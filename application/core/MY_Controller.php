@@ -27,6 +27,7 @@ class MY_Controller extends CI_Controller {
                 if (!empty($email)) {
                     $admin = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['email' => $email, 'is_delete' => 0, 'is_active' => 1]], ['single' => true]);
                     if (!empty($admin)) {
+                        unset($admin['password']);
                         $this->session->set_userdata('remalways_admin', $admin);
                         $this->is_admin_loggedin = true;
                     }

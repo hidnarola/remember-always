@@ -49,6 +49,7 @@ class Login extends MY_Controller {
                 //-- If input details are valid then store data into session
                 if ($this->input->post('remember_me') == 1)
                     $this->users_model->activate_admin_remember_me($result['email']);
+                unset($result['password']);
                 $this->session->set_userdata('remalways_admin', $result);
                 return TRUE;
             }

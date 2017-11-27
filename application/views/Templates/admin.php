@@ -38,12 +38,12 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
-                            <?php if ($this->session->userdata('remAlways_user')['profile_image'] != '') { ?>
-                                                <!--<img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remAlways_user')['profile_image']) ?>" alt="">-->
+                            <?php if ($this->session->userdata('remalways_admin')['profile_image'] != '') { ?>
+                                <img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remalways_admin')['profile_image']) ?>" alt="">
                             <?php } else { ?>
                                 <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" alt="">
                             <?php } ?>
-                            <span><?php echo $this->session->userdata('remAlways_user')['firstname'] . ' ' . $this->session->userdata('remAlways_user')['lastname'] ?></span>
+                            <span><?php echo $this->session->userdata('remalways_admin')['firstname'] . ' ' . $this->session->userdata('remalways_admin')['lastname'] ?></span>
                             <i class="caret"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -67,8 +67,8 @@
                             <div class="category-content">
                                 <div class="media">
                                     <a href="#" class="media-left">
-                                        <?php if ($this->session->userdata('remAlways_user')['profile_image'] != '') { ?>
-                                                            <!--<img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remAlways_user')['profile_image']) ?>" class="img-circle img-sm" alt="">-->
+                                        <?php if ($this->session->userdata('remalways_admin')['profile_image'] != '') { ?>
+                                            <img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remalways_admin')['profile_image']) ?>" class="img-circle img-sm" alt="">
                                         <?php } else { ?>
                                             <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" class="img-circle img-sm" alt="">
                                         <?php } ?>
@@ -76,7 +76,7 @@
                                     <div class="media-body">
                                         <span class="media-heading text-semibold">Remember Always</span>
                                         <div class="text-size-mini text-muted">
-                                            <i class="icon-user"></i> &nbsp;<?php echo ($this->session->userdata('remAlways_user')['role'] == 'admin') ? 'admin' : 'staff'; ?>
+                                            <i class="icon-user"></i> &nbsp;<?php echo ($this->session->userdata('remalways_admin')['role'] == 'admin') ? 'admin' : 'user'; ?>
                                         </div>
                                     </div>
                                 </div>

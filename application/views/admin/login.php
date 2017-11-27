@@ -157,7 +157,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label class="checkbox-inline">
-                                                <input type="checkbox" class="styled" checked="checked">
+                                                <input type="checkbox" name="remember_me" class="styled" checked="checked" value="1">
                                                 Remember
                                             </label>
                                         </div>
