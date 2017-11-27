@@ -53,6 +53,7 @@ $route['default_controller'] = 'welcome';
 
 /** Admin Routes **/
 $route['admin'] = 'admin/login';
+$route['admin/logout'] = 'admin/login/logout';
 $route['admin/forgot_password'] = 'admin/login/forgot_password';
 
 $route['404_override'] = '';

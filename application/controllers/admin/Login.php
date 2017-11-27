@@ -6,11 +6,10 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('admin/users_model');
     }
 
     /**
@@ -49,8 +48,8 @@ class Login extends CI_Controller {
             } else {
                 //-- If input details are valid then store data into session
                 if ($this->input->post('remember_me') == 1)
-                    $this->users_model->activate_remember_me($result['email']);
-                $this->session->set_userdata('remAlways_admin', $result);
+                    $this->users_model->activate_admin_remember_me($result['email']);
+                $this->session->set_userdata('remalways_admin', $result);
                 return TRUE;
             }
         } else {
@@ -63,9 +62,9 @@ class Login extends CI_Controller {
      * Clears the session and log out admin/staff
      */
     public function logout() {
-        $this->session->sess_destroy();
-        delete_cookie(REMEMBER_ME_COOKIE_NAME);
-        redirect('login');
+        $this->session->unset_userdata('remalways_admin');
+        delete_cookie(REMEMBER_ME_ADMIN_COOKIE);
+        redirect('admin/login');
     }
 
     /**
