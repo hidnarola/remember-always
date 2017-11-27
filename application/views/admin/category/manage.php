@@ -1,3 +1,4 @@
+<script type="text/javascript" src="assets/admin/js/plugins/forms/validation/validate.min.js"></script>
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
@@ -49,18 +50,17 @@ if ($this->session->flashdata('success')) {
 <div class="content">
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal form-validate" id="category_from" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal form-validate-jquery" id="category_from" method="POST" enctype="multipart/form-data">
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <div class="message alert alert-danger" style="display:none"></div>
 
                         <div class="form-group">
-                            <label class="col-lg-3 control-label">Category Name <span class="text-danger">*</span></label>
+                            <label class="col-lg-2 control-label">Category Name <span class="text-danger">*</span></label>
                             <div class="col-lg-6">
-                                <input type="text" name="name" id="name" placeholder="Enter Category Name" class="form-control" value="<?php echo (isset($user_datas['reward_title'])) ? $user_datas['reward_title'] : set_value('reward_title'); ?>">
+                                <input type="text" name="name" id="name" placeholder="Enter Category Name" class="form-control" value="<?php echo (isset($category['name'])) ? $category['name'] : set_value('name'); ?>">
                             </div>
                         </div>
-
                         <div class="text-right">
                             <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                         </div>
@@ -71,32 +71,26 @@ if ($this->session->flashdata('success')) {
     </div>
 </div>
 <script>
-    $('#category_from').validate();
+
+     $("#category_from").validate({
+        ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
+        errorClass: 'validation-error-label',
+        successClass: 'validation-valid-label',
+        highlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        unhighlight: function (element, errorClass) {
+            $(element).removeClass(errorClass);
+        },
+        validClass: "validation-valid-label",
+        success: function (label) {
+            label.addClass("validation-valid-label");
+        },
+        rules: {
+            name: {
+                required: true
+            }
+        },
+    });
+
 </script>
-<style>
-    .image_wrapper{
-        height:auto;
-        width:auto;
-    }
-    #imagePreview {
-        width: 400px;
-        height: 180px;
-        background-position: center center;
-        background-size: contain;
-        -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
-        display: inline-block;
-        float: left;
-        margin: 9px;
-        background-repeat: no-repeat; 
-    }
-    #imagePreview_msg {
-        width: 100%;
-        height: 180px;
-        background-position: center center;
-        background-size: cover;
-        -webkit-box-shadow: 0 0 1px 1px rgba(0, 0, 0, .3);
-    }
-    .image_wrapper thumb-inner{
-        max-width: auto; 
-    }
-</style>

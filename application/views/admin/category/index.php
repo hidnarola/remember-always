@@ -49,26 +49,23 @@ if ($this->session->flashdata('success')) {
         }
     }
     ?>
-    <!-- Content area -->
+    <!-- /content area -->
     <div class="content">
-        <!-- /content area -->
-        <div class="content">
-            <div class="panel panel-flat">
-                <div class="message alert alert-danger" style="display:none"></div>
-                <div class="panel-heading text-right">
-                    <a href="<?php echo site_url('admin/categories/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus3"></i></b> Add Category</a>
-                </div>
-                <div class="table-responsive">
-                    <table class="table datatable-basic">
-                        <thead>
-                            <tr>
-                                <th>Sr No.</th>
-                                <th >Name</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
+        <div class="panel panel-flat">
+            <div class="message alert alert-danger" style="display:none"></div>
+            <div class="panel-heading text-right">
+                <a href="<?php echo site_url('admin/categories/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus3"></i></b> Add Category</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table datatable-basic">
+                    <thead>
+                        <tr>
+                            <th>Sr No.</th>
+                            <th >Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
         <?php
@@ -113,10 +110,12 @@ if ($this->session->flashdata('success')) {
                         visible: true,
                         searchable: false,
                         sortable: false,
+                        width: "20%"
                     },
                     {
                         data: "name",
                         visible: true,
+                        width: "60%"
                     },
                     {
                         data: "id",
@@ -124,14 +123,10 @@ if ($this->session->flashdata('success')) {
                         searchable: false,
                         sortable: false,
                         render: function (data, type, full, meta) {
-                            var action = '<td class="text-center"><ul class="icons-list"><li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-menu9"></i></a><ul class="dropdown-menu dropdown-menu-right">';
-                            if (full.hide_product == 0) {
-                                action += '<li><a href="javascript:void(0)" id="prod_id_' + full.id + '" class="hide_info" title="Hide" prod_id="' + full.id + '"><i class="fa fa-eye-slash"></i>Hide</a></li>';
-                            } else {
-//                                action += '<li><a href="javascript:void(0)" onclick="pause_campaign(' + full.id + ',\'activate\')" title="Edit"><i class="icon-play4"></i>Show</a></li>';
-                                action += '<li><a href="javascript:void(0)" id="show_prod_' + full.id + '" class="show_info" title="Hide" prod_id="' + full.id + '"><i class="fa fa-eye"></i>Show</a></li>';
-                            }
-                            action += '</ul></li></ul></td>';
+                            var action = '<ul class="icons-list">';
+                            action += '<li class="text-primary-600"><a href="admin/categories/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil7"></i></a></li>';
+                            action += '<li class="text-danger-600"><a href="javascript:void(0)" id="delete_' + btoa(full.id) + '" class="delete_category" title="Delete" cat_id="' + btoa(full.id) + '"><i class="icon-trash"></i></a></li>';
+                            action += '</ul>';
                             return action;
                         }
                     }
@@ -142,7 +137,40 @@ if ($this->session->flashdata('success')) {
                 width: 'auto'
             });
         });
-//        $(document).on("click", ".hide_info", function (e) {
+        $(document).on("click", ".delete_category", function (e) {
+        swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this service category!",
+            type: "warning",
+            showCancelButton: true,
+//            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, delete it!",
+            cancelButtonText: "No, cancel plz!",
+//            focusConfirm:true,
+            focusCancel:true,
+//          reverseButtons: true,
+        }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            type: 'POST',
+                            url: url,
+                            async: false,
+                            dataType: 'JSON',
+                            data: {id: id, type: 'property_details', title: 'Property'},
+                            success: function (data) {
+                                if (data.status == 1) {
+                                    window.location.reload();
+                                } else if (data.status == 0) {
+                                }
+                            }
+                        });
+                    }
+               }, function (dismiss) {
+            // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
+            if (dismiss === 'cancel') {
+                        swal("Cancelled", "Your service category is safe :)", "error");
+              }
+        });
 //            var id = $(this).attr("prod_id");
 //            $('#hideproduct').modal('show');
 //            $('.hide_prod').on('click', function () {
@@ -156,7 +184,7 @@ if ($this->session->flashdata('success')) {
 //                });
 //            });
 //            return false;
-//        });
+        });
 //        $(document).on("click", ".show_info", function (e) {
 //            var id = $(this).attr("prod_id");
 //            $('#showproduct').modal('show');

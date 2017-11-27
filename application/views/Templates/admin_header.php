@@ -11,6 +11,8 @@
 <link href="assets/admin/css/core.css" rel="stylesheet" type="text/css">
 <link href="assets/admin/css/components.css" rel="stylesheet" type="text/css">
 <link href="assets/admin/css/colors.css" rel="stylesheet" type="text/css">
+<link href="assets/admin/css/sweetalert2.css" rel="stylesheet" type="text/css">
+<link href="assets/admin/css/admin_developer.css" rel="stylesheet" type="text/css">
 <!--<link href="assets/admin/css/custom.css" rel="stylesheet" type="text/css">-->
 <!-- /global stylesheets -->
 
@@ -31,8 +33,9 @@
 
 <script type="text/javascript" src="assets/admin/js/plugins/forms/selects/bootstrap_multiselect.js"></script>
 <script type="text/javascript" src="assets/admin/js/plugins/forms/selects/select2.min.js"></script>
-<script type="text/javascript" src="assets/admin/js/plugins/forms/validation/validate.min.js"></script>
-<script type="text/javascript" src="assets/admin/js/plugins/forms/validation/additional_methods.min.js"></script>
+<script type="text/javascript" src="assets/admin/js/sweetalert2.all.min.js"></script>
+
+<!--<script type="text/javascript" src="assets/admin/js/plugins/forms/validation/additional_methods.min.js"></script>-->
 <!--<script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
 <script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>-->
 

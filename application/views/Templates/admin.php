@@ -15,10 +15,6 @@
         </noscript>    
     </head>
     <body>
-        <?php
-        $controller = $this->router->fetch_class();
-        $Method = $this->router->fetch_method();
-        ?>
         <!-- Main navbar -->
         <div class="navbar navbar-inverse">
             <div class="navbar-header">
@@ -87,8 +83,8 @@
                         <div class="sidebar-category sidebar-category-visible">
                             <div class="category-content no-padding">
                                 <ul class="navigation navigation-main navigation-accordion">
-                                    <li <?php echo strtolower($controller) == 'dashboard' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/dashboard') ?>"><i class="icon-home2"></i> <span>Dashboard</span></a></li>
-                                    <li <?php echo strtolower($controller) == 'categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/categories') ?>"><i class="icon-list-unordered"></i> <span>Service Categories</span></a></li>
+                                    <li <?php echo strtolower($this->controller) == 'dashboard' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/dashboard') ?>"><i class="icon-home2"></i> <span>Dashboard</span></a></li>
+                                    <li <?php echo strtolower($this->controller) == 'categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/categories') ?>"><i class="icon-list-unordered"></i> <span>Service Categories</span></a></li>
                                     <li class=""><a href="<?php echo site_url('logout') ?>"><i class="icon-switch2"></i> <span>Logout</span></a></li>
                                 </ul>
                             </div>

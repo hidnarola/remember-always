@@ -6,7 +6,7 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Categories extends CI_Controller {
+class Categories extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -29,10 +29,10 @@ class Categories extends CI_Controller {
         $final['recordsFiltered'] = $final['recordsTotal'] = $this->category_model->get_all_categories('count');
         $final['redraw'] = 1;
         $donors = $this->category_model->get_all_categories('result');
-        foreach ($donors as $key => $val) {
-            $donors[$key] = $val;
-            $donors[$key]['created'] = date('m/d/Y', strtotime($val['created']));
-        }
+//        foreach ($donors as $key => $val) {
+//            $donors[$key] = $val;
+//            $donors[$key]['created'] = date('m/d/Y', strtotime($val['created']));
+//        }
 
         $final['data'] = $donors;
         echo json_encode($final);
@@ -43,12 +43,12 @@ class Categories extends CI_Controller {
      *
      */
     public function add($id = null) {
-
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
-            $donor = $this->donors_model->get_donor_details($id);
-            if (!empty($donor)) {
+            $category = $this->category_model->sql_select(TBL_SERVICE_CATEGORIES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+            if (!empty($category)) {
+                $this->data['category'] = $category;
                 $this->data['title'] = 'Remember Always Admin | Service Category';
                 $this->data['heading'] = 'Edit Service Category';
             } else {
@@ -62,7 +62,17 @@ class Categories extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
-            
+            $dataArr = ['name' => trim($this->input->post('name'))];
+            if (is_numeric($id)) {
+                $dataArr['modified_at'] = date('Y-m-d H:i:s');
+                $this->category_model->common_insert_update('update', TBL_SERVICE_CATEGORIES, $dataArr, ['id' => $id]);
+                $this->session->set_flashdata('success', 'Service Categirty details has been updated successfully.');
+            } else {
+                $dataArr['created_at'] = date('Y-m-d H:i:s');
+                $id = $this->category_model->common_insert_update('insert', TBL_SERVICE_CATEGORIES, $dataArr);
+                $this->session->set_flashdata('success', 'Service Categirty has been inserted successfully.');
+            }
+            redirect('admin/categories');
         }
         $this->template->load('admin', 'admin/category/manage', $this->data);
     }
@@ -80,14 +90,14 @@ class Categories extends CI_Controller {
      * @return boolean
      */
     public function catgeory_exists($value) {
-        p($value);
-        $result = $this->category_model->get_all_details('service_categories', ['name' => trim($value)]);
-        p($result);
+//        p($value);
+        $result = $this->category_model->sql_select(TBL_SERVICE_CATEGORIES, 'name', ['where' => array('name' => trim($value), 'is_delete' => 0)], ['single' => true]);
+//        p($result, 1);
         if (!empty($result)) {
             if (trim($value) != $result['name']) {
-                $this->form_validation->set_message('catgeory_exists', 'Service category already exists.');
                 return TRUE;
             } else {
+                $this->form_validation->set_message('catgeory_exists', 'Service category already exists.');
                 return FALSE;
             }
         } else {
