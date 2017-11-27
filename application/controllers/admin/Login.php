@@ -10,6 +10,7 @@ class Login extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('admin/users_model');
     }
 
     /**
@@ -25,7 +26,7 @@ class Login extends CI_Controller {
             if ($this->input->get('redirect')) {
                 redirect(base64_decode($this->input->get('redirect')));
             } else {
-                redirect('home');
+                redirect('admin/dashboard');
             }
         }
         $data['title'] = 'Remember Always Admin | Login';
@@ -33,23 +34,23 @@ class Login extends CI_Controller {
     }
 
     /**
-     * Callback Validate function to check Admin/Staff Login  
+     * Callback Validate function to check Admin Login  
      * @return boolean
      */
     public function login_validation() {
-        $result = $this->users_model->get_user_detail(['email' => trim($this->input->post('email'))]);
+        $result = $this->users_model->get_user_detail(['email' => trim($this->input->post('email')), 'is_delete' => 0]);
         if ($result) {
             if (!password_verify($this->input->post('password'), $result['password'])) {
-                $this->form_validation->set_message('login_validation', 'Invalid  Email/Password.');
+                $this->form_validation->set_message('login_validation', 'Invalid Email/Password.');
                 return FALSE;
-            } else if ($result['is_active'] == 0 || $result['is_delete'] == 1) {
+            } else if ($result['is_active'] == 0) {
                 $this->form_validation->set_message('login_validation', 'Your Account has been blocked! Please contact system administrator');
                 return FALSE;
             } else {
                 //-- If input details are valid then store data into session
                 if ($this->input->post('remember_me') == 1)
                     $this->users_model->activate_remember_me($result['email']);
-                $this->session->set_userdata('extracredit_user', $result);
+                $this->session->set_userdata('remAlways_admin', $result);
                 return TRUE;
             }
         } else {
