@@ -36,6 +36,7 @@ class Categories extends CI_Controller {
      *
      */
     public function add_cateory() {
+        
 //        $result = $this->users_model->get_user_detail(['name' => trim($value)]);
 //        if (!empty($result)) {
 //            if (trim($value) != $result['name']) {
