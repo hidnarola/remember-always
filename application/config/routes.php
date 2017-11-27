@@ -54,6 +54,7 @@ $route['default_controller'] = 'welcome';
 /** Admin Routes **/
 $route['admin'] = 'admin/login';
 $route['admin/forgot_password'] = 'admin/login/forgot_password';
+$route['admin/categories/list'] = 'admin/categories/index';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
