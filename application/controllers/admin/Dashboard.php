@@ -48,7 +48,7 @@ class Dashboard extends MY_Controller {
                     'firstname' => trim($this->input->post('firstname')),
                     'lastname' => trim($this->input->post('lastname')),
                     'profile_image' => $profile_image,
-                    'modified' => date('Y-m-d H:i:s')
+                    'updated_at' => date('Y-m-d H:i:s')
                 );
                 $this->users_model->common_insert_update('update', TBL_USERS, $update_array, ['id' => $this->session->userdata('remalways_admin')['id']]);
                 $this->session->set_flashdata('success', 'Profile updated successfully!');
@@ -57,14 +57,14 @@ class Dashboard extends MY_Controller {
                 unset($result['password']);
 
                 $this->session->set_userdata('remalways_admin', $result);
-                redirect('Dashboard/profile');
+                redirect('admin/profile');
             }
         }
-        $this->template->load('default', 'profile', $data);
+        $this->template->load('admin', 'admin/profile', $data);
     }
 
     /**
-     * Updates passowrd for entered user
+     * Updates password for Administrator
      */
     public function update_password() {
         $this->form_validation->set_rules('old_password', 'Password', 'trim|required');
@@ -75,7 +75,7 @@ class Dashboard extends MY_Controller {
             $error = validation_errors();
             $this->session->set_flashdata('error', $error);
         } else {
-            $result = $this->users_model->get_user_detail(['email' => $this->session->userdata('extracredit_user')['email']]);
+            $result = $this->users_model->get_user_detail(['email' => $this->session->userdata('remalways_admin')['email'], 'is_delete' => 0]);
             if (!password_verify($this->input->post('old_password'), $result['password'])) {
                 $this->session->set_flashdata('error', 'You have entered wrong old password! Please try again.');
             } else {
@@ -87,7 +87,7 @@ class Dashboard extends MY_Controller {
                 $this->session->set_flashdata('success', 'Your password changed successfully');
             }
         }
-        redirect('home/profile');
+        redirect('admin/profile');
     }
 
 }

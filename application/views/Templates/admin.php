@@ -18,7 +18,7 @@
         <!-- Main navbar -->
         <div class="navbar navbar-inverse">
             <div class="navbar-header">
-                <a class="navbar-brand" href="<?php echo site_url('home'); ?>">
+                <a class="navbar-brand" href="<?php echo site_url('admin/dashboard'); ?>">
                     <!--<img src="assets/images/logo_light.png" alt="">-->
                     Remember Always
                 </a>
