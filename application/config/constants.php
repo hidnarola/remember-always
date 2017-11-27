@@ -95,4 +95,4 @@ define('TBL_USERS', 'users');
 define('UPLOADS', 'uploads/');
 define('USER_IMAGES', 'uploads/user-images/');
 
-define('REMEMBER_ME_COOKIE_NAME', 'ecs908f7d89f');
+define('REMEMBER_ME_ADMIN_COOKIE', 'ecs908f7d89f');

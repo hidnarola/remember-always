@@ -128,7 +128,17 @@
                                     <div class="icon-object border-slate-300 text-slate-300"><i class="icon-reading"></i></div>
                                     <h5 class="content-group">Remember Always <small class="display-block">Your credentials</small></h5>
                                 </div>
-
+                                <?php
+                                if (isset($error) && !empty($error)) {
+                                    echo '<div class="alert alert-danger">' . $error . '</div>';
+                                }
+                                if ($this->session->flashdata('success')) {
+                                    echo '<div class="alert alert-success">' . $this->session->flashdata('success') . '</div>';
+                                }
+                                if ($this->session->flashdata('error')) {
+                                    echo '<div class="alert alert-danger">' . $this->session->flashdata('error') . '</div>';
+                                }
+                                ?>
                                 <div class="form-group has-feedback has-feedback-left">
                                     <input type="email" class="form-control" placeholder="Email" name="email" required="required">
                                     <div class="form-control-feedback">
@@ -137,7 +147,7 @@
                                 </div>
 
                                 <div class="form-group has-feedback has-feedback-left">
-                                    <input type="text" class="form-control" placeholder="Password" name="password" required="required">
+                                    <input type="password" class="form-control" placeholder="Password" name="password" required="required">
                                     <div class="form-control-feedback">
                                         <i class="icon-lock2 text-muted"></i>
                                     </div>
@@ -153,7 +163,7 @@
                                         </div>
 
                                         <div class="col-sm-6 text-right">
-                                            <a href="<?php echo site_url('admin/forgot_password')?>">Forgot password?</a>
+                                            <a href="<?php echo site_url('admin/forgot_password') ?>">Forgot password?</a>
                                         </div>
                                     </div>
                                 </div>
