@@ -124,8 +124,9 @@ if ($this->session->flashdata('success')) {
                         sortable: false,
                         render: function (data, type, full, meta) {
                             var action = '<ul class="icons-list">';
-                            action += '<li class="text-primary-600"><a href="admin/categories/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil7"></i></a></li>';
-                            action += '<li class="text-danger-600"><a href="javascript:void(0)" id="delete_' + btoa(full.id) + '" class="delete_category" title="Delete" cat_id="' + btoa(full.id) + '"><i class="icon-trash"></i></a></li>';
+//                            action += '<li class="text-primary-600"><a href="' + site_url + 'admin/categories/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil7"></i></a></li>';
+                            action += '<li class="text-primary-600">&nbsp;&nbsp;<a href="' + site_url + 'admin/categories/edit/' + btoa(full.id) + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-xs" title="Edit Donation"><i class="icon-pencil3"></i></a></li>';
+                            action += '<li>&nbsp;&nbsp;<a href="' + site_url + 'admin/categories/delete/' + btoa(full.id) + '" title="Delete" onclick="return confirm_alert(this)" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded btn-xs"><i class="icon-trash"></i></a>';
                             action += '</ul>';
                             return action;
                         }
@@ -137,67 +138,33 @@ if ($this->session->flashdata('success')) {
                 width: 'auto'
             });
         });
-        $(document).on("click", ".delete_category", function (e) {
-        swal({
-            title: "Are you sure?",
-            text: "You will not be able to recover this service category!",
-            type: "warning",
-            showCancelButton: true,
+        function confirm_alert(e) {
+            var id = $(this).attr("cat_id");
+            var url = 'admin/categories/delete/' + id;
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this service category!",
+                type: "warning",
+                showCancelButton: true,
 //            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "Yes, delete it!",
-            cancelButtonText: "No, cancel plz!",
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plz!",
 //            focusConfirm:true,
-            focusCancel:true,
+                focusCancel: true,
 //          reverseButtons: true,
-        }).then(function (isConfirm) {
-                    if (isConfirm) {
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            async: false,
-                            dataType: 'JSON',
-                            data: {id: id, type: 'property_details', title: 'Property'},
-                            success: function (data) {
-                                if (data.status == 1) {
-                                    window.location.reload();
-                                } else if (data.status == 0) {
-                                }
-                            }
-                        });
-                    }
-               }, function (dismiss) {
-            // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
-            if (dismiss === 'cancel') {
-                        swal("Cancelled", "Your service category is safe :)", "error");
-              }
-        });
-//            var id = $(this).attr("prod_id");
-//            $('#hideproduct').modal('show');
-//            $('.hide_prod').on('click', function () {
-//                $.ajax({
-//                    type: "POST",
-//                    url: "product/hide/" + id,
-//                    success: function (data) {
-//                        $('#hideproduct').modal('hide');
-//                        location.reload();
-//                    }
-//                });
-//            });
-//            return false;
-        });
-//        $(document).on("click", ".show_info", function (e) {
-//            var id = $(this).attr("prod_id");
-//            $('#showproduct').modal('show');
-//            $('.show_prod').on('click', function () {
-//                $.ajax({
-//                    type: "POST",
-//                    url: "product/show/" + id,
-//                    success: function (data) {
-//                        $('#showproduct').modal('hide');
-//                        location.reload();
-//                    }
-//                });
-//            });
-//            return false;
-//        });
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    console.log($(e).attr('href'));
+                    window.location.href = $(e).attr('href');
+                    return true;
+                }
+            }, function (dismiss) {
+                // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
+                if (dismiss === 'cancel') {
+                    swal("Cancelled", "Your service category is safe :)", "error");
+                }
+            });
+            return false;
+        }
+
     </script>

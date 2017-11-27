@@ -43,6 +43,7 @@ class Categories extends MY_Controller {
      *
      */
     public function add($id = null) {
+        $uniqe_category_str = '';
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
@@ -58,11 +59,20 @@ class Categories extends MY_Controller {
             $this->data['title'] = 'Remember Always Admin | Service Category';
             $this->data['heading'] = 'Add Service Category';
         }
-        $this->form_validation->set_rules('name', 'Name', 'trim|required|callback_catgeory_exists');
+        if (strtolower($this->input->method()) == 'post') {
+            if (is_numeric($id)) {
+                if (!empty($category) && $category['name'] != trim(htmlentities($this->input->post('name')))) {
+                    $uniqe_category_str = '|callback_catgeory_exists';
+                }
+            } else {
+                $uniqe_category_str = '|callback_catgeory_exists';
+            }
+        }
+        $this->form_validation->set_rules('name', 'Name', 'trim|required' . $uniqe_category_str);
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
-            $dataArr = ['name' => trim($this->input->post('name'))];
+            $dataArr = ['name' => trim(htmlentities($this->input->post('name')))];
             if (is_numeric($id)) {
                 $dataArr['modified_at'] = date('Y-m-d H:i:s');
                 $this->category_model->common_insert_update('update', TBL_SERVICE_CATEGORIES, $dataArr, ['id' => $id]);
@@ -83,6 +93,27 @@ class Categories extends MY_Controller {
      */
     public function edit($id) {
         $this->add($id);
+    }
+
+    /**
+     * Delete service category
+     * @param int $id
+     * */
+    public function delete($id = NULL) {
+        $id = base64_decode($id);
+        if (is_numeric($id)) {
+            $category = $this->category_model->sql_select(TBL_SERVICE_CATEGORIES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+            if (!empty($category)) {
+                $update_array = array(
+                    'is_delete' => 1
+                );
+                $this->category_model->common_insert_update('update', TBL_SERVICE_CATEGORIES, $update_array, ['id' => $id]);
+                $this->session->set_flashdata('success', 'Service categories has been deleted successfully!');
+            } else {
+                $this->session->set_flashdata('error', 'Unable to delete service categories!');
+            }
+        }
+        redirect('admin/categories');
     }
 
     /**
