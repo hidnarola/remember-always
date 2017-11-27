@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Login Controller for Administrator Login
+ * Dashboard controller for dashboard of Administrator
  * @author KU 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
