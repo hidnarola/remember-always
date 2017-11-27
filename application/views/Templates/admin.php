@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <?php
-        $this->load->view('Templates/header');
+        $this->load->view('Templates/admin_header');
         ?>
         <script type="text/javascript">
             //-- Set common javascript vairable
@@ -101,6 +101,9 @@
             </div>
             <!-- /page content -->
         </div>
+        <?php
+        $this->load->view('Templates/admin_footer');
+        ?>
         <!-- /page container -->
     </body>
 </html>

@@ -28,7 +28,7 @@ class Categories extends CI_Controller {
             }
         }
         $data['title'] = 'Remember Always Admin | Service Category';
-        $this->load->view('admin/login', $data);
+        $this->template->load('admin_main', 'admin/product/index', $this->data);
     }
 
     /**
@@ -50,23 +50,24 @@ class Categories extends CI_Controller {
 //            return TRUE;
 //        }
     }
+    
     /**
      * Callback Validate function to check service category already exists or not.
      * @return boolean
      */
     public function catgeory_exists($value) {
-//        $result = $this->users_model->get_user_detail(['name' => trim($value)]);
-//        if (!empty($result)) {
-//            if (trim($value) != $result['name']) {
-//                $this->form_validation->set_message('login_validation', 'Invalid  Email/Password.');
-//                return TRUE;
-//            } else {
-//
-//                return FALSE;
-//            }
-//        } else {
-//            return TRUE;
-//        }
+        $result = $this->MY_Model->get_all_details(['name' => trim($value)]);
+        if (!empty($result)) {
+            if (trim($value) != $result['name']) {
+                $this->form_validation->set_message('catgeory_exists', 'Service category already exists.');
+                return TRUE;
+            } else {
+
+                return FALSE;
+            }
+        } else {
+            return TRUE;
+        }
     }
 
 }
