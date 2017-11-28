@@ -70,4 +70,15 @@ class Users_model extends MY_Model {
         return $query->row_array();
     }
 
+    /**
+     * Check verification code exists or not in users table
+     * @param string $verification_code
+     * @return array
+     */
+    public function check_verification_code($verification_code) {
+        $this->db->where('verification_code', $verification_code);
+        $query = $this->db->get(TBL_USERS);
+        return $query->row_array();
+    }
+
 }

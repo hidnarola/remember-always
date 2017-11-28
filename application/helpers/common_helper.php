@@ -15,7 +15,7 @@ if (!defined('BASEPATH'))
  * @param Array $data - Data to be passed
  * @return boolean
  */
-function send_email($to = '', $template = '', $data = []) {
+function send_mail($to = '', $template = '', $data = []) {
     if (empty($to) || empty($template) || empty($data)) {
         return false;
     }
@@ -26,7 +26,7 @@ function send_email($to = '', $template = '', $data = []) {
     $config['smtp_host'] = 'ssl://smtp.gmail.com';
     $config['smtp_port'] = '465';
     $config['smtp_user'] = 'demo.narola@gmail.com';
-    $config['smtp_pass'] = 'narola21';
+    $config['smtp_pass'] = 'Narola21#';
     $config['charset'] = 'utf-8';
     $config['newline'] = "\r\n";
     $config['mailtype'] = 'html';
@@ -35,7 +35,7 @@ function send_email($to = '', $template = '', $data = []) {
     $ci->email->initialize($config);
 
     $ci->email->to($to);
-    $ci->email->from('no-reply@extracredit.com');
+    $ci->email->from('no-reply@rememberalways.com');
     $ci->email->subject($data['subject']);
     $view = $ci->load->view('email_templates/' . $template, $data, TRUE);
     $ci->email->message($view);
@@ -73,7 +73,7 @@ function qry($bool = false) {
 }
 
 /**
- * Return verfication code with check already exit or not for users table
+ * Return verification code with check already exit or not for users table
  */
 function verification_code() {
     $CI = & get_instance();

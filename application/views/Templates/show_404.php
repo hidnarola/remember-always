@@ -9,21 +9,21 @@
 
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-        <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/core.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/components.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/core.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/components.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/colors.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
         <!-- Core JS files -->
-        <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-        <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-        <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-        <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+        <script type="text/javascript" src="assets/admin/js/plugins/loaders/pace.min.js"></script>
+        <script type="text/javascript" src="assets/admin/js/core/libraries/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/admin/js/core/libraries/bootstrap.min.js"></script>
+        <script type="text/javascript" src="assets/admin/js/plugins/loaders/blockui.min.js"></script>
         <!-- /core JS files -->
         <!-- Theme JS files -->
-        <script type="text/javascript" src="assets/js/core/app.js"></script>
+        <script type="text/javascript" src="assets/admin/js/core/app.js"></script>
         <!-- /theme JS files -->
     </head>
 
@@ -40,16 +40,16 @@
             </div>
 
             <div class="navbar-collapse collapse" id="navbar-mobile">
-                <?php if ($this->session->userdata('remAlways_user')['id'] != '') { ?>
+                <?php if ($this->session->userdata('remalways_admin')['id'] != '') { ?>
                     <ul class="nav navbar-nav navbar-right">
                         <li class="dropdown dropdown-user">
                             <a class="dropdown-toggle" data-toggle="dropdown">
-                                <?php if ($this->session->userdata('remAlways_user')['profile_image'] != '') { ?>
-                                    <!--<img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remAlways_user')['profile_image']) ?>" alt="">-->
+                                <?php if ($this->session->userdata('remalways_admin')['profile_image'] != '') { ?>
+                                        <!--<img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remalways_admin')['profile_image']) ?>" alt="">-->
                                 <?php } else { ?>
-                                    <img src="<?php echo base_url('assets/images/placeholder.jpg') ?>" alt="">
+                                    <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" alt="">
                                 <?php } ?>
-                                <span><?php echo $this->session->userdata('remAlways_user')['firstname'] . ' ' . $this->session->userdata('remAlways_user')['lastname'] ?></span>
+                                <span><?php echo $this->session->userdata('remalways_admin')['firstname'] . ' ' . $this->session->userdata('remalways_admin')['lastname'] ?></span>
                                 <i class="caret"></i>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right">
@@ -91,7 +91,7 @@
                         <!-- /error wrapper -->
                         <!-- Footer -->
                         <div class="footer text-muted text-center">
-                            &copy; 2017. <a href="#">Remember Always</a>, All Rights Reserved
+                            &copy; 2017. <a href="<?php echo site_url()?>">Remember Always</a>, All Rights Reserved
                         </div>
                         <!-- /footer -->
                     </div>

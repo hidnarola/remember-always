@@ -84,13 +84,13 @@ class Login extends MY_Controller {
             $encoded_verification_code = $verification_code;
 
             $email_data = [];
-            $email_data['url'] = site_url() . 'reset_password?code=' . $encoded_verification_code;
+            $email_data['url'] = site_url() . 'admin/reset_password?code=' . $encoded_verification_code;
             $email_data['name'] = $user['firstname'] . ' ' . $user['lastname'];
             $email_data['email'] = trim($this->input->post('email'));
-            $email_data['subject'] = 'Reset Password - Extra Credit';
-            send_email(trim($this->input->post('email')), 'forgot_password', $email_data);
+            $email_data['subject'] = 'Reset Password - Remember Always Admin';
+            send_mail(trim($this->input->post('email')), 'forgot_password', $email_data);
             $this->session->set_flashdata('success', 'Email has been successfully sent to reset password!Please check email');
-            redirect('login');
+            redirect('admin/login');
         }
 
         $data['title'] = 'Remember Always Admin | Forgot Password';
@@ -124,18 +124,18 @@ class Login extends MY_Controller {
                 );
                 $this->users_model->common_insert_update('update', TBL_USERS, $data, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Your password changed successfully');
-                redirect('login');
+                redirect('admin/login');
             }
-            $this->load->view('reset_password', $data);
+            $this->load->view('admin/reset_password', $data);
         } else {
             //--- if invalid verification code
             $this->session->set_flashdata('error', 'Invalid request or already changed password');
-            redirect('login');
+            redirect('admin/login');
         }
     }
 
     /**
-     * Check email is valid or not
+     * Check admin email is valid or not
      */
     public function check_email() {
         $requested_email = trim($this->input->get('email'));

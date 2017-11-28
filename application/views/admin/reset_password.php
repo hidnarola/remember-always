@@ -9,7 +9,8 @@
         <title><?php echo $title ?></title>
         <noscript>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=js_disabled">
-        </noscript>    
+        </noscript>  
+
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
         <link href="assets/admin/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
@@ -47,17 +48,22 @@
                     <div class="content">
 
                         <!-- Password recovery -->
-                        <form action="" method="post" id="forgot_password_form">
+                        <form action="" method="post" id="reset_password_form">
                             <div class="panel panel-body login-form">
                                 <div class="text-center">
                                     <div class="icon-object border-warning text-warning"><i class="icon-spinner11"></i></div>
-                                    <h5 class="content-group">Password recovery <small class="display-block">We'll send you instructions in email</small></h5>
+                                    <h5 class="content-group">Change Password </h5>
                                 </div>
-
                                 <div class="form-group has-feedback">
-                                    <input type="text" name="email" class="form-control" placeholder="Your email">
+                                    <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                                     <div class="form-control-feedback">
-                                        <i class="icon-mail5 text-muted"></i>
+                                        <i class="icon-key text-muted"></i>
+                                    </div>
+                                </div>
+                                <div class="form-group has-feedback">
+                                    <input type="password" name="con_password" class="form-control" placeholder="Confirm Password">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-key text-muted"></i>
                                     </div>
                                 </div>
                                 <div class="form-group login-options">
@@ -67,8 +73,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <button type="submit" class="btn bg-blue btn-block" id="reset_password">Reset password <i class="icon-arrow-right14 position-right"></i></button>
+                                <button type="submit" class="btn bg-blue btn-block" id="change_password">Change password <i class="icon-arrow-right14 position-right"></i></button>
                             </div>
                         </form>
                         <!-- /password recovery -->
@@ -86,7 +91,7 @@
 
     </body>
     <script type="text/javascript">
-        $("#forgot_password_form").validate({
+        $("#reset_password_form").validate({
             ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
             errorClass: 'validation-error-label',
             successClass: 'validation-valid-label',
@@ -138,20 +143,29 @@
                 label.addClass("validation-valid-label")
             },
             rules: {
-                email: {
-                    email: true,
+                password: {
                     required: true,
-                    remote: '<?php echo site_url('admin/login/check_email') ?>'
-                }
+                    minlength: 5
+                },
+                con_password: {
+                    required: true,
+                    minlength: 5,
+                    equalTo: "#password"
+                },
             },
             messages: {
-                email: {
-                    remote: jQuery.validator.format("Invalid Email Address")
-                }
+                password: {
+                    required: "Please enter a password",
+                    minlength: "Your password must be at least 5 characters long"
+                },
+                con_password: {
+                    required: "Please enter a password",
+                    minlength: "Your password must be at least 5 characters long",
+                    equalTo: "Please enter the same password as above"
+                },
             },
             submitHandler: function (form) {
-                $('#reset_password').attr('disabled', true);
-                // do other things for a valid form
+                $('#change_password').attr('disabled', true);
                 form.submit();
             }
         });
