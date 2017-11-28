@@ -108,5 +108,4 @@ define('UPLOADS', 'uploads/');
 define('USER_IMAGES', 'uploads/user-images/');
 define('SLIDER_IMAGES', 'uploads/slider-images/');
 
-
 define('REMEMBER_ME_ADMIN_COOKIE', 'ecs908f7d89f');

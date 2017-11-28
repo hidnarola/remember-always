@@ -51,23 +51,23 @@ if ($this->session->flashdata('success')) {
     ?>
     <!-- /content area -->
     <div class="content">
+
         <div class="panel panel-flat">
             <div class="message alert alert-danger" style="display:none"></div>
             <div class="panel-heading text-right">
                 <a href="<?php echo site_url('admin/home_slider/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus3"></i></b> Add Slider</a>
             </div>
-            <div class="table-responsive">
-                <table class="table datatable-basic">
-                    <thead>
-                        <tr>
-                            <th>Sr No.</th>
-                            <th>Description</th>
-                            <th>Image</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+            <table class="table datatable-basic">
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th>Image</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
         <?php
         $this->load->view('Templates/admin_footer');
@@ -93,7 +93,7 @@ if ($this->session->flashdata('success')) {
     <script>
         $(function () {
             $('.datatable-basic').dataTable({
-                scrollX: true,
+//                scrollX: true,
                 autoWidth: false,
                 processing: true,
                 serverSide: true,
@@ -111,29 +111,69 @@ if ($this->session->flashdata('success')) {
                         visible: true,
                         searchable: false,
                         sortable: false,
-                        width: "20%"
-                    },
-                    {
-                        data: "description",
-                        visible: true,
-                        width: "60%"
+                        width: "10%"
                     },
                     {
                         data: "image",
                         visible: true,
-                        width: "30%"
+                        width: "10%",
+                        render: function (data, type, full, meta) {
+                            var action = '<a class="fancybox" href="<?php echo base_url() . SLIDER_IMAGES ?>' + data + '" data-fancybox-group="gallery" ><img src="<?php echo base_url() . SLIDER_IMAGES ?>' + data + '" style="width: 58px; height: 58px; border - radius: 2px; " alt="' + data + '"></a>';
+//                                    var action = '<img src="' + site_url + 'assets/admin/images/placeholder.jpg" style="width: 58px; height: 58px; border-radius: 2px;" alt="">';
+                            return action;
+                        }
+                    },
+                    {
+                        data: "description",
+                        visible: true,
+                        width: "55%"
+                    },
+                    {
+                        data: "is_active",
+                        visible: true,
+                        width: "10%",
+                        render: function (data, type, full, meta) {
+                            if (data == '1') {
+                                var action = '<span class="label label-success">Active</span>';
+                            } else {
+                                var action = '<span class="label label-default">In-Active</span>';
+                            }
+
+                            return action;
+                        }
                     },
                     {
                         data: "id",
                         visible: true,
                         searchable: false,
                         sortable: false,
+                        width: "12%",
                         render: function (data, type, full, meta) {
                             var action = '<ul class="icons-list">';
 //                            action += '<li class="text-primary-600"><a href="' + site_url + 'admin/categories/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil7"></i></a></li>';
                             action += '<li class="text-teal">&nbsp;&nbsp;<a href="' + site_url + 'admin/home_slider/view/' + btoa(full.id) + '" class="btn border-teal text-teal btn-flat btn-rounded btn-icon btn-xs valign-text-bottom" title="View"><i class="icon-eye"></i></a></li>';
                             action += '<li class="text-primary-600">&nbsp;&nbsp;<a href="' + site_url + 'admin/home_slider/edit/' + btoa(full.id) + '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-xs" title="Edit"><i class="icon-pencil3"></i></a></li>';
                             action += '<li>&nbsp;&nbsp;<a href="' + site_url + 'admin/home_slider/delete/' + btoa(full.id) + '" title="Delete" onclick="return confirm_alert(this)" class="btn border-warning text-warning-600 btn-flat btn-icon btn-rounded btn-xs"><i class="icon-trash"></i></a>';
+                            action += '</ul>';
+                            var action = '';
+                            action += '<ul class="icons-list">';
+                            action += '<li class="dropdown">';
+                            action += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
+                            action += '<i class="icon-menu9"></i>';
+                            action += '</a>';
+                            action += '<ul class="dropdown-menu dropdown-menu-right">';
+                            action += '<li>';
+                            action += '<a href="' + site_url + 'admin/home_slider/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil3"></i> Edit slider</a>'
+                            action += '<a href="' + site_url + 'admin/home_slider/view/' + btoa(full.id) + '" title="View"><i class="icon-comment-discussion"></i> View slider</a>'
+                            if (full.is_active == '1') {
+                                action += '<a href="' + site_url + 'admin/home_slider/hide/' + btoa(full.id) + '" onclick="return hide(this)" class="in_active" title="Hide"><i class="icon-eye-blocked"></i> Hide slider</a>'
+                            } else {
+                                action += '<a href="' + site_url + 'admin/home_slider/show/' + btoa(full.id) + '" id="' + btoa(full.id) + '" onclick="return show(this)" class="active" title="Show"><i class="icon-eye"></i> Show slider</a>'
+                            }
+                            action += '<a href="' + site_url + 'admin/home_slider/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete slider</a>'
+                            action += '</li>';
+                            action += '</ul>';
+                            action += '</li>';
                             action += '</ul>';
                             return action;
                         }
@@ -147,31 +187,65 @@ if ($this->session->flashdata('success')) {
         });
         function confirm_alert(e) {
             var id = $(this).attr("cat_id");
-            var url = 'admin/categories/delete/' + id;
+            var url = 'admin/home_slider/delete/' + id;
             swal({
                 title: "Are you sure?",
-                text: "You will not be able to recover this service category!",
+                 text: "You will not be able to recover this slider!",
                 type: "warning",
                 showCancelButton: true,
-//            confirmButtonColor: "#DD6B55",
                 confirmButtonText: "Yes, delete it!",
                 cancelButtonText: "No, cancel plz!",
-//            focusConfirm:true,
                 focusCancel: true,
-//          reverseButtons: true,
             }).then(function (isConfirm) {
                 if (isConfirm) {
-                    console.log($(e).attr('href'));
                     window.location.href = $(e).attr('href');
                     return true;
                 }
             }, function (dismiss) {
                 // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
                 if (dismiss === 'cancel') {
-                    swal("Cancelled", "Your service category is safe :)", "error");
+                    swal("Cancelled", "Your slider is safe :)", "error");
                 }
             });
             return false;
         }
-
+        function hide(e) {
+           swal({
+                title: "Are you sure?",
+                text: "You want to hide this slider!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                focusCancel: true,
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = $(e).attr('href');
+                    return true;
+                }
+            }, function (dismiss) {
+            });
+            return false;
+        }
+        function show(e) {
+           swal({
+                title: "Are you sure?",
+                text: "You want to show this slider!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                focusCancel: true,
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = $(e).attr('href');
+                    return true;
+                }
+            }, function (dismiss) {
+            });
+            return false;
+        }
+        $(function () {
+            $('.fancybox').fancybox();
+        });
     </script>

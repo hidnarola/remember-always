@@ -19,8 +19,8 @@ class home_slider_model extends MY_Model {
      */
     public function get_all_slider($count = '') {
         $start = $this->input->get('start');
-        $columns = ['test_id', 'description','image', 's.id'];
-        $this->db->select('s.id,@a:=@a+1 AS test_id,description,image', false);
+        $columns = ['test_id', 'description', 'image', 'is_active', 's.id'];
+        $this->db->select('s.id,@a:=@a+1 AS test_id,description,image,is_active', false);
         $this->db->where('s.is_delete', '0');
         $keyword = $this->input->get('search');
         if (!empty($keyword['value'])) {

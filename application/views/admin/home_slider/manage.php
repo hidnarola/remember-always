@@ -8,7 +8,7 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li><a href="<?php echo site_url('admin/categories'); ?>"><i class="icon-stack position-left"></i> Service Categories</a></li>
+            <li><a href="<?php echo site_url('admin/home_slider'); ?>"><i class="icon-stack position-left"></i> Home Slider List</a></li>
             <li class="active"><i class="icon-pencil7 position-left"></i><?php echo $heading; ?></li>
         </ul>
     </div>
@@ -68,13 +68,13 @@ if ($this->session->flashdata('success')) {
                                     <div class="media-left" id="image_preview_div">
                                         <?php
                                         $required = 'required';
-                                        if (isset($guest_communication) && $guest_communication['media'] != '') {
+                                        if (isset($slider) && $slider['image'] != '') {
                                             $required = '';
-                                            if (preg_match("/\.(gif|png|jpg)$/", $guest_communication['media'])) {
+                                            if (preg_match("/\.(png|jpg|jpeg)$/", $slider['image'])) {
                                                 ?>
-                                                <img src="<?php echo COMMUNICATION_IMAGES . $guest_communication['media']; ?>" style="width: 58px; height: 58px; border-radius: 2px;" alt="">
+                                                <img src="<?php echo SLIDER_IMAGES . $slider['image']; ?>" style="width: 58px; height: 58px; border-radius: 2px;" alt="">
                                             <?php } else { ?>
-                                                <a class="fancybox" target="_blank" href="<?php echo COMMUNICATION_IMAGES . $guest_communication['media']; ?>" data-fancybox-group="gallery" ><img src="assets/images/default_file.png" height="55px" width="55px" alt="" class="img-circle"/></a>
+                                                <a class="fancybox" target="_blank" href="<?php echo SLIDER_IMAGES . $slider['image']; ?>" data-fancybox-group="gallery" ><img src="assets/admin/images/placeholder.jpg" height="55px" width="55px" alt="" class="img-circle"/></a>
                                                 <?php
                                             }
                                         } else {
@@ -84,7 +84,7 @@ if ($this->session->flashdata('success')) {
                                     </div>
 
                                     <div class="media-body">
-                                        <input type="file" name="image" id="image" class="file-styled">
+                                        <input type="file" name="image" id="image" class="file-styled" <?php echo $required ?>>
                                         <span class="help-block">Accepted formats:  png, jpg , jpeg</span>
                                     </div>
                                     <span></span>
@@ -146,9 +146,9 @@ if ($this->session->flashdata('success')) {
             description: {
                 required: true
             },
-            image: {
-                required: true,
-            }
+//            image: {
+//                required: true,
+//            }
         },
     });
     $(".file-styled").uniform({
