@@ -1,12 +1,12 @@
 <?php
 
 /**
- * category_model for category function
+ * Category_model for category function
  * @author Akk
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class category_model extends MY_Model {
+class Category_model extends MY_Model {
 
     public function __construct() {
         parent::__construct();
@@ -38,5 +38,5 @@ class category_model extends MY_Model {
 
 }
 
-/* End of file MY_Model.php */
-/* Location: ./application/core/MY_Model.php */
+/* End of file Category_model.php */
+/* Location: ./application/models/admin/Category_model.php */

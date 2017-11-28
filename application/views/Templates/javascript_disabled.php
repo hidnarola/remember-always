@@ -5,26 +5,26 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <base href="<?php echo base_url(); ?>">
-        <title>Javascript Disabled</title>
+        <title>Java Script Disabled</title>
 
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
-        <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/core.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/components.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/bootstrap.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/core.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/components.css" rel="stylesheet" type="text/css">
+        <link href="assets/admin/css/colors.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
 
         <!-- Core JS files -->
-        <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
-        <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
-        <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
-        <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+        <script type="text/javascript" src="assets/admin/js/plugins/loaders/pace.min.js"></script>
+        <script type="text/javascript" src="assets/admin/js/core/libraries/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/admin/js/core/libraries/bootstrap.min.js"></script>
+        <script type="text/javascript" src="assets/admin/js/plugins/loaders/blockui.min.js"></script>
         <!-- /core JS files -->
 
         <!-- Theme JS files -->
-        <script type="text/javascript" src="assets/js/core/app.js"></script>
+        <script type="text/javascript" src="assets/admin/js/core/app.js"></script>
         <!-- /theme JS files -->
     </head>
 
@@ -39,8 +39,8 @@
                     <div class="content">
                         <!-- Error title -->
                         <div class="text-center content-group">
-                            <h1>Opps! Something went wrong.</h1>
-                            <h6>Please enable javascript in your browser.</h6>
+                            <h1>Oops! Something went wrong.</h1>
+                            <h6>Please enable Java Script in your browser.</h6>
                         </div>
                         <!-- /error title -->
                         <!-- Error content -->

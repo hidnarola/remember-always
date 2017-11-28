@@ -101,7 +101,7 @@ class Login extends MY_Controller {
      * Reset password page
      */
     public function reset_password() {
-        $data['title'] = 'Extra Credit| Reset Password';
+        $data['title'] = 'Remember Always Admin | Reset Password';
         $verification_code = $this->input->get('code');
         $verification_code = $this->encrypt->decode($verification_code);
         //--- check varification code is valid or not

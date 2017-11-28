@@ -6,7 +6,7 @@
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class home_slider_model extends MY_Model {
+class Home_slider_model extends MY_Model {
 
     public function __construct() {
         parent::__construct();
@@ -38,5 +38,5 @@ class home_slider_model extends MY_Model {
 
 }
 
-/* End of file MY_Model.php */
-/* Location: ./application/core/MY_Model.php */
+/* End of file Home_slider_model.php */
+/* Location: ./application/models/admin/Home_slider_model.php */

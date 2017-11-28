@@ -87,7 +87,6 @@ defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest auto
 /**
  * Constants for Tables
  */
-define('TBL_USERS', 'users');
 define('TBL_AFFILIATIONS', 'affiliations');
 define('TBL_AFFILIATIONS_PROFILE', 'affiliation_profile');
 define('TBL_POSTS', 'posts');
@@ -100,6 +99,7 @@ define('TBL_RELATIONS', 'relations');
 define('TBL_SERVICE_CATEGORIES', 'service_categories');
 define('TBL_SERVICE_PROVIDERS', 'service_providers');
 define('TBL_SLIDER', 'slider');
+define('TBL_USERS', 'users');
 
 /**
  * Constants for User Images

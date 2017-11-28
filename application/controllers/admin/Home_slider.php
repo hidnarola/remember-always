@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Login Controller for Administrator Login
- * @author KU 
+ * Home Slider controller to manage slider images of Home Page
+ * @author AKK
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Login Controller for Administrator Login
- * @author KU 
+ * Categories Controller for Service provider categories
+ * @author AKK 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
