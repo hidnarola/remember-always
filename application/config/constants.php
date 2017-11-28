@@ -99,14 +99,11 @@ define('TBL_PROFILE_USER', 'profile_user');
 define('TBL_RELATIONS', 'relations');
 define('TBL_SERVICE_CATEGORIES', 'service_categories');
 define('TBL_SERVICE_PROVIDERS', 'service_providers');
-define('TBL_SLIDER', 'slider');
 
 /**
  * Constants for User Images
  */
 define('UPLOADS', 'uploads/');
 define('USER_IMAGES', 'uploads/user-images/');
-define('SLIDER_IMAGES', 'uploads/slider-images/');
-
 
 define('REMEMBER_ME_ADMIN_COOKIE', 'ecs908f7d89f');

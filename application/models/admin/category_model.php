@@ -1,8 +1,8 @@
 <?php
 
 /**
- * category_model for category function
- * @author Akk
+ * MY_Model for common model function
+ * @author KU
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -29,9 +29,9 @@ class category_model extends MY_Model {
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         $this->db->limit($this->input->get('length'), $this->input->get('start'));
         if ($count == 'count') {
-            $res_data = $this->db->get(TBL_SERVICE_CATEGORIES .' s')->num_rows();
+            $res_data = $this->db->get('service_categories s')->num_rows();
         } else {
-            $res_data = $this->db->get(TBL_SERVICE_CATEGORIES .' s,(SELECT @a:= ' . $start . ') AS a')->result_array();
+            $res_data = $this->db->get('service_categories s,(SELECT @a:= ' . $start . ') AS a')->result_array();
         }
         return $res_data;
     }
