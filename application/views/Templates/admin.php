@@ -120,4 +120,8 @@
                 "Please select file upto 2MB."
                 );
     </script>
+    <style>
+        .fancybox-close:after {display: none;}
+        .fancybox-nav span:after {display: none;}
+    </style>
 </html>

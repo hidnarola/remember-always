@@ -1,4 +1,3 @@
-<script type="text/javascript" src="assets/admin/js/plugins/forms/validation/validate.min.js"></script>
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
