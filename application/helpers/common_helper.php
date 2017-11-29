@@ -382,3 +382,19 @@ function crop_image($source_x, $source_y, $width, $height, $image_name) {
         imagepng($new_image, $output_path . $filename . '.' . $extension);
     }
 }
+
+/**
+     * 404 Error Handler
+     *
+     * @uses	CI_Exceptions::show_error()
+     *
+     * @param	string	$page		Page URI
+     * @param 	bool	$log_error	Whether to log the error
+     * @return	void
+     */
+    function custom_show_404($page = '', $log_error = TRUE) {
+        $CI = & get_instance();
+        $CI->load->view('Templates/show_404');
+        echo $CI->output->get_output();
+        exit; // EXIT_UNKNOWN_FILE
+    }

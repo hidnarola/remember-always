@@ -55,7 +55,7 @@ if ($this->session->flashdata('success')) {
         <div class="panel panel-flat">
             <div class="message alert alert-danger" style="display:none"></div>
             <div class="panel-heading text-right">
-                <a href="<?php echo site_url('admin/home_slider/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus3"></i></b> Add Slider</a>
+                <a href="<?php echo site_url('admin/home_slider/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add Slider</a>
             </div>
             <table class="table datatable-basic">
                 <thead>
@@ -190,9 +190,10 @@ if ($this->session->flashdata('success')) {
             var url = 'admin/home_slider/delete/' + id;
             swal({
                 title: "Are you sure?",
-                 text: "You will not be able to recover this slider!",
+                text: "You will not be able to recover this slider!",
                 type: "warning",
                 showCancelButton: true,
+                confirmButtonColor: "#FF7043",
                 confirmButtonText: "Yes, delete it!",
                 cancelButtonText: "No, cancel plz!",
                 focusCancel: true,
@@ -210,11 +211,12 @@ if ($this->session->flashdata('success')) {
             return false;
         }
         function hide(e) {
-           swal({
+            swal({
                 title: "Are you sure?",
                 text: "You want to hide this slider!",
                 type: "warning",
                 showCancelButton: true,
+                confirmButtonColor: "#FF7043",
                 confirmButtonText: "Yes",
                 cancelButtonText: "No",
                 focusCancel: true,
@@ -228,11 +230,12 @@ if ($this->session->flashdata('success')) {
             return false;
         }
         function show(e) {
-           swal({
+            swal({
                 title: "Are you sure?",
                 text: "You want to show this slider!",
                 type: "warning",
                 showCancelButton: true,
+                confirmButtonColor: "#FF7043",
                 confirmButtonText: "Yes",
                 cancelButtonText: "No",
                 focusCancel: true,

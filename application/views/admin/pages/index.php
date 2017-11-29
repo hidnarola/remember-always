@@ -8,7 +8,7 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li class="active">Pages</li>
+            <li class="active"><i class="icon-magazine position-left"></i> Pages</li>
         </ul>
     </div>
 </div>
@@ -48,7 +48,7 @@ if ($this->session->flashdata('success')) {
     <div class="content">
         <div class="panel panel-flat">
             <div class="panel-heading text-right">
-                <a href="<?php echo site_url('admin/pages/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus3"></i></b> Add new page</a>
+                <a href="<?php echo site_url('admin/pages/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add new page</a>
             </div>
             <table class="table datatable-basic">
                 <thead>
@@ -68,6 +68,7 @@ if ($this->session->flashdata('success')) {
     <script>
         $(function () {
             $('.datatable-basic').dataTable({
+                autoWidth: false,
                 processing: true,
                 serverSide: true,
                 language: {
@@ -126,9 +127,6 @@ if ($this->session->flashdata('success')) {
                             if (data == '0') {
                                 status = '<span class="label bg-grey">InActive</span>';
                             }
-                            if (data == '2') {
-                                status = '<span class="label bg-danger">Deleted</span>';
-                            }
                             return status;
                         }
                     },
@@ -137,17 +135,26 @@ if ($this->session->flashdata('success')) {
                         visible: true,
                         searchable: false,
                         sortable: false,
-                        width: 200,
                         render: function (data, type, full, meta) {
-                            var action = '';
-                            if (full.active == '1') {
-                                if (btoa(full.id) != 31 && btoa(full.id) != 32) {
-                                    action += '<a href="' + site_url + 'admin/pages/edit/' + btoa(full.id)+ '" class="btn border-primary text-primary-600 btn-flat btn-icon btn-rounded btn-sm"><i class="icon-pencil3"></i></a>';
-                                }
-                                action += '&nbsp;&nbsp;<a href="' + site_url + 'admin/pages/delete/' + btoa(full.id) + '" class="btn border-danger text-danger-600 btn-flat btn-icon btn-rounded" onclick="return confirm_alert(this);"><i class="icon-cross2"></i></a>'
-                            } else {
-                                action += '<a href="' + site_url + 'admin/pages/activate/' + btoa(full.id) + '" class="btn border-success text-success-600 btn-flat btn-icon btn-rounded"><i class="icon-checkmark"></i></a>'
-                            }
+                            var action = '<ul class="icons-list">';
+                            action += '<li class="dropdown">';
+                            action += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
+                            action += '<i class="icon-menu9"></i>';
+                            action += '</a>';
+                            action += '<ul class="dropdown-menu dropdown-menu-right">';
+                            action += '<li>';
+                            action += '<a href="' + site_url + 'admin/pages/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil3"></i> Edit page</a>'
+//                            action += '<a href="' + site_url + 'admin/pages/view/' + btoa(full.id) + '" title="View"><i class="icon-comment-discussion"></i> View page</a>'
+//                            if (full.active == '1') {
+//                                action += '<a href="' + site_url + 'admin/pages/actions/inactive/' + btoa(full.id) + '" onclick="return hide(this)" class="in_active" title="Hide"><i class="icon-eye-blocked"></i> Inactive Page</a>'
+//                            } else {
+//                                action += '<a href="' + site_url + 'admin/pages/actions/active/' + btoa(full.id) + '" id="' + btoa(full.id) + '" onclick="return show(this)" class="active" title="Show"><i class="icon-eye"></i> Active page</a>'
+//                            }
+                            action += '<a href="' + site_url + 'admin/pages/actions/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete page</a>'
+                            action += '</li>';
+                            action += '</ul>';
+                            action += '</li>';
+                            action += '</ul>';
                             return action;
                         }
                     }
@@ -163,20 +170,87 @@ if ($this->session->flashdata('success')) {
         function confirm_alert(e) {
             swal({
                 title: "Are you sure?",
-                text: "You will be able to recover this page!",
+                text: "You will not be able to recover this page!",
+                type: "warning",
+                confirmButtonColor: "#FF7043",
+                showCancelButton: true,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel plz!",
+                focusCancel: true,
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = $(e).attr('href');
+                    return true;
+                }
+            }, function (dismiss) {
+                // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
+                if (dismiss === 'cancel') {
+                    swal("Cancelled", "Your page is safe :)", "error");
+                }
+            });
+            return false;
+        }
+
+        function hide(e) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to in-activate this page!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#FF7043",
-                confirmButtonText: "Yes, delete it!"
-            },
-                    function (isConfirm) {
-                        if (isConfirm) {
-                            window.location.href = $(e).attr('href');
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                focusCancel: true,
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = $(e).attr('href');
+                    return true;
+                }
+            }, function (dismiss) {
+            });
             return false;
         }
+        function show(e) {
+            swal({
+                title: "Are you sure?",
+                text: "You want to activate this page!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                confirmButtonColor: "#FF7043",
+                cancelButtonText: "No",
+                focusCancel: true,
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = $(e).attr('href');
+                    return true;
+                }
+            }, function (dismiss) {
+            });
+            return false;
+        }
+
+        $(document).on('click', '.styled', function () {
+            data_type = $(this).data('type');
+            data_id = $(this).data('id');
+            if ($(this).parent().attr('class') == 'checked') {
+                $(this).parent().removeClass('checked');
+                $(this).prop('checked', false);
+                value = 0;
+            } else {
+                $(this).parent().addClass('checked');
+                $(this).prop('checked', true);
+                value = 1;
+            }
+
+            $.ajax({
+                url: "<?php site_url() ?>admin/pages/change_data_status",
+                data: {type: data_type, id: data_id, value: value},
+                type: "POST",
+                success: function (result) {
+                    swal("Success!", "Your changes was successfully arranged!", "success");
+//                    common_ajax_call();
+                }
+            });
+        });
     </script>

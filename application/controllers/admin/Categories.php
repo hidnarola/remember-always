@@ -53,7 +53,7 @@ class Categories extends MY_Controller {
                 $this->data['title'] = 'Remember Always Admin | Service Category';
                 $this->data['heading'] = 'Edit Service Category';
             } else {
-                show_404();
+                custom_show_404();
             }
         } else {
             $this->data['title'] = 'Remember Always Admin | Service Category';

@@ -14,7 +14,7 @@
 <link href="assets/admin/css/sweetalert2.css" rel="stylesheet" type="text/css">
 <link href="assets/admin/css/admin_developer.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" type="text/css" href="assets/admin/css/jquery.fancybox.css?v=2.1.5" media="screen" />
-<!--<link href="assets/admin/css/custom.css" rel="stylesheet" type="text/css">-->
+<link href="assets/admin/css/custom.css" rel="stylesheet" type="text/css">
 <!-- /global stylesheets -->
 
 <!-- Core JS files -->

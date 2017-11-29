@@ -47,7 +47,7 @@ class Home_slider extends MY_Controller {
                 $this->data['title'] = 'Remember Always Admin | Home Slider';
                 $this->data['heading'] = 'Edit Home Slider';
             } else {
-                show_404();
+                custom_show_404();
             }
         } else {
             $this->data['title'] = 'Remember Always Admin | Home Slider';
@@ -113,11 +113,11 @@ class Home_slider extends MY_Controller {
             if (!empty($slider)) {
                 $this->data['slider'] = $slider;
             } else {
-                show_404();
+                custom_show_404();
             }
             $this->template->load('admin', 'admin/home_slider/view', $this->data);
         } else {
-            show_404();
+            custom_show_404();
         }
     }
 

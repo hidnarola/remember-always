@@ -54,19 +54,19 @@ if ($this->session->flashdata('success')) {
         <div class="panel panel-flat">
             <div class="message alert alert-danger" style="display:none"></div>
             <div class="panel-heading text-right">
-                <a href="<?php echo site_url('admin/categories/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus3"></i></b> Add Category</a>
+                <a href="<?php echo site_url('admin/categories/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add Service Category</a>
             </div>
             <!--<div class="table-responsive">-->
-                <table class="table datatable-basic">
-                    <thead>
-                        <tr>
-                            <th>Sr No.</th>
-                            <th >Name</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
+            <table class="table datatable-basic">
+                <thead>
+                    <tr>
+                        <th>Sr No.</th>
+                        <th >Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
         <!--</div>-->
         <?php
         $this->load->view('Templates/admin_footer');
@@ -146,7 +146,7 @@ if ($this->session->flashdata('success')) {
                 text: "You will not be able to recover this service category!",
                 type: "warning",
                 showCancelButton: true,
-//            confirmButtonColor: "#DD6B55",
+                confirmButtonColor: "#FF7043",
                 confirmButtonText: "Yes, delete it!",
                 cancelButtonText: "No, cancel plz!",
 //            focusConfirm:true,
