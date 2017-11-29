@@ -59,5 +59,10 @@ $route['admin/forgot_password'] = 'admin/login/forgot_password';
 $route['admin/reset_password'] = 'admin/login/reset_password';
 $route['admin/profile'] = 'admin/dashboard/profile';
 
+/** User Routes **/
+$route['forgot_password'] = 'login/forgot_password';
+$route['reset_password'] = 'login/reset_password';
+$route['logout'] = 'login/logout';
+
 $route['404_override'] = 'pagenotfound';
 $route['translate_uri_dashes'] = FALSE;

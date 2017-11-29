@@ -60,7 +60,7 @@ class Login extends MY_Controller {
     }
 
     /**
-     * Clears the session and log out admin/staff
+     * Clears the session and log out admin
      */
     public function logout() {
         $this->session->unset_userdata('remalways_admin');

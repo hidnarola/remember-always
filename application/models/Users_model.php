@@ -32,6 +32,16 @@ class Users_model extends MY_Model {
         set_cookie(REMEMBER_ME_ADMIN_COOKIE, $encoded_email, time() + (3600 * 24 * 360));
         return true;
     }
+    /**
+     * Set cookie with passed email id
+     * @param string $email
+     * @return boolean
+     */
+    public function activate_user_remember_me($email) {
+        $encoded_email = $this->encrypt->encode($email);
+        set_cookie(REMEMBER_ME_USER_COOKIE, $encoded_email, time() + (3600 * 24 * 360));
+        return true;
+    }
 
     /**
      * Get users for data table
