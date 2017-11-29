@@ -47,7 +47,7 @@ class Pages extends MY_Controller {
                 $this->data['title'] = 'Remember Always Admin | Pages';
                 $this->data['heading'] = 'Edit Page';
             } else {
-                show_404();
+                custom_show_404();
             }
         } else {
             $this->data['title'] = 'Remember Always Admin | Pages';
@@ -66,7 +66,7 @@ class Pages extends MY_Controller {
             $dataArr = [
                 'navigation_name' => trim(htmlentities($this->input->post('navigation_name'))),
                 'title' => trim(htmlentities($this->input->post('title'))),
-                'description' => htmlentities($this->input->post('description')),
+                'description' => $this->input->post('description'),
                 'meta_title' => trim(htmlentities($this->input->post('meta_title'))),
                 'meta_keyword' => trim(htmlentities($this->input->post('meta_keyword'))),
                 'meta_description' => trim(htmlentities($this->input->post('meta_description'))),
@@ -113,20 +113,21 @@ class Pages extends MY_Controller {
      *
      */
     public function view($id) {
+         
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
             $this->data['title'] = 'Remember Always Admin | Pages';
             $this->data['heading'] = 'View Page Details';
-            $slider = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
-            if (!empty($slider)) {
-                $this->data['slider'] = $slider;
+            $page_data = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+            if (!empty($page_data)) {
+                $this->data['page_data'] = $page_data;
             } else {
-                show_404();
+                custom_show_404();
             }
             $this->template->load('admin', 'admin/pages/view', $this->data);
         } else {
-            show_404();
+            custom_show_404();
         }
     }
 
@@ -139,66 +140,57 @@ class Pages extends MY_Controller {
     }
 
     /**
-     * Delete service category
-     * @param int $id
+     * @method : action function
+     * @uses : this function is used to apply action of page
+     * @author : AKK
      * */
-    public function delete($id = NULL) {
-        $id = base64_decode($id);
+    public function actions($action, $user_id) {
+        if (!is_null($user_id))
+            $id = base64_decode($user_id);
         if (is_numeric($id)) {
-            $slider = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
-            if (!empty($slider)) {
-                $update_array = array(
-                    'is_delete' => 1
-                );
+            $where = 'id = ' . $this->db->escape($id);
+            $page = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => $id, 'is_delete' => 0)], ['single' => true]);
+            if (!empty($page)) {
+                if ($action == 'delete') {
+                    $update_array = array(
+                        'is_delete' => 1
+                    );
+                    $this->session->set_flashdata('success', 'Page successfully deleted!');
+                } else if ($action == 'inactive') {
+                    $update_array = array(
+                        'active' => 0
+                    );
+                    $this->session->set_flashdata('success', 'Page successfully inactivated!');
+                } else {
+                    $update_array = array(
+                        'active' => 1
+                    );
+                    $this->session->set_flashdata('success', 'Page successfully activated!');
+                }
                 $this->pages_model->common_insert_update('update', TBL_PAGES, $update_array, ['id' => $id]);
-                $this->session->set_flashdata('success', 'Slider has been deleted successfully!');
             } else {
-                $this->session->set_flashdata('error', 'Unable to delete slider!');
+                $this->session->set_flashdata('error', 'Invalid request. Please try again!');
             }
+        } else {
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
         }
-        redirect('admin/pages');
+        redirect(site_url('admin/pages'));
     }
 
     /**
-     * Hide slider
-     * @param int $id
+     * @method : Change_data_status function
+     * @uses : this function is used to changes status based on show in header and footer
+     * @author : AKK
      * */
-    public function hide($id = NULL) {
-        $id = base64_decode($id);
+    public function change_data_status() {
+         if (!is_null($this->input->post('id')))
+            $id = base64_decode($this->input->post('id'));
         if (is_numeric($id)) {
-            $slider = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
-            if (!empty($slider)) {
-                $update_array = array(
-                    'is_active' => 0
-                );
-                $this->pages_model->common_insert_update('update', TBL_PAGES, $update_array, ['id' => $id]);
-                $this->session->set_flashdata('success', 'Slider will now be hidden!');
-            } else {
-                $this->session->set_flashdata('error', 'Unable to hide slider!');
-            }
+            $user_array = array($this->input->post('type') => $this->input->post('value'));
+            $this->pages_model->common_insert_update('update', TBL_PAGES, $user_array, ['id' => $id]);
+            echo 'success';
         }
-        redirect('admin/pages');
-    }
-
-    /**
-     * Show service category
-     * @param int $id
-     * */
-    public function show($id = NULL) {
-        $id = base64_decode($id);
-        if (is_numeric($id)) {
-            $slider = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
-            if (!empty($slider)) {
-                $update_array = array(
-                    'is_active' => 1
-                );
-                $this->pages_model->common_insert_update('update', TBL_PAGES, $update_array, ['id' => $id]);
-                $this->session->set_flashdata('success', 'Slider will now be visible!');
-            } else {
-                $this->session->set_flashdata('error', 'Unable to show slider!');
-            }
-        }
-        redirect('admin/pages');
+        exit;
     }
 
 }
