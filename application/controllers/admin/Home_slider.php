@@ -108,7 +108,7 @@ class Home_slider extends MY_Controller {
             $id = base64_decode($id);
         if (is_numeric($id)) {
             $this->data['title'] = 'Remember Always Admin | Home Slider';
-            $this->data['heading'] = 'View Home Slider';
+            $this->data['heading'] = 'View Home Slider Details';
             $slider = $this->home_slider_model->sql_select(TBL_SLIDER, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($slider)) {
                 $this->data['slider'] = $slider;
@@ -169,6 +169,7 @@ class Home_slider extends MY_Controller {
         }
         redirect('admin/home_slider');
     }
+    
     /**
      * Show service category
      * @param int $id
@@ -189,25 +190,4 @@ class Home_slider extends MY_Controller {
         }
         redirect('admin/home_slider');
     }
-
-    /**
-     * Callback Validate function to check service category already exists or not.
-     * @return boolean
-     */
-    public function catgeory_exists($value) {
-//        p($value);
-        $result = $this->home_slider_model->sql_select(TBL_SLIDER, 'name', ['where' => array('name' => trim($value), 'is_delete' => 0)], ['single' => true]);
-//        p($result, 1);
-        if (!empty($result)) {
-            if (trim($value) != $result['name']) {
-                return TRUE;
-            } else {
-                $this->form_validation->set_message('catgeory_exists', 'Service category already exists.');
-                return FALSE;
-            }
-        } else {
-            return TRUE;
-        }
-    }
-
 }

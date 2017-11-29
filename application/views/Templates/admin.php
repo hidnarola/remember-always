@@ -84,6 +84,7 @@
                             <div class="category-content no-padding">
                                 <ul class="navigation navigation-main navigation-accordion">
                                     <li <?php echo strtolower($this->controller) == 'dashboard' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/dashboard') ?>"><i class="icon-home2"></i><span>Dashboard</span></a></li>
+                                    <li <?php echo strtolower($this->controller) == 'pages' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/pages') ?>"><i class="icon-magazine"></i><span>Manage Pages</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'home_slider' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/home_slider') ?>"><i class="icon-stack"></i><span>Home Slider</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/categories') ?>"><i class="icon-list-unordered"></i><span>Service Categories</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'providers' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/providers') ?>"><i class="icon-hammer-wrench"></i><span>Service Providers</span></a></li>
@@ -107,19 +108,6 @@
         <!-- /page container -->
     </body>
     <script>
-        $.validator.addMethod(
-                "filesize", function (value, element, arg) {
-                    file_size = element.files[0].size / 1024 / 1024;
-                    console.log(parseInt(file_size));
-                    console.log(arg);
-                    if ((parseInt(file_size) > arg)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                },
-                "Please select file upto 2MB."
-                );
     </script>
     <style>
         .fancybox-close:after {display: none;}

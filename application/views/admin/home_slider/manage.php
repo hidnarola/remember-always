@@ -1,4 +1,3 @@
-<script type="text/javascript" src="assets/admin/js/plugins/forms/validation/validate.min.js"></script>
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
@@ -62,7 +61,7 @@ if ($this->session->flashdata('success')) {
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-2">Media</label>
+                            <label class="control-label col-lg-2">Upload Image</label>
                             <div class="col-lg-6">
                                 <div class="media no-margin-top">
                                     <div class="media-left" id="image_preview_div">
@@ -85,7 +84,7 @@ if ($this->session->flashdata('success')) {
 
                                     <div class="media-body">
                                         <input type="file" name="image" id="image" class="file-styled" <?php echo $required ?>>
-                                        <span class="help-block">Accepted formats:  png, jpg , jpeg</span>
+                                        <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
                                     </div>
                                     <span></span>
                                 </div>
@@ -146,47 +145,52 @@ if ($this->session->flashdata('success')) {
             description: {
                 required: true
             },
-//            image: {
+            image: {
 //                required: true,
-//            }
+                extension: "jpg|png|jpeg",
+                maxFileSize: {
+                    "unit": "KB",
+                    "size": 700
+                }
+            }
         },
     });
     $(".file-styled").uniform({
         fileButtonClass: 'action btn bg-pink'
     });
     $(document).on('change', '#image', function (e) {
-        $(this).rules('add', {
-            filesize: 2,
-        });
-        ValidateSingleInput(this);
+//        $(this).rules('add', {
+//            filesize: 2,
+//        });
+//        ValidateSingleInput(this);
         readURL(this);
     })
     var _validFileExtensions = [".jpg", ".jpeg", ".png", ];
 //    var _validFileExtensions_Video = [".mp4", ".webm", ".ogv", ".png",".MPG",".MPEG" ,".OGG",".ogg",".mpeg"];    
-    function ValidateSingleInput(oInput) {
-        if (oInput.type == "file") {
-
-            var sFileName = oInput.value;
-            if (sFileName.length > 0) {
-                var blnValid = false;
-                var sizeValid = false;
-                for (var j = 0; j < _validFileExtensions.length; j++) {
-                    var sCurExtension = _validFileExtensions[j];
-                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-                        blnValid = true;
-                        break;
-                    }
-                }
-                if (!blnValid) {
-                    $(".validation_alert label").text("Sorry, invalid file, allowed extensions are: " + _validFileExtensions.join(", "));
-                    $("#validation_modal").modal();
-                    oInput.value = "";
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+//    function ValidateSingleInput(oInput) {
+//        if (oInput.type == "file") {
+//
+//            var sFileName = oInput.value;
+//            if (sFileName.length > 0) {
+//                var blnValid = false;
+//                var sizeValid = false;
+//                for (var j = 0; j < _validFileExtensions.length; j++) {
+//                    var sCurExtension = _validFileExtensions[j];
+//                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
+//                        blnValid = true;
+//                        break;
+//                    }
+//                }
+//                if (!blnValid) {
+//                    $(".validation_alert label").text("Sorry, invalid file, allowed extensions are: " + _validFileExtensions.join(", "));
+//                    $("#validation_modal").modal();
+//                    oInput.value = "";
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
