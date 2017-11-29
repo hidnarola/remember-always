@@ -1,0 +1,203 @@
+<style>
+    label.error {
+        color: #D8000C;
+    }
+</style>
+<script type="text/javascript" src="assets/admin/ckeditor/ckeditor.js"></script>
+<div class="page-header page-header-default">
+    <div class="page-header-content">
+        <div class="page-title">
+            <h4><i class="icon-magazine"></i> <span class="text-semibold"><?php echo $heading; ?></span></h4>
+        </div>
+    </div>
+    <div class="breadcrumb-line">
+        <ul class="breadcrumb">
+            <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
+            <li><a href="<?php echo site_url('admin/pages'); ?>"><i class="icon-magazine position-left"></i> Pages</a></li>
+            <li class="active"><i class="icon-pencil7 position-left"></i> <?php echo $heading; ?></li>
+        </ul>
+    </div>
+</div>
+<?php
+if ($this->session->flashdata('success')) {
+    ?>
+    <div class="content pt0 flashmsg">
+        <div class="alert alert-success">
+            <a class="close" data-dismiss="alert">X</a>
+            <strong><?= $this->session->flashdata('success') ?></strong>
+        </div>
+    </div>
+    <?php
+    $this->session->set_flashdata('success', false);
+} else if ($this->session->flashdata('error')) {
+    ?>
+    <div class="content pt0 flashmsg">
+        <div class="alert alert-danger">
+            <a class="close" data-dismiss="alert">X</a>
+            <strong><?= $this->session->flashdata('error') ?></strong>
+        </div>
+    </div>
+    <?php
+    $this->session->set_flashdata('error', false);
+} else {
+    if (!empty(validation_errors())) {
+        ?>
+        <div class="content pt0 flashmsg">
+            <div class = "alert alert-danger">
+                <a class="close" data-dismiss="alert">X</a>
+                <strong><?php echo validation_errors(); ?></strong>       
+            </div>
+            <?php
+        }
+    }
+    ?>
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <!-- Basic layout-->
+                    <form  method="post" id="page_info" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
+                        <div class="panel panel-flat">
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label>Navigation Name:</label>
+                                    <input type="text" name="navigation_name" id="navigation_name" class="form-control" value="<?php echo isset($page_data['navigation_name']) ? $page_data['navigation_name'] : set_value('navigation_name'); ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Page Title:</label>
+                                    <input type="text" name="title" id="title" class="form-control" value="<?php echo isset($page_data['title']) ? $page_data['title'] : set_value('title'); ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Description:</label>
+                                    <textarea name="description" id="description" rows="4" cols="4">
+                                        <?php echo isset($page_data['description']) ? $page_data['description'] : set_value('description'); ?>
+                                    </textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Banner Image:</label>
+                                    <div class="row">
+                                        <?php
+                                        if (isset($page_data['banner_image'])) {
+                                            ?>
+                                            <div class="col-md-3">
+                                                <img heigth="100" width="170" src="<?php echo base_url(PAGE_BANNER . '/' . $page_data['banner_image']) ?>" alt="">
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                        <div class="col-md-9">
+                                            <!--                                        <div class="form-group">
+                                                                                        <label>Banner Image:</label>
+                                                                                        <div class="uploader">
+                                                                                            <input type="file" name="banner_image" id="banner_image" class="file-styled">
+                                                                                            <span class="filename" style="">No file selected</span>
+                                                                                            <span class="action btn bg-pink-400" style="">Choose File</span>
+                                                                                        </div>
+                                                                                        <span class="help-block">Accepted formats: png, jpg, jpeg. Max file size 700Kb</span>
+                                                                                    </div>-->
+                                            <div class="media-body">
+                                                <input type="file" name="banner_image" id="banner_image" class="file-styled">
+                                                <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
+                                            </div>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>SEO Meta title:</label>
+                                    <input type="text" name="meta_title" id="meta_title" class="form-control" value="<?php echo isset($page_data['meta_title']) ? $page_data['meta_title'] : set_value('meta_title'); ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>SEO Meta keyword:</label>
+                                    <input type="text" name="meta_keyword" id="meta_keyword" class="form-control" value="<?php echo isset($page_data['meta_keyword']) ? $page_data['meta_keyword'] : set_value('meta_keyword'); ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>SEO Meta Description:</label>
+                                    <input type="text" name="meta_description" id="meta_description" class="form-control" value="<?php echo isset($page_data['meta_description']) ? $page_data['meta_description'] : set_value('meta_description'); ?>">
+                                </div>
+                                <div class="text-right">
+                                    <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /basic layout -->
+                </div>
+            </div>
+        </div>
+        <?php $this->load->view('Templates/admin_footer'); ?>
+    </div>
+    <script type="text/javascript">
+        $('document').ready(function () {
+            CKEDITOR.replace('description', {
+                height: '400px'
+            });
+            for (var i in CKEDITOR.instances) {
+                CKEDITOR.instances[i].on('change', function () {
+                    $('#description').valid();
+                });
+            }
+            $("#page_info").validate({
+                ignore: [],
+                errorClass: 'validation-error-label',
+                successClass: 'validation-valid-label',
+                highlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                unhighlight: function (element, errorClass) {
+                    $(element).removeClass(errorClass);
+                },
+                validClass: "validation-valid-label",
+                rules: {
+                    navigation_name: {
+                        required: true,
+                    },
+                    title: {
+                        required: true,
+                    },
+                    description: {
+                        required: function (textarea) {
+                            CKEDITOR.instances[textarea.id].updateElement(); // update textarea
+                            var editorcontent = textarea.value.replace(/<[^>]*>/gi, ''); // strip tags
+                            return editorcontent.length === 0;
+                        }
+                    },
+                    meta_title: {
+                        required: true
+                    },
+                    meta_description: {
+                        required: true,
+                    },
+                    meta_keyword: {
+                        required: true,
+                    },
+                    banner_image: {
+                        // required: true,
+                        extension: "jpg|png|jpeg",
+                        maxFileSize: {
+                            "unit": "KB",
+                            "size": 700
+                        }
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    if (element.attr("name") == "banner_image") {
+                        error.insertAfter($(".uploader"));
+                    } else if (element.attr("name") == "description") {
+                        error.insertAfter(element.parent());
+                    } else {
+                        error.insertAfter(element);
+                    }
+                },
+//                submitHandler: function (form) {
+////                    form.submit();
+//                },
+            });
+        });
+        $(".file-styled").uniform({
+            fileButtonClass: 'action btn bg-pink'
+        });
+        $(document).on('change', '#description', function () {
+            $(this).valid();
+        });
+    </script>

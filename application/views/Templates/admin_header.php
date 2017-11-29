@@ -36,7 +36,7 @@
 <script type="text/javascript" src="assets/admin/js/plugins/forms/selects/select2.min.js"></script>
 <script type="text/javascript" src="assets/admin/js/sweetalert2.all.min.js"></script>
 
-<script type="text/javascript" src="assets/admin/js/plugins/forms/validation/validate.min.js"></script>
+<script type="text/javascript" src="assets/admin/js/jquery.custom_validate.js"></script>
 <script type="text/javascript" src="assets/admin/js/plugins/forms/validation/additional_methods.min.js"></script>
 <script type="text/javascript" src="assets/admin/js/jquery.fancybox.js?v=2.1.5"></script>
 <!--<script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
