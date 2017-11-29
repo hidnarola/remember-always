@@ -10,7 +10,7 @@ class Providers extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('admin/provider_model');
+        $this->load->model('admin/providers_model');
     }
 
     /**
@@ -19,7 +19,26 @@ class Providers extends MY_Controller {
     public function index() {
 
         $data['title'] = 'Remember Always Admin | Service Providers';
-        $this->template->load('admin', 'admin/service-providers/index', $data);
+        $this->template->load('admin', 'admin/service_providers/list_providers', $data);
+    }
+
+    /**
+     * Get providers data for AJAX table
+     * */
+    public function get_providers() {
+        $final['recordsFiltered'] = $final['recordsTotal'] = $this->providers_model->get_providers('count');
+        $final['redraw'] = 1;
+        $providers = $this->providers_model->get_providers('result');
+        $start = $this->input->get('start') + 1;
+        foreach ($providers as $key => $val) {
+            $providers[$key] = $val;
+            $providers[$key]['sr_no'] = $start;
+            $providers[$key]['created_at'] = date('m/d/Y', strtotime($val['created']));
+            $start++;
+        }
+
+        $final['data'] = $providers;
+        echo json_encode($final);
     }
 
 }
