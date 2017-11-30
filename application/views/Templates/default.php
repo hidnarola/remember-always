@@ -6,7 +6,7 @@
         $this->load->view('Templates/default_header');
         ?>
         <script type="text/javascript">
-            //Set common javascript vairable
+            //Set common javascript variable
             var site_url = "<?php echo site_url() ?>";
             var base_url = "<?php echo base_url() ?>";
         </script>

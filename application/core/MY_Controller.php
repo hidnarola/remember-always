@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
 
-    public $is_loggedin, $is_admin_loggedin = false;
+    public $is_user_loggedin, $is_admin_loggedin = false;
 
     public function __construct() {
         parent::__construct();
@@ -25,7 +25,7 @@ class MY_Controller extends CI_Controller {
                 $encoded_email = get_cookie(REMEMBER_ME_ADMIN_COOKIE);
                 $email = $this->encrypt->decode($encoded_email);
                 if (!empty($email)) {
-                    $admin = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['email' => $email, 'is_delete' => 0, 'is_active' => 1]], ['single' => true]);
+                    $admin = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['email' => $email, 'is_delete' => 0, 'is_active' => 1, 'role' => 'admin']], ['single' => true]);
                     if (!empty($admin)) {
                         unset($admin['password']);
                         $this->session->set_userdata('remalways_admin', $admin);
@@ -42,6 +42,28 @@ class MY_Controller extends CI_Controller {
             } else { //-- If logged in and access login page the redirect user to home page
                 if (strtolower($this->controller) == 'login' && strtolower($this->action) != 'logout') {
                     redirect('admin/dashboard');
+                }
+            }
+        } else {
+            $session = $this->session->userdata('remalways_user');
+            if (!empty($session['id']) && !empty($session['email']))
+                $this->is_user_loggedin = true;
+            else {
+                $encoded_email = get_cookie(REMEMBER_ME_USER_COOKIE);
+                $email = $this->encrypt->decode($encoded_email);
+                if (!empty($email)) {
+                    $admin = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['email' => $email, 'is_delete' => 0, 'is_active' => 1, 'role' => 'user']], ['single' => true]);
+                    if (!empty($admin)) {
+                        unset($admin['password']);
+                        $this->session->set_userdata('remalways_user', $admin);
+                        $this->is_user_loggedin = true;
+                    }
+                }
+            }
+            //-- If already logged in and try to access login or signup page
+            if ($this->is_user_loggedin) {
+                if ((strtolower($this->controller) == 'login' && strtolower($this->action) != 'logout') || strtolower($this->controller) == 'signup') {
+                    redirect('home');
                 }
             }
         }
