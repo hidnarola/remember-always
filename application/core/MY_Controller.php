@@ -60,6 +60,12 @@ class MY_Controller extends CI_Controller {
                     }
                 }
             }
+            //-- If already logged in and try to access login or signup page
+            if ($this->is_user_loggedin) {
+                if ((strtolower($this->controller) == 'login' && strtolower($this->action) != 'logout') || strtolower($this->controller) == 'signup') {
+                    redirect('home');
+                }
+            }
         }
     }
 
