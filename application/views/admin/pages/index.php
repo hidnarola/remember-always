@@ -143,14 +143,13 @@ if ($this->session->flashdata('success')) {
                             action += '</a>';
                             action += '<ul class="dropdown-menu dropdown-menu-right">';
                             action += '<li>';
-//                            action += '<a href="' + site_url + 'admin/pages/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil3"></i> Edit page</a>'
-                            action += '<a href="javascript:void(0)" title="Edit"><i class="icon-pencil3"></i> Edit page</a>'
-//                            action += '<a href="' + site_url + 'admin/pages/view/' + btoa(full.id) + '" title="View"><i class="icon-comment-discussion"></i> View page</a>'
-//                            if (full.active == '1') {
-//                                action += '<a href="' + site_url + 'admin/pages/actions/inactive/' + btoa(full.id) + '" onclick="return hide(this)" class="in_active" title="Hide"><i class="icon-eye-blocked"></i> Inactive Page</a>'
-//                            } else {
-//                                action += '<a href="' + site_url + 'admin/pages/actions/active/' + btoa(full.id) + '" id="' + btoa(full.id) + '" onclick="return show(this)" class="active" title="Show"><i class="icon-eye"></i> Active page</a>'
-//                            }
+                            action += '<a href="' + site_url + 'admin/pages/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil3"></i> Edit page</a>'
+                            action += '<a href="' + site_url + 'admin/pages/view/' + btoa(full.id) + '" title="View"><i class="icon-comment-discussion"></i> View page</a>'
+                            if (full.active == '1') {
+                                action += '<a href="' + site_url + 'admin/pages/actions/inactive/' + btoa(full.id) + '" onclick="return hide(this)" class="in_active" title="Hide"><i class="icon-eye-blocked"></i> Inactive Page</a>'
+                            } else {
+                                action += '<a href="' + site_url + 'admin/pages/actions/active/' + btoa(full.id) + '" id="' + btoa(full.id) + '" onclick="return show(this)" class="active" title="Show"><i class="icon-eye"></i> Active page</a>'
+                            }
                             action += '<a href="' + site_url + 'admin/pages/actions/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete page</a>'
                             action += '</li>';
                             action += '</ul>';

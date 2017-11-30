@@ -113,4 +113,13 @@
         .fancybox-close:after {display: none;}
         .fancybox-nav span:after {display: none;}
     </style>
+
+    <script>
+        $(document).keypress(
+                function (event) {
+                    if (event.which == '13') {
+                        event.preventDefault();
+                    }
+                });
+    </script>
 </html>

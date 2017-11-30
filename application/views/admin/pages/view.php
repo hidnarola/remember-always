@@ -104,7 +104,7 @@ if ($this->session->flashdata('success')) {
                                 <?php } ?>
                                 <tr>
                                     <th class="text-nowrap custom_align_top">Description :</th>
-                                    <td><?php echo isset($page_data['navigation_name']) ? $page_data['description'] : '' ?></td>
+                                    <td><?php echo isset($page_data['description']) ? $page_data['description'] : '' ?></td>
                                 </tr>
                             </tbody>
                         </table>

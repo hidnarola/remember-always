@@ -13,8 +13,8 @@
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
-            <li><a href="<?php echo site_url('home'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li class="active">Service Providers</li>
+            <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
+            <li class="active"><i class="icon-hammer-wrench"></i> Service Providers</li>
         </ul>
     </div>
 </div>
@@ -97,7 +97,7 @@
                     visible: true,
                 },
                 {
-                    data: "created",
+                    data: "created_at",
                     visible: true,
                 },
                 {
@@ -114,9 +114,9 @@
                         action += '</a>';
                         action += '<ul class="dropdown-menu dropdown-menu-right">';
                         action += '<li>';
-                        action += '<a href="' + site_url + 'admin/providers/edit/' + btoa(full.id) + '" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
+//                        action += '<a href="' + site_url + 'admin/providers/edit/' + btoa(full.id) + '" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
                         action += '<a href="' + site_url + 'admin/providers/view/' + btoa(full.id) + '" title="View Service Provider"><i class="icon-coins"></i> View</a>';
-                        action += '<a href="' + site_url + 'admin/providers/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete Service Provider"><i class="icon-trash"></i> Delete</a>'
+//                        action += '<a href="' + site_url + 'admin/providers/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete Service Provider"><i class="icon-trash"></i> Delete</a>'
                         action += '</li>';
                         action += '</ul>';
                         action += '</li>';
