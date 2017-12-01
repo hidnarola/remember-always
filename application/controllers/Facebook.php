@@ -19,7 +19,7 @@ class Facebook extends My_Controller {
         if ($this->is_user_loggedin)
             redirect();
 
-        $this->callback_url = base_url('facebook/callback');
+        $this->callback_url = site_url('facebook/callback');
         $this->facebook = new Facebook\Facebook($this->fb_secret);
     }
 

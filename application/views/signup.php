@@ -136,11 +136,8 @@
                 </form>
                 <div class="form-group">
                     <div class="col-md-12">
-                        <fb:login-button 
-                            scope="public_profile,email"
-                            onlogin="checkLoginState();">
-                        </fb:login-button>
                         <a href="<?php echo site_url('/facebook') ?>" class="btn btn-primary">Sign up with Facebook</a>
+                        <!--<br><br><div class="g-signin2" data-onsuccess="onSignIn"></div>-->
                         &nbsp;<a href="<?php echo site_url('/google') ?>" class="btn btn-danger">Sign up with Google</a>
                     </div>
                 </div>
@@ -153,4 +150,21 @@
     <!-- /page content -->
 </div>
 <!-- /page container -->
+<script>
+    function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+    }
+    ;
+</script>
 
