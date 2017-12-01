@@ -2,7 +2,7 @@
 
 require APPPATH . 'vendor/Facebook/autoload.php';
 
-class Fb extends My_Controller {
+class Facebook extends My_Controller {
 
     private $fb_secret = [
         'app_id' => '131151487573446',
@@ -16,11 +16,25 @@ class Fb extends My_Controller {
 
         parent::__construct();
 
-        if (!$this->is_user_loggedin)
+        if ($this->is_user_loggedin)
             redirect();
 
         $this->callback_url = base_url('facebook/callback');
         $this->facebook = new Facebook\Facebook($this->fb_secret);
+    }
+
+    public function index() {
+        $helper = $this->facebook->getRedirectLoginHelper();
+
+        $scope = [
+            'email',
+            'public_profile',
+            'user_friends',
+        ];
+
+        $url = $helper->getLoginUrl($this->callback_url, $scope);
+
+        redirect($url);
     }
 
     public function connect() {
@@ -110,17 +124,43 @@ class Fb extends My_Controller {
 
         $user = $response->getGraphUser();
 
-        $data = [
-            'user_id' => $this->session->userdata('id'),
-            'account_name' => $user->getFirstName() . ' ' . $user->getLastName(),
-            'image_url' => $user->getPicture()->getUrl(),
-            'social_id' => $user->getId(),
-            'type' => 1,
-            'access_token' => $token,
-            'access_token_timeout' => "'" . $expiry_time . "'",
-        ];
 
-//        $this->users_model->common_insert_update('insert', TBL_USERS, $data);
+        if (!empty($user)) {
+
+            $facebook_id = $user->getId();
+            //check facebook id already present in database
+            $db_user = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['facebook_id' => $facebook_id]], ['single' => true]);
+            if (!empty($db_user)) {
+                if ($db_user['is_delete'] == 1 || $db_user['is_active'] == 0) {
+                    $this->session->set_flashdata('error', 'You account is blocked. Please contact system administrator');
+                    redirect('login');
+                } else {
+                    $this->session->set_userdata('remalways_user', $db_user);
+                    $this->session->set_flashdata('success', 'You are now logged in with Facebook successfully');
+                    redirect('home');
+                }
+            } else {
+                $data = [
+                    'role' => 'user',
+                    'firstname' => $user->getFirstName(),
+                    'lastname' => $user->getLastName(),
+                    'email' => $user->getEmail(),
+                    'password' => null,
+                    'profile_image' => $user->getPicture()->getUrl(),
+                    'login_access_token' => $token,
+                    'facebook_id' => $user->getId(),
+                    'is_verify' => 1,
+                    'is_active' => 1,
+                    'created_at' => date('Y-m-d H:i:s')
+                ];
+                $this->users_model->common_insert_update('insert', TBL_USERS, $data);
+                $this->session->set_userdata('remalways_user', $data);
+                $this->session->set_flashdata('success', 'You are now logged in with Facebook successfully');
+                redirect('home');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Unable to connect with facebook');
+        }
     }
 
 }

@@ -39,7 +39,7 @@ class Signup extends MY_Controller {
             $this->users_model->common_insert_update('insert', TBL_USERS, $data);
 
             $verification_code = $this->encrypt->encode($verification_code);
-            $encoded_verification_code = $verification_code;
+            $encoded_verification_code = urlencode($verification_code);
 
             $email_data = [];
             $email_data['url'] = site_url() . 'verify?code=' . $encoded_verification_code;
@@ -84,7 +84,7 @@ class Signup extends MY_Controller {
 
     public function verify() {
         $verification_code = $this->input->get('code');
-        $verification_code = $this->encrypt->decode($verification_code);
+        $verification_code = $this->encrypt->decode(urldecode($verification_code));
         //--- check varification code is valid or not
         $result = $this->users_model->check_verification_code($verification_code);
         if (!empty($result)) {
