@@ -139,16 +139,20 @@ class Home_slider extends MY_Controller {
             $slider = $this->home_slider_model->sql_select(TBL_SLIDER, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($slider)) {
                 $update_array = array(
-                    'is_delete' => 1
+                    'is_delete' => 1,
+                    'modified_at' => date('Y-m-d H:i:s'),
                 );
                 $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Slider has been deleted successfully!');
             } else {
                 $this->session->set_flashdata('error', 'Unable to delete slider!');
             }
+        }else {
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
         }
         redirect('admin/home_slider');
     }
+
     /**
      * Hide slider
      * @param int $id
@@ -159,17 +163,20 @@ class Home_slider extends MY_Controller {
             $slider = $this->home_slider_model->sql_select(TBL_SLIDER, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($slider)) {
                 $update_array = array(
-                    'is_active' => 0
+                    'is_active' => 0,
+                    'modified_at' => date('Y-m-d H:i:s'),
                 );
                 $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Slider will now be hidden!');
             } else {
                 $this->session->set_flashdata('error', 'Unable to hide slider!');
             }
+        }else {
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
         }
         redirect('admin/home_slider');
     }
-    
+
     /**
      * Show service category
      * @param int $id
@@ -180,7 +187,8 @@ class Home_slider extends MY_Controller {
             $slider = $this->home_slider_model->sql_select(TBL_SLIDER, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($slider)) {
                 $update_array = array(
-                     'is_active' => 1
+                    'is_active' => 1,
+                    'modified_at' => date('Y-m-d H:i:s'),
                 );
                 $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Slider will now be visible!');
@@ -188,6 +196,10 @@ class Home_slider extends MY_Controller {
                 $this->session->set_flashdata('error', 'Unable to show slider!');
             }
         }
+        else {
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
+        }
         redirect('admin/home_slider');
     }
+
 }

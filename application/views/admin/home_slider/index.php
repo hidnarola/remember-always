@@ -3,7 +3,7 @@
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
-            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Admin</span> - Home Slider List</h4>
+            <h4><i class="icon-stack position-left"></i>Home Sliders</h4>
         </div>
     </div>
 
@@ -136,7 +136,7 @@ if ($this->session->flashdata('success')) {
                             if (data == '1') {
                                 var action = '<span class="label label-success">Active</span>';
                             } else {
-                                var action = '<span class="label label-default">In-Active</span>';
+                                var action = '<span class="label label-default">InActive</span>';
                             }
 
                             return action;
@@ -210,6 +210,7 @@ if ($this->session->flashdata('success')) {
             });
             return false;
         }
+        
         function hide(e) {
             swal({
                 title: "Are you sure?",

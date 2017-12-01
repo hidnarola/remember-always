@@ -58,19 +58,38 @@
                     <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                         <tr>
                             <td align='center' valign='top'>
-                                <h2 style='color: #26A69A !important'>Email Verification</h2>
+                                <h2 style='color: #26A69A !important'><?php echo isset($title) ? $title : 'Email Verification' ?></h2>
                             </td>
                         </tr>
                         <tr>
+                            <?php if (isset($password)) { ?> 
+                                <td align='center' valign='top'>
+                                    <p style='margin: 1em 0;'>
+                                        <br>
+                                        You have been registerd as user for Remember always.
+                                        <br/>
+                                        Below is your login crediants
+                                    </p>
+                                </td>
+                            <?php } ?>
+                        </tr>
+                        <tr>
                             <td align='center' style='border-top: 1px solid #dce1e5;border-bottom: 1px solid #dce1e5;' valign='top'>
+
                                 <p style='margin: 1em 0;'>
                                     <strong>Name:</strong>
                                     <?php echo $name; ?>
                                 </p>
                                 <p style='margin: 1em 0;'>
-                                    <strong>E-mail:</strong>
-                                    <a href="mailto:<?php echo $email ?>" style="color: #000000 !important;"><?php echo $email ?></a>
+                                    <strong>Email:</strong>
+                                    <a href="mailto:<?php echo $email ?>" style="color: #000000 !important;"><?php echo $email; ?></a>
                                 </p>
+                                <?php if (isset($password)) { ?> 
+                                    <p style='margin: 1em 0;'>
+                                        <strong>Password:</strong>
+                                        <?php echo $password ?>
+                                    </p>
+                                <?php } ?>
                             </td>
                         </tr>
                         <tr>

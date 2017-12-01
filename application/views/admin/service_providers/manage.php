@@ -2,7 +2,7 @@
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
-            <h4><i class="icon-magazine"></i> <span class="text-semibold"><?php echo $heading; ?></span></h4>
+            <h4><i class="icon-hammer-wrench"></i> <span class="text-semibold"><?php echo $heading; ?></span></h4>
         </div>
     </div>
     <div class="breadcrumb-line">
@@ -210,19 +210,40 @@ if ($this->session->flashdata('success')) {
             var marker = new google.maps.Marker({
                 map: map,
                 anchorPoint: new google.maps.Point(0, -29),
-                draggable: true
+//                draggable: true
             });
             if (prop_lat != '' && prop_lng != '') {
                 var marker = new google.maps.Marker({
                     map: map,
                     anchorPoint: new google.maps.Point(0, -29),
-                    draggable: true,
+//                    draggable: true,
                     position: {lat: parseFloat(prop_lat), lng: parseFloat(prop_lng)}
                 });
                 $('#searchInput').val(prop_address);
                 $('#latitute').val(prop_lat);
                 $('#longitute').val(prop_lng);
                 $('#zipcode').val(prop_zipcode);
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({
+                    'address': prop_address
+                }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        var service = new google.maps.places.PlacesService(map);
+                        service.getDetails({
+                            placeId: results[0]['place_id']
+                        }, function (place, status) {
+                            marker.setPosition(place.geometry.location);
+                            if (status === google.maps.places.PlacesServiceStatus.OK) {
+                                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address);
+                                infowindow.open(map, marker);
+                                marker.addListener('click', function () {
+                                    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address);
+                                    infowindow.open(map, marker);
+                                });
+                            }
+                        });
+                    }
+                });
             }
 
 //            marker.addListener('drag', function () {

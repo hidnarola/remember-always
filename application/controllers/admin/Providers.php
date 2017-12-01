@@ -33,7 +33,7 @@ class Providers extends MY_Controller {
         foreach ($providers as $key => $val) {
             $providers[$key] = $val;
             $providers[$key]['sr_no'] = $start;
-            $providers[$key]['created_at'] = date('m/d/Y', strtotime($val['created_at']));
+            $providers[$key]['created_at'] = date('d M Y', strtotime($val['created_at']));
             $start++;
         }
 
@@ -128,5 +128,29 @@ class Providers extends MY_Controller {
         } else {
             custom_show_404();
         }
+    }
+    
+    /**
+     * Delete service provider
+     * @param int $id
+     * */
+    public function delete($id = NULL) {
+        $id = base64_decode($id);
+        if (is_numeric($id)) {
+            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+            if (!empty($provider_data)) {
+                $update_array = array(
+                    'is_delete' => 1,
+                    'modified_at' => date('Y-m-d H:i:s'),
+                );
+                $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $update_array, ['id' => $id]);
+                $this->session->set_flashdata('success', 'Service provider has been deleted successfully!');
+            } else {
+                $this->session->set_flashdata('error', 'Unable to Service provider slider!');
+            }
+        }else {
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
+        }
+        redirect('admin/providers');
     }
 }

@@ -6,7 +6,7 @@
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class pages_model extends MY_Model {
+class Pages_model extends MY_Model {
 
     public function __construct() {
         parent::__construct();

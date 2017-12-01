@@ -24,6 +24,7 @@ class Home_slider_model extends MY_Model {
         $this->db->where('s.is_delete', '0');
         $keyword = $this->input->get('search');
         if (!empty($keyword['value'])) {
+//            $this->db->having('description LIKE "%' . $keyword['value'] . '%" OR is_active LIKE "%' . $keyword['value'] . '%"', NULL);
             $this->db->having('description LIKE "%' . $keyword['value'] . '%"', NULL);
         }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);

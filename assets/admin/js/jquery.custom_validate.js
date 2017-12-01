@@ -1796,7 +1796,13 @@ jQuery.validator.addMethod("wordMax",
             );
         }
     );
-
+//    jQuery.validator.addMethod(
+//            "custom_mail",
+//            function (value, element, regexp) {
+//                return this.optional(element) || /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,})$/i.test(jQuery.trim(value));
+//            },
+//            "Please check your email."
+//            );
 }(jQuery));
 
 function getWordCount(wordString) {

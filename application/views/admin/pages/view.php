@@ -1,9 +1,8 @@
-<script type="text/javascript" src="<?php echo "assets/admin/js/plugins/tables/datatables/datatables.min.js"; ?>"></script>
 <!-- Page header -->
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
-            <h4><i class="icon-arrow-left52 position-left"></i> <span class="text-semibold">Admin</span> - Home Slider List</h4>
+            <h4><i class="icon-magazine position-left"></i>  Pages</h4>
         </div>
     </div>
 
