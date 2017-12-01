@@ -152,7 +152,7 @@
 //                        action += '<a href="' + site_url + 'admin/users/edit/' + btoa(full.id) + '" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
                         action += '<a href="javascript:void(0)" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
                         action += '<a href="' + site_url + 'admin/users/view/' + btoa(full.id) + '" title="View Service Provider"><i class="icon-book"></i> View</a>';
-                        action += '<a href="' + site_url + 'admin/users/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete User"><i class="icon-trash"></i> Delete</a>'
+//                        action += '<a href="' + site_url + 'admin/users/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete User"><i class="icon-trash"></i> Delete</a>'
                         action += '</li>';
                         action += '</ul>';
                         action += '</li>';
