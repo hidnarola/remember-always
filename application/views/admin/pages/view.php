@@ -10,7 +10,7 @@
         <ul class="breadcrumb">
             <li><a href="<?php echo base_url() . "admin/dashboard" ?>"><i class="icon-home2 position-left"></i> Home</a></li>
             <li><a href="<?php echo site_url('admin/pages'); ?>"><i class="icon-magazine position-left"></i> Pages</a></li>
-            <li class="active"><i class="icon-comment-discussion position-left"></i><?php echo $heading; ?></li>
+            <li class="active"><i class="icon-book position-left"></i><?php echo $heading; ?></li>
         </ul>
     </div>
 </div>

@@ -6,13 +6,13 @@
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
-            <h4><i class="icon-users2"></i> <span class="text-semibold"> Users</span></h4>
+            <h4><i class="icon-comment"></i> <span class="text-semibold"> Posts</span></h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li class="active"><i class="icon-users2"></i> Users</li>
+            <li class="active"><i class="icon-comment"></i> Posts</li>
         </ul>
     </div>
 </div>
@@ -37,20 +37,18 @@
     </div>
     <div class="panel panel-flat">
         <div class="panel-heading text-right">
-            <a href="<?php // echo site_url('admin/users/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add User</a>
+            <!--<a href="<?php // echo site_url('admin/users/add');  ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add User</a>-->
         </div>
         <!--<div class="table-responsive">-->
         <table class="table datatable-basic">
             <thead>
                 <tr>
                     <th>Sr No</th>
-                    <th>Profile</th>
+                    <th>Comments</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Active Status</th>
-                    <th>Verification Status</th>
-                    <th>Registration Date</th>
-                    <th>Action</th>
+                    <th>Posted Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
         </table>
@@ -75,27 +73,16 @@
                 paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
             },
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-            order: [[5, "desc"]],
-            ajax: site_url + 'admin/users/get_users',
+            order: [[0, "desc"]],
+            ajax: site_url + 'admin/posts/get_posts',
             columns: [
                 {
                     data: "sr_no",
                     visible: true,
                 },
                 {
-                    data: "profile_image",
+                    data: "comment",
                     visible: true,
-                    width: '10%',
-                    render: function (data, type, full, meta) {
-                        if (data != null && (full.facebook_id == null && full.google_id == null)) {
-                            var action = '<a class="fancybox" href="<?php echo base_url() . USER_IMAGES ?>' + data + '" data-fancybox-group="gallery" ><img src="<?php echo base_url(USER_IMAGES) ?>' + data + '" style="width: 58px; height: 58px; border - radius: 2px; " alt="' + data + '"></a>';
-                        } else if (data != null && (full.facebook_id != null || full.google_id != null)) {
-                            var action = '<a class="fancybox" href="' + data + '" data-fancybox-group="gallery" ><img src="' + data + '" style="width: 58px; height: 58px; border - radius: 2px; " alt="' + data + '"></a>';
-                        } else {
-                            var action = '<img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" class="img-circle img-lg" alt="' + data + '">';
-                        }
-                        return action;
-                    }
                 },
                 {
                     data: "firstname",
@@ -103,56 +90,28 @@
                 },
                 {
                     data: "lastname",
-                    visible: true
-                },
-                {
-                    data: "is_active",
                     visible: true,
-                    render: function (data, type, full, meta) {
-                        var action = '';
-                        if (data == '1') {
-                            action += '<span class="label label-success">Active</span>';
-                        } else {
-                            action += '<span class="label label-default">InActive</span>';
-                        }
-                        return action;
-                    }
-                },
-                {
-                    data: "is_verify",
-                    visible: true,
-                    render: function (data, type, full, meta) {
-                        if (data == '1') {
-                            var action = '<span class="label label-success">Verified</span>';
-                        } else {
-                            var action = '<span class="label label-danger">Not Verified</span>';
-                        }
-
-                        return action;
-                    }
                 },
                 {
                     data: "created_at",
                     visible: true,
                 },
                 {
-                    data: "is_delete",
+                    data: "id",
                     visible: true,
                     searchable: false,
                     sortable: false,
                     render: function (data, type, full, meta) {
-                        var action = '';
-                        action += '<ul class="icons-list">';
+                        var action = '<ul class="icons-list">';
                         action += '<li class="dropdown">';
                         action += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
                         action += '<i class="icon-menu9"></i>';
                         action += '</a>';
                         action += '<ul class="dropdown-menu dropdown-menu-right">';
                         action += '<li>';
-//                        action += '<a href="' + site_url + 'admin/users/edit/' + btoa(full.id) + '" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
-                        action += '<a href="javascript:void(0)" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
-                        action += '<a href="' + site_url + 'admin/users/view/' + btoa(full.id) + '" title="View Service Provider"><i class="icon-book"></i> View</a>';
-//                        action += '<a href="' + site_url + 'admin/users/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete User"><i class="icon-trash"></i> Delete</a>'
+//                        action += '<a href="' + site_url + 'admin/posts/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil3"></i> Edit page</a>'
+                        action += '<a href="' + site_url + 'admin/posts/view/' + btoa(full.id) + '" title="View Post"><i class="icon-book"></i> View Post</a>'
+//                        action += '<a href="' + site_url + 'admin/posts/actions/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete page</a>'
                         action += '</li>';
                         action += '</ul>';
                         action += '</li>';
@@ -160,7 +119,6 @@
                         return action;
                     }
                 }
-
             ],
         });
 
