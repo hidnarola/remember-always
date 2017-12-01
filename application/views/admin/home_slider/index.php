@@ -164,7 +164,7 @@ if ($this->session->flashdata('success')) {
                             action += '<ul class="dropdown-menu dropdown-menu-right">';
                             action += '<li>';
                             action += '<a href="' + site_url + 'admin/home_slider/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil3"></i> Edit slider</a>'
-                            action += '<a href="' + site_url + 'admin/home_slider/view/' + btoa(full.id) + '" title="View"><i class="icon-comment-discussion"></i> View slider</a>'
+                            action += '<a href="' + site_url + 'admin/home_slider/view/' + btoa(full.id) + '" title="View"><i class="icon-book"></i> View slider</a>'
                             if (full.is_active == '1') {
                                 action += '<a href="' + site_url + 'admin/home_slider/hide/' + btoa(full.id) + '" onclick="return hide(this)" class="in_active" title="Hide"><i class="icon-eye-blocked"></i> Hide slider</a>'
                             } else {
