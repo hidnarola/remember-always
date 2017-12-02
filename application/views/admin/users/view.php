@@ -78,6 +78,20 @@ if ($this->session->flashdata('success')) {
                                     <td><?php echo isset($user_data['created_at']) && !is_null($user_data['created_at']) ? date('d M Y', strtotime($user_data['created_at'])) : '-' ?></td>
                                 </tr>
                                 <tr>
+                                    <th class="text-nowrap">User Type :</th>
+                                    <td>
+                                        <?php
+                                        if (isset($user_data['facebook_id']) && !is_null($user_data['profile_image'])) {
+                                            echo 'Facebook User';
+                                        } else if (isset($user_data['google_id']) && !is_null($user_data['profile_image'])) {
+                                            echo 'Google User';
+                                        } else {
+                                            echo 'Normal';
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="text-nowrap">Status :</th>
                                     <td>
                                         <?php echo isset($user_data['is_active']) && $user_data['is_active'] == '1' ? '<span class="label label-success">Active</span>' : '<span class="label label-default">InActive</span>' ?>
@@ -88,10 +102,16 @@ if ($this->session->flashdata('success')) {
                                     <th class="text-nowrap custom_align_top">Profile :</th>
                                     <td>
                                         <?php
-                                        if (isset($user_data['profile_name']) && !is_null($user_data['profile_image'])) {
+                                        if (isset($user_data['profile_image']) && !is_null($user_data['profile_image'])) {
+                                            if (is_null($user_data['facebook_id']) && is_null($user_data['google_id'])) {
+                                                ?>
+                                                <a class="fancybox" href="<?php echo base_url(USER_IMAGES . $user_data['profile_image']); ?>" data-fancybox-group="gallery" ><img src="<?php echo base_url(USER_IMAGES . $user_data['profile_image']); ?>" class="img-responsive content-group" width="100px" height="100px" alt=""></a>
+                                            <?php } else { ?>
+                                                <a class="fancybox" href="<?php echo $user_data['profile_image']; ?>" data-fancybox-group="gallery" ><img src="<?php echo $user_data['profile_image']; ?>" class="img-responsive content-group" width="100px" height="100px" alt=""></a>
+                                                <?php
+                                            }
+                                        } else {
                                             ?>
-                                            <a class="fancybox" href="<?php echo base_url(USER_IMAGES . $user_data['profile_image']); ?>" data-fancybox-group="gallery" ><img src="<?php echo base_url(USER_IMAGES . $user_data['profile_image']); ?>" class="img-responsive content-group" width="100px" height="100px" alt=""></a>
-                                        <?php } else { ?>
                                             <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" class="img-responsive" width="100px" height="100px" alt="">
                                         <?php } ?>
                                     </td>

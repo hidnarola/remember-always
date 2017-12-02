@@ -138,9 +138,9 @@ if ($this->session->flashdata('success')) {
                 error.insertAfter(element)
             }
         },
-        success: function (label) {
-            label.addClass("validation-valid-label");
-        },
+//        success: function (label) {
+//            label.addClass("validation-valid-label");
+//        },
         rules: {
             description: {
                 required: true
@@ -153,6 +153,10 @@ if ($this->session->flashdata('success')) {
                     "size": 700
                 }
             }
+        },
+        submitHandler: function (form) {
+            $('button[type="submit"]').attr('disabled', true);
+            form.submit();
         },
     });
     $(".file-styled").uniform({
