@@ -73,7 +73,7 @@ class Users_model extends MY_Model {
      * @param string $email
      * @return array
      */
-    public function check_unique_email($email) {
+    public function check_unique_email($email) { 
         $this->db->where('email', $email);
         $this->db->where('is_delete', 0);
         $query = $this->db->get(TBL_USERS);

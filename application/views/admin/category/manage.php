@@ -71,7 +71,7 @@ if ($this->session->flashdata('success')) {
 </div>
 <script>
 
-     $("#category_from").validate({
+    $("#category_from").validate({
         ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
         errorClass: 'validation-error-label',
         successClass: 'validation-valid-label',
@@ -82,13 +82,17 @@ if ($this->session->flashdata('success')) {
             $(element).removeClass(errorClass);
         },
         validClass: "validation-valid-label",
-        success: function (label) {
-            label.addClass("validation-valid-label");
-        },
+//        success: function (label) {
+//            label.addClass("validation-valid-label");
+//        },
         rules: {
             name: {
                 required: true
             }
+        },
+        submitHandler: function (form) {
+            $('button[type="submit"]').attr('disabled', true);
+            form.submit();
         },
     });
 

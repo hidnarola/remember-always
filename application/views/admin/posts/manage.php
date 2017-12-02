@@ -123,9 +123,10 @@ if ($this->session->flashdata('success')) {
                     error.insertAfter(element);
 //                    }
                 },
-//                submitHandler: function (form) {
-////                    form.submit();
-//                },
+                submitHandler: function (form) {
+                    $('button[type="submit"]').attr('disabled', true);
+                    form.submit();
+                },
             });
         }
         );
