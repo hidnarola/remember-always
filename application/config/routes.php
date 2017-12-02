@@ -63,6 +63,8 @@ $route['admin/profile'] = 'admin/dashboard/profile';
 $route['forgot_password'] = 'login/forgot_password';
 $route['reset_password'] = 'login/reset_password';
 $route['verify'] = 'signup/verify';
+$route['profile/create'] = 'profile/create';
+$route['profile/(:any)'] = 'profile/index/$1';
 $route['logout'] = 'login/logout';
 
 $route['404_override'] = 'pagenotfound';

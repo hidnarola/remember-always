@@ -91,6 +91,68 @@ function verification_code() {
 }
 
 /**
+ * Return unique slug with table check
+ */
+
+/**
+ * Return slug with unique check in table
+ * @param string $text
+ * @param string $table
+ * @param int $id
+ * @return string
+ */
+function slug($text, $table, $id = NULL) {
+    $CI = & get_instance();
+    $ci->load->model('users_model');
+
+    // replace non letter or digits by -
+    $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+    // transliterate
+    $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+    // remove unwanted characters
+    $text = preg_replace('~[^-\w]+~', '', $text);
+    // trim
+    $text = trim($text, '-');
+    // remove duplicate -
+    $text = preg_replace('~-+~', '-', $text);
+    // lowercase
+    $text = strtolower($text);
+
+    if (empty($text)) {
+        $text = 'n-a';
+    }
+
+    if ($table != '') {
+        //--- when text with table name then check generated slug is already exist or not
+        for ($i = 0; $i < 1; $i++) {
+            if ($id != NULL) {
+                $where = 'slug = ' . $ci->db->escape($text) . ' AND id != ' . $id;
+            } else {
+                $where = 'slug = ' . $ci->db->escape($text);
+            }
+            $result = $ci->users_model->sql_select($table, '*', ['where' => $where], ['single' => true]);
+            if (sizeof($result) > 0) {
+                $explode_slug = explode("-", $text);
+                $last_char = $explode_slug[count($explode_slug) - 1];
+                if (is_numeric($last_char)) {
+                    $last_char++;
+                    unset($explode_slug[count($explode_slug) - 1]);
+                    $text = implode($explode_slug, "-");
+                    $text .= "-" . $last_char;
+                } else {
+                    $text .= "-1";
+                }
+                $i--;
+            } else {
+                return $text;
+            }
+        }
+    } else {
+        return $text;
+    }
+}
+
+/**
  * Uploads image
  * @param string $image_name
  * @param string $image_path
@@ -120,32 +182,6 @@ function upload_image($image_name, $image_path) {
     return $imgname;
 }
 
-function upload_communication($image_name, $image_path) {
-    $CI = & get_instance();
-    $extension = explode('/', $_FILES[$image_name]['type']);
-    $file_extension = explode('/', $_FILES[$image_name]['name']);
-    $file_extension = explode('.', end($file_extension));
-    $randname = uniqid() . time() . '.' . end($file_extension);
-    $config = array(
-        'upload_path' => $image_path,
-        'allowed_types' => "png|jpg|jpeg|pdf|docx|doc|DOCX|DOC",
-//        'max_size' => 10000,
-        // 'max_height'      => "768",
-        // 'max_width'       => "1024" ,
-        'file_name' => $randname
-    );
-    //--Load the upload library
-    $CI->load->library('upload');
-    $CI->upload->initialize($config);
-    if ($CI->upload->do_upload($image_name)) {
-        $img_data = $CI->upload->data();
-        $imgname = $img_data['file_name'];
-    } else {
-        $imgname = array('errors' => $CI->upload->display_errors());
-    }
-    return $imgname;
-}
-
 /**
  * Generated random password
  * @return generated password
@@ -159,127 +195,6 @@ function randomPassword() {
         $pass[] = $alphabet[$n];
     }
     return implode($pass); //turn the array into a string
-}
-
-/**
- * Check User is allowed for the following permission or not
- * @param string $page_name
- * @param string $permission - add/edit/delete/view
- * @param int $flag
- * @return boolean
- */
-function checkPrivileges($page_name = '', $permission = '', $flag = 0) {
-    $CI = & get_instance();
-    $user_id = $CI->session->userdata('extracredit_user')['id'];
-    $user_role = $CI->session->userdata('extracredit_user')['role'];
-    $prevArr = $CI->users_model->checkPrivleges($page_name, $user_id)->row_array();
-    $columns = $CI->db->query("SHOW COLUMNS FROM " . TBL_USER_PERMISSION . " LIKE 'pg_%'")->result();
-    $actions = array();
-    if ($permission != '') {
-        if ($user_role == 'admin') {
-            return true;
-        }
-        if ($prevArr['pg_' . $permission] == 1) {
-            return true;
-        } else {
-            if ($flag == 0) {
-                $CI->session->set_flashdata('error', 'You are not authorized to access this page!');
-                redirect('home');
-            } else {
-                return false;
-            }
-        }
-    } else if ($permission == '') {
-        if ($user_role == 'admin') {
-            foreach ($columns as $k => $v) {
-                $actions[] = strtolower(substr($v->Field, 3));
-            }
-        } else {
-            foreach ($columns as $k => $v) {
-                if (array_key_exists($v->Field, $prevArr) && $prevArr[$v->Field] == 1) {
-                    $actions[] = strtolower(substr($v->Field, 3));
-                }
-            }
-        }
-        return $actions;
-    }
-}
-
-/**
- * Add/Update subscriber into MailChimp
- * @param array $data
- */
-function mailchimp($data) {
-    $CI = & get_instance();
-    $apiKey = $CI->config->item('Mailchimp_api_key');
-    $email = $data['email_address'];
-    $memberId = md5(strtolower($email));
-    $dataCenter = substr($apiKey, strpos($apiKey, '-') + 1);
-    $url = 'https://' . $dataCenter . '.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/' . $memberId;
-    $json = json_encode($data);
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_USERPWD, 'user:' . $apiKey);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-    $result = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    $arr = json_decode($result, true);
-}
-
-/**
- * Return details of mailchimp subscriber
- * @param string $email
- */
-function get_mailchimp_subscriber($email) {
-    $CI = & get_instance();
-    $apiKey = $CI->config->item('Mailchimp_api_key');
-    $memberId = md5(strtolower($email));
-    $dataCenter = substr($apiKey, strpos($apiKey, '-') + 1);
-    $url = 'https://' . $dataCenter . '.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/' . $memberId;
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_USERPWD, 'user:' . $apiKey);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    $result = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    $arr = json_decode($result, true);
-    return $arr;
-}
-
-/**
- * Delete subscriber from MailChimp Account
- * @param array $data
- * @author KU
- */
-function delete_mailchimp_subscriber($data) {
-    $CI = & get_instance();
-    $apiKey = $CI->config->item('Mailchimp_api_key');
-    $email = $data['email_address'];
-    $memberId = md5(strtolower($email));
-    $dataCenter = substr($apiKey, strpos($apiKey, '-') + 1);
-    $url = 'https://' . $dataCenter . '.api.mailchimp.com/3.0/lists/' . LIST_ID . '/members/' . $memberId;
-    $json = json_encode($data);
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_USERPWD, 'user:' . $apiKey);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-    $result = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-    $arr = json_decode($result, true);
 }
 
 /**
@@ -384,17 +299,16 @@ function crop_image($source_x, $source_y, $width, $height, $image_name) {
 }
 
 /**
-     * 404 Error Handler
-     *
-     * @uses	CI_Exceptions::show_error()
-     *
-     * @param	string	$page		Page URI
-     * @param 	bool	$log_error	Whether to log the error
-     * @return	void
-     */
-    function custom_show_404($page = '', $log_error = TRUE) {
-        $CI = & get_instance();
-        $CI->load->view('Templates/show_404');
-        echo $CI->output->get_output();
-        exit; // EXIT_UNKNOWN_FILE
-    }
+ * 404 Error Handler
+ *
+ * @uses CI_Exceptions::show_error()
+ * @param string $page Page URI
+ * @param bool $log_error Whether to log the error
+ * @return void
+ */
+function custom_show_404($page = '', $log_error = TRUE) {
+    $CI = & get_instance();
+    $CI->load->view('Templates/show_404');
+    echo $CI->output->get_output();
+    exit; // EXIT_UNKNOWN_FILE
+}
