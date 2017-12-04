@@ -55,7 +55,7 @@ if ($this->session->flashdata('success')) {
             <div class="panel border-top-xlg border-top-info panel-white">
                 <div class="panel-heading " role="tab" id="heading1">
                     <h4 class="panel-title">
-                        <?php echo isset($provider_data['name']) ? $provider_data['name'] : '' ?> Service Provider Details
+                        <?php echo isset($provider_data['name']) ? $provider_data['name'] . "'s" : 'Service Provider' ?>  Details
                         <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1" aria-expanded="true" aria-controls="collapse1" class="pull-right">
                             <i class="solsoCollapseIcon fa fa-chevron-up"></i>	
                         </a>
@@ -66,31 +66,57 @@ if ($this->session->flashdata('success')) {
                         <table class="table table-striped table-bordered page_details" data-alert="" data-all="189">
                             <tbody>
                                 <tr>
-                                    <th class="text-nowrap">Navigation Name :</th>
+                                    <th class="text-nowrap">Service Category :</th>
+                                    <td><?php echo isset($provider_data['category_name']) ? $provider_data['category_name'] : '' ?></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">Name :</th>
                                     <td><?php echo isset($provider_data['name']) ? $provider_data['name'] : '' ?></td>
                                 </tr>
+                                <tr>
+                                    <th class="text-nowrap">Phone Number :</th>
+                                    <td><?php echo isset($provider_data['phone_number']) ? $provider_data['phone_number'] : '-' ?></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">Website Url :</th>
+                                    <td><?php echo isset($provider_data['website_url']) ? '<a href="' . $provider_data['website_url'] . '" target="_blank">' . $provider_data['website_url'] . '</a>' : '-' ?></td>
+                                </tr>
+                                <?php if (isset($provider_data['image']) && !empty($provider_data['image']) && !is_null($provider_data['image'])) { ?>
+                                    <tr>
+                                        <th class="text-nowrap custom_align_top">Image :</th>
+                                        <td><a class="fancybox" href="<?php echo base_url(PROVIDER_IMAGES . $provider_data['image']) ?>" data-fancybox-group="gallery" ><img src="<?php echo base_url(PROVIDER_IMAGES . $provider_data['image']) ?>" height="100px" width="100px"></img></a></td>
+                                    </tr>
+                                <?php } ?>
                                 <tr>
                                     <th class="text-nowrap">Description :</th>
                                     <td><?php echo isset($provider_data['description']) ? $provider_data['description'] : '' ?></td>
                                 </tr>
                                 <tr>
-                                    <th class="text-nowrap">Latitude :</th>
-                                    <td><?php echo isset($provider_data['latitute']) ? $provider_data['latitute'] : '-' ?></td>
+                                    <th class="text-nowrap" colspan="2">Address :</th>
                                 </tr>
                                 <tr>
-                                    <th class="text-nowrap">Longitude :</th>
-                                    <td><?php echo isset($provider_data['longitute']) ? $provider_data['longitute'] : '-' ?></td>
+                                    <th class="text-nowrap">Street Address 1 :</th>
+                                    <td><?php echo isset($provider_data['street1']) ? $provider_data['street1'] : '-' ?></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">Street Address 2 :</th>
+                                    <td><?php echo isset($provider_data['street2']) ? $provider_data['street2'] : '-' ?></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">City :</th>
+                                    <td><?php echo isset($provider_data['city']) ? $provider_data['city'] : '-' ?></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">State :</th>
+                                    <td><?php echo isset($provider_data['state']) ? $provider_data['state'] : '-' ?></td>
                                 </tr>
                                 <tr>
                                     <th class="text-nowrap">Zipcode :</th>
                                     <td><?php echo isset($provider_data['zipcode']) ? $provider_data['zipcode'] : '-' ?></td>
                                 </tr>
-                                <tr>
-                                    <th class="text-nowrap" colspan="2">Location :</th>
-                                </tr>
-                                <tr>
+<!--                                <tr>
                                     <th class="text-nowrap" colspan="2"> <div id="map" class="map-container map-marker-simple"></div></th>
-                                </tr>
+                                </tr>-->
                             </tbody>
                         </table>
                     </div>
@@ -106,66 +132,4 @@ if ($this->session->flashdata('success')) {
         $(function () {
             $('.fancybox').fancybox();
         });
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdsZQ2FI5Qr-fawy7THvNJKojMGoUkJP8&libraries=places&callback=initMap" async defer></script>
-    <script type="text/javascript">
-        function initMap() {
-            var prop_lat = '<?php
-        if (isset($provider_data)) {
-            echo $provider_data['latitute'];
-        }
-        ?>';
-            var prop_lng = '<?php
-        if (isset($provider_data)) {
-            echo $provider_data['longitute'];
-        }
-        ?>';
-            var prop_address = '<?php
-        if (isset($provider_data)) {
-            echo $provider_data['location'];
-        }
-        ?>';
-            var prop_zipcode = '<?php
-        if (isset($provider_data) && !empty($provider_data['zipcode'])) {
-            echo $provider_data['zipcode'];
-        }
-        ?>';
-            if (prop_lat != '' && prop_lng != '') {
-                var myLatlng = new google.maps.LatLng(parseFloat(prop_lat), parseFloat(prop_lng));
-//                console.log(myLatlng.lat());
-//                console.log(myLatlng.lng());
-                var map = new google.maps.Map(document.getElementById('map'), {
-                    center: myLatlng,
-                    zoom: 16,
-                });
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({
-                    'address': prop_address
-                }, function (results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        var service = new google.maps.places.PlacesService(map);
-                        service.getDetails({
-                            placeId: results[0]['place_id']
-                        }, function (place, status) {
-                            marker.setPosition(place.geometry.location);
-                            if (status === google.maps.places.PlacesServiceStatus.OK) {
-                                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address);
-                                infowindow.open(map, marker);
-                                 marker.addListener('click', function() {
-                                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address);
-                                infowindow.open(map, marker);
-                                 });
-                            }
-                        });
-                    }
-                });
-
-                var infowindow = new google.maps.InfoWindow();
-                var marker = new google.maps.Marker({
-                    map: map,
-                    anchorPoint: new google.maps.Point(0, -25),
-                    position: {lat: parseFloat(prop_lat), lng: parseFloat(prop_lng)}
-                });
-            }
-        }
     </script>

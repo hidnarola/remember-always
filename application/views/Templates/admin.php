@@ -88,7 +88,7 @@
                                     <li <?php echo strtolower($this->controller) == 'home_slider' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/home_slider') ?>"><i class="icon-stack"></i><span>Home Slider</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/categories') ?>"><i class="icon-list-unordered"></i><span>Service Categories</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'providers' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/providers') ?>"><i class="icon-hammer-wrench"></i><span>Service Providers</span></a></li>
-                                    <!--<li <?php // echo strtolower($this->controller) == 'posts' ? 'class="active"' : '' ?>><a href="<?php // echo site_url('admin/posts') ?>"><i class="icon-comment"></i><span>Posts</span></a></li>-->
+                                    <li <?php echo strtolower($this->controller) == 'posts' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/posts') ?>"><i class="icon-comment"></i><span>Posts</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'users' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/users') ?>"><i class="icon-users2"></i><span>Users</span></a></li>
                                     <li class=""><a href="<?php echo site_url('logout') ?>"><i class="icon-switch2"></i> <span>Logout</span></a></li>
                                 </ul>

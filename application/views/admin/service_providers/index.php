@@ -46,7 +46,7 @@
                     <th>Category</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Zipcode</th>
+                    <th>Phone Number</th>
                     <th>Added Date</th>
                     <th>Action</th>
                 </tr>
@@ -91,7 +91,7 @@
                     visible: true
                 },
                 {
-                    data: "zipcode",
+                    data: "phone_number",
                     visible: true,
                 },
                 {

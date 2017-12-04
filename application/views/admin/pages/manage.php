@@ -86,16 +86,7 @@ if ($this->session->flashdata('success')) {
                                         }
                                         ?>
                                         <div class="col-md-9">
-                                            <!--                                        <div class="form-group">
-                                                                                        <label>Banner Image:</label>
-                                                                                        <div class="uploader">
-                                                                                            <input type="file" name="banner_image" id="banner_image" class="file-styled">
-                                                                                            <span class="filename" style="">No file selected</span>
-                                                                                            <span class="action btn bg-pink-400" style="">Choose File</span>
-                                                                                        </div>
-                                                                                        <span class="help-block">Accepted formats: png, jpg, jpeg. Max file size 700Kb</span>
-                                                                                    </div>-->
-                                            <div class="media-body">
+                                             <div class="media-body">
                                                 <input type="file" name="banner_image" id="banner_image" class="file-styled">
                                                 <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
                                             </div>

@@ -2,14 +2,14 @@
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
-            <h4><i class="icon-users2"></i> <span class="text-semibold"><?php echo $heading; ?></span></h4>
+            <h4><i class="icon-comment"></i> <span class="text-semibold"><?php echo $heading; ?></span></h4>
         </div>
     </div>
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li><a href="<?php echo site_url('admin/providers'); ?>"><i class="icon-users2"></i> Users</a></li>
-            <li class="active"><i class="icon-pencil7 position-left"></i> <?php echo $heading; ?></li>
+            <li><a href="<?php echo site_url('admin/posts'); ?>"><i class="icon-comment position-left"></i> Posts</a></li>
+            <li class="active"><i class="icon-book position-left"></i><?php echo $heading; ?></li>
         </ul>
     </div>
 </div>
@@ -55,16 +55,46 @@ if ($this->session->flashdata('success')) {
                         <div class="panel panel-flat">
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label>First Name:</label>
-                                    <input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo isset($user_data['firstname']) ? $user_data['firstname'] : set_value('firstname'); ?>">
+                                    <label>User:</label>
+                                    <select name="user_id" id="user_id" class="form-control">
+                                        <option value="">-- Select User --</option>
+                                        <?php
+                                        if (isset($users) && !empty($users)) {
+                                            foreach ($users as $key => $value) {
+                                                $selected = '';
+                                                if (isset($post_data) && $post_data['user_id'] == $value['id']) {
+                                                    $selected = 'selected';
+                                                }
+                                                ?>
+                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Last Name:</label>
-                                    <input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo isset($user_data['lastname']) ? $user_data['lastname'] : set_value('lastname'); ?>">
+                                    <label>User Profile:</label>
+                                    <select name="profile_id" id="profile_id" class="form-control">
+                                        <option value="">-- Select User Profile --</option>
+                                        <?php
+                                        if (isset($profiles) && !empty($profiles)) {
+                                            foreach ($profiles as $key => $value) {
+                                                $selected = '';
+                                                if (isset($post_data) && $post_data['profile_id'] == $value['id']) {
+                                                    $selected = 'selected';
+                                                }
+                                                ?>
+                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Email:</label>
-                                    <input type="text" name="email" id="email" class="form-control" value="<?php echo isset($user_data['email']) ? $user_data['email'] : set_value('email'); ?>">
+                                    <label>Comment:</label>
+                                    <textarea name="comment" id="comment" rows="4" cols="4" class="form-control"><?php echo isset($post_data['comment']) ? $post_data['comment'] : set_value('comment'); ?></textarea>
                                 </div>
                                 <div class="text-right">
                                     <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
@@ -80,16 +110,6 @@ if ($this->session->flashdata('success')) {
     </div>
     <script type="text/javascript">
         $('document').ready(function () {
-
-//            jQuery.validator.addMethod("check_email_exists", function (value, element) {
-//                $.ajax({
-//                    url: base_url + '/admin/users/email_validation',
-//                    method: 'post',
-//                    data: {email : value},
-//                    success: function (response) {
-//                        console.log(response);
-//                    }
-//                });
             $("#user_form").validate({
                 ignore: [],
                 errorClass: 'validation-error-label',
@@ -102,34 +122,39 @@ if ($this->session->flashdata('success')) {
                 },
                 validClass: "validation-valid-label",
                 rules: {
-                    firstname: {
+                    user_id: {
                         required: true,
                     },
-                    lastname: {
+                    profile_id: {
                         required: true,
                     },
-                    email: {
+                    comment: {
                         required: true,
-                        email: true
                     }
 
                 },
                 errorPlacement: function (error, element) {
-//                    if (element.attr("name") == "banner_image") {
-//                        error.insertAfter($(".uploader"));
-//                    } else if (element.attr("name") == "description") {
-//                        error.insertAfter(element.parent());
-//                    } else {
                     error.insertAfter(element);
-//                    }
                 },
                 submitHandler: function (form) {
                     $('button[type="submit"]').attr('disabled', true);
                     form.submit();
                 },
             });
-        }
-        );
+        });
+        $(document).on('change', '#user_id', function () {
+            var user_id = $("#user_id option:selected").val();
+            $url = '<?php echo base_url() ?>' + 'admin/posts/get_user_profile';
+            $.ajax({
+                type: "POST",
+                url: $url,
+                data: {
+                    id: user_id,
+                }
+            }).done(function (data) {
+                $("select#profile_id").html(data);
+            });
+        });
         $(".file-styled").uniform({
             fileButtonClass: 'action btn bg-pink'
         });

@@ -68,7 +68,11 @@ class Providers extends MY_Controller {
         $this->form_validation->set_rules('service_category', 'Service Category', 'trim|required');
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
-        $this->form_validation->set_rules('location', 'Location', 'trim|required');
+        $this->form_validation->set_rules('street1', 'Street Address 1', 'trim|required');
+        $this->form_validation->set_rules('city', 'City', 'trim|required');
+        $this->form_validation->set_rules('state', 'State', 'trim|required');
+        $this->form_validation->set_rules('phone', 'Phone Number', 'trim|required');
+        $this->form_validation->set_rules('website', 'Website Url', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
@@ -78,13 +82,43 @@ class Providers extends MY_Controller {
                 'service_category_id' => trim(htmlentities($this->input->post('service_category'))),
                 'name' => trim(htmlentities($this->input->post('name'))),
                 'description' => $this->input->post('description'),
-                'location' => trim($this->input->post('location')),
                 'latitute' => $this->input->post('latitute'),
                 'longitute' => $this->input->post('longitute'),
+                'street1' => trim($this->input->post('street1')),
+                'city' => trim($this->input->post('city')),
+                'state' => trim($this->input->post('state')),
+                'phone_number' => trim($this->input->post('phone')),
+                'website_url' => trim($this->input->post('website')),
             ];
+            if (!empty($this->input->post('street2'))) {
+                $dataArr['street2'] = $this->input->post('street2');
+            }
             if (!empty($this->input->post('zipcode'))) {
                 $dataArr['zipcode'] = $this->input->post('zipcode');
             }
+            if ($_FILES['image']['name'] != '') {
+                $image_data = upload_image('image', PROVIDER_IMAGES);
+                if (is_array($image_data)) {
+                    $flag = 1;
+                    $data['profile_image_validation'] = $image_data['errors'];
+                } else {
+                    if (is_numeric($id)) {
+                        if (!empty($provider_data)) {
+                            unlink(PROVIDER_IMAGES . $provider_data['image']);
+                        }
+                    }
+                    $provider_image = $image_data;
+                    $dataArr['image'] = $provider_image;
+                }
+            } else {
+                if (is_numeric($id)) {
+                    if (!empty($provider_data)) {
+                        $provider_image = $provider_data['image'];
+                        $dataArr['image'] = $provider_data['image'];
+                    }
+                }
+            }
+//            p($dataArr, 1);
             if (is_numeric($id)) {
                 $dataArr['modified_at'] = date('Y-m-d H:i:s');
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);
@@ -118,7 +152,8 @@ class Providers extends MY_Controller {
         if (is_numeric($id)) {
             $this->data['title'] = 'Remember Always Admin | Service Providers';
             $this->data['heading'] = 'View Service Provider Details';
-            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS . ' sp', 'sp.*,sc.name as category_name', ['where' => array('sp.id' => trim($id), 'sp.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_SERVICE_CATEGORIES . ' sc', 'condition' => 'sc.id=sp.service_category_id AND sc.is_delete=0')]]);
+//            p($provider_data);
             if (!empty($provider_data)) {
                 $this->data['provider_data'] = $provider_data;
             } else {
