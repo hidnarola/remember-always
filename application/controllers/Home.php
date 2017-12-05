@@ -13,13 +13,12 @@ class Home extends MY_Controller {
     }
 
     /**
-     * Display login page for login
+     * Landing page
      */
     public function index() {
         $data['title'] = 'Remember Always';
         $data['slider'] = $this->users_model->sql_select(TBL_SLIDER, 'image,description', ['where' => ['is_delete' => 0, 'is_active' => 1]]);
-//        $this->template->load('default', 'home', $data);
-        $this->load->view('coming_soon', $data);
+        $this->template->load('default', 'home', $data);
     }
 
 }
