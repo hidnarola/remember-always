@@ -49,7 +49,7 @@ if ($this->session->flashdata('success')) {
 <div class="content">
     <div class="row">
         <div class="col-md-12">
-            <form class="form-horizontal form-validate-jquery" id="category_from" method="POST" enctype="multipart/form-data">
+            <form class="form-horizontal form-validate-jquery" id="slider_image_form" method="POST" enctype="multipart/form-data">
                 <div class="panel panel-flat">
                     <div class="panel-body">
                         <div class="message alert alert-danger" style="display:none"></div>
@@ -88,6 +88,7 @@ if ($this->session->flashdata('success')) {
                                     </div>
                                     <span></span>
                                 </div>
+                                <div id="proper_image" class="validation-error-label"></div>
                                 <?php
                                 if (isset($media_validation))
                                     echo '<label id="logo-error" class="validation-error-label" for="logo">' . $media_validation . '</label>';
@@ -117,9 +118,9 @@ if ($this->session->flashdata('success')) {
     </div>
 </div>
 <script>
-
-
-    $("#category_from").validate({
+    max_image_size = <?php echo MAX_IMAGE_SIZE ?>;
+    is_valid = false;
+    $("#slider_image_form").validate({
         ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
         errorClass: 'validation-error-label',
         successClass: 'validation-valid-label',
@@ -131,71 +132,40 @@ if ($this->session->flashdata('success')) {
         },
         validClass: "validation-valid-label",
         errorPlacement: function (error, element) {
-            //                console.log(element[0]['classList']);
             if (element[0]['id'] == "image") {
                 error.insertAfter(element.parent().parent().next('span')); // select2
             } else {
                 error.insertAfter(element)
             }
         },
-//        success: function (label) {
-//            label.addClass("validation-valid-label");
-//        },
         rules: {
             description: {
                 required: true
             },
             image: {
-//                required: true,
                 extension: "jpg|png|jpeg",
                 maxFileSize: {
-                    "unit": "KB",
-                    "size": 700
+                    "unit": "MB",
+                    "size": max_image_size
                 }
             }
         },
         submitHandler: function (form) {
-            $('button[type="submit"]').attr('disabled', true);
-            form.submit();
+            if (is_valid == true) {
+                $('button[type="submit"]').attr('disabled', true);
+                form.submit();
+            }
         },
     });
     $(".file-styled").uniform({
         fileButtonClass: 'action btn bg-pink'
     });
     $(document).on('change', '#image', function (e) {
-//        $(this).rules('add', {
-//            filesize: 2,
-//        });
-//        ValidateSingleInput(this);
         readURL(this);
     })
     var _validFileExtensions = [".jpg", ".jpeg", ".png", ];
-//    var _validFileExtensions_Video = [".mp4", ".webm", ".ogv", ".png",".MPG",".MPEG" ,".OGG",".ogg",".mpeg"];    
-//    function ValidateSingleInput(oInput) {
-//        if (oInput.type == "file") {
-//
-//            var sFileName = oInput.value;
-//            if (sFileName.length > 0) {
-//                var blnValid = false;
-//                var sizeValid = false;
-//                for (var j = 0; j < _validFileExtensions.length; j++) {
-//                    var sCurExtension = _validFileExtensions[j];
-//                    if (sFileName.substr(sFileName.length - sCurExtension.length, sCurExtension.length).toLowerCase() == sCurExtension.toLowerCase()) {
-//                        blnValid = true;
-//                        break;
-//                    }
-//                }
-//                if (!blnValid) {
-//                    $(".validation_alert label").text("Sorry, invalid file, allowed extensions are: " + _validFileExtensions.join(", "));
-//                    $("#validation_modal").modal();
-//                    oInput.value = "";
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
     function readURL(input) {
+        var height = 700, width = 1920, img = '', file = '', val = '';
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -213,7 +183,21 @@ if ($this->session->flashdata('success')) {
                 $('#image_preview_div').html(html);
             }
             reader.readAsDataURL(input.files[0]);
+            // check slider image dimension
+            var _URL = window.URL || window.webkitURL;
+            if ((file = input.files[0])) {
+                img = new Image();
+                img.onload = function () {
+                    if (this.width < width && this.height < height) {
+                        is_valid = false;
+                        $('#proper_image').html('Photo should be ' + width + ' X ' + height + ' or more dimensions');
+                    } else {
+                        is_valid = true;
+                        $('#proper_image').html('');
+                    }
+                };
+                img.src = _URL.createObjectURL(file);
+            }
         }
     }
-
 </script>
