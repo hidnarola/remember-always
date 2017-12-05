@@ -158,7 +158,7 @@ function slug($text, $table, $id = NULL) {
  * @param string $image_path
  * @return array - Either name of the image if uploaded successfully or Array of errors if image is not uploaded successfully
  */
-function upload_image($image_name, $image_path, $allow_extension = null) {
+function upload_image($image_name, $image_path) {
     $CI = & get_instance();
     $extension = explode('/', $_FILES[$image_name]['type']);
     $randname = uniqid() . time() . '.' . end($extension);
@@ -170,8 +170,43 @@ function upload_image($image_name, $image_path, $allow_extension = null) {
         // 'max_width'       => "1024" ,
         'file_name' => $randname
     );
-    if($allow_extension != null){
-    $config['allowed_types'] = $allow_extension;
+    //--Load the upload library
+    $CI->load->library('upload');
+    $CI->upload->initialize($config);
+    if ($CI->upload->do_upload($image_name)) {
+        $img_data = $CI->upload->data();
+        $imgname = $img_data['file_name'];
+    } else {
+        $imgname = array('errors' => $CI->upload->display_errors());
+    }
+    return $imgname;
+}
+
+/**
+ * Uploads image
+ * @param string $image_name
+ * @param string $image_path
+ * @return array - Either name of the image if uploaded successfully or Array of errors if image is not uploaded successfully
+ */
+function upload_multiple_image($image_name, $extension, $image_path, $type= 'image',$allow_extension = null) {
+    $CI = & get_instance();
+//    $extension = explode('/', $_FILES[$image_name]['type']);
+    $randname = uniqid() . time() . '.' . $extension;
+    $config = array(
+        'upload_path' => $image_path,
+        'allowed_types' => "png|jpg|jpeg|gif",
+        'max_size' => "2048",
+        // 'max_height'      => "768",
+        // 'max_width'       => "1024" ,
+        'file_name' => $randname
+    );
+    if($type == 'image'){
+        $config['max_size'] = MAX_IMAGE_SIZE * 1024;
+    }else if ($type == 'video'){
+        $config['max_size'] = MAX_VIDEO_SIZE * 1024;
+    }
+    if ($allow_extension != null) {
+        $config['allowed_types'] = $allow_extension;
     }
     //--Load the upload library
     $CI->load->library('upload');
@@ -190,6 +225,7 @@ function upload_image($image_name, $image_path, $allow_extension = null) {
  * @return generated password
  */
 function randomPassword() {
+//    475F0EDD
     $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
     $pass = array(); //declare $pass as an array
     $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
