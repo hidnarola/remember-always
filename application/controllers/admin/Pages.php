@@ -95,7 +95,7 @@ class Pages extends MY_Controller {
                 }
             }
             if (is_numeric($id)) {
-                $dataArr['modified_at'] = date('Y-m-d H:i:s');
+                $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->pages_model->common_insert_update('update', TBL_PAGES, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Page details has been updated successfully.');
             } else {

@@ -67,7 +67,7 @@ if ($this->session->flashdata('success')) {
                                                     $selected = 'selected';
                                                 }
                                                 ?>
-                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></option>
+                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('user_id', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></option>
                                                 <?php
                                             }
                                         }
@@ -86,7 +86,7 @@ if ($this->session->flashdata('success')) {
                                                     $selected = 'selected';
                                                 }
                                                 ?>
-                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></option>
+                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('profile_id', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></option>
                                                 <?php
                                             }
                                         }
@@ -99,20 +99,13 @@ if ($this->session->flashdata('success')) {
                                 </div>
                                 <div class="form-group">
                                     <label>Image:</label>
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <div class="media-body">
-                                                <input type="file" name="image" id="image" class="file-styled" multiple="">
-                                                <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
-                                            </div>
-                                            <span></span>
-                                        </div>
-                                    </div>
+                                    <input type="file" name="image[]" id="image[]" class="image_file_upload" multiple="multiple">
+                                    <span class="help-block image_helper">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
                                 </div>
                                 <div class="form-group">
                                     <label>Video:</label>
-                                    <input type="file" class="file-input-ajax" multiple="multiple">
-                                    <span class="help-block">Accepted formats:  mp4. Max file size 700Kb</span>
+                                    <input type="file" name="video[]" id="video[]" class="video_file_upload" multiple="multiple">
+                                    <span class="help-block video_helper">Accepted formats:  mp4. Max file size 100MB</span>
                                 </div>
                                 <div class="text-right">
                                     <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
@@ -146,18 +139,83 @@ if ($this->session->flashdata('success')) {
                     profile_id: {
                         required: true,
                     },
-                    comment: {
-                        required: true,
-                    }
+//                    comment: {
+//                        atleast_one: ['image[]','video[]'],
+//                    },
+//                    'image[]': {
+//                        required: true,
+//                    }
 
                 },
                 errorPlacement: function (error, element) {
-                    error.insertAfter(element);
+                    if (element.attr("name") == "image[]") {
+                        error.insertAfter($(".image_helper"));
+                    } else if (element.attr("name") == "video[]") {
+                        error.insertAfter($(".video_helper"));
+                    } else {
+                        error.insertAfter(element);
+                    }
                 },
                 submitHandler: function (form) {
                     $('button[type="submit"]').attr('disabled', true);
                     form.submit();
                 },
+            });
+            $(".video_file_upload").fileinput({
+                browseLabel: 'Browse',
+                browseIcon: '<i class="icon-file-plus"></i>',
+                //                removeFromPreviewOnError: true,
+                //                uploadIcon: '<i class="icon-file-upload2"></i>',
+                //                removeIcon: '<i class="icon-cross3"></i>',
+                layoutTemplates: {
+                    icon: '<i class="icon-file-check"></i>'
+                },
+                initialCaption: "Please select videos",
+                //                initialPreview: [
+                //                    "<img src='assets/images/placeholder.jpg' class='file-preview-image' alt=''>",
+                //                    "<img src='assets/images/placeholder.jpg' class='file-preview-image' alt=''>",
+                //                ],
+                overwriteInitial: false,
+                allowedFileExtensions: ["mp4"],
+                //                fileActionSettings: {
+                //                    removeIcon: '<i class="icon-bin"></i>',
+                //                    removeClass: 'btn btn-link btn-xs btn-icon',
+                //                    uploadIcon: '<i class="icon-upload"></i>',
+                //                    uploadClass: 'btn btn-link btn-xs btn-icon',
+                //                    indicatorNew: '<i class="icon-file-plus text-slate"></i>',
+                //                    indicatorSuccess: '<i class="icon-checkmark3 file-icon-large text-success"></i>',
+                //                    indicatorError: '<i class="icon-cross2 text-danger"></i>',
+                //                    indicatorLoading: '<i class="icon-spinner2 spinner text-muted"></i>',
+                //                },
+                //maxFileSize: 100
+            });
+            $(".image_file_upload").fileinput({
+                browseLabel: 'Browse',
+                browseIcon: '<i class="icon-file-plus"></i>',
+                //                removeFromPreviewOnError: true,
+                //                uploadIcon: '<i class="icon-file-upload2"></i>',
+                //                removeIcon: '<i class="icon-cross3"></i>',
+                layoutTemplates: {
+                    icon: '<i class="icon-file-check"></i>'
+                },
+                initialCaption: "Please select images",
+                //                initialPreview: [
+                //                    "<img src='assets/images/placeholder.jpg' class='file-preview-image' alt=''>",
+                //                    "<img src='assets/images/placeholder.jpg' class='file-preview-image' alt=''>",
+                //                ],
+                overwriteInitial: false,
+                allowedFileExtensions: ["jpg", "jpeg", "png"],
+                //                fileActionSettings: {
+                //                    removeIcon: '<i class="icon-bin"></i>',
+                //                    removeClass: 'btn btn-link btn-xs btn-icon',
+                //                    uploadIcon: '<i class="icon-upload"></i>',
+                //                    uploadClass: 'btn btn-link btn-xs btn-icon',
+                //                    indicatorNew: '<i class="icon-file-plus text-slate"></i>',
+                //                    indicatorSuccess: '<i class="icon-checkmark3 file-icon-large text-success"></i>',
+                //                    indicatorError: '<i class="icon-cross2 text-danger"></i>',
+                //                    indicatorLoading: '<i class="icon-spinner2 spinner text-muted"></i>',
+                //                },
+                //maxFileSize: 100
             });
         });
         $(document).on('change', '#user_id', function () {
