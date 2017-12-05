@@ -158,7 +158,7 @@ function slug($text, $table, $id = NULL) {
  * @param string $image_path
  * @return array - Either name of the image if uploaded successfully or Array of errors if image is not uploaded successfully
  */
-function upload_image($image_name, $image_path) {
+function upload_image($image_name, $image_path, $allow_extension = null) {
     $CI = & get_instance();
     $extension = explode('/', $_FILES[$image_name]['type']);
     $randname = uniqid() . time() . '.' . end($extension);
@@ -170,6 +170,9 @@ function upload_image($image_name, $image_path) {
         // 'max_width'       => "1024" ,
         'file_name' => $randname
     );
+    if($allow_extension != null){
+    $config['allowed_types'] = $allow_extension;
+    }
     //--Load the upload library
     $CI->load->library('upload');
     $CI->upload->initialize($config);

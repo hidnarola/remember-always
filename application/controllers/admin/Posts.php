@@ -73,16 +73,28 @@ class Posts extends MY_Controller {
         }
         $this->form_validation->set_rules('profile_id', 'Profile', 'trim|required');
         $this->form_validation->set_rules('user_id', 'User', 'trim|required');
-        $this->form_validation->set_rules('comment', 'Comment', 'trim|required' . $unique_email);
+        $this->form_validation->set_rules('comment', 'comment', 'callback_al_least_one_value');
+
+
+        if ($this->input->method() == 'post') {
+            $profiles = $this->post_model->sql_select(TBL_PROFILES, null, ['where' => array('is_delete' => 0, 'user_id' => base64_decode($this->input->post('user_id')))]);
+            if (!empty($profiles)) {
+                $this->data['profiles'] = $profiles;
+            }
+        }
+//        $this->form_validation->set_rules('comment', 'Comment', 'trim|required' . $unique_email);
 
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
+            p($_FILES);
             $dataArr = array(
                 'profile_id' => trim($this->input->post('profile_id')),
                 'user_id' => trim($this->input->post('user_id')),
-                'comment' => trim($this->input->post('comment')),
             );
+            if (!empty(trim($this->input->post('comment')))) {
+                $dataArr['comment'] = trim($this->input->post('comment'));
+            }
             p($dataArr, 1);
             if (is_numeric($id)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
@@ -164,11 +176,27 @@ class Posts extends MY_Controller {
             qry();
             if (!empty($post_data)) {
                 foreach ($post_data as $row) {
-                    $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['firstname'].' '.$row['lastname'] . "</option>";
+                    $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['firstname'] . ' ' . $row['lastname'] . "</option>";
                 }
             }
         }
         echo $options;
+    }
+
+    /**
+     * Callback Validate function to check service category already exists or not.
+     * @return boolean
+     */
+    public function al_least_one_value($value) {
+//        p($_FILES['image']['name'][0], 1);
+//var_dump((isset($_FILES['image']) && empty($_FILES['image']['name'][0])));
+//var_dump((isset($_FILES['video']) && empty($_FILES['video']['name'][0])));
+        if (trim($this->input->post('comment')) == '' && ((isset($_FILES['image']) && empty($_FILES['image']['name'][0])) && ((isset($_FILES['video']) && empty($_FILES['video']['name'][0]))))) {
+            $this->form_validation->set_message('al_least_one_value', 'Please enter commment or select image or select video.');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
     }
 
 }
