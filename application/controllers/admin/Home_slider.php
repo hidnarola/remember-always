@@ -86,7 +86,7 @@ class Home_slider extends MY_Controller {
             }
 //            p($dataArr,1);
             if (is_numeric($id)) {
-                $dataArr['modified_at'] = date('Y-m-d H:i:s');
+                $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Slider details has been updated successfully.');
             } else {
@@ -140,7 +140,7 @@ class Home_slider extends MY_Controller {
             if (!empty($slider)) {
                 $update_array = array(
                     'is_delete' => 1,
-                    'modified_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 );
                 $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Slider has been deleted successfully!');
@@ -164,7 +164,7 @@ class Home_slider extends MY_Controller {
             if (!empty($slider)) {
                 $update_array = array(
                     'is_active' => 0,
-                    'modified_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 );
                 $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Slider will now be hidden!');
@@ -188,7 +188,7 @@ class Home_slider extends MY_Controller {
             if (!empty($slider)) {
                 $update_array = array(
                     'is_active' => 1,
-                    'modified_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 );
                 $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Slider will now be visible!');
