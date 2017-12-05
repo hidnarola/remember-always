@@ -1,4 +1,5 @@
-<script type="text/javascript" src="assets/admin/ckeditor/ckeditor.js"></script>
+<script type="text/javascript" src="assets/admin/js/plugins/uploaders/fileinput.min.js"></script>
+<script type="text/javascript" src="assets/admin/js/pages/uploader_bootstrap.js"></script>
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
@@ -95,6 +96,23 @@ if ($this->session->flashdata('success')) {
                                 <div class="form-group">
                                     <label>Comment:</label>
                                     <textarea name="comment" id="comment" rows="4" cols="4" class="form-control"><?php echo isset($post_data['comment']) ? $post_data['comment'] : set_value('comment'); ?></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label>Image:</label>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="media-body">
+                                                <input type="file" name="image" id="image" class="file-styled" multiple="">
+                                                <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
+                                            </div>
+                                            <span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Video:</label>
+                                    <input type="file" class="file-input-ajax" multiple="multiple">
+                                    <span class="help-block">Accepted formats:  mp4. Max file size 700Kb</span>
                                 </div>
                                 <div class="text-right">
                                     <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>

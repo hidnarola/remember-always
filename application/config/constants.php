@@ -110,6 +110,7 @@ define('USER_IMAGES', 'uploads/user-images/');
 define('SLIDER_IMAGES', 'uploads/slider-images/');
 define('PAGE_BANNER', 'uploads/banners/');
 define('PROVIDER_IMAGES', 'uploads/provider-images/');
+define('POST_IMAGES', 'uploads/post-images/');
 
 define('REMEMBER_ME_ADMIN_COOKIE', 'remAlwaysAd908f7d89f');
 define('REMEMBER_ME_USER_COOKIE', 'remAlways908f7d89f');

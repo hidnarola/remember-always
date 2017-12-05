@@ -33,7 +33,6 @@ class Categories extends MY_Controller {
 //            $donors[$key] = $val;
 //            $donors[$key]['created'] = date('m/d/Y', strtotime($val['created']));
 //        }
-
         $final['data'] = $donors;
         echo json_encode($final);
     }

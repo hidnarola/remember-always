@@ -37,7 +37,7 @@
     </div>
     <div class="panel panel-flat">
         <div class="panel-heading text-right">
-            <!--<a href="<?php // echo site_url('admin/users/add');  ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add User</a>-->
+            <a href="<?php echo site_url('admin/posts/add');  ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add User</a>
         </div>
         <!--<div class="table-responsive">-->
         <table class="table datatable-basic">
