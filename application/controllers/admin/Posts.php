@@ -88,14 +88,61 @@ class Posts extends MY_Controller {
             $this->data['error'] = validation_errors();
         } else {
             p($_FILES);
+            if (isset($_FILES['image']) && !empty($_FILES['image']['name'][0])) {
+                foreach ($_FILES['image']['name'] as $key => $value) {
+                    $extension = explode('/', $_FILES['image']['type'][$key]);
+                    $_FILES['custom_image']['name'] = $_FILES['image']['name'][$key];
+                    $_FILES['custom_image']['type'] = $_FILES['image']['type'][$key];
+                    $_FILES['custom_image']['tmp_name'] = $_FILES['image']['tmp_name'][$key];
+                    $_FILES['custom_image']['error'] = $_FILES['image']['error'][$key];
+                    $_FILES['custom_image']['size'] = $_FILES['image']['size'][$key];
+                    $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES);
+                    if (is_array($image_data)) {
+                        $flag = 1;
+                        $data['image_validation'] = $image_data['errors'];
+                    } else {
+                        $image = $image_data;
+                        $dataArr_media[] = array(
+                            'media' => $image,
+                            'type' => 1,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        );
+                    }
+                }
+            }
+            if (isset($_FILES['video']) && !empty($_FILES['video']['name'][0])) {
+                foreach ($_FILES['video']['name'] as $key => $value) {
+                    $extension = explode('/', $_FILES['video']['type'][$key]);
+                    p($extension);
+                    $_FILES['custom_video']['name'] = $_FILES['video']['name'][$key];
+                    $_FILES['custom_video']['type'] = $_FILES['video']['type'][$key];
+                    $_FILES['custom_video']['tmp_name'] = $_FILES['video']['tmp_name'][$key];
+                    $_FILES['custom_video']['error'] = $_FILES['video']['error'][$key];
+                    $_FILES['custom_video']['size'] = $_FILES['video']['size'][$key];
+                    $video_data = upload_multiple_image('custom_video', end($extension), POST_IMAGES, 'video', 'mp4');
+                    p($video_data);
+                    if (is_array($video_data)) {
+                        $flag = 1;
+                        $data['video_validation'] = $video_data['errors'];
+                    } else {
+                        $video = $video_data;
+                        $dataArr_media[] = array(
+                            'media' => $video,
+                            'type' => 2,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        );
+                    }
+                }
+            }
+//            p($dataArr_media, 1);
             $dataArr = array(
-                'profile_id' => trim($this->input->post('profile_id')),
-                'user_id' => trim($this->input->post('user_id')),
+                'profile_id' => base64_decode(trim($this->input->post('profile_id'))),
+                'user_id' => 1,
             );
             if (!empty(trim($this->input->post('comment')))) {
                 $dataArr['comment'] = trim($this->input->post('comment'));
             }
-            p($dataArr, 1);
+//            p($dataArr, 1);
             if (is_numeric($id)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->post_model->common_insert_update('update', TBL_POSTS, $dataArr, ['id' => $id]);
@@ -103,9 +150,16 @@ class Posts extends MY_Controller {
             } else {
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
                 $id = $this->post_model->common_insert_update('insert', TBL_POSTS, $dataArr);
+                if (isset($dataArr_media) && !empty($dataArr_media)) {
+                    foreach ($dataArr_media as $key => $value) {
+                        $dataArr_media[$key]['post_id'] = $id;
+                    }
+                    $this->post_model->batch_insert_update('insert', TBL_POST_MEDIAS, $dataArr_media);
+//                    p($dataArr_media, 1);
+                }
                 $this->session->set_flashdata('success', 'Post details has been inserted successfully.');
             }
-            redirect('admin/users');
+            redirect('admin/posts');
         }
         $this->template->load('admin', 'admin/posts/manage', $this->data);
     }
@@ -123,7 +177,6 @@ class Posts extends MY_Controller {
      *
      */
     public function view($id) {
-
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
