@@ -32,6 +32,7 @@ class Users_model extends MY_Model {
         set_cookie(REMEMBER_ME_ADMIN_COOKIE, $encoded_email, time() + (3600 * 24 * 360));
         return true;
     }
+
     /**
      * Set cookie with passed email id
      * @param string $email
@@ -73,7 +74,7 @@ class Users_model extends MY_Model {
      * @param string $email
      * @return array
      */
-    public function check_unique_email($email) { 
+    public function check_unique_email($email) {
         $this->db->where('email', $email);
         $this->db->where('is_delete', 0);
         $query = $this->db->get(TBL_USERS);
@@ -91,4 +92,31 @@ class Users_model extends MY_Model {
         return $query->row_array();
     }
 
+    /**
+     * Get Profiles for data table
+     * @param string $type - Either result or count
+     * @return array for result or integer for count
+     */
+    public function get_profiles($type = 'result', $user_id) {
+        $columns = ['id', 'profile_image', 'firstname', 'lastname','type','privacy', 'email', 'p.created_at', 'is_blocked', 'is_published'];
+        $keyword = $this->input->get('search');
+        $this->db->select('p.*');
+        $this->db->join(TBL_USERS . ' u', 'u.id=p.user_id AND u.is_delete=0', 'left');
+
+        if (!empty($keyword['value'])) {
+            $this->db->where('(firstname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR lastname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR email LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ' OR CONCAT(firstname , " " ,lastname) LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')');
+        }
+
+        $this->db->where(['p.is_delete' => 0, 'p.user_id' => $user_id]);
+        $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
+        if ($type == 'result') {
+            $this->db->limit($this->input->get('length'), $this->input->get('start'));
+            $query = $this->db->get(TBL_PROFILES . ' p');
+//            p($query->result_array());
+            return $query->result_array();
+        } else {
+            $query = $this->db->get(TBL_PROFILES . ' p');
+            return $query->num_rows();
+        }
+    }
 }

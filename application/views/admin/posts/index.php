@@ -12,6 +12,9 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
+            <?php if (isset($user_id)) { ?>
+                <li><a href="<?php echo site_url('admin/users'); ?>"><i class="icon-users2"></i> Users</a></li>
+            <?php } ?>
             <li class="active"><i class="icon-comment"></i> Posts</li>
         </ul>
     </div>
@@ -37,7 +40,7 @@
     </div>
     <div class="panel panel-flat">
         <div class="panel-heading text-right">
-            <a href="<?php echo site_url('admin/posts/add');  ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add Post</a>
+            <a href="<?php echo isset($user_id) ? site_url('admin/users/postadd/' . $user_id) : site_url('admin/posts/add'); ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add Post</a>
         </div>
         <!--<div class="table-responsive">-->
         <table class="table datatable-basic">
@@ -57,10 +60,14 @@
     <?php $this->load->view('Templates/admin_footer'); ?>
 </div>
 <script type="text/javascript">
+    var user_id = '<?php echo isset($user_id) ? $user_id : '' ?>';
     $(".file-styled").uniform({
         fileButtonClass: 'action btn bg-blue'
     });
-
+    var url = site_url + 'admin/posts/get_posts';
+    if (user_id != '') {
+        url = site_url + 'admin/posts/get_posts/' + user_id;
+    }
     $(function () {
         $('.datatable-basic').dataTable({
 //            scrollX:true,
@@ -74,7 +81,7 @@
             },
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
             order: [[0, "desc"]],
-            ajax: site_url + 'admin/posts/get_posts',
+            ajax: url,
             columns: [
                 {
                     data: "sr_no",
@@ -102,6 +109,14 @@
                     searchable: false,
                     sortable: false,
                     render: function (data, type, full, meta) {
+                        var editurl = site_url + 'admin/posts/edit/' + btoa(full.id);
+                        var viewurl = site_url + 'admin/posts/view/' + btoa(full.id);
+                        var deleteurl = site_url + 'admin/posts/delete/' + btoa(full.id);
+                        if (user_id != '') {
+                            editurl = site_url + 'admin/users/postedit/' + user_id + '/'+ btoa(full.id);
+                            viewurl = site_url + 'admin/users/posts/view/' + btoa(full.id) + '/' + user_id;
+                            deleteurl = site_url + 'admin/users/postdelete/' + user_id + '/' + btoa(full.id);
+                        }
                         var action = '<ul class="icons-list">';
                         action += '<li class="dropdown">';
                         action += '<a href="#" class="dropdown-toggle" data-toggle="dropdown">';
@@ -109,9 +124,9 @@
                         action += '</a>';
                         action += '<ul class="dropdown-menu dropdown-menu-right">';
                         action += '<li>';
-//                        action += '<a href="' + site_url + 'admin/posts/edit/' + btoa(full.id) + '" title="Edit"><i class="icon-pencil3"></i> Edit page</a>'
-                        action += '<a href="' + site_url + 'admin/posts/view/' + btoa(full.id) + '" title="View Post"><i class="icon-book"></i> View Post</a>'
-//                        action += '<a href="' + site_url + 'admin/posts/actions/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete page</a>'
+                        action += '<a href="' + editurl + '" title="Edit"><i class="icon-pencil3"></i> Edit page</a>'
+                        action += '<a href="' + viewurl + '" title="View Post"><i class="icon-book"></i> View Post</a>'
+                        action += '<a href="' + deleteurl + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete page</a>'
                         action += '</li>';
                         action += '</ul>';
                         action += '</li>';
@@ -134,7 +149,7 @@
     function confirm_alert(e) {
         swal({
             title: "Are you sure?",
-            text: "You will not be able to recover this user!",
+            text: "You will not be able to recover this post!",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#FF7043",
@@ -148,7 +163,7 @@
         }, function (dismiss) {
             // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
             if (dismiss === 'cancel') {
-                swal("Cancelled", "Your user is safe :)", "error");
+                swal("Cancelled", "Your post is safe :)", "error");
             }
         });
         return false;

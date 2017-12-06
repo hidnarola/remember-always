@@ -12,7 +12,8 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li class="active"><i class="icon-users2"></i> Users</li>
+            <li><a href="<?php echo site_url('admin/users'); ?>"><i class="icon-users2"></i> Users</a></li>
+            <li class="active"><i class="icon-profile"></i> Profiles</li>
         </ul>
     </div>
 </div>
@@ -37,7 +38,8 @@
     </div>
     <div class="panel panel-flat">
         <div class="panel-heading text-right">
-            <a href="<?php echo site_url('admin/users/add') ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add User</a>
+            
+            <!--<a href="<?php // echo site_url('admin/users/add') ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add User</a>-->
         </div>
         <!--<div class="table-responsive">-->
         <table class="table datatable-basic">
@@ -47,9 +49,10 @@
                     <th>Profile</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>User Type</th>
-                    <th>Active Status</th>
-                    <th>Verification Status</th>
+                    <th>Type</th>
+                    <th>Privacy</th>
+                    <th>Status</th>
+                    <th>Published</th>
                     <th>Registration Date</th>
                     <th>Action</th>
                 </tr>
@@ -60,9 +63,13 @@
     <?php $this->load->view('Templates/admin_footer'); ?>
 </div>
 <script type="text/javascript">
+    var user_id = '<?php echo isset($user_id) ? $user_id : '' ?>';
     $(".file-styled").uniform({
         fileButtonClass: 'action btn bg-blue'
     });
+    if (user_id != '') {
+        url = site_url + 'admin/users/get_profiles/' + user_id;
+    }
     $(function () {
         $('.datatable-basic').dataTable({
 //            scrollX:true,
@@ -76,7 +83,7 @@
             },
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
             order: [[5, "desc"]],
-            ajax: site_url + 'admin/users/get_users',
+            ajax: url,
             columns: [
                 {
                     data: "sr_no",
@@ -109,45 +116,55 @@
                     width: '10%',
                 },
                 {
-                    data: "facebook_id",
+                    data: "type",
                     visible: true,
                     width: '10%',
                     render: function (data, type, full, meta) {
-                        if (full.facebook_id != null) {
-                            var action = 'Facebook User';
-                        } else if (full.google_id != null) {
-                            var action = 'Google User';
+                        var action = '-';
+                        if (data == '1') {
+                            action = 'Normal';
+                        } else if (data == '2') {
+                            action = 'Fundraiser';
                         } else {
-                            var action = 'Normal';
+                            action = 'Normal';
                         }
                         return action;
                     }
                 },
                 {
-                    data: "is_active",
+                    data: "privacy",
+                    visible: true,
+                    width: '10%',
+                    render: function (data, type, full, meta) {
+                        action = data;
+                        return action;
+                    }
+                },
+                {
+                    data: "is_blocked",
                     visible: true,
                     width: '10%',
                     render: function (data, type, full, meta) {
                         var action = '';
                         if (data == '1') {
-                            action += '<span class="label label-success">Active</span>';
+                            action += '<span class="label label-danger">Blocked</span>';
                         } else {
-                            action += '<span class="label label-default">InActive</span>';
+                            action += '<span class="label label-success">Active</span>';
                         }
                         return action;
                     }
                 },
                 {
-                    data: "is_verify",
+                    data: "is_published",
                     visible: true,
                     width: '10%',
                     render: function (data, type, full, meta) {
+                        var action = '';
                         if (data == '1') {
-                            var action = '<span class="label label-success">Verified</span>';
+                            action += '<span class="label label-success">Yes</span>';
                         } else {
-                            var action = '<span class="label label-danger">Not Verified</span>';
+                            action += '<span class="label label-default">No</span>';
                         }
-
                         return action;
                     }
                 },
@@ -171,11 +188,11 @@
                         action += '</a>';
                         action += '<ul class="dropdown-menu dropdown-menu-right">';
                         action += '<li>';
-                        action += '<a href="' + site_url + 'admin/users/edit/' + btoa(full.id) + '" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
-                        action += '<a href="' + site_url + 'admin/users/posts/' + btoa(full.id) + '" title="Manage Posts"><i class="icon-comment"></i> Manage Post</a>';
-                        action += '<a href="' + site_url + 'admin/users/profile/' + btoa(full.id) + '" title="Manage Profile"><i class="icon-profile"></i> Manage Profile</a>';
-                        action += '<a href="' + site_url + 'admin/users/view/' + btoa(full.id) + '" title="View Service Provider"><i class="icon-book"></i> View</a>';
-                        action += '<a href="' + site_url + 'admin/users/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete User"><i class="icon-trash"></i> Delete</a>'
+//                        action += '<a href="' + site_url + 'admin/users/edit/' + btoa(full.id) + '" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
+//                        action += '<a href="' + site_url + 'admin/users/posts/' + btoa(full.id) + '" title="Manage Posts"><i class="icon-comment"></i> Manage Post</a>';
+//                        action += '<a href="' + site_url + 'admin/users/profile/' + btoa(full.id) + '" title="Manage Profile"><i class="icon-profile"></i> Manage Profile</a>';
+//                        action += '<a href="' + site_url + 'admin/users/view/' + btoa(full.id) + '" title="View Service Provider"><i class="icon-book"></i> View</a>';
+//                        action += '<a href="' + site_url + 'admin/users/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete User"><i class="icon-trash"></i> Delete</a>'
                         action += '</li>';
                         action += '</ul>';
                         action += '</li>';
@@ -190,6 +207,7 @@
             width: 'auto'
         });
     });
+    
     $(function () {
         $('.fancybox').fancybox();
     });
