@@ -58,6 +58,8 @@ $route['admin/logout'] = 'admin/login/logout';
 $route['admin/forgot_password'] = 'admin/login/forgot_password';
 $route['admin/reset_password'] = 'admin/login/reset_password';
 $route['admin/profile'] = 'admin/dashboard/profile';
+$route['admin/users/posts/view/(:any)/(:any)'] = 'admin/posts/view/$1/$2';
+$route['admin/users/posts/(:any)'] = 'admin/posts/index/$1';
 
 /** User Routes **/
 $route['forgot_password'] = 'login/forgot_password';

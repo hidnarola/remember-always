@@ -17,7 +17,7 @@ class Post_model extends MY_Model {
      * @param : @table 
      * @author : AKK
      */
-    public function get_posts($count = '') {
+    public function get_posts($count = '', $user_id = null) {
         $columns = ['p.id', 'p.comment', 'p.created_at', 'u.firstname', 'u.lastname'];
         $keyword = $this->input->get('search');
         $this->db->select('p.id,p.comment,p.created_at,u.firstname,u.lastname');
@@ -30,6 +30,9 @@ class Post_model extends MY_Model {
                     ' OR CONCAT(firstname , " " ,lastname) LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')');
         }
         $this->db->where(['p.is_delete' => 0]);
+        if($user_id != null && is_numeric($user_id)){
+            $this->db->where(['pf.user_id' => $user_id]);
+        }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($count == 'result') {
             $this->db->limit($this->input->get('length'), $this->input->get('start'));

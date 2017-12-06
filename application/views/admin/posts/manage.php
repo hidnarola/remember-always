@@ -1,3 +1,4 @@
+<link type="text/css" href="assets/admin/css/fileinput.css">
 <script type="text/javascript" src="assets/admin/js/plugins/uploaders/fileinput.min.js"></script>
 <script type="text/javascript" src="assets/admin/js/pages/uploader_bootstrap.js"></script>
 <div class="page-header page-header-default">
@@ -9,7 +10,12 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li><a href="<?php echo site_url('admin/posts'); ?>"><i class="icon-comment position-left"></i> Posts</a></li>
+            <?php if (isset($user_id)) { ?>
+                <li><a href="<?php echo site_url('admin/users'); ?>"><i class="icon-users2"></i> Users</a></li>
+                <li><a href="<?php echo site_url('admin/users/posts/'. $user_id); ?>"><i class="icon-comment position-left"></i> Posts</a></li>
+            <?php } else { ?>
+                <li><a href="<?php echo site_url('admin/posts'); ?>"><i class="icon-comment position-left"></i> Posts</a></li>
+            <?php } ?>
             <li class="active"><i class="icon-book position-left"></i><?php echo $heading; ?></li>
         </ul>
     </div>
@@ -55,6 +61,7 @@ if ($this->session->flashdata('success')) {
                     <form  method="post" id="user_form" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
                         <div class="panel panel-flat">
                             <div class="panel-body">
+                                <?php if (!isset($user_id)) { ?>
                                 <div class="form-group">
                                     <label>User:</label>
                                     <select name="user_id" id="user_id" class="form-control">
@@ -63,7 +70,7 @@ if ($this->session->flashdata('success')) {
                                         if (isset($users) && !empty($users)) {
                                             foreach ($users as $key => $value) {
                                                 $selected = '';
-                                                if (isset($post_data) && $post_data['user_id'] == $value['id']) {
+                                                if (isset($post_data) && $post_data['pf_user_id'] == $value['id']) {
                                                     $selected = 'selected';
                                                 }
                                                 ?>
@@ -74,6 +81,7 @@ if ($this->session->flashdata('success')) {
                                         ?>
                                     </select>
                                 </div>
+                                <?php } ?>
                                 <div class="form-group">
                                     <label>User Profile:</label>
                                     <select name="profile_id" id="profile_id" class="form-control">
@@ -101,11 +109,69 @@ if ($this->session->flashdata('success')) {
                                     <label>Image:</label>
                                     <input type="file" name="image[]" id="image[]" class="image_file_upload" multiple="multiple">
                                     <span class="help-block image_helper">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
+                                    <?php if (isset($post_media) && !empty($post_media)) { ?>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="image_custom_preview">
+                                                    <?php
+                                                    $cnt = 0;
+                                                    foreach ($post_media as $key => $value) {
+                                                        if ($value['type'] == 1) {
+                                                            ?>
+                                                            <div class="col-lg-2 col-sm-6 div_other_img">
+                                                                <img src="<?php echo base_url(POST_IMAGES . $value['media']) ?>" alt="" style="height:120px;width:150px" class="img-thumbnail">
+                                                                <input type="hidden" class="hidden_other_img" name="hidden_other_image_id[]" id="hidden_other_image<?php echo $cnt; ?>" value="<?php echo $value['id']; ?>">
+                                                                <div class="text-center mt-1">
+                                                                    <span>
+                                                                        <a href="javascript:void(0);" class="btn btn-danger btn-xs remove_other_img" style="top-margin:5px !important">REMOVE</a>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <?php
+                                                            $cnt++;
+                                                        }
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                                 <div class="form-group">
                                     <label>Video:</label>
+
+
                                     <input type="file" name="video[]" id="video[]" class="video_file_upload" multiple="multiple">
                                     <span class="help-block video_helper">Accepted formats:  mp4. Max file size 100MB</span>
+                                    <?php if (isset($post_media) && !empty($post_media)) { ?>
+                                        <div class="col-md-12">
+                                            <div class="row">
+                                                <div class="image_custom_preview">
+                                                    <?php
+                                                    $cnt = 0;
+                                                    foreach ($post_media as $key => $value) {
+                                                        if ($value['type'] == 2) {
+                                                            ?>
+                                                            <div class="col-lg-2 col-sm-6 div_other_img">
+                                                                <video width="175px" height="160px" controls="">
+                                                                    <source src="<?php echo base_url(POST_IMAGES . $value['media']) ?>" type="video/mp4">
+                                                                </video>
+                                                                <input type="hidden" class="hidden_other_video" name="hidden_other_video_id[]" id="hidden_other_image<?php echo $cnt; ?>" value="<?php echo $value['id']; ?>">
+                                                                <div class="text-center mt-1">
+                                                                    <span>
+                                                                        <a href="javascript:void(0);" class="btn btn-danger btn-xs remove_other_video" style="top-margin:5px !important">REMOVE</a>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <?php
+                                                            $cnt++;
+                                                        }
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                                 <div class="text-right">
                                     <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
@@ -139,12 +205,12 @@ if ($this->session->flashdata('success')) {
                     profile_id: {
                         required: true,
                     },
-//                    comment: {
-//                        atleast_one: ['image[]','video[]'],
-//                    },
-//                    'image[]': {
-//                        required: true,
-//                    }
+                    //                    comment: {
+                    //                        atleast_one: ['image[]','video[]'],
+                    //                    },
+                    //                    'image[]': {
+                    //                        required: true,
+                    //                    }
 
                 },
                 errorPlacement: function (error, element) {
@@ -217,6 +283,12 @@ if ($this->session->flashdata('success')) {
                 //                },
                 //maxFileSize: 100
             });
+        });
+        $(document).on('click', '.remove_other_img', function () {
+            $(this).parents('.div_other_img').remove();
+        });
+        $(document).on('click', '.remove_other_video', function () {
+            $(this).parents('.div_other_img').remove();
         });
         $(document).on('change', '#user_id', function () {
             var user_id = $("#user_id option:selected").val();
