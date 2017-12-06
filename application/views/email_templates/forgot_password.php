@@ -40,9 +40,9 @@
             <center>
                 <table border='0' cellpadding='50' cellspacing='0' style='margin-left: auto;margin-right: auto;width:600px;text-align:center;' width='600'>
                     <tr>
-                        <td align='center' valign='top' color='#26A69A'>
+                        <td align='center' valign='top' color='#975979'>
                             <!--<img height="75" src="../../assets/images/emails/logo_blue.jpg" style="outline:none; text-decoration:none;border:none;display:block;" width="100" />-->
-                            <!--<h2 style='color: #26A69A !important'>Remember Always</h2>-->
+                            <!--<h2 style='color: #975979 !important'>Remember Always</h2>-->
                         </td>
                     </tr>
                 </table>
@@ -58,7 +58,7 @@
                     <table border='0' cellpadding='0' cellspacing='0' width='100%'>
                         <tr>
                             <td align='center' valign='top'>
-                                <h2 style='color: #26A69A !important'>Password reset</h2>
+                                <h2 style='color: #975979 !important'>Password reset</h2>
                             </td>
                         </tr>
                         <tr>
@@ -83,7 +83,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align='center' bgcolor='#26A69A' valign='top'>
+                            <td align='center' bgcolor='#975979' valign='top'>
                                 <h3><a href="<?php echo $url ?>" style="color: #ffffff !important">Change my password</a></h3>
                             </td>
                         </tr>

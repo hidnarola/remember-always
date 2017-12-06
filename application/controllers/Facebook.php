@@ -81,11 +81,13 @@ class Facebook extends My_Controller {
                 echo "Error Code: " . $helper->getErrorCode() . "\n";
                 echo "Error Reason: " . $helper->getErrorReason() . "\n";
                 echo "Error Description: " . $helper->getErrorDescription() . "\n";
+                $this->session->set_flashdata('error', $helper->getErrorDescription());
+                redirect('/');
             } else {
                 header('HTTP/1.0 400 Bad Request');
                 echo 'Bad request';
+                exit;
             }
-            exit;
         }
 
         $oAuth2Client = $this->facebook->getOAuth2Client();
@@ -137,7 +139,7 @@ class Facebook extends My_Controller {
                 } else {
                     $this->session->set_userdata('remalways_user', $db_user);
                     $this->session->set_flashdata('success', 'You are now logged in with Facebook successfully');
-                    redirect('home');
+                    redirect('/');
                 }
             } else {
                 $data = [
@@ -153,10 +155,11 @@ class Facebook extends My_Controller {
                     'is_active' => 1,
                     'created_at' => date('Y-m-d H:i:s')
                 ];
-                $this->users_model->common_insert_update('insert', TBL_USERS, $data);
+                $user_id = $this->users_model->common_insert_update('insert', TBL_USERS, $data);
+                $data['id'] = $user_id;
                 $this->session->set_userdata('remalways_user', $data);
                 $this->session->set_flashdata('success', 'You are now logged in with Facebook successfully');
-                redirect('home');
+                redirect('/');
             }
         } else {
             $this->session->set_flashdata('error', 'Unable to connect with facebook');

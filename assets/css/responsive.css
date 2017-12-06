@@ -2,3 +2,10 @@
 .navbar-header{display:none;}
 
 }
+
+@media(max-width:500px){
+#login .modal-dialog {width:94%;}
+.login-options a {float:none !important;display:block;text-align:center;margin:15px 0 0;}
+.popup-or{margin:0;}
+
+}

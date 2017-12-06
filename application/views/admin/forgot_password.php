@@ -12,6 +12,7 @@
         </noscript>    
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+        <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
         <link href="assets/admin/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
         <link href="assets/admin/css/bootstrap.css" rel="stylesheet" type="text/css">
         <link href="assets/admin/css/core.css" rel="stylesheet" type="text/css">
@@ -103,8 +104,7 @@
                 if (element.parents('div').hasClass("checker") || element.parents('div').hasClass("choice") || element.parent().hasClass('bootstrap-switch-container')) {
                     if (element.parents('label').hasClass('checkbox-inline') || element.parents('label').hasClass('radio-inline')) {
                         error.appendTo(element.parent().parent().parent().parent());
-                    }
-                    else {
+                    } else {
                         error.appendTo(element.parent().parent().parent().parent().parent());
                     }
                 }
@@ -127,9 +127,7 @@
                 // Input group, styled file input
                 else if (element.parent().hasClass('uploader') || element.parents().hasClass('input-group')) {
                     error.appendTo(element.parent().parent());
-                }
-
-                else {
+                } else {
                     error.insertAfter(element);
                 }
             },

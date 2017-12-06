@@ -36,7 +36,7 @@ class Google extends MY_Controller {
 
             $access_token = json_decode($access_token, 1);
 
-           
+
             if (!empty($access_token['refresh_token']))
                 $data['refresh_token'] = $access_token['refresh_token'];
 
@@ -53,10 +53,10 @@ class Google extends MY_Controller {
                     } else {
                         $this->session->set_userdata('remalways_user', $db_user);
                         $this->session->set_flashdata('success', 'You are now logged in with Google successfully');
-                        redirect('home');
+                        redirect('/');
                     }
                 } else {
-                    
+
                     $data = [
                         'role' => 'user',
                         'firstname' => $me["name"]['givenName'],
@@ -70,10 +70,11 @@ class Google extends MY_Controller {
                         'is_active' => 1,
                         'created_at' => date('Y-m-d H:i:s')
                     ];
-                    $this->users_model->common_insert_update('insert', TBL_USERS, $data);
+                    $user_id = $this->users_model->common_insert_update('insert', TBL_USERS, $data);
+                    $data['id'] = $user_id;
                     $this->session->set_userdata('remalways_user', $data);
                     $this->session->set_flashdata('success', 'You are now logged in with google successfully');
-                    redirect('home');
+                    redirect('/');
                 }
             } else {
                 $this->session->set_flashdata('error', 'Unable to connect with facebook');

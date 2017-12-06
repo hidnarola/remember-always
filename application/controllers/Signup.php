@@ -23,6 +23,8 @@ class Signup extends MY_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             $data['error'] = validation_errors();
+            $error_msg = str_replace(array("\r", "\n"), '', $data['error']);
+            $this->session->set_flashdata('error', $error_msg);
         } else {
             $verification_code = verification_code();
             $data = array(
@@ -38,7 +40,8 @@ class Signup extends MY_Controller {
             );
             $this->users_model->common_insert_update('insert', TBL_USERS, $data);
 
-            $verification_code = $this->encrypt->encode($verification_code);
+//            $verification_code = $this->encrypt->encode($verification_code);
+            $verification_code = base64_encode($verification_code);
             $encoded_verification_code = urlencode($verification_code);
 
             $email_data = [];
@@ -48,10 +51,8 @@ class Signup extends MY_Controller {
             $email_data['subject'] = 'Verify Email | Remember Always';
             send_mail(trim($this->input->post('email')), 'verify_email', $email_data);
             $this->session->set_flashdata('success', 'You have been registered successfully and verification mail is sent! Please verify your email to login');
-            redirect('login');
         }
-        $data['title'] = 'Remember Always | Signup';
-        $this->template->load('default', 'signup', $data);
+        redirect('/');
     }
 
     /**
@@ -84,7 +85,8 @@ class Signup extends MY_Controller {
 
     public function verify() {
         $verification_code = $this->input->get('code');
-        $verification_code = $this->encrypt->decode(urldecode($verification_code));
+//        $verification_code = $this->encrypt->decode(urldecode($verification_code));
+        $verification_code = base64_decode(urldecode($verification_code));
         //--- check varification code is valid or not
         $result = $this->users_model->check_verification_code($verification_code);
         if (!empty($result)) {
@@ -104,7 +106,7 @@ class Signup extends MY_Controller {
             //--- if invalid verification code
             $this->session->set_flashdata('error', 'Invalid request or already verified your email');
         }
-        redirect('login');
+        redirect('/');
     }
 
 }

@@ -4,8 +4,13 @@
             <a href=""><img src="assets/images/logo.png" alt="" /></a>
         </div>
         <div class="login-register">
-            <a href="javascript:void(0)" onclick="showModal('log-in')">Login</a>
-            <a href="javascript:void(0)" onclick="showModal('sign-up')">Register</a>
+            <?php if ($this->is_user_loggedin) { ?>
+                <a href="<?php echo site_url('logout') ?>"><?php echo $this->session->userdata('remalways_user')['firstname'] . ' ' . $this->session->userdata('remalways_user')['lastname'] ?> Logout</a>
+            <?php } else {
+                ?>
+                <a href="javascript:void(0)" onclick="showModal('log-in')">Login</a>
+                <a href="javascript:void(0)" onclick="showModal('sign-up')">Register</a>
+            <?php } ?>
         </div>
         <div class="search">
             <a href=""><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">

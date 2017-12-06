@@ -9,17 +9,26 @@
 
         <!-- Bootstrap -->
         <link href="https://fonts.googleapis.com/css?family=Oswald:300,700|Roboto:400,500|Rubik:300,400,500,700,900" rel="stylesheet">
-
         <base href="<?php echo base_url(); ?>">
+
+        <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" >
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/owl.carousel.css" rel="stylesheet" />
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
+        <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" />
 
         <script type="text/javascript">
             //Set common javascript variable
             var site_url = "<?php echo site_url() ?>";
             var base_url = "<?php echo base_url() ?>";
+            var s_msg = "<?php echo $this->session->flashdata('success') ?>";
+            var e_msg = "<?php echo $this->session->flashdata('error') ?>";
+            var reset_pwd = 0;
         </script>
+        <?php if (isset($reset_password)) { ?>
+            <script>reset_pwd = 1;</script>
+        <?php } ?>
         <noscript>
         <META HTTP-EQUIV="Refresh" CONTENT="0;URL=js_disabled">
         </noscript>    
@@ -35,8 +44,10 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/owl.carousel.min.js"></script>
         <script src="assets/js/jquery.validate.min.js"></script>
         <script src="assets/js/additional-methods.min.js"></script>
+        <script src="assets/js/pnotify.custom.min.js"></script>
         <script src="assets/js/custom.js"></script>
 
     </head>
@@ -55,7 +66,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="log-in">
-                            <form method="post" id="login-form">
+                            <form method="post" id="login-form" action="<?php echo site_url('login') ?>">
                                 <div class="popup-input">
                                     <label>Email</label>
                                     <input type="text" name="email" placeholder="support@gmail.com" />
@@ -66,32 +77,33 @@
                                 </div>
                                 <div class="keep-me">
                                     <label class="custom-checkbox">keep me signed in
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="remember_me" value="1">
                                         <span class="checkmark"></span>
                                     </label>
-                                    <a href="">Forget your password?</a>
+                                    <!--<a data-target="#forgot-pwdmodal" data-toggle="modal">Forget your password?</a>-->
+                                    <a href="javascript:void(0)" onclick="showForgotModal()">Forget your password?</a>
                                 </div>
                                 <div class="pup-btn">
-                                    <button type="submit">LOG IN</button>
+                                    <button type="submit" id="login_form_btn">LOG IN</button>
                                 </div>
                                 <div class="popup-or">
                                     <span>OR</span>
                                 </div>
                                 <div class="login-options">
-                                    <a href=""><img src="assets/images/facebook-login.png" alt="" /></a>
-                                    <a href=""><img src="assets/images/google-login.png" alt="" /></a>
+                                    <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+                                    <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
                                 </div>
                             </form>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="sign-up">
-                            <form method="post" id="signup-form">
+                            <form method="post" id="signup-form" action="<?php echo site_url('signup') ?>">
                                 <div class="popup-input">
                                     <label>Email</label>
                                     <input type="text" name="email" placeholder="support@gmail.com" />
                                 </div>
                                 <div class="popup-input">
                                     <label>Password</label>
-                                    <input type="password" id="password" name="password" placeholder="password" />
+                                    <input type="password" name="password" id="password" placeholder="Password" />
                                 </div>
                                 <div class="popup-input">
                                     <label>Confirm Password</label>
@@ -99,8 +111,12 @@
                                 </div>
                                 <div class="popup-input name-input">
                                     <label>Name</label>
-                                    <input type="text" name="firstname" placeholder="Firt Name" />
-                                    <input type="text" name="lastname" placeholder="Last Name" />
+                                    <div class="first-last">
+                                        <input type="text" name="firstname" placeholder="First Name" />
+                                    </div>
+                                    <div class="last-first">
+                                        <input type="text" name="lastname" placeholder="Last Name" />
+                                    </div>
                                 </div>
 
                                 <div class="keep-me">
@@ -110,17 +126,67 @@
                                     </label>
                                 </div>
                                 <div class="pup-btn">
-                                    <button type="submit">Sign UP</button>
+                                    <button type="submit" id="signup_form_btn">Sign UP</button>
                                 </div>
                                 <div class="popup-or">
                                     <span>OR</span>
                                 </div>
                                 <div class="login-options">
-                                    <a href=""><img src="assets/images/facebook-login.png" alt="" /></a>
-                                    <a href=""><img src="assets/images/google-login.png" alt="" /></a>
+                                    <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+                                    <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
                                 </div>
                             </form>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="forgot-pwdmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="login-signup">
+                    <div class="mpopup-header">
+                        Password recovery
+                    </div>
+                    <div class="mpopup-body">
+                        <form method="post" id="forgot_password_form" action="<?php echo site_url('forgot_password') ?>">
+                            <div class="popup-input">
+                                <label>Email</label>
+                                <input type="text" name="email" id="email" placeholder="Your email" />
+                            </div>
+                            <div class="keep-me">
+                                <a href="javascript:void(0)" onclick="loginModal()">Back to login?</a>
+                            </div>
+                            <div class="pup-btn">
+                                <button type="submit" id="reset_password">RESET PASSWORD</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="resetpwd-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="login-signup">
+                    <div class="mpopup-header">
+                        Change Password
+                    </div>
+                    <div class="mpopup-body">
+                        <form method="post" id="reset_password_form" action="<?php echo site_url('reset_password') ?>">
+                            <div class="popup-input">
+                                <label>Password</label>
+                                <input type="password" name="password" id="password" placeholder="Password" />
+                            </div>
+                            <div class="popup-input">
+                                <label>Confirm Password</label>
+                                <input type="password" name="con_password" id="con_password" placeholder="Confirm Password" />
+                            </div>
+                            <div class="keep-me">
+                                <a href="javascript:void(0)" onclick="loginrestModal()">Back to login?</a>
+                            </div>
+                            <div class="pup-btn">
+                                <button type="submit" id="change_password_btn">CHANGE PASSWORD</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
