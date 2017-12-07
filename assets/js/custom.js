@@ -141,7 +141,7 @@ $(function () {
             }
         },
         submitHandler: function (form) {
-            $('#reset_password').attr('disabled', true);
+            $('#reset_password_btn').attr('disabled', true);
             form.submit();
         }
     });
@@ -155,7 +155,7 @@ $(function () {
             con_password: {
                 required: true,
                 minlength: 5,
-                equalTo: "#password"
+                equalTo: "#reset_password"
             },
         },
         messages: {

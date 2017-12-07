@@ -157,7 +157,7 @@
                                 <a href="javascript:void(0)" onclick="loginModal()">Back to login?</a>
                             </div>
                             <div class="pup-btn">
-                                <button type="submit" id="reset_password">RESET PASSWORD</button>
+                                <button type="submit" id="reset_password_btn">RESET PASSWORD</button>
                             </div>
                         </form>
                     </div>
@@ -171,10 +171,16 @@
                         Change Password
                     </div>
                     <div class="mpopup-body">
-                        <form method="post" id="reset_password_form" action="<?php echo site_url('reset_password') ?>">
+                        <?php
+                        $reset_pwd_code = '';
+                        if (isset($reset_password_code)) {
+                            $reset_pwd_code = $reset_password_code;
+                        }
+                        ?>
+                        <form method="post" id="reset_password_form" action="<?php echo site_url('reset_password?code=' . $reset_pwd_code) ?>">
                             <div class="popup-input">
                                 <label>Password</label>
-                                <input type="password" name="password" id="password" placeholder="Password" />
+                                <input type="password" name="password" id="reset_password" placeholder="Password" />
                             </div>
                             <div class="popup-input">
                                 <label>Confirm Password</label>

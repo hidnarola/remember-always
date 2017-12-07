@@ -53,7 +53,7 @@ class Home_slider extends MY_Controller {
             $this->data['title'] = 'Remember Always Admin | Home Slider';
             $this->data['heading'] = 'Add Home Slider';
         }
-        $this->form_validation->set_rules('description', 'Description', 'trim|required');
+        $this->form_validation->set_rules('description', 'Description', 'trim');
 //        $this->form_validation->set_rules('image', 'Image', 'required');
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();

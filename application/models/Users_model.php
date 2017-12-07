@@ -88,6 +88,7 @@ class Users_model extends MY_Model {
      */
     public function check_verification_code($verification_code) {
         $this->db->where('verification_code', $verification_code);
+        $this->db->where('is_delete', 0);
         $query = $this->db->get(TBL_USERS);
         return $query->row_array();
     }
@@ -98,7 +99,7 @@ class Users_model extends MY_Model {
      * @return array for result or integer for count
      */
     public function get_profiles($type = 'result', $user_id) {
-        $columns = ['id', 'profile_image', 'firstname', 'lastname','type','privacy', 'email', 'p.created_at', 'is_blocked', 'is_published'];
+        $columns = ['id', 'profile_image', 'firstname', 'lastname', 'type', 'privacy', 'email', 'p.created_at', 'is_blocked', 'is_published'];
         $keyword = $this->input->get('search');
         $this->db->select('p.*');
         $this->db->join(TBL_USERS . ' u', 'u.id=p.user_id AND u.is_delete=0', 'left');
@@ -119,4 +120,5 @@ class Users_model extends MY_Model {
             return $query->num_rows();
         }
     }
+
 }

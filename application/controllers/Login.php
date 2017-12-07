@@ -83,7 +83,7 @@ class Login extends CI_Controller {
             $error_msg = str_replace(array("\r", "\n"), '', $data['error']);
             $this->session->set_flashdata('error', $error_msg);
         } else {
-            $user = $this->users_model->get_user_detail("email='" . trim($this->input->post('email')) . "' AND is_delete=0 AND is_active=1 AND facebook_id IS NULL AND google_id IS NULL");
+            $user = $this->users_model->get_user_detail("email='" . trim($this->input->post('email')) . "' AND is_delete=0 AND is_active=1 AND role='user' AND facebook_id IS NULL AND google_id IS NULL");
             $verification_code = verification_code();
             $this->users_model->common_insert_update('update', TBL_USERS, array('verification_code' => $verification_code), array('id' => $user['id']));
 
@@ -96,7 +96,7 @@ class Login extends CI_Controller {
             $email_data['email'] = trim($this->input->post('email'));
             $email_data['subject'] = 'Reset Password - Remember Always';
             send_mail(trim($this->input->post('email')), 'forgot_password', $email_data);
-            $this->session->set_flashdata('success', 'Email has been successfully sent to reset password!Please check email');
+            $this->session->set_flashdata('success', 'Email has been successfully sent to reset password! Please check email');
         }
         redirect('/');
     }
@@ -134,7 +134,7 @@ class Login extends CI_Controller {
      */
     public function reset_password() {
         $data['title'] = 'Remember Always | Reset Password';
-        $verification_code = $this->input->get('code');
+        $org_code = $verification_code = $this->input->get('code');
 //        $verification_code = $this->encrypt->decode($verification_code);
         $verification_code = base64_decode($verification_code);
         $this->is_user_loggedin = false;
@@ -150,7 +150,7 @@ class Login extends CI_Controller {
 
                 //--- if valid then reset password and generate new verification code
                 //--- generate verification code
-                $new_verification_code = verification_code();
+                $new_verification_code = NULL;
                 $id = $result['id'];
                 $data = array(
                     'password' => password_hash($this->input->post('password'), PASSWORD_BCRYPT),
@@ -161,6 +161,7 @@ class Login extends CI_Controller {
                 redirect('/');
             }
             $data['reset_password'] = true;
+            $data['reset_password_code'] = $org_code;
             $data['title'] = 'Remember Always';
             $data['slider'] = $this->users_model->sql_select(TBL_SLIDER, 'image,description', ['where' => ['is_delete' => 0, 'is_active' => 1]]);
             $this->template->load('default', 'home', $data);

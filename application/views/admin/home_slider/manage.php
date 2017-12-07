@@ -55,13 +55,13 @@ if ($this->session->flashdata('success')) {
                         <div class="message alert alert-danger" style="display:none"></div>
 
                         <div class="form-group">
-                            <label class="col-lg-2 control-label">Description <span class="text-danger">*</span></label>
+                            <label class="col-lg-2 control-label">Description</label>
                             <div class="col-lg-6">
                                 <textarea name="description" id="description" placeholder="Enter Description" class="form-control" rows="5"><?php echo (isset($slider['description'])) ? $slider['description'] : set_value('description'); ?></textarea>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-lg-2">Upload Image</label>
+                            <label class="control-label col-lg-2">Upload Image <span class="text-danger">*</span></label>
                             <div class="col-lg-6">
                                 <div class="media no-margin-top">
                                     <div class="media-left" id="image_preview_div">
@@ -117,9 +117,12 @@ if ($this->session->flashdata('success')) {
         </div>
     </div>
 </div>
+<script>is_valid = false;</script>
+<?php if (isset($slider)) { ?>
+    <script>is_valid = true;</script>
+<?php } ?>
 <script>
     max_image_size = <?php echo MAX_IMAGE_SIZE ?>;
-    is_valid = false;
     $("#slider_image_form").validate({
         ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
         errorClass: 'validation-error-label',
@@ -139,9 +142,6 @@ if ($this->session->flashdata('success')) {
             }
         },
         rules: {
-            description: {
-                required: true
-            },
             image: {
                 extension: "jpg|png|jpeg",
                 maxFileSize: {

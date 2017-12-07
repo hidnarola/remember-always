@@ -76,7 +76,7 @@ class Login extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $data['error'] = validation_errors();
         } else {
-            $user = $this->users_model->get_user_detail(['email' => trim($this->input->post('email')), 'is_delete' => 0, 'is_active' => 1]);
+            $user = $this->users_model->get_user_detail(['email' => trim($this->input->post('email')), 'is_delete' => 0, 'is_active' => 1, 'role' => 'admin']);
             $verification_code = verification_code();
             $this->users_model->common_insert_update('update', TBL_USERS, array('verification_code' => $verification_code), array('id' => $user['id']));
 
