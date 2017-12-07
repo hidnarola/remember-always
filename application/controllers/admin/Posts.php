@@ -85,7 +85,7 @@ class Posts extends MY_Controller {
 
 
         if ($this->input->method() == 'post') {
-            $profiles = $this->post_model->sql_select(TBL_PROFILES, null, ['where' => array('is_delete' => 0, 'user_id' => base64_decode($this->input->post('user_id')))]);
+            $profiles = $this->post_model->sql_select(TBL_PROFILES, null, ['where' => array('is_delete' => 0, 'user_id' => base64_decode($this->input->post('pf_user_id')))]);
             if (!empty($profiles)) {
                 $this->data['profiles'] = $profiles;
             }
@@ -249,7 +249,7 @@ class Posts extends MY_Controller {
             }
             $dataArr = array(
                 'profile_id' => base64_decode(trim($this->input->post('profile_id'))),
-                'user_id' => 1,
+                'user_id' => base64_decode(trim($this->input->post('user_id'))),
             );
             if (!empty(trim($this->input->post('comment')))) {
                 $dataArr['comment'] = trim($this->input->post('comment'));
@@ -384,7 +384,6 @@ class Posts extends MY_Controller {
         $options = '<option value="">-- Select User Profile --</option>';
         if (is_numeric($id)) {
             $post_data = $this->post_model->sql_select(TBL_PROFILES, null, ['where' => array('user_id' => trim($id), 'is_delete' => 0)]);
-            qry();
             if (!empty($post_data)) {
                 foreach ($post_data as $row) {
                     $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['firstname'] . ' ' . $row['lastname'] . "</option>";
@@ -408,6 +407,10 @@ class Posts extends MY_Controller {
         } else {
             return TRUE;
         }
+    }
+
+    public function test() {
+        $this->load->view('admin/posts/test');
     }
 
 }

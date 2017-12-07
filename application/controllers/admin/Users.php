@@ -124,7 +124,7 @@ class Users extends MY_Controller {
     }
 
     /**
-     * Edit a Uesr.
+     * View a Uesr.
      *
      */
     public function view($id) {
@@ -389,7 +389,7 @@ class Users extends MY_Controller {
             }
             $dataArr = array(
                 'profile_id' => base64_decode(trim($this->input->post('profile_id'))),
-                'user_id' => 1,
+                'user_id' => base64_decode(trim($this->input->post('user_id'))),
             );
             if (!empty(trim($this->input->post('comment')))) {
                 $dataArr['comment'] = trim($this->input->post('comment'));
@@ -521,6 +521,67 @@ class Users extends MY_Controller {
 //         p($users, 1);
         $final['data'] = $users;
         echo json_encode($final);
+    }
+
+    /**
+     * Actions for user profiles
+     * @param int $id
+     * */
+    public function profile_action($action, $id = NULL, $user_id) {
+        $id = base64_decode($id);
+        if (is_numeric($id) && !empty($action)) {
+            $profile_data = $this->users_model->sql_select(TBL_PROFILES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+            if (!empty($profile_data)) {
+                if ($action == 'delete') {
+                    $update_array = array(
+                        'is_delete' => 1,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    );
+                    $this->session->set_flashdata('success', 'Profile has been deleted successfully!');
+                } else if ($action == 'block') {
+                    $update_array = array(
+                        'is_blocked' => 1,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    );
+                    $this->session->set_flashdata('success', 'Profile has been blocked successfully!');
+                } else if ($action == 'unblock') {
+                    $update_array = array(
+                        'is_blocked' => 0,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    );
+                    $this->session->set_flashdata('success', 'Profile has been unblocked successfully!');
+                }
+                $this->users_model->common_insert_update('update', TBL_PROFILES, $update_array, ['id' => $id]);
+            } else {
+                $this->session->set_flashdata('error', 'Unable to User slider!');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
+        }
+        redirect('admin/users/profile/' . $user_id);
+    }
+
+    /**
+     * View a USer profile data.
+     *
+     */
+    public function viewprofile($id) {
+
+        if (!is_null($id))
+            $id = base64_decode($id);
+        if (is_numeric($id)) {
+            $this->data['title'] = 'Remember Always Admin | User Profile';
+            $this->data['heading'] = 'View User Profile Details';
+            $profile_data = $this->users_model->sql_select(TBL_PROFILES . ' p', null, ['where' => array('p.id' => trim($id), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')], 'single' => true]);
+            if (!empty($profile_data)) {
+                $this->data['profile_data'] = $profile_data;
+            } else {
+                custom_show_404();
+            }
+            $this->template->load('admin', 'admin/profile/view', $this->data);
+        } else {
+            custom_show_404();
+        }
     }
 
 }

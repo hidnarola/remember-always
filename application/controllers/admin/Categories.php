@@ -73,7 +73,7 @@ class Categories extends MY_Controller {
         } else {
             $dataArr = ['name' => trim(htmlentities($this->input->post('name')))];
             if (is_numeric($id)) {
-                $dataArr['updated_at'] = date('Y-m-d H:i:s');
+                $dataArr['modified_at'] = date('Y-m-d H:i:s');
                 $this->category_model->common_insert_update('update', TBL_SERVICE_CATEGORIES, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service Categirty details has been updated successfully.');
             } else {
@@ -104,7 +104,8 @@ class Categories extends MY_Controller {
             $category = $this->category_model->sql_select(TBL_SERVICE_CATEGORIES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($category)) {
                 $update_array = array(
-                    'is_delete' => 1
+                    'is_delete' => 1,
+                    'modified_at' => date('Y-m-d H:i:s')
                 );
                 $this->category_model->common_insert_update('update', TBL_SERVICE_CATEGORIES, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service categories has been deleted successfully!');
