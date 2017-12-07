@@ -66,13 +66,30 @@ class Home_slider extends MY_Controller {
                     $flag = 1;
                     $data['profile_image_validation'] = $image_data['errors'];
                 } else {
-                    if (is_numeric($id)) {
-                        $slider = $this->home_slider_model->sql_select(TBL_SLIDER, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
-                        if (!empty($slider)) {
-                            unlink(SLIDER_IMAGES . $slider['image']);
+                    $slider_image = $image_data;
+
+                    // check height of uploaded slider image
+                    $image_size = getimagesize(base_url() . SLIDER_IMAGES . $image_data);
+                    if ($image_size[1] > 730) {
+                        $path_parts = pathinfo(SLIDER_IMAGES . $image_data);
+                        $new_image = $path_parts['filename'] . 'resize.' . $path_parts['extension'];
+                        $slider_image = $new_image;
+//                        $new_width = (730 * $image_size[0]) / $image_size[1];
+                        $new_width = 1600;
+                        $resize_data = resize_image(SLIDER_IMAGES . $image_data, SLIDER_IMAGES . $slider_image, $new_width, 730);
+                        if (is_array($resize_data)) {
+                            $flag = 1;
+                            $data['profile_image_validation'] = $resize_data['errors'];
                         }
                     }
-                    $slider_image = $image_data;
+                    if ($flag == 0) {
+                        if (is_numeric($id)) {
+                            $slider = $this->home_slider_model->sql_select(TBL_SLIDER, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+                            if (!empty($slider)) {
+                                unlink(SLIDER_IMAGES . $slider['image']);
+                            }
+                        }
+                    }
                     $dataArr['image'] = $slider_image;
                 }
             } else {
@@ -84,17 +101,18 @@ class Home_slider extends MY_Controller {
                     }
                 }
             }
-//            p($dataArr,1);
-            if (is_numeric($id)) {
-                $dataArr['updated_at'] = date('Y-m-d H:i:s');
-                $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $dataArr, ['id' => $id]);
-                $this->session->set_flashdata('success', 'Slider details has been updated successfully.');
-            } else {
-                $dataArr['created_at'] = date('Y-m-d H:i:s');
-                $id = $this->home_slider_model->common_insert_update('insert', TBL_SLIDER, $dataArr);
-                $this->session->set_flashdata('success', 'Slider details has been inserted successfully.');
+            if ($flag == 0) {
+                if (is_numeric($id)) {
+                    $dataArr['updated_at'] = date('Y-m-d H:i:s');
+                    $this->home_slider_model->common_insert_update('update', TBL_SLIDER, $dataArr, ['id' => $id]);
+                    $this->session->set_flashdata('success', 'Slider details has been updated successfully.');
+                } else {
+                    $dataArr['created_at'] = date('Y-m-d H:i:s');
+                    $id = $this->home_slider_model->common_insert_update('insert', TBL_SLIDER, $dataArr);
+                    $this->session->set_flashdata('success', 'Slider details has been inserted successfully.');
+                }
+                redirect('admin/home_slider');
             }
-            redirect('admin/home_slider');
         }
         $this->template->load('admin', 'admin/home_slider/manage', $this->data);
     }
@@ -147,7 +165,7 @@ class Home_slider extends MY_Controller {
             } else {
                 $this->session->set_flashdata('error', 'Unable to delete slider!');
             }
-        }else {
+        } else {
             $this->session->set_flashdata('error', 'Invalid request. Please try again!');
         }
         redirect('admin/home_slider');
@@ -171,7 +189,7 @@ class Home_slider extends MY_Controller {
             } else {
                 $this->session->set_flashdata('error', 'Unable to hide slider!');
             }
-        }else {
+        } else {
             $this->session->set_flashdata('error', 'Invalid request. Please try again!');
         }
         redirect('admin/home_slider');
@@ -195,8 +213,7 @@ class Home_slider extends MY_Controller {
             } else {
                 $this->session->set_flashdata('error', 'Unable to show slider!');
             }
-        }
-        else {
+        } else {
             $this->session->set_flashdata('error', 'Invalid request. Please try again!');
         }
         redirect('admin/home_slider');

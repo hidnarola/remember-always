@@ -27,7 +27,7 @@ class Profile extends MY_Controller {
     public function create() {
         if (!$this->is_user_loggedin) {
             $this->session->set_flashdata('error', 'You must login to access this page');
-            redirect('login');
+            redirect('/');
         }
         $this->form_validation->set_rules('profile_image', 'Profile Image', 'trim|required');
         $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
@@ -45,10 +45,10 @@ class Profile extends MY_Controller {
                 'user_id' => $this->session->userdata('remalways_user')['id'],
                 'firstname' => trim($this->input->post('firstname')),
                 'lastname' => trim($this->input->post('lastname')),
+                'nickname' => trim($this->input->post('nickname')),
                 'slug' => $slug,
                 'profile_image' => $profile_image,
-                'tag_line' => trim($this->input->post('tag_line')),
-                'fun_facts' => trim($this->input->post('fun_facts')),
+                'life_bio' => trim($this->input->post('life_bio')),
                 'date_of_birth' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_birth'))),
                 'date_of_death' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_death'))),
                 'created_at' => date('Y-m-d H:i:s')
@@ -58,8 +58,9 @@ class Profile extends MY_Controller {
             $this->session->set_flashdata('success', 'Profile Created successfully!');
             redirect('profile/' . $slug);
         }
+        $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Create Profile';
-        $this->template->load('default', 'profile_form', $data);
+        $this->template->load('default', 'profile/profile_form', $data);
     }
 
 }

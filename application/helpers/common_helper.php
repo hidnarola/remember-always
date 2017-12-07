@@ -188,7 +188,7 @@ function upload_image($image_name, $image_path) {
  * @param string $image_path
  * @return array - Either name of the image if uploaded successfully or Array of errors if image is not uploaded successfully
  */
-function upload_multiple_image($image_name, $extension, $image_path, $type= 'image',$allow_extension = null) {
+function upload_multiple_image($image_name, $extension, $image_path, $type = 'image', $allow_extension = null) {
     $CI = & get_instance();
 //    $extension = explode('/', $_FILES[$image_name]['type']);
     $randname = uniqid() . time() . '.' . $extension;
@@ -200,9 +200,9 @@ function upload_multiple_image($image_name, $extension, $image_path, $type= 'ima
         // 'max_width'       => "1024" ,
         'file_name' => $randname
     );
-    if($type == 'image'){
+    if ($type == 'image') {
         $config['max_size'] = MAX_IMAGE_SIZE * 1024;
-    }else if ($type == 'video'){
+    } else if ($type == 'video') {
         $config['max_size'] = MAX_VIDEO_SIZE * 1024;
     }
     if ($allow_extension != null) {
@@ -263,7 +263,7 @@ function front_pagination() {
 }
 
 /**
- * Resise image to specified dimensions
+ * Resize image to specified dimensions
  * @param string $src - Source of image
  * @param string $dest - Destination of image
  * @param int $width - Width of image
@@ -280,7 +280,11 @@ function resize_image($src, $dest, $width, $height) {
     $config['height'] = $height;
     $config['new_image'] = $dest;
     $CI->image_lib->initialize($config);
-    $CI->image_lib->resize();
+    $data = '';
+    if (!$CI->image_lib->resize()) {
+        $data = array('errors' => $CI->image_lib->display_errors());
+    }
+    return $data;
 }
 
 /**

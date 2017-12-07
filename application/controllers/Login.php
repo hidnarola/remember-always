@@ -163,7 +163,7 @@ class Login extends CI_Controller {
             $data['reset_password'] = true;
             $data['reset_password_code'] = $org_code;
             $data['title'] = 'Remember Always';
-            $data['slider'] = $this->users_model->sql_select(TBL_SLIDER, 'image,description', ['where' => ['is_delete' => 0, 'is_active' => 1]]);
+            $data['slider_images'] = $this->users_model->sql_select(TBL_SLIDER, 'image,description', ['where' => ['is_delete' => 0, 'is_active' => 1]]);
             $this->template->load('default', 'home', $data);
         } else {
             //--- if invalid verification code

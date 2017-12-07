@@ -51,7 +51,13 @@
         <script src="assets/js/custom.js"></script>
 
     </head>
-    <body>
+    <?php
+    $body_class = '';
+    if ($this->controller != 'home') {
+        $body_class = 'inr-pages';
+    }
+    ?>
+    <body class="<?php echo $body_class ?>">
         <?php
         $this->load->view('Templates/default_header');
         echo $body;
@@ -154,7 +160,7 @@
                                 <input type="text" name="email" id="email" placeholder="Your email" />
                             </div>
                             <div class="keep-me">
-                                <a href="javascript:void(0)" onclick="loginModal()">Back to login?</a>
+                                <a href="javascript:void(0)" onclick="loginforgetModal()">Back to login?</a>
                             </div>
                             <div class="pup-btn">
                                 <button type="submit" id="reset_password_btn">RESET PASSWORD</button>

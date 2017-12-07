@@ -3,15 +3,32 @@
         <div class="logo">
             <a href=""><img src="assets/images/logo.png" alt="" /></a>
         </div>
-        <div class="login-register">
-            <?php if ($this->is_user_loggedin) { ?>
-                <a href="<?php echo site_url('logout') ?>"><?php echo $this->session->userdata('remalways_user')['firstname'] . ' ' . $this->session->userdata('remalways_user')['lastname'] ?> Logout</a>
-            <?php } else {
-                ?>
+        <?php if ($this->is_user_loggedin) { ?>
+            <div class="login-user dropdown">
+                <a href="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <span class="user-name">
+                        <?php if ($this->session->userdata('remalways_user')['profile_image'] != '') { ?>
+                            <img src="<?php echo USER_IMAGES . $this->session->userdata('remalways_user')['profile_image']; ?>" alt="<?php echo $this->session->userdata('remalways_user')['firstname'] ?>"/>
+                        <?php } else { ?>
+                            <img src="assets/images/profile-icon.png" alt="<?php echo $this->session->userdata('remalways_user')['firstname'] ?>"/>
+                        <?php } ?>
+                    </span>
+                    <?php echo $this->session->userdata('remalways_user')['firstname'] . ' ' . $this->session->userdata('remalways_user')['lastname'] ?>
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="">My Profile</a></li>
+                    <li><a href="">Edit Profile </a></li>
+                    <li><a href="<?php echo site_url('logout') ?>">Logout</a></li>
+                </ul>
+            </div>
+        <?php } else {
+            ?>
+            <div class="login-register">
                 <a href="javascript:void(0)" onclick="showModal('log-in')">Login</a>
                 <a href="javascript:void(0)" onclick="showModal('sign-up')">Register</a>
-            <?php } ?>
-        </div>
+            </div>
+        <?php } ?>
         <div class="search">
             <a href=""><svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129">
                     <g>
@@ -46,5 +63,15 @@
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+        <?php if (isset($breadcrumb)) { ?>
+            <div class="breadcrumb">
+                <ul>
+                    <?php foreach ($breadcrumb['links'] as $bcrumb) { ?>
+                        <li><a href="<?php echo $bcrumb['link'] ?>"><?php echo $bcrumb['title'] ?></a></li>
+                    <?php } ?>
+                    <li><?php echo $breadcrumb['title'] ?></li>
+                </ul>
+            </div>
+        <?php } ?>
     </div>
 </header>

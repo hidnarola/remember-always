@@ -191,11 +191,35 @@ function showForgotModal() {
     $('#login').modal('hide');
     $('#forgot-pwdmodal').modal();
 }
-function loginModal() {
+/**
+ * Hide forgot password modal and display login modal
+ */
+function loginforgetModal() {
     $('#forgot-pwdmodal').modal('hide');
     $('#login').modal();
 }
+/**
+ * Hide reset password modal and display login modal
+ */
 function loginrestModal() {
     $('#resetpwd-modal').modal('hide');
     $('#login').modal();
+}
+/**
+ * Display login popup when authorized access is needed
+ */
+function loginModal(obj) {
+    var redirect_url = $(obj).attr('data-redirect');
+    $('#login-form').attr('action', site_url + 'login?redirect=' + btoa(redirect_url));
+    new PNotify({
+        title: 'Error!',
+        text: 'Please login first!',
+        buttons: {
+            sticker: false
+        },
+        //styling:'bootstrap3',
+        type: 'error'
+    });
+    $('#login').modal();
+    $('.nav-tabs a[href="#log-in"]').tab('show');
 }
