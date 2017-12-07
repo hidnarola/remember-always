@@ -15,17 +15,17 @@ function initAutocomplete() {
             var places = autocomplete.getPlace();
 //            console.log(places);
             if (places.length == 0) {
-                 swal("Cancelled", "Your entered address is not able to track on google so please enter correct address. :)", "error");
+                swal("Cancelled", "Your entered address is not able to track on google so please enter correct address. :)", "error");
                 return;
             }
-            
+
 //            places.forEach(function (place) {
-                if (typeof places.geometry !== 'undefined') {
-                    $('#latitute').val(places.geometry.location.lat());
-                    $('#longitute').val(places.geometry.location.lng());
-                } else {
-                    googleLocationIssuePrompt();
-                }
+            if (typeof places.geometry !== 'undefined') {
+                $('#latitute').val(places.geometry.location.lat());
+                $('#longitute').val(places.geometry.location.lng());
+            } else {
+                googleLocationIssuePrompt();
+            }
 //            });
 
             /**
@@ -59,19 +59,42 @@ function fillInAddress(place) {
 function fillInAddressComponents(place, componentForm, formFields) {
 //    place = place[0];
     for (var field in formFields) {
-        document.getElementById(formFields[field]).value = '';
+        if (field != 'state') {
+            document.getElementById(formFields[field]).value = '';
+        }
     }
     // Get each component of the address from the place details
     // and fill the corresponding field on the form.
     if (typeof place.address_components != 'undefined') {
         for (var i = 0; i < place.address_components.length; i++) {
             var addressType = place.address_components[i].types[0];
+//            console.log(addressType);
             if (formFields[addressType]) {
                 var val = place.address_components[i][componentForm[addressType]];
                 if (addressType === 'street_number' || addressType === 'route' || addressType == 'sublocality_level_2') {
                     document.getElementById(formFields[addressType]).value += ' ' + val;
                 } else {
+                    if (addressType == 'administrative_area_level_1') {
+                        console.log('heere');
+//                        $('#state').val(3922);
+//                        console.log('value is', $('#state').val());
+//                        $('#state').trigger('change');
+                        var state_val = $('#state').find('option:contains(' + val + ')').attr('value');
+                        $('#state').val(state_val);
+//                        console.log(state_val);
+//                        $('#state').val("'" + state_val + "'");
+//                        $('#state').val(parseInt(state_val));
+//                        $('#state').trigger('change').val(state_val);
+                         $('#state').find('option:contains(' + val + ')').attr('selected', 'true')
+//                        $('#state').select2();
+//                        $('#state').trigger('change');
+//                        document.getElementById(formFields[addressType])
+                    }
+                    if (addressType == 'locality') {
+
+                    }
                     document.getElementById(formFields[addressType]).value = val;
+
                 }
             }
         }

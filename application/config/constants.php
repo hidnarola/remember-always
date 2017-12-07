@@ -90,6 +90,7 @@ defined('EXIT__AUTO_MAX') OR define('EXIT__AUTO_MAX', 125); // highest automatic
  */
 define('TBL_AFFILIATIONS', 'affiliations');
 define('TBL_AFFILIATIONS_PROFILE', 'affiliation_profile');
+define('TBL_AFFILIATIONS_CATEGORY', 'affiliation_categories');
 define('TBL_DONATIONS', 'donations');
 define('TBL_FUNDRAISER_MEDIA', 'fundraiser_media');
 define('TBL_FUNDRAISER_PROFILES', 'fundraiser_profiles');
@@ -108,6 +109,9 @@ define('TBL_SERVICE_CATEGORIES', 'service_categories');
 define('TBL_SERVICE_PROVIDERS', 'service_providers');
 define('TBL_SLIDER', 'slider');
 define('TBL_USERS', 'users');
+define('TBL_COUNTRY', 'countries');
+define('TBL_STATE', 'states');
+define('TBL_CITY', 'cities');
 
 /**
  * Constants for Images

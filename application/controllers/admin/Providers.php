@@ -51,6 +51,9 @@ class Providers extends MY_Controller {
         if (is_numeric($id)) {
             $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($provider_data)) {
+                $cities = $this->providers_model->sql_select(TBL_CITY . ' c', 'c.*', ['where' => array('c.state_id' => $provider_data['state'])]);
+//                $states = $this->providers_model->sql_select(TBL_STATE . ' s', null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['join' => [array('table' => TBL_COUNTRY . ' c', 'condition' => 'c.id=s.country_id AND s.is_delete=0')]]);
+                $this->data['cities'] = $cities;
                 $this->data['provider_data'] = $provider_data;
                 $this->data['title'] = 'Remember Always Admin | Service Providers';
                 $this->data['heading'] = 'Edit Service Provider';
@@ -62,9 +65,16 @@ class Providers extends MY_Controller {
             $this->data['heading'] = 'Add Service Provider';
         }
 
+        $states = $this->providers_model->sql_select(TBL_STATE . ' s', 's.*', ['where' => array('c.id' => 231)], ['join' => [array('table' => TBL_COUNTRY . ' c', 'condition' => 'c.id=s.country_id')]]);
+        $this->data['states'] = $states;
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, null, ['where' => array('is_delete' => 0)]);
         $this->data['service_categories'] = $service_categories;
-
+        if ($this->input->method() == 'post') {
+            $cities = $this->providers_model->sql_select(TBL_CITY, null, ['where' => array('is_delete' => 0, 'state_id' => base64_decode($this->input->post('state')))]);
+            if (!empty($cities)) {
+                $this->data['cities'] = $cities;
+            }
+        }
         $this->form_validation->set_rules('service_category', 'Service Category', 'trim|required');
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
@@ -76,7 +86,7 @@ class Providers extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
-//            p($this->input->post(), 1);
+            p($this->input->post(), 1);
             $flag = 0;
             $dataArr = [
                 'service_category_id' => trim(htmlentities($this->input->post('service_category'))),
@@ -85,8 +95,8 @@ class Providers extends MY_Controller {
                 'latitute' => $this->input->post('latitute'),
                 'longitute' => $this->input->post('longitute'),
                 'street1' => trim($this->input->post('street1')),
-                'city' => trim($this->input->post('city')),
-                'state' => trim($this->input->post('state')),
+                'city' => base64_decode(trim($this->input->post('city'))),
+                'state' => base64_decode(trim($this->input->post('state'))),
                 'phone_number' => trim($this->input->post('phone')),
                 'website_url' => trim($this->input->post('website')),
             ];
@@ -132,21 +142,21 @@ class Providers extends MY_Controller {
         }
         $this->template->load('admin', 'admin/service_providers/manage', $this->data);
     }
-    
-     /**
+
+    /**
      * view a service provider .
      *
      */
     public function edit($id) {
         $this->add($id);
     }
-    
+
     /**
      * Edit a Service Provider.
      *
      */
     public function view($id) {
-         
+
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
@@ -164,7 +174,7 @@ class Providers extends MY_Controller {
             custom_show_404();
         }
     }
-    
+
     /**
      * Delete service provider
      * @param int $id
@@ -183,9 +193,28 @@ class Providers extends MY_Controller {
             } else {
                 $this->session->set_flashdata('error', 'Unable to Service provider slider!');
             }
-        }else {
+        } else {
             $this->session->set_flashdata('error', 'Invalid request. Please try again!');
         }
         redirect('admin/providers');
     }
+
+    /**
+     * Get cities based on state.
+     * @param int $id
+     * */
+    public function get_city() {
+        $id = base64_decode($this->input->post('stateid'));
+        $options = '<option value="">-- Select City --</option>';
+        if (is_numeric($id)) {
+            $post_data = $this->providers_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
+            if (!empty($post_data)) {
+                foreach ($post_data as $row) {
+                    $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                }
+            }
+        }
+        echo $options;
+    }
+
 }

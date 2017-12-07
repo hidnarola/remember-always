@@ -89,7 +89,13 @@ $Path = $_SERVER['PATH_INFO'];
                                     <li <?php echo strtolower($this->controller) == 'dashboard' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/dashboard') ?>"><i class="icon-home2"></i><span>Dashboard</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'pages' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/pages') ?>"><i class="icon-magazine"></i><span>Manage Pages</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'home_slider' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/home_slider') ?>"><i class="icon-stack"></i><span>Home Slider</span></a></li>
-                                    <li <?php echo strtolower($this->controller) == 'categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/categories') ?>"><i class="icon-list-unordered"></i><span>Service Categories</span></a></li>
+                                    <li <?php echo strtolower($this->controller) == 'categories' || strtolower($this->controller) == 'affiliations' ? 'class="active"' : '' ?>>
+                                        <a href="#" class="has-ul"><i class="icon-grid"></i> <span>Categories</span></a>
+                                        <ul class="hidden-ul" style="<?php echo strtolower($this->controller) == 'categories' || strtolower($this->controller) == 'affiliation_categories' ? 'display:block' : '' ?>">
+                                            <li <?php echo strtolower($this->controller) == 'categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/categories') ?>"><i class="icon-list-unordered"></i><span>Service</span></a></li>
+                                            <li <?php echo strtolower($this->controller) == 'affiliation_categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/affiliation_categories') ?>"><i class="icon-list-unordered"></i><span>Affiliation</span></a></li>
+                                        </ul>
+                                    </li>
                                     <li <?php echo strtolower($this->controller) == 'providers' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/providers') ?>"><i class="icon-hammer-wrench"></i><span>Service Providers</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'posts' && !preg_match("/\/users\//i", $Path) ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/posts') ?>"><i class="icon-comment"></i><span>Posts</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'users' || preg_match("/\/users\//i", $Path) ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/users') ?>"><i class="icon-users2"></i><span>Users</span></a></li>
