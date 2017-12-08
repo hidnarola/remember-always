@@ -119,9 +119,10 @@ define('TBL_CITY', 'cities');
 define('UPLOADS', 'uploads/');
 define('USER_IMAGES', 'uploads/user-images/');
 define('SLIDER_IMAGES', 'uploads/slider-images/');
-define('PAGE_BANNER', 'uploads/banners/');
 define('PROVIDER_IMAGES', 'uploads/provider-images/');
+define('PROFILE_IMAGES', 'uploads/profile-images/');
 define('POST_IMAGES', 'uploads/post-images/');
+define('PAGE_BANNER', 'uploads/banners/');
 
 /**
  * Constants for Cookie

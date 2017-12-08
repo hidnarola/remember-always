@@ -9,6 +9,7 @@
             //-- Set common javascript vairable
             var site_url = "<?php echo site_url() ?>";
             var base_url = "<?php echo base_url() ?>";
+            var max_image_size = <?php echo MAX_IMAGE_SIZE ?>;
 <?php
 $Path = $_SERVER['PATH_INFO'];
 ?>
@@ -124,8 +125,7 @@ $Path = $_SERVER['PATH_INFO'];
         .fancybox-close:after {display: none;}
         .fancybox-nav span:after {display: none;}
     </style>
-
-    <script>
+    <script type="text/javascript">
         $(document).keypress(
                 function (event) {
                     if (event.which == '13') {

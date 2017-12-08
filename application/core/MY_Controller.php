@@ -8,7 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
 
-    public $is_user_loggedin, $is_admin_loggedin = false;
+    public $is_user_loggedin = false, $is_admin_loggedin = false, $user_id;
 
     public function __construct() {
         parent::__construct();
@@ -62,6 +62,7 @@ class MY_Controller extends CI_Controller {
             }
             //-- If already logged in and try to access login or signup page
             if ($this->is_user_loggedin) {
+                $this->user_id = $this->session->userdata('remalways_user')['id'];
                 if ((strtolower($this->controller) == 'login' && strtolower($this->action) != 'logout') || strtolower($this->controller) == 'signup') {
                     redirect('home');
                 }

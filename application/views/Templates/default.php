@@ -25,6 +25,7 @@
             var s_msg = "<?php echo $this->session->flashdata('success') ?>";
             var e_msg = "<?php echo $this->session->flashdata('error') ?>";
             var reset_pwd = 0;
+            var max_image_size = <?php echo MAX_IMAGE_SIZE ?>;
         </script>
         <?php if (isset($reset_password)) { ?>
             <script>reset_pwd = 1;</script>

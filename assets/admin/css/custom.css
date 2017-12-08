@@ -8,3 +8,5 @@ and open the template in the editor.
     Author     : kayushi
 */
 .custom_align_top{vertical-align: top !important;}
+.dashboard_layout .dash-icon{margin-top: -5px;}
+.has-bg-image { background-image: url(../images/panel_bg.png);}

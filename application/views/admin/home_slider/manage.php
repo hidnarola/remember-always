@@ -12,41 +12,37 @@
         </ul>
     </div>
 </div>
-<?php
-if ($this->session->flashdata('success')) {
-    ?>
-    <div class="content pt0 flashmsg">
-        <div class="alert alert-success">
-            <a class="close" data-dismiss="alert">X</a>
-            <strong><?= $this->session->flashdata('success') ?></strong>
-        </div>
-    </div>
-    <?php
-    $this->session->set_flashdata('success', false);
-} else if ($this->session->flashdata('error')) {
-    ?>
-    <div class="content pt0 flashmsg">
-        <div class="alert alert-danger">
-            <a class="close" data-dismiss="alert">X</a>
-            <strong><?= $this->session->flashdata('error') ?></strong>
-        </div>
-    </div>
-    <?php
-    $this->session->set_flashdata('error', false);
-} else {
-    if (!empty(validation_errors())) {
-        ?>
-        <div class="content pt0 flashmsg">
-            <div class = "alert alert-danger">
-                <a class="close" data-dismiss="alert">X</a>
-                <strong><?php echo validation_errors(); ?></strong>       
-            </div>
-        </div>
-        <?php
-    }
-}
-?>
 <div class="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <?php
+            if ($this->session->flashdata('success')) {
+                ?>
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
+                    <strong><?= $this->session->flashdata('success') ?></strong>
+                </div>
+                <?php
+            } else if ($this->session->flashdata('error')) {
+                ?>
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
+                    <strong><?= $this->session->flashdata('error') ?></strong>
+                </div>
+                <?php
+            } else {
+                if (!empty(validation_errors())) {
+                    ?>
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert"><span>&times;</span><span class="sr-only">Close</span></button>
+                        <strong><?php echo validation_errors(); ?></strong>       
+                    </div>
+                    <?php
+                }
+            }
+            ?>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <form class="form-horizontal form-validate-jquery" id="slider_image_form" method="POST" enctype="multipart/form-data">
@@ -122,7 +118,6 @@ if ($this->session->flashdata('success')) {
     <script>is_valid = true;</script>
 <?php } ?>
 <script>
-    max_image_size = <?php echo MAX_IMAGE_SIZE ?>;
     $("#slider_image_form").validate({
         ignore: 'input[type=hidden], .select2-search__field', // ignore hidden fields
         errorClass: 'validation-error-label',

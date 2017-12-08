@@ -16,8 +16,12 @@ class Dashboard extends MY_Controller {
      * Display dashboard page
      */
     public function index() {
-        $this->data['title'] = 'Remember Always Admin | Dashboard';
-        $this->template->load('admin', 'admin/dashboard', $this->data);
+        $data['title'] = 'Remember Always Admin | Dashboard';
+        $data['users'] = $this->users_model->sql_select(TBL_USERS, 'id', ['where' => ['role' => 'user', 'is_delete' => 0, 'is_active' => 1]], ['count' => true]);
+        $data['providers'] = $this->users_model->sql_select(TBL_SERVICE_PROVIDERS, 'id', ['where' => ['is_delete' => 0]], ['count' => true]);
+        $data['profiles'] = $this->users_model->sql_select(TBL_PROFILES, 'id', ['where' => ['is_delete' => 0, 'is_published' => 1, 'is_blocked' => 0]], ['count' => true]);
+        $data['posts'] = $this->users_model->sql_select(TBL_POSTS, 'id', ['where' => ['is_delete' => 0]], ['count' => true]);
+        $this->template->load('admin', 'admin/dashboard', $data);
     }
 
     /**
