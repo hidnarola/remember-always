@@ -53,7 +53,7 @@
                     <th>Privacy</th>
                     <th>Status</th>
                     <th>Published</th>
-                    <th>Registration Date</th>
+                    <th>Created Date</th>
                     <th>Action</th>
                 </tr>
             </thead>

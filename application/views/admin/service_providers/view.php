@@ -104,11 +104,11 @@ if ($this->session->flashdata('success')) {
                                 </tr>
                                 <tr>
                                     <th class="text-nowrap">City :</th>
-                                    <td><?php echo isset($provider_data['city']) ? $provider_data['city'] : '-' ?></td>
+                                    <td><?php echo isset($provider_data['city_name']) ? $provider_data['city_name'] : '-' ?></td>
                                 </tr>
                                 <tr>
                                     <th class="text-nowrap">State :</th>
-                                    <td><?php echo isset($provider_data['state']) ? $provider_data['state'] : '-' ?></td>
+                                    <td><?php echo isset($provider_data['state_name']) ? $provider_data['state_name'] : '-' ?></td>
                                 </tr>
                                 <tr>
                                     <th class="text-nowrap">Zipcode :</th>

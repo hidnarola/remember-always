@@ -144,7 +144,7 @@ class Providers extends MY_Controller {
     }
 
     /**
-     * view a service provider .
+     * edit a service provider .
      *
      */
     public function edit($id) {
@@ -162,7 +162,7 @@ class Providers extends MY_Controller {
         if (is_numeric($id)) {
             $this->data['title'] = 'Remember Always Admin | Service Providers';
             $this->data['heading'] = 'View Service Provider Details';
-            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS . ' sp', 'sp.*,sc.name as category_name', ['where' => array('sp.id' => trim($id), 'sp.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_SERVICE_CATEGORIES . ' sc', 'condition' => 'sc.id=sp.service_category_id AND sc.is_delete=0')]]);
+            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS . ' sp', 'sp.*,sc.name as category_name,c.name as city_name,s.name as state_name', ['where' => array('sp.id' => trim($id), 'sp.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_SERVICE_CATEGORIES . ' sc', 'condition' => 'sc.id=sp.service_category_id AND sc.is_delete=0'),array('table' => TBL_STATE . ' s', 'condition' => 's.id=sp.state'),array('table' => TBL_CITY . ' c', 'condition' => 'c.id=sp.city')]]);
 //            p($provider_data);
             if (!empty($provider_data)) {
                 $this->data['provider_data'] = $provider_data;
