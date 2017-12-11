@@ -572,9 +572,29 @@ class Users extends MY_Controller {
         if (is_numeric($id)) {
             $this->data['title'] = 'Remember Always Admin | User Profile';
             $this->data['heading'] = 'View User Profile Details';
-            $profile_data = $this->users_model->sql_select(TBL_PROFILES . ' p', null, ['where' => array('p.id' => trim($id), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')], 'single' => true]);
+            $profile_data = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as user_fname,u.lastname as user_lname,fp.goal,fp.title,fp.details,fp.end_date,fp.created_at as fp_created_at', ['where' => array('p.id' => trim($id), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0'), array('table' => TBL_FUNDRAISER_PROFILES . ' fp', 'condition' => 'fp.profile_id=p.id AND fp.is_delete=0')], 'single' => true]);
             if (!empty($profile_data)) {
+                $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($id), 'f.is_delete' => 0)]);
+                $affiliations = $this->users_model->sql_select(TBL_AFFILIATIONS_PROFILE . ' ap', 'ap.*,u.firstname as user_fname,u.lastname as user_lname,p.firstname as p_fname,p.lastname as p_lname', ['where' => array('ap.profile_id' => trim($id), 'a.is_delete' => 0)], ['join' => [
+                        array('table' => TBL_AFFILIATIONS . ' a', 'condition' => 'ap.affiliation_id=a.id AND a.is_delete=0'),
+                        array('table' => TBL_USERS . ' u', 'condition' => 'u.id=a.user_id AND u.is_delete=0'),
+                        array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=ap.profile_id AND p.is_delete=0'),
+                        array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'a.category_id=ac.id AND ac.is_delete=0')]]);
+                $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($id), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')]]);
+                $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
+                foreach ($funnel_services as $key => $value) {
+                    if ($value['service_type'] == 'Burial') {
+                        $funnel_services_data['Burial'] = $value;
+                    } else if ($value['service_type'] == 'Memorial') {
+                        $funnel_services_data['Memorial'] = $value;
+                    } else if ($value['service_type'] == 'Funeral') {
+                        $funnel_services_data['Funeral'] = $value;
+                    }
+                }
                 $this->data['profile_data'] = $profile_data;
+                $this->data['affiliations'] = $affiliations;
+                $this->data['fun_facts'] = $fun_facts;
+                $this->data['funnel_services'] = $funnel_services_data;
             } else {
                 custom_show_404();
             }
