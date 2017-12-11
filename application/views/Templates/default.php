@@ -9,6 +9,7 @@
 
         <!-- Bootstrap -->
         <link href="https://fonts.googleapis.com/css?family=Oswald:300,700|Roboto:400,500|Rubik:300,400,500,700,900" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"  rel="stylesheet">
         <base href="<?php echo base_url(); ?>">
 
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" >

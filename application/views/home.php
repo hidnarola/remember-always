@@ -18,7 +18,7 @@
                     <?php } else { ?>
                         <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Create a life profile</a>
                     <?php } ?>
-                    <a href="javascript:void(0)">Find a life profile</a>
+                        <a href="<?php echo site_url('profile')?>">Find a life profile</a>
                 </div>
             </div>
             <?php

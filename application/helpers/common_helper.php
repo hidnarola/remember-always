@@ -103,7 +103,7 @@ function verification_code() {
  */
 function slug($text, $table, $id = NULL) {
     $CI = & get_instance();
-    $ci->load->model('users_model');
+    $CI->load->model('users_model');
 
     // replace non letter or digits by -
     $text = preg_replace('~[^\pL\d]+~u', '-', $text);
@@ -120,17 +120,21 @@ function slug($text, $table, $id = NULL) {
 
     if (empty($text)) {
         $text = 'n-a';
+    } elseif ($text == 'create') { //-- check if slug contains "create" keyword
+        $text = 'n-a';
     }
 
     if ($table != '') {
         //--- when text with table name then check generated slug is already exist or not
         for ($i = 0; $i < 1; $i++) {
             if ($id != NULL) {
-                $where = 'slug = ' . $ci->db->escape($text) . ' AND id != ' . $id;
+                $where = ['slug' => $text, 'id!=' => $id];
+//                $where = 'slug = ' . $CI->db->escape($text) . ' AND id != ' . $id;
             } else {
-                $where = 'slug = ' . $ci->db->escape($text);
+                $where = ['slug' => $text];
+//                $where = 'slug = ' . $CI->db->escape($text);
             }
-            $result = $ci->users_model->sql_select($table, '*', ['where' => $where], ['single' => true]);
+            $result = $CI->users_model->sql_select($table, '*', ['where' => $where], ['single' => true]);
             if (sizeof($result) > 0) {
                 $explode_slug = explode("-", $text);
                 $last_char = $explode_slug[count($explode_slug) - 1];
