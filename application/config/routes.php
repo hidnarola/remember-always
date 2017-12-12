@@ -68,6 +68,8 @@ $route['verify'] = 'signup/verify';
 $route['profile/create'] = 'profile/create';
 $route['profile/(:any)'] = 'profile/index/$1';
 $route['logout'] = 'login/logout';
+$route['editprofile'] = 'users/edit_profile';
+$route['changepassword'] = 'users/update_password';
 
 $route['404_override'] = 'pagenotfound';
 $route['translate_uri_dashes'] = FALSE;
