@@ -16,6 +16,7 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/owl.carousel.css" rel="stylesheet" />
         <link href="assets/css/style.css" rel="stylesheet" />
+        <link href="assets/css/developer.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" />
 
@@ -27,6 +28,9 @@
             var e_msg = "<?php echo $this->session->flashdata('error') ?>";
             var reset_pwd = 0;
             var max_image_size = <?php echo MAX_IMAGE_SIZE ?>;
+            var max_video_size = <?php echo MAX_VIDEO_SIZE ?>;
+            var max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
+            var max_videos_count = <?php echo MAX_VIDEOS_COUNT ?>;
         </script>
         <?php if (isset($reset_password)) { ?>
             <script>reset_pwd = 1;</script>

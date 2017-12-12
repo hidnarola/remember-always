@@ -169,7 +169,7 @@ function upload_image($image_name, $image_path) {
     $config = array(
         'upload_path' => $image_path,
         'allowed_types' => "png|jpg|jpeg|gif",
-        'max_size' => "2048",
+        'max_size' => (MAX_IMAGE_SIZE * 1024),
         // 'max_height'      => "768",
         // 'max_width'       => "1024" ,
         'file_name' => $randname
@@ -184,6 +184,34 @@ function upload_image($image_name, $image_path) {
         $imgname = array('errors' => $CI->upload->display_errors());
     }
     return $imgname;
+}
+
+/**
+ * Uploads video
+ * @param string $video_name
+ * @param string $video_path
+ * @return array - Either name of the video if uploaded successfully or Array of errors if video is not uploaded successfully
+ */
+function upload_video($video_name, $video_path) {
+    $CI = & get_instance();
+    $extension = explode('/', $_FILES[$video_name]['type']);
+    $randname = uniqid() . time() . '.' . end($extension);
+    $config = array(
+        'upload_path' => $video_path,
+        'allowed_types' => "mp4",
+        'max_size' => (MAX_VIDEO_SIZE * 1024),
+        'file_name' => $randname
+    );
+    //--Load the upload library
+    $CI->load->library('upload');
+    $CI->upload->initialize($config);
+    if ($CI->upload->do_upload($video_name)) {
+        $img_data = $CI->upload->data();
+        $vdoname = $img_data['file_name'];
+    } else {
+        $vdoname = array('errors' => $CI->upload->display_errors());
+    }
+    return $vdoname;
 }
 
 /**
