@@ -17,15 +17,15 @@ class Profile extends MY_Controller {
      * Display login page for login
      */
     public function index($slug) {
-        
+
         $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'slug' => $slug]], ['single' => true]);
         if (!empty($is_left)) {
             $funnel_services_data = [];
             $post_data = [];
             $final_post_data = [];
             $post_id = 0;
-            $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)],['order_by' => 'f.id DESC']);
-            $posts = $this->users_model->sql_select(TBL_POSTS . ' p', 'p.*,u.firstname,u.lastname,u.profile_image,pm.media,pm.type', ['where' => array('p.profile_id' => trim($is_left['id']), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_POST_MEDIAS . ' pm', 'condition' => 'pm.post_id=p.id AND pm.is_delete=0'),array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')], 'order_by' => 'p.id DESC']);
+            $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
+            $posts = $this->users_model->sql_select(TBL_POSTS . ' p', 'p.*,u.firstname,u.lastname,u.profile_image,pm.media,pm.type', ['where' => array('p.profile_id' => trim($is_left['id']), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_POST_MEDIAS . ' pm', 'condition' => 'pm.post_id=p.id AND pm.is_delete=0'), array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')], 'order_by' => 'p.id DESC']);
             $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
             $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
             if (!empty($funnel_services)) {
@@ -67,7 +67,7 @@ class Profile extends MY_Controller {
                     }
                 }
             }
-             $data['url'] = current_url();
+            $data['url'] = current_url();
             $data['profile'] = $is_left;
             $data['fun_facts'] = $fun_facts;
             $data['funnel_services'] = $funnel_services_data;
@@ -101,6 +101,7 @@ class Profile extends MY_Controller {
                 $data['error'] = validation_errors();
                 $data['success'] = false;
             } else {
+
                 $profile_process = $this->input->post('profile_process');
                 $flag = 0;
                 $profile_image = '';
@@ -151,9 +152,11 @@ class Profile extends MY_Controller {
                     if (!empty($is_left)) {
                         $data['updated_at'] = date('Y-m-d H:i:s');
                         $this->users_model->common_insert_update('update', TBL_PROFILES, $data, ['id' => $is_left['id']]);
+                        $data['id'] = $is_left['id'];
                     } else {
                         $data['created_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('insert', TBL_PROFILES, $data);
+                        $profile_id = $this->users_model->common_insert_update('insert', TBL_PROFILES, $data);
+                        $data['id'] = $profile_id;
                     }
 
                     $data['success'] = true;
@@ -166,6 +169,28 @@ class Profile extends MY_Controller {
         $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Create Profile';
         $this->template->load('default', 'profile/profile_form', $data);
+    }
+
+    /**
+     * Upload profile gallery
+     */
+    public function upload_gallery() {
+        if ($_FILES) {
+            $profile_id = base64_decode($this->input->post('profile_id'));
+            $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+            $directory = 'user_' . $profile['id'];
+            if (!file_exists(PROFILE_IMAGES . $directory)) {
+                mkdir(PROFILE_IMAGES . $directory);
+            }
+            upload_image('gallery', $image_path);
+            $data['success'] = true;
+        } else {
+            
+        }
+        echo json_encode($data);
+        exit;
+        p($_POST);
+        p($_FILES, 1);
     }
 
 }

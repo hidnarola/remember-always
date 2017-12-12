@@ -445,7 +445,6 @@
 </div>
 <script type="text/javascript">
     var profile_id = '<?php echo (isset($profile)) ? base64_encode($profile['id']) : 0 ?>';
-    console.log('profile_id', profile_id);
     $(function () {
         //-- Initialize datepicker
         $('.date-picker').datepicker({
@@ -514,8 +513,6 @@
                         }
                     }
                 });
-            } else {
-                console.log('form not valid');
             }
         }
         return false;
@@ -638,14 +635,16 @@
                     image_count++;
                     //-- check image and video count
                     if (image_count <= max_images_count) {
+                                        console.log('image',index);
+
                         //-- Remove default preview div
                         $('#default-preview').remove();
                         var reader = new FileReader();
 
                         reader.onload = function (e) {
-                            str += '<li><div class="upload-wrap"><span>';
+                            str = '<li><div class="upload-wrap"><span>';
                             str += '<img src="' + e.target.result + '" style="width:100%">';
-                            str += '</span><a href="javascript:void(0)" onclick="delete_media(' + index + ')">';
+                            str += '</span><a href="javascript:void(0)" onclick="delete_media(this)">';
                             str += '<?php $this->load->view('delete_svg', true); ?>';
                             str += '</a></div></li>';
                             dvPreview.append(str);
@@ -677,10 +676,12 @@
                 } else if (regex_video.test(file[0].name.toLowerCase())) {
                     video_count++;
                     if (video_count <= max_videos_count) {
+                                                            console.log('video',index);
+
                         $('#default-preview').remove();
                         str += '<li><div class="upload-wrap"><span>';
                         str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '" id="video_here">Your browser does not support HTML5 video.</video>';
-                        str += '</span><a href="javascript:void(0)" onclick="delete_media(' + index + ')">';
+                        str += '</span><a href="javascript:void(0)" onclick="delete_media(this)">';
                         str += '<?php $this->load->view('delete_svg', true); ?>';
                         str += '</a></div></li>';
                         dvPreview.append(str);
@@ -696,7 +697,7 @@
             showErrorMSg("This browser does not support HTML5 FileReader.");
         }
     });
-    function delete_media(index) {
-
+    function delete_media(obj) {
+        $(obj).parent('.upload-wrap').parent('li').remove();
     }
 </script>
