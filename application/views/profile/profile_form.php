@@ -506,9 +506,7 @@
                     contentType: false, // tell jQuery not to set contentType
                     success: function (data) {
                         if (data.success == true) {
-                            console.log(data.data);
                             profile_id = btoa(data.data.id);
-                            console.log('after profile is updated', profile_id);
                             profile_steps('second-step');
                         } else {
                             $('#profile_process').val(0);
@@ -643,6 +641,7 @@
                         //-- Remove default preview div
                         $('#default-preview').remove();
                         var reader = new FileReader();
+
                         reader.onload = function (e) {
                             str += '<li><div class="upload-wrap"><span>';
                             str += '<img src="' + e.target.result + '" style="width:100%">';
@@ -651,27 +650,27 @@
                             str += '</a></div></li>';
                             dvPreview.append(str);
                         }
+                        reader.readAsDataURL(file[0]);
+
                         // upload image
+                        var formData = new FormData();
+                        formData.append('profile_id', profile_id);
+                        formData.append('type', 'image');
+                        formData.append('gallery', file[0], file[0].name);
                         $.ajax({
-                            url: site_url + "profile/create",
+                            url: site_url + "profile/upload_gallery",
                             type: "POST",
-                            data: fd,
+                            data: formData,
                             dataType: "json",
                             processData: false, // tell jQuery not to process the data
                             contentType: false, // tell jQuery not to set contentType
                             success: function (data) {
                                 if (data.success == true) {
-                                    console.log(data.data);
-                                    profile_id = btoa(data.data.id);
-                                    console.log('after profile is updated', profile_id);
-                                    profile_steps('second-step');
                                 } else {
-                                    $('#profile_process').val(0);
                                     showErrorMSg(data.error);
                                 }
                             }
                         });
-                        reader.readAsDataURL(file[0]);
                     } else {
                         showErrorMSg("Limit is exceeded to upload images");
                     }

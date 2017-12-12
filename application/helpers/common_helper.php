@@ -120,7 +120,7 @@ function slug($text, $table, $id = NULL) {
 
     if (empty($text)) {
         $text = 'n-a';
-    } elseif ($text == 'create') { //-- check if slug contains "create" keyword
+    } elseif ($text == 'create' || $text == 'upload_gallery') { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
         $text = 'n-a';
     }
 

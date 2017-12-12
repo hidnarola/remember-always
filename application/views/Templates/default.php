@@ -19,6 +19,7 @@
         <link href="assets/css/developer.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" />
+        <link href="assets/css/jquery.fancybox.css" rel="stylesheet" />
 
         <script type="text/javascript">
             //Set common javascript variable
@@ -53,8 +54,10 @@
         <script src="assets/js/owl.carousel.min.js"></script>
         <script src="assets/js/jquery.validate.min.js"></script>
         <script src="assets/js/additional-methods.min.js"></script>
-        <script src="assets/js/pnotify.custom.min.js"></script>
-        <script src="assets/js/custom.js"></script>
+        <script src="assets/js/pnotify.custom.min.js"></script> 
+        <script src="assets/js/jquery.fancybox.js"></script>
+        <script src="assets/js/jquery.fancybox.pack.js"></script>
+        <script src="assets/js/custom.js"></script> 
 
     </head>
     <?php
