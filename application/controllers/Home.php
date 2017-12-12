@@ -20,5 +20,5 @@ class Home extends MY_Controller {
         $data['slider_images'] = $this->users_model->sql_select(TBL_SLIDER, 'image,description', ['where' => ['is_delete' => 0, 'is_active' => 1]]);
         $this->template->load('default', 'home', $data);
     }
-
+    
 }

@@ -18,7 +18,8 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                     <li><a href="">My Profile</a></li>
-                    <li><a href="">Edit Profile </a></li>
+                    <li><a href="<?php echo site_url('editprofile') ?>">Edit Profile </a></li>
+                    <li><a href="<?php echo site_url('changepassword') ?>">Change Password</a></li>
                     <li><a href="<?php echo site_url('logout') ?>">Logout</a></li>
                 </ul>
             </div>

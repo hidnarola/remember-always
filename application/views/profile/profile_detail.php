@@ -2,10 +2,30 @@
     <div class="container">
         <div class="create-profile-box create-profile-body">
             <div class="profile-head">
-                <span><img src="assets/images/profile-pic.jpg" alt="" /> </span>
+                <span>
+                    <?php
+                    if (isset($profile['cover_image']) && $profile['cover_image'] != '') {
+                        echo "<img src='" . PROFILE_IMAGES . $profile['cover_image'] . "' style='width:1150px;height:339px;'>";
+                    } else {
+                        echo "<img src='assets/images/profile-pic.jpg' alt='' />";
+                    }
+                    ?>
+
+                </span>
                 <div class="profile-title">
-                    <div class="profile-title-img"><img src="assets/images/profile-pic-01.jpg" alt="" /></div>
-                    <h4>Popularised in the the release of <small> <i class="fa fa-map-marker"></i> Galley of type and, Scrambled  -  Born: 3Nov, 1988</small> </h4>
+                    <div class="profile-title-img">
+                        <?php
+                        if (isset($profile['profile_image']) && $profile['profile_image'] != '') {
+                            echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "' style='width:170px;height:176px;'>";
+                        } else {
+                            echo "<img src='assets/images/profile-pic-01.jpg' alt='' />";
+                        }
+                        ?>
+                    </div>
+                    <h4><?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Popularised in the the release of' ?> <small> 
+                            <!--<i class="fa fa-map-marker"></i> Galley of type and, Scrambled-->
+                            Born: <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('d M, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> 
+                            - Death: <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('d M, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?></small> </h4>
                     <a href="" class="donate-btn">Donate</a>
                     <a href="" class="flowers-btn">Send Flowers</a>
                     <div class="profile-share">
@@ -21,7 +41,7 @@
             <div class="profile-body">
                 <div class="profile-body-l">
                     <div class="profile-box">
-                        <h2>Memorial Services</h2>
+                        <h2>Funeral Services</h2>
                         <div class="profile-box-body according-tab">
                             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                                 <div class="panel panel-default">
@@ -111,19 +131,19 @@
                                 <li>
                                     <div class="lifetime-box">
                                         <h3><a href="">2002</a></h3>
-                                        <p>Was popularised the release she	ets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
+                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="lifetime-box">
                                         <h3><a href="">2004</a></h3>
-                                        <p>Was popularised the release she	ets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
+                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="lifetime-box">
                                         <h3><a href="">2006</a></h3>
-                                        <p>Was popularised the release she	ets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
+                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
                                     </div>
                                 </li>
                             </ul>
@@ -135,8 +155,8 @@
                     <div class="profile-box life-bio">
                         <h2>The Life Bio</h2>
                         <div class="profile-box-body">
-                            <p>Was popularised the release sheets containing  recently desktop publishing software a aldus pop pageMaker including.</p>
-                            <p>Release sheets containing  recently desktop publishing software a aldus pop pageMaker including	.</p>
+                            <p><?php echo isset($profile['life_bio']) && !is_null($profile['life_bio']) ? $profile['life_bio'] : 'Life bio not available for this profile.' ?></p>
+                            <!--<p>Release sheets containing  recently desktop publishing software a aldus pop pageMaker including	.</p>-->
                         </div>
 
                         <div class="post-comment">
@@ -239,57 +259,58 @@
                             </div>
                         </div>
                         <div class="comments-div">
-                            <ul>
-                                <li>
-                                    <div class="comments-div-wrap">
-                                        <span></span>
-                                        <h3>Sheets containing and recently<small>3month Ago</small></h3>
-                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="comments-div-wrap">
-                                        <span></span>
-                                        <h3>Sheets containing and recently<small>3month Ago</small></h3>
-                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="comments-div-wrap">
-                                        <span></span>
-                                        <h3>Sheets containing and recently<small>3month Ago</small></h3>
-                                        <ul class="post-images">
-                                            <li><a href=""></a></li>
-                                            <li><a href=""></a></li>
-                                            <li><a href=""></a></li>
-                                            <li><a href=""></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="comments-div-wrap">
-                                        <span></span>
-                                        <h3>Sheets containing and recently<small>3month Ago</small></h3>
-                                        <ul class="post-video">
-                                            <li><a href=""></a></li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
+                            <?php if (isset($posts) && !empty($posts)) { ?>
+                                <ul>
+                                    <?php
+                                    foreach ($posts as $key => $val) {
+                                        $from_date = date_create($val['created_at']);
+                                        $to_date = date_create(date('Y-m-d H:i:s'));
+                                        $days_diff = date_diff($from_date, $to_date);
+                                        ?>
+                                        <li>
+                                            <div class="comments-div-wrap">
+                                                <span></span>
+                                                <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?><small><?php echo (($days_diff->y > 0) ? $days_diff->y . ' Year' . ($days_diff->y > 1 ? 's' : '') : '') . (($days_diff->m > 0) ? $days_diff->m . ' Month' . ($days_diff->m > 1 ? 's' : '') : '') . (($days_diff->d > 0) ? $days_diff->d . ' Day' . ($days_diff->d > 1 ? 's' : '') : '') ?> Ago</small></h3>
+                                                <p><?php echo $val['comment'] ?></p>
+                                                <?php if (isset($val['media']) && isset($val['media'][1])) { ?>
+                                                    <ul class="post-images">
+                                                        <?php foreach ($val['media'][1] as $k => $v) {
+                                                            ?>
+                                                            <li><a href=""><img src="<?php echo base_url(POST_IMAGES . $v) ?>"></a></li>
+
+                                                        <?php } ?>
+                                                    </ul>
+                                                <?php } ?>
+                                                <?php if (isset($val['media']) && isset($val['media'][2])) { ?>
+                                                    <ul class="post-video">
+                                                        <?php foreach ($val['media'][2] as $k => $v) {
+                                                            ?>
+                                                            <li><a href=""></a></li>
+                                                        <?php } ?>
+                                                    </ul>
+                                                <?php } ?>
+                                            </div>
+                                        </li>
+                                    <?php } ?>
+                                </ul><?php } else { ?>
+                                No post comments available for this profile.
+                            <?php } ?>
                         </div>
 
                     </div>
                 </div>
                 <div class="profile-body-r">
-                    <div class="profile-box fundraiser">
-                        <h2>Tribute Fundraiser</h2>
-                        <div class="profile-box-body">
-                            <span>Donated <big>86%</big></span>
-                            <h6>$9.00.000 <small>Raised of</small></h6>
-                            <h6>10.00.000 <small>Goal</small></h6>
-                            <a href="">Donation</a>
+                    <?php if (isset($profil['type']) && $profile['type'] == 2) { ?>
+                        <div class="profile-box fundraiser">
+                            <h2>Tribute Fundraiser</h2>
+                            <div class="profile-box-body">
+                                <span>Donated <big>86%</big></span>
+                                <h6>$9.00.000 <small>Raised of</small></h6>
+                                <h6>10.00.000 <small>Goal</small></h6>
+                                <a href="">Donation</a>
+                            </div>
                         </div>
-                    </div>
+                    <?php } ?>
                     <div class="profile-box life-gallery">
                         <h2>Life Gallery</h2>
                         <div class="profile-box-body">
@@ -306,8 +327,17 @@
                     <div class="profile-box fun-facts">
                         <h2>Fun Facts</h2>
                         <div class="profile-box-body">
-                            <p>Was popularised the release sheets containing  recently desktop publishing software a aldus pop pageMaker including.</p>
-                            <p>Release sheets containing  recently desktop publishing software a aldus pop pageMaker including.</p>
+                            <?php
+                            if (isset($fun_facts) && !empty($fun_facts)) {
+                                foreach ($fun_facts as $key => $val) {
+                                    ?>
+                                    <p><?php echo $val['facts'] ?></p>
+                                    <?php
+                                }
+                            } else {
+                                ?>
+                                <p>Fun Facts are not available for this profile.</p>
+                            <?php } ?>
                         </div>
                     </div>
 
