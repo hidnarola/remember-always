@@ -494,10 +494,3 @@ ul.post-video li a img{width:100%;min-height:120px;}
 .four-input input{margin:0 2% 0 0;width:20%;float:left;}
 .four-input span{font-size:16px;font-weight:500;color:#999;line-height:52px;width:6%;text-align:left;float:left;}
 .four-input p{padding-top:4px;display:inline-block;vertical-align:top;}
-
-
-/* Developer CSS */
-.carousel .item{text-align:center;}
-label.error {color: red;margin: 5px 0px 0px 5px;font-size: 14px;font-weight: normal;}
-.mpopup-header{background: #975979;color: #fff;border: 0;font-family: 'Rubik';font-size: 18px;text-transform: uppercase;line-height: 20px;padding: 15px;border-radius: 0;text-align: center;margin: 0 0 25px;}
-.mpopup-body{padding: 0 15px;}

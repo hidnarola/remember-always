@@ -133,5 +133,7 @@ define('REMEMBER_ME_USER_COOKIE', 'remAlways908f7d89f');
 /**
  * Constants for max file size 
  */
-define('MAX_IMAGE_SIZE', '10');
-define('MAX_VIDEO_SIZE', '200');
+define('MAX_IMAGE_SIZE', 10);
+define('MAX_VIDEO_SIZE', 200);
+define('MAX_IMAGES_COUNT', 500);
+define('MAX_VIDEOS_COUNT', 50);
