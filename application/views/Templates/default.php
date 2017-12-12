@@ -18,7 +18,6 @@
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" />
-
         <script type="text/javascript">
             //Set common javascript variable
             var site_url = "<?php echo site_url() ?>";

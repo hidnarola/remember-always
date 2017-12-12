@@ -33,11 +33,10 @@
                         <a href="" class="fa fa-facebook"></a>
                         <a href="" class="fa fa-twitter"></a>
                         <a href="" class="fa fa-pinterest"></a>
-                        <a href="" class="fa fa-instagram"></a>
+                        <a href="javascript:void(0)" class="icon-linked_in fa fa-google-plus" onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus"></a>
                     </div>
                 </div>
             </div>
-
             <div class="profile-body">
                 <div class="profile-body-l">
                     <div class="profile-box">
@@ -47,79 +46,69 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="headingOne">
                                         <h4 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> When an unknown printer</a>
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Memorial Service & Viewing Section</a>
                                         </h4>
                                     </div>
                                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                         <div class="panel-body">
-                                            <h5>Start Time (5nov, 2010)</h5>
-                                            <p class="general-text"> It was popularised in the with the release sheets containing and more recently with desktop publishing software a aldus pop pageMaker including versions.</p>
-                                            <h5>End Time (5nov, 2010)</h5>
-                                            <p class="general-text"> It was popularised in the with the release sheets containing and more recently with desktop publishing software a aldus pop pageMaker including versions.</p>
+                                            <?php if (isset($funnel_services['Memorial']) && !empty($funnel_services['Memorial'])) { ?>
+                                                <h5><?php echo $funnel_services['Memorial']['place_name'] ?></h5>
+                                                <p>Time: <?php echo $funnel_services['Memorial']['time'] ?></p>
+                                                <p>Date: (<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('d M, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p>Address: <?php echo $funnel_services['Memorial']['address'] ?></p>
+                                                <p>City: <?php echo $funnel_services['Memorial']['city_name'] ?></p>
+                                                <p>State: <?php echo $funnel_services['Memorial']['state_name'] ?></p>
+                                                <p>Zipcode: <?php echo $funnel_services['Memorial']['zip'] ?></p>
+                                            <?php } else { ?>
+                                                <p class="general-text">Memorial service not available.</p>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="headingTwo">
                                         <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Galley of type and </a>
+                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Funeral Service Section</a>
                                         </h4>
                                     </div>
                                     <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                                         <div class="panel-body">
-                                            <h5>Start Time (5nov, 2010)</h5>
-                                            <p class="general-text">Has been the industry's standard dummy text ever since the is simply dummy text of the printing and typesetting industry been the industry's standard dummy text eversince thehas survived not only five centuries but also the leap into electronic typesettwas popularised in the was. </p>
-                                            <h5>End Time (5nov, 2010)</h5>
-                                            <p class="general-text"> Popularised in the with the release of etraset sheets containing and more recently with desktop publishing software like aldus pageMaker including versions hen an unknown printer took a galley of type and scrambled it to make a type specimen book has survived not only five centuries but also the leap into electronic typesetting remaining essentially unchanged.</p>
+                                            <?php if (isset($funnel_services['Funeral']) && !empty($funnel_services['Funeral'])) { ?>
+                                                <h5><?php echo $funnel_services['Funeral']['place_name'] ?></h5>
+                                                <p>Time: <?php echo $funnel_services['Funeral']['time'] ?></p>
+                                                <p>Date: (<?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('d M, Y', strtotime($funnel_services['Funeral']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p>Address: <?php echo $funnel_services['Funeral']['address'] ?></p>
+                                                <p>City: <?php echo $funnel_services['Funeral']['city_name'] ?></p>
+                                                <p>State: <?php echo $funnel_services['Funeral']['state_name'] ?></p>
+                                                <p>Zipcode: <?php echo $funnel_services['Funeral']['zip'] ?></p>
+                                            <?php } else { ?>
+                                                <p class="general-text">Funeral service not available.</p>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading" role="tab" id="headingThree">
                                         <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Scrambled it to make a type.</a>
+                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Burial Section</a>
                                         </h4>
                                     </div>
                                     <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                                         <div class="panel-body">
-                                            <h5>Start Time (5nov, 2010)</h5>
-                                            <p class="general-text">Has been the industry's standard dummy text ever since the is simply dummy text of the printing and typesetting industry been the industry's standard dummy text eversince thehas survived not only five centuries but also the leap into electronic typesettwas popularised in the was. </p>
-                                            <h5>End Time (5nov, 2010)</h5>
-                                            <p class="general-text"> Popularised in the with the release of etraset sheets containing and more recently with desktop publishing software like aldus pageMaker including versions hen an unknown printer took a galley of type and scrambled it to make a type specimen book has survived not only five centuries but also the leap into electronic typesetting remaining essentially unchanged.</p>
+                                            <?php if (isset($funnel_services['Burial']) && !empty($funnel_services['Burial'])) { ?>
+                                                <h5><?php echo $funnel_services['Burial']['place_name'] ?></h5>
+                                                <p>Time: <?php echo $funnel_services['Burial']['time'] ?></p>
+                                                <p>Date: (<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('d M, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p>Address: <?php echo $funnel_services['Burial']['address'] ?></p>
+                                                <p>City: <?php echo $funnel_services['Burial']['city_name'] ?></p>
+                                                <p>State: <?php echo $funnel_services['Burial']['state_name'] ?></p>
+                                                <p>Zipcode: <?php echo $funnel_services['Burial']['zip'] ?></p>
+                                            <?php } else { ?>
+                                                <p class="general-text">Burial service not available.</p>
+                                            <?php } ?>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingfour">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#headingfour" aria-expanded="false" aria-controls="headingfour">Specimen book has survived.</a>
-                                        </h4>
-                                    </div>
-                                    <div id="headingfour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfour">
-                                        <div class="panel-body">
-                                            <h5>Start Time (5nov, 2010)</h5>
-                                            <p class="general-text">Has been the industry's standard dummy text ever since the is simply dummy text of the printing and typesetting industry been the industry's standard dummy text eversince thehas survived not only five centuries but also the leap into electronic typesettwas popularised in the was. </p>
-                                            <h5>End Time (5nov, 2010)</h5>
-                                            <p class="general-text"> Popularised in the with the release of etraset sheets containing and more recently with desktop publishing software like aldus pageMaker including versions hen an unknown printer took a galley of type and scrambled it to make a type specimen book has survived not only five centuries but also the leap into electronic typesetting remaining essentially unchanged.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingfive">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#headingfive" aria-expanded="false" aria-controls="headingfive">Mot only five centuries</a>
-                                        </h4>
-                                    </div>
-                                    <div id="headingfive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingfive">
-                                        <div class="panel-body">
-                                            <h5>Start Time (5nov, 2010)</h5>
-                                            <p class="general-text">Has been the industry's standard dummy text ever since the is simply dummy text of the printing and typesetting industry been the industry's standard dummy text eversince thehas survived not only five centuries but also the leap into electronic typesettwas popularised in the was. </p>
-                                            <h5>End Time (5nov, 2010)</h5>
-                                            <p class="general-text"> Popularised in the with the release of etraset sheets containing and more recently with desktop publishing software like aldus pageMaker including versions hen an unknown printer took a galley of type and scrambled it to make a type specimen book has survived not only five centuries but also the leap into electronic typesetting remaining essentially unchanged.</p>
-                                        </div>
-                                    </div>
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -269,15 +258,26 @@
                                         ?>
                                         <li>
                                             <div class="comments-div-wrap">
-                                                <span></span>
+                                                <span>
+                                                    <?php
+                                                    if (isset($val['profile_image']) && !is_null($val['profile_image'])) {
+                                                        if (!preg_match("/https:\/\//i", $val['profile_image'])) {
+                                                            ?>
+                                                            <img src="<?php echo USER_IMAGES . $val['profile_image'] ?>"/>
+                                                        <?php } else { ?>
+                                                            <img src="<?php echo $val['profile_image'] ?>"/>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                </span>
                                                 <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?><small><?php echo (($days_diff->y > 0) ? $days_diff->y . ' Year' . ($days_diff->y > 1 ? 's' : '') : '') . (($days_diff->m > 0) ? $days_diff->m . ' Month' . ($days_diff->m > 1 ? 's' : '') : '') . (($days_diff->d > 0) ? $days_diff->d . ' Day' . ($days_diff->d > 1 ? 's' : '') : '') ?> Ago</small></h3>
                                                 <p><?php echo $val['comment'] ?></p>
                                                 <?php if (isset($val['media']) && isset($val['media'][1])) { ?>
                                                     <ul class="post-images">
                                                         <?php foreach ($val['media'][1] as $k => $v) {
                                                             ?>
-                                                            <li><a href=""><img src="<?php echo base_url(POST_IMAGES . $v) ?>"></a></li>
-
+                                                            <li><a class="fancybox" href="<?php echo base_url(POST_IMAGES . $v) ?>"><img src="<?php echo base_url(POST_IMAGES . $v) ?>"></a></li>
                                                         <?php } ?>
                                                     </ul>
                                                 <?php } ?>
@@ -285,7 +285,11 @@
                                                     <ul class="post-video">
                                                         <?php foreach ($val['media'][2] as $k => $v) {
                                                             ?>
-                                                            <li><a href=""></a></li>
+                                                            <li>
+                                                                <video  width="100%" height="150px" controls="">
+                                                                    <source src="<?php echo base_url(POST_IMAGES . $v) ?>" type="video/mp4">
+                                                                </video>
+                                                            </li>
                                                         <?php } ?>
                                                     </ul>
                                                 <?php } ?>
@@ -363,3 +367,14 @@
         </div>
     </div>	
 </div>
+<script type="text/javascript"> 
+    $(".fancybox")
+            .attr('rel', 'gallery')
+            .fancybox({
+                padding: 0
+            });
+        function genericSocialShare(url) {
+            window.open(url, 'sharer', 'toolbar=0,status=0,width=648,height=395');
+            return true;
+        }
+</script>

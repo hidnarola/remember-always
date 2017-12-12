@@ -17,15 +17,16 @@ class Profile extends MY_Controller {
      * Display login page for login
      */
     public function index($slug) {
-        $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_published' => 1, 'is_delete' => 0, 'slug' => $slug]], ['single' => true]);
+        
+        $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'slug' => $slug]], ['single' => true]);
         if (!empty($is_left)) {
             $funnel_services_data = [];
             $post_data = [];
             $final_post_data = [];
             $post_id = 0;
-            $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)]);
-            $posts = $this->users_model->sql_select(TBL_POSTS . ' p', 'p.*,u.firstname,u.lastname,pm.media,pm.type', ['where' => array('p.profile_id' => trim($is_left['id']), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_POST_MEDIAS . ' pm', 'condition' => 'pm.post_id=p.id AND pm.is_delete=0'),array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')]]);
-            $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')]]);
+            $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)],['order_by' => 'f.id DESC']);
+            $posts = $this->users_model->sql_select(TBL_POSTS . ' p', 'p.*,u.firstname,u.lastname,u.profile_image,pm.media,pm.type', ['where' => array('p.profile_id' => trim($is_left['id']), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_POST_MEDIAS . ' pm', 'condition' => 'pm.post_id=p.id AND pm.is_delete=0'),array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')], 'order_by' => 'p.id DESC']);
+            $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
             $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
             if (!empty($funnel_services)) {
                 foreach ($funnel_services as $key => $value) {
@@ -53,6 +54,7 @@ class Profile extends MY_Controller {
                         'user_id' => $value[0]['user_id'],
                         'firstname' => $value[0]['firstname'],
                         'lastname' => $value[0]['lastname'],
+                        'profile_image' => $value[0]['profile_image'],
                         'comment' => $value[0]['comment'],
                         'created_at' => $value[0]['created_at'],
                         'updated_at' => $value[0]['updated_at'],
@@ -64,9 +66,8 @@ class Profile extends MY_Controller {
                         }
                     }
                 }
-                p($final_post_data);
             }
-            
+             $data['url'] = current_url();
             $data['profile'] = $is_left;
             $data['fun_facts'] = $fun_facts;
             $data['funnel_services'] = $funnel_services_data;
@@ -100,7 +101,6 @@ class Profile extends MY_Controller {
                 $data['error'] = validation_errors();
                 $data['success'] = false;
             } else {
-
                 $profile_process = $this->input->post('profile_process');
                 $flag = 0;
                 $profile_image = '';
