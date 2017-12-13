@@ -63,9 +63,20 @@ class Pages extends MY_Controller {
             $this->data['error'] = validation_errors();
         } else {
             $flag = 0;
+            if (!empty($this->input->post('navigation_name'))) {
+                $slug = trim($this->input->post('navigation_name'));
+            } else {
+                $slug = trim($this->input->post('title'));
+            }
+            if (isset($page_data) && !empty($page_data)) {
+                $slug = slug($slug, TBL_PAGES, trim($id));
+            } else {
+                $slug = slug($slug, TBL_PAGES);
+            }
             $dataArr = [
                 'navigation_name' => trim(htmlentities($this->input->post('navigation_name'))),
                 'title' => trim(htmlentities($this->input->post('title'))),
+                'slug' => $slug,
                 'description' => $this->input->post('description'),
                 'meta_title' => trim(htmlentities($this->input->post('meta_title'))),
                 'meta_keyword' => trim(htmlentities($this->input->post('meta_keyword'))),

@@ -7,10 +7,32 @@
             <h3>Quick Link</h3>
             <ul>
                 <li><a href="<?php echo site_url('/') ?>">Home</a></li>
-                <li><a href="">Blog</a></li>
-                <li><a href="">About</a></li>
-                <li><a href="">FAQ</a></li>
-                <li><a href="">Features</a></li>
+                <!--                <li><a href="">Blog</a></li>
+                                <li><a href="">About</a></li>
+                                <li><a href="">FAQ</a></li>
+                                <li><a href="">Features</a></li>-->
+                <?php
+                $header_links = get_pages('footer');
+                if (isset($header_links)) {
+                    foreach ($header_links as $key => $value) {
+                        if (isset($value['sub_menus'])) {
+                            foreach ($value['sub_menus'] as $key1 => $value1) {
+                                ?>
+                                <li class="">
+                                    <a href="<?php echo site_url('pages/' . $value1['slug']); ?>"><?php echo $value1['navigation_name']; ?></a>
+                                </li>
+                                <?php
+                            }
+                        } else {
+                            ?>
+                            <li class="">
+                                <a href="<?php echo site_url('pages/' . $value['slug']); ?>"><?php echo $value['navigation_name']; ?></a>
+                            </li>
+                            <?php
+                        }
+                    }
+                }
+                ?>
                 <li><a href="">Contact</a></li>
             </ul>
         </div>

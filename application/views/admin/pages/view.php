@@ -107,7 +107,6 @@ if ($this->session->flashdata('success')) {
                                 </tr>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
             </div>
