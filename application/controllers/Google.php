@@ -49,7 +49,7 @@ class Google extends MY_Controller {
                 if (!empty($db_user)) {
                     if ($db_user['is_delete'] == 1 || $db_user['is_active'] == 0) {
                         $this->session->set_flashdata('error', 'You account is blocked. Please contact system administrator');
-                        redirect('login');
+                        redirect('/');
                     } else {
                         $this->session->set_userdata('remalways_user', $db_user);
                         $this->session->set_flashdata('success', 'You are now logged in with Google successfully');

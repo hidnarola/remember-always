@@ -73,5 +73,7 @@ $route['logout'] = 'login/logout';
 $route['editprofile'] = 'users/edit_profile';
 $route['changepassword'] = 'users/update_password';
 
+$route['(:any)']='cms/index/$1';
+
 $route['404_override'] = 'pagenotfound';
 $route['translate_uri_dashes'] = FALSE;

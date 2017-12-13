@@ -143,6 +143,8 @@ class Profile extends MY_Controller {
                 }
                 if (!empty($is_left)) {
                     $slug = slug($slug, TBL_PROFILES, $is_left['id']);
+                } else {
+                    $slug = slug($slug, TBL_PROFILES);
                 }
 
                 //-- check if profile image is there in $_FILES array
@@ -264,8 +266,6 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function delete_gallery() {
-        echo 'here';
-        echo $this->input->post('gallery');exit;
         $gallery = base64_decode($this->input->post('gallery'));
         $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
         if (!empty($gallery_media)) {
