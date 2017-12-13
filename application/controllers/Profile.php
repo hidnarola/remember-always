@@ -27,7 +27,7 @@ class Profile extends MY_Controller {
             $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
             $posts = $this->users_model->sql_select(TBL_POSTS . ' p', 'p.*,u.firstname,u.lastname,u.profile_image,pm.media,pm.type', ['where' => array('p.profile_id' => trim($is_left['id']), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_POST_MEDIAS . ' pm', 'condition' => 'pm.post_id=p.id AND pm.is_delete=0'), array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')], 'order_by' => 'p.id DESC']);
             $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
-            $life_gallery = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
+            $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($is_left['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
             $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
             if (!empty($funnel_services)) {
                 foreach ($funnel_services as $key => $value) {
@@ -99,6 +99,7 @@ class Profile extends MY_Controller {
             $data['fun_facts'] = $fun_facts;
             $data['funnel_services'] = $funnel_services_data;
             $data['posts'] = $final_post_data;
+            $data['life_gallery'] = $life_gallery;
             $data['title'] = 'Profile';
             $data['breadcrumb'] = ['title' => 'User Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
             $this->template->load('default', 'profile/profile_detail', $data);
@@ -268,25 +269,17 @@ class Profile extends MY_Controller {
      */
     public function delete_gallery() {
         $gallery = base64_decode($this->input->post('gallery'));
-        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media,type', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
+        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
         if (!empty($gallery_media)) {
             $this->users_model->common_delete(TBL_GALLERY, ['id' => $gallery]);
             unlink(PROFILE_IMAGES . $gallery_media['media']);
             $data['success'] = true;
-            $data['type'] = $gallery_media['type'];
         } else {
             $data['success'] = false;
             $data['error'] = "Invalid request!";
         }
         echo json_encode($data);
         exit;
-    }
-
-    /**
-     * Ajax call to this function Proceed profile steps
-     */
-    public function proceed_steps() {
-        
     }
 
 }
