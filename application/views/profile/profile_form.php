@@ -93,19 +93,26 @@
                                             </div>
                                         </li>
                                         <?php
+                                        $image_count = $video_count = 0;
                                         if (isset($profile_gallery) && !empty($profile_gallery)) {
                                             foreach ($profile_gallery as $key => $value) {
                                                 ?>
                                                 <li>
                                                     <div class="upload-wrap">
                                                         <span>
-                                                            <?php if ($value['type'] == 1) { ?>
+                                                            <?php
+                                                            if ($value['type'] == 1) {
+                                                                $image_count++;
+                                                                ?>
                                                                 <img src="<?php echo PROFILE_IMAGES . $value['media'] ?>" style="width:100%">
-                                                            <?php } else { ?>
+                                                                <?php
+                                                            } else {
+                                                                $video_count++;
+                                                                ?>
                                                                 <video style="width:100%;height:100%" controls><source src="<?php echo PROFILE_IMAGES . $value['media'] ?>">Your browser does not support HTML5 video.</video>
                                                             <?php } ?>
                                                         </span>
-                                                        <a href="javascript:void(0)" onclick="delete_media(this,'<?php echo base64_encode($value['id'])?>')"><?php $this->load->view('delete_svg'); ?></a>	
+                                                        <a href="javascript:void(0)" onclick="delete_media(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>	
                                                     </div>
                                                 </li>
                                             <?php }
@@ -157,7 +164,7 @@
                                 <div class="step-btm-btn">
                                     <button class="back" onclick="return back_step()">Back</button>
                                     <button class="skip" onclick="return skip_step()">Skip</button>
-                                    <button class="next" onclick="return false;">Next</button>
+                                    <button class="next" onclick="return proceed_step();">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -465,6 +472,10 @@
 </div>
 <script type="text/javascript">
     var profile_id = '<?php echo (isset($profile)) ? base64_encode($profile['id']) : 0 ?>';
+    max_images_count = <?php echo MAX_IMAGES_COUNT - $image_count ?>;
+//    max_videos_count = <?php echo MAX_VIDEOS_COUNT - $video_count ?>;
+    max_videos_count = 2;
+
     $(function () {
         //-- Initialize datepicker
         $('.date-picker').datepicker({
@@ -642,6 +653,30 @@
         return false;
     }
 
+    // Proceeds steps
+    function proceed_step() {
+        var profile_process = $('#profile_process').val();
+        if (profile_process == 1) {
+            $.ajax({
+                url: site_url + "profile/proceed_steps",
+                type: "POST",
+                data: {profile_process: 2},
+                dataType: "json",
+                processData: false, // tell jQuery not to process the data
+                contentType: false, // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data.success == true) {
+                        profile_id = btoa(data.data.id);
+                        profile_steps('second-step');
+                    } else {
+                        $('#profile_process').val(0);
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        }
+    }
+
     var image_count = 0, video_count = 0;
     $("#gallery").change(function () {
         var dvPreview = $("#selected-preview");
@@ -652,7 +687,6 @@
                 var file = $(this);
                 str = '';
                 if (regex.test(file[0].name.toLowerCase())) {
-                    image_count++;
                     //-- check image and video count
                     if (image_count <= max_images_count) {
 
@@ -691,9 +725,9 @@
                     } else {
                         showErrorMSg("Limit is exceeded to upload images");
                     }
+                    image_count++;
 
                 } else if (regex_video.test(file[0].name.toLowerCase())) {
-                    video_count++;
                     if (video_count <= max_videos_count) {
                         // upload video
                         var videoData = new FormData();
@@ -710,7 +744,7 @@
                             success: function (data) {
                                 if (data.success == true) {
                                     $('#default-preview').remove();
-                                    str += '<li><div class="upload-wrap"><span>';
+                                    str = '<li><div class="upload-wrap"><span>';
                                     str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
                                     str += '</span><a href="javascript:void(0)" onclick="delete_media(this,\'' + data.data + '\')">';
                                     str += '<?php $this->load->view('delete_svg', true); ?>';
@@ -726,6 +760,7 @@
                     } else {
                         showErrorMSg("Limit is exceeded to upload videos");
                     }
+                    video_count++;
 
                 } else {
                     showErrorMSg(file[0].name + " is not a valid image/video file.");
@@ -743,7 +778,13 @@
             dataType: "json",
             success: function (data) {
                 if (data.success == true) {
+                    if (data.type == 1) {
+                        max_images_count++; //increase max images count if deleted media is image
+                    } else {
+                        max_videos_count++; //increase max videos count if deleted media is video
+                    }
                     $(obj).parent('.upload-wrap').parent('li').remove();
+
                 } else {
                     showErrorMSg(data.error);
                 }
