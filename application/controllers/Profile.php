@@ -67,6 +67,32 @@ class Profile extends MY_Controller {
                     }
                 }
             }
+            if ($_POST) {
+//                p($this->input->post(), 1);
+                $this->form_validation->set_rules('comment', 'comment', 'trim|required');
+                if ($this->form_validation->run() == FALSE) {
+                    $this->data['error'] = validation_errors();
+                } else {
+                    $dataArr = array(
+                        'profile_id' => $is_left['id'],
+                        'user_id' => $is_left['user_id'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                    );
+                    if (!empty(trim($this->input->post('comment')))) {
+                        $dataArr['comment'] = trim($this->input->post('comment'));
+                    }
+                    $id = $this->users_model->common_insert_update('insert', TBL_POSTS, $dataArr);
+//                    if (isset($dataArr_media) && !empty($dataArr_media)) {
+//                        foreach ($dataArr_media as $key => $value) {
+//                            $dataArr_media[$key]['post_id'] = $id;
+//                        }
+//                        $this->post_model->batch_insert_update('insert', TBL_POST_MEDIAS, $dataArr_media);
+////                    p($dataArr_media, 1);
+//                    }
+                    $this->session->set_flashdata('success', 'Post details has been inserted successfully.');
+                    redirect('profile/' . $slug);
+                }
+            }
             $data['url'] = current_url();
             $data['profile'] = $is_left;
             $data['fun_facts'] = $fun_facts;

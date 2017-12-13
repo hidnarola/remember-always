@@ -98,7 +98,7 @@ if ($this->session->flashdata('success')) {
                                 <?php if (isset($page_data['banner_image']) && !empty($page_data['banner_image']) && !is_null($page_data['banner_image'])) { ?>
                                     <tr>
                                         <th class="text-nowrap custom_align_top">Banner Image :</th>
-                                        <td><a class="fancybox" href="<?php echo base_url(PAGE_BANNER . $page_data['banner_image']) ?>" data-fancybox-group="gallery" ><img src="<?php echo base_url(PAGE_BANNER . $page_data['banner_image']) ?>" height="100px" width="100px"></img></a></td>
+                                        <td><a class="fancybox" href="<?php echo base_url(PAGE_BANNER . $page_data['banner_image']) ?>" data-fancybox-group="gallery" ><img src="<?php echo base_url(PAGE_BANNER . $page_data['banner_image']) ?>" height="100px" width="170px"></img></a></td>
                                     </tr>
                                 <?php } ?>
                                 <tr>
@@ -116,7 +116,6 @@ if ($this->session->flashdata('success')) {
         $this->load->view('Templates/admin_footer');
         ?>
     </div>
-
     <script type="text/javascript">
         $(function () {
             $('.fancybox').fancybox();

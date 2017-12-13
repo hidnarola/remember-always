@@ -74,15 +74,30 @@ class Pages extends MY_Controller {
             if (!empty($_FILES['banner_image']['name'])) {
                 $image_name = upload_image('banner_image', PAGE_BANNER);
                 if (is_array($image_name)) {
-                    $this->data['profile_image_validation'] = $image_name['errors'];
+                    $this->data['banner_image_validation'] = $image_name['errors'];
                 } else {
-                    if (is_numeric($id)) {
-                        $page_data = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
-                        if (!empty($page_data) && !empty($page_data['banner_image'])) {
-                            unlink(PAGE_BANNER . $page_data['banner_image']);
+                    $slider_image = $image_name;
+                    $image_size = getimagesize(base_url() . PAGE_BANNER . $image_name);
+                    if ($image_size[1] > 730) {
+                        $path_parts = pathinfo(PAGE_BANNER . $image_name);
+                        $new_image = $path_parts['filename'] . 'resize.' . $path_parts['extension'];
+                        $slider_image = $new_image;
+//                        $new_width = (730 * $image_size[0]) / $image_size[1];
+                        $new_width = 1600;
+                        $resize_data = resize_image(PAGE_BANNER . $image_name, PAGE_BANNER . $slider_image, $new_width, 730);
+                        if (is_array($resize_data)) {
+                            $flag = 1;
+                            $data['banner_image_validation'] = $resize_data['errors'];
                         }
                     }
-                    $slider_image = $image_name;
+                    if ($flag == 0) {
+                        if (is_numeric($id)) {
+                            $page_data = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+                            if (!empty($page_data) && !empty($page_data['banner_image'])) {
+                                unlink(PAGE_BANNER . $page_data['banner_image']);
+                            }
+                        }
+                    }
                     $dataArr['banner_image'] = $slider_image;
                 }
             } else {
@@ -94,14 +109,16 @@ class Pages extends MY_Controller {
                     }
                 }
             }
-            if (is_numeric($id)) {
-                $dataArr['updated_at'] = date('Y-m-d H:i:s');
-                $this->pages_model->common_insert_update('update', TBL_PAGES, $dataArr, ['id' => $id]);
-                $this->session->set_flashdata('success', 'Page details has been updated successfully.');
-            } else {
-                $dataArr['created_at'] = date('Y-m-d H:i:s');
-                $id = $this->pages_model->common_insert_update('insert', TBL_PAGES, $dataArr);
-                $this->session->set_flashdata('success', 'Page details has been inserted successfully.');
+            if ($flag == 0) {
+                if (is_numeric($id)) {
+                    $dataArr['updated_at'] = date('Y-m-d H:i:s');
+                    $this->pages_model->common_insert_update('update', TBL_PAGES, $dataArr, ['id' => $id]);
+                    $this->session->set_flashdata('success', 'Page details has been updated successfully.');
+                } else {
+                    $dataArr['created_at'] = date('Y-m-d H:i:s');
+                    $id = $this->pages_model->common_insert_update('insert', TBL_PAGES, $dataArr);
+                    $this->session->set_flashdata('success', 'Page details has been inserted successfully.');
+                }
             }
             redirect('admin/pages');
         }
@@ -113,7 +130,7 @@ class Pages extends MY_Controller {
      *
      */
     public function view($id) {
-         
+
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
@@ -183,7 +200,7 @@ class Pages extends MY_Controller {
      * @author : AKK
      * */
     public function change_data_status() {
-         if (!is_null($this->input->post('id')))
+        if (!is_null($this->input->post('id')))
             $id = base64_decode($this->input->post('id'));
         if (is_numeric($id)) {
             $user_array = array($this->input->post('type') => $this->input->post('value'));
