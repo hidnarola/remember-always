@@ -118,6 +118,7 @@ class Profile extends MY_Controller {
         if (!empty($is_left)) {
             $data['profile'] = $is_left;
             $data['profile_gallery'] = $this->users_model->sql_select(TBL_GALLERY, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['order_by' => 'id DESC']);
+            $data['fun_facts'] = $this->users_model->sql_select(TBL_FUN_FACTS, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
         }
         if ($_POST) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
@@ -302,6 +303,59 @@ class Profile extends MY_Controller {
             }
         } else {
             $data = ['success' => false, 'error' => 'Invalid request!'];
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Upload profile gallery
+     * @author KU
+     */
+    public function add_facts() {
+        $profile_id = base64_decode($this->input->post('profile_id'));
+        $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+        if (!empty($profile)) {
+            $id = $this->users_model->common_insert_update('insert', TBL_FUN_FACTS, ['profile_id' => $profile_id, 'user_id' => $this->user_id, 'facts' => trim($this->input->post('facts')), 'created_at' => date('Y-m-d H:i:s')]);
+            $data['success'] = true;
+            $data['data'] = base64_encode($id);
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Something went wrong!";
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Check fact is already added or not
+     * @param type $id
+     */
+    public function check_facts($id) {
+        $facts = trim($this->input->get('fun_fact'));
+        $profile_id = base64_decode($id);
+        $fact = $this->users_model->sql_select(TBL_FUN_FACTS, 'id', ['where' => ['facts' => $facts, 'profile_id' => $profile_id, 'is_delete' => 0]]);
+        if (!empty($fact)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
+    }
+
+    /**
+     * Delete uploaded profile gallery 
+     * @author KU
+     */
+    public function delete_facts() {
+        $fact = base64_decode($this->input->post('fact'));
+        $fact_detail = $this->users_model->sql_select(TBL_FUN_FACTS, 'facts', ['where' => ['id' => $fact, 'is_delete' => 0]], ['single' => true]);
+        if (!empty($fact_detail)) {
+            $this->users_model->common_insert_update('update', TBL_FUN_FACTS, ['is_delete' => 0], ['id' => $fact]);
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Invalid request!";
         }
         echo json_encode($data);
         exit;

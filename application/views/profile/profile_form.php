@@ -177,25 +177,43 @@
                             <div class="step-form">
                                 <div class="step-03">
                                     <div class="step-03-l">
-                                        <div class="input-wrap-div">
-                                            <input type="text" name="" placeholder="Text here" class="input-css" />
-                                            <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>
-                                        </div>
-                                        <div class="input-wrap-div">
-                                            <input type="text" name="" placeholder="Text here" class="input-css" />
-                                            <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>
-                                        </div>
-                                        <div class="input-wrap-div">
-                                            <input type="text" name="" placeholder="Text here" class="input-css" />
-                                            <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>
-                                        </div>
-                                        <div class="input-wrap-div">
-                                            <input type="text" name="" placeholder="Text here" class="input-css" />
-                                            <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>
-                                        </div>
+                                        <?php
+                                        $facts_count = 0;
+                                        if (isset($fun_facts) && !empty($fun_facts)) {
+                                            foreach ($fun_facts as $key => $value) {
+                                                $facts_count++;
+                                                ?>
+                                                <div class="input-wrap-div">
+                                                    <div class="input-css"><?php echo $value['facts'] ?></div>
+                                                    <a href="javascript:void(0)" onclick="delete_facts(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
+                                                </div>
+                                                <?php
+                                            }
+                                        } else {
+                                            ?>
+                                            <div id="default-facts">
+                                                <div class="input-wrap-div">
+                                                    <div class="input-css">Text here</div>
+                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>
+                                                </div>
+                                                <div class="input-wrap-div">
+                                                    <div class="input-css">Text here</div>
+                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>
+                                                </div>
+                                                <div class="input-wrap-div">
+                                                    <div class="input-css">Text here</div>
+                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>
+                                                </div>
+                                                <div class="input-wrap-div">
+                                                    <div class="input-css">Text here</div>
+                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>
+                                                </div>
+                                            </div>
+                                        <?php } ?>
+                                        <div id="selected-facts"></div>
                                     </div>
                                     <div class="step-03-m">
-                                        <button type="submit">Add a Fun Fact</button>
+                                        <button type="button" onclick="$('#funfact-modal').modal('show')">Add a Fun Fact</button>
                                     </div>
                                     <div class="step-03-r">
                                         <h6>Fun facts can be anything fun or <br/>interesting about your loved one.</h6>
@@ -474,13 +492,14 @@
     <div class="modal-dialog" role="document">
         <div class="login-signup">
             <div class="mpopup-body">
-                <div class="popup-input">
-                    <label>Fun Fact</label>
-                    <input type="text" name="fun_fact" id="fun_fact" placeholder="Start Typing..">
-                </div>
+                <form id="fun-fact-form">
+                    <div class="popup-input">
+                        <label>Fun Fact</label>
+                        <input type="text" name="fun_fact" id="fun_fact" placeholder="Start Typing.." required>
+                    </div>
+                </form>
                 <div class="pup-btn">
-                    <button type="button" onclick="return false;" id="add-funfact-btn">Add</button>
-                    <button type="button" onclick="$('#funfact-modal').modal('hide')">close</button>
+                    <button type="button" onclick="return add_funfact();" id="add-funfact-btn">Add</button>
                 </div>
             </div>
         </div>
@@ -489,8 +508,8 @@
 <script type="text/javascript">
     var profile_id = '<?php echo (isset($profile)) ? base64_encode($profile['id']) : 0 ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT - $image_count ?>;
-//    max_videos_count = <?php echo MAX_VIDEOS_COUNT - $video_count ?>;
-    max_videos_count = 2;
+    max_videos_count = <?php echo MAX_VIDEOS_COUNT - $video_count ?>;
+    max_facts_count = 10;
 
     $(function () {
         //-- Initialize datepicker
@@ -522,6 +541,18 @@
                 }
             },
 
+        });
+        $("#fun-fact-form").validate({
+            rules: {
+                fun_fact: {
+                    required: true
+                },
+                messages: {
+                    fun_fact: {
+                        required: "Please Enter fun fact",
+                    },
+                },
+            },
         });
     });
     // Display the preview of image on image upload
@@ -691,7 +722,7 @@
         }
         return false;
     }
-
+    //-- Gallery step
     var image_count = 0, video_count = 0;
     $("#gallery").change(function () {
         var dvPreview = $("#selected-preview");
@@ -805,5 +836,60 @@
                 }
             }
         });
+    }
+    // facts step
+    var facts_count = 0;
+    function delete_facts(obj, data) {
+        $.ajax({
+            url: site_url + "profile/delete_facts",
+            type: "POST",
+            data: {'fact': data},
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    $(obj).parent('.input-wrap-div').remove();
+                    max_facts_count++;
+                } else {
+                    showErrorMSg(data.error);
+                }
+            }
+        });
+    }
+    //-- Add fun fact step
+    function add_funfact() {
+        $('#fun_fact').rules('add', {
+            remote: site_url + 'profile/check_facts/' + profile_id,
+            messages: {
+                remote: "This fun fact is already added",
+            }
+        });
+        if ($('#fun-fact-form').valid()) {
+            if (facts_count <= max_facts_count) {
+                $.ajax({
+                    url: site_url + "profile/add_facts",
+                    type: "POST",
+                    data: {facts: $('#fun_fact').val(), profile_id: profile_id},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success == true) {
+                            facts_count++;
+                            $('#default-facts').remove();
+                            str = '<div class="input-wrap-div">';
+                            str += '<div class="input-css">' + $('#fun_fact').val() + '</div>';
+                            str += '<a href="javascript:void(0)" onclick="delete_facts(this,\'' + data.data + '\')">';
+                            str += '<?php $this->load->view('delete_svg', true); ?>';
+                            str += '</div>';
+                            $('#selected-facts').append(str);
+                            $('#funfact-modal').modal('hide');
+                        } else {
+                            showErrorMSg(data.error);
+                        }
+                    }
+                });
+            }
+        }
+
+
+        return false;
     }
 </script>

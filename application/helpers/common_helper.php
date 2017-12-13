@@ -120,7 +120,7 @@ function slug($text, $table, $id = NULL) {
 
     if (empty($text)) {
         $text = 'n-a';
-    } elseif ($text == 'create' || $text == 'upload_gallery' || $text == 'delete_gallery' || $text == 'proceed_steps') { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
+    } elseif ($text == 'create' || $text == 'upload_gallery' || $text == 'delete_gallery' || $text == 'proceed_steps' || $text == 'check_facts' || $text == 'delete_facts' || $text == 'add_facts') { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
         $text = 'n-a';
     }
 
