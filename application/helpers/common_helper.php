@@ -120,7 +120,7 @@ function slug($text, $table, $id = NULL) {
 
     if (empty($text)) {
         $text = 'n-a';
-    } elseif ($text == 'create' || $text == 'upload_gallery') { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
+    } elseif ($text == 'create' || $text == 'upload_gallery' || $text == 'delete_gallery') { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
         $text = 'n-a';
     }
 
@@ -129,10 +129,8 @@ function slug($text, $table, $id = NULL) {
         for ($i = 0; $i < 1; $i++) {
             if ($id != NULL) {
                 $where = ['slug' => $text, 'id!=' => $id];
-//                $where = 'slug = ' . $CI->db->escape($text) . ' AND id != ' . $id;
             } else {
                 $where = ['slug' => $text];
-//                $where = 'slug = ' . $CI->db->escape($text);
             }
             $result = $CI->users_model->sql_select($table, '*', ['where' => $where], ['single' => true]);
             if (sizeof($result) > 0) {
@@ -402,31 +400,31 @@ function format_days($days_diff) {
         } else {
             $result .= $days_diff->y . ' Year';
         }
-    }else if ($days_diff->m > 0) {
+    } else if ($days_diff->m > 0) {
         if ($days_diff->m > 1) {
             $result .= $days_diff->m . ' Months';
         } else {
             $result .= $days_diff->m . ' Month';
         }
-    }else if ($days_diff->d > 0) {
+    } else if ($days_diff->d > 0) {
         if ($days_diff->d > 1) {
             $result .= $days_diff->d . ' Days';
         } else {
             $result .= $days_diff->d . ' Day';
         }
-    }else if ($days_diff->h > 0) {
+    } else if ($days_diff->h > 0) {
         if ($days_diff->h > 1) {
             $result .= $days_diff->h . ' Hours';
         } else {
             $result .= $days_diff->h . ' Hour';
         }
-    }else if ($days_diff->i > 0) {
+    } else if ($days_diff->i > 0) {
         if ($days_diff->i > 1) {
             $result .= $days_diff->i . ' Minutes';
         } else {
             $result .= $days_diff->i . ' Minute';
         }
-    }else if ($days_diff->s > 0) {
+    } else if ($days_diff->s > 0) {
         if ($days_diff->s > 1) {
             $result .= $days_diff->s . ' Seconds';
         } else {
