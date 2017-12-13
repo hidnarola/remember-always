@@ -68,6 +68,7 @@ $route['verify'] = 'signup/verify';
 $route['profile/create'] = 'profile/create';
 $route['profile/upload_gallery'] = 'profile/upload_gallery';
 $route['profile/delete_gallery'] = 'profile/delete_gallery';
+$route['profile/proceed_steps'] = 'profile/proceed_steps';
 $route['profile/(:any)'] = 'profile/index/$1';
 $route['logout'] = 'login/logout';
 $route['editprofile'] = 'users/edit_profile';
