@@ -268,17 +268,25 @@ class Profile extends MY_Controller {
      */
     public function delete_gallery() {
         $gallery = base64_decode($this->input->post('gallery'));
-        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
+        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media,type', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
         if (!empty($gallery_media)) {
             $this->users_model->common_delete(TBL_GALLERY, ['id' => $gallery]);
             unlink(PROFILE_IMAGES . $gallery_media['media']);
             $data['success'] = true;
+            $data['type'] = $gallery_media['type'];
         } else {
             $data['success'] = false;
             $data['error'] = "Invalid request!";
         }
         echo json_encode($data);
         exit;
+    }
+
+    /**
+     * Ajax call to this function Proceed profile steps
+     */
+    public function proceed_steps() {
+        
     }
 
 }
