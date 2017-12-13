@@ -14,7 +14,7 @@ class Cms extends MY_Controller {
      * @author KAP
      * */
     public function index($page_slug) {
-        $get_result = $this->users_model->sql_select(TBL_PAGES, null, ['where' => ['slug =' . $this->db->escape(urldecode($page_slug))]], ['single' => true]);
+        $get_result = $this->users_model->sql_select(TBL_PAGES, null, ['where' => ['slug' => urldecode($page_slug)]], ['single' => true]);
         if ($get_result) {
             $data['title'] = 'Remember Always';
             $data['page_title'] = $get_result['title'];
