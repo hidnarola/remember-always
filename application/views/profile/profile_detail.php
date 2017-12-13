@@ -33,8 +33,8 @@
                     <div class="profile-share">
                         <h6>Share</h6>
                         <a href="javascript:void(0)"class="fa fa-facebook" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"></a>
-                        <a href="javascript:void(0)"class="fa fa-twitter" onclick="javascript:genericSocialShare('http://twitter.com/share?url=<?php echo $url; ?>')" title="Twitter Share"></a>
                         <a href="javascript:void(0)"class="fa fa-pinterest" onclick="javascript:genericSocialShare('https://pinterest.com/pin/create/bookmarklet/?url=<?php echo $url; ?>')" title="Pintrest Share"></a>
+                        <a href="javascript:void(0)"class="fa fa-twitter" onclick="javascript:genericSocialShare('http://twitter.com/share?url=<?php echo $url; ?>')" title="Twitter Share"></a>
                         <a href="javascript:void(0)" class="icon-linked_in fa fa-google-plus" onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus Share"></a>
                     </div>
                 </div>
