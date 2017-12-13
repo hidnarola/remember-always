@@ -283,9 +283,28 @@ class Profile extends MY_Controller {
 
     /**
      * Ajax call to this function Proceed profile steps
+     * @author KU
      */
     public function proceed_steps() {
-        
+        if ($this->input->post('profile_process')) {
+            $profile_id = base64_decode($this->input->post('profile_id'));
+            $profile_process = $this->input->post('profile_process');
+            //-- Get profile detail from profile_id
+            $profile = $this->users_model->sql_select(TBL_PROFILES, 'profile_process', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+            if (!empty($profile)) {
+                if ($profile_process == 2) {
+                    if ($profile['profile_process'] <= $profile_process)
+                        $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => $profile_process], ['id' => $profile_id]);
+                    $data = ['success' => true];
+                }
+            } else {
+                $data = ['success' => false, 'error' => 'Invalid request!'];
+            }
+        } else {
+            $data = ['success' => false, 'error' => 'Invalid request!'];
+        }
+        echo json_encode($data);
+        exit;
     }
 
 }

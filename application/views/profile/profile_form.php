@@ -199,7 +199,7 @@
                                     </div>
                                     <div class="step-03-r">
                                         <h6>Fun facts can be anything fun or <br/>interesting about your loved one.</h6>
-                                        <h5>Example Incluse things sucg as:</h5>
+                                        <h5>Example Include things such as:</h5>
                                         <p>Place of birth or where they grew up.</p>
                                         <p>Family information</p>
                                         <p>School(s) Attended</p>
@@ -470,6 +470,22 @@
         </div>
     </div>	
 </div>
+<div class="modal fade" id="funfact-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="login-signup">
+            <div class="mpopup-body">
+                <div class="popup-input">
+                    <label>Fun Fact</label>
+                    <input type="text" name="fun_fact" id="fun_fact" placeholder="Start Typing..">
+                </div>
+                <div class="pup-btn">
+                    <button type="button" onclick="return false;" id="add-funfact-btn">Add</button>
+                    <button type="button" onclick="$('#funfact-modal').modal('hide')">close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
     var profile_id = '<?php echo (isset($profile)) ? base64_encode($profile['id']) : 0 ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT - $image_count ?>;
@@ -660,21 +676,20 @@
             $.ajax({
                 url: site_url + "profile/proceed_steps",
                 type: "POST",
-                data: {profile_process: 2},
+                data: {profile_process: 2, profile_id: profile_id},
                 dataType: "json",
-                processData: false, // tell jQuery not to process the data
-                contentType: false, // tell jQuery not to set contentType
                 success: function (data) {
                     if (data.success == true) {
-                        profile_id = btoa(data.data.id);
-                        profile_steps('second-step');
+                        $('#profile_process').val(2);
+                        profile_steps('third-step');
                     } else {
-                        $('#profile_process').val(0);
+                        $('#profile_process').val(1);
                         showErrorMSg(data.error);
                     }
                 }
             });
         }
+        return false;
     }
 
     var image_count = 0, video_count = 0;
