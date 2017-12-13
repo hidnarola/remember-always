@@ -33,8 +33,8 @@
                     <div class="profile-share">
                         <h6>Share</h6>
                         <a href="javascript:void(0)"class="fa fa-facebook" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"></a>
-                        <a href="javascript:void(0)"class="fa fa-twitter" onclick="javascript:genericSocialShare('http://twitter.com/share?url=<?php echo $url; ?>')" title="Twitter Share"></a>
                         <a href="javascript:void(0)"class="fa fa-pinterest" onclick="javascript:genericSocialShare('https://pinterest.com/pin/create/bookmarklet/?url=<?php echo $url; ?>')" title="Pintrest Share"></a>
+                        <a href="javascript:void(0)"class="fa fa-twitter" onclick="javascript:genericSocialShare('http://twitter.com/share?url=<?php echo $url; ?>')" title="Twitter Share"></a>
                         <a href="javascript:void(0)" class="icon-linked_in fa fa-google-plus" onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus Share"></a>
                     </div>
                 </div>
@@ -276,7 +276,7 @@
                                                     }
                                                     ?>
                                                 </span>
-                                                <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?><small><?php echo format_days($days_diff)?>  Ago</small></h3>
+                                                <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?><small><?php echo format_days($days_diff) ?>  Ago</small></h3>
                                                 <p><?php echo $val['comment'] ?></p>
                                                 <?php if (isset($val['media']) && isset($val['media'][1])) { ?>
                                                     <ul class="post-images">
@@ -324,12 +324,28 @@
                         <h2>Life Gallery</h2>
                         <div class="profile-box-body">
                             <ul>
-                                <li><a href=""></a></li>
-                                <li><a href=""></a></li>
-                                <li><a href=""></a></li>
-                                <li><a href=""></a></li>
-                                <li><a href=""></a></li>
-                                <li><a href=""></a></li>
+                                <?php
+                                if (isset($life_gallery) && !empty($life_gallery)) {
+                                    foreach ($life_gallery as $key => $val) {
+                                        if ($val['type'] == 1) {
+                                            ?>
+                                            <li><a class="fancybox" href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>"><img src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" width="100%" height="100%"></a></li>
+                                        <?php } else if ($val['type'] == 2) {
+                                            ?>
+                                            <li>
+                                                <a>
+                                                    <video  width="100%" height="100%"controls="">
+                                                        <source src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" type="video/mp4">
+                                                    </video>
+                                                </a>
+                                            </li>
+                                            <?php
+                                        }
+                                    }
+                                } else {
+                                    ?>
+                                    Profile not having life gallery.
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>

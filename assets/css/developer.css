@@ -12,3 +12,24 @@ label.error {color: red;margin: 5px 0px 0px 5px;font-size: 14px;font-weight: nor
 .mpopup-header{background: #975979;color: #fff;border: 0;font-family: 'Rubik';font-size: 18px;text-transform: uppercase;line-height: 20px;padding: 15px;border-radius: 0;text-align: center;margin: 0 0 25px;}
 .mpopup-body{padding: 0 15px;}
 .upload-wrap span {padding: 0px;}
+
+.services-ctgr ul li a.active {
+    text-decoration: none;
+    color: #975779;
+}
+.fa-facebook:hover{
+    text-decoration: none;
+    color:#3b5998;
+}
+.fa-twitter:hover{
+    text-decoration: none;
+    color:#0084b4;
+}
+.fa-google-plus:hover{
+    text-decoration: none;
+    color:#dd4b39;
+}
+.fa-pinterest:hover{
+    text-decoration: none;
+    color:#c8232c;
+}
