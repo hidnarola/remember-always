@@ -434,3 +434,45 @@ function format_days($days_diff) {
     return $result;
 //       . (($days_diff->m > 0) ? $days_diff->m . ' Month' . ($days_diff->m > 1 ? 's ' : ' ') : '') . (($days_diff->d > 0) ? $days_diff->d . ' Day' . ($days_diff->d > 1 ? 's ' : ' ') : '') . (($days_diff->h > 0) ? $days_diff->h . ' Hour' . ($days_diff->h > 1 ? 's ' : ' ') : '') . (($days_diff->i > 0) ? $days_diff->i . ' Minute' . ($days_diff->i > 1 ? 's ' : ' ') : '') .(($days_diff->s > 0) ? $days_diff->s . ' Second' . ($days_diff->s > 1 ? 's' : '') : '')
 }
+
+/**
+ * get_pages get pages based on perameter
+ * @param  @type
+ * @author AKK
+ */
+function get_pages($type) {
+    $CI = & get_instance();
+//    $CI->load->model('MY_Model');
+    if ($type == 'header') {
+        $result = $CI->users_model->get_pages($type);
+        if ($result) {
+            $menu_array = array();
+            foreach ($result as $key => $value) {
+                if ($value['parent_id'] == 0 && $value['active'] == 1) {
+                    $menu_array[$value['id']] = $value;
+                }
+            }
+            foreach ($result as $key => $value) {
+                if ($value['parent_id'] != 0) {
+                    if (isset($menu_array[$value['parent_id']])) {
+                        $menu_array[$value['parent_id']]['sub_menus'][] = $value;
+                    }
+                }
+            }
+            return $menu_array;
+        }
+    }
+
+    if ($type == 'footer') {
+        $result = $CI->users_model->get_pages($type);
+        if ($result) {
+            $menu_array = array();
+            foreach ($result as $key => $value) {
+                // if($value['parent_id'] == 0){
+                $menu_array[$key] = $value;
+                // } 
+            }
+            return $menu_array;
+        }
+    }
+}

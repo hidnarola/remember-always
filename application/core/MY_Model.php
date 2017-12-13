@@ -214,7 +214,8 @@ class MY_Model extends CI_Model {
         $query = $this->db->get($table);
         return $query->result_array();
     }
-
+    
+    
     /**
      * @method : get pages for header and footer.
      * @uses : This function is used get pages from the table based on perameter
@@ -222,7 +223,7 @@ class MY_Model extends CI_Model {
      * @author : AKK
      */
     public function get_pages($type){
-        $this->db->select('navigation_name, id, url, parent_id, active, (SELECT count(*) FROM '.TBL_PAGES.' WHERE parent_id = p.id) AS is_parent');
+        $this->db->select('navigation_name, id, slug, parent_id, active, (SELECT count(*) FROM '.TBL_PAGES.' WHERE parent_id = p.id) AS is_parent');
         if($type == 'header'){
             $this->db->where('show_in_header = 1');
             $this->db->order_by('header_position','ASC');
