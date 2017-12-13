@@ -33,6 +33,15 @@ class MY_Model extends CI_Model {
     }
 
     /**
+     * Common delete function to delete records from table
+     * @param string $table
+     * @param array $condition
+     */
+    public function common_delete($table, $condition) {
+        $this->db->delete($table, $condition);  // Produces: // DELETE FROM $table WHERE $condition
+    }
+
+    /**
      * This function returns the table contents based on data. 
      * @param String $table
      * @param Array $condition        	

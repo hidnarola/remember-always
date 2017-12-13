@@ -80,6 +80,7 @@ class Profile extends MY_Controller {
 
     /**
      * Create Profile Page
+     * @author KU
      */
     public function create() {
         if (!$this->is_user_loggedin) {
@@ -90,6 +91,7 @@ class Profile extends MY_Controller {
         $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_published' => 0, 'is_delete' => 0, 'user_id' => $this->user_id]], ['single' => true, 'order_by' => 'id DESC']);
         if (!empty($is_left)) {
             $data['profile'] = $is_left;
+            $data['profile_gallery'] = $this->users_model->sql_select(TBL_GALLERY, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['order_by' => 'id DESC']);
         }
         if ($_POST) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
@@ -123,6 +125,7 @@ class Profile extends MY_Controller {
                     if (!file_exists(PROFILE_IMAGES . $directory)) {
                         mkdir(PROFILE_IMAGES . $directory);
                     }
+
                     $image_data = upload_image('profile_image', PROFILE_IMAGES . $directory);
                     if (is_array($image_data)) {
                         $flag = 1;
@@ -152,13 +155,19 @@ class Profile extends MY_Controller {
                     if (!empty($is_left)) {
                         $data['updated_at'] = date('Y-m-d H:i:s');
                         $this->users_model->common_insert_update('update', TBL_PROFILES, $data, ['id' => $is_left['id']]);
-                        $data['id'] = $is_left['id'];
+                        $profile_id = $is_left['id'];
                     } else {
                         $data['created_at'] = date('Y-m-d H:i:s');
                         $profile_id = $this->users_model->common_insert_update('insert', TBL_PROFILES, $data);
-                        $data['id'] = $profile_id;
                     }
-
+                    if (!file_exists(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id)) {
+                        mkdir(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id);
+                        if ($_FILES['profile_image']['name'] != '') {
+                            rename(PROFILE_IMAGES . $profile_image, PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id . '/' . $image_data);
+                            $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_image' => 'user_' . $this->user_id . '/profile_' . $profile_id . '/' . $image_data], ['id' => $profile_id]);
+                        }
+                    }
+                    $data['id'] = $profile_id;
                     $data['success'] = true;
                     $data['data'] = $data;
                 }
@@ -173,24 +182,76 @@ class Profile extends MY_Controller {
 
     /**
      * Upload profile gallery
+     * @author KU
      */
     public function upload_gallery() {
+        $data = [];
         if ($_FILES) {
             $profile_id = base64_decode($this->input->post('profile_id'));
             $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
-            $directory = 'user_' . $profile['id'];
-            if (!file_exists(PROFILE_IMAGES . $directory)) {
-                mkdir(PROFILE_IMAGES . $directory);
+            if (!empty($profile)) {
+
+                $directory = 'user_' . $profile['user_id'];
+                if (!file_exists(PROFILE_IMAGES . $directory)) {
+                    mkdir(PROFILE_IMAGES . $directory);
+                }
+                $sub_directory = 'profile_' . $profile_id;
+                if (!file_exists(PROFILE_IMAGES . $directory . '/' . $sub_directory)) {
+                    mkdir(PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                }
+                if ($this->input->post('type') == 'image') {
+
+                    $image_data = upload_image('gallery', PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                    if (is_array($image_data)) {
+                        $data['error'] = $image_data['errors'];
+                        $data['success'] = false;
+                    } else {
+                        $id = $this->users_model->common_insert_update('insert', TBL_GALLERY, ['profile_id' => $profile_id, 'user_id' => $this->user_id, 'media' => $directory . '/' . $sub_directory . '/' . $image_data, 'type' => 1, 'created_at' => date('Y-m-d H:i:s')]);
+                        $data['success'] = true;
+                        $data['data'] = base64_encode($id);
+                    }
+                } elseif ($this->input->post('type') == 'video') {
+                    $video_data = upload_video('gallery', PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                    if (is_array($video_data)) {
+                        $data['error'] = $video_data['errors'];
+                        $data['success'] = false;
+                    } else {
+                        $id = $this->users_model->common_insert_update('insert', TBL_GALLERY, ['profile_id' => $profile_id, 'user_id' => $this->user_id, 'media' => $directory . '/' . $sub_directory . '/' . $video_data, 'type' => 2, 'created_at' => date('Y-m-d H:i:s')]);
+                        $data['success'] = true;
+                        $data['data'] = base64_encode($id);
+                    }
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = "Something went wrong!";
             }
-            upload_image('gallery', $image_path);
-            $data['success'] = true;
         } else {
-            
+            $data['success'] = false;
+            $data['error'] = "Invalid data!";
         }
         echo json_encode($data);
         exit;
-        p($_POST);
-        p($_FILES, 1);
+    }
+
+    /**
+     * Delete uploaded profile gallery 
+     * @author KU
+     */
+    public function delete_gallery() {
+        echo 'here';
+        echo $this->input->post('gallery');exit;
+        $gallery = base64_decode($this->input->post('gallery'));
+        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
+        if (!empty($gallery_media)) {
+            $this->users_model->common_delete(TBL_GALLERY, ['id' => $gallery]);
+            unlink(PROFILE_IMAGES . $gallery_media['media']);
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Invalid request!";
+        }
+        echo json_encode($data);
+        exit;
     }
 
 }

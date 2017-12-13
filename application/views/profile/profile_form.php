@@ -92,44 +92,64 @@
                                                 </div>
                                             </div>
                                         </li>
-                                        <div id="default-preview">
-                                            <li>
-                                                <div class="upload-wrap">
-                                                    <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="upload-wrap">
-                                                    <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="upload-wrap">
-                                                    <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="upload-wrap">
-                                                    <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="upload-wrap">
-                                                    <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="upload-wrap">
-                                                    <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
-                                                </div>
-                                            </li>
-                                        </div>
+                                        <?php
+                                        if (isset($profile_gallery) && !empty($profile_gallery)) {
+                                            foreach ($profile_gallery as $key => $value) {
+                                                ?>
+                                                <li>
+                                                    <div class="upload-wrap">
+                                                        <span>
+                                                            <?php if ($value['type'] == 1) { ?>
+                                                                <img src="<?php echo PROFILE_IMAGES . $value['media'] ?>" style="width:100%">
+                                                            <?php } else { ?>
+                                                                <video style="width:100%;height:100%" controls><source src="<?php echo PROFILE_IMAGES . $value['media'] ?>">Your browser does not support HTML5 video.</video>
+                                                            <?php } ?>
+                                                        </span>
+                                                        <a href="javascript:void(0)" onclick="delete_media(this,'<?php echo base64_encode($value['id'])?>')"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    </div>
+                                                </li>
+                                            <?php }
+                                            ?>
+                                        <?php } else { ?>
+                                            <div id="default-preview">
+                                                <li>
+                                                    <div class="upload-wrap">
+                                                        <span></span>
+                                                        <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="upload-wrap">
+                                                        <span></span>
+                                                        <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="upload-wrap">
+                                                        <span></span>
+                                                        <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="upload-wrap">
+                                                        <span></span>
+                                                        <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="upload-wrap">
+                                                        <span></span>
+                                                        <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="upload-wrap">
+                                                        <span></span>
+                                                        <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    </div>
+                                                </li>
+                                            </div>
+                                        <?php } ?>
                                         <div id="selected-preview"></div>
                                     </ul>
                                 </div>	
@@ -635,21 +655,6 @@
                     image_count++;
                     //-- check image and video count
                     if (image_count <= max_images_count) {
-                                        console.log('image',index);
-
-                        //-- Remove default preview div
-                        $('#default-preview').remove();
-                        var reader = new FileReader();
-
-                        reader.onload = function (e) {
-                            str = '<li><div class="upload-wrap"><span>';
-                            str += '<img src="' + e.target.result + '" style="width:100%">';
-                            str += '</span><a href="javascript:void(0)" onclick="delete_media(this)">';
-                            str += '<?php $this->load->view('delete_svg', true); ?>';
-                            str += '</a></div></li>';
-                            dvPreview.append(str);
-                        }
-                        reader.readAsDataURL(file[0]);
 
                         // upload image
                         var formData = new FormData();
@@ -665,6 +670,19 @@
                             contentType: false, // tell jQuery not to set contentType
                             success: function (data) {
                                 if (data.success == true) {
+                                    //-- Remove default preview div
+                                    $('#default-preview').remove();
+                                    var reader = new FileReader();
+
+                                    reader.onload = function (e) {
+                                        str = '<li><div class="upload-wrap"><span>';
+                                        str += '<img src="' + e.target.result + '" style="width:100%">';
+                                        str += '</span><a href="javascript:void(0)" onclick="delete_media(this,\'' + data.data + '\')">';
+                                        str += '<?php $this->load->view('delete_svg', true); ?>';
+                                        str += '</a></div></li>';
+                                        dvPreview.append(str);
+                                    }
+                                    reader.readAsDataURL(file[0]);
                                 } else {
                                     showErrorMSg(data.error);
                                 }
@@ -673,22 +691,42 @@
                     } else {
                         showErrorMSg("Limit is exceeded to upload images");
                     }
+
                 } else if (regex_video.test(file[0].name.toLowerCase())) {
                     video_count++;
                     if (video_count <= max_videos_count) {
-                                                            console.log('video',index);
+                        // upload video
+                        var videoData = new FormData();
+                        videoData.append('profile_id', profile_id);
+                        videoData.append('type', 'video');
+                        videoData.append('gallery', file[0], file[0].name);
+                        $.ajax({
+                            url: site_url + "profile/upload_gallery",
+                            type: "POST",
+                            data: videoData,
+                            dataType: "json",
+                            processData: false, // tell jQuery not to process the data
+                            contentType: false, // tell jQuery not to set contentType
+                            success: function (data) {
+                                if (data.success == true) {
+                                    $('#default-preview').remove();
+                                    str += '<li><div class="upload-wrap"><span>';
+                                    str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
+                                    str += '</span><a href="javascript:void(0)" onclick="delete_media(this,\'' + data.data + '\')">';
+                                    str += '<?php $this->load->view('delete_svg', true); ?>';
+                                    str += '</a></div></li>';
+                                    dvPreview.append(str);
 
-                        $('#default-preview').remove();
-                        str += '<li><div class="upload-wrap"><span>';
-                        str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '" id="video_here">Your browser does not support HTML5 video.</video>';
-                        str += '</span><a href="javascript:void(0)" onclick="delete_media(this)">';
-                        str += '<?php $this->load->view('delete_svg', true); ?>';
-                        str += '</a></div></li>';
-                        dvPreview.append(str);
+                                } else {
+                                    showErrorMSg(data.error);
+                                }
+                            }
+                        });
 
                     } else {
                         showErrorMSg("Limit is exceeded to upload videos");
                     }
+
                 } else {
                     showErrorMSg(file[0].name + " is not a valid image/video file.");
                 }
@@ -697,7 +735,19 @@
             showErrorMSg("This browser does not support HTML5 FileReader.");
         }
     });
-    function delete_media(obj) {
-        $(obj).parent('.upload-wrap').parent('li').remove();
+    function delete_media(obj, data) {
+        $.ajax({
+            url: site_url + "profile/delete_gallery",
+            type: "POST",
+            data: {'gallery': data},
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    $(obj).parent('.upload-wrap').parent('li').remove();
+                } else {
+                    showErrorMSg(data.error);
+                }
+            }
+        });
     }
 </script>

@@ -22,7 +22,7 @@ class Login extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $data['error'] = validation_errors();
         } else {
-            $this->session->set_flashdata('success', 'Logged in successfully!');
+//            $this->session->set_flashdata('success', 'Logged in successfully!');
         }
         //-- If redirect is set in URL then redirect user back to that page
         if ($this->input->get('redirect')) {
