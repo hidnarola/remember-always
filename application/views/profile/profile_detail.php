@@ -26,14 +26,16 @@
                             <!--<i class="fa fa-map-marker"></i> Galley of type and, Scrambled-->
                             Born: <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('d M, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> 
                             - Death: <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('d M, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?></small> </h4>
-                    <a href="" class="donate-btn">Donate</a>
+                    <?php if (isset($profil['type']) && $profile['type'] == 2) { ?>
+                        <a href="" class="donate-btn">Donate</a>
+                    <?php } ?>
                     <a href="" class="flowers-btn">Send Flowers</a>
                     <div class="profile-share">
                         <h6>Share</h6>
-                        <a href="" class="fa fa-facebook"></a>
-                        <a href="" class="fa fa-twitter"></a>
-                        <a href="" class="fa fa-pinterest"></a>
-                        <a href="javascript:void(0)" class="icon-linked_in fa fa-google-plus" onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus"></a>
+                        <a href="javascript:void(0)"class="fa fa-facebook" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"></a>
+                        <a href="javascript:void(0)"class="fa fa-twitter" onclick="javascript:genericSocialShare('http://twitter.com/share?url=<?php echo $url; ?>')" title="Twitter Share"></a>
+                        <a href="javascript:void(0)"class="fa fa-pinterest" onclick="javascript:genericSocialShare('https://pinterest.com/pin/create/bookmarklet/?url=<?php echo $url; ?>')" title="Pintrest Share"></a>
+                        <a href="javascript:void(0)" class="icon-linked_in fa fa-google-plus" onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus Share"></a>
                     </div>
                 </div>
             </div>
@@ -149,103 +151,105 @@
                         </div>
 
                         <div class="post-comment">
-                            <textarea placeholder="Add some comment, Images, Video etc..."></textarea>
-                            <div class="comment-btm">
-                                <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
-                                    <g>
-                                    <g id="_x33__8_">
-                                    <g>
-                                    <path d="M573.75,267.75L459,344.25c0-23.218-10.557-43.758-26.89-57.796c38.881-23.428,65.14-65.637,65.14-114.329
-                                          c0-73.938-59.938-133.875-133.875-133.875c-73.937,0-133.875,59.938-133.875,133.875c0,37.504,15.51,71.317,40.373,95.625
-                                          h-70.151c18.322-20.33,29.778-46.971,29.778-76.5c0-63.38-51.37-114.75-114.75-114.75S0,127.87,0,191.25
-                                          c0,34.578,15.625,65.216,39.818,86.254C16.199,290.528,0,315.371,0,344.25v153c0,42.247,34.253,76.5,76.5,76.5h306
-                                          c42.247,0,76.5-34.253,76.5-76.5v-19.125l114.75,95.625c21.133,0,38.25-17.117,38.25-38.25V306
-                                          C612,284.867,594.883,267.75,573.75,267.75z M38.25,191.25c0-42.247,34.253-76.5,76.5-76.5s76.5,34.253,76.5,76.5
-                                          s-34.253,76.5-76.5,76.5S38.25,233.497,38.25,191.25z M420.75,497.25c0,21.114-17.117,38.25-38.25,38.25h-306
-                                          c-21.133,0-38.25-17.117-38.25-38.25v-153c0-21.133,17.117-38.25,38.25-38.25h306c21.133,0,38.25,17.117,38.25,38.25V497.25z
-                                          M363.375,267.96c-52.938,0-95.835-42.917-95.835-95.835c0-52.938,42.917-95.835,95.835-95.835s95.835,42.897,95.835,95.835
-                                          S416.312,267.96,363.375,267.96z M573.75,535.5L459,439.875V382.5L573.75,306V535.5z"/>
-                                    </g>
-                                    </g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    </svg></a>
-                                <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                viewBox="0 0 489.4 489.4" style="enable-background:new 0 0 489.4 489.4;" xml:space="preserve">
-                                    <g>
-                                    <g>
-                                    <path d="M0,437.8c0,28.5,23.2,51.6,51.6,51.6h386.2c28.5,0,51.6-23.2,51.6-51.6V51.6c0-28.5-23.2-51.6-51.6-51.6H51.6
-                                          C23.1,0,0,23.2,0,51.6C0,51.6,0,437.8,0,437.8z M437.8,464.9H51.6c-14.9,0-27.1-12.2-27.1-27.1v-64.5l92.8-92.8l79.3,79.3
-                                          c4.8,4.8,12.5,4.8,17.3,0l143.2-143.2l107.8,107.8v113.4C464.9,452.7,452.7,464.9,437.8,464.9z M51.6,24.5h386.2
-                                          c14.9,0,27.1,12.2,27.1,27.1v238.1l-99.2-99.1c-4.8-4.8-12.5-4.8-17.3,0L205.2,333.8l-79.3-79.3c-4.8-4.8-12.5-4.8-17.3,0
-                                          l-84.1,84.1v-287C24.5,36.7,36.7,24.5,51.6,24.5z"/>
-                                    <path d="M151.7,196.1c34.4,0,62.3-28,62.3-62.3s-28-62.3-62.3-62.3s-62.3,28-62.3,62.3S117.3,196.1,151.7,196.1z M151.7,96
-                                          c20.9,0,37.8,17,37.8,37.8s-17,37.8-37.8,37.8s-37.8-17-37.8-37.8S130.8,96,151.7,96z"/>
-                                    </g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    <g>
-                                    </g>
-                                    </svg></a>
-                                <button type="submit">Post</button>
-                            </div>
+                            <form method="post" enctype="multipart/form-data" name="post_form" id="post_form">
+                                <textarea name="comment" id="comment" placeholder="Add some comment, Images, Video etc..."> </textarea>
+                                <div class="comment-btm">
+                                    <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                    width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
+                                        <g>
+                                        <g id="_x33__8_">
+                                        <g>
+                                        <path d="M573.75,267.75L459,344.25c0-23.218-10.557-43.758-26.89-57.796c38.881-23.428,65.14-65.637,65.14-114.329
+                                              c0-73.938-59.938-133.875-133.875-133.875c-73.937,0-133.875,59.938-133.875,133.875c0,37.504,15.51,71.317,40.373,95.625
+                                              h-70.151c18.322-20.33,29.778-46.971,29.778-76.5c0-63.38-51.37-114.75-114.75-114.75S0,127.87,0,191.25
+                                              c0,34.578,15.625,65.216,39.818,86.254C16.199,290.528,0,315.371,0,344.25v153c0,42.247,34.253,76.5,76.5,76.5h306
+                                              c42.247,0,76.5-34.253,76.5-76.5v-19.125l114.75,95.625c21.133,0,38.25-17.117,38.25-38.25V306
+                                              C612,284.867,594.883,267.75,573.75,267.75z M38.25,191.25c0-42.247,34.253-76.5,76.5-76.5s76.5,34.253,76.5,76.5
+                                              s-34.253,76.5-76.5,76.5S38.25,233.497,38.25,191.25z M420.75,497.25c0,21.114-17.117,38.25-38.25,38.25h-306
+                                              c-21.133,0-38.25-17.117-38.25-38.25v-153c0-21.133,17.117-38.25,38.25-38.25h306c21.133,0,38.25,17.117,38.25,38.25V497.25z
+                                              M363.375,267.96c-52.938,0-95.835-42.917-95.835-95.835c0-52.938,42.917-95.835,95.835-95.835s95.835,42.897,95.835,95.835
+                                              S416.312,267.96,363.375,267.96z M573.75,535.5L459,439.875V382.5L573.75,306V535.5z"/>
+                                        </g>
+                                        </g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        </svg></a>
+                                    <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                    viewBox="0 0 489.4 489.4" style="enable-background:new 0 0 489.4 489.4;" xml:space="preserve">
+                                        <g>
+                                        <g>
+                                        <path d="M0,437.8c0,28.5,23.2,51.6,51.6,51.6h386.2c28.5,0,51.6-23.2,51.6-51.6V51.6c0-28.5-23.2-51.6-51.6-51.6H51.6
+                                              C23.1,0,0,23.2,0,51.6C0,51.6,0,437.8,0,437.8z M437.8,464.9H51.6c-14.9,0-27.1-12.2-27.1-27.1v-64.5l92.8-92.8l79.3,79.3
+                                              c4.8,4.8,12.5,4.8,17.3,0l143.2-143.2l107.8,107.8v113.4C464.9,452.7,452.7,464.9,437.8,464.9z M51.6,24.5h386.2
+                                              c14.9,0,27.1,12.2,27.1,27.1v238.1l-99.2-99.1c-4.8-4.8-12.5-4.8-17.3,0L205.2,333.8l-79.3-79.3c-4.8-4.8-12.5-4.8-17.3,0
+                                              l-84.1,84.1v-287C24.5,36.7,36.7,24.5,51.6,24.5z"/>
+                                        <path d="M151.7,196.1c34.4,0,62.3-28,62.3-62.3s-28-62.3-62.3-62.3s-62.3,28-62.3,62.3S117.3,196.1,151.7,196.1z M151.7,96
+                                              c20.9,0,37.8,17,37.8,37.8s-17,37.8-37.8,37.8s-37.8-17-37.8-37.8S130.8,96,151.7,96z"/>
+                                        </g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        <g>
+                                        </g>
+                                        </svg></a>
+                                    <button type="submit" name="post_btn" id="post_btn">Post</button>
+                                </div>
+                            </form>
                         </div>
                         <div class="comments-div">
                             <?php if (isset($posts) && !empty($posts)) { ?>
@@ -255,6 +259,7 @@
                                         $from_date = date_create($val['created_at']);
                                         $to_date = date_create(date('Y-m-d H:i:s'));
                                         $days_diff = date_diff($from_date, $to_date);
+//                                        $equal = (date('Y-m-d'strtotime($val['created_at']) != strtotime(date('Y-m-d H:i:s'))) ? true: false;
                                         ?>
                                         <li>
                                             <div class="comments-div-wrap">
@@ -271,7 +276,7 @@
                                                     }
                                                     ?>
                                                 </span>
-                                                <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?><small><?php echo (($days_diff->y > 0) ? $days_diff->y . ' Year' . ($days_diff->y > 1 ? 's' : '') : '') . (($days_diff->m > 0) ? $days_diff->m . ' Month' . ($days_diff->m > 1 ? 's' : '') : '') . (($days_diff->d > 0) ? $days_diff->d . ' Day' . ($days_diff->d > 1 ? 's' : '') : '') ?> Ago</small></h3>
+                                                <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?><small><?php echo format_days($days_diff)?>  Ago</small></h3>
                                                 <p><?php echo $val['comment'] ?></p>
                                                 <?php if (isset($val['media']) && isset($val['media'][1])) { ?>
                                                     <ul class="post-images">
@@ -367,14 +372,34 @@
         </div>
     </div>	
 </div>
-<script type="text/javascript"> 
+<script type="text/javascript">
     $(".fancybox")
             .attr('rel', 'gallery')
             .fancybox({
                 padding: 0
             });
-        function genericSocialShare(url) {
-            window.open(url, 'sharer', 'toolbar=0,status=0,width=648,height=395');
-            return true;
+    function genericSocialShare(url) {
+        window.open(url, 'sharer', 'toolbar=0,status=0,width=648,height=395');
+        return true;
+    }
+    $('#post_form').validate({
+        onkeyup: false,
+        onfocusout: false,
+        rules: {
+            comment: {
+//                required: true,
+                atleast_one_for_post: true,
+            }
+        },
+        highlight: function (element, errorClass) {
+            if ($(element).attr('name') === 'comment') {
+                $('#post-modal').modal();
+            }
+        },
+        messages: {
+            comment: {
+                atleast_one_for_post: ''
+            }
         }
+    });
 </script>

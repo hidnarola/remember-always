@@ -1796,17 +1796,13 @@
                         );
             }
     );
-//    $.validator.addMethod('atleast_one', function (value, element, param) {
-//        console.log(typeof param);
-//        console.log(param);
-////        if (typeof param == 'object') {
-////            for (var i = 0, max = 10; i < max; i++) {
-////                console.log($(param[i]).val());
-////            }
-////        } else {
-////            return this.optional(element) || value <= $(param).val();
-////        }
-//    }, 'Invalid value');
+    $.validator.addMethod('atleast_one', function (value, element, param) {
+        if (($('input[name="image[]"]')[0].files.length == 0) && ($('input[name="video[]"]')[0].files.length == 0) && $.trim($('#comment').val()) == '') {
+            return false;
+        } else {
+            return true;
+        }
+    }, 'Please eneter comment or slect image or video file.');
 //    jQuery.validator.addMethod(
 //            "custom_mail",
 //            function (value, element, regexp) {

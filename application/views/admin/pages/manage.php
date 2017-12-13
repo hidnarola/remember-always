@@ -76,23 +76,31 @@ if ($this->session->flashdata('success')) {
                                 <div class="form-group">
                                     <label>Banner Image:</label>
                                     <div class="row">
-                                        <?php
-                                        if (isset($page_data['banner_image'])) {
-                                            ?>
-                                            <div class="col-md-3">
-                                                <img heigth="100" width="170" src="<?php echo base_url(PAGE_BANNER . '/' . $page_data['banner_image']) ?>" alt="">
-                                            </div>
+                                        <div class="col-md-3" id="image_preview_div">
                                             <?php
-                                        }
-                                        ?>
+                                            if (isset($page_data['banner_image'])) {
+                                                ?>
+                                                <img heigth="100" width="170" src="<?php echo base_url(PAGE_BANNER . '/' . $page_data['banner_image']) ?>" alt="">
+                                                <?php } else {
+                                                ?>
+                                                <img heigth="100" width="170" src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" alt="">
+                                            <?php }
+                                            ?>
+                                        </div>
                                         <div class="col-md-9">
-                                             <div class="media-body">
+                                            <div class="media-body">
                                                 <input type="file" name="banner_image" id="banner_image" class="file-styled">
                                                 <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
                                             </div>
                                             <span></span>
+
                                         </div>
                                     </div>
+                                    <div id="proper_image" class="validation-error-label"></div>
+                                    <?php
+                                    if (isset($media_validation))
+                                        echo '<label id="logo-error" class="validation-error-label" for="logo">' . $media_validation . '</label>';
+                                    ?>
                                 </div>
                                 <div class="form-group">
                                     <label>SEO Meta title:</label>
@@ -192,4 +200,43 @@ if ($this->session->flashdata('success')) {
         $(document).on('change', '#description', function () {
             $(this).valid();
         });
+        $(document).on('change', '#banner_image', function (e) {
+            readURL(this);
+        })
+        var _validFileExtensions = [".jpg", ".jpeg", ".png", ];
+        function readURL(input) {
+            var height = 700, width = 1920, img = '', file = '', val = '';
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var valid_extensions = /(\.jpg|\.jpeg|\.png)$/i;
+                    if (typeof (input.files[0]) != 'undefined') {
+                        if (valid_extensions.test(input.files[0].name)) {
+                            var html = '<img src="' + e.target.result + '" style="width: 170px; height: 100px; border-radius: 2px;" alt="">';
+                        } else {
+                            var html = '<img src="assets/admin/images/placeholder.jpg" style="width: 170px; height: 100px; border-radius: 2px;" alt="">';
+                        }
+                    } else {
+                        var html = '<img src="assets/admin/images/placeholder.jpg" style="width: 170px; height: 100px; border-radius: 2px;" alt="">';
+                    }
+                    $('#image_preview_div').html(html);
+                }
+                reader.readAsDataURL(input.files[0]);
+                // check slider image dimension
+                var _URL = window.URL || window.webkitURL;
+                if ((file = input.files[0])) {
+                    img = new Image();
+                    img.onload = function () {
+                        if (this.width < width && this.height < height) {
+                            is_valid = false;
+                            $('#proper_image').html('Photo should be ' + width + ' X ' + height + ' or more dimensions');
+                        } else {
+                            is_valid = true;
+                            $('#proper_image').html('');
+                        }
+                    };
+                    img.src = _URL.createObjectURL(file);
+                }
+            }
+        }
     </script>

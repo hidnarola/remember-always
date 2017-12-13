@@ -387,3 +387,52 @@ function custom_show_404($page = '', $log_error = TRUE) {
     echo $CI->output->get_output();
     exit; // EXIT_UNKNOWN_FILE
 }
+
+/**
+ * Format number of date difference between two dates
+ *
+ * @param object $days_diff
+ * @return string result
+ */
+function format_days($days_diff) {
+    $result = '';
+    if ($days_diff->y > 0) {
+        if ($days_diff->y > 1) {
+            $result .= $days_diff->y . ' Years';
+        } else {
+            $result .= $days_diff->y . ' Year';
+        }
+    }else if ($days_diff->m > 0) {
+        if ($days_diff->m > 1) {
+            $result .= $days_diff->m . ' Months';
+        } else {
+            $result .= $days_diff->m . ' Month';
+        }
+    }else if ($days_diff->d > 0) {
+        if ($days_diff->d > 1) {
+            $result .= $days_diff->d . ' Days';
+        } else {
+            $result .= $days_diff->d . ' Day';
+        }
+    }else if ($days_diff->h > 0) {
+        if ($days_diff->h > 1) {
+            $result .= $days_diff->h . ' Hours';
+        } else {
+            $result .= $days_diff->h . ' Hour';
+        }
+    }else if ($days_diff->i > 0) {
+        if ($days_diff->i > 1) {
+            $result .= $days_diff->i . ' Minutes';
+        } else {
+            $result .= $days_diff->i . ' Minute';
+        }
+    }else if ($days_diff->s > 0) {
+        if ($days_diff->s > 1) {
+            $result .= $days_diff->s . ' Seconds';
+        } else {
+            $result .= $days_diff->s . ' Second';
+        }
+    }
+    return $result;
+//       . (($days_diff->m > 0) ? $days_diff->m . ' Month' . ($days_diff->m > 1 ? 's ' : ' ') : '') . (($days_diff->d > 0) ? $days_diff->d . ' Day' . ($days_diff->d > 1 ? 's ' : ' ') : '') . (($days_diff->h > 0) ? $days_diff->h . ' Hour' . ($days_diff->h > 1 ? 's ' : ' ') : '') . (($days_diff->i > 0) ? $days_diff->i . ' Minute' . ($days_diff->i > 1 ? 's ' : ' ') : '') .(($days_diff->s > 0) ? $days_diff->s . ' Second' . ($days_diff->s > 1 ? 's' : '') : '')
+}

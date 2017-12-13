@@ -123,7 +123,7 @@
                             <div class="form-group">
                                 <label>Image:</label>
                                 <input type="file" name="image[]" id="image[]" class="image_file_upload file-input" multiple="multiple">
-                                <span class="help-block image_helper">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
+                                <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
                                 <?php if (isset($post_media) && !empty($post_media)) { ?>
                                     <div class="col-md-12">
                                         <div class="row">
@@ -157,10 +157,8 @@
                             </div>
                             <div class="form-group">
                                 <label>Video:</label>
-
-
                                 <input type="file" name="video[]" id="video[]" class="video_file_upload" multiple="multiple">
-                                <span class="help-block video_helper">Accepted formats:  mp4. Max file size 100MB</span>
+                                <span class="help-block custom_helper">Accepted formats:  mp4. Max file size 100MB</span>
                                 <?php if (isset($post_media) && !empty($post_media)) { ?>
                                     <div class="col-md-12">
                                         <div class="row">
@@ -229,12 +227,24 @@
                 profile_id: {
                     required: true,
                 },
+                comment: {
+                    atleast_one: true,
+                },
+                "image[]": {
+                    atleast_one: true,
+                },
+                "video[]": {
+                    atleast_one: true,
+                },
             },
             errorPlacement: function (error, element) {
-                if (element.attr("name") == "image[]") {
-                    error.insertAfter($(".image_helper"));
-                } else if (element.attr("name") == "video[]") {
-                    error.insertAfter($(".video_helper"));
+                if (element.attr("name") == "image[]" || element.attr("name") == "video[]" || element.attr("name") == "comment") {
+                    $(".custom_helper").html(error);
+//                }
+//                 else if (element.attr("name") == "video[]") {
+//                    error.insertAfter($(".custom_helper").html(error));
+//                } else if (element.attr("name") == "comment") {
+//                    error.insertAfter($(".custom_helper").html(error));
                 } else {
                     error.insertAfter(element);
                 }
@@ -275,6 +285,9 @@
             browseIcon: '<i class="icon-file-plus"></i>',
             layoutTemplates: {
                 icon: '<i class="icon-file-check"></i>'
+            },
+            previewSettings: {
+                video: {'width': "175px", 'height': "160px", 'max-width': "100%"},
             },
             initialCaption: "Please select videos",
             overwriteInitial: false,
