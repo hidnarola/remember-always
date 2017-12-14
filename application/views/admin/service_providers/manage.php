@@ -83,6 +83,7 @@
                                 <div class="col-md-6">
                                     <label>Street Address 1: <span class="text-danger">*</span></label>
                                     <input type="text" name="street1" id="street1" class="form-control" value="<?php echo isset($provider_data['street1']) ? $provider_data['street1'] : set_value('street1'); ?>" placeholder="Please enter address">
+                                    <input type="hidden" name="location" id="location" class="form-control" value="<?php echo isset($provider_data['location']) ? $provider_data['location'] : set_value('location'); ?>" >
                                     <input type="hidden" name="latitute" id="latitute" class="form-control" value="<?php echo isset($provider_data['latitute']) ? $provider_data['latitute'] : set_value('latitute'); ?>" >
                                     <input type="hidden" name="longitute" id="longitute" class="form-control" value="<?php echo isset($provider_data['longitute']) ? $provider_data['longitute'] : set_value('longitute'); ?>">
                                 </div>
@@ -94,7 +95,7 @@
                             <div class="row form-group mt-5">
                                 <div class="col-md-4">
                                     <label>State: <span class="text-danger">*</span></label>
-                                    <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');      ?>">-->
+                                    <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');       ?>">-->
                                     <select name="state" id="state" class="form-control">
                                         <option value="0">-- Select State --</option>
                                         <?php
@@ -114,7 +115,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label>City: <span class="text-danger">*</span></label>
-                                    <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');      ?>">-->
+                                    <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');       ?>">-->
                                     <select name="city" id="city" class="form-control">
                                         <option value="">-- Select City --</option>
                                         <?php
@@ -179,6 +180,14 @@
     <?php $this->load->view('Templates/admin_footer'); ?>
 </div>
 <script type="text/javascript">
+    $('#city').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    $('#state').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
     $('document').ready(function () {
         $("#page_info").validate({
             ignore: [],

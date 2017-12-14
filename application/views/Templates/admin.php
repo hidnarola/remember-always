@@ -10,6 +10,8 @@
             var site_url = "<?php echo site_url() ?>";
             var base_url = "<?php echo base_url() ?>";
             var max_image_size = <?php echo MAX_IMAGE_SIZE ?>;
+            var current_dir = '<?php echo $this->router->fetch_directory() ?>';
+//            console.log(current_dir);
 <?php
 $Path = $_SERVER['PATH_INFO'];
 ?>
@@ -126,8 +128,7 @@ $Path = $_SERVER['PATH_INFO'];
         .fancybox-nav span:after {display: none;}
     </style>
     <script type="text/javascript">
-        $(document).keypress(
-                function (event) {
+        $(document).on('keypress', 'input',function (event) {
                     if (event.which == '13') {
                         event.preventDefault();
                     }

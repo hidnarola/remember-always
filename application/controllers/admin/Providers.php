@@ -70,7 +70,7 @@ class Providers extends MY_Controller {
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, null, ['where' => array('is_delete' => 0)]);
         $this->data['service_categories'] = $service_categories;
         if ($this->input->method() == 'post') {
-            $cities = $this->providers_model->sql_select(TBL_CITY, null, ['where' => array('is_delete' => 0, 'state_id' => base64_decode($this->input->post('state')))]);
+            $cities = $this->providers_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => base64_decode($this->input->post('state')))]);
             if (!empty($cities)) {
                 $this->data['cities'] = $cities;
             }
@@ -86,12 +86,21 @@ class Providers extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
-            p($this->input->post(), 1);
+            if (!empty(trim(htmlentities($this->input->post('name'))))) {
+                $slug = trim(htmlentities($this->input->post('name')));
+            }
+            if (isset($provider_data) && !empty($provider_data)) {
+                $slug = slug($slug, TBL_SERVICE_PROVIDERS, trim($id));
+            } else {
+                $slug = slug($slug, TBL_SERVICE_PROVIDERS);
+            }
             $flag = 0;
             $dataArr = [
+                'slug' => $slug,
                 'service_category_id' => trim(htmlentities($this->input->post('service_category'))),
                 'name' => trim(htmlentities($this->input->post('name'))),
                 'description' => $this->input->post('description'),
+                'location' => $this->input->post('location'),
                 'latitute' => $this->input->post('latitute'),
                 'longitute' => $this->input->post('longitute'),
                 'street1' => trim($this->input->post('street1')),
@@ -130,7 +139,7 @@ class Providers extends MY_Controller {
             }
 //            p($dataArr, 1);
             if (is_numeric($id)) {
-                $dataArr['updated_at'] = date('Y-m-d H:i:s');
+                $dataArr['modified_at'] = date('Y-m-d H:i:s');
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service Provider details has been updated successfully.');
             } else {
@@ -162,7 +171,7 @@ class Providers extends MY_Controller {
         if (is_numeric($id)) {
             $this->data['title'] = 'Remember Always Admin | Service Providers';
             $this->data['heading'] = 'View Service Provider Details';
-            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS . ' sp', 'sp.*,sc.name as category_name,c.name as city_name,s.name as state_name', ['where' => array('sp.id' => trim($id), 'sp.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_SERVICE_CATEGORIES . ' sc', 'condition' => 'sc.id=sp.service_category_id AND sc.is_delete=0'),array('table' => TBL_STATE . ' s', 'condition' => 's.id=sp.state'),array('table' => TBL_CITY . ' c', 'condition' => 'c.id=sp.city')]]);
+            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS . ' sp', 'sp.*,sc.name as category_name,c.name as city_name,s.name as state_name', ['where' => array('sp.id' => trim($id), 'sp.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_SERVICE_CATEGORIES . ' sc', 'condition' => 'sc.id=sp.service_category_id AND sc.is_delete=0'), array('table' => TBL_STATE . ' s', 'condition' => 's.id=sp.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=sp.city')]]);
 //            p($provider_data);
             if (!empty($provider_data)) {
                 $this->data['provider_data'] = $provider_data;
@@ -186,7 +195,7 @@ class Providers extends MY_Controller {
             if (!empty($provider_data)) {
                 $update_array = array(
                     'is_delete' => 1,
-                    'updated_at' => date('Y-m-d H:i:s'),
+                    'modified_at' => date('Y-m-d H:i:s'),
                 );
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service provider has been deleted successfully!');

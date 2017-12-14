@@ -26,6 +26,7 @@
             //Set common javascript variable
             var site_url = "<?php echo site_url() ?>";
             var base_url = "<?php echo base_url() ?>";
+            var current_dir = '<?php echo $this->router->fetch_directory() ?>';
             var s_msg = "<?php echo $this->session->flashdata('success') ?>";
             var e_msg = "<?php echo $this->session->flashdata('error') ?>";
             var reset_pwd = 0;

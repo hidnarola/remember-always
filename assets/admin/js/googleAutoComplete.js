@@ -1,6 +1,5 @@
 function initAutocomplete() {
     $('#street1').each(function () {
-        console.log("asdjasdbhj");
         var currentThis = $(this);
         var input = document.getElementById('street1');
 //        var options = {
@@ -13,7 +12,7 @@ function initAutocomplete() {
         var autocomplete = new google.maps.places.Autocomplete(input, options);
         autocomplete.addListener('place_changed', function () {
             var places = autocomplete.getPlace();
-//            console.log(places);
+            console.log(places);
             if (places.length == 0) {
                 swal("Cancelled", "Your entered address is not able to track on google so please enter correct address. :)", "error");
                 return;
@@ -21,6 +20,7 @@ function initAutocomplete() {
 
 //            places.forEach(function (place) {
             if (typeof places.geometry !== 'undefined') {
+                $('#location').val(places.formatted_address);
                 $('#latitute').val(places.geometry.location.lat());
                 $('#longitute').val(places.geometry.location.lng());
             } else {
@@ -66,6 +66,7 @@ function fillInAddressComponents(place, componentForm, formFields) {
     // Get each component of the address from the place details
     // and fill the corresponding field on the form.
     if (typeof place.address_components != 'undefined') {
+        var city_val = '';
         for (var i = 0; i < place.address_components.length; i++) {
             var addressType = place.address_components[i].types[0];
 //            console.log(addressType);
@@ -75,23 +76,33 @@ function fillInAddressComponents(place, componentForm, formFields) {
                     document.getElementById(formFields[addressType]).value += ' ' + val;
                 } else {
                     if (addressType == 'administrative_area_level_1') {
-                        console.log('heere');
-//                        $('#state').val(3922);
-//                        console.log('value is', $('#state').val());
-//                        $('#state').trigger('change');
                         var state_val = $('#state').find('option:contains(' + val + ')').attr('value');
-                        $('#state').val(state_val);
+//                        console.log(val);
 //                        console.log(state_val);
-//                        $('#state').val("'" + state_val + "'");
-//                        $('#state').val(parseInt(state_val));
-//                        $('#state').trigger('change').val(state_val);
-                         $('#state').find('option:contains(' + val + ')').attr('selected', 'true')
-//                        $('#state').select2();
-//                        $('#state').trigger('change');
-//                        document.getElementById(formFields[addressType])
+                        $('#state').val(state_val);
+                        $('#state').trigger('change');
+                        var state_id = $("#state option:selected").val();
+                        if (current_dir == 'admin/') {
+                            $url = site_url + 'admin/providers/get_cities_by_state';
+                        } else {
+                            $url = site_url + 'service_provider/get_cities_by_state';
+                        }
+                        $.ajax({
+                            type: "POST",
+                            url: $url,
+                            data: {
+                                stateid: state_val,
+                            }
+                        }).done(function (data) {
+                            $("select#city").html(data);
+                            $('select#city').selectpicker('refresh');
+                            var temp_city_val = $('#city').find('option:contains(' + city_val + ')').attr('value');
+                            $('#city').val(temp_city_val);
+                            $('#city').trigger('change');
+                        });
                     }
                     if (addressType == 'locality') {
-
+                        city_val = val;
                     }
                     document.getElementById(formFields[addressType]).value = val;
 
