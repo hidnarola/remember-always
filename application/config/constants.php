@@ -89,8 +89,9 @@ defined('EXIT__AUTO_MAX') OR define('EXIT__AUTO_MAX', 125); // highest automatic
  * Constants for Tables
  */
 define('TBL_AFFILIATIONS', 'affiliations');
-define('TBL_AFFILIATIONS_PROFILE', 'affiliation_profile');
 define('TBL_AFFILIATIONS_CATEGORY', 'affiliation_categories');
+define('TBL_CITY', 'cities');
+define('TBL_COUNTRY', 'countries');
 define('TBL_DONATIONS', 'donations');
 define('TBL_FUNDRAISER_MEDIA', 'fundraiser_media');
 define('TBL_FUNDRAISER_PROFILES', 'fundraiser_profiles');
@@ -101,6 +102,8 @@ define('TBL_PAGES', 'pages');
 define('TBL_POSTS', 'posts');
 define('TBL_POST_MEDIAS', 'post_medias');
 define('TBL_PROFILES', 'profiles');
+define('TBL_PROFILE_AFFILIATION', 'profile_affiliation');
+define('TBL_PROFILE_AFFILIATIONTEXTS', 'profile_affiliationtexts');
 define('TBL_PROFILE_EDITORS', 'profile_editors');
 define('TBL_GALLERY', 'profile_gallery');
 define('TBL_PROFILE_RELATION', 'profile_relation');
@@ -108,10 +111,8 @@ define('TBL_RELATIONS', 'relations');
 define('TBL_SERVICE_CATEGORIES', 'service_categories');
 define('TBL_SERVICE_PROVIDERS', 'service_providers');
 define('TBL_SLIDER', 'slider');
-define('TBL_USERS', 'users');
-define('TBL_COUNTRY', 'countries');
 define('TBL_STATE', 'states');
-define('TBL_CITY', 'cities');
+define('TBL_USERS', 'users');
 
 /**
  * Constants for Images

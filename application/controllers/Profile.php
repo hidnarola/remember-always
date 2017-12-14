@@ -121,6 +121,13 @@ class Profile extends MY_Controller {
             $data['profile'] = $is_left;
             $data['profile_gallery'] = $this->users_model->sql_select(TBL_GALLERY, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['order_by' => 'id DESC']);
             $data['fun_facts'] = $this->users_model->sql_select(TBL_FUN_FACTS, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
+            //-- Get profile Affiliations
+            $sql = "SELECT * FROM ("
+                    . "SELECT id,affiliation_text as name,'1' as free_text,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $is_left['id'] . " AND is_delete=0
+                       UNION ALL
+                       SELECT p.id,a.name,'0' as free_text,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND p.is_delete=0 AND a.is_delete=0 
+                    ) a order by created_at";
+            $data['affiliations'] = $this->users_model->customQuery($sql);
         }
         if ($_POST) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
@@ -294,11 +301,9 @@ class Profile extends MY_Controller {
             //-- Get profile detail from profile_id
             $profile = $this->users_model->sql_select(TBL_PROFILES, 'profile_process', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
             if (!empty($profile)) {
-                if ($profile_process == 2) {
-                    if ($profile['profile_process'] <= $profile_process)
-                        $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => $profile_process], ['id' => $profile_id]);
-                    $data = ['success' => true];
-                }
+                if ($profile['profile_process'] <= $profile_process)
+                    $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => $profile_process], ['id' => $profile_id]);
+                $data = ['success' => true];
             } else {
                 $data = ['success' => false, 'error' => 'Invalid request!'];
             }
@@ -352,7 +357,7 @@ class Profile extends MY_Controller {
         $fact = base64_decode($this->input->post('fact'));
         $fact_detail = $this->users_model->sql_select(TBL_FUN_FACTS, 'facts', ['where' => ['id' => $fact, 'is_delete' => 0]], ['single' => true]);
         if (!empty($fact_detail)) {
-            $this->users_model->common_insert_update('update', TBL_FUN_FACTS, ['is_delete' => 0], ['id' => $fact]);
+            $this->users_model->common_insert_update('update', TBL_FUN_FACTS, ['is_delete' => 1], ['id' => $fact]);
             $data['success'] = true;
         } else {
             $data['success'] = false;
