@@ -476,3 +476,4 @@ function get_pages($type) {
         }
     }
 }
+

@@ -29,7 +29,20 @@ class Providers_model extends MY_Model {
         $this->db->join(TBL_SERVICE_CATEGORIES . ' c', 'p.service_category_id=c.id AND c.is_delete=0', 'left');
         if (isset($data) && !empty($data)) {
             if (isset($data['category'])) {
-                $this->db->where('c.name LIKE ' . $this->db->escape('%' . $data['category'] . '%' . ''));
+               $this->db->where('c.name LIKE ' . $this->db->escape('%' . $data['category'] . '%' . ''));
+            }
+            if (isset($data['keyword'])) {
+               $this->db->where('p.name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . ''));
+            }
+
+            if (isset($data['location'])) {
+                $latitude = $longitude = '';
+                $latitude = $data['lat'];
+                $longitude = $data['long'];
+                if ($latitude != '' && $longitude != '') {
+                    $this->db->select('( 3959 * acos( cos( radians(' . $latitude . ') ) * cos( radians( p.latitute ) ) * cos( radians( p.longitute ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( p.latitute ) ) ) ) AS distance');
+                    $this->db->having('distance <', 50);
+                }
             }
         }
         $this->db->where(['p.is_delete' => 0]);

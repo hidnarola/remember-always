@@ -3,6 +3,12 @@
  * @author KU 
  */
 $(function () {
+    //Prevent form submition by pressing enter key
+    $(document).on('keypress', 'input', function (event) {
+        if (event.which == '13') {
+            event.preventDefault();
+        }
+    });
     //Display success/error flash messages
     if (s_msg != '') {
         new PNotify({
@@ -212,14 +218,14 @@ function loginModal(obj) {
     var redirect_url = $(obj).attr('data-redirect');
     $('#login-form').attr('action', site_url + 'login?redirect=' + btoa(redirect_url));
     /* new PNotify({
-        title: 'Error!',
-        text: 'Please login first!',
-        buttons: {
-            sticker: false
-        },
-        //styling:'bootstrap3',
-        type: 'error'
-    }); */
+     title: 'Error!',
+     text: 'Please login first!',
+     buttons: {
+     sticker: false
+     },
+     //styling:'bootstrap3',
+     type: 'error'
+     }); */
     $('#login').modal();
     $('.nav-tabs a[href="#log-in"]').tab('show');
 }
@@ -249,14 +255,14 @@ function showErrorMSg(msg) {
  * Custom function for updatign url when query string is present.
  */
 function updateQueryStringParameter(uri, key, value) {
-        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
-        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
-        if (uri.match(re)) {
-            return uri.replace(re, '$1' + key + "=" + value + '$2');
-        } else {
-            return uri + separator + key + "=" + value;
-        }
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+        return uri + separator + key + "=" + value;
     }
+}
 /**
  * Custom validator method for max file size
  */

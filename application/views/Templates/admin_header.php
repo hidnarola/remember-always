@@ -9,6 +9,7 @@
 <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
 <link href="assets/admin/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
 <link href="assets/admin/css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="assets/admin/css/bootstrap-select.min.css" rel="stylesheet">
 <link href="assets/admin/css/core.css" rel="stylesheet" type="text/css">
 <link href="assets/admin/css/components.css" rel="stylesheet" type="text/css">
 <link href="assets/admin/css/colors.css" rel="stylesheet" type="text/css">
@@ -22,6 +23,7 @@
 <script type="text/javascript" src="assets/admin/js/plugins/loaders/pace.min.js"></script>
 <script type="text/javascript" src="assets/admin/js/core/libraries/jquery.min.js"></script>
 <script type="text/javascript" src="assets/admin/js/core/libraries/bootstrap.min.js"></script>
+<script type="text/javascript" src="assets/admin/js/bootstrap-select.min.js"></script>
 <script type="text/javascript" src="assets/admin/js/plugins/loaders/blockui.min.js"></script>
 <!-- /core JS files -->
 

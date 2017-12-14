@@ -70,4 +70,24 @@ class MY_Controller extends CI_Controller {
         }
     }
 
+    /**
+     * to get cities from selected state.
+     * @param  @state
+     * @author AKK
+     */
+    public function get_cities_by_state() {
+        $id = base64_decode($this->input->post('stateid'));
+        $options = '<option value="">-- Select City --</option>';
+        $result = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
+        p(qry());
+        if ($result) {
+            if (!empty($result)) {
+                foreach ($result as $key => $row) {
+                     $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                }
+            }
+        }
+        echo $options;
+    }
+
 }
