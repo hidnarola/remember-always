@@ -14,6 +14,7 @@
 
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" >
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
         <link href="assets/css/owl.carousel.css" rel="stylesheet" />
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/developer.css" rel="stylesheet" />
@@ -51,6 +52,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="assets/js/bootstrap.min.js"></script>
+        <script src="assets/js/bootstrap-select.min.js"></script>
         <script src="assets/js/owl.carousel.min.js"></script>
         <script src="assets/js/jquery.validate.min.js"></script>
         <script src="assets/js/additional-methods.min.js"></script>

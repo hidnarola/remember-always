@@ -489,7 +489,7 @@ ul.post-video li a img{width:100%;min-height:120px;}
 .btn-btm-01{background:#efefef;width:130px;margin:0 auto;border:2px solid #efefef;color:#666;font-size:14px;line-height:38px;border-radius:4px;font-family:'Roboto';font-weight:400;display:block;text-align:center;}
 .btn-btm-01:hover{background:transparent;text-decoration:none;}
 .ad a{display:block;width:100%;}
-.ad a img{max-width:100%;}
+.ad a img{width:100%;}
 
 .four-input input{margin:0 2% 0 0;width:20%;float:left;}
 .four-input span{font-size:16px;font-weight:500;color:#999;line-height:52px;width:6%;text-align:left;float:left;}
@@ -518,3 +518,17 @@ ul.post-video li a img{width:100%;min-height:120px;}
 .srvs-list-ul h3 a{font-size:18px;color:#666;list-style:none;font-family:'Rubik';font-weight:400;}
 .srvs-list-ul h3 a:hover{color:#975979;text-decoration:none;}
 .srvs-list-ul p{font-family:'Roboto';font-size:14px;color:#999;line-height:20px;display:block;margin:0;padding:0;}
+.bootstrap-select>.dropdown-toggle{ box-shadow:3px 3px 3px 0 rgba(0,0,0,.1) !important;border:1px solid #e5e5e5 !important;border-radius:0;line-height: 20px;padding: 15px;background:#fff !important;color:#aeaeae;font-size:15px;font-weight:400;}
+.bootstrap-select>.dropdown-toggle:focus{outline:none !important;outline-offset:none !important;}
+.bootstrap-select:not([class*=col-]):not([class*=form-control]):not(.input-group-btn){width:100% !important;}
+.services-form:after{content:'';display:block;clear:both;}
+.services-form{margin:0 0 25px;}
+.srvs-form-div{float:left;width:26%;margin:0 2% 0 0;}
+.srvs-form-div:last-child{width:16%;margin-right:0;}
+.srvs-form-div button{background:#975979;border:2px solid #975979;color:#fff;font-size:16px;font-weight:700;font-family:'Rubik';line-height:18px;padding:15px;width:100%;text-transform:uppercase;}
+.srvs-form-div button:hover{background:transparent;color:#975979;}
+
+.srvs-dtl-l{width:40%;float:left;}
+.srvs-dtl-r{width:58%;float:right;}
+.srvs-dtl-r h3{margin:0 0 15px;padding:0;font-family:'Rubik';font-size:18px;color:#975979;line-height:normal;font-weight:500;}
+.srvs-dtl-r h3 small{display:block;font-size:15px;color:#666;line-height:normal;}

@@ -18,6 +18,11 @@ class Service_provider extends MY_Controller {
      * Display login page for login
      */
     public function index() {
+        if (!$this->is_user_loggedin) {
+            $this->session->set_flashdata('error', 'You must login to access this page');
+            redirect('/');
+        }
+
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
         $services = $this->providers_model->get_providers('result', $this->input->get());
 

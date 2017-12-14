@@ -143,9 +143,11 @@ a.helpful-btn{margin:20px auto 0;top:0;}
 .services-pro-r{width:100%;padding:0 0 25px;}
 .services-pro-m{padding-bottom:10px;}
 .services-pro-m .ad{width:48%;margin:0 1%;float:left;padding:7px;}
-.common-page{padding-top:15px;}
-.common-head h2.h2title{margin-bottom:10px;line-height:normal;}
+.common-page{padding-top:15px;    padding-bottom:25px;}
+.common-head h2.h2title{margin-bottom:10px;line-height:normal;margin-right:10px; padding:6px 0 0;}
 .common-head a.pspl{float:left;}
+.srvs-form-div {width:48% !important;margin: 0 1% 15px;}
+.services-form {margin: 0 0 5px;}
 
 }
 
@@ -155,4 +157,6 @@ a.helpful-btn{margin:20px auto 0;top:0;}
 .login-options a {float:none !important;display:block;text-align:center;margin:15px 0 0;}
 .popup-or{margin:0;}
 .step-02-ul li{width:100%;}
+
+
 }

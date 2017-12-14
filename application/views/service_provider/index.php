@@ -5,6 +5,37 @@
             <a href="" class="pspl">Post a Services Provider Listing</a>
         </div>
         <div class="common-body">
+            <div class="services-form">
+                <form method="get" name="provider_form" id="provider_form">
+                    <div class="srvs-form-div">
+                            <select name="category" id="category" class="selectpicker">
+                            <option value="">-- Select Category --</option>
+                            <?php
+                            if (isset($service_categories) && !empty($service_categories)) {
+                                foreach ($service_categories as $key => $value) {
+                                    $selected = '';
+                                    if (isset($_GET['category']) && $_GET['category'] == $value['name']) {
+                                        $selected = 'selected';
+                                    }
+                                    ?>
+                                    <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>"><?php echo $value['name']; ?></option>
+                                    <?php
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="srvs-form-div">
+                        <input type="text" name="keyword" placeholder="Enter Keyword" class="input-css" value="<?php echo (isset($_GET['keyword'])) ? $_GET['keyword'] : set_value('keyword') ?>"/>
+                    </div>
+                    <div class="srvs-form-div">	
+                        <input type="text" name="location" placeholder="Location" class="input-css" value="<?php echo set_value('location') ?>"/>
+                    </div>
+                    <div class="srvs-form-div">	
+                        <button type="submit"  name="provider_search_btn" id="provider_search_btn"  class="next">Search</button>
+                    </div>	
+                </form>
+            </div>
             <div class="services-pro-l">
                 <div class="profile-box services-listings">
                     <h2>Services Listing</h2>
@@ -39,12 +70,12 @@
                     <h2>Services Categories</h2>
                     <div class="profile-box-body">
                         <ul>
-                            <li><a href="<?php echo site_url('service_provider') ?>">All Service Providers</a></li>
+                            <li><a href="<?php echo site_url('service_provider') ?>" class="<?php echo!isset($_GET['category']) ? 'active' : '' ?>">All Service Providers</a></li>
                             <?php
                             if (isset($service_categories) && !empty($service_categories)) {
                                 foreach ($service_categories as $key => $value) {
                                     ?>
-                                    <li><a href="<?php echo site_url('service_provider?category=' . $value['name']) ?>"><?php echo $value['name'] ?></a></li>
+                                    <li><a href="<?php echo site_url('service_provider?category=' . $value['name']) ?>" class="<?php echo isset($_GET['category']) && $_GET['category'] == $value['name'] ? 'active' : '' ?>"><?php echo $value['name'] ?></a></li>
                                     <?php
                                 }
                             } else {
@@ -66,3 +97,4 @@
         </div>
     </div>
 </div>
+
