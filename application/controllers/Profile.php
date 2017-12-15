@@ -123,9 +123,9 @@ class Profile extends MY_Controller {
             $data['fun_facts'] = $this->users_model->sql_select(TBL_FUN_FACTS, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
             //-- Get profile Affiliations
             $sql = "SELECT * FROM ("
-                    . "SELECT id,affiliation_text as name,'1' as free_text,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $is_left['id'] . " AND is_delete=0
+                    . "SELECT id,affiliation_text as name,'1' as free_text,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $is_left['id'] . "
                        UNION ALL
-                       SELECT p.id,a.name,'0' as free_text,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND p.is_delete=0 AND a.is_delete=0 
+                       SELECT p.id,a.name,'0' as free_text,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND a.is_delete=0 
                     ) a order by created_at";
             $data['profile_affiliations'] = $this->users_model->customQuery($sql);
         }
@@ -369,29 +369,79 @@ class Profile extends MY_Controller {
     }
 
     /**
-     * Delete affiliation
+     * Add Affiliation
      * @author KU
      */
-    public function delete_affiliation() {
-        $fact = base64_decode($this->input->post('fact'));
-        $fact_detail = $this->users_model->sql_select(TBL_FUN_FACTS, 'facts', ['where' => ['id' => $fact, 'is_delete' => 0]], ['single' => true]);
-        if (!empty($fact_detail)) {
-            $this->users_model->common_insert_update('update', TBL_FUN_FACTS, ['is_delete' => 1], ['id' => $fact]);
+    public function add_affiliation() {
+        $profile_id = base64_decode($this->input->post('profile_id'));
+        $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+        if (!empty($profile)) {
+            $id_arr = [];
+            if ($this->input->post('select_affiliation') != '') {
+                $sql = 'INSERT IGNORE INTO ' . TBL_PROFILE_AFFILIATION . ' (profile_id,affiliation_id,created_at) VALUES (' . $profile_id . ',' . $this->input->post('select_affiliation') . ',\'' . date('Y-m-d H:i:s') . '\')';
+                $this->db->query($sql);
+                $id = $this->db->insert_id();
+                $affiliation = $this->users_model->sql_select(TBL_AFFILIATIONS, 'name', ['where' => ['id' => $this->input->post('select_affiliation')]], ['single' => true]);
+                if ($id != 0) {
+                    $id_arr[] = ['id' => base64_encode($id), 'type' => 0, 'name' => $affiliation['name']];
+                }
+            }
+            if (trim($this->input->post('affiliation_text')) != '') {
+                $sql = 'INSERT IGNORE INTO ' . TBL_PROFILE_AFFILIATIONTEXTS . ' (profile_id,affiliation_text,created_at) VALUES (' . $profile_id . ',\'' . trim($this->input->post('affiliation_text')) . '\',\'' . date('Y-m-d H:i:s') . '\')';
+                $this->db->query($sql);
+                $id = $this->db->insert_id();
+                if ($id != 0) {
+                    $id_arr[] = ['id' => base64_encode($id), 'type' => 1, 'name' => trim($this->input->post('affiliation_text'))];
+                }
+            }
+            $sql = "SELECT count(id) as count FROM ("
+                    . "SELECT id FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $profile_id . "
+                       UNION ALL
+                       SELECT p.id FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $profile_id . " AND a.is_delete=0 
+                    ) a";
+            $count = $this->users_model->customQuery($sql, 2);
             $data['success'] = true;
+            $data['data'] = $id_arr;
+            $data['affiliation_count'] = $count['count'];
         } else {
             $data['success'] = false;
-            $data['error'] = "Invalid request!";
+            $data['error'] = "Something went wrong!";
         }
         echo json_encode($data);
         exit;
     }
 
     /**
-     * Add Affiliation
+     * Check affiliation is already added or not
+     * @param type $id
+     */
+    public function check_affiliation($id) {
+        $affiliation_text = trim($this->input->get('affiliation_text'));
+        $profile_id = base64_decode($id);
+        $affiliation = $this->users_model->sql_select(TBL_PROFILE_AFFILIATIONTEXTS, 'id', ['where' => ['affiliation_text' => $affiliation_text, 'profile_id' => $profile_id]]);
+        if (!empty($affiliation)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
+    }
+
+    /**
+     * Delete affiliation
      * @author KU
      */
-    public function add_affiliation() {
-        
+    public function delete_affiliation() {
+        $id = base64_decode($this->input->post('affiliation'));
+        if ($this->input->post('type') == 1) {
+            $this->users_model->common_delete(TBL_PROFILE_AFFILIATIONTEXTS, ['id' => $id]);
+        } else {
+            $this->users_model->common_delete(TBL_PROFILE_AFFILIATION, ['id' => $id]);
+        }
+
+        $data['success'] = true;
+        echo json_encode($data);
+        exit;
     }
 
 }

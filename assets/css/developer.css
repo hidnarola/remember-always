@@ -41,3 +41,6 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 }
 /*15-12-2017*/
 .p-10 {padding: 10px!important;}
+.add_timeline_btn,.remove_timeline_btn{cursor: pointer;}
+.add_timeline_btn:hover,.remove_timeline_btn:hover{text-decoration: none;}
+.mb-20 {margin-bottom: 20px!important;}

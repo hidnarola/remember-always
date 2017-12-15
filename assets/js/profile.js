@@ -104,6 +104,12 @@ function submit_form() {
                                 }
                             });
                         }
+                        $('#affiliation_text').rules('add', {
+                            remote: site_url + 'profile/check_affiliation/' + profile_id,
+                            messages: {
+                                remote: "This affiliation is already added",
+                            }
+                        });
                         profile_steps('second-step');
                     } else {
                         $('#profile_process').val(0);
@@ -168,6 +174,9 @@ function back_step() {
         if (!$('#third1-step').hasClass('hide')) {
             $('#profile_process').val(3);
             profile_steps('third-step');
+        } else if (!$('#forth-step').hasClass('hide')) {
+            $('#profile_process').val(3);
+            profile_steps('third1-step');
         } else {
             $('#profile_process').val(2);
             profile_steps('second-step');
@@ -265,8 +274,11 @@ function proceed_step() {
             }
         });
     } else if (profile_process == 3) {
+        console.log('here');
         if (!$('#third-step').hasClass('hide')) {
             profile_steps('third1-step');
+        } else if ($('#third-step').hasClass('hide') && !$('#third1-step').hasClass('hide')) {
+            profile_steps('forth-step');
         }
     }
 
@@ -457,29 +469,31 @@ function findProperty(obj, key) {
 function add_affiliation() {
     if ($('#affiliation-form').valid()) {
         if (affiliation_count < max_affiliation_count) {
-
             $.ajax({
                 url: site_url + "profile/add_affiliation",
                 type: "POST",
-                data: {facts: $('#fun_fact').val(), profile_id: profile_id},
+                data: {select_affiliation: $('#select_affiliation').val(), affiliation_text: $('#affiliation_text').val(), profile_id: profile_id},
                 dataType: "json",
                 success: function (data) {
                     if (data.success == true) {
-                        facts_count++;
                         $('#default-facts').remove();
-                        str = '<div class="input-wrap-div">';
-                        str += '<div class="input-css">' + $('#fun_fact').val() + '</div>';
-                        str += '<a href="javascript:void(0)" onclick="delete_facts(this,\'' + data.data + '\')">';
-                        str += delete_str;
-                        str += '</div>';
-                        $('#selected-facts').append(str);
-                        $("#fun-fact-form")[0].reset();
-                        $('#funfact-modal').modal('hide');
-                        $("#fun-fact-form").validate().resetForm();
-                        $('#fun_fact').rules('add', {
-                            remote: site_url + 'profile/check_facts/' + profile_id,
+                        str = '';
+                        $.each(data.data, function (i, v) {
+                            str += '<div class="input-wrap-div">';
+                            str += '<div class="input-css">' + v.name + '</div>';
+                            str += '<a href="javascript:void(0)" onclick="delete_affiliation(this,\'' + v.id + '\',' + v.type + ')">';
+                            str += delete_str;
+                            str += '</div>';
+                        });
+                        affiliation_count = data.affiliation_count;
+                        $('#selected-affiliation').append(str);
+                        $("#affiliation-form")[0].reset();
+                        $('#affiliation-modal').modal('hide');
+                        $("#affiliation-form").validate().resetForm();
+                        $('#affiliation_text').rules('add', {
+                            remote: site_url + 'profile/check_affiliation/' + profile_id,
                             messages: {
-                                remote: "This fun fact is already added",
+                                remote: "This affiliation is already added",
                             }
                         });
                     } else {
@@ -498,15 +512,29 @@ function delete_affiliation(obj, data, type) {
     $.ajax({
         url: site_url + "profile/delete_affiliation",
         type: "POST",
-        data: {'fact': data},
+        data: {'affiliation': data, 'type': type},
         dataType: "json",
         success: function (data) {
             if (data.success == true) {
+                affiliation_count--;
                 $(obj).parent('.input-wrap-div').remove();
-                max_affiliation_count++;
             } else {
                 showErrorMSg(data.error);
             }
         }
     });
 }
+
+//-- Forth Timeline step
+$(document).on('click', '.add_timeline_btn', function () {
+    timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
+    $('.timeline-div').append(timeline_div);
+    $(this).html('<i class="fa fa-trash"></i> Remove');
+    $(this).removeClass('add_timeline_btn');
+    $(this).addClass('remove_timeline_btn text-danger mb-20');
+});
+
+$(document).on('click', '.remove_timeline_btn', function () {
+    $(this).parent('.step-06-l').parent('.step-06').remove();
+});
+
