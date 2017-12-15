@@ -43,7 +43,7 @@ class Service_provider extends MY_Controller {
             redirect('/');
         }
 
-         if (isset($slug) && !empty($slug)) {
+        if (isset($slug) && !empty($slug)) {
             $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
             $data['service_categories'] = $service_categories;
             $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS . ' sp', 'sp.*,sc.name as category_name,c.name as city_name,s.name as state_name', ['where' => array('sp.slug' => $slug, 'sp.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_SERVICE_CATEGORIES . ' sc', 'condition' => 'sc.id=sp.service_category_id AND sc.is_delete=0'), array('table' => TBL_STATE . ' s', 'condition' => 's.id=sp.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=sp.city')]]);
@@ -59,7 +59,7 @@ class Service_provider extends MY_Controller {
             custom_show_404();
         }
     }
-    
+
     /**
      * Add a new service provider directory listing.
      *
@@ -71,38 +71,35 @@ class Service_provider extends MY_Controller {
             $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($provider_data)) {
                 $cities = $this->providers_model->sql_select(TBL_CITY . ' c', 'c.*', ['where' => array('c.state_id' => $provider_data['state'])]);
-                $this->data['cities'] = $cities;
-                $this->data['provider_data'] = $provider_data;
-                $this->data['title'] = 'Remember Always Admin | Service Providers';
-                $this->data['heading'] = 'Edit Service Provider';
+                $data['cities'] = $cities;
+                $data['provider_data'] = $provider_data;
             } else {
                 custom_show_404();
             }
-        } else {
-            $this->data['title'] = 'Remember Always Admin | Service Providers';
-            $this->data['heading'] = 'Add Service Provider';
         }
 
         $states = $this->providers_model->sql_select(TBL_STATE . ' s', 's.*', ['where' => array('c.id' => 231)], ['join' => [array('table' => TBL_COUNTRY . ' c', 'condition' => 'c.id=s.country_id')]]);
-        $this->data['states'] = $states;
+        $data['states'] = $states;
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, null, ['where' => array('is_delete' => 0)]);
-        $this->data['service_categories'] = $service_categories;
+        $data['service_categories'] = $service_categories;
         if ($this->input->method() == 'post') {
             $cities = $this->providers_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => base64_decode($this->input->post('state')))]);
             if (!empty($cities)) {
-                $this->data['cities'] = $cities;
+                $data['cities'] = $cities;
             }
         }
-        $this->form_validation->set_rules('service_category', 'Service Category', 'trim|required');
+        $this->form_validation->set_rules('category', 'Service Category', 'trim|required');
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('street1', 'Street Address 1', 'trim|required');
         $this->form_validation->set_rules('city', 'City', 'trim|required');
-        $this->form_validation->set_rules('state', 'State', 'trim|required');
-        $this->form_validation->set_rules('phone', 'Phone Number', 'trim|required');
+        $this->form_validation->set_rules('state_hidden', 'State', 'trim|required');
+        $this->form_validation->set_rules('phone_number', 'Phone Number', 'trim|required');
         $this->form_validation->set_rules('website', 'Website Url', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
-            $this->data['error'] = validation_errors();
+            p(validation_errors());
+//            p($_POST);
+            $data['error'] = validation_errors();
         } else {
             p($_FILES);
             p($this->input->post(),1);
@@ -117,7 +114,8 @@ class Service_provider extends MY_Controller {
             $flag = 0;
             $dataArr = [
                 'slug' => $slug,
-                'service_category_id' => trim(htmlentities($this->input->post('service_category'))),
+                'service_category_id' => base64_decode(trim($this->input->post('category'))),
+                'user_id' => $this->user_id,
                 'name' => trim(htmlentities($this->input->post('name'))),
                 'description' => $this->input->post('description'),
                 'location' => $this->input->post('location'),
@@ -125,8 +123,8 @@ class Service_provider extends MY_Controller {
                 'longitute' => $this->input->post('longitute'),
                 'street1' => trim($this->input->post('street1')),
                 'city' => base64_decode(trim($this->input->post('city'))),
-                'state' => base64_decode(trim($this->input->post('state'))),
-                'phone_number' => trim($this->input->post('phone')),
+                'state' => base64_decode(trim($this->input->post('state_hidden'))),
+                'phone_number' => trim($this->input->post('phone_number')),
                 'website_url' => trim($this->input->post('website')),
             ];
             if (!empty($this->input->post('street2'))) {
@@ -136,17 +134,21 @@ class Service_provider extends MY_Controller {
                 $dataArr['zipcode'] = $this->input->post('zipcode');
             }
             if ($_FILES['image']['name'] != '') {
-                $image_data = upload_image('image', PROVIDER_IMAGES);
+                $directory = 'user_' . $this->user_id;
+                if (!file_exists(PROVIDER_IMAGES . $directory)) {
+                    mkdir(PROVIDER_IMAGES . $directory);
+                }
+                $image_data = upload_image('image', PROVIDER_IMAGES . $directory);
                 if (is_array($image_data)) {
                     $flag = 1;
-                    $data['profile_image_validation'] = $image_data['errors'];
+                    $data['provider_validation'] = $image_data['errors'];
                 } else {
                     if (is_numeric($id)) {
                         if (!empty($provider_data)) {
                             unlink(PROVIDER_IMAGES . $provider_data['image']);
                         }
                     }
-                    $provider_image = $image_data;
+                    $provider_image = $directory . '/' .$image_data;
                     $dataArr['image'] = $provider_image;
                 }
             } else {
@@ -157,7 +159,7 @@ class Service_provider extends MY_Controller {
                     }
                 }
             }
-//            p($dataArr, 1);
+            p($dataArr, 1);
             if (is_numeric($id)) {
                 $dataArr['modified_at'] = date('Y-m-d H:i:s');
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);
@@ -167,8 +169,12 @@ class Service_provider extends MY_Controller {
                 $id = $this->providers_model->common_insert_update('insert', TBL_SERVICE_PROVIDERS, $dataArr);
                 $this->session->set_flashdata('success', 'Service Provider listing has been added successfully.');
             }
-//            redirect('admin/providers');
+            redirect('service_provider');
         }
-        $this->template->load('default', 'service_provider/manage', $this->data);
+        $data['title'] = 'Post Service Provider Listing';
+        $data['breadcrumb'] = ['title' => 'Post Service Provider Listing', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('service_provider'), 'title' => 'Service Provider Listing']]];
+
+        $this->template->load('default', 'service_provider/manage', $data);
     }
+
 }

@@ -25,6 +25,7 @@
         <script type="text/javascript">
             //Set common javascript variable
             var site_url = "<?php echo site_url() ?>";
+            var google_map_key = "<?php echo GOOGLE_MAP_KEY ?>";
             var base_url = "<?php echo base_url() ?>";
             var current_dir = '<?php echo $this->router->fetch_directory() ?>';
             var s_msg = "<?php echo $this->session->flashdata('success') ?>";

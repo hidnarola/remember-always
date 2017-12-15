@@ -44,6 +44,8 @@ class MY_Controller extends CI_Controller {
                     redirect('admin/dashboard');
                 }
             }
+            $providers = $this->users_model->sql_select(TBL_SERVICE_PROVIDERS, 'COUNT(*) as un_approved_count', ['where' => array('is_active' => 0, 'is_delete' => 0)], ['single' => true]);
+            $this->un_approved = $providers;
         } else {
             $session = $this->session->userdata('remalways_user');
             if (!empty($session['id']) && !empty($session['email']))
@@ -77,13 +79,22 @@ class MY_Controller extends CI_Controller {
      */
     public function get_cities_by_state() {
         $id = base64_decode($this->input->post('stateid'));
+        $city_val = $this->input->post('city');
+        if ($city_val != '' && $id != '') {
+            $city_exists = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('name' => trim($city_val))]);
+            if (empty($city_exists)) {
+                $dataArr = ['name' => $city_val,
+                    'state_id' => $id
+                ];
+                $this->users_model->common_insert_update('insert', TBL_CITY, $dataArr);
+            }
+        }
         $options = '<option value="">-- Select City --</option>';
         $result = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
-        p(qry());
         if ($result) {
             if (!empty($result)) {
                 foreach ($result as $key => $row) {
-                     $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                    $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
                 }
             }
         }

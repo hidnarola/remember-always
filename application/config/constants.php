@@ -130,6 +130,10 @@ define('PAGE_BANNER', 'uploads/banners/');
  */
 define('REMEMBER_ME_ADMIN_COOKIE', 'remAlwaysAd908f7d89f');
 define('REMEMBER_ME_USER_COOKIE', 'remAlways908f7d89f');
+/**
+ * Constants for google api key
+ */
+define('GOOGLE_MAP_KEY', 'AIzaSyAylcYpcGylc8GTu_PYJI7sqPVn6ITrVnM');
 
 /**
  * Constants for max file size 

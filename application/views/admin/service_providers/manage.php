@@ -112,6 +112,7 @@
                                         }
                                         ?>
                                     </select>
+                                    <input type="hidden" name="state_hidden" id="state_hidden" class="form-control" value="<?php echo isset($provider_data['state']) ? base64_encode($provider_data['state']) : set_value('state_hidden'); ?>" >
                                 </div>
                                 <div class="col-md-4">
                                     <label>City: <span class="text-danger">*</span></label>
@@ -277,7 +278,7 @@
         fileButtonClass: 'action btn bg-pink'
     });
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdsZQ2FI5Qr-fawy7THvNJKojMGoUkJP8&libraries=places&callback=initAutocomplete" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAylcYpcGylc8GTu_PYJI7sqPVn6ITrVnM&libraries=places&callback=initAutocomplete" async defer></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/googleAutoComplete.js') ?>"></script>
 <style>
     .hide {

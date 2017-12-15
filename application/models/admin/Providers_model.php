@@ -18,7 +18,7 @@ class Providers_model extends MY_Model {
      * @return array for result or int for count
      */
     public function get_providers($type = 'result') {
-        $columns = ['p.id', 'c.name', 'p.name', 'p.description', 'p.zipcode', 'p.created_at', 'p.is_delete'];
+        $columns = ['p.id', 'c.name', 'p.name', 'p.description', 'p.zipcode', 'p.created_at', 'p.is_delete', 'p.is_active'];
         $keyword = $this->input->get('search');
         $this->db->select('p.*,c.name as category');
         $this->db->join(TBL_SERVICE_CATEGORIES . ' c', 'p.service_category_id=c.id AND c.is_delete=0', 'left');

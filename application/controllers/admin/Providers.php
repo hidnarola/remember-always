@@ -17,8 +17,7 @@ class Providers extends MY_Controller {
      * Display listing of service provider
      */
     public function index() {
-
-        $data['title'] = 'Remember Always Admin | Service Providers';
+       $data['title'] = 'Remember Always Admin | Service Providers';
         $this->template->load('admin', 'admin/service_providers/index', $data);
     }
 
@@ -80,7 +79,7 @@ class Providers extends MY_Controller {
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('street1', 'Street Address 1', 'trim|required');
         $this->form_validation->set_rules('city', 'City', 'trim|required');
-        $this->form_validation->set_rules('state', 'State', 'trim|required');
+        $this->form_validation->set_rules('state_hidden', 'State', 'trim|required');
         $this->form_validation->set_rules('phone', 'Phone Number', 'trim|required');
         $this->form_validation->set_rules('website', 'Website Url', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
@@ -105,7 +104,7 @@ class Providers extends MY_Controller {
                 'longitute' => $this->input->post('longitute'),
                 'street1' => trim($this->input->post('street1')),
                 'city' => base64_decode(trim($this->input->post('city'))),
-                'state' => base64_decode(trim($this->input->post('state'))),
+                'state' => base64_decode(trim($this->input->post('state_hidden'))),
                 'phone_number' => trim($this->input->post('phone')),
                 'website_url' => trim($this->input->post('website')),
             ];
@@ -143,6 +142,8 @@ class Providers extends MY_Controller {
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service Provider details has been updated successfully.');
             } else {
+                $dataArr['user_id'] = $this->user_id;
+                $dataArr['is_active'] = 1;
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
                 $id = $this->providers_model->common_insert_update('insert', TBL_SERVICE_PROVIDERS, $dataArr);
                 $this->session->set_flashdata('success', 'Service Provider details has been inserted successfully.');
@@ -201,6 +202,42 @@ class Providers extends MY_Controller {
                 $this->session->set_flashdata('success', 'Service provider has been deleted successfully!');
             } else {
                 $this->session->set_flashdata('error', 'Unable to Service provider slider!');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
+        }
+        redirect('admin/providers');
+    }
+
+    /**
+     * Approve service provider added by user.
+     * @param int $id
+     * */
+    public function action($type = '', $id = NULL) {
+        $id = base64_decode($id);
+        $action_type = $type;
+        if (is_numeric($id)) {
+            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+            if (!empty($provider_data)) {
+                if ($action_type == 'approve') {
+                    $update_array = array(
+                        'is_active' => 1,
+                        'modified_at' => date('Y-m-d H:i:s'),
+                    );
+                } else if ($action_type == 'unapprove') {
+                    $update_array = array(
+                        'is_active' => 0,
+                        'modified_at' => date('Y-m-d H:i:s'),
+                    );
+                }
+                $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $update_array, ['id' => $id]);
+                if ($action_type == 'approve') {
+                    $this->session->set_flashdata('success', 'Service provider has been approved successfully!');
+                } else if ($action_type == 'unapprove') {
+                    $this->session->set_flashdata('success', 'Service provider has been unapproved successfully!');
+                }
+            } else {
+                $this->session->set_flashdata('error', 'Unable to get Service provider!');
             }
         } else {
             $this->session->set_flashdata('error', 'Invalid request. Please try again!');

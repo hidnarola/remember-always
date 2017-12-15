@@ -48,6 +48,7 @@
                     <th>Description</th>
                     <th>Phone Number</th>
                     <th>Added Date</th>
+                    <th>Status</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -99,6 +100,19 @@
                     visible: true,
                 },
                 {
+                    data: "is_active",
+                    visible: true,
+                    render: function (data, type, full, meta) {
+                        if (data == '1') {
+                            var action = '<span class="label label-success">Approved</span>';
+                        } else {
+                            var action = '<span class="label label-danger">Not Approved</span>';
+                        }
+
+                        return action;
+                    }
+                },
+                {
                     data: "is_delete",
                     visible: true,
                     searchable: false,
@@ -113,6 +127,14 @@
                         action += '<ul class="dropdown-menu dropdown-menu-right">';
                         action += '<li>';
                         action += '<a href="' + site_url + 'admin/providers/edit/' + btoa(full.id) + '" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
+
+                        if (full.is_active == '1') {
+                            var type = 'approve';
+                            action += '<a href="' + site_url + 'admin/providers/action/unapprove/' + btoa(full.id) + '" title="UnApprove Service Provider" data-type="' + type + '" onclick="return confirm_approve(this)"><i class="icon-cross"></i> Approve</a>';
+                        } else {
+                            var type = 'unapprove';
+                            action += '<a href="' + site_url + 'admin/providers/action/approve/' + btoa(full.id) + '" title="Approve Service Provider" data-type="' + type + '" onclick="return confirm_approve(this)"><i class="icon-check"></i> Approve</a>';
+                        }
                         action += '<a href="' + site_url + 'admin/providers/view/' + btoa(full.id) + '" title="View Service Provider"><i class="icon-book"></i> View</a>';
                         action += '<a href="' + site_url + 'admin/providers/delete/' + btoa(full.id) + '" onclick="return confirm_alert(this)" title="Delete Service Provider"><i class="icon-trash"></i> Delete</a>'
                         action += '</li>';
@@ -153,6 +175,52 @@
                 swal("Cancelled", "Your service provider is safe :)", "error");
             }
         });
+        return false;
+    }
+    function confirm_approve(e) {
+        var type = $(e).attr('data-type');
+        console.log(type);
+        if (type == 'approve') {
+            swal({
+                title: "Are you sure?",
+                text: "You want to approve this service!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#FF7043",
+                confirmButtonText: "Yes, Approve it!",
+                cancelButtonText: "No, cancel plz!"
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = $(e).attr('href');
+                    return true;
+                }
+            }, function (dismiss) {
+                // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
+                if (dismiss === 'cancel') {
+                    swal("Cancelled", "Your service provider is not approved :)", "error");
+                }
+            });
+        } else if (type == 'unapprove') {
+            swal({
+                title: "Are you sure?",
+                text: "You want to Unapprove this service!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#FF7043",
+                confirmButtonText: "Yes, UnApprove it!",
+                cancelButtonText: "No, cancel plz!"
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    window.location.href = $(e).attr('href');
+                    return true;
+                }
+            }, function (dismiss) {
+                // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
+                if (dismiss === 'cancel') {
+                    swal("Cancelled", "Your service provider is still unapproved :)", "error");
+                }
+            });
+        }
         return false;
     }
 

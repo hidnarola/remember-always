@@ -26,24 +26,33 @@
                                                 if (isset($service_categories) && !empty($service_categories)) {
                                                     foreach ($service_categories as $key => $value) {
                                                         $selected = '';
-                                                        if (isset($provider_data['category']) && $provider_data['category'] == $value['id']) {
+                                                        if (isset($provider_data['service_category_id']) && $provider_data['service_category_id'] == $value['id']) {
                                                             $selected = 'selected';
                                                         }
                                                         ?>
-                                                        <option <?php echo $selected; ?> value="<?php echo urlencode($value['id']) ?>"><?php echo $value['name']; ?></option>
+                                                        <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('category', base64_encode($value['id']), TRUE) : '' ?>><?php echo $value['name']; ?></option>
                                                         <?php
                                                     }
                                                 }
                                                 ?>
                                             </select>
+                                            <?php
+                                            echo '<label id="category-error" class="error" for="category">' . form_error('category') . '</label>';
+                                            ?>
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Name <span class="text-danger">*</span></label>
                                             <input type="text" name="name" id="name" placeholder="Name" class="input-css" value="<?php echo isset($provider_data['name']) ? $provider_data['name'] : set_value('name'); ?>">
+                                            <?php
+                                            echo '<label id="name-error" class="error" for="name">' . form_error('name') . '</label>';
+                                            ?>
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Description <span class="text-danger">*</span></label>
-                                            <textarea class="input-css textarea-css" id="description" name="description" placeholder="Description"></textarea>
+                                            <textarea class="input-css textarea-css" id="description" name="description" placeholder="Description"><?php echo isset($provider_data['description']) ? $provider_data['description'] : set_value('description'); ?></textarea>
+                                            <?php
+                                            echo '<label id="description-error" class="error" for="description">' . form_error('description') . '</label>';
+                                            ?>
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Address <span class="text-danger">*</span></label>
@@ -52,15 +61,21 @@
                                                 <input type="hidden" name="location" id="location" class="form-control" value="<?php echo isset($provider_data['location']) ? $provider_data['location'] : set_value('location'); ?>" >
                                                 <input type="hidden" name="latitute" id="latitute" class="form-control" value="<?php echo isset($provider_data['latitute']) ? $provider_data['latitute'] : set_value('latitute'); ?>" >
                                                 <input type="hidden" name="longitute" id="longitute" class="form-control" value="<?php echo isset($provider_data['longitute']) ? $provider_data['longitute'] : set_value('longitute'); ?>">
+                                                <?php
+                                                echo '<label id="street1-error" class="error" for="street1">' . form_error('street1') . '</label>';
+                                                ?>
                                             </div>
                                             <div class="input-r">
                                                 <input type="text" name="street2" id="street2" placeholder="Street2 address" class="input-css" value="<?php echo isset($provider_data['street2']) ? $provider_data['street2'] : set_value('street2'); ?>">
+                                                <?php
+                                                echo '<label id="street2-error" class="error" for="street2">' . form_error('street2') . '</label>';
+                                                ?>
                                             </div>
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-three-l">
-                                                <select name="state" id="state" class="form-control">
-                                                    <option value="0">-- Select State --</option>
+                                                <select name="state" id="state" class="selectpicker">
+                                                    <option value="">-- Select State --</option>
                                                     <?php
                                                     if (isset($states) && !empty($states)) {
                                                         foreach ($states as $key => $value) {
@@ -75,6 +90,10 @@
                                                     }
                                                     ?>
                                                 </select>
+                                                <input type="hidden" name="state_hidden" id="state_hidden" class="form-control" value="<?php echo isset($provider_data['state']) ? base64_encode($provider_data['state']) : set_value('state_hidden'); ?>" >
+                                                <?php
+                                                echo '<label id="state_hidden-error" class="error" for="state_hidden">' . form_error('state_hidden') . '</label>';
+                                                ?>
                                             </div>
                                             <div class="input-three-m">
                                                 <select name="city" id="city" class="selectpicker">
@@ -93,18 +112,27 @@
                                                     }
                                                     ?>
                                                 </select>
+                                                <?php
+                                                echo '<label id="city-error" class="error" for="city">' . form_error('city') . '</label>';
+                                                ?>
                                             </div>
                                             <div class="input-three-r">
-                                                <input type="text" name="zipcode" id="zipcode" placeholder="Zip" class="input-css">
+                                                <input type="text" name="zipcode" id="zipcode" placeholder="Zip" class="input-css" value="<?php echo isset($provider_data['zipcode']) ? $provider_data['zipcode'] : set_value('zipcode'); ?>"> 
                                             </div>
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Phone <span class="text-danger">*</span></label>
-                                            <input type="text" name="phone_number" id="phone_number" placeholder="Phone Number" class="input-css">
+                                            <input type="text" name="phone_number" id="phone_number" placeholder="Phone Number" class="input-css" value="<?php echo isset($provider_data['phone_number']) ? $provider_data['phone_number'] : set_value('phone_number'); ?>">
+                                            <?php
+                                            echo '<label id="phone_number-error" class="error" for="phone_number">' . form_error('phone_number') . '</label>';
+                                            ?>
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Website <span class="text-danger">*</span></label>
-                                            <input type="text" name="website" id="website" placeholder="Wesbsite" class="input-css">
+                                            <input type="text" name="website" id="website" placeholder="Wesbsite" class="input-css" value="<?php echo isset($provider_data['website']) ? $provider_data['website'] : set_value('website'); ?>">
+                                            <?php
+                                            echo '<label id="website-error" class="error" for="website">' . form_error('website') . '</label>';
+                                            ?>
                                         </div>
                                     </div>
                                     <div class="step-06-r">
@@ -221,7 +249,7 @@
             },
         });
     });
-    
+
     $(document).on('change', '#state', function () {
         var state_id = $("#state option:selected").val();
         $url = '<?php echo site_url() ?>' + 'service_provider/get_cities_by_state';
@@ -249,6 +277,6 @@
         }
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBdsZQ2FI5Qr-fawy7THvNJKojMGoUkJP8&libraries=places&callback=initAutocomplete" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAylcYpcGylc8GTu_PYJI7sqPVn6ITrVnM&libraries=places&callback=initAutocomplete" async defer></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/googleAutoComplete.js') ?>"></script>
 <style>

@@ -77,11 +77,18 @@ function fillInAddressComponents(place, componentForm, formFields) {
                 } else {
                     if (addressType == 'administrative_area_level_1') {
                         var state_val = $('#state').find('option:contains(' + val + ')').attr('value');
-//                        console.log(val);
+//                        $('select#state').selectpicker('refresh');
+//                        var state_val = $('#state option').filter(function () {
+//                            return $(this).html() == val;
+//                        }).val();
+//                        console.log($('#state').find('option[text=Virginia]'));
 //                        console.log(state_val);
-                        $('#state').val(state_val);
-                        $('#state').trigger('change');
-                        var state_id = $("#state option:selected").val();
+//                        $('select#state').selectpicker('refresh');
+                        $('select#state').val(state_val);
+                        $('#state_hidden').val(state_val);
+                        $('select#state').selectpicker('refresh');
+                        $('select#state').trigger('change');
+                       console.log( $("#state option:selected").val());
                         if (current_dir == 'admin/') {
                             $url = site_url + 'admin/providers/get_cities_by_state';
                         } else {
@@ -92,13 +99,14 @@ function fillInAddressComponents(place, componentForm, formFields) {
                             url: $url,
                             data: {
                                 stateid: state_val,
+                                city: city_val
                             }
                         }).done(function (data) {
                             $("select#city").html(data);
                             $('select#city').selectpicker('refresh');
                             var temp_city_val = $('#city').find('option:contains(' + city_val + ')').attr('value');
-                            $('#city').val(temp_city_val);
-                            $('#city').trigger('change');
+                            $('select#city').val(temp_city_val);
+                            $('select#city').trigger('change');
                         });
                     }
                     if (addressType == 'locality') {

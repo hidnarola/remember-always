@@ -99,9 +99,10 @@ $Path = $_SERVER['PATH_INFO'];
                                             <li <?php echo strtolower($this->controller) == 'affiliation_categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/affiliation_categories') ?>"><i class="icon-list-unordered"></i><span>Affiliation</span></a></li>
                                         </ul>
                                     </li>
-                                    <li <?php echo strtolower($this->controller) == 'providers' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/providers') ?>"><i class="icon-hammer-wrench"></i><span>Service Providers</span></a></li>
+                                    <li <?php echo strtolower($this->controller) == 'providers' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/providers') ?>"><i class="icon-hammer-wrench"></i><span>Service Providers <?php echo isset($this->un_approved['un_approved_count']) ? '<span class="label bg-warning-400">' . $this->un_approved['un_approved_count'] . '</span>' : '' ?></span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'posts' && !preg_match("/\/users\//i", $Path) ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/posts') ?>"><i class="icon-comment"></i><span>Posts</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'users' || preg_match("/\/users\//i", $Path) ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/users') ?>"><i class="icon-users2"></i><span>Users</span></a></li>
+                                    <li <?php echo strtolower($this->controller) == 'blog_post' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/blog_post') ?>"><i class="icon-books"></i><span>Blog Posts</span></a></li>
                                     <li class=""><a href="<?php echo site_url('logout') ?>"><i class="icon-switch2"></i> <span>Logout</span></a></li>
                                 </ul>
                             </div>
@@ -128,10 +129,10 @@ $Path = $_SERVER['PATH_INFO'];
         .fancybox-nav span:after {display: none;}
     </style>
     <script type="text/javascript">
-        $(document).on('keypress', 'input',function (event) {
-                    if (event.which == '13') {
-                        event.preventDefault();
-                    }
-                });
+        $(document).on('keypress', 'input', function (event) {
+            if (event.which == '13') {
+                event.preventDefault();
+            }
+        });
     </script>
 </html>

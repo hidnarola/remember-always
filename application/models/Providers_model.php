@@ -45,7 +45,7 @@ class Providers_model extends MY_Model {
                 }
             }
         }
-        $this->db->where(['p.is_delete' => 0]);
+        $this->db->where(['p.is_delete' => 0, 'is_active' => 1]);
 //        $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'result') {
 //            $this->db->limit($this->input->get('length'), $this->input->get('start'));
