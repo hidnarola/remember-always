@@ -374,7 +374,8 @@ font-family: 'Roboto';font-size: 16px;color: #aeaeae;line-height: 23px;text-tran
 
 .profile-share{float:right;padding:20px 0;}
 .profile-share h6{display:inline-block;vertical-align:top;width:auto;margin:0;font-size:16px;color:#a0a5b7;line-height:44px;letter-spacing:.05em;}
-.profile-share a{font-size:20px;color:#a0a5b7;line-height:44px;margin:0 0 0 10px;}
+.profile-share a{line-height: 44px;margin: 0 0 0 5px;display: inline-block;vertical-align: top;}
+.profile-share a svg{width:24px;height:24px;vertical-align:middle;}
 .profile-share a i{vertical-align:middle;}
 .profile-head{display:inline-block;vertical-align:top;margin:0;}
 
@@ -396,10 +397,11 @@ font-family: 'Roboto';font-size: 16px;color: #aeaeae;line-height: 23px;text-tran
 .according-tab .panel-heading:after{content:'\f067';font-family:'FontAwesome'; width:23px;height:23px; display:block;position:absolute;top:16px;right:3px;}
  
 .according-tab .panel-body {padding:15px;border:0 !important;background:#efefef;}
-.according-tab .panel-body h5{display:block;width:100%;font-family:'Roboto';font-weight:500;font-size:14px;color:#666;padding:0 0 4px;margin:0;}
+.according-tab .panel-body h5{display:block;width: 100%;font-family: 'Roboto';font-weight: 500;font-size: 16px;color: #975979;padding: 0 0 15px;margin: 0;text-transform: uppercase;font-weight: 500;}
 .according-tab .panel-group{margin:0;}
 .according-tab .panel.panel-default:last-child .panel-heading{border-bottom:0;padding-bottom:8px;}
-.according-tab .panel-body p{padding:0 0 15px;margin:0;color:#999;}
+.according-tab .panel-body p{padding:0 0 15px;margin:0;color:#666;font-family: 'Roboto';}
+.according-tab .panel-body p strong{font-weight:500;font-family: 'Roboto';}
 .according-tab .panel-body p:last-child{padding-bottom:0;}
 
 .fundraiser{background:#975979;border:0;}
@@ -447,7 +449,7 @@ font-family: 'Roboto';font-size: 16px;color: #aeaeae;line-height: 23px;text-tran
 .comment-btm button:hover{background:transparent;color:#57585a;}
 
 .comments-div{display:block;width:100%;padding:0 6px;}
-.comments-div > ul{margin:0;padding:0;list-style:none;}
+.comments-div > ul{ margin:0;max-height:550px;padding:0;list-style:none;height:100%;overflow:auto;}
 .comments-div > ul > li{width:100%;padding:0 0 17px;margin:0 0 20px;border-bottom:1px solid #efefef;}
 .comments-div > ul > li:last-child{padding-bottom:0;border:0;margin-bottom:0;}
 .comments-div-wrap{padding:0 0 0 100px;min-height:100px;position:relative;}
@@ -567,3 +569,10 @@ ul.post-video li a img{width:100%;min-height:120px;}
 .funeral-r a.btn-link.color-01:hover{color:#7030a0;background:#fff;}
 .funeral-r a.btn-link.color-02{background:#3097a0;border:2px solid #3097a0;max-width:190px;}
 .funeral-r a.btn-link.color-02:hover{color:#3097a0;background:#fff;}
+p.no-data{padding:0 0 15px;margin:0;line-height:22px;font-size:13px;font-weight:400;display:block;text-align:center;}
+
+.post-modal .mpopup-body {text-align: center;background: #efefef;padding: 25px;}
+.post-modal .mpopup-body p{margin:0;}
+.post-modal .mpopup-body button{position: absolute;top: -17px;right: -17px;width: 34px;height: 34px;background: #545454;color: #fff;border-radius: 80px;
+line-height: 34px;border: 0;vertical-align: top;text-align: center;}
+.post-modal .mpopup-body button:before{ content: "\f00d";vertical-align: top;line-height: 31px;text-align: center;    margin-left: 2px;}

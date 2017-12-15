@@ -10,7 +10,6 @@
                         echo "<img src='assets/images/profile-pic.jpg' alt='' />";
                     }
                     ?>
-
                 </span>
                 <div class="profile-title">
                     <div class="profile-title-img">
@@ -32,10 +31,194 @@
                     <a href="" class="flowers-btn">Send Flowers</a>
                     <div class="profile-share">
                         <h6>Share</h6>
-                        <a href="javascript:void(0)"class="fa fa-facebook" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"></a>
-                        <a href="javascript:void(0)"class="fa fa-pinterest" onclick="javascript:genericSocialShare('https://pinterest.com/pin/create/bookmarklet/?url=<?php echo $url; ?>')" title="Pintrest Share"></a>
-                        <a href="javascript:void(0)"class="fa fa-twitter" onclick="javascript:genericSocialShare('http://twitter.com/share?url=<?php echo $url; ?>')" title="Twitter Share"></a>
-                        <a href="javascript:void(0)" class="icon-linked_in fa fa-google-plus" onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus Share"></a>
+                        <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 112.196 112.196" style="enable-background:new 0 0 112.196 112.196;" xml:space="preserve">
+<g>
+	<circle style="fill:#3B5998;" cx="56.098" cy="56.098" r="56.098"/>
+	<path style="fill:#FFFFFF;" d="M70.201,58.294h-10.01v36.672H45.025V58.294h-7.213V45.406h7.213v-8.34
+		c0-5.964,2.833-15.303,15.301-15.303L71.56,21.81v12.51h-8.151c-1.337,0-3.217,0.668-3.217,3.513v7.585h11.334L70.201,58.294z"/>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg></a>
+                        <a href="javascript:void(0)" onclick="javascript:genericSocialShare('https://pinterest.com/pin/create/bookmarklet/?url=<?php echo $url; ?>')" title="Pintrest Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 112.198 112.198" style="enable-background:new 0 0 112.198 112.198;" xml:space="preserve">
+<g>
+	<circle style="fill:#CB2027;" cx="56.099" cy="56.1" r="56.098"/>
+	<g>
+		<path style="fill:#F1F2F2;" d="M60.627,75.122c-4.241-0.328-6.023-2.431-9.349-4.45c-1.828,9.591-4.062,18.785-10.679,23.588
+			c-2.045-14.496,2.998-25.384,5.34-36.941c-3.992-6.72,0.48-20.246,8.9-16.913c10.363,4.098-8.972,24.987,4.008,27.596
+			c13.551,2.724,19.083-23.513,10.679-32.047c-12.142-12.321-35.343-0.28-32.49,17.358c0.695,4.312,5.151,5.621,1.78,11.571
+			c-7.771-1.721-10.089-7.85-9.791-16.021c0.481-13.375,12.018-22.74,23.59-24.036c14.635-1.638,28.371,5.374,30.267,19.14
+			C85.015,59.504,76.275,76.33,60.627,75.122L60.627,75.122z"/>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg></a>
+                        <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://twitter.com/share?url=<?php echo $url; ?>')" title="Twitter Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 112.197 112.197" style="enable-background:new 0 0 112.197 112.197;" xml:space="preserve">
+<g>
+	<circle style="fill:#55ACEE;" cx="56.099" cy="56.098" r="56.098"/>
+	<g>
+		<path style="fill:#F1F2F2;" d="M90.461,40.316c-2.404,1.066-4.99,1.787-7.702,2.109c2.769-1.659,4.894-4.284,5.897-7.417
+			c-2.591,1.537-5.462,2.652-8.515,3.253c-2.446-2.605-5.931-4.233-9.79-4.233c-7.404,0-13.409,6.005-13.409,13.409
+			c0,1.051,0.119,2.074,0.349,3.056c-11.144-0.559-21.025-5.897-27.639-14.012c-1.154,1.98-1.816,4.285-1.816,6.742
+			c0,4.651,2.369,8.757,5.965,11.161c-2.197-0.069-4.266-0.672-6.073-1.679c-0.001,0.057-0.001,0.114-0.001,0.17
+			c0,6.497,4.624,11.916,10.757,13.147c-1.124,0.308-2.311,0.471-3.532,0.471c-0.866,0-1.705-0.083-2.523-0.239
+			c1.706,5.326,6.657,9.203,12.526,9.312c-4.59,3.597-10.371,5.74-16.655,5.74c-1.08,0-2.15-0.063-3.197-0.188
+			c5.931,3.806,12.981,6.025,20.553,6.025c24.664,0,38.152-20.432,38.152-38.153c0-0.581-0.013-1.16-0.039-1.734
+			C86.391,45.366,88.664,43.005,90.461,40.316L90.461,40.316z"/>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg></a>
+                        <a href="javascript:void(0)"  onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 112.196 112.196" style="enable-background:new 0 0 112.196 112.196;" xml:space="preserve">
+<g>
+	<g>
+		<circle id="XMLID_30_" style="fill:#DC4E41;" cx="56.098" cy="56.097" r="56.098"/>
+	</g>
+	<g>
+		<path style="fill:#DC4E41;" d="M19.531,58.608c-0.199,9.652,6.449,18.863,15.594,21.867c8.614,2.894,19.205,0.729,24.937-6.648
+			c4.185-5.169,5.136-12.06,4.683-18.498c-7.377-0.066-14.754-0.044-22.12-0.033c-0.012,2.628,0,5.246,0.011,7.874
+			c4.417,0.122,8.835,0.066,13.252,0.155c-1.115,3.821-3.655,7.377-7.51,8.757c-7.443,3.28-16.94-1.005-19.282-8.813
+			c-2.827-7.477,1.801-16.5,9.442-18.675c4.738-1.667,9.619,0.21,13.673,2.673c2.054-1.922,3.976-3.976,5.864-6.052
+			c-4.606-3.854-10.525-6.217-16.61-5.698C29.526,35.659,19.078,46.681,19.531,58.608z"/>
+		<path style="fill:#DC4E41;" d="M79.102,48.668c-0.022,2.198-0.045,4.407-0.056,6.604c-2.209,0.022-4.406,0.033-6.604,0.044
+			c0,2.198,0,4.384,0,6.582c2.198,0.011,4.407,0.022,6.604,0.045c0.022,2.198,0.022,4.395,0.044,6.604c2.187,0,4.385-0.011,6.582,0
+			c0.012-2.209,0.022-4.406,0.045-6.615c2.197-0.011,4.406-0.022,6.604-0.033c0-2.198,0-4.384,0-6.582
+			c-2.197-0.011-4.406-0.022-6.604-0.044c-0.012-2.198-0.033-4.407-0.045-6.604C83.475,48.668,81.288,48.668,79.102,48.668z"/>
+		<g>
+			<path style="fill:#FFFFFF;" d="M19.531,58.608c-0.453-11.927,9.994-22.949,21.933-23.092c6.085-0.519,12.005,1.844,16.61,5.698
+				c-1.889,2.077-3.811,4.13-5.864,6.052c-4.054-2.463-8.935-4.34-13.673-2.673c-7.642,2.176-12.27,11.199-9.442,18.675
+				c2.342,7.808,11.839,12.093,19.282,8.813c3.854-1.38,6.395-4.936,7.51-8.757c-4.417-0.088-8.835-0.033-13.252-0.155
+				c-0.011-2.628-0.022-5.246-0.011-7.874c7.366-0.011,14.743-0.033,22.12,0.033c0.453,6.439-0.497,13.33-4.683,18.498
+				c-5.732,7.377-16.322,9.542-24.937,6.648C25.981,77.471,19.332,68.26,19.531,58.608z"/>
+			<path style="fill:#FFFFFF;" d="M79.102,48.668c2.187,0,4.373,0,6.57,0c0.012,2.198,0.033,4.407,0.045,6.604
+				c2.197,0.022,4.406,0.033,6.604,0.044c0,2.198,0,4.384,0,6.582c-2.197,0.011-4.406,0.022-6.604,0.033
+				c-0.022,2.209-0.033,4.406-0.045,6.615c-2.197-0.011-4.396,0-6.582,0c-0.021-2.209-0.021-4.406-0.044-6.604
+				c-2.197-0.023-4.406-0.033-6.604-0.045c0-2.198,0-4.384,0-6.582c2.198-0.011,4.396-0.022,6.604-0.044
+				C79.057,53.075,79.079,50.866,79.102,48.668z"/>
+		</g>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+</svg></a>
                     </div>
                 </div>
             </div>
@@ -55,12 +238,12 @@
                                         <div class="panel-body">
                                             <?php if (isset($funnel_services['Memorial']) && !empty($funnel_services['Memorial'])) { ?>
                                                 <h5><?php echo $funnel_services['Memorial']['place_name'] ?></h5>
-                                                <p>Time: <?php echo $funnel_services['Memorial']['time'] ?></p>
-                                                <p>Date: (<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('d M, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                <p>Address: <?php echo $funnel_services['Memorial']['address'] ?></p>
-                                                <p>City: <?php echo $funnel_services['Memorial']['city_name'] ?></p>
-                                                <p>State: <?php echo $funnel_services['Memorial']['state_name'] ?></p>
-                                                <p>Zipcode: <?php echo $funnel_services['Memorial']['zip'] ?></p>
+                                                <p><strong>Time:</strong> <?php echo $funnel_services['Memorial']['time'] ?></p>
+                                                <p><strong>Date:</strong> (<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('d M, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p><strong>Address:</strong> <?php echo $funnel_services['Memorial']['address'] ?></p>
+                                                <p><strong>City:</strong> <?php echo $funnel_services['Memorial']['city_name'] ?></p>
+                                                <p><strong>State:</strong> <?php echo $funnel_services['Memorial']['state_name'] ?></p>
+                                                <p><strong>Zipcode:</strong> <?php echo $funnel_services['Memorial']['zip'] ?></p>
                                             <?php } else { ?>
                                                 <p class="general-text">Memorial service not available.</p>
                                             <?php } ?>
@@ -77,12 +260,12 @@
                                         <div class="panel-body">
                                             <?php if (isset($funnel_services['Funeral']) && !empty($funnel_services['Funeral'])) { ?>
                                                 <h5><?php echo $funnel_services['Funeral']['place_name'] ?></h5>
-                                                <p>Time: <?php echo $funnel_services['Funeral']['time'] ?></p>
-                                                <p>Date: (<?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('d M, Y', strtotime($funnel_services['Funeral']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                <p>Address: <?php echo $funnel_services['Funeral']['address'] ?></p>
-                                                <p>City: <?php echo $funnel_services['Funeral']['city_name'] ?></p>
-                                                <p>State: <?php echo $funnel_services['Funeral']['state_name'] ?></p>
-                                                <p>Zipcode: <?php echo $funnel_services['Funeral']['zip'] ?></p>
+                                                <p><strong>Time:</strong> <?php echo $funnel_services['Funeral']['time'] ?></p>
+                                                <p><strong>Date: </strong> (<?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('d M, Y', strtotime($funnel_services['Funeral']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p><strong>Address: </strong> <?php echo $funnel_services['Funeral']['address'] ?></p>
+                                                <p><strong>City: </strong> <?php echo $funnel_services['Funeral']['city_name'] ?></p>
+                                                <p><strong>State: </strong> <?php echo $funnel_services['Funeral']['state_name'] ?></p>
+                                                <p><strong>Zipcode: </strong> <?php echo $funnel_services['Funeral']['zip'] ?></p>
                                             <?php } else { ?>
                                                 <p class="general-text">Funeral service not available.</p>
                                             <?php } ?>
@@ -99,12 +282,12 @@
                                         <div class="panel-body">
                                             <?php if (isset($funnel_services['Burial']) && !empty($funnel_services['Burial'])) { ?>
                                                 <h5><?php echo $funnel_services['Burial']['place_name'] ?></h5>
-                                                <p>Time: <?php echo $funnel_services['Burial']['time'] ?></p>
-                                                <p>Date: (<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('d M, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                <p>Address: <?php echo $funnel_services['Burial']['address'] ?></p>
-                                                <p>City: <?php echo $funnel_services['Burial']['city_name'] ?></p>
-                                                <p>State: <?php echo $funnel_services['Burial']['state_name'] ?></p>
-                                                <p>Zipcode: <?php echo $funnel_services['Burial']['zip'] ?></p>
+                                                <p><strong>Time:</strong> <?php echo $funnel_services['Burial']['time'] ?></p>
+                                                <p><strong>Date:</strong> (<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('d M, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p><strong>Address: </strong> <?php echo $funnel_services['Burial']['address'] ?></p>
+                                                <p><strong>City:</strong> <?php echo $funnel_services['Burial']['city_name'] ?></p>
+                                                <p><strong>State:</strong> <?php echo $funnel_services['Burial']['state_name'] ?></p>
+                                                <p><strong>Zipcode: </strong> <?php echo $funnel_services['Burial']['zip'] ?></p>
                                             <?php } else { ?>
                                                 <p class="general-text">Burial service not available.</p>
                                             <?php } ?>
@@ -302,7 +485,7 @@
                                         </li>
                                     <?php } ?>
                                 </ul><?php } else { ?>
-                                No post comments available for this profile.
+                            <p class="no-data">No post comments available for this profile.</p>
                             <?php } ?>
                         </div>
 

@@ -181,7 +181,7 @@ if ($this->session->flashdata('success')) {
                 },
                 errorPlacement: function (error, element) {
                     if (element.attr("name") == "banner_image") {
-                        error.insertAfter($(".uploader"));
+                        error.insertAfter($(".#proper_image"));
                     } else if (element.attr("name") == "description") {
                         error.insertAfter(element.parent());
                     } else {

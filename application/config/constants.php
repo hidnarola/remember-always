@@ -100,6 +100,7 @@ define('TBL_FUN_FACTS', 'fun_facts');
 define('TBL_LIFE_TIMELINE', 'life_timeline');
 define('TBL_PAGES', 'pages');
 define('TBL_POSTS', 'posts');
+define('TBL_BLOG_POST', 'blog_post');
 define('TBL_POST_MEDIAS', 'post_medias');
 define('TBL_PROFILES', 'profiles');
 define('TBL_PROFILE_AFFILIATION', 'profile_affiliation');
@@ -123,6 +124,7 @@ define('SLIDER_IMAGES', 'uploads/slider-images/');
 define('PROVIDER_IMAGES', 'uploads/provider-images/');
 define('PROFILE_IMAGES', 'uploads/profile-images/');
 define('POST_IMAGES', 'uploads/post-images/');
+define('BLOG_POST_IMAGES', 'uploads/blog-post-images/');
 define('PAGE_BANNER', 'uploads/banners/');
 
 /**
