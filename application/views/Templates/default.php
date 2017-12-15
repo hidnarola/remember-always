@@ -216,14 +216,12 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade post-modal" id="post-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="login-signup">
                      <div class="mpopup-body">
                          <p>Post is Empty. Please enter post comment or slect image or video file for post.</p>
-                         <div class="pup-btn">
-                             <button type="button" onclick="$('#post-modal').modal('toggle')">close</button>
-                            </div>
+                         <button type="button" onclick="$('#post-modal').modal('toggle')" class="fa fa-close"></button>
                     </div>
                 </div>
             </div>

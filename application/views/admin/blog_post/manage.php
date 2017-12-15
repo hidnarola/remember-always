@@ -9,8 +9,8 @@
     <div class="breadcrumb-line">
         <ul class="breadcrumb">
             <li><a href="<?php echo site_url('admin/dashboard'); ?>"><i class="icon-home2 position-left"></i> Home</a></li>
-            <li><a href="<?php echo site_url('admin/posts'); ?>"><i class="icon-books position-left"></i> Blog Posts</a></li>
-            <li class="active"><i class="icon-books position-left"></i><?php echo $heading; ?></li>
+            <li><a href="<?php echo site_url('admin/blog_post'); ?>"><i class="icon-books position-left"></i> Blog Posts</a></li>
+            <li class="active"><i class="icon-pencil7 position-left"></i><?php echo $heading; ?></li>
         </ul>
     </div>
 </div>
@@ -49,7 +49,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <!-- Basic layout-->
-                <form  method="post" id="user_form" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
+                <form  method="post" id="blogpost_form" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
                     <div class="panel panel-flat">
                         <div class="panel-body">
                             <div class="form-group">
@@ -71,121 +71,41 @@
                                     ?>
                                 </select>
                             </div>
-                            <?php if (!isset($user_id)) { ?>
-                                <div class="form-group">
-                                    <label>User:</label>
-                                    <select name="pf_user_id" id="pf_user_id" class="form-control">
-                                        <option value="">-- Select User --</option>
-                                        <?php
-                                        if (isset($users) && !empty($users)) {
-                                            foreach ($users as $key => $value) {
-                                                $selected = '';
-                                                if (isset($post_data) && $post_data['pf_user_id'] == $value['id']) {
-                                                    $selected = 'selected';
-                                                }
-                                                ?>
-                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('pf_user_id', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></option>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            <?php } ?>
                             <div class="form-group">
-                                <label>User Profile:</label>
-                                <select name="profile_id" id="profile_id" class="form-control">
-                                    <option value="">-- Select User Profile --</option>
-                                    <?php
-                                    if (isset($profiles) && !empty($profiles)) {
-                                        foreach ($profiles as $key => $value) {
-                                            $selected = '';
-                                            if (isset($post_data) && $post_data['profile_id'] == $value['id']) {
-                                                $selected = 'selected';
-                                            }
-                                            ?>
-                                            <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('profile_id', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['firstname'] . ' ' . $value['lastname']; ?></option>
-                                            <?php
-                                        }
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+                                <label>Title:</label>
+                                <input type="text" name="title" id="title"  class="form-control" value="<?php echo isset($post_data['title']) ? $post_data['title'] : set_value('title'); ?>" />                            </div>
                             <div class="form-group">
-                                <label>Comment:</label>
-                                <textarea name="comment" id="comment" rows="4" cols="4" class="form-control"><?php echo isset($post_data['comment']) ? $post_data['comment'] : set_value('comment'); ?></textarea>
+                                <label>Description:</label>
+                                <textarea name="description" id="description" rows="4" cols="4" class="form-control"><?php echo isset($post_data['description']) ? $post_data['description'] : set_value('description'); ?></textarea>
                             </div>
                             <div class="form-group">
                                 <label>Image:</label>
-                                <input type="file" name="image[]" id="image[]" class="image_file_upload file-input" multiple="multiple">
-                                <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
-                                <?php if (isset($post_media) && !empty($post_media)) { ?>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="image_custom_preview">
-                                                <?php
-                                                $cnt = 0;
-                                                foreach ($post_media as $key => $value) {
-                                                    if ($value['type'] == 1) {
-                                                        ?>
-                                                        <div class="col-lg-2 col-sm-6 div_other_img">
-                                                            <img src="<?php echo base_url(POST_IMAGES . $value['media']) ?>" alt="" style="height:120px;width:150px" class="img-thumbnail">
-                                                            <input type="hidden" class="hidden_other_img" name="hidden_other_image_id[]" id="hidden_other_image<?php echo $cnt; ?>" value="<?php echo $value['id']; ?>">
-                                                            <div class="text-center mt-1">
-                                                                <span>
-                                                                    <a href="javascript:void(0);" class="btn btn-danger btn-xs remove_other_img" style="top-margin:5px !important">REMOVE</a>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <?php
-                                                        $cnt++;
-                                                    }
-                                                }
-                                                ?>
-                                                <input type="hidden" name="image_count" id="image_count" value="<?php echo 500 - $cnt; ?>">
-                                            </div>
-                                        </div>
+                                <div class="row">
+                                    <div class="col-md-3" id="image_preview_div">
+                                        <?php
+                                        if (isset($post_data['image'])) {
+                                            ?>
+                                            <img heigth="100" width="170" src="<?php echo base_url(BLOG_POST_IMAGES . '/' . $post_data['image']) ?>" alt="">
+                                        <?php } else {
+                                            ?>
+                                            <img heigth="100" width="170" src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" alt="">
+                                        <?php }
+                                        ?>
                                     </div>
-                                <?php } else { ?>
-                                    <input type="hidden" name="image_count" id="image_count" value="500">
-                                <?php } ?>
-                            </div>
-                            <div class="form-group">
-                                <label>Video:</label>
-                                <input type="file" name="video[]" id="video[]" class="video_file_upload" multiple="multiple">
-                                <span class="help-block custom_helper">Accepted formats:  mp4. Max file size 100MB</span>
-                                <?php if (isset($post_media) && !empty($post_media)) { ?>
-                                    <div class="col-md-12">
-                                        <div class="row">
-                                            <div class="image_custom_preview">
-                                                <?php
-                                                $cnt = 0;
-                                                foreach ($post_media as $key => $value) {
-                                                    if ($value['type'] == 2) {
-                                                        ?>
-                                                        <div class="col-lg-2 col-sm-6 div_other_img">
-                                                            <video width="175px" height="160px" controls="">
-                                                                <source src="<?php echo base_url(POST_IMAGES . $value['media']) ?>" type="video/mp4">
-                                                            </video>
-                                                            <input type="hidden" class="hidden_other_video" name="hidden_other_video_id[]" id="hidden_other_image<?php echo $cnt; ?>" value="<?php echo $value['id']; ?>">
-                                                            <div class="text-center mt-1">
-                                                                <span>
-                                                                    <a href="javascript:void(0);" class="btn btn-danger btn-xs remove_other_video" style="top-margin:5px !important">REMOVE</a>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <?php
-                                                        $cnt++;
-                                                    }
-                                                }
-                                                ?>
-                                                <input type="hidden" name="video_count" id="image_count" value="<?php echo 50 - $cnt; ?>">
-                                            </div>
+                                    <div class="col-md-9">
+                                        <div class="media-body">
+                                            <input type="file" name="image" id="image" class="file-styled">
+                                            <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size <?php echo MAX_IMAGE_SIZE; ?> MB</span>
                                         </div>
+                                        <span></span>
+
                                     </div>
-                                <?php } else { ?>
-                                    <input type="hidden" name="video_count" id="video_count" value="50">
-                                <?php } ?>
+                                </div>
+                                <div id="proper_image" class="validation-error-label"></div>
+                                <?php
+                                if (isset($media_validation))
+                                    echo '<label id="image-error" class="validation-error-label" for="image">' . $media_validation . '</label>';
+                                ?>
                             </div>
                             <div class="text-right">
                                 <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
@@ -199,9 +119,17 @@
     </div>
     <?php $this->load->view('Templates/admin_footer'); ?>
 </div>
+<script>is_valid = false;</script>
+<?php if (isset($post_data)) { ?>
+    <script>is_valid = true;</script>
+<?php } ?>
 <script type="text/javascript">
     $('document').ready(function () {
-        $("#user_form").validate({
+        $(".file-styled").uniform({
+            fileButtonClass: 'action btn bg-pink'
+        });
+
+        $("#blogpost_form").validate({
             ignore: [],
             errorClass: 'validation-error-label',
             successClass: 'validation-valid-label',
@@ -216,106 +144,76 @@
                 user_id: {
                     required: true,
                 },
-                pf_user_id: {
+                title: {
                     required: true,
                 },
-                profile_id: {
+                description: {
                     required: true,
                 },
-                comment: {
-                    atleast_one: true,
-                },
-                "image[]": {
-                    atleast_one: true,
-                },
-                "video[]": {
-                    atleast_one: true,
+                image: {
+                    required: true,
+                    extension: "jpg|png|jpeg",
+                    maxFileSize: {
+                        "unit": "MB",
+                        "size": max_image_size
+                    }
                 },
             },
             errorPlacement: function (error, element) {
-                if (element.attr("name") == "image[]" || element.attr("name") == "video[]" || element.attr("name") == "comment") {
-                    $(".custom_helper").html(error);
-//                }
-//                 else if (element.attr("name") == "video[]") {
-//                    error.insertAfter($(".custom_helper").html(error));
-//                } else if (element.attr("name") == "comment") {
-//                    error.insertAfter($(".custom_helper").html(error));
+                if (element.attr("name") == "image") {
+                    error.insertAfter($(".uploader"));
+                } else if (element.attr("name") == "description") {
+                    error.insertAfter(element.parent());
                 } else {
                     error.insertAfter(element);
                 }
             },
             submitHandler: function (form) {
-                $('button[type="submit"]').attr('disabled', true);
-                form.submit();
+                if (is_valid == true) {
+                    $('button[type="submit"]').attr('disabled', true);
+                    form.submit();
+                }
             },
         });
-        $(".image_file_upload").fileinput({
-            browseLabel: 'Browse',
-            browseIcon: '<i class="icon-file-plus"></i>',
-            showRemove: false,
-            showUpload: false,
-            layoutTemplates: {
-                icon: '<i class="icon-file-check"></i>',
-//                    actionDelete: '<button type="button" class="kv-file-remove {removeClass}" title="{removeTitle}"{dataUrl}{dataKey}>{removeIcon}</button>\n',
-            },
-            initialCaption: "Please select images",
-            initialPreviewShowDelete: true,
-            allowedFileExtensions: ["jpg", "jpeg", "png"],
-            maxFileCount: $("#image_count").val(),
-            dropZoneEnabled: false,
-            overwriteInitial: false,
-            fileActionSettings: {
-                showDrag: false,
-                showRemove: true,
-                removeIcon: '<i class="icon-bin"></i>',
-                removeClass: 'btn btn-link btn-xs btn-icon remove_other_img',
-                indicatorNew: '<i class="icon-file-plus text-slate"></i>',
-                indicatorSuccess: '<i class="icon-checkmark3 file-icon-large text-success"></i>',
-                indicatorError: '<i class="icon-cross2 text-danger"></i>',
-//                    indicatorLoading: '<i class="icon-spinner2 spinner text-muted"></i>',
+
+    });
+    $(document).on('change', '#image', function (e) {
+        readURL(this);
+    })
+    var _validFileExtensions = [".jpg", ".jpeg", ".png", ];
+    function readURL(input) {
+        var height = 197, width = 345, img = '', file = '', val = '';
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var valid_extensions = /(\.jpg|\.jpeg|\.png)$/i;
+                if (typeof (input.files[0]) != 'undefined') {
+                    if (valid_extensions.test(input.files[0].name)) {
+                        var html = '<img src="' + e.target.result + '" style="width: 100px; height: 100px; border-radius: 2px;" alt="">';
+                    } else {
+                        var html = '<img src="assets/admin/images/placeholder.jpg" style="width: 100px; height: 100px; border-radius: 2px;" alt="">';
+                    }
+                } else {
+                    var html = '<img src="assets/admin/images/placeholder.jpg" style="width: 100px; height: 100px; border-radius: 2px;" alt="">';
+                }
+                $('#image_preview_div').html(html);
             }
-        });
-        $(".video_file_upload").fileinput({
-            browseLabel: 'Browse',
-            browseIcon: '<i class="icon-file-plus"></i>',
-            layoutTemplates: {
-                icon: '<i class="icon-file-check"></i>'
-            },
-            previewSettings: {
-                video: {'width': "175px", 'height': "160px", 'max-width': "100%"},
-            },
-            initialCaption: "Please select videos",
-            overwriteInitial: false,
-            maxFileCount: $("#image_count").val(),
-            allowedFileExtensions: ["mp4"],
-        });
-    });
-    $(document).on('click', '.remove_other_img', function () {
-        $(this).parents('.div_other_img').remove();
-        var image_count = parseInt($("#image_count").val());
-        image_count++;
-        $("#image_count").val(image_count);
-    });
-    $(document).on('click', '.remove_other_video', function () {
-        $(this).parents('.div_other_img').remove();
-        var image_count = parseInt($("#video_count").val());
-        image_count++;
-        $("#video_count").val(image_count);
-    });
-    $(document).on('change', '#pf_user_id', function () {
-        var user_id = $("#pf_user_id option:selected").val();
-        $url = '<?php echo base_url() ?>' + 'admin/posts/get_user_profile';
-        $.ajax({
-            type: "POST",
-            url: $url,
-            data: {
-                id: user_id,
+            reader.readAsDataURL(input.files[0]);
+            // check slider image dimension
+            var _URL = window.URL || window.webkitURL;
+            if ((file = input.files[0])) {
+                img = new Image();
+                img.onload = function () {
+                    if (this.width < width && this.height < height) {
+                        is_valid = false;
+                        $('#proper_image').html('Photo should be ' + width + ' X ' + height + ' or more dimensions');
+                    } else {
+                        is_valid = true;
+                        $('#proper_image').html('');
+                    }
+                };
+                img.src = _URL.createObjectURL(file);
             }
-        }).done(function (data) {
-            $("select#profile_id").html(data);
-        });
-    });
-    $(".file-styled").uniform({
-        fileButtonClass: 'action btn bg-pink'
-    });
+        }
+    }
 </script>
