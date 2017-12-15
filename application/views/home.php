@@ -18,7 +18,7 @@
                     <?php } else { ?>
                         <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Create a life profile</a>
                     <?php } ?>
-                        <a href="<?php echo site_url('profile')?>">Find a life profile</a>
+                    <a href="<?php echo site_url('profile') ?>">Find a life profile</a>
                 </div>
             </div>
             <?php
@@ -550,7 +550,7 @@
                 </li>
                 <li>
                     <div class="helpful-box">
-                        <h3><a href="<?php echo site_url('service_provider')?>">Find Service <br/> Providers</a></h3>
+                        <h3><a href="<?php echo site_url('service_provider') ?>">Find Service <br/> Providers</a></h3>
                         <p>Search for and find service providers relevant to the needs surrounding...</p>
                         <span><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                    viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
@@ -730,7 +730,7 @@
                     </div>
                 </li>
             </ul>
-            <a href="" class="helpful-btn">Access Resources</a>
+            <a href="<?php echo site_url('funeral_resources') ?>" class="helpful-btn">Access Resources</a>
         </div>
     </div>
 </section>

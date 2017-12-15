@@ -127,7 +127,7 @@ class Profile extends MY_Controller {
                        UNION ALL
                        SELECT p.id,a.name,'0' as free_text,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND p.is_delete=0 AND a.is_delete=0 
                     ) a order by created_at";
-            $data['affiliations'] = $this->users_model->customQuery($sql);
+            $data['profile_affiliations'] = $this->users_model->customQuery($sql);
         }
         if ($_POST) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
@@ -213,6 +213,7 @@ class Profile extends MY_Controller {
             echo json_encode($data);
             exit;
         }
+        $data['affiliations'] = $this->users_model->sql_select(TBL_AFFILIATIONS, 'id,name', ['where' => ['is_approved' => 1, 'is_delete' => 0]]);
         $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Create Profile';
         $this->template->load('default', 'profile/profile_form', $data);
@@ -350,7 +351,7 @@ class Profile extends MY_Controller {
     }
 
     /**
-     * Delete uploaded profile gallery 
+     * Delete fun facts
      * @author KU
      */
     public function delete_facts() {
@@ -365,6 +366,32 @@ class Profile extends MY_Controller {
         }
         echo json_encode($data);
         exit;
+    }
+
+    /**
+     * Delete affiliation
+     * @author KU
+     */
+    public function delete_affiliation() {
+        $fact = base64_decode($this->input->post('fact'));
+        $fact_detail = $this->users_model->sql_select(TBL_FUN_FACTS, 'facts', ['where' => ['id' => $fact, 'is_delete' => 0]], ['single' => true]);
+        if (!empty($fact_detail)) {
+            $this->users_model->common_insert_update('update', TBL_FUN_FACTS, ['is_delete' => 1], ['id' => $fact]);
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Invalid request!";
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Add Affiliation
+     * @author KU
+     */
+    public function add_affiliation() {
+        
     }
 
 }
