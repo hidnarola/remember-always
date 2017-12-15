@@ -243,13 +243,13 @@
                                     <div class="step-03-l">
                                         <?php
                                         $affiliation_count = 0;
-                                        if (isset($affiliations) && !empty($affiliations)) {
-                                            foreach ($affiliations as $key => $value) {
+                                        if (isset($profile_affiliations) && !empty($profile_affiliations)) {
+                                            foreach ($profile_affiliations as $key => $value) {
                                                 $affiliation_count++;
                                                 ?>
                                                 <div class="input-wrap-div">
                                                     <div class="input-css"><?php echo $value['name'] ?></div>
-                                                    <a href="javascript:void(0)" onclick="delete_affiliation(this,<?php echo $value['free_text'] ?>, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
+                                                    <a href="javascript:void(0)" onclick="delete_affiliation(this, '<?php echo base64_encode($value['id']) ?>',<?php echo $value['free_text'] ?>)"><?php $this->load->view('delete_svg'); ?></a>
                                                 </div>
                                                 <?php
                                             }
@@ -276,7 +276,7 @@
                                         <?php } ?>
                                     </div>
                                     <div class="step-03-m">
-                                        <button type="submit">Add a Affiliations</button>
+                                        <button type="button" onclick="$('#affiliation-modal').modal('show')">Add a Affiliations</button>
                                     </div>
                                     <div class="step-03-r">
                                         <h6>Affiliations are things your loved on was <br/> associated with and that were important to hm or her.</h6>
@@ -522,12 +522,40 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="affiliation-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="login-signup">
+            <div class="mpopup-body">
+                <form id="affiliation-form">
+                    <div class="popup-input">
+                        <label>Affiliation</label>
+                        <select name="select_affiliation" id="select_affiliation" class="selectpicker">
+                            <option value="">Select Affiliation</option>
+                            <?php foreach ($affiliations as $af) { ?>
+                                <option value="<?php echo $af['id'] ?>"><?php echo $af['name'] ?></option>
+                                <?php
+                            }
+                            ?>
+                        </select>
+                        <div class="text-center p-10">OR</div>
+                        <input type="text" name="affiliation_text" id="affiliation_text" placeholder="Start Typing..">
+                    </div>
+                </form>
+                <div class="pup-btn">
+                    <button type="button" onclick="return add_affiliation();" id="add-funfact-btn">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     var profile_id = '<?php echo (isset($profile)) ? base64_encode($profile['id']) : 0 ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT - $image_count ?>;
     max_videos_count = <?php echo MAX_VIDEOS_COUNT - $video_count ?>;
-    max_facts_count = 10;
+    max_facts_count = max_affiliation_count = 10;
     delete_str = '<?php $this->load->view('delete_svg', true); ?>';
     facts_count = <?php echo (isset($profile)) ? $facts_count : 0 ?>;
+    affiliation_count = <?php echo (isset($profile)) ? $affiliation_count : 0 ?>;
 </script>
 <script src="assets/js/profile.js"></script>

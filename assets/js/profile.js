@@ -41,6 +41,29 @@ $(function () {
             },
         },
     });
+    $("#affiliation-form").validate({
+        rules: {
+            select_affiliation: {
+                required: function (element) {
+                    console.log('text', $("#affiliation_text").is(':empty'));
+                    return $("#affiliation_text").is(':empty');
+                }
+            },
+            affiliation_text: {
+                required: function (element) {
+                    if ($("#select_affiliation").val() == '')
+                        return true;
+                    else
+                        return false;
+                }
+            },
+            messages: {
+                affiliation_text: {
+                    required: "Please select or enter affiliation",
+                },
+            },
+        },
+    });
 });
 // Display the preview of image on image upload
 function readURL(input) {
@@ -365,22 +388,6 @@ function delete_media(obj, data) {
         }
     });
 }
-function delete_facts(obj, data) {
-    $.ajax({
-        url: site_url + "profile/delete_facts",
-        type: "POST",
-        data: {'fact': data},
-        dataType: "json",
-        success: function (data) {
-            if (data.success == true) {
-                $(obj).parent('.input-wrap-div').remove();
-                max_facts_count++;
-            } else {
-                showErrorMSg(data.error);
-            }
-        }
-    });
-}
 //-- Add fun fact step
 function add_funfact() {
     if ($('#fun-fact-form').valid()) {
@@ -420,6 +427,22 @@ function add_funfact() {
     }
     return false;
 }
+function delete_facts(obj, data) {
+    $.ajax({
+        url: site_url + "profile/delete_facts",
+        type: "POST",
+        data: {'fact': data},
+        dataType: "json",
+        success: function (data) {
+            if (data.success == true) {
+                $(obj).parent('.input-wrap-div').remove();
+                max_facts_count++;
+            } else {
+                showErrorMSg(data.error);
+            }
+        }
+    });
+}
 function findProperty(obj, key) {
     if (typeof obj === "object") {
         if (key in obj) {
@@ -429,4 +452,61 @@ function findProperty(obj, key) {
         }
     }
     return false;
+}
+//-- Third Affiliation Step
+function add_affiliation() {
+    if ($('#affiliation-form').valid()) {
+        if (affiliation_count < max_affiliation_count) {
+
+            $.ajax({
+                url: site_url + "profile/add_affiliation",
+                type: "POST",
+                data: {facts: $('#fun_fact').val(), profile_id: profile_id},
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        facts_count++;
+                        $('#default-facts').remove();
+                        str = '<div class="input-wrap-div">';
+                        str += '<div class="input-css">' + $('#fun_fact').val() + '</div>';
+                        str += '<a href="javascript:void(0)" onclick="delete_facts(this,\'' + data.data + '\')">';
+                        str += delete_str;
+                        str += '</div>';
+                        $('#selected-facts').append(str);
+                        $("#fun-fact-form")[0].reset();
+                        $('#funfact-modal').modal('hide');
+                        $("#fun-fact-form").validate().resetForm();
+                        $('#fun_fact').rules('add', {
+                            remote: site_url + 'profile/check_facts/' + profile_id,
+                            messages: {
+                                remote: "This fun fact is already added",
+                            }
+                        });
+                    } else {
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+
+        } else {
+            showErrorMSg('You can add up to 10 affiliations only.');
+        }
+    }
+    return false;
+}
+function delete_affiliation(obj, data, type) {
+    $.ajax({
+        url: site_url + "profile/delete_affiliation",
+        type: "POST",
+        data: {'fact': data},
+        dataType: "json",
+        success: function (data) {
+            if (data.success == true) {
+                $(obj).parent('.input-wrap-div').remove();
+                max_affiliation_count++;
+            } else {
+                showErrorMSg(data.error);
+            }
+        }
+    });
 }

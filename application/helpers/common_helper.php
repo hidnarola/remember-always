@@ -118,9 +118,10 @@ function slug($text, $table, $id = NULL) {
     // lowercase
     $text = strtolower($text);
 
+    $used_actions = ['create', 'upload_gallery', 'delete_gallery', 'proceed_steps', 'add_facts', 'check_facts', 'delete_facts','add_affiliation','delete_affiliation'];
     if (empty($text)) {
         $text = 'n-a';
-    } elseif ($text == 'create' || $text == 'upload_gallery' || $text == 'delete_gallery' || $text == 'proceed_steps' || $text == 'check_facts' || $text == 'delete_facts' || $text == 'add_facts') { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
+    } elseif (in_array($text, $used_actions)) { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
         $text = 'n-a';
     }
 
@@ -476,4 +477,3 @@ function get_pages($type) {
         }
     }
 }
-
