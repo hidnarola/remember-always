@@ -72,7 +72,7 @@ class Login extends CI_Controller {
     public function logout() {
         $this->session->unset_userdata('remalways_user');
         delete_cookie(REMEMBER_ME_USER_COOKIE);
-        $this->session->set_flashdata('success', 'Logout successfully!');
+//        $this->session->set_flashdata('success', 'Logout successfully!');
         redirect('/');
     }
 
