@@ -64,6 +64,41 @@ $(function () {
             },
         },
     });
+    var currentYear = (new Date).getFullYear();
+
+    // Time line form validate
+    $('#timeline-form').validate({
+        rules: {
+            'title[]': {
+                'required': true
+            },
+            'month[]': {
+                min: 1,
+                max: 12
+            },
+            'month_year[]': {
+                max: currentYear
+            },
+            'year[]': {
+                max: currentYear
+            },
+            'life_pic[]': {
+                extension: "jpg|png|jpeg|mp4",
+                maxFileSize: {
+                    "unit": "MB",
+                    "size": max_image_size
+                }
+            },
+        },
+        errorPlacement: function (error, element) {
+            if ($(element).attr('name') == 'life_pic[]') {
+                error.appendTo(element.parent("div").parent('div').parent('div'));
+            } else {
+                return false;  // suppresses error message text
+
+            }
+        }
+    });
 });
 // Display the preview of image on image upload
 function readURL(input) {
@@ -320,7 +355,7 @@ $("#gallery").change(function () {
                                 reader.onload = function (e) {
                                     str = '<li><div class="upload-wrap"><span>';
                                     str += '<img src="' + e.target.result + '" style="width:100%">';
-                                    str += '</span><a href="javascript:void(0)" onclick="delete_media(this,\'' + data.data + '\')">';
+                                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
                                     str += delete_str;
                                     str += '</a></div></li>';
                                     dvPreview.append(str);
@@ -355,7 +390,7 @@ $("#gallery").change(function () {
                                 $('#default-preview').remove();
                                 str = '<li><div class="upload-wrap"><span>';
                                 str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
-                                str += '</span><a href="javascript:void(0)" onclick="delete_media(this,\'' + data.data + '\')">';
+                                str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
                                 str += delete_str;
                                 str += '</a></div></li>';
                                 dvPreview.append(str);
@@ -527,14 +562,34 @@ function delete_affiliation(obj, data, type) {
 
 //-- Forth Timeline step
 $(document).on('click', '.add_timeline_btn', function () {
-    timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
-    $('.timeline-div').append(timeline_div);
-    $(this).html('<i class="fa fa-trash"></i> Remove');
-    $(this).removeClass('add_timeline_btn');
-    $(this).addClass('remove_timeline_btn text-danger mb-20');
+    if ($('#timeline-form').valid()) {
+        timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
+        $('.timeline-div').append(timeline_div);
+        $(this).html('<i class="fa fa-trash"></i> Remove');
+        $(this).removeClass('add_timeline_btn');
+        $(this).addClass('remove_timeline_btn text-danger mb-20');
+        //-- Initialize datepicker
+        $('.date-picker').datepicker({
+            format: "dd/mm/yyyy",
+            endDate: "date()"
+        });
+    }
 });
 
 $(document).on('click', '.remove_timeline_btn', function () {
     $(this).parent('.step-06-l').parent('.step-06').remove();
 });
 
+$(document).on('change', '.timeline-media', function () {
+    obj = $(this);
+    if (this.files && this.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var html = '<img src="' + e.target.result + '" style="width: 170px; border-radius: 2px;" alt="">';
+            obj.prev('.select-file_up_btn').html(html);
+        }
+        reader.readAsDataURL(this.files[0]);
+    }
+    
+});

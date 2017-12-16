@@ -1,3 +1,4 @@
+<style type="text/css">.input-css.error{border:1px solid red;}</style>
 <link href="assets/css/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet"/>
 <script src="assets/js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 <!-- /theme JS files -->
@@ -116,7 +117,7 @@
                                                             <video style="width:100%;height:100%" controls><source src="<?php echo PROFILE_IMAGES . $value['media'] ?>">Your browser does not support HTML5 video.</video>
                                                         <?php } ?>
                                                     </span>
-                                                    <a href="javascript:void(0)" onclick="delete_media(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    <a href="javascript:void(0)" class="remove-video" onclick="delete_media(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>	
                                                 </div>
                                             </li>
                                         <?php }
@@ -126,37 +127,37 @@
                                             <li>
                                                 <div class="upload-wrap">
                                                     <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="upload-wrap">
                                                     <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="upload-wrap">
                                                     <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="upload-wrap">
                                                     <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="upload-wrap">
                                                     <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
                                                 </div>
                                             </li>
                                             <li>
                                                 <div class="upload-wrap">
                                                     <span></span>
-                                                    <a href="javascript:void(0)"><?php $this->load->view('delete_svg'); ?></a>	
+                                                    <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
                                                 </div>
                                             </li>
                                         </div>
@@ -306,41 +307,43 @@
                             <p>Enter information about important milestones in your loved ones life.</p>
                         </div>
                         <div class="step-form">
-                            <div class="timeline-div">
-                                <div class="step-06">
-                                    <div class="step-06-l">
-                                        <div class="input-wrap">
-                                            <label class="label-css">Title</label>
-                                            <input type="text" name="" placeholder="Title" class="input-css">
+                            <form id="timeline-form">
+                                <div class="timeline-div">
+                                    <div class="step-06">
+                                        <div class="step-06-l">
+                                            <div class="input-wrap">
+                                                <label class="label-css">Title</label>
+                                                <input type="text" name="title[]" placeholder="Title" class="input-css">
+                                            </div>
+                                            <div class="input-wrap four-input">
+                                                <input type="text" name="date[]" placeholder="Date" class="input-css date-picker"> <span>Or</span>
+                                                <input type="number" name="month[]" placeholder="Month" class="input-css">
+                                                <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
+                                                <input type="number" name="year[]" placeholder="Year" class="input-css">
+                                                <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                            </div>
+                                            <div class="input-wrap">
+                                                <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"></textarea>
+                                            </div>
+                                            <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
                                         </div>
-                                        <div class="input-wrap four-input">
-                                            <input type="text" name="" placeholder="Date" class="input-css"> <span>Or</span>
-                                            <input type="text" name="" placeholder="Month" class="input-css">
-                                            <input type="text" name="" placeholder="Year" class="input-css"><span>Or</span>
-                                            <input type="text" name="" placeholder="Year" class="input-css">
-                                            <p>You may enter a Year a, Month/Year, or a full date.</p>
-                                        </div>
-                                        <div class="input-wrap">
-                                            <textarea class="input-css textarea-css" placeholder="Details(optional)"></textarea>
-                                        </div>
-                                        <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
-                                    </div>
-                                    <div class="step-06-r">
-                                        <div class="select-file">
-                                            <div class="select-file-upload"> 
-                                                <span class="select-file_up_btn">Upload Picture or Video? <span>Select</span></span>
-                                                <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false"> 
+                                        <div class="step-06-r">
+                                            <div class="select-file">
+                                                <div class="select-file-upload"> 
+                                                    <span class="select-file_up_btn">Upload Picture or Video? <span>Select</span></span>
+                                                    <input type="file" name="life_pic[]" multiple="false" class="timeline-media"> 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="step-btm-btn">
-                                <button class="back" onclick="return back_step()">Back</button>
-                                <button class="skip" onclick="return skip_step()">Skip</button>
-                                <button class="next" onclick="return false;">Next</button>
-                            </div>
+                                <div class="step-btm-btn">
+                                    <button class="back" onclick="return back_step()">Back</button>
+                                    <button class="skip" onclick="return skip_step()">Skip</button>
+                                    <button class="next" onclick="return false;">Next</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                     <div id="fifth-step" class="hide profile-steps">
