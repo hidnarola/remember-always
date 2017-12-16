@@ -91,13 +91,13 @@ class Blog_post extends MY_Controller {
                     // check height of uploaded slider image
                     $image_size = getimagesize(base_url() . BLOG_POST_IMAGES . $image_data);
 //                    p($image_size);
-                    if ($image_size[1] > 200) {
+                    if ($image_size[1] > 730) {
                         $path_parts = pathinfo(BLOG_POST_IMAGES . $image_data);
                         $new_image = $path_parts['filename'] . 'resize.' . $path_parts['extension'];
                         $post_image = $new_image;
 //                        $new_width = (730 * $image_size[0]) / $image_size[1];
-                        $new_width = 350;
-                        $resize_data = resize_image(BLOG_POST_IMAGES . $image_data, BLOG_POST_IMAGES . $post_image, $new_width, 200);
+                        $new_width = 1600;
+                        $resize_data = resize_image(BLOG_POST_IMAGES . $image_data, BLOG_POST_IMAGES . $post_image, $new_width, 730);
                         if (is_array($resize_data)) {
                             $flag = 1;
                             $data['profile_image_validation'] = $resize_data['errors'];
@@ -241,8 +241,17 @@ class Blog_post extends MY_Controller {
             $id = base64_decode($this->input->post('id'));
         if (is_numeric($id)) {
             $user_array = array('is_view' => $this->input->post('value'));
-            $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id]);
-            echo 'success';
+            if ($this->input->post('value') == 0) {
+                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id]);
+            }
+            $count = $this->blog_post_model->sql_select(TBL_BLOG_POST, 'COUNT(*) as view_count', ['where' => array('is_view' => 1, 'is_delete' => 0)], ['single' => true]);
+//            p($count['view_count']);
+            if ($count['view_count'] < 2) {
+                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id]);
+                echo 'success';
+            } else {
+                echo 'error';
+            }
         }
         exit;
     }

@@ -126,6 +126,11 @@
                         if (data == 1) {
                             status = '<div class="checkbox"><label><div class="checker"><span class="checked"><input type="checkbox" class="styled" value="1" data-id="' + btoa(full.id) + '" data-type="show_in_home"></span></div></label></div>';
                         }
+//                         else {
+//                            if (full.sub_count == 2) {
+//                                status = '<div class="checkbox"><label><div class="checker disabled"><span><input type="checkbox" class=" styled" value="0" disabled="disabled" data-id="' + btoa(full.id) + '" data-type="show_in_home"></span></div></label></div>';
+//                            }
+//                        }
                         return status;
                     }
                 },
@@ -149,13 +154,13 @@
                         action += '</a>';
                         action += '<ul class="dropdown-menu dropdown-menu-right">';
                         action += '<li>';
+                        action += '<a href="' + editurl + '" title="Edit"><i class="icon-pencil3"></i> Edit</a>'
+                        action += '<a href="' + viewurl + '" title="View Post"><i class="icon-book"></i> View</a>'
                         if (full.is_active == '1') {
                             action += '<a href="' + site_url + 'admin/blog_post/action/hide/' + btoa(full.id) + '" data-type="hide" onclick="return confirm_view(this)" class="in_active" title="Hide"><i class="icon-eye-blocked"></i>Hide Post</a>'
                         } else {
                             action += '<a href="' + site_url + 'admin/blog_post/action/show/' + btoa(full.id) + '" id="' + btoa(full.id) + '" data-type="show" onclick="return confirm_view(this)" class="active" title="Show"><i class="icon-eye"></i>Show Post</a>'
                         }
-                        action += '<a href="' + editurl + '" title="Edit"><i class="icon-pencil3"></i> Edit</a>'
-                        action += '<a href="' + viewurl + '" title="View Post"><i class="icon-book"></i> View</a>'
                         action += '<a href="' + deleteurl + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete</a>'
                         action += '</li>';
                         action += '</ul>';
@@ -245,28 +250,35 @@
         }
         return false;
     }
-    
+
     $(document).on('click', '.styled', function () {
-            data_type = $(this).data('type');
-            data_id = $(this).data('id');
-            if ($(this).parent().attr('class') == 'checked') {
-                $(this).parent().removeClass('checked');
-                $(this).prop('checked', false);
-                value = 0;
-            } else {
-                $(this).parent().addClass('checked');
-                $(this).prop('checked', true);
-                value = 1;
-            }
-//
-            $.ajax({
-                url: "<?php site_url() ?>admin/blog_post/change_data_status",
-                data: {id: data_id, value: value},
-                type: "POST",
-                success: function (result) {
+        var check_this = $(this);
+        data_type = $(this).data('type');
+        data_id = $(this).data('id');
+        if ($(this).parent().attr('class') == 'checked') {
+            $(this).parent().removeClass('checked');
+            $(this).prop('checked', false);
+            value = 0;
+
+        } else {
+            $(this).parent().addClass('checked');
+            $(this).prop('checked', true);
+            value = 1;
+        }
+        $.ajax({
+            url: "<?php site_url() ?>admin/blog_post/change_data_status",
+            data: {id: data_id, value: value},
+            type: "POST",
+            success: function (result) {
+                console.log(result);
+                if (result == 'success') {
                     swal("Success!", "Your changes was successfully saved!", "success");
-//                    common_ajax_call();
+                } else {
+                    check_this.parent().removeClass('checked');
+                    check_this.prop('checked', false);
+                    swal("Warning!", "Your cannot set more than 3 blog post for home page!", "error");
                 }
-            });
+            }
         });
+    });
 </script>

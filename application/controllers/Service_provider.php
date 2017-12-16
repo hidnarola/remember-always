@@ -18,14 +18,8 @@ class Service_provider extends MY_Controller {
      * Display login page for login
      */
     public function index() {
-        if (!$this->is_user_loggedin) {
-            $this->session->set_flashdata('error', 'You must login to access this page');
-            redirect('/');
-        }
-
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
         $services = $this->providers_model->get_providers('result', $this->input->get());
-//        p(qry());
 
         $data['service_categories'] = $service_categories;
         $data['services'] = $services;
@@ -38,11 +32,6 @@ class Service_provider extends MY_Controller {
      * Display service provider details
      */
     public function view($slug) {
-        if (!$this->is_user_loggedin) {
-            $this->session->set_flashdata('error', 'You must login to access this page');
-            redirect('/');
-        }
-
         if (isset($slug) && !empty($slug)) {
             $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
             $data['service_categories'] = $service_categories;
@@ -53,7 +42,7 @@ class Service_provider extends MY_Controller {
                 custom_show_404();
             }
             $data['title'] = 'Services Provider Directory';
-            $data['breadcrumb'] = ['title' => 'Services Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+            $data['breadcrumb'] = ['title' => 'Post Service Provider Listing', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('service_provider'), 'title' => 'Service Provider Listing']]];
             $this->template->load('default', 'service_provider/details', $data);
         } else {
             custom_show_404();
@@ -65,6 +54,11 @@ class Service_provider extends MY_Controller {
      *
      */
     public function add($id = null) {
+        if (!$this->is_user_loggedin) {
+            $this->session->set_flashdata('error', 'You must login to access this page');
+            redirect('/');
+        }
+
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
@@ -101,8 +95,8 @@ class Service_provider extends MY_Controller {
 //            p($_POST);
             $data['error'] = validation_errors();
         } else {
-            p($_FILES);
-            p($this->input->post(),1);
+//            p($_FILES);
+//            p($this->input->post(),1);
             if (!empty(trim(htmlentities($this->input->post('name'))))) {
                 $slug = trim(htmlentities($this->input->post('name')));
             }
@@ -148,7 +142,7 @@ class Service_provider extends MY_Controller {
                             unlink(PROVIDER_IMAGES . $provider_data['image']);
                         }
                     }
-                    $provider_image = $directory . '/' .$image_data;
+                    $provider_image = $directory . '/' . $image_data;
                     $dataArr['image'] = $provider_image;
                 }
             } else {
