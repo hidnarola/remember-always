@@ -17,6 +17,7 @@
         <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
         <link href="assets/css/owl.carousel.css" rel="stylesheet" />
         <link href="assets/css/style.css" rel="stylesheet" />
+        <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/developer.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" />

@@ -36,7 +36,13 @@ class Users extends MY_Controller {
         if ($_POST) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
             $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
+            if (isset($_POST['old_password']) && !empty(trim($_POST['old_password']))) {
+                $this->form_validation->set_rules('old_password', 'Password', 'trim|required|callback_check_password');
+                $this->form_validation->set_rules('new_password', 'Password', 'trim|required');
+                $this->form_validation->set_rules('confirm_password', 'Confirm password', 'trim|required|matches[new_password]');
+            }
             if ($this->form_validation->run() == FALSE) {
+//                p(validation_errors());
                 $data['error'] = validation_errors();
                 $data['success'] = false;
             } else {
@@ -66,6 +72,14 @@ class Users extends MY_Controller {
                     'lastname' => trim($this->input->post('lastname')),
                     'profile_image' => $profile_image,
                 );
+//                $result = $this->users_model->get_user_detail(['id' => $this->user_id, 'is_delete' => 0]);
+//                if (!password_verify($this->input->post('old_password'), $is_left['password'])) {
+//                    $this->session->set_flashdata('error', 'You have entered wrong old password! Please try again.');
+//                } else {
+                if(!empty($this->input->post('new_password'))){
+                    $data['password'] = password_hash($this->input->post('new_password'), PASSWORD_BCRYPT);
+                }
+//                p($data, 1);
                 if (!empty($is_left)) {
                     $data['updated_at'] = date('Y-m-d H:i:s');
                     $this->users_model->common_insert_update('update', TBL_USERS, $data, ['id' => $is_left['id']]);
@@ -113,6 +127,24 @@ class Users extends MY_Controller {
         $data['breadcrumb'] = ['title' => 'Change Password', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Change Password';
         $this->template->load('default', 'change_password', $data);
+    }
+
+    /**
+     * Check password is correct or not.
+     */
+    public function check_password() {
+        $is_left = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['id' => $this->user_id, 'is_delete' => 0,]], ['single' => true]);
+        if (!empty($is_left)) {
+            if (!password_verify($this->input->post('old_password'), $is_left['password'])) {
+                $this->form_validation->set_message('check_password', 'You have entered wrong current password! Please try again.');
+                return FALSE;
+            } else {
+                return TRUE;
+            }
+        } else {
+            $this->form_validation->set_message('check_password', 'You have entered wrong current password! Please try again.');
+            return FALSE;
+        }
     }
 
 }

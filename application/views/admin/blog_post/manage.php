@@ -83,7 +83,9 @@
                                 <div class="row">
                                     <div class="col-md-3" id="image_preview_div">
                                         <?php
+                                        $required = 'required="true"';
                                         if (isset($post_data['image'])) {
+                                            $required = '';
                                             ?>
                                             <img heigth="100" width="170" src="<?php echo base_url(BLOG_POST_IMAGES . '/' . $post_data['image']) ?>" alt="">
                                         <?php } else {
@@ -94,7 +96,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="media-body">
-                                            <input type="file" name="image" id="image" class="file-styled">
+                                            <input type="file" name="image" id="image" class="file-styled" <?php echo $required; ?> >
                                             <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size <?php echo MAX_IMAGE_SIZE; ?> MB</span>
                                         </div>
                                         <span></span>
@@ -151,7 +153,7 @@
                     required: true,
                 },
                 image: {
-                    required: true,
+//                    required: true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "MB",
@@ -182,7 +184,7 @@
     })
     var _validFileExtensions = [".jpg", ".jpeg", ".png", ];
     function readURL(input) {
-        var height = 197, width = 345, img = '', file = '', val = '';
+        var height = 730, width = 1600, img = '', file = '', val = '';
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {
