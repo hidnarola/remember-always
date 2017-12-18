@@ -55,8 +55,16 @@
                                             <img src="<?php echo PROVIDER_IMAGES . $value['image'] ?>" width="100%" height="100%"/>
                                         <?php } ?>
                                     </span>
-                                    <h3><a href="<?php echo site_url('service_provider/view/'.$value['slug'])?>"><?php echo $value['name'] ?></a></h3>
-                                    <p><?php echo $value['description'] ?></p>
+                                    <h3><a href="<?php echo site_url('service_provider/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
+                                    <p><?php
+                                        $text = $value['description'];
+                                        if (strlen($value['description']) > 500) {
+                                            $text = preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...', $value['description']);
+                                            echo $text;
+                                        } else {
+                                            echo $text;
+                                        }
+                                        ?></p>
                                 </li>
 
                                 <?php

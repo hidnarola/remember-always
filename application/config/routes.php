@@ -67,6 +67,7 @@ $route['reset_password'] = 'login/reset_password';
 $route['verify'] = 'signup/verify';
 $route['profile/create'] = 'profile/create';
 $route['profile/upload_gallery'] = 'profile/upload_gallery';
+$route['profile/upload_cover_image'] = 'profile/upload_cover_image';
 $route['profile/delete_gallery'] = 'profile/delete_gallery';
 $route['profile/proceed_steps'] = 'profile/proceed_steps';
 $route['profile/check_facts/(:any)'] = 'profile/check_facts/$1';
