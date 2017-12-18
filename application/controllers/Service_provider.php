@@ -22,10 +22,29 @@ class Service_provider extends MY_Controller {
         $services = $this->providers_model->get_providers('result', $this->input->get());
 
         $data['service_categories'] = $service_categories;
-        $data['services'] = $services;
+        $data['services'] = $this->load_providers(0, true);
+
         $data['title'] = 'Services Provider Directory';
         $data['breadcrumb'] = ['title' => 'Services Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'service_provider/index', $data);
+    }
+
+    /**
+     * Display login page for login
+     */
+    public function load_providers($start, $static = false) {
+        $offset = 3;
+        $services = $this->providers_model->get_providers('result', $this->input->get(), $start, $offset);
+        if ($static === true) {
+            return $services;
+        } else {
+            if (!empty($services)) {
+//            p($services);
+                echo json_encode($services);
+            } else {
+                echo '';
+            }
+        }
     }
 
     /**

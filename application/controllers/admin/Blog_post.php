@@ -75,8 +75,18 @@ class Blog_post extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
+            $slug = '';
+            if (!empty(trim($this->input->post('title')))) {
+                $slug = trim($this->input->post('title'));
+            }
+            if (isset($post_data) && !empty($post_data)) {
+                $slug = slug($slug, TBL_BLOG_POST, trim($id));
+            } else {
+                $slug = slug($slug, TBL_BLOG_POST);
+            }
             $dataArr = array(
                 'user_id' => base64_decode(trim($this->input->post('user_id'))),
+                'slug' => $slug,
                 'title' => trim(htmlentities($this->input->post('title'))),
                 'description' => trim($this->input->post('description')),
             );
@@ -89,20 +99,20 @@ class Blog_post extends MY_Controller {
                     $post_image = $image_data;
 
                     // check height of uploaded slider image
-                    $image_size = getimagesize(base_url() . BLOG_POST_IMAGES . $image_data);
-//                    p($image_size);
-                    if ($image_size[1] > 730) {
-                        $path_parts = pathinfo(BLOG_POST_IMAGES . $image_data);
-                        $new_image = $path_parts['filename'] . 'resize.' . $path_parts['extension'];
-                        $post_image = $new_image;
-//                        $new_width = (730 * $image_size[0]) / $image_size[1];
-                        $new_width = 1600;
-                        $resize_data = resize_image(BLOG_POST_IMAGES . $image_data, BLOG_POST_IMAGES . $post_image, $new_width, 730);
-                        if (is_array($resize_data)) {
-                            $flag = 1;
-                            $data['profile_image_validation'] = $resize_data['errors'];
-                        }
-                    }
+//                    $image_size = getimagesize(base_url() . BLOG_POST_IMAGES . $image_data);
+////                    p($image_size);
+//                    if ($image_size[1] > 730) {
+//                        $path_parts = pathinfo(BLOG_POST_IMAGES . $image_data);
+//                        $new_image = $path_parts['filename'] . 'resize.' . $path_parts['extension'];
+//                        $post_image = $new_image;
+////                        $new_width = (730 * $image_size[0]) / $image_size[1];
+//                        $new_width = 1600;
+//                        $resize_data = resize_image(BLOG_POST_IMAGES . $image_data, BLOG_POST_IMAGES . $post_image, $new_width, 730);
+//                        if (is_array($resize_data)) {
+//                            $flag = 1;
+//                            $data['profile_image_validation'] = $resize_data['errors'];
+//                        }
+//                    }
                     if ($flag == 0) {
                         if (is_numeric($id)) {
                             if (!empty($post_data)) {
@@ -242,12 +252,12 @@ class Blog_post extends MY_Controller {
         if (is_numeric($id)) {
             $user_array = array('is_view' => $this->input->post('value'));
             if ($this->input->post('value') == 0) {
-                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id]);
+                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id, 'modified_at' => date('Y-m-d H:i:s')]);
             }
             $count = $this->blog_post_model->sql_select(TBL_BLOG_POST, 'COUNT(*) as view_count', ['where' => array('is_view' => 1, 'is_delete' => 0)], ['single' => true]);
 //            p($count['view_count']);
-            if ($count['view_count'] < 2) {
-                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id]);
+            if ($count['view_count'] < 3) {
+                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id, 'modified_at' => date('Y-m-d H:i:s')]);
                 echo 'success';
             } else {
                 echo 'error';

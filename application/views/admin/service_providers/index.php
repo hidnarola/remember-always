@@ -89,7 +89,16 @@
                 },
                 {
                     data: "description",
-                    visible: true
+                    visible: true,
+                    render: function (data, type, full, meta) {
+                        console.log(data);
+                        var text = data;
+                        if (data.length > 500) {
+                            text = data.substring(0, 500);
+                            text +='...';
+                        }
+                        return text;
+                    }
                 },
                 {
                     data: "phone_number",

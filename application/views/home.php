@@ -801,33 +801,23 @@
     <div class="container">
         <h2>Blog Posts <small>Informative and inspirational articles, stories tips</small></h2>
         <div id="blog-carousel" class="owl-carousel  owl-theme">
-            <div class="item">
-                <div class="blog-box">
-                    <span><a href=""><img src="assets/images/blog-01.jpg" alt="" /></a></span>
-                    <div class="blog-content">
-                        <p>by : Admin Name  -  01-Nov-2017</p>
-                        <h3><a href="">When an unknown printer galley of type and scrambled it to.</a></h3>
+            <?php
+            if (isset($blogs) && !empty($blogs)) {
+                foreach ($blogs as $key => $val) {
+                    ?>
+                    <div class="item">
+                        <div class="blog-box">
+                            <span><a href="<?php echo site_url('blog/details/' . $val['slug']) ?>"><img src="<?php echo BLOG_POST_IMAGES . $val['image'] ?>" alt="" /></a></span>
+                            <div class="blog-content">
+                                <p>by : <?php echo $val['firstname'] . ' ' . $val['lastname'] ?>  - <?php echo date('d-M-Y', strtotime($val['created_at'])); ?></p>
+                                <h3><a href="<?php echo site_url('blog/details/' . $val['slug']) ?>"><?php echo $val['title'] ?></a></h3>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="blog-box">
-                    <span><a href=""><img src="assets/images/blog-02.jpg" alt="" /></a></span>
-                    <div class="blog-content">
-                        <p>by : Admin Name  -  01-Nov-2017</p>
-                        <h3><a href="">When an unknown printer galley of type and scrambled it to.</a></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="blog-box">
-                    <span><a href=""><img src="assets/images/blog-01.jpg" alt="" /></a></span>
-                    <div class="blog-content">
-                        <p>by : Admin Name  -  01-Nov-2017</p>
-                        <h3><a href="">When an unknown printer galley of type and scrambled it to.</a></h3>
-                    </div>
-                </div>
-            </div>
+                    <?php
+                }
+            }
+            ?>
         </div>
     </div>
 </section>

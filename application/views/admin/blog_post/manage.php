@@ -206,7 +206,7 @@
             if ((file = input.files[0])) {
                 img = new Image();
                 img.onload = function () {
-                    if (this.width < width && this.height < height) {
+                    if (this.width < width || this.height < height) {
                         is_valid = false;
                         $('#proper_image').html('Photo should be ' + width + ' X ' + height + ' or more dimensions');
                     } else {

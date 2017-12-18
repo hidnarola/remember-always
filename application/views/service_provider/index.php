@@ -40,9 +40,9 @@
                 </form>
             </div>
             <div class="services-pro-l">
-                <div class="profile-box services-listings">
+                <div class="profile-box services-listings" id="service_ul_data">
                     <h2>Services Listing</h2>
-                    <ul class="srvs-list-ul">
+                    <ul class="srvs-list-ul" >
                         <?php
                         if (isset($services) && !empty($services)) {
                             foreach ($services as $key => $value) {
@@ -66,7 +66,6 @@
                                         }
                                         ?></p>
                                 </li>
-
                                 <?php
                             }
                         } else {
@@ -74,6 +73,9 @@
                             <li>No Services available</li>
                         <?php } ?>
                     </ul>
+                    <!--                    <div class="loader" style="display: none">
+                                            <img src="assets/images/loader.gif" />
+                                        </div>-->
                 </div>
             </div>
             <div class="services-pro-r">
@@ -110,9 +112,37 @@
 </div>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
+    var provider_image = '<?php echo PROVIDER_IMAGES ?>';
+    var provider_url = '<?php echo site_url('service_provider/view/') ?>';
     $('#category').selectpicker({
         liveSearch: true,
         size: 5
+    });
+    $("#service_ul_data").mCustomScrollbar({
+        axis: "y",
+        scrollButtons: {enable: true},
+        theme: "3d",
+        callbacks: {
+            onScroll: function () {
+                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                    var limitStart = $("#service_ul_data li").length;
+//                    console.log(limitStart);
+                    loadResults(limitStart);
+                }
+            }, /*user custom callback function on scroll event*/
+
+        },
+        advanced: {
+
+            updateOnBrowserResize: true, /*update scrollbars on browser resize (for layouts based on percentages): boolean*/
+
+            updateOnContentResize: true, /*auto-update scrollbars on content resize (for dynamic content): boolean*/
+
+            autoExpandHorizontalScroll: true, /*auto-expand width for horizontal scrolling: boolean*/
+
+            autoScrollOnFocus: true /*auto-scroll on focused elements: boolean*/
+
+        },
     });
     var input = (document.getElementById('location'));
     var options = {
@@ -182,5 +212,44 @@
             window.location.href = site_url + 'service_provider' + url;
         }
         return false;
+    }
+//    $('#service_ul_data').scroll(function () {
+//        if ($(".loader").css('display') == 'none') {
+
+//        }
+//    });
+    function loadResults(limitStart) {
+//        $(".loader").show();
+        $.ajax({
+            url: '<?php echo site_url() ?>' + 'service_provider/load_providers/' + limitStart,
+            type: "post",
+            dataType: "json",
+//            data: {
+//                limitStart: limitStart
+//            },
+            success: function (data) {
+                var string = '';
+                $.each(data, function (index, value) {
+                    string += '<li>' +
+                            '<span>';
+                    if (typeof value['image'] != 'undefined' && value['image'] != null) {
+                        string += '<img src="' + provider_image + value['image'] + '" width="100%" height="100%" />';
+                    }
+                    string += '</span>' +
+                            '<h3><a href="' + provider_url + value['slug'] + '">' + value['name'] + '</a></h3>' +
+                            '<p>';
+                    text = value['description'];
+                    if (value['description'].length > 500) {
+//                        text = value['description'].preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...');
+                        text = value['description'].substring(0, 500);
+                        text += '...';
+                    }
+                    string += text;
+                    string += '</p>';
+                    $("#service_ul_data").append(string);
+                });
+//                $(".loader").hide();
+            }
+        });
     }
 </script>
