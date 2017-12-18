@@ -131,7 +131,7 @@ class Profile extends MY_Controller {
                 } else {
                     $this->users_model->common_insert_update('update', TBL_PROFILES, ['cover_image' => $directory . '/' . $sub_directory . '/' . $image_data, 'updated_at' => date('Y-m-d H:i:s')], ['id' => $profile_id]);
                     $data['success'] = true;
-                    $data['url'] = site_url('uploads/profile-images/'.$directory . '/' . $sub_directory . '/' . $image_data);
+                    $data['url'] = site_url('uploads/profile-images/' . $directory . '/' . $sub_directory . '/' . $image_data);
                     $data['data'] = 'Background Image uploaded successfully!';
                 }
             } else {
@@ -480,6 +480,98 @@ class Profile extends MY_Controller {
         }
 
         $data['success'] = true;
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Add life time line
+     */
+    public function add_timeline() {
+        $post_arr = $this->input->post();
+        $profile_id = base64_decode($this->input->post('profile_id'));
+        $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+        $flag = 0;
+        if (!empty($profile)) {
+            $life_timeline = [];
+            foreach ($post_arr['title'] as $key => $arr) {
+                $lif_arr = ['profile_id' => $profile_id];
+                if ($this->input->post('date')[$key] != '') {
+                    $lif_arr['date'] = date('Y-m-d', strtotime($this->input->post('date')[$key]));
+                    $lif_arr['month'] = date('n', strtotime($this->input->post('date')[$key]));
+                    $lif_arr['year'] = date('Y', strtotime($this->input->post('date')[$key]));
+                } elseif ($this->input->post('month')[$key] != '') {
+                    $lif_arr['month'] = $this->input->post('month')[$key];
+                    $lif_arr['year'] = $this->input->post('month_year')[$key];
+                    $lif_arr['date'] = null;
+                } elseif ($this->input->post('year')[$key] != '') {
+                    $lif_arr['month'] = null;
+                    $lif_arr['year'] = $this->input->post('year')[$key];
+                    $lif_arr['date'] = null;
+                }
+                $lif_arr['details'] = $this->input->post('details')[$key];
+                $lif_arr['created_at'] = date('Y-m-d H:i:s');
+
+                if ($_FILES['life_pic']['name'][$key] != '') {
+
+                    $directory = 'user_' . $profile['user_id'];
+                    if (!file_exists(PROFILE_IMAGES . $directory)) {
+                        mkdir(PROFILE_IMAGES . $directory);
+                    }
+                    $sub_directory = 'profile_' . $profile_id;
+                    if (!file_exists(PROFILE_IMAGES . $directory . '/' . $sub_directory)) {
+                        mkdir(PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                    }
+
+                    $extension = explode('/', $_FILES['life_pic']['type'][$key]);
+                    $extension = end($extension);
+                    // check file extension image/video
+                    if (in_array($extension, ['jpg', 'jpeg', 'png', 'bmp', 'gif'])) {
+                        $_FILES['life_image']['name'] = $_FILES['life_pic']['name'][$key];
+                        $_FILES['life_image']['type'] = $_FILES['life_pic']['type'][$key];
+                        $_FILES['life_image']['tmp_name'] = $_FILES['life_pic']['tmp_name'][$key];
+                        $_FILES['life_image']['error'] = $_FILES['life_pic']['error'][$key];
+                        $_FILES['life_image']['size'] = $_FILES['life_pic']['size'][$key];
+                        $image_data = upload_image('life_image', PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                        if (is_array($image_data)) {
+                            $flag = 1;
+                            $data['success'] = false;
+                            $data['error'] = $image_data['errors'];
+                            break;
+                        } else {
+                            $lif_arr['timeline_media'] = $image_data;
+                        }
+                    } elseif ($extension == 'mp4') {
+                        $_FILES['life_video']['name'] = $_FILES['life_pic']['name'][$key];
+                        $_FILES['life_video']['type'] = $_FILES['life_pic']['type'][$key];
+                        $_FILES['life_video']['tmp_name'] = $_FILES['life_pic']['tmp_name'][$key];
+                        $_FILES['life_video']['error'] = $_FILES['life_pic']['error'][$key];
+                        $_FILES['life_video']['size'] = $_FILES['life_pic']['size'][$key];
+                        $video_data = upload_video('life_video', PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                        if (is_array($video_data)) {
+                            $flag = 1;
+                            $data['success'] = false;
+                            $data['error'] = $video_data['errors'];
+                            break;
+                        } else {
+                            $lif_arr['timeline_media'] = $video_data;
+                        }
+                    } else {
+                        $flag = 1;
+                        $data['success'] = false;
+                        $data['error'] = 'You have not uploaded valid image/upload';
+                        break;
+                    }
+                }
+                $life_timeline[] = $lif_arr;
+            }
+            if ($flag == 0) {
+                $this->users_model->batch_insert_update('insert', TBL_LIFE_TIMELINE, $life_timeline);
+                $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 4], ['id' => $profile_id]);
+
+                $data['success'] = true;
+            }
+        }
         echo json_encode($data);
         exit;
     }

@@ -1,3 +1,5 @@
+var regex_img = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
 $(function () {
     //-- Initialize datepicker
     $('.date-picker').datepicker({
@@ -218,7 +220,7 @@ function back_step() {
         }
     } else if (profile_process == 4) {
         $('#profile_process').val(3);
-        profile_steps('third1-step');
+        profile_steps('forth-step');
     } else if (profile_process == 5) {
         $('#profile_process').val(4);
         profile_steps('forth-step');
@@ -310,6 +312,55 @@ function proceed_step() {
             profile_steps('third1-step');
         } else if ($('#third-step').hasClass('hide') && !$('#third1-step').hasClass('hide')) {
             profile_steps('forth-step');
+        } else if ($('#third-step').hasClass('hide') && $('#third1-step').hasClass('hide')) {
+            // submit form and save data-- Save time line data
+            // check if title is not empty
+            title_empty = 1;
+            $('input[name="title[]"]').each(function () {
+                if ($(this).val() != '') {
+                    title_empty = 0;
+                }
+            });
+            if (title_empty == 0) {
+                if ($('#timeline-form').valid() && validate_timeline_date()) {
+                    fd = new FormData(document.getElementById("timeline-form"));
+                    fd.append('profile_id', profile_id);
+                    $.ajax({
+                        url: site_url + "profile/add_timeline",
+                        type: "POST",
+                        data: fd,
+                        dataType: "json",
+                        processData: false, // tell jQuery not to process the data 
+                        contentType: false, // tell jQuery not to set contentType
+                        success: function (data) {
+                            if (data.success == true) {
+                                $('#profile_process').val(4);
+                                profile_steps('fifth-step');
+                            } else {
+                                $('#profile_process').val(3);
+                                showErrorMSg(data.error);
+                            }
+                        }
+                    });
+                }
+            } else {
+                $.ajax({
+                    url: site_url + "profile/proceed_steps",
+                    type: "POST",
+                    data: {profile_process: 4, profile_id: profile_id},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.success == true) {
+                            $('#profile_process').val(4);
+                            profile_steps('fifth-step');
+                        } else {
+                            $('#profile_process').val(3);
+                            showErrorMSg(data.error);
+                        }
+                    }
+                });
+            }
+
         }
     }
 
@@ -321,12 +372,10 @@ var image_count = 0, video_count = 0;
 $("#gallery").change(function () {
     var dvPreview = $("#selected-preview");
     if (typeof (FileReader) != "undefined") {
-        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
-        var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
         $($(this)[0].files).each(function (index) {
             var file = $(this);
             str = '';
-            if (regex.test(file[0].name.toLowerCase())) {
+            if (regex_img.test(file[0].name.toLowerCase())) {
                 //-- check image and video count
                 if (image_count <= max_images_count) {
 
@@ -557,10 +606,19 @@ function delete_affiliation(obj, data, type) {
 }
 
 //-- Forth Timeline step
+// Add timline button
 $(document).on('click', '.add_timeline_btn', function () {
     if ($('#timeline-form').valid()) {
         if (validate_timeline_date()) {
             timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
+            timeline_div.find('input[name="title[]"]').val('');
+            timeline_div.find('input[name="date[]"]').val('');
+            timeline_div.find('input[name="month[]"]').val('');
+            timeline_div.find('input[name="month_year[]"]').val('');
+            timeline_div.find('input[name="year[]"]').val('');
+            timeline_div.find('input[name="details[]"]').val('');
+            timeline_div.find('input[name="life_pic[]"]').val('');
+            timeline_div.find('.select-file_up_btn').html("Upload Picture or Video? <span>Select</span>");
             $('.timeline-div').append(timeline_div);
             $(this).html('<i class="fa fa-trash"></i> Remove');
             $(this).removeClass('add_timeline_btn');
@@ -573,26 +631,33 @@ $(document).on('click', '.add_timeline_btn', function () {
         }
     }
 });
-
+// Remove timeline button
 $(document).on('click', '.remove_timeline_btn', function () {
     $(this).parent('.step-06-l').parent('.step-06').remove();
 });
 
+//onchange media event for life timeline
 $(document).on('change', '.timeline-media', function () {
     obj = $(this);
     if (this.files && this.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            var html = '<img src="' + e.target.result + '" style="width: 170px; border-radius: 2px;" alt="">';
+        //-- check if file is image or not
+        if (regex_img.test(this.files[0].name.toLowerCase())) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var html = '<img src="' + e.target.result + '" style="width: 170px; border-radius: 2px;" alt="">';
+                obj.prev('.select-file_up_btn').html(html);
+            }
+            reader.readAsDataURL(this.files[0]);
+        } else if (regex_video.test(this.files[0].name.toLowerCase())) {
+            var html = '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(this.files[0]) + '">Your browser does not support HTML5 video.</video>'
             obj.prev('.select-file_up_btn').html(html);
+        } else {
+            obj.prev('.select-file_up_btn').html('Upload Picture or Video? <span>Select</span>');
         }
-        reader.readAsDataURL(this.files[0]);
     }
-
 });
+//Validates date,month and year
 function validate_timeline_date() {
-    console.log('here 1');
     valid = 1;
     $('input[name="date[]"]').each(function () {
         date = $(this);
@@ -600,7 +665,6 @@ function validate_timeline_date() {
         month_year = $(this).siblings('input[name="month_year[]"]');
         year = $(this).siblings('input[name="year[]"]');
         if (date.val() == '' && (month.val() == '' || month_year.val() == '') && year.val() == '') {
-            console.log('here');
             date.addClass('error');
             valid = 0;
         } else {
@@ -613,3 +677,22 @@ function validate_timeline_date() {
         return true;
     }
 }
+//Remove error class if date,month or year is valid
+$(document).on('change', 'input[name="year[]"],input[name="month[]"],input[name="month_year[]"]', function () {
+    date = $(this).siblings('input[name="date[]"]')
+    if ($(this).attr('name') == 'year[]') {
+        date.removeClass('error');
+    } else {
+        if ($(this).attr('name') == 'month[]') {
+            month_year = $(this).siblings('input[name="month_year[]"]')
+            if ($(this).val() != '' && month_year.val() != '') {
+                date.removeClass('error');
+            }
+        } else {
+            month = $(this).siblings('input[name="month[]"]');
+            if ($(this).val() != '' && month.val() != '') {
+                date.removeClass('error');
+            }
+        }
+    }
+});

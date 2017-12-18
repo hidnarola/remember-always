@@ -341,7 +341,7 @@
                                 <div class="step-btm-btn">
                                     <button class="back" onclick="return back_step()">Back</button>
                                     <button class="skip" onclick="return skip_step()">Skip</button>
-                                    <button class="next" onclick="return false;">Next</button>
+                                    <button class="next" onclick="return proceed_step();">Next</button>
                                 </div>
                             </form>
                         </div>
