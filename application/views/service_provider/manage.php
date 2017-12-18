@@ -138,14 +138,15 @@
                                     <div class="step-06-r">
                                         <div class="select-file">
                                             <div class="select-file-upload">
-                                                <span class="up_btn">
+                                                <span class="select-file_up_btn up_btn">
                                                     <?php
                                                     if (isset($provider_data) && $provider_data['image'] != '') {
                                                         echo "<img src='" . PROVIDER_IMAGES . $provider_data['image'] . "'>";
+                                                    }else{
+                                                        echo 'Upload image for service provider<span>Select File</span>';
                                                     }
                                                     ?>
                                                 </span>
-                                                <span class="select-file_up_btn">Upload image for service provider<span>Select File</span></span>
                                                 <input type="file" name="image" id="image" multiple="false" onchange="readURL(this);"> 
                                             </div>
                                         </div>

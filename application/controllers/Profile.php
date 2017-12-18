@@ -107,6 +107,46 @@ class Profile extends MY_Controller {
     }
 
     /**
+     * Upload cover image
+     * @author AKK
+     */
+    public function upload_cover_image() {
+        $data = [];
+        if ($_FILES) {
+            $profile_id = base64_decode($this->input->post('profile_id'));
+            $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+            if (!empty($profile)) {
+                $directory = 'user_' . $profile['user_id'];
+                if (!file_exists(PROFILE_IMAGES . $directory)) {
+                    mkdir(PROFILE_IMAGES . $directory);
+                }
+                $sub_directory = 'profile_' . $profile_id;
+                if (!file_exists(PROFILE_IMAGES . $directory . '/' . $sub_directory)) {
+                    mkdir(PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                }
+                $image_data = upload_image('cover_image', PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                if (is_array($image_data)) {
+                    $data['error'] = $image_data['errors'];
+                    $data['success'] = false;
+                } else {
+                    $this->users_model->common_insert_update('update', TBL_PROFILES, ['cover_image' => $directory . '/' . $sub_directory . '/' . $image_data, 'updated_at' => date('Y-m-d H:i:s')], ['id' => $profile_id]);
+                    $data['success'] = true;
+                    $data['url'] = site_url('uploads/profile-images/'.$directory . '/' . $sub_directory . '/' . $image_data);
+                    $data['data'] = 'Background Image uploaded successfully!';
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = "Something went wrong!";
+            }
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Invalid data!";
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
      * Create Profile Page
      * @author KU
      */
