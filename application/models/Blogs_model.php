@@ -6,7 +6,7 @@
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Providers_model extends MY_Model {
+class blogs_model extends MY_Model {
 
     public function __construct() {
         parent::__construct();
@@ -17,7 +17,7 @@ class Providers_model extends MY_Model {
      * @param string $type - Either result or count
      * @return array for result or int for count
      */
-    public function get_providers($type = 'result', $data = array(), $start = 0, $offset = 5) {
+    public function get_blogs($type = 'result', $data = array(), $start = 0, $offset = 5) {
         $this->db->select('p.*,c.name as category');
         $this->db->join(TBL_SERVICE_CATEGORIES . ' c', 'p.service_category_id=c.id AND c.is_delete=0', 'left');
         if (isset($data) && !empty($data)) {

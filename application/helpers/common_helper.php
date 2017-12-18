@@ -382,7 +382,12 @@ function crop_image($source_x, $source_y, $width, $height, $image_name) {
  */
 function custom_show_404($page = '', $log_error = TRUE) {
     $CI = & get_instance();
-    $CI->load->view('Templates/show_404');
+    $directory = $CI->router->fetch_directory();
+    if ($directory == 'admin/') {
+            $CI->load->view('Templates/show_404');
+        } else {
+            $CI->load->view('Templates/Front_show_404');
+        }
     echo $CI->output->get_output();
     exit; // EXIT_UNKNOWN_FILE
 }

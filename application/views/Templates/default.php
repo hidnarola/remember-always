@@ -16,6 +16,7 @@
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
         <link href="assets/css/owl.carousel.css" rel="stylesheet" />
+        <link href="assets/css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/developer.css" rel="stylesheet" />
@@ -62,6 +63,7 @@
         <script src="assets/js/pnotify.custom.min.js"></script> 
         <script src="assets/js/jquery.fancybox.js"></script>
         <script src="assets/js/jquery.fancybox.pack.js"></script>
+        <script src="assets/js/jquery.mCustomScrollbar.js"></script>
         <script src="assets/js/custom.js"></script> 
 
     </head>

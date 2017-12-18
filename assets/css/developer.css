@@ -44,4 +44,6 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .add_timeline_btn,.remove_timeline_btn{cursor: pointer;}
 .add_timeline_btn:hover,.remove_timeline_btn:hover{text-decoration: none;}
 .mb-20 {margin-bottom: 20px!important;}
-/*16-12-2017 */
+/*18-12-2017 */
+.services-listings ul {max-height: 550px;height: auto;overflow: auto;}
+.custom_error_container div{text-align: center;}
