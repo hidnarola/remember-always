@@ -316,7 +316,7 @@
                                                 <input type="text" name="title[]" placeholder="Title" class="input-css">
                                             </div>
                                             <div class="input-wrap four-input">
-                                                <input type="text" name="date[]" placeholder="Date" class="input-css date-picker"> <span>Or</span>
+                                                <input type="text" name="date[]" id="" placeholder="Date" class="input-css date-picker"> <span>Or</span>
                                                 <input type="number" name="month[]" placeholder="Month" class="input-css">
                                                 <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
                                                 <input type="number" name="year[]" placeholder="Year" class="input-css">

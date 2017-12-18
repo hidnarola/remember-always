@@ -293,13 +293,10 @@ function proceed_step() {
                 if (data.success == true) {
                     $('#profile_process').val(3);
                     if ($('#third-step').hasClass('hide') && $('#third1-step').hasClass('hide')) {
-                        console.log('both hide');
                         profile_steps('third-step');
                     } else if ($('#third1-step').hasClass('hide') && !$('#third-step').hasClass('hide')) {
-                        console.log('third step hide');
                         profile_steps('third1-step');
                     } else {
-                        console.log('else');
                         profile_steps('forth-step');
                     }
                 } else {
@@ -309,7 +306,6 @@ function proceed_step() {
             }
         });
     } else if (profile_process == 3) {
-        console.log('here');
         if (!$('#third-step').hasClass('hide')) {
             profile_steps('third1-step');
         } else if ($('#third-step').hasClass('hide') && !$('#third1-step').hasClass('hide')) {
@@ -563,16 +559,18 @@ function delete_affiliation(obj, data, type) {
 //-- Forth Timeline step
 $(document).on('click', '.add_timeline_btn', function () {
     if ($('#timeline-form').valid()) {
-        timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
-        $('.timeline-div').append(timeline_div);
-        $(this).html('<i class="fa fa-trash"></i> Remove');
-        $(this).removeClass('add_timeline_btn');
-        $(this).addClass('remove_timeline_btn text-danger mb-20');
-        //-- Initialize datepicker
-        $('.date-picker').datepicker({
-            format: "dd/mm/yyyy",
-            endDate: "date()"
-        });
+        if (validate_timeline_date()) {
+            timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
+            $('.timeline-div').append(timeline_div);
+            $(this).html('<i class="fa fa-trash"></i> Remove');
+            $(this).removeClass('add_timeline_btn');
+            $(this).addClass('remove_timeline_btn text-danger mb-20');
+            //-- Initialize datepicker
+            $('.date-picker').datepicker({
+                format: "dd/mm/yyyy",
+                endDate: "date()"
+            });
+        }
     }
 });
 
@@ -591,5 +589,27 @@ $(document).on('change', '.timeline-media', function () {
         }
         reader.readAsDataURL(this.files[0]);
     }
-    
+
 });
+function validate_timeline_date() {
+    console.log('here 1');
+    valid = 1;
+    $('input[name="date[]"]').each(function () {
+        date = $(this);
+        month = $(this).siblings('input[name="month[]"]');
+        month_year = $(this).siblings('input[name="month_year[]"]');
+        year = $(this).siblings('input[name="year[]"]');
+        if (date.val() == '' && (month.val() == '' || month_year.val() == '') && year.val() == '') {
+            console.log('here');
+            date.addClass('error');
+            valid = 0;
+        } else {
+            date.removeClass('error');
+        }
+    });
+    if (valid == 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
