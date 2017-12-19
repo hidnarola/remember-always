@@ -3,7 +3,7 @@ var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
 $(function () {
     //-- Initialize datepicker
     $('.date-picker').datepicker({
-        format: "dd/mm/yyyy",
+        format: "mm/dd/yyyy",
         endDate: "date()"
     });
     // Setup validation
@@ -101,6 +101,7 @@ $(function () {
             }
         }
     });
+    $('.service-datepicker').datepicker({format: "mm/dd/yyyy", startDate: "date()"});
 });
 // Display the preview of image on image upload
 function readURL(input) {
@@ -182,6 +183,23 @@ function profile_steps(obj) {
         $('#' + obj).removeClass('hide');
         $('#first-step-li,#second-step-li').addClass('process-done');
     } else if (obj == 'forth-step') {
+        //-- Display timeline data
+
+        $.ajax({
+            url: site_url + "profile/lifetimeline",
+            type: "POST",
+            data: {profile_id: profile_id},
+            success: function (data) {
+                $('.timeline-div').html(data);
+
+                $('.date-picker').datepicker({
+                    format: "mm/dd/yyyy",
+                    endDate: "date()"
+                });
+            }
+        });
+
+
         $('.main-steps').removeClass('hide');
         $('#' + obj).removeClass('hide');
         $('#first-step-li,#second-step-li,#third-step-li').addClass('process-done');
@@ -611,6 +629,7 @@ $(document).on('click', '.add_timeline_btn', function () {
     if ($('#timeline-form').valid()) {
         if (validate_timeline_date()) {
             timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
+            timeline_div.find('input[name="timelineid[]"]').val('');
             timeline_div.find('input[name="title[]"]').val('');
             timeline_div.find('input[name="date[]"]').val('');
             timeline_div.find('input[name="month[]"]').val('');
@@ -625,7 +644,7 @@ $(document).on('click', '.add_timeline_btn', function () {
             $(this).addClass('remove_timeline_btn text-danger mb-20');
             //-- Initialize datepicker
             $('.date-picker').datepicker({
-                format: "dd/mm/yyyy",
+                format: "mm/dd/yyyy",
                 endDate: "date()"
             });
         }
@@ -634,6 +653,24 @@ $(document).on('click', '.add_timeline_btn', function () {
 // Remove timeline button
 $(document).on('click', '.remove_timeline_btn', function () {
     $(this).parent('.step-06-l').parent('.step-06').remove();
+});
+$(document).on('click', '.remove_org_timeline_btn', function () {
+    var id = $(this).attr('data-id');
+    var obj = $(this);
+    $.ajax({
+        url: site_url + "profile/delete_timeline",
+        type: "POST",
+        data: {id: id},
+        dataType: "json",
+        success: function (data) {
+            if (data.success == true) {
+                obj.parent('.step-06-l').parent('.step-06').remove();
+            } else {
+                showErrorMSg(data.error);
+            }
+        }
+    });
+
 });
 
 //onchange media event for life timeline
@@ -649,7 +686,7 @@ $(document).on('change', '.timeline-media', function () {
             }
             reader.readAsDataURL(this.files[0]);
         } else if (regex_video.test(this.files[0].name.toLowerCase())) {
-            var html = '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(this.files[0]) + '">Your browser does not support HTML5 video.</video>'
+            var html = '<video style="width:100%;" controls><source src="' + URL.createObjectURL(this.files[0]) + '">Your browser does not support HTML5 video.</video>'
             obj.prev('.select-file_up_btn').html(html);
         } else {
             obj.prev('.select-file_up_btn').html('Upload Picture or Video? <span>Select</span>');

@@ -23,9 +23,7 @@
                     </ul>
                     <a href="javascript:void(0)" class="save-draft" onclick="$('#create_profile_form').valid()">Save as draft</a>
                 </div>
-
                 <div class="step-form">
-
 
                     <div id="first-step" class="profile-steps">
                         <form method="post" enctype="multipart/form-data" id="create_profile_form">
@@ -60,10 +58,10 @@
                                     </div>
                                     <div class="input-wrap">
                                         <div class="input-l">
-                                            <input type="text" name="date_of_birth" placeholder="Date of Birth" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('d-m-Y', strtotime($profile['date_of_birth'])) : set_value('date_of_birth') ?>"/>
+                                            <input type="text" name="date_of_birth" placeholder="Date of Birth" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_birth'])) : set_value('date_of_birth') ?>"/>
                                         </div>
                                         <div class="input-r">
-                                            <input type="text" name="date_of_death" placeholder="Dath of Death" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('d-m-Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
+                                            <input type="text" name="date_of_death" placeholder="Dath of Death" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
                                         </div>
                                     </div>
                                 </div>
@@ -309,34 +307,90 @@
                         <div class="step-form">
                             <form id="timeline-form">
                                 <div class="timeline-div">
-                                    <div class="step-06">
-                                        <div class="step-06-l">
-                                            <div class="input-wrap">
-                                                <label class="label-css">Title</label>
-                                                <input type="text" name="title[]" placeholder="Title" class="input-css">
+                                    <?php
+                                    if (isset($timeline) && !empty($timeline)) {
+                                        $timeline_count = count($timeline) - 1;
+                                        foreach ($timeline as $key => $value) {
+                                            ?>
+                                            <input type="hidden" name="timelineid[]" value="<?php echo base64_encode($value['id']) ?>"/>
+                                            <div class="step-06">
+                                                <div class="step-06-l">
+                                                    <div class="input-wrap">
+                                                        <label class="label-css">Title</label>
+                                                        <input type="text" name="title[]" placeholder="Title" class="input-css" value="<?php echo $value['title'] ?>">
+                                                    </div>
+                                                    <div class="input-wrap four-input">
+                                                        <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="<?php echo date('m/d/Y', strtotime($value['date'])) ?>"> <span>Or</span>
+                                                        <input type="number" name="month[]" placeholder="Month" class="input-css" value="<?php echo $value['month'] ?>">
+                                                        <input type="number" name="month_year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>"><span>Or</span>
+                                                        <input type="number" name="year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>">
+                                                        <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                                    </div>
+                                                    <div class="input-wrap">
+                                                        <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"><?php echo $value['details']; ?></textarea>
+                                                    </div>
+                                                    <?php if ($key == $timeline_count) { ?>
+                                                        <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
+                                                    <?php } else { ?>
+                                                        <a class="remove_org_timeline_btn text-danger mb-20 label-css" data-id='<?php echo base64_encode($value['id']) ?>'><i class="fa fa-trash"></i> Remove</a>
+                                                    <?php } ?>
+                                                </div>
+                                                <div class="step-06-r">
+                                                    <div class="select-file">
+                                                        <div class="select-file-upload"> 
+                                                            <span class="select-file_up_btn">
+                                                                <?php
+                                                                if ($value['timeline_media'] != '') {
+                                                                    if ($value['media_type'] == 1) {
+                                                                        ?>
+                                                                        <img src="<?php echo PROFILE_IMAGES . $value['timeline_media'] ?>" style="width: 170px; border-radius: 2px;" alt="">
+                                                                    <?php } else if ($value['media_type'] == 2) {
+                                                                        ?>
+                                                                        <video style="width:100%;" controls><source src="<?php echo $value['timeline_media'] ?>">Your browser does not support HTML5 video.</video>
+                                                                        <?php
+                                                                    }
+                                                                } else {
+                                                                    ?>
+                                                                    Upload Picture or Video? <span>Select</span>
+                                                                <?php } ?>
+                                                            </span>
+                                                            <input type="file" name="life_pic[]" multiple="false" class="timeline-media"> 
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="input-wrap four-input">
-                                                <input type="text" name="date[]" id="" placeholder="Date" class="input-css date-picker"> <span>Or</span>
-                                                <input type="number" name="month[]" placeholder="Month" class="input-css">
-                                                <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
-                                                <input type="number" name="year[]" placeholder="Year" class="input-css">
-                                                <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                            <?php
+                                        }
+                                    } else {
+                                        ?>
+                                        <div class="step-06">
+                                            <div class="step-06-l">
+                                                <div class="input-wrap">
+                                                    <label class="label-css">Title</label>
+                                                    <input type="text" name="title[]" placeholder="Title" class="input-css">
+                                                </div>
+                                                <div class="input-wrap four-input">
+                                                    <input type="text" name="date[]" placeholder="Date" class="input-css date-picker"> <span>Or</span>
+                                                    <input type="number" name="month[]" placeholder="Month" class="input-css">
+                                                    <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
+                                                    <input type="number" name="year[]" placeholder="Year" class="input-css">
+                                                    <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                                </div>
+                                                <div class="input-wrap">
+                                                    <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"></textarea>
+                                                </div>
+                                                <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
                                             </div>
-                                            <div class="input-wrap">
-                                                <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"></textarea>
-                                            </div>
-                                            <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
-                                        </div>
-                                        <div class="step-06-r">
-                                            <div class="select-file">
-                                                <div class="select-file-upload"> 
-                                                    <span class="select-file_up_btn">Upload Picture or Video? <span>Select</span></span>
-                                                    <input type="file" name="life_pic[]" multiple="false" class="timeline-media"> 
+                                            <div class="step-06-r">
+                                                <div class="select-file">
+                                                    <div class="select-file-upload"> 
+                                                        <span class="select-file_up_btn">Upload Picture or Video? <span>Select</span></span>
+                                                        <input type="file" name="life_pic[]" multiple="false" class="timeline-media"> 
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                    </div>
+                                    <?php } ?>
                                 </div>
                                 <div class="step-btm-btn">
                                     <button class="back" onclick="return back_step()">Back</button>
@@ -351,105 +405,107 @@
                             <h2>Add Funeral Services<small>(optional)</small> </h2>
                             <p>In necessary, enter funeral services information. You will be able to remove this information later.</p>
                         </div>
-                        <div class="step-form">
-                            <div class="step-05">
-                                <div class="step-05-l">
-                                    <div class="input-wrap">
-                                        <label class="label-css">Memorial Services & Viewing Section.</label>
-                                        <div class="input-l">
-                                            <input type="text" name="" placeholder="Date" class="input-css">
+                        <form id="funeralservice-form">
+                            <div class="step-form">
+                                <div class="step-05">
+                                    <div class="step-05-l">
+                                        <div class="input-wrap">
+                                            <label class="label-css">Memorial Services & Viewing Section.</label>
+                                            <div class="input-l">
+                                                <input type="text" name="memorial_date" placeholder="Date" class="input-css service-datepicker">
+                                            </div>
+                                            <div class="input-r">
+                                                <input type="text" name="memorial_time" placeholder="Time" class="input-css">
+                                            </div>
                                         </div>
-                                        <div class="input-r">
-                                            <input type="text" name="" placeholder="Time" class="input-css">
+                                        <div class="input-wrap">
+                                            <input type="text" name="memorial_place" placeholder="Name fo place" class="input-css">
+                                        </div>
+                                        <div class="input-wrap">
+                                            <input type="text" name="memorial_address" placeholder="Address" class="input-css">
+                                        </div>
+                                        <div class="input-wrap">
+                                            <div class="input-three-l">
+                                                <input type="text" name="memorial_city" placeholder="City" class="input-css">
+                                            </div>
+                                            <div class="input-three-m">
+                                                <input type="text" name="memorial_state" placeholder="State" class="input-css">
+                                            </div>
+                                            <div class="input-three-r">
+                                                <input type="text" name="memorial_zip" placeholder="Zip" class="input-css">
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="input-wrap">
-                                        <input type="text" name="" placeholder="Name fo place" class="input-css">
-                                    </div>
-                                    <div class="input-wrap">
-                                        <input type="text" name="" placeholder="Address" class="input-css">
-                                    </div>
-                                    <div class="input-wrap">
-                                        <div class="input-three-l">
-                                            <input type="text" name="" placeholder="City" class="input-css">
+                                    <div class="step-05-m">
+                                        <div class="input-wrap">
+                                            <label class="label-css">Funeral Services section</label>
+                                            <div class="input-l">
+                                                <input type="text" name="funeral_date" placeholder="Date" class="input-css service-datepicker">
+                                            </div>
+                                            <div class="input-r">
+                                                <input type="text" name="funeral_time" placeholder="Time" class="input-css">
+                                            </div>
                                         </div>
-                                        <div class="input-three-m">
-                                            <input type="text" name="" placeholder="State" class="input-css">
+                                        <div class="input-wrap">
+                                            <input type="text" name="funeral_place" placeholder="Name fo place" class="input-css">
                                         </div>
-                                        <div class="input-three-r">
-                                            <input type="text" name="" placeholder="Zip" class="input-css">
+                                        <div class="input-wrap">
+                                            <input type="text" name="funeral_address" placeholder="Address" class="input-css">
+                                        </div>
+                                        <div class="input-wrap">
+                                            <div class="input-three-l">
+                                                <input type="text" name="funeral_city" placeholder="City" class="input-css">
+                                            </div>
+                                            <div class="input-three-m">
+                                                <input type="text" name="funeral_state" placeholder="State" class="input-css">
+                                            </div>
+                                            <div class="input-three-r">
+                                                <input type="text" name="funeral_zip" placeholder="Zip" class="input-css">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="step-05-r">
+                                        <div class="input-wrap">
+                                            <label class="label-css">Burial Section</label>
+                                            <div class="input-l">
+                                                <input type="text" name="burial_date" placeholder="Date" class="input-css service-datepicker">
+                                            </div>
+                                            <div class="input-r">
+                                                <input type="text" name="burial_time" placeholder="Time" class="input-css">
+                                            </div>
+                                        </div>
+                                        <div class="input-wrap">
+                                            <input type="text" name="burial_name" placeholder="Name fo place" class="input-css">
+                                        </div>
+                                        <div class="input-wrap">
+                                            <input type="text" name="burial_address" placeholder="Address" class="input-css">
+                                        </div>
+                                        <div class="input-wrap">
+                                            <div class="input-three-l">
+                                                <input type="text" name="burial_city" placeholder="City" class="input-css">
+                                            </div>
+                                            <div class="input-three-m">
+                                                <input type="text" name="burial_state" placeholder="State" class="input-css">
+                                            </div>
+                                            <div class="input-three-r">
+                                                <input type="text" name="burial_zip" placeholder="Zip" class="input-css">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="step-05-m">
-                                    <div class="input-wrap">
-                                        <label class="label-css">Funeral Services section</label>
-                                        <div class="input-l">
-                                            <input type="text" name="" placeholder="Date" class="input-css">
-                                        </div>
-                                        <div class="input-r">
-                                            <input type="text" name="" placeholder="Time" class="input-css">
-                                        </div>
-                                    </div>
-                                    <div class="input-wrap">
-                                        <input type="text" name="" placeholder="Name fo place" class="input-css">
-                                    </div>
-                                    <div class="input-wrap">
-                                        <input type="text" name="" placeholder="Address" class="input-css">
-                                    </div>
-                                    <div class="input-wrap">
-                                        <div class="input-three-l">
-                                            <input type="text" name="" placeholder="City" class="input-css">
-                                        </div>
-                                        <div class="input-three-m">
-                                            <input type="text" name="" placeholder="State" class="input-css">
-                                        </div>
-                                        <div class="input-three-r">
-                                            <input type="text" name="" placeholder="Zip" class="input-css">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="step-05-r">
-                                    <div class="input-wrap">
-                                        <label class="label-css">Burial Section</label>
-                                        <div class="input-l">
-                                            <input type="text" name="" placeholder="Date" class="input-css">
-                                        </div>
-                                        <div class="input-r">
-                                            <input type="text" name="" placeholder="Time" class="input-css">
-                                        </div>
-                                    </div>
-                                    <div class="input-wrap">
-                                        <input type="text" name="" placeholder="Name fo place" class="input-css">
-                                    </div>
-                                    <div class="input-wrap">
-                                        <input type="text" name="" placeholder="Address" class="input-css">
-                                    </div>
-                                    <div class="input-wrap">
-                                        <div class="input-three-l">
-                                            <input type="text" name="" placeholder="City" class="input-css">
-                                        </div>
-                                        <div class="input-three-m">
-                                            <input type="text" name="" placeholder="State" class="input-css">
-                                        </div>
-                                        <div class="input-three-r">
-                                            <input type="text" name="" placeholder="Zip" class="input-css">
-                                        </div>
-                                    </div>
+                                <div class="step-btm-btn">
+                                    <button class="back" onclick="return back_step()">Back</button>
+                                    <button class="skip" onclick="return skip_step()">Skip</button>
+                                    <button class="next" onclick="return false;">Next</button>
                                 </div>
                             </div>
-                            <div class="step-btm-btn">
-                                <button class="back" onclick="return back_step()">Back</button>
-                                <button class="skip" onclick="return skip_step()">Skip</button>
-                                <button class="next" onclick="return false;">Next</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>	
-    <div class="create-profile-body hide profile-steps"  id="sixth-step">
+    <div class="create-profile-body hide profile-steps" id="sixth-step">
         <div class="container">
             <div class="create-profile-box step-06-wrap">
                 <div class="step-title">

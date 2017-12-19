@@ -118,7 +118,7 @@ function slug($text, $table, $id = NULL) {
     // lowercase
     $text = strtolower($text);
 
-    $used_actions = ['create', 'upload_gallery', 'delete_gallery', 'proceed_steps', 'add_facts', 'check_facts', 'delete_facts', 'add_affiliation', 'delete_affiliation', 'add_timeline'];
+    $used_actions = ['create', 'upload_gallery', 'delete_gallery', 'proceed_steps', 'add_facts', 'check_facts', 'delete_facts', 'add_affiliation', 'delete_affiliation', 'add_timeline', 'upload_cover_image', 'delete_timeline', 'lifetimeline'];
     if (empty($text)) {
         $text = 'n-a';
     } elseif (in_array($text, $used_actions)) { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
@@ -384,10 +384,10 @@ function custom_show_404($page = '', $log_error = TRUE) {
     $CI = & get_instance();
     $directory = $CI->router->fetch_directory();
     if ($directory == 'admin/') {
-            $CI->load->view('Templates/show_404');
-        } else {
-            $CI->load->view('Templates/Front_show_404');
-        }
+        $CI->load->view('Templates/show_404');
+    } else {
+        $CI->load->view('Templates/Front_show_404');
+    }
     echo $CI->output->get_output();
     exit; // EXIT_UNKNOWN_FILE
 }

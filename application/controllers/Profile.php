@@ -168,8 +168,9 @@ class Profile extends MY_Controller {
                        SELECT p.id,a.name,'0' as free_text,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND a.is_delete=0 
                     ) a order by created_at";
             $data['profile_affiliations'] = $this->users_model->customQuery($sql);
+            $data['timeline'] = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
         }
-        if ($_POST) {
+        if ($this->input->post('profile_process')) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
             $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
             $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'trim|required');
@@ -496,6 +497,7 @@ class Profile extends MY_Controller {
             $life_timeline = [];
             foreach ($post_arr['title'] as $key => $arr) {
                 $lif_arr = ['profile_id' => $profile_id];
+                $lif_arr['title'] = trim($this->input->post('title')[$key]);
                 if ($this->input->post('date')[$key] != '') {
                     $lif_arr['date'] = date('Y-m-d', strtotime($this->input->post('date')[$key]));
                     $lif_arr['month'] = date('n', strtotime($this->input->post('date')[$key]));
@@ -510,7 +512,7 @@ class Profile extends MY_Controller {
                     $lif_arr['date'] = null;
                 }
                 $lif_arr['details'] = $this->input->post('details')[$key];
-                $lif_arr['created_at'] = date('Y-m-d H:i:s');
+
 
                 if ($_FILES['life_pic']['name'][$key] != '') {
 
@@ -539,7 +541,7 @@ class Profile extends MY_Controller {
                             $data['error'] = $image_data['errors'];
                             break;
                         } else {
-                            $lif_arr['timeline_media'] = $image_data;
+                            $lif_arr['timeline_media'] = $directory . '/' . $sub_directory . '/' . $image_data;
                         }
                     } elseif ($extension == 'mp4') {
                         $_FILES['life_video']['name'] = $_FILES['life_pic']['name'][$key];
@@ -554,7 +556,7 @@ class Profile extends MY_Controller {
                             $data['error'] = $video_data['errors'];
                             break;
                         } else {
-                            $lif_arr['timeline_media'] = $video_data;
+                            $lif_arr['timeline_media'] = $directory . '/' . $sub_directory . '/' . $video_data;
                         }
                     } else {
                         $flag = 1;
@@ -566,13 +568,124 @@ class Profile extends MY_Controller {
                 $life_timeline[] = $lif_arr;
             }
             if ($flag == 0) {
-                $this->users_model->batch_insert_update('insert', TBL_LIFE_TIMELINE, $life_timeline);
+                foreach ($life_timeline as $key => $arr) {
+                    if (isset($this->input->post('timelineid')[$key])) {
+                        $arr['updated_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('update', TBL_LIFE_TIMELINE, $arr, ['id' => base64_decode($this->input->post('timelineid')[$key])]);
+                    } else {
+                        $arr['created_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('insert', TBL_LIFE_TIMELINE, $arr);
+                    }
+                }
+//                $this->users_model->batch_insert_update('insert', TBL_LIFE_TIMELINE, $life_timeline);
                 $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 4], ['id' => $profile_id]);
 
                 $data['success'] = true;
             }
         }
         echo json_encode($data);
+        exit;
+    }
+
+    public function delete_timeline() {
+        $id = base64_decode($this->input->post('id'));
+        if (!empty($id)) {
+            $this->users_model->common_insert_update('update', TBL_LIFE_TIMELINE, ['is_delete' => 1], ['id' => $id]);
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = 'Something went wrong';
+        }
+
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Get life time-line of particular profile
+     */
+    public function lifetimeline() {
+        $id = base64_decode($this->input->post('profile_id'));
+        $timeline = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $id, 'is_delete' => 0]]);
+        if (!empty($timeline)) {
+            $timeline_count = count($timeline) - 1;
+            $str = '';
+            foreach ($timeline as $key => $value) {
+                $str .= '<input type="hidden" name="timelineid[]" value="' . base64_encode($value['id']) . '"/>
+                        <div class="step-06">
+                            <div class="step-06-l">
+                                <div class="input-wrap">
+                                    <label class="label-css">Title</label>
+                                    <input type="text" name="title[]" placeholder="Title" class="input-css" value="' . $value['title'] . '">
+                                </div>
+                                <div class="input-wrap four-input">
+                                    <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="' . date('m/d/Y', strtotime($value['date'])) . '"> <span>Or</span>
+                                    <input type="number" name="month[]" placeholder="Month" class="input-css" value="' . $value['month'] . '">
+                                    <input type="number" name="month_year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '"><span>Or</span>
+                                    <input type="number" name="year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '">
+                                    <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                </div>
+                                <div class="input-wrap">
+                                    <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)">' . $value['details'] . '</textarea>
+                                </div>';
+                if ($key == $timeline_count) {
+                    $str .= '<a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>';
+                } else {
+                    $str .= '<a class="remove_org_timeline_btn text-danger mb-20 label-css" data-id="' . base64_encode($value['id']) . '"><i class="fa fa-trash"></i> Remove</a>';
+                }
+                $str .= '</div>
+                        <div class="step-06-r">
+                            <div class="select-file">
+                                <div class="select-file-upload"> 
+                                    <span class="select-file_up_btn">';
+
+                if ($value['timeline_media'] != '') {
+                    if ($value['media_type'] == 1) {
+                        $str .= '<img src="' . PROFILE_IMAGES . $value['timeline_media'] . '" style="width: 170px; border-radius: 2px;" alt="">';
+                    } else if ($value['media_type'] == 2) {
+
+                        $str .= '<video style="width:100%;" controls><source src="' . $value['timeline_media'] . '">Your browser does not support HTML5 video.</video>';
+                    }
+                } else {
+                    $str .= 'Upload Picture or Video? <span>Select</span>';
+                }
+                $str .= '</span>
+                                <input type="file" name="life_pic[]" multiple="false" class="timeline-media"> 
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+            }
+        } else {
+            $str .= '<div class="step-06">
+                        <div class="step-06-l">
+                            <div class="input-wrap">
+                                <label class="label-css">Title</label>
+                                <input type="text" name="title[]" placeholder="Title" class="input-css">
+                            </div>
+                            <div class="input-wrap four-input">
+                                <input type="text" name="date[]" placeholder="Date" class="input-css date-picker"> <span>Or</span>
+                                <input type="number" name="month[]" placeholder="Month" class="input-css">
+                                <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
+                                <input type="number" name="year[]" placeholder="Year" class="input-css">
+                                <p>You may enter a Year a, Month/Year, or a full date.</p>
+                            </div>
+                            <div class="input-wrap">
+                                <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"></textarea>
+                            </div>
+                            <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
+                        </div>
+                        <div class="step-06-r">
+                            <div class="select-file">
+                                <div class="select-file-upload"> 
+                                    <span class="select-file_up_btn">Upload Picture or Video? <span>Select</span></span>
+                                    <input type="file" name="life_pic[]" multiple="false" class="timeline-media"> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+        }
+        echo $str;
         exit;
     }
 

@@ -647,3 +647,21 @@ ul.blog-list-ul li  .blog-box span{margin-bottom:10px;}
 .srvs-dtl-r img {max-width:300px;border: 8px solid #fff;box-shadow: 0 0 30px 0 rgba(0,0,0,.1);float: left;margin: 0 20px 10px 0;}
 .gallery-video-img{ overflow:hidden;display:block;height:100%;width:100%;}
 .profile-body-m .comments-div ul {padding-right:11px;}
+
+.srh-list:after{content:'';clear:both;display:block;}
+.srh-list{display:block;width:100%;}
+.srh-list ul{list-style:none;margin:0 -10px;padding:0;}
+.srh-list ul li{float:left;width:25%;padding:0 10px 20px;}
+.srh-list-box {display:block; border:1px solid #e5e5e5;box-shadow:3px 3px 3px 0 rgba(0,0,0,.1);padding:12px;}
+.srh-list-img{width:100%;overflow:hidden;height:150px;display:block;margin:0 0 18px;}
+.srh-list-img a{display:block;width:100%;}
+.srh-list-img a img{width:100%; min-height:150px;}
+.srh-list-dtl{display:block;width:100%;padding:10px 1px 5px 8px;position:relative;}
+.srh-list-dtl h2{margin:0 0 2px;padding:0;display: block;font-size: 100%;line-height: 100%;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;height:22px;}
+.srh-list-dtl h2 a{margin:0;padding:0;font-family:'Rubik';font-size:16px;color:#975979;line-height:normal;font-weight:500;}
+.srh-list-dtl h2 a:hover{color:#57585a;text-decoration:none;}
+.srh-list-dtl p{ font-family:'Roboto';font-size:14px;color:#666;line-height:20px;display:block;margin:0;padding:0	;}
+
+.tag-blog{background:url(../images/tag-blog.png) no-repeat 0 0;display:block;width:48px;height:28px;position:absolute;top:-32px;left:0;}
+.tag-profile{background:url(../images/tag-profile.png) no-repeat 0 0;display:block;width:67px;height:28px;position:absolute;top:-32px;left:0;}
+.tag-services{background:url(../images/tag-services.png) no-repeat 0 0;display:block;width:140px;height:28px;position:absolute;top:-32px;left:0;}
