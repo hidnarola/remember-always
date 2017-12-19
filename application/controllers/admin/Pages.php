@@ -220,5 +220,27 @@ class Pages extends MY_Controller {
         }
         exit;
     }
-
+    
+    /**
+     * Delete uploaded image 
+     * @author AKK
+     */
+    public function delete_image() {
+        $gallery = base64_decode($this->input->post('image'));
+        $media = $this->pages_model->sql_select(TBL_PAGES, 'banner_image', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
+        if (!empty($media)) {
+            $update_array = array(
+                'banner_image' => NULL,
+                'updated_at' => date('Y-m-d H:i:s'),
+            );
+            $this->pages_model->common_insert_update('update', TBL_PAGES, $update_array, ['id' => $gallery]);
+            unlink(PAGE_BANNER . $media['banner_image']);
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Invalid request!";
+        }
+        echo json_encode($data);
+        exit;
+    }
 }

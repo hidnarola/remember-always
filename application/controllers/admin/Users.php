@@ -378,8 +378,6 @@ class Users extends MY_Controller {
                         } else {
                             foreach ($dataArr_media as $key => $value) {
                                 if ($value['type'] == 2) {
-//                                    var_dump($value);
-//                                    p($dataArr_media[$key]['is_delete']);
                                     $dataArr_media[$key]['is_delete'] = 1;
                                 }
                             }
@@ -575,11 +573,18 @@ class Users extends MY_Controller {
             $profile_data = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as user_fname,u.lastname as user_lname,fp.goal,fp.title,fp.details,fp.end_date,fp.created_at as fp_created_at', ['where' => array('p.id' => trim($id), 'p.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0'), array('table' => TBL_FUNDRAISER_PROFILES . ' fp', 'condition' => 'fp.profile_id=p.id AND fp.is_delete=0')], 'single' => true]);
             if (!empty($profile_data)) {
                 $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($id), 'f.is_delete' => 0)]);
-                $affiliations = $this->users_model->sql_select(TBL_AFFILIATIONS_PROFILE . ' ap', 'ap.*,u.firstname as user_fname,u.lastname as user_lname,p.firstname as p_fname,p.lastname as p_lname', ['where' => array('ap.profile_id' => trim($id), 'a.is_delete' => 0)], ['join' => [
-                        array('table' => TBL_AFFILIATIONS . ' a', 'condition' => 'ap.affiliation_id=a.id AND a.is_delete=0'),
-                        array('table' => TBL_USERS . ' u', 'condition' => 'u.id=a.user_id AND u.is_delete=0'),
-                        array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=ap.profile_id AND p.is_delete=0'),
-                        array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'a.category_id=ac.id AND ac.is_delete=0')]]);
+//                $affiliations = $this->users_model->sql_select(TBL_PROFILE_AFFILIATION . ' ap', 'ap.*,u.firstname as user_fname,u.lastname as user_lname,p.firstname as p_fname,p.lastname as p_lname', ['where' => array('ap.profile_id' => trim($id), 'a.is_delete' => 0)], ['join' => [
+//                        array('table' => TBL_AFFILIATIONS . ' a', 'condition' => 'ap.affiliation_id=a.id AND a.is_delete=0'),
+//                        array('table' => TBL_USERS . ' u', 'condition' => 'u.id=a.user_id AND u.is_delete=0'),
+//                        array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=ap.profile_id AND p.is_delete=0'),
+//                        array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'a.category_id=ac.id AND ac.is_delete=0')]]);
+//                p(qry(),1);
+                $sql = "SELECT * FROM ("
+                        . "SELECT id,affiliation_text as name,'1' as free_text,created_at,'NULL' as category_name FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $profile_data['id'] . "
+                           UNION ALL
+                           SELECT p.id,a.name,'0' as free_text,p.created_at,ac.name as category_name FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a ON p.affiliation_id=a.id LEFT JOIN " . TBL_AFFILIATIONS_CATEGORY . " ac ON ac.id=a.category_id WHERE p.profile_id=" . $profile_data['id'] . " AND a.is_delete=0) a";
+                $affiliations = $this->users_model->customQuery($sql);
+//                p(qry());
                 $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($id), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')]]);
                 $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
                 foreach ($funnel_services as $key => $value) {
@@ -602,6 +607,38 @@ class Users extends MY_Controller {
         } else {
             custom_show_404();
         }
+    }
+
+    /**
+     * Display login page for login
+     */
+    public function load_data() {
+        $offset = 2;
+        $id = base64_decode($this->input->post('id'));
+        $type = $this->input->post('type');
+        if ($type == 'affiliation') {
+            $affiliations = $this->users_model->sql_select(TBL_AFFILIATIONS . ' a', 'a.*,ac.name as category_name,co.name as country_name,c.name as city_name,s.name as state_name', ['where' => array('a.id' => trim($id), 'a.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'ac.id=a.category_id AND ac.is_delete=0'), array('table' => TBL_COUNTRY . ' co', 'condition' => 'co.id=a.country'), array('table' => TBL_STATE . ' s', 'condition' => 's.id=a.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=a.city')]]);
+            if (!empty($affiliations)) {
+                $affiliations['created_at'] = date('d M Y', strtotime($affiliations['created_at']));
+                if ($affiliations['image'] != null) {
+                    $affiliations['url'] = AFFILIATION_IMAGE . $affiliations['image'];
+                }
+                echo json_encode($affiliations);
+            } else {
+                echo json_encode([]);
+            }
+        }
+//        else if ($type == 'funfact') {
+//            $affiliations = $this->users_model->sql_select(TBL_FUN_FACTS . ' a', 'a.*,ac.name as category_name,co.name as country_name,c.name as city_name,s.name as state_name', ['where' => array('a.id' => trim($id), 'a.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'ac.id=a.category_id AND ac.is_delete=0'), array('table' => TBL_COUNTRY . ' co', 'condition' => 'co.id=a.country'), array('table' => TBL_STATE . ' s', 'condition' => 's.id=a.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=a.city')]]);
+//            if (!empty($affiliations)) {
+//                $affiliations['created_at'] = date('d M Y', strtotime($affiliations['created_at']));
+//                echo $affiliations;
+//                exit;
+//            } else {
+//                echo '';
+//                exit;
+//            }
+//        }
     }
 
 }

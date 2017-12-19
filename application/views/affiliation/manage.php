@@ -2,14 +2,14 @@
 <div class="create-profile">
     <div class="create-profile-top">
         <div class="container">
-            <h2>Post Service Provider Listing</h2>
+            <h2>Add Affiliation</h2>
         </div>
     </div>
     <div class="create-profile-body main-steps">
         <div class="container">
             <div class="create-profile-box">
                 <div class="step-form">
-                    <form method="post" enctype="multipart/form-data" id="provider_form">
+                    <form method="post" enctype="multipart/form-data" id="affiliation_form">
                         <div id="forth-step">
                             <div class="step-title">
 <!--                                <h2>Add <small>(optional)</small> </h2>
@@ -23,10 +23,10 @@
                                             <select name="category" id="category" class="selectpicker">
                                                 <option value="">-- Select Category --</option>
                                                 <?php
-                                                if (isset($service_categories) && !empty($service_categories)) {
-                                                    foreach ($service_categories as $key => $value) {
+                                                if (isset($categories) && !empty($categories)) {
+                                                    foreach ($categories as $key => $value) {
                                                         $selected = '';
-                                                        if (isset($provider_data['service_category_id']) && $provider_data['service_category_id'] == $value['id']) {
+                                                        if (isset($provider_data['category_id']) && $provider_data['category_id'] == $value['id']) {
                                                             $selected = 'selected';
                                                         }
                                                         ?>
@@ -56,24 +56,28 @@
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Address <span class="text-danger">*</span></label>
-                                            <div class="input-l">
-                                                <input type="text" name="street1" id="street1" placeholder="Street1 address" class="input-css" value="<?php echo isset($provider_data['street1']) ? $provider_data['street1'] : set_value('street1'); ?>">
-                                                <input type="hidden" name="location" id="location" class="form-control" value="<?php echo isset($provider_data['location']) ? $provider_data['location'] : set_value('location'); ?>" >
-                                                <input type="hidden" name="latitute" id="latitute" class="form-control" value="<?php echo isset($provider_data['latitute']) ? $provider_data['latitute'] : set_value('latitute'); ?>" >
-                                                <input type="hidden" name="longitute" id="longitute" class="form-control" value="<?php echo isset($provider_data['longitute']) ? $provider_data['longitute'] : set_value('longitute'); ?>">
-                                                <?php
-                                                echo '<label id="street1-error" class="error" for="street1">' . form_error('street1') . '</label>';
-                                                ?>
-                                            </div>
-                                            <div class="input-r">
-                                                <input type="text" name="street2" id="street2" placeholder="Street2 address" class="input-css" value="<?php echo isset($provider_data['street2']) ? $provider_data['street2'] : set_value('street2'); ?>">
-                                                <?php
-                                                echo '<label id="street2-error" class="error" for="street2">' . form_error('street2') . '</label>';
-                                                ?>
-                                            </div>
-                                        </div>
-                                        <div class="input-wrap">
                                             <div class="input-three-l">
+                                                <select name="country" id="country" class="selectpicker">
+                                                    <option value="">-- Select Country --</option>
+                                                    <?php
+                                                    if (isset($countries) && !empty($countries)) {
+                                                        foreach ($countries as $key => $value) {
+                                                            $selected = '';
+                                                            if (isset($provider_data) && $provider_data['country'] == $value['id']) {
+                                                                $selected = 'selected';
+                                                            }
+                                                            ?>
+                                                            <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('country', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <?php
+                                                echo '<label id="country-error" class="error" for="country">' . form_error('country') . '</label>';
+                                                ?>
+                                            </div>
+                                            <div class="input-three-m">
                                                 <select name="state" id="state" class="selectpicker">
                                                     <option value="">-- Select State --</option>
                                                     <?php
@@ -94,8 +98,9 @@
                                                 <?php
                                                 echo '<label id="state_hidden-error" class="error" for="state_hidden">' . form_error('state_hidden') . '</label>';
                                                 ?>
+
                                             </div>
-                                            <div class="input-three-m">
+                                            <div class="input-three-r">
                                                 <select name="city" id="city" class="selectpicker">
                                                     <option value="">-- Select City --</option>
                                                     <?php
@@ -116,23 +121,6 @@
                                                 echo '<label id="city-error" class="error" for="city">' . form_error('city') . '</label>';
                                                 ?>
                                             </div>
-                                            <div class="input-three-r">
-                                                <input type="text" name="zipcode" id="zipcode" placeholder="Zip" class="input-css" value="<?php echo isset($provider_data['zipcode']) ? $provider_data['zipcode'] : set_value('zipcode'); ?>"> 
-                                            </div>
-                                        </div>
-                                        <div class="input-wrap">
-                                            <label class="label-css">Phone <span class="text-danger">*</span></label>
-                                            <input type="text" name="phone_number" id="phone_number" placeholder="Phone Number" class="input-css" value="<?php echo isset($provider_data['phone_number']) ? $provider_data['phone_number'] : set_value('phone_number'); ?>">
-                                            <?php
-                                            echo '<label id="phone_number-error" class="error" for="phone_number">' . form_error('phone_number') . '</label>';
-                                            ?>
-                                        </div>
-                                        <div class="input-wrap">
-                                            <label class="label-css">Website <span class="text-danger">*</span></label>
-                                            <input type="text" name="website" id="website" placeholder="Wesbsite" class="input-css" value="<?php echo isset($provider_data['website']) ? $provider_data['website'] : set_value('website'); ?>">
-                                            <?php
-                                            echo '<label id="website-error" class="error" for="website">' . form_error('website') . '</label>';
-                                            ?>
                                         </div>
                                     </div>
                                     <div class="step-06-r">
@@ -147,7 +135,7 @@
                                                     }
                                                     ?>
                                                 </span>
-                                                <input type="file" name="image" id="image" multiple="false" onchange="readURL(this);"> 
+                                                <input type="file" name="image" id="image" multiple="false"> 
                                             </div>
                                         </div>
                                     </div>
@@ -172,6 +160,10 @@
             liveSearch: true,
             size: 5
         });
+        $('#country').selectpicker({
+            liveSearch: true,
+            size: 5
+        });
         $('#city').selectpicker({
             liveSearch: true,
             size: 5
@@ -181,7 +173,7 @@
             size: 5
         });
         // Setup validation
-        $("#provider_form").validate({
+        $("#affiliation_form").validate({
             ignore: ['select:hidden'],
             rules: {
                 category: {
@@ -193,22 +185,14 @@
                 description: {
                     required: true,
                 },
-                street1: {
-                    required: true,
-                },
-                city: {
+                country: {
                     required: true,
                 },
                 state: {
                     required: true,
                 },
-                phone_number: {
+                city: {
                     required: true,
-                    phoneUS: true
-                },
-                website: {
-                    required: true,
-                    url: true
                 },
                 image: {
                     extension: "jpg|png|jpeg",
@@ -218,40 +202,54 @@
                     }
                 }
             },
-            messages: {
-                phone_number: {
-                    phoneUS: "Please specify valid us phone number."
-                },
-            },
             errorPlacement: function (error, element) {
-                if (element.hasClass('selectpicker')) {
-                    error.insertAfter(element.parent().find('.bootstrap-select'));
-                } else if (element.attr("name") == "image") {
+                if (element.attr("name") == "image") {
                     error.insertAfter($(".select-file"));
+                } else if (element.hasClass('selectpicker')) {
+                    error.insertAfter(element.parent().find('.bootstrap-select'));
                 } else {
                     error.insertAfter(element);
                 }
-            },
-            submitHandler: function (form) {
-                $('button[type="submit"]').attr('disabled', true);
-                form.submit();
-            },
+            }
         });
     });
 
-    $(document).on('change', '#state', function () {
-        var state_id = $("#state option:selected").val();
-        $url = '<?php echo site_url() ?>' + 'service_provider/get_cities_by_state';
+    $(document).on('change', '#country', function () {
+        var country_id = $("#country option:selected").val();
+        $url = '<?php echo base_url() ?>' + 'affiliation/get_data';
         $.ajax({
             type: "POST",
             url: $url,
             data: {
-                stateid: state_id,
+                id: country_id,
+                type: 'state',
             }
         }).done(function (data) {
-            $("select#city").html(data);
-            $('select#city').selectpicker('refresh');
+            if (data != '') {
+                $("select#state").html(data);
+                $("select#state").selectpicker('refresh');
+            }
         });
+    });
+    $(document).on('change', '#state', function () {
+        var state_id = $("#state option:selected").val();
+        $url = '<?php echo base_url() ?>' + 'affiliation/get_data';
+        $.ajax({
+            type: "POST",
+            url: $url,
+            data: {
+                id: state_id,
+                type: 'city',
+            }
+        }).done(function (data) {
+            if (data != '') {
+                $("select#city").html(data);
+                $("select#city").selectpicker('refresh');
+            }
+        });
+    });
+    $(document).on('change', '#image', function (e) {
+        readURL(this);
     });
     // Display the preview of image on image upload
     function readURL(input) {

@@ -53,7 +53,7 @@
                     <div class="panel panel-flat">
                         <div class="panel-body">
                             <div class="form-group">
-                                <label>Posted by:</label>
+                                <label>Posted by: <span class="text-danger">*</span></label>
                                 <select name="user_id" id="user_id" class="form-control">
                                     <option value="">-- Select User --</option>
                                     <?php
@@ -72,14 +72,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Title:</label>
+                                <label>Title: <span class="text-danger">*</span></label>
                                 <input type="text" name="title" id="title"  class="form-control" value="<?php echo isset($post_data['title']) ? $post_data['title'] : set_value('title'); ?>" />                            </div>
                             <div class="form-group">
-                                <label>Description:</label>
+                                <label>Description: <span class="text-danger">*</span></label>
                                 <textarea name="description" id="description" rows="4" cols="4" class="form-control"><?php echo isset($post_data['description']) ? $post_data['description'] : set_value('description'); ?></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Image:</label>
+                                <label>Image: <span class="text-danger">*</span></label>
                                 <div class="row">
                                     <div class="col-md-3" id="image_preview_div">
                                         <?php
