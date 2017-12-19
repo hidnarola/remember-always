@@ -53,7 +53,7 @@
                         <div class="panel-body">
                             <div class="form-group">
                                 <label>Select Service Category: <span class="text-danger">*</span></label>
-                                <select name="service_category" id="service_category" class="form-control">
+                                <select name="service_category" id="service_category" class="form-control selectpicker">
                                     <option value="">-- Select Category --</option>
                                     <?php
                                     if (isset($service_categories) && !empty($service_categories)) {
@@ -95,9 +95,9 @@
                             <div class="row form-group mt-5">
                                 <div class="col-md-4">
                                     <label>State: <span class="text-danger">*</span></label>
-                                    <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');       ?>">-->
-                                    <select name="state" id="state" class="form-control">
-                                        <option value="0">-- Select State --</option>
+                                    <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');        ?>">-->
+                                    <select name="state" id="state" class="form-control selectpicker">
+                                        <option value="">-- Select State --</option>
                                         <?php
                                         if (isset($states) && !empty($states)) {
                                             foreach ($states as $key => $value) {
@@ -116,8 +116,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label>City: <span class="text-danger">*</span></label>
-                                    <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');       ?>">-->
-                                    <select name="city" id="city" class="form-control">
+                                    <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');        ?>">-->
+                                    <select name="city" id="city" class="form-control selectpicker">
                                         <option value="">-- Select City --</option>
                                         <?php
                                         if (isset($cities) && !empty($cities)) {
@@ -247,8 +247,9 @@
                     error.insertAfter($(".uploader"));
                 } else if (element.attr("name") == "description") {
                     error.insertAfter(element);
-                }
-                if (element.attr("name") == "image") {
+                } else if (element.hasClass('selectpicker')) {
+                    error.insertAfter(element.parent().find('.bootstrap-select'));
+                }else if (element.attr("name") == "image") {
                     error.insertAfter($(".uploader"));
                 } else {
                     error.insertAfter(element);

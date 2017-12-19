@@ -44,8 +44,11 @@ class MY_Controller extends CI_Controller {
                     redirect('admin/dashboard');
                 }
             }
+            $this->user_id = $this->session->userdata('remalways_admin')['id'];
             $providers = $this->users_model->sql_select(TBL_SERVICE_PROVIDERS, 'COUNT(*) as un_approved_count', ['where' => array('is_active' => 0, 'is_delete' => 0)], ['single' => true]);
+            $affiliations = $this->users_model->sql_select(TBL_AFFILIATIONS, 'COUNT(*) as un_approved_count', ['where' => array('is_approved' => 0, 'is_delete' => 0)], ['single' => true]);
             $this->un_approved = $providers;
+            $this->un_approved_affiliation = $affiliations;
         } else {
             $session = $this->session->userdata('remalways_user');
             if (!empty($session['id']) && !empty($session['email']))

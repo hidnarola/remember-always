@@ -72,7 +72,6 @@ if ($this->session->flashdata('success')) {
                         <li><a href="#affiliation_tab" data-toggle="tab">Affiliations</a></li>
                         <li><a href="#funfact_tab" data-toggle="tab">FunFacts</a></li>
                     </ul>
-
                     <div class="tab-content">
                         <div class="tab-pane active" id="profile_info">
                             <div class="table-responsive">
@@ -164,11 +163,10 @@ if ($this->session->flashdata('success')) {
                                 foreach ($affiliations as $key => $val) {
                                     ?>
                                     <blockquote>
-                                        <p class='affiliation_name' data-bind='<?php echo base64_encode($val['affiliation_id']) ?>'>
-                                            <?php echo isset($val['name']) ? $val['name'] : '' ?></td>
+                                        <p>
+                                            <a href="javasxript:void(0)" class='affiliation_name' data-bind='<?php echo base64_encode($val['id']) ?>'><?php echo isset($val['name']) ? $val['name'] : '' ?></a>
                                         </p>
                                         <footer><?php echo isset($val['created_at']) && !is_null($val['created_at']) ? date('d M Y', strtotime($val['created_at'])) : '-' ?></footer>
-
                                     </blockquote>
                                     <p></p>
                                     <?php
@@ -180,13 +178,13 @@ if ($this->session->flashdata('success')) {
                         </div>
 
                         <div class="tab-pane" id="funfact_tab">
-                            <?php
-                            if (isset($fun_facts) && !empty($fun_facts)) {
+                            <?php if (isset($fun_facts) && !empty($fun_facts)) { ?>
+                                <?php
                                 foreach ($fun_facts as $key => $val) {
                                     ?>
                                     <blockquote>
                                         <p >
-                                            <?php echo isset($val['facts']) ? $val['facts'] : '' ?></td>
+                                            <?php echo isset($val['facts']) ? $val['facts'] : '' ?>
                                         </p>
                                         <footer><?php echo isset($val['created_at']) && !is_null($val['created_at']) ? date('d M Y', strtotime($val['created_at'])) : '-' ?></footer>
 
@@ -236,7 +234,7 @@ if ($this->session->flashdata('success')) {
                                         </tr>
                                         <tr>
                                             <th class="text-nowrap">Date :</th>
-                                            <td><?php echo isset($funnel_services['Memorial']['date'])&& !is_null($funnel_services['Memorial']['date']) ? date('d M Y', strtotime($funnel_services['Memorial']['date'])) : '-' ?></td>
+                                            <td><?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('d M Y', strtotime($funnel_services['Memorial']['date'])) : '-' ?></td>
                                         </tr>
                                         <tr>
                                             <th class="text-nowrap">Time :</th>
@@ -280,7 +278,7 @@ if ($this->session->flashdata('success')) {
                                         </tr>
                                         <tr>
                                             <th class="text-nowrap">Date :</th>
-                                            <td><?php echo isset($funnel_services['Funeral']['date'])&& !is_null($funnel_services['Funeral']['date']) ? date('d M Y', strtotime($funnel_services['Funeral']['date'])) : '-' ?></td>
+                                            <td><?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('d M Y', strtotime($funnel_services['Funeral']['date'])) : '-' ?></td>
                                         </tr>
                                         <tr>
                                             <th class="text-nowrap">Time :</th>
@@ -324,7 +322,7 @@ if ($this->session->flashdata('success')) {
                                         </tr>
                                         <tr>
                                             <th class="text-nowrap">Date :</th>
-                                            <td><?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date'])? date('d M Y', strtotime($funnel_services['Burial']['date'])) : '-' ?></td>
+                                            <td><?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('d M Y', strtotime($funnel_services['Burial']['date'])) : '-' ?></td>
                                         </tr>
                                         <tr>
                                             <th class="text-nowrap">Time :</th>
@@ -361,13 +359,98 @@ if ($this->session->flashdata('success')) {
             </div>
         </div>
     </div>
+
+    <div id="affiliation_model" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h1 class="modal-title" id="affiliation_title">Affiliation Details</h1>
+                </div>
+
+                <div class="modal-body">
+                    <table class="table table-striped table-bordered page_details" data-alert="" data-all="189">
+                        <tbody>
+                            <tr>
+                                <th class="text-nowrap">Name :</th>
+                                <td class="name"></td>
+                            </tr>
+                            <tr class="hide">
+                                <th class="text-nowrap">Image :</th>
+                                <td class="image"><img src="" width="100px" height="100px"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">Category :</th>
+                                <td class="category_name"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">Country :</th>
+                                <td class="country"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">State :</th>
+                                <td class="state"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">City :</th>
+                                <td class="city"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">Date :</th>
+                                <td class="added_date"></td>
+                            </tr>
+                            <tr>
+                                <th class="text-nowrap">Description :</th>
+                                <td class="description"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php
     $this->load->view('Templates/admin_footer');
     ?>
 </div>
-
 <script type="text/javascript">
     $(function () {
         $('.fancybox').fancybox();
+        $(document).on('click', '.affiliation_name', function () {
+            var data_id = $(this).data('bind');
+//            console.log(data_id);
+            $.ajax({
+                url: '<?php echo site_url() ?>' + 'admin/users/load_data',
+                type: "post",
+                dataType: "json",
+                data: {
+                    id: data_id,
+                    type: 'affiliation'
+                },
+                success: function (data) {
+                    if (data != '') {
+                        if (data['image'] != null) {
+                            $('.image').parent().removeClass('hide');
+                            $('.image').find('img').attr('src',data['url']);
+                        } else {
+                            $('.image').parent().addClass('hide');
+                        }
+                        $('#affiliation_model').modal();
+                        $('.name').html(data['name']);
+                        $('.category_name').html(data['category_name']);
+                        $('.country').html(data['country_name']);
+                        $('.state').html(data['state_name']);
+                        $('.city').html(data['city_name']);
+                        $('.added_date').html(data['created_at']);
+                        $('.description').html(data['description']);
+                    } else {
+                        swal("Success!", "Selected Category is unregsitered so no more information is available.", "error");
+                    }
+                }
+            });
+        });
     });
 </script>

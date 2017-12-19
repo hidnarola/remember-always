@@ -80,6 +80,7 @@ $route['profile/add_timeline'] = 'profile/add_timeline';
 $route['profile/delete_timeline'] = 'profile/delete_timeline';
 $route['profile/lifetimeline'] = 'profile/lifetimeline';
 $route['profile/(:any)'] = 'profile/index/$1';
+$route['blog/(:any)'] = 'blog/index/$1';
 $route['logout'] = 'login/logout';
 $route['editprofile'] = 'users/edit_profile';
 $route['changepassword'] = 'users/update_password';

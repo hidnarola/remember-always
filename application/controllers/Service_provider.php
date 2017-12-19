@@ -33,7 +33,7 @@ class Service_provider extends MY_Controller {
      * Display login page for login
      */
     public function load_providers($start, $static = false) {
-        $offset = 3;
+        $offset = 5;
         $services = $this->providers_model->get_providers('result', $this->input->get(), $start, $offset);
         if ($static === true) {
             return $services;
@@ -172,7 +172,7 @@ class Service_provider extends MY_Controller {
                     }
                 }
             }
-            p($dataArr, 1);
+//            p($dataArr, 1);
             if (is_numeric($id)) {
                 $dataArr['modified_at'] = date('Y-m-d H:i:s');
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);

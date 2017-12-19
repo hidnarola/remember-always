@@ -17,33 +17,29 @@ class Blog extends MY_Controller {
     /**
      * Display login page for login
      */
-    public function index() {
-        $service_categories = $this->blogs_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
-        $services = $this->blogs_model->get_providers('result', $this->input->get());
+    public function index($start = 0) {
+        $blog_list = $this->blogs_model->sql_select(TBL_BLOG_POST, '*', ['where' => ['is_delete' => 0, 'is_active' => 1]], ['order_by' => 'id DESC', 'limit' => 10]);
+        $data['blog_list'] = $blog_list;
 
-        $data['service_categories'] = $service_categories;
-        $data['services'] = $this->load_providers(0, true);
+        $page_config = front_pagination();
+        $page_config['per_page'] = 4;
+        $page_config['base_url'] = site_url('blog');
+        $page_config["total_rows"] = $this->load_blogs('count', 0);
+        $data['blogs'] = $this->load_blogs('result', $start);
+        $this->pagination->initialize($page_config);
 
-        $data['title'] = 'Services Provider Directory';
-        $data['breadcrumb'] = ['title' => 'Services Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
-        $this->template->load('default', 'service_provider/index', $data);
+        $data['title'] = 'All Blogs';
+        $data['breadcrumb'] = ['title' => 'Blogs', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $this->template->load('default', 'blog_post/index', $data);
     }
 
     /**
-     * Display login page for login
+     * Returns Blog based on content to be showed on page.
      */
-    public function load_providers($start, $static = false) {
-        $offset = 1;
-        $services = $this->blogs_model->get_providers('result', $this->input->get(), $start, $offset);
-        if ($static === true) {
-            return $services;
-        } else {
-            if (!empty($services)) {
-                echo json_encode($services);
-            } else {
-                echo '';
-            }
-        }
+    public function load_blogs($type = 'result', $start) {
+        $offset = 4;
+        $blogs = $this->blogs_model->get_blogs($type, null, $start, $offset);
+        return $blogs;
     }
 
     /**
@@ -51,9 +47,9 @@ class Blog extends MY_Controller {
      */
     public function details($slug) {
         if (isset($slug) && !empty($slug)) {
-            $blogs = $this->blogs_model->sql_select(TBL_BLOG_POST, '*', ['where' => ['is_delete' => 0]], ['order_by' => 'id DESC', 'limit' => 5]);
+            $blogs = $this->blogs_model->sql_select(TBL_BLOG_POST, '*', ['where' => ['is_delete' => 0, 'is_active' => 1]], ['order_by' => 'id DESC', 'limit' => 5]);
             $data['blogs'] = $blogs;
-            $blog_data = $this->users_model->sql_select(TBL_BLOG_POST . ' b', 'title,image,description,b.slug,u.firstname,u.lastname,b.created_at', ['where' => ['b.is_delete' => 0, 'b.is_active' => 1, 'b.is_view' => 1, 'slug' => $slug]], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=b.user_id')], 'single' => true]);
+            $blog_data = $this->users_model->sql_select(TBL_BLOG_POST . ' b', 'title,image,description,b.slug,u.firstname,u.lastname,b.created_at', ['where' => ['b.is_delete' => 0, 'b.is_active' => 1, 'slug' => $slug]], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=b.user_id')], 'single' => true]);
             if (!empty($blog_data)) {
                 $data['blog_data'] = $blog_data;
             } else {

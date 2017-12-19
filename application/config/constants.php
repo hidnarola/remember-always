@@ -126,6 +126,7 @@ define('PROFILE_IMAGES', 'uploads/profile-images/');
 define('POST_IMAGES', 'uploads/post-images/');
 define('BLOG_POST_IMAGES', 'uploads/blog-post-images/');
 define('PAGE_BANNER', 'uploads/banners/');
+define('AFFILIATION_IMAGE', 'uploads/affiliation-images/');
 
 /**
  * Constants for Cookie
