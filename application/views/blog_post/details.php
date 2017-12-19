@@ -1,7 +1,7 @@
 <div class="common-page">
     <div class="container">
         <div class="common-head">
-            <h2 class="h2title">Blog</h2>
+            <h2 class="h2title">Blog Details</h2>
         </div>
         <div class="common-body">
             <div class="funeral-l blog-dtl">

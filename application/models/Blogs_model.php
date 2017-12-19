@@ -6,7 +6,7 @@
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class blogs_model extends MY_Model {
+class Blogs_model extends MY_Model {
 
     public function __construct() {
         parent::__construct();
@@ -18,34 +18,16 @@ class blogs_model extends MY_Model {
      * @return array for result or int for count
      */
     public function get_blogs($type = 'result', $data = array(), $start = 0, $offset = 5) {
-        $this->db->select('p.*,c.name as category');
-        $this->db->join(TBL_SERVICE_CATEGORIES . ' c', 'p.service_category_id=c.id AND c.is_delete=0', 'left');
-        if (isset($data) && !empty($data)) {
-            if (isset($data['category'])) {
-                $this->db->where('c.name LIKE ' . $this->db->escape('%' . $data['category'] . '%' . ''));
-            }
-            if (isset($data['keyword'])) {
-                $this->db->where('p.name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . ''));
-            }
-
-            if (isset($data['location'])) {
-                $latitude = $longitude = '';
-                $latitude = $data['lat'];
-                $longitude = $data['long'];
-                if ($latitude != '' && $longitude != '') {
-                    $this->db->select('( 3959 * acos( cos( radians(' . $latitude . ') ) * cos( radians( p.latitute ) ) * cos( radians( p.longitute ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( p.latitute ) ) ) ) AS distance');
-                    $this->db->having('distance <', 50);
-                }
-            }
-        }
-        $this->db->where(['p.is_delete' => 0, 'is_active' => 1]);
-//        $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
+        $this->db->select('title,image,description,b.slug,u.firstname,u.lastname,b.created_at');
+        $this->db->join(TBL_USERS . ' u', 'u.id=b.user_id AND u.is_delete=0', 'left');
+        $this->db->where(['b.is_delete' => 0, 'b.is_active' => 1]);
+        $this->db->order_by('b.id DESC');
         if ($type == 'result') {
             $this->db->limit($offset, $start);
-            $query = $this->db->get(TBL_SERVICE_PROVIDERS . ' p');
+            $query = $this->db->get(TBL_BLOG_POST . ' b');
             return $query->result_array();
         } else {
-            $query = $this->db->get(TBL_SERVICE_PROVIDERS . ' p');
+            $query = $this->db->get(TBL_BLOG_POST . ' b');
             return $query->num_rows();
         }
     }

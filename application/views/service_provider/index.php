@@ -42,7 +42,7 @@
             <div class="services-pro-l">
                 <div class="profile-box services-listings" id="service_ul_data">
                     <h2>Services Listing</h2>
-                    <ul class="srvs-list-ul" >
+                    <ul class="srvs-list-ul service_content" >
                         <?php
                         if (isset($services) && !empty($services)) {
                             foreach ($services as $key => $value) {
@@ -83,10 +83,9 @@
                     <h2>Services Categories</h2>
                     <div class="profile-box-body">
                         <ul>
-                            <li><a href="<?php echo site_url('service_provider') ?>" class="<?php echo!isset($_GET['category']) ? 'active' : '' ?>">All Service Providers</a></li>
-                            <?php
-                            if (isset($service_categories) && !empty($service_categories)) {
-                                foreach ($service_categories as $key => $value) {
+                            <?php if (isset($service_categories) && !empty($service_categories)) { ?>
+                                <li><a href="<?php echo site_url('service_provider') ?>" class="<?php echo!isset($_GET['category']) ? 'active' : '' ?>">All Service Providers</a></li>
+                                <?php foreach ($service_categories as $key => $value) {
                                     ?>
                                     <li><a href="javascript:void(0)" data-value="<?php echo $value['name'] ?>"class="category_click <?php echo isset($_GET['category']) && $_GET['category'] == $value['name'] ? 'active' : '' ?>"><?php echo $value['name'] ?></a></li>
                                     <?php
@@ -125,7 +124,7 @@
         callbacks: {
             onScroll: function () {
                 if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-                    var limitStart = $("#service_ul_data li").length;
+                    var limitStart = $(".service_content li").length;
 //                    console.log(limitStart);
                     loadResults(limitStart);
                 }
@@ -246,7 +245,7 @@
                     }
                     string += text;
                     string += '</p>';
-                    $("#service_ul_data").append(string);
+                    $(".service_content").append(string);
                 });
 //                $(".loader").hide();
             }

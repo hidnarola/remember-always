@@ -78,6 +78,7 @@ $route['profile/delete_affiliation'] = 'profile/delete_affiliation';
 $route['profile/check_affiliation/(:any)'] = 'profile/check_affiliation/$1';
 $route['profile/add_timeline'] = 'profile/add_timeline';
 $route['profile/(:any)'] = 'profile/index/$1';
+$route['blog/(:any)'] = 'blog/index/$1';
 $route['logout'] = 'login/logout';
 $route['editprofile'] = 'users/edit_profile';
 $route['changepassword'] = 'users/update_password';

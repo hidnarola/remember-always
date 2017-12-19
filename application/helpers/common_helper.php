@@ -272,14 +272,14 @@ function randomPassword() {
  * @return array - Configuration array for pagination
  */
 function front_pagination() {
-    $config['full_tag_open'] = '<ul class="pagination">';
+    $config['full_tag_open'] = '<ul class="paggination">';
     $config['full_tag_close'] = '</ul>';
     $config['num_tag_open'] = '<li>';
     $config['num_tag_close'] = '</li>';
     $config['first_link'] = 'First';
     $config['first_tag_open'] = '<li>';
     $config['first_tag_close'] = '</li>';
-    $config['cur_tag_open'] = '<li style="display:none"></li><li class="active"><a data-type="checked" style="background-color:#62a0b4;color:#ffffff; pointer-events: none;">';
+    $config['cur_tag_open'] = '<li style="display:none"></li><li class="active"><a data-type="checked">';
     $config['cur_tag_close'] = '</a></li><li style="display:none"></li>';
     $config['prev_link'] = '&laquo;';
     $config['prev_tag_open'] = '<li>';
