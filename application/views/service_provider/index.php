@@ -40,8 +40,9 @@
                 </form>
             </div>
             <div class="services-pro-l">
-                <div class="profile-box services-listings" id="service_ul_data">
+                <div class="profile-box services-listings" >
                     <h2>Services Listing</h2>
+                    <div id="service_ul_data">
                     <ul class="srvs-list-ul service_content" >
                         <?php
                         if (isset($services) && !empty($services)) {
@@ -73,6 +74,7 @@
                             <li>No Services available</li>
                         <?php } ?>
                     </ul>
+                    </div>
                     <!--                    <div class="loader" style="display: none">
                                             <img src="assets/images/loader.gif" />
                                         </div>-->

@@ -69,11 +69,13 @@ class Profile extends MY_Controller {
                 }
             }
             if ($_POST) {
-//                p($this->input->post(), 1);
                 $this->form_validation->set_rules('comment', 'comment', 'trim|required');
                 if ($this->form_validation->run() == FALSE) {
                     $this->data['error'] = validation_errors();
                 } else {
+                p($_FILES);
+                var_dump($this->input->post('post_upload'));
+                p($this->input->post(), 1);
                     $dataArr = array(
                         'profile_id' => $is_left['id'],
                         'user_id' => $is_left['user_id'],
@@ -91,7 +93,7 @@ class Profile extends MY_Controller {
 ////                    p($dataArr_media, 1);
 //                    }
                     $this->session->set_flashdata('success', 'Post details has been inserted successfully.');
-                    redirect('profile/' . $slug);
+//                    redirect('profile/' . $slug);
                 }
             }
             $data['url'] = current_url();
@@ -686,6 +688,80 @@ class Profile extends MY_Controller {
                     </div>';
         }
         echo $str;
+        exit;
+    }
+
+    /**
+     * Upload profile post
+     * @author AKK
+     */
+    public function upload_post() {
+        $data = [];
+        if ($_FILES) {
+            $profile_id = base64_decode($this->input->post('profile_id'));
+            $post_id = base64_decode($this->input->post('post_id'));
+            if ($this->input->post('post_id') == '0') {
+                $post_insert_data = ['profile_id' => $profile_id,
+                    'user_id' => $this->user_id,
+                    'created_at' => date('Y-m-d H:i:s')];
+                $post_id = $this->users_model->common_insert_update('insert', TBL_POSTS, $post_insert_data);
+            }
+            $post = $this->users_model->sql_select(TBL_POSTS, '*', ['where' => ['id' => $post_id, 'is_delete' => 0]], ['single' => true]);
+            if (!empty($post)) {
+                $directory = 'profile_' . $profile_id;
+                if (!file_exists(POST_IMAGES . $directory)) {
+                    mkdir(POST_IMAGES . $directory);
+                }
+                if ($this->input->post('type') == 'image') {
+                    $image_data = upload_image('post_upload', POST_IMAGES . $directory);
+                    if (is_array($image_data)) {
+                        $data['error'] = $image_data['errors'];
+                        $data['success'] = false;
+                    } else {
+                        $id = $this->users_model->common_insert_update('insert', TBL_POST_MEDIAS, ['post_id' => $post_id, 'media' => $directory . '/' . $image_data, 'type' => 1, 'created_at' => date('Y-m-d H:i:s')]);
+                        $data['success'] = true;
+                        $data['data'] = json_encode(array('id' => base64_encode($id), 'post_id' => base64_encode($post['id'])));
+                    }
+                } elseif ($this->input->post('type') == 'video') {
+                    $video_data = upload_video('post_upload', POST_IMAGES . $directory);
+                    if (is_array($video_data)) {
+                        $data['error'] = $video_data['errors'];
+                        $data['success'] = false;
+                    } else {
+                        $id = $this->users_model->common_insert_update('insert', TBL_POST_MEDIAS, ['post_id' => $post_id, 'media' => $directory . '/' . $video_data, 'type' => 2, 'created_at' => date('Y-m-d H:i:s')]);
+                        $data['success'] = true;
+                        $data['data'] = json_encode(array('id' => base64_encode($id), 'post_id' => base64_encode($post['id'])));
+                    }
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = "Something went wrong!";
+            }
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Invalid data!";
+        }
+        p($data);
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Delete uploaded profile post 
+     * @author AKK
+     */
+    public function delete_post() {
+        $gallery = base64_decode($this->input->post('post'));
+        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
+        if (!empty($gallery_media)) {
+            $this->users_model->common_delete(TBL_GALLERY, ['id' => $gallery]);
+            unlink(PROFILE_IMAGES . $gallery_media['media']);
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Invalid request!";
+        }
+        echo json_encode($data);
         exit;
     }
 

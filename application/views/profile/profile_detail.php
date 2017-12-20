@@ -353,105 +353,137 @@
                         <div class="post-comment">
                             <form method="post" enctype="multipart/form-data" name="post_form" id="post_form">
                                 <textarea name="comment" id="comment" placeholder="Add some comment, Images, Video etc..."> </textarea>
+                                <div class="comoon-ul-li list-04">
+                                    <ul>
+                                        <li>
+                                            <div class="gallery-wrap">
+                                                <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="gallery-wrap">
+                                                <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
+                                                <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
                                 <div class="comment-btm">
-                                    <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                    width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
-                                            <g>
-                                                <g id="_x33__8_">
+                                    <div class="select-file video-upload">
+                                        <div class="select-file-upload"> 
+                                            <span class="select-file_up_btn">
+                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     width="612px" height="612px" viewBox="0 0 612 612" style="enable-background:new 0 0 612 612;" xml:space="preserve">
                                                     <g>
-                                                        <path d="M573.75,267.75L459,344.25c0-23.218-10.557-43.758-26.89-57.796c38.881-23.428,65.14-65.637,65.14-114.329
-                                                              c0-73.938-59.938-133.875-133.875-133.875c-73.937,0-133.875,59.938-133.875,133.875c0,37.504,15.51,71.317,40.373,95.625
-                                                              h-70.151c18.322-20.33,29.778-46.971,29.778-76.5c0-63.38-51.37-114.75-114.75-114.75S0,127.87,0,191.25
-                                                              c0,34.578,15.625,65.216,39.818,86.254C16.199,290.528,0,315.371,0,344.25v153c0,42.247,34.253,76.5,76.5,76.5h306
-                                                              c42.247,0,76.5-34.253,76.5-76.5v-19.125l114.75,95.625c21.133,0,38.25-17.117,38.25-38.25V306
-                                                              C612,284.867,594.883,267.75,573.75,267.75z M38.25,191.25c0-42.247,34.253-76.5,76.5-76.5s76.5,34.253,76.5,76.5
-                                                              s-34.253,76.5-76.5,76.5S38.25,233.497,38.25,191.25z M420.75,497.25c0,21.114-17.117,38.25-38.25,38.25h-306
-                                                              c-21.133,0-38.25-17.117-38.25-38.25v-153c0-21.133,17.117-38.25,38.25-38.25h306c21.133,0,38.25,17.117,38.25,38.25V497.25z
-                                                              M363.375,267.96c-52.938,0-95.835-42.917-95.835-95.835c0-52.938,42.917-95.835,95.835-95.835s95.835,42.897,95.835,95.835
-                                                              S416.312,267.96,363.375,267.96z M573.75,535.5L459,439.875V382.5L573.75,306V535.5z"/>
+                                                        <g id="_x33__8_">
+                                                            <g>
+                                                                <path d="M573.75,267.75L459,344.25c0-23.218-10.557-43.758-26.89-57.796c38.881-23.428,65.14-65.637,65.14-114.329
+                                                                      c0-73.938-59.938-133.875-133.875-133.875c-73.937,0-133.875,59.938-133.875,133.875c0,37.504,15.51,71.317,40.373,95.625
+                                                                      h-70.151c18.322-20.33,29.778-46.971,29.778-76.5c0-63.38-51.37-114.75-114.75-114.75S0,127.87,0,191.25
+                                                                      c0,34.578,15.625,65.216,39.818,86.254C16.199,290.528,0,315.371,0,344.25v153c0,42.247,34.253,76.5,76.5,76.5h306
+                                                                      c42.247,0,76.5-34.253,76.5-76.5v-19.125l114.75,95.625c21.133,0,38.25-17.117,38.25-38.25V306
+                                                                      C612,284.867,594.883,267.75,573.75,267.75z M38.25,191.25c0-42.247,34.253-76.5,76.5-76.5s76.5,34.253,76.5,76.5
+                                                                      s-34.253,76.5-76.5,76.5S38.25,233.497,38.25,191.25z M420.75,497.25c0,21.114-17.117,38.25-38.25,38.25h-306
+                                                                      c-21.133,0-38.25-17.117-38.25-38.25v-153c0-21.133,17.117-38.25,38.25-38.25h306c21.133,0,38.25,17.117,38.25,38.25V497.25z
+                                                                      M363.375,267.96c-52.938,0-95.835-42.917-95.835-95.835c0-52.938,42.917-95.835,95.835-95.835s95.835,42.897,95.835,95.835
+                                                                      S416.312,267.96,363.375,267.96z M573.75,535.5L459,439.875V382.5L573.75,306V535.5z"/>
+                                                            </g>
+                                                        </g>
                                                     </g>
-                                                </g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                        </svg></a>
-                                    <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                    viewBox="0 0 489.4 489.4" style="enable-background:new 0 0 489.4 489.4;" xml:space="preserve">
-                                            <g>
-                                                <g>
-                                                    <path d="M0,437.8c0,28.5,23.2,51.6,51.6,51.6h386.2c28.5,0,51.6-23.2,51.6-51.6V51.6c0-28.5-23.2-51.6-51.6-51.6H51.6
-                                                          C23.1,0,0,23.2,0,51.6C0,51.6,0,437.8,0,437.8z M437.8,464.9H51.6c-14.9,0-27.1-12.2-27.1-27.1v-64.5l92.8-92.8l79.3,79.3
-                                                          c4.8,4.8,12.5,4.8,17.3,0l143.2-143.2l107.8,107.8v113.4C464.9,452.7,452.7,464.9,437.8,464.9z M51.6,24.5h386.2
-                                                          c14.9,0,27.1,12.2,27.1,27.1v238.1l-99.2-99.1c-4.8-4.8-12.5-4.8-17.3,0L205.2,333.8l-79.3-79.3c-4.8-4.8-12.5-4.8-17.3,0
-                                                          l-84.1,84.1v-287C24.5,36.7,36.7,24.5,51.6,24.5z"/>
-                                                    <path d="M151.7,196.1c34.4,0,62.3-28,62.3-62.3s-28-62.3-62.3-62.3s-62.3,28-62.3,62.3S117.3,196.1,151.7,196.1z M151.7,96
-                                                          c20.9,0,37.8,17,37.8,37.8s-17,37.8-37.8,37.8s-37.8-17-37.8-37.8S130.8,96,151.7,96z"/>
-                                                </g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                            <g>
-                                            </g>
-                                        </svg></a>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                            <input type="file" name="video_post[]" id="video_post" class="post_gallery_upload" data-type="video" multiple="true"> 
+                                        </div>
+                                    </div>
+
+                                    <div class="select-file img-upload">
+                                        <div class="select-file-upload"> 
+                                            <span class="select-file_up_btn">
+                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     viewBox="0 0 489.4 489.4" style="enable-background:new 0 0 489.4 489.4;" xml:space="preserve">
+                                                    <g>
+                                                        <g>
+                                                            <path d="M0,437.8c0,28.5,23.2,51.6,51.6,51.6h386.2c28.5,0,51.6-23.2,51.6-51.6V51.6c0-28.5-23.2-51.6-51.6-51.6H51.6
+                                                                  C23.1,0,0,23.2,0,51.6C0,51.6,0,437.8,0,437.8z M437.8,464.9H51.6c-14.9,0-27.1-12.2-27.1-27.1v-64.5l92.8-92.8l79.3,79.3
+                                                                  c4.8,4.8,12.5,4.8,17.3,0l143.2-143.2l107.8,107.8v113.4C464.9,452.7,452.7,464.9,437.8,464.9z M51.6,24.5h386.2
+                                                                  c14.9,0,27.1,12.2,27.1,27.1v238.1l-99.2-99.1c-4.8-4.8-12.5-4.8-17.3,0L205.2,333.8l-79.3-79.3c-4.8-4.8-12.5-4.8-17.3,0
+                                                                  l-84.1,84.1v-287C24.5,36.7,36.7,24.5,51.6,24.5z"/>
+                                                            <path d="M151.7,196.1c34.4,0,62.3-28,62.3-62.3s-28-62.3-62.3-62.3s-62.3,28-62.3,62.3S117.3,196.1,151.7,196.1z M151.7,96
+                                                                  c20.9,0,37.8,17,37.8,37.8s-17,37.8-37.8,37.8s-37.8-17-37.8-37.8S130.8,96,151.7,96z"/>
+                                                        </g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                    <g>
+                                                    </g>
+                                                </svg>
+                                            </span>
+                                            <input type="file" name="images_post[]" id="images_post" class="post_gallery_upload" data-type="image" multiple="true"> 
+                                        </div>
+                                    </div>
+                                    <!--<input type="hidden" name="post_data" id="post_data"/>-->
                                     <button type="submit" name="post_btn" id="post_btn">Post</button>
                                 </div>
                             </form>
                         </div>
-                        <div class="comments-div">
+                        <div class="comments-div"  id="content-8">
                             <?php if (isset($posts) && !empty($posts)) { ?>
                                 <ul>
                                     <?php
@@ -463,7 +495,7 @@
                                         ?>
                                         <li>
                                             <div class="comments-div-wrap">
-                                                <span>
+                                                <span class="commmnet-postted-img">
                                                     <?php
                                                     if (isset($val['profile_image']) && !is_null($val['profile_image'])) {
                                                         if (!preg_match("/https:\/\//i", $val['profile_image'])) {
@@ -478,25 +510,40 @@
                                                 </span>
                                                 <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?><small><?php echo format_days($days_diff) ?>  Ago</small></h3>
                                                 <p><?php echo $val['comment'] ?></p>
-                                                <?php if (isset($val['media']) && isset($val['media'][1])) { ?>
-                                                    <ul class="post-images">
-                                                        <?php foreach ($val['media'][1] as $k => $v) {
-                                                            ?>
-                                                            <li><a class="fancybox" href="<?php echo base_url(POST_IMAGES . $v) ?>"><img src="<?php echo base_url(POST_IMAGES . $v) ?>"></a></li>
-                                                        <?php } ?>
-                                                    </ul>
-                                                <?php } ?>
-                                                <?php if (isset($val['media']) && isset($val['media'][2])) { ?>
-                                                    <ul class="post-video">
-                                                        <?php foreach ($val['media'][2] as $k => $v) {
-                                                            ?>
-                                                            <li>
-                                                                <video  width="100%" height="150px" controls="">
-                                                                    <source src="<?php echo base_url(POST_IMAGES . $v) ?>" type="video/mp4">
-                                                                </video>
-                                                            </li>
-                                                        <?php } ?>
-                                                    </ul>
+                                                <?php if (isset($val['media'])) { ?>
+                                                    <div class="comoon-ul-li list-02">
+                                                        <ul>
+                                                            <?php if (isset($val['media']) && isset($val['media'][1])) { ?>
+                                                                <?php foreach ($val['media'][1] as $k => $v) {
+                                                                    ?>
+                                                                    <li>
+                                                                        <div class="gallery-wrap">
+                                                                            <span class="gallery-video-img">
+                                                                                <a class="fancybox" href="<?php echo base_url(POST_IMAGES . $v) ?>" data-fancybox-type="image" rel="post_group_<?php echo $key ?>"><img src="<?php echo base_url(POST_IMAGES . $v) ?>"></a>
+                                                                            </span>
+                                                                        </div>
+                                                                    </li>
+                                                                    <?php
+                                                                }
+                                                            }
+                                                            if (isset($val['media']) && isset($val['media'][2])) {
+                                                                ?>
+                                                                <?php foreach ($val['media'][2] as $k => $v) {
+                                                                    ?>
+                                                                    <li>
+                                                                        <div class="gallery-wrap">
+                                                                            <span class="gallery-video-img">
+                                                                                <video  width="100%" height="150px" controls="">
+                                                                                    <source src="<?php echo base_url(POST_IMAGES . $v) ?>" type="video/mp4">
+                                                                                </video>
+                                                                            </span>
+                                                                            <span class="gallery-play-btn"><a href="<?php echo base_url(POST_IMAGES . $v) ?>" class="fancybox" data-fancybox-type="iframe" rel="post_group_<?php echo $key ?>"><img src="assets/images/play.png" alt=""></a></span>
+                                                                        </div>
+                                                                    </li>
+                                                                <?php } ?>
+                                                            <?php } ?>
+                                                        </ul>
+                                                    </div>
                                                 <?php } ?>
                                             </div>
                                         </li>
@@ -529,19 +576,24 @@
                                     foreach ($life_gallery as $key => $val) {
                                         if ($val['type'] == 1) {
                                             ?>
-                                            <li><a class="fancybox" href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>"><img src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" width="100%" height="100%"></a></li>
+                                            <li>
+                                                <div class="gallery-wrap">
+                                                    <span class="gallery-video-img">
+                                                        <a class="fancybox" href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" data-fancybox-type="image" rel="gallery"><img src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" width="100%" height="100%"></a>
+                                                    </span>
+                                                </div>
+                                            </li>
                                         <?php } else if ($val['type'] == 2) {
                                             ?>
                                             <li>
                                                 <div class="gallery-wrap">
-                                                    <span class="gallery-video-img"><img src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" alt="" /></span>
-                                                    <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""/></a></span>
+                                                    <span class="gallery-video-img">
+                                                        <video  width="100%" height="100%"controls="">
+                                                            <source src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" type="video/mp4">
+                                                        </video>
+                                                    </span>
+                                                    <span class="gallery-play-btn"><a href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="gallery"><img src="assets/images/play.png" alt=""></a></span>
                                                 </div>
-                                                <!--                                                                                                <a>
-                                                                                                    <video  width="100%" height="100%"controls="">
-                                                                                                        <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])                        ?>" type="video/mp4">
-                                                                                                    </video>
-                                                                                                </a>-->
                                             </li>
                                             <?php
                                         }
@@ -593,124 +645,10 @@
     </div>	
 </div>
 <script type="text/javascript">
-    $(".fancybox")
-            .attr('rel', 'gallery')
-            .fancybox({
-                padding: 0
-            });
-    function genericSocialShare(url) {
-        window.open(url, 'sharer', 'toolbar=0,status=0,width=648,height=395');
-        return true;
-    }
-    $('#post_form').validate({
-        onkeyup: false,
-        onfocusout: false,
-        rules: {
-            comment: {
-//                required: true,
-                atleast_one_for_post: true,
-            }
-        },
-        highlight: function (element, errorClass) {
-            if ($(element).attr('name') === 'comment') {
-                $('#post-modal').modal();
-            }
-        },
-        messages: {
-            comment: {
-                atleast_one_for_post: ''
-            }
-        }
-    });
-    profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';
-    $(document).on('change', "#cover_image", function () {
-//        if (typeof (FileReader) != "undefined") {
-//            var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.png)$/;
-//            var file = this.files;
-//            str = '';
-//            if (regex.test(file[0].name.toLowerCase())) {
-        readURL(this);
-        //-- check image and video count
-//                    if (image_count <= max_images_count) {
-        // upload image
-
-//                        $.ajax({
-//                            url: site_url + "profile/upload_gallery",
-//                            type: "POST",
-//                            data: formData,
-//                            dataType: "json",
-//                            processData: false, // tell jQuery not to process the data
-//                            contentType: false, // tell jQuery not to set contentType
-//                            success: function (data) {
-//                                if (data.success == true) {
-//                                    //-- Remove default preview div
-//                                    $('#default-preview').remove();
-//                                    var reader = new FileReader();
-//                                    reader.readAsDataURL(file[0]);
-//                                } else {
-//                                    showErrorMSg(data.error);
-//                                }
-//                            }
-//                        });
-//                    } else {
-//                        showErrorMSg("Limit is exceeded to upload cover image.");
-//                    }
-//            }
-
-//        }
-    });
-
-    function readURL(input) {
-        var height = 330, width = 1120, img = '', file = '', val = '';
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-//                console.log("gdfkgdf", e);
-                var _URL = window.URL || window.webkitURL;
-                var valid_extensions = /(\.jpg|\.jpeg|\.png)$/i;
-                if (typeof (input.files[0]) != 'undefined') {
-                    if (valid_extensions.test(input.files[0].name)) {
-                        img = new Image();
-                        img.onload = function () {
-                            console.log("width", this.width);
-                            console.log("height", this.height);
-                            if (this.width < width || this.height < height) {
-                                showErrorMSg('Photo should be ' + width + ' X ' + height + ' or more dimensions');
-                            } else {
-                                var formData = new FormData();
-                                formData.append('profile_id', profile_id);
-                                formData.append('cover_image', input.files[0], input.files[0].name);
-//                                console.log(formData.get('cover_image'));
-                                $.ajax({
-                                    url: site_url + "profile/upload_cover_image",
-                                    type: "POST",
-                                    data: formData,
-                                    dataType: "json",
-                                    processData: false, // tell jQuery not to process the data
-                                    contentType: false, // tell jQuery not to set contentType
-                                    success: function (data) {
-                                        if (data.success == true) {
-                                            //-- Remove default preview div
-                                            $('.cover_img').attr('src', data.url);
-                                            var reader = new FileReader();
-                                            reader.readAsDataURL(input.files[0]);
-                                            showSuccessMSg(data.data);
-                                        } else {
-                                            showErrorMSg(data.error);
-                                        }
-                                    }
-                                });
-                            }
-                        };
-                        img.src = _URL.createObjectURL(input.files[0]);
-                    } else {
-                        showErrorMSg(input.files[0].name + " is not a valid image file.");
-                    }
-                } else {
-                    showErrorMSg("This browser does not support HTML5 FileReader.");
-                }
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    var profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';
+    var slug = '<?php echo isset($profile['slug']) ? $profile['slug'] : '' ?>';
+    max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
+    max_videos_count = <?php echo MAX_VIDEOS_COUNT ?>;
+    delete_str = '<?php $this->load->view('delete_svg', true); ?>';
 </script>
+<script src="assets/js/profile_detail.js"></script>

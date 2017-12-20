@@ -233,6 +233,7 @@ class MY_Model extends CI_Model {
             $this->db->having('is_parent = 0');
         }
         $this->db->where('active', 1);
+        $this->db->where('is_delete', 0);
         $query = $this->db->get(TBL_PAGES . ' p');
         return $query->result_array();
     }

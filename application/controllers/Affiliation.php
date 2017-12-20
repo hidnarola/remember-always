@@ -22,11 +22,15 @@ class Affiliation extends MY_Controller {
     }
 
     /**
-     * Add a new service provider directory listing.
+     * Add a new affiliation.
      *
      */
     public function add($id = null) {
-        $uniqe_category_str = '';
+        if (!$this->is_user_loggedin) {
+            $this->session->set_flashdata('error', 'You must login to access this page');
+            redirect('/');
+        }
+        
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
@@ -69,20 +73,18 @@ class Affiliation extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $data['error'] = validation_errors();
         } else {
-            p($this->input->post(), 1);
             $dataArr = ['user_id' => $this->user_id,
                 'category_id' => base64_decode(trim($this->input->post('category'))),
                 'name' => trim(htmlentities($this->input->post('name'))),
                 'description' => $this->input->post('description'),
                 'country' => base64_decode(trim($this->input->post('country'))),
                 'state' => base64_decode(trim($this->input->post('state'))),
-                'city' => base64_decode(trim($this->input->post('city'))),
-                'is_approved' => 1];
+                'city' => base64_decode(trim($this->input->post('city')))];
             if ($_FILES['image']['name'] != '') {
                 $image_data = upload_image('image', AFFILIATION_IMAGE);
                 if (is_array($image_data)) {
                     $flag = 1;
-                    $data['profile_image_validation'] = $image_data['errors'];
+                    $data['image_validation'] = $image_data['errors'];
                 } else {
                     if (is_numeric($id)) {
                         if (!empty($affiliation)) {
@@ -108,9 +110,9 @@ class Affiliation extends MY_Controller {
             } else {
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
                 $id = $this->affiliation_model->common_insert_update('insert', TBL_AFFILIATIONS, $dataArr);
-                $this->session->set_flashdata('success', 'Affiliation has been inserted successfully.');
+                $this->session->set_flashdata('success', 'Affiliation has been added.');
             }
-            redirect('admin/affiliations');
+            redirect('affiliation/add');
         }
         $data['title'] = 'Affiliation';
         $data['breadcrumb'] = ['title' => 'Add Affiliation', 'links' => [['link' => site_url(), 'title' => 'Home']]];

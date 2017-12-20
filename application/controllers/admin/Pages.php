@@ -88,19 +88,19 @@ class Pages extends MY_Controller {
                     $this->data['banner_image_validation'] = $image_name['errors'];
                 } else {
                     $slider_image = $image_name;
-                    $image_size = getimagesize(base_url() . PAGE_BANNER . $image_name);
-                    if ($image_size[1] > 730) {
-                        $path_parts = pathinfo(PAGE_BANNER . $image_name);
-                        $new_image = $path_parts['filename'] . 'resize.' . $path_parts['extension'];
-                        $slider_image = $new_image;
-//                        $new_width = (730 * $image_size[0]) / $image_size[1];
-                        $new_width = 1600;
-                        $resize_data = resize_image(PAGE_BANNER . $image_name, PAGE_BANNER . $slider_image, $new_width, 730);
-                        if (is_array($resize_data)) {
-                            $flag = 1;
-                            $data['banner_image_validation'] = $resize_data['errors'];
-                        }
-                    }
+//                    $image_size = getimagesize(base_url() . PAGE_BANNER . $image_name);
+//                    if ($image_size[1] > 730) {
+//                        $path_parts = pathinfo(PAGE_BANNER . $image_name);
+//                        $new_image = $path_parts['filename'] . 'resize.' . $path_parts['extension'];
+//                        $slider_image = $new_image;
+////                        $new_width = (730 * $image_size[0]) / $image_size[1];
+//                        $new_width = 1600;
+//                        $resize_data = resize_image(PAGE_BANNER . $image_name, PAGE_BANNER . $slider_image, $new_width, 730);
+//                        if (is_array($resize_data)) {
+//                            $flag = 1;
+//                            $data['banner_image_validation'] = $resize_data['errors'];
+//                        }
+//                    }
                     if ($flag == 0) {
                         if (is_numeric($id)) {
                             $page_data = $this->pages_model->sql_select(TBL_PAGES, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);

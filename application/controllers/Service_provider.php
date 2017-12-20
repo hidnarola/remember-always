@@ -33,7 +33,7 @@ class Service_provider extends MY_Controller {
      * Display login page for login
      */
     public function load_providers($start, $static = false) {
-        $offset = 5;
+        $offset = 3;
         $services = $this->providers_model->get_providers('result', $this->input->get(), $start, $offset);
         if ($static === true) {
             return $services;
