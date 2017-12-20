@@ -43,37 +43,38 @@
                 <div class="profile-box services-listings" >
                     <h2>Services Listing</h2>
                     <div id="service_ul_data">
-                    <ul class="srvs-list-ul service_content" >
-                        <?php
-                        if (isset($services) && !empty($services)) {
-                            foreach ($services as $key => $value) {
+                        <ul class="srvs-list-ul service_content" >
+                            <?php
+                            if (isset($services) && !empty($services)) {
+                                foreach ($services as $key => $value) {
+                                    ?>
+                                    <li>
+                                        <span> 
+                                            <?php
+                                            if (isset($value['image']) && !is_null($value['image'])) {
+                                                ?>
+                                                <img src="<?php echo PROVIDER_IMAGES . $value['image'] ?>" width="100%" height="100%"/>
+                                            <?php } ?>
+                                        </span>
+                                        <h3><a href="<?php echo site_url('service_provider/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
+                                        <p><?php
+                                            $text = $value['description'];
+                                            if (strlen($value['description']) > 500) {
+                                                $text = preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...', $value['description']);
+                                                echo $text;
+                                            } else {
+                                                echo $text;
+                                            }
+                                            ?></p>
+                                    </li>
+                                    <?php
+                                }
+                            } else {
                                 ?>
-                                <li>
-                                    <span> 
-                                        <?php
-                                        if (isset($value['image']) && !is_null($value['image'])) {
-                                            ?>
-                                            <img src="<?php echo PROVIDER_IMAGES . $value['image'] ?>" width="100%" height="100%"/>
-                                        <?php } ?>
-                                    </span>
-                                    <h3><a href="<?php echo site_url('service_provider/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
-                                    <p><?php
-                                        $text = $value['description'];
-                                        if (strlen($value['description']) > 500) {
-                                            $text = preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...', $value['description']);
-                                            echo $text;
-                                        } else {
-                                            echo $text;
-                                        }
-                                        ?></p>
-                                </li>
-                                <?php
-                            }
-                        } else {
-                            ?>
-                            <li>No Services available</li>
-                        <?php } ?>
-                    </ul>
+                                <p class="no-data">No Services available</p>
+                            <?php } ?>
+                        </ul>
+                        <!--<div class="loader"><img src="assets/images/loader2.gif" /></div>-->
                     </div>
                     <!--                    <div class="loader" style="display: none">
                                             <img src="assets/images/loader.gif" />
@@ -94,9 +95,10 @@
                                 }
                             } else {
                                 ?>
-                                <li>No Services Categories available.</li>
+                                <li><p class="no-data">No Services Categories available.</p></li>
                             <?php } ?>
                         </ul>
+
                     </div>
                 </div>
             </div>
@@ -113,6 +115,7 @@
 </div>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
+    $('.loader').hide();
     var provider_image = '<?php echo PROVIDER_IMAGES ?>';
     var provider_url = '<?php echo site_url('service_provider/view/') ?>';
     $('#category').selectpicker({
@@ -127,7 +130,7 @@
             onScroll: function () {
                 if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
                     var limitStart = $(".service_content li").length;
-//                    console.log(limitStart);
+//                     $(".loader").show();
                     loadResults(limitStart);
                 }
             }, /*user custom callback function on scroll event*/
@@ -220,7 +223,6 @@
 //        }
 //    });
     function loadResults(limitStart) {
-//        $(".loader").show();
         $.ajax({
             url: '<?php echo site_url() ?>' + 'service_provider/load_providers/' + limitStart,
             type: "post",

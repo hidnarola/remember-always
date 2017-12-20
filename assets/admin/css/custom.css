@@ -10,3 +10,4 @@ and open the template in the editor.
 .custom_align_top{vertical-align: top !important;}
 .dashboard_layout .dash-icon{margin-top: -5px;}
 .has-bg-image { background-image: url(../images/panel_bg.png);}
+#image_preview_div .delete_image{display:block;margin:10px 0 0;}

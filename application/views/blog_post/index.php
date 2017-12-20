@@ -20,6 +20,8 @@
                             </li>
                         <?php } ?>
                     </ul>
+                <?php } else { ?>
+                    <p>Blogs are not posted.</p>
                 <?php } ?>
                 <div class="paggination-wrap">
                     <?php echo $this->pagination->create_links(); ?>
@@ -38,7 +40,7 @@
                                 <?php } ?>
                             </ul>
                         <?php } else { ?>
-                            <p class="no-data">There are not blogs posted</p>
+                            <p class="no-data">Blogs are not posted.</p>
                         <?php } ?>
                     </div>
                 </div>
