@@ -515,7 +515,7 @@ ul.post-video li a img{width:100%;min-height:120px;}
 .services-pro-r{float:right;width:28.4%}
 
 .srvs-list-ul{margin:0;padding:20px 15px 0;list-style:none;display:block;}
-.srvs-list-ul li{display:block;width:100%;position:relative;padding:8px 0 25px 105px;margin:0 0 25px;border-bottom:1px solid #efefef;min-height:90px;}
+.srvs-list-ul li{display:block;width:100%;position:relative;padding:8px 0 25px 105px;margin:0 0 15px;border-bottom:1px solid #efefef;min-height:100px;}
 .srvs-list-ul li:last-child{border-bottom:0;margin:0;padding-bottom:15px;}
 .srvs-list-ul span{width:88px;height:88px;background:#efefef;position:absolute;top:0;left:0;}
 .srvs-list-ul h3{margin:0 0 8px;padding:0;font-size:100%;font-weight:400;font-family:'Rubik';line-height:100%;}
@@ -664,6 +664,18 @@ ul.blog-list-ul li  .blog-box span{margin-bottom:10px;}
 
 .tag-blog{background:url(../images/tag-blog.png) no-repeat 0 0;display:block;width:48px;height:28px;position:absolute;top:-32px;left:0;}
 .tag-profile{background:url(../images/tag-profile.png) no-repeat 0 0;display:block;width:67px;height:28px;position:absolute;top:-32px;left:0;}
-.tag-services{background:url(../images/tag-services.png) no-repeat 0 0;display:block;width:140px;height:28px;position:absolute;top:-32px;left:0;}
 
 #service_ul_data{height:500px;}
+
+.mypost-l{float:left;width:30.5%;}
+.mypost-r{float:right;width:67%;}
+.user-update{display:inline-block;vertical-align:top;width:100%;margin:15px 0 0;}
+.user-update a{display:inline-block;vertical-align:top;margin:0 10px 0 0;padding:2px 8px;line-height:20px;text-decoration:none;color:#fff;font-size:14px;border-radius:4px;}
+
+.user-update a.edit{background:#57585a;border:2px solid #57585a;}
+.user-update a.edit:hover{background:transparent;color:#57585a;}
+.user-update a.delete{background:#999;border:2px solid #999;}
+.user-update a.delete:hover{background:transparent;color:#999;}
+.user-update a.public{background:#975979;border:2px solid #975979;}
+.user-update a.public:hover{background:transparent;color:#975979;}
+

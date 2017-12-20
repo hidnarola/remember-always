@@ -102,6 +102,10 @@ $(function () {
         }
     });
     $('.service-datepicker').datepicker({format: "mm/dd/yyyy", startDate: "date()"});
+    $('.service-time').datetimepicker({
+        format: 'LT'
+    });
+//    $('.service-time')
 });
 // Display the preview of image on image upload
 function readURL(input) {

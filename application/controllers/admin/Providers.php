@@ -138,7 +138,7 @@ class Providers extends MY_Controller {
             }
 //            p($dataArr, 1);
             if (is_numeric($id)) {
-                $dataArr['modified_at'] = date('Y-m-d H:i:s');
+                $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service Provider details has been updated successfully.');
             } else {
@@ -196,7 +196,7 @@ class Providers extends MY_Controller {
             if (!empty($provider_data)) {
                 $update_array = array(
                     'is_delete' => 1,
-                    'modified_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 );
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service provider has been deleted successfully!');
@@ -222,12 +222,12 @@ class Providers extends MY_Controller {
                 if ($action_type == 'approve') {
                     $update_array = array(
                         'is_active' => 1,
-                        'modified_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
                     );
                 } else if ($action_type == 'unapprove') {
                     $update_array = array(
                         'is_active' => 0,
-                        'modified_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
                     );
                 }
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $update_array, ['id' => $id]);

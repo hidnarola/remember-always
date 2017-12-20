@@ -171,6 +171,20 @@ class Profile extends MY_Controller {
                     ) a order by created_at";
             $data['profile_affiliations'] = $this->users_model->customQuery($sql);
             $data['timeline'] = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
+            $services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
+            $data['burial_service'] = $data['funeral_service'] = $data['memorial_service'] = $data['burial_cities'] = $data['funeral_cities'] = $data['memorial_cities'] = [];
+            foreach ($services as $service) {
+                if ($service['service_type'] == 'Burial') {
+                    $data['burial_service'] = $service;
+                    $data['burial_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $service['state']]]);
+                } elseif ($service['service_type'] == 'Funeral') {
+                    $data['funeral_service'] = $service;
+                    $data['funeral_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $service['state']]]);
+                } elseif ($service['service_type'] == 'Memorial') {
+                    $data['memorial_service'] = $service;
+                    $data['memorial_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $service['state']]]);
+                }
+            }
         }
         if ($this->input->post('profile_process')) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
@@ -256,6 +270,8 @@ class Profile extends MY_Controller {
             echo json_encode($data);
             exit;
         }
+        $data['cities'] = [];
+        $data['states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => 234]]);
         $data['affiliations'] = $this->users_model->sql_select(TBL_AFFILIATIONS, 'id,name', ['where' => ['is_approved' => 1, 'is_delete' => 0]]);
         $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Create Profile';
