@@ -174,7 +174,7 @@ class Service_provider extends MY_Controller {
             }
 //            p($dataArr, 1);
             if (is_numeric($id)) {
-                $dataArr['modified_at'] = date('Y-m-d H:i:s');
+                $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service Provider details has been updated successfully.');
             } else {

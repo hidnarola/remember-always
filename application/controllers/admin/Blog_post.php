@@ -132,7 +132,7 @@ class Blog_post extends MY_Controller {
             }
             if ($flag == 0) {
                 if (is_numeric($id)) {
-                    $dataArr['modified_at'] = date('Y-m-d H:i:s');
+                    $dataArr['updated_at'] = date('Y-m-d H:i:s');
                     $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $dataArr, ['id' => $id]);
                     $this->session->set_flashdata('success', 'Blog Post details has been updated successfully.');
                 } else {
@@ -191,7 +191,7 @@ class Blog_post extends MY_Controller {
             if (!empty($post_data)) {
                 $update_array = array(
                     'is_delete' => 1,
-                    'modified_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
                 );
                 $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $update_array, ['id' => $id]);
 
@@ -218,12 +218,12 @@ class Blog_post extends MY_Controller {
                 if ($action_type == 'hide') {
                     $update_array = array(
                         'is_active' => 0,
-                        'modified_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
                     );
                 } else if ($action_type == 'show') {
                     $update_array = array(
                         'is_active' => 1,
-                        'modified_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
                     );
                 }
                 $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $update_array, ['id' => $id]);
@@ -252,12 +252,12 @@ class Blog_post extends MY_Controller {
         if (is_numeric($id)) {
             $user_array = array('is_view' => $this->input->post('value'));
             if ($this->input->post('value') == 0) {
-                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id, 'modified_at' => date('Y-m-d H:i:s')]);
+                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id, 'updated_at' => date('Y-m-d H:i:s')]);
             }
             $count = $this->blog_post_model->sql_select(TBL_BLOG_POST, 'COUNT(*) as view_count', ['where' => array('is_view' => 1, 'is_delete' => 0)], ['single' => true]);
 //            p($count['view_count']);
             if ($count['view_count'] < 3) {
-                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id, 'modified_at' => date('Y-m-d H:i:s')]);
+                $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id, 'updated_at' => date('Y-m-d H:i:s')]);
                 echo 'success';
             } else {
                 echo 'error';

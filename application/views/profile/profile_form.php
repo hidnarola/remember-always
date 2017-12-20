@@ -1,6 +1,9 @@
 <style type="text/css">.input-css.error{border:1px solid red;}</style>
 <link href="assets/css/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet"/>
 <script src="assets/js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+<script src="assets/js/moment.min.js"></script>
+<link href="assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
+<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 <!-- /theme JS files -->
 <div class="create-profile">
     <div class="create-profile-top">
@@ -412,27 +415,58 @@
                                         <div class="input-wrap">
                                             <label class="label-css">Memorial Services & Viewing Section.</label>
                                             <div class="input-l">
-                                                <input type="text" name="memorial_date" placeholder="Date" class="input-css service-datepicker">
+                                                <input type="text" name="memorial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo date('m/d/Y', strtotime($memorial_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="memorial_time" placeholder="Time" class="input-css">
+                                                <input type="text" name="memorial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['time'] ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="memorial_place" placeholder="Name fo place" class="input-css">
+                                            <input type="text" name="memorial_place" placeholder="Name fo place" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="memorial_address" placeholder="Address" class="input-css">
+                                            <input type="text" name="memorial_address" placeholder="Address" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['memorial_address'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <div class="input-three-l">
-                                                <input type="text" name="memorial_city" placeholder="City" class="input-css">
-                                            </div>
                                             <div class="input-three-m">
-                                                <input type="text" name="memorial_state" placeholder="State" class="input-css">
+                                                <select name="memorial_state" class="input-css" placeholder="State">
+                                                    <option value="">Select state</option>
+                                                    <?php
+                                                    foreach ($states as $state) {
+                                                        $selected = '';
+                                                        if (isset($memorial_service) && !empty($memorial_service)) {
+                                                            if ($state['id'] == $memorial_service['state'])
+                                                                $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="input-three-l">
+                                                <?php
+                                                $cities_arr = $cities;
+                                                if (isset($memorial_service) && !empty($memorial_service))
+                                                    $cities_arr = $memorial_cities;
+                                                ?>
+                                                <select name="memorial_city" class="input-css" placeholder="State">
+                                                    <option value="">Select City</option>
+                                                    <?php
+                                                    foreach ($cities_arr as $city) {
+                                                        $selected = '';
+                                                        if (isset($memorial_service) && !empty($memorial_service)) {
+                                                            if ($city['id'] == $memorial_service['city'])
+                                                                $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
                                             </div>
                                             <div class="input-three-r">
-                                                <input type="text" name="memorial_zip" placeholder="Zip" class="input-css">
+                                                <input type="text" name="memorial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -440,27 +474,58 @@
                                         <div class="input-wrap">
                                             <label class="label-css">Funeral Services section</label>
                                             <div class="input-l">
-                                                <input type="text" name="funeral_date" placeholder="Date" class="input-css service-datepicker">
+                                                <input type="text" name="funeral_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo date('m/d/Y', strtotime($funeral_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="funeral_time" placeholder="Time" class="input-css">
+                                                <input type="text" name="funeral_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['time'] ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="funeral_place" placeholder="Name fo place" class="input-css">
+                                            <input type="text" name="funeral_place" placeholder="Name fo place" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="funeral_address" placeholder="Address" class="input-css">
+                                            <input type="text" name="funeral_address" placeholder="Address" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['address'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <div class="input-three-l">
-                                                <input type="text" name="funeral_city" placeholder="City" class="input-css">
-                                            </div>
                                             <div class="input-three-m">
-                                                <input type="text" name="funeral_state" placeholder="State" class="input-css">
+                                                <select name="funeral_state" class="input-css" placeholder="State">
+                                                    <option value="">Select state</option>
+                                                    <?php
+                                                    foreach ($states as $state) {
+                                                        $selected = '';
+                                                        if (isset($funeral_service) && !empty($funeral_service)) {
+                                                            if ($state['id'] == $funeral_service['state'])
+                                                                $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="input-three-l">
+                                                <?php
+                                                $cities_arr = $cities;
+                                                if (isset($funeral_service) && !empty($funeral_service))
+                                                    $cities_arr = $funeral_cities;
+                                                ?>
+                                                <select name="funeral_city" id="funeral_city" class="input-css" placeholder="City">
+                                                    <option value="">Select City</option>
+                                                    <?php
+                                                    foreach ($cities_arr as $city) {
+                                                        $selected = '';
+                                                        if (isset($memorial_service) && !empty($funeral_service)) {
+                                                            if ($city['id'] == $funeral_service['city'])
+                                                                $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
                                             </div>
                                             <div class="input-three-r">
-                                                <input type="text" name="funeral_zip" placeholder="Zip" class="input-css">
+                                                <input type="text" name="funeral_zip" placeholder="Zip" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -468,27 +533,58 @@
                                         <div class="input-wrap">
                                             <label class="label-css">Burial Section</label>
                                             <div class="input-l">
-                                                <input type="text" name="burial_date" placeholder="Date" class="input-css service-datepicker">
+                                                <input type="text" name="burial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($burial_service) && !empty($burial_service)) echo date('m/d/Y', strtotime($burial_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="burial_time" placeholder="Time" class="input-css">
+                                                <input type="text" name="burial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_time'] ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_name" placeholder="Name fo place" class="input-css">
+                                            <input type="text" name="burial_name" placeholder="Name fo place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_address" placeholder="Address" class="input-css">
+                                            <input type="text" name="burial_address" placeholder="Address" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_address'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <div class="input-three-l">
-                                                <input type="text" name="burial_city" placeholder="City" class="input-css">
-                                            </div>
                                             <div class="input-three-m">
-                                                <input type="text" name="burial_state" placeholder="State" class="input-css">
+                                                <select name="burial_state" class="input-css" placeholder="State">
+                                                    <option value="">Select state</option>
+                                                    <?php
+                                                    foreach ($states as $state) {
+                                                        $selected = '';
+                                                        if (isset($burial_service) && !empty($burial_service)) {
+                                                            if ($state['id'] == $burial_service['state'])
+                                                                $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="input-three-l">
+                                                <?php
+                                                $cities_arr = $cities;
+                                                if (isset($funeral_service) && !empty($funeral_service))
+                                                    $cities_arr = $burial_cities;
+                                                ?>
+                                                <select name="burial_city" class="input-css" placeholder="City">
+                                                    <option value="">Select City</option>
+                                                    <?php
+                                                    foreach ($cities_arr as $city) {
+                                                        $selected = '';
+                                                        if (isset($burial_service) && !empty($burial_service)) {
+                                                            if ($city['id'] == $burial_service['city'])
+                                                                $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
+                                                    <?php }
+                                                    ?>
+                                                </select>
                                             </div>
                                             <div class="input-three-r">
-                                                <input type="text" name="burial_zip" placeholder="Zip" class="input-css">
+                                                <input type="text" name="burial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>
