@@ -73,9 +73,9 @@ class Profile extends MY_Controller {
                 if ($this->form_validation->run() == FALSE) {
                     $this->data['error'] = validation_errors();
                 } else {
-                p($_FILES);
-                var_dump($this->input->post('post_upload'));
-                p($this->input->post(), 1);
+                    p($_FILES);
+                    var_dump($this->input->post('post_upload'));
+                    p($this->input->post(), 1);
                     $dataArr = array(
                         'profile_id' => $is_left['id'],
                         'user_id' => $is_left['user_id'],
@@ -707,6 +707,23 @@ class Profile extends MY_Controller {
         exit;
     }
 
+    /**
+     * Get cities 
+     */
+    public function get_cities() {
+        $state_id = $this->input->post('state');
+        $cities = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $state_id]]);
+        echo json_encode($cities);
+        exit;
+    }
+
+    /**
+     * Add service details
+     */
+     public function add_services() { 
+        echo $profile_id = base64_decode($this->input->post('profile_id'));
+        exit;
+    }
     /**
      * Upload profile post
      * @author AKK

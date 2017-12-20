@@ -418,18 +418,18 @@
                                                 <input type="text" name="memorial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo date('m/d/Y', strtotime($memorial_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="memorial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['time'] ?>">
+                                                <input type="text" name="memorial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo date('h:i A', strtotime($memorial_service['time'])) ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="memorial_place" placeholder="Name fo place" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['place_name'] ?>">
+                                            <input type="text" name="memorial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <input type="text" name="memorial_address" placeholder="Address" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['memorial_address'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <div class="input-three-m">
-                                                <select name="memorial_state" class="input-css" placeholder="State">
+                                            <div class="input-three-l">
+                                                <select name="memorial_state" id="memorial_state" class="input-css service-state" placeholder="State">
                                                     <option value="">Select state</option>
                                                     <?php
                                                     foreach ($states as $state) {
@@ -444,13 +444,13 @@
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="input-three-l">
+                                            <div class="input-three-m">
                                                 <?php
                                                 $cities_arr = $cities;
                                                 if (isset($memorial_service) && !empty($memorial_service))
                                                     $cities_arr = $memorial_cities;
                                                 ?>
-                                                <select name="memorial_city" class="input-css" placeholder="State">
+                                                <select name="memorial_city" id="memorial_city" class="input-css" placeholder="State">
                                                     <option value="">Select City</option>
                                                     <?php
                                                     foreach ($cities_arr as $city) {
@@ -477,18 +477,18 @@
                                                 <input type="text" name="funeral_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo date('m/d/Y', strtotime($funeral_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="funeral_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['time'] ?>">
+                                                <input type="text" name="funeral_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo date('h:i A', strtotime($funeral_service['time'])) ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="funeral_place" placeholder="Name fo place" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['place_name'] ?>">
+                                            <input type="text" name="funeral_place" placeholder="Name of place" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <input type="text" name="funeral_address" placeholder="Address" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['address'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <div class="input-three-m">
-                                                <select name="funeral_state" class="input-css" placeholder="State">
+                                            <div class="input-three-l">
+                                                <select name="funeral_state" id="funeral_state" class="input-css service-state" placeholder="State">
                                                     <option value="">Select state</option>
                                                     <?php
                                                     foreach ($states as $state) {
@@ -503,7 +503,7 @@
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="input-three-l">
+                                            <div class="input-three-m">
                                                 <?php
                                                 $cities_arr = $cities;
                                                 if (isset($funeral_service) && !empty($funeral_service))
@@ -540,14 +540,14 @@
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_name" placeholder="Name fo place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_name'] ?>">
+                                            <input type="text" name="burial_name" placeholder="Name of place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <input type="text" name="burial_address" placeholder="Address" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_address'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <div class="input-three-m">
-                                                <select name="burial_state" class="input-css" placeholder="State">
+                                            <div class="input-three-l">
+                                                <select name="burial_state" id="burial_state" class="input-css service-state" placeholder="State">
                                                     <option value="">Select state</option>
                                                     <?php
                                                     foreach ($states as $state) {
@@ -562,13 +562,13 @@
                                                     ?>
                                                 </select>
                                             </div>
-                                            <div class="input-three-l">
+                                            <div class="input-three-m">
                                                 <?php
-                                                $cities_arr = $cities;
+                                                $cities_arr = $cities; 
                                                 if (isset($funeral_service) && !empty($funeral_service))
                                                     $cities_arr = $burial_cities;
                                                 ?>
-                                                <select name="burial_city" class="input-css" placeholder="City">
+                                                <select name="burial_city" id="burial_city" class="input-css" placeholder="City">
                                                     <option value="">Select City</option>
                                                     <?php
                                                     foreach ($cities_arr as $city) {

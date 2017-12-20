@@ -384,6 +384,8 @@ function proceed_step() {
             }
 
         }
+    }else if (profile_process == 4) {
+        
     }
 
 
@@ -488,7 +490,7 @@ function delete_media(obj, data) {
         data: {'gallery': data},
         dataType: "json",
         success: function (data) {
-            if (data.success == true) {
+            if (data.success == true) { 
                 if (data.type == 1) {
                     max_images_count++; //increase max images count if deleted media is image
                 } else {
@@ -736,4 +738,33 @@ $(document).on('change', 'input[name="year[]"],input[name="month[]"],input[name=
             }
         }
     }
+});
+
+// select box change event
+$(document).on('change', '.service-state', function () {
+    state_val = $(this).val();
+    state_id = $(this).attr('id');
+    city_id = '';
+    if (state_id == 'memorial_state') {
+        city_id = 'memorial_city';
+    } else if (state_id == 'funeral_state') {
+        city_id = 'funeral_city';
+    } else if (state_id == 'burial_state') {
+        city_id = 'burial_city';
+    }
+    $('#' + city_id).val();
+
+    $.ajax({
+        url: site_url + "profile/get_cities",
+        type: "POST",
+        data: {state: state_val},
+        dataType: "json",
+        success: function (data) {
+            var options = "<option value=''>Select City</option>";
+            for (var i = 0; i < data.length; i++) {
+                options += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+            }
+            $('#' + city_id).empty().append(options);
+        }
+    });
 });
