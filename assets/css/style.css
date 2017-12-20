@@ -571,7 +571,7 @@ ul.post-video li a img{width:100%;min-height:120px;}
 .funeral-r a.btn-link.color-01:hover{color:#7030a0;background:#fff;}
 .funeral-r a.btn-link.color-02{background:#3097a0;border:2px solid #3097a0;max-width:190px;}
 .funeral-r a.btn-link.color-02:hover{color:#3097a0;background:#fff;}
-p.no-data{padding:0 0 15px;margin:0;line-height:22px;font-size:13px;font-weight:400;display:block;text-align:center;}
+p.no-data{padding:15px 0;margin:0;line-height:22px;font-size:13px;font-weight:400;display:block;text-align:center;color:#999;}
 
 .post-modal .mpopup-body {text-align: center;background: #efefef;padding: 25px;}
 .post-modal .mpopup-body p{margin:0;}
@@ -678,4 +678,6 @@ ul.blog-list-ul li  .blog-box span{margin-bottom:10px;}
 .user-update a.delete:hover{background:transparent;color:#999;}
 .user-update a.public{background:#975979;border:2px solid #975979;}
 .user-update a.public:hover{background:transparent;color:#975979;}
+.loader{ text-align:center;margin: 0 auto;}
+.loader img{max-width:24px;}
 

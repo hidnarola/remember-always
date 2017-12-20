@@ -328,8 +328,8 @@ $.validator.addMethod("maxFileSize",
         }
 );
 $.validator.addMethod('atleast_one_for_post', function (value, element, param) {
-//    if (($('input[name="image[]"]')[0].files.length == 0) && ($('input[name="video[]"]')[0].files.length == 0) && $.trim($('#comment').val()) == '') {
-    if ($.trim($('#comment').val()) == '') {
+    if (($('input[name="images_post[]"]')[0].files.length == 0) && ($('input[name="video_post[]"]')[0].files.length == 0) && $.trim($('#comment').val()) == '') {
+//    if ($.trim($('#comment').val()) == '') {
         return false;
     } else {
         return true;

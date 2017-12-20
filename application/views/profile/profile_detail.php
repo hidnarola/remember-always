@@ -355,18 +355,6 @@
                                 <textarea name="comment" id="comment" placeholder="Add some comment, Images, Video etc..."> </textarea>
                                 <div class="comoon-ul-li list-04">
                                     <ul>
-                                        <li>
-                                            <div class="gallery-wrap">
-                                                <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="gallery-wrap">
-                                                <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
-                                                <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
-                                            </div>
-                                        </li>
-
                                     </ul>
                                 </div>
                                 <div class="comment-btm">
@@ -600,7 +588,7 @@
                                     }
                                 } else {
                                     ?>
-                                    Profile not having life gallery.
+                                <p class="no-data">Profile not having life gallery.</p>
                                 <?php } ?>
                             </ul>
                         </div>
@@ -617,7 +605,7 @@
                                 }
                             } else {
                                 ?>
-                                <p>Fun Facts are not available for this profile.</p>
+                                <p class="no-data">Fun Facts are not available for this profile.</p>
                             <?php } ?>
                         </div>
                     </div>
@@ -650,5 +638,6 @@
     max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
     max_videos_count = <?php echo MAX_VIDEOS_COUNT ?>;
     delete_str = '<?php $this->load->view('delete_svg', true); ?>';
+    user_image = '<?php echo USER_IMAGES ?>';
 </script>
 <script src="assets/js/profile_detail.js"></script>
