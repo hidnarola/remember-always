@@ -211,6 +211,7 @@
                     url: true
                 },
                 image: {
+                    required:true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "MB",

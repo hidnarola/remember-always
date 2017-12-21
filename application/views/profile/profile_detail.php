@@ -317,28 +317,57 @@
                     <div class="profile-box lifetime-line">
                         <h2>Life Time Line</h2>
                         <div class="profile-box-body">
-                            <span><img src="assets/images/helpful-img.jpg" alt="" /></span>
-                            <ul>
-                                <li>
-                                    <div class="lifetime-box">
-                                        <h3><a href="">2002</a></h3>
-                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="lifetime-box">
-                                        <h3><a href="">2004</a></h3>
-                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="lifetime-box">
-                                        <h3><a href="">2006</a></h3>
-                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                    </div>
-                                </li>
+                            <span>
+                                <?php
+                                if (isset($profile['profile_image']) && $profile['profile_image'] != '') {
+                                    echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "''>";
+                                } else {
+                                    echo "<img src='assets/images/profile-pic-01.jpg' alt='' />";
+                                }
+                                ?>
+                            </span>
+                            <ul class="timeline_ul">
+                                <?php
+                                $count = 0;
+                                $total_count = 0;
+                                if (isset($life_timeline) && !empty($life_timeline)) {
+                                    foreach ($life_timeline as $k => $v) {
+                                        $total_count = $v['total_count'];
+                                        ?>
+                                        <li>
+                                            <div class="lifetime-box">
+                                                <h3><a href="">
+                                                        <?php
+                                                        if ($v['date'] != null) {
+                                                            echo $v['date'];
+                                                        } else if ($v['month'] != null) {
+                                                            echo $v['month'] . ' , ' . $v['year'];
+                                                        } else {
+                                                            echo $v['year'];
+                                                        }
+                                                        ?>
+                                                    </a></h3>
+                                                <p><?php echo $v['title']; ?></p>
+                                                <?php if ($v['timeline_media'] != null && $v['media_type'] == 1) { ?>
+                                                    <h6><a href="javascript:void(0)" class="timeline fa fa-image"></a></h6>
+                                                <?php } else if ($v['timeline_media'] != null && $v['media_type'] == 2) { ?>
+                                                    <h6><a href="" class = "fa fa-play-circle-o"></a></h6>
+                                                <?php } else { ?>
+                                                    <h6><a href = "" class = "fa fa-circle-o"></a></h6>
+                                                <?php } ?>
+                                            </div>
+                                        </li>
+                                        <?php
+                                        $count++;
+                                    }
+                                } else {
+                                    ?>
+                                    <li><p class="no-data">No timeline added.</li>
+                                <?php } ?>
                             </ul>
-                            <a href="" class="btn-btm-01">View More</a>
+                            <?php if ($total_count != $count) { ?>
+                                <a href="javascript:void(0)" class="btn-btm-01 view_more_timeline">View More</a>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -347,7 +376,6 @@
                         <h2>The Life Bio</h2>
                         <div class="profile-box-body">
                             <p><?php echo isset($profile['life_bio']) && !is_null($profile['life_bio']) ? $profile['life_bio'] : 'Life bio not available for this profile.' ?></p>
-                            <!--<p>Release sheets containing  recently desktop publishing software a aldus pop pageMaker including	.</p>-->
                         </div>
 
                         <div class="post-comment">
@@ -473,7 +501,7 @@
                         </div>
                         <div class="comments-div"  id="content-8">
                             <?php if (isset($posts) && !empty($posts)) { ?>
-                                <ul>
+                                <ul class="post_ul">
                                     <?php
                                     foreach ($posts as $key => $val) {
                                         $from_date = date_create($val['created_at']);
@@ -507,7 +535,7 @@
                                                                     <li>
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
-                                                                                <a class="fancybox" href="<?php echo base_url(POST_IMAGES . $v) ?>" data-fancybox-type="image" rel="post_group_<?php echo $key ?>"><img src="<?php echo base_url(POST_IMAGES . $v) ?>"></a>
+                                                                                <a class="fancybox" href="<?php echo base_url(POST_IMAGES . $v) ?>" data-fancybox-type="image" rel="post_group_<?php echo $val['id'] ?>"><img src="<?php echo base_url(POST_IMAGES . $v) ?>"></a>
                                                                             </span>
                                                                         </div>
                                                                     </li>
@@ -525,7 +553,7 @@
                                                                                     <source src="<?php echo base_url(POST_IMAGES . $v) ?>" type="video/mp4">
                                                                                 </video>
                                                                             </span>
-                                                                            <span class="gallery-play-btn"><a href="<?php echo base_url(POST_IMAGES . $v) ?>" class="fancybox" data-fancybox-type="iframe" rel="post_group_<?php echo $key ?>"><img src="assets/images/play.png" alt=""></a></span>
+                                                                            <span class="gallery-play-btn"><a href="<?php echo base_url(POST_IMAGES . $v) ?>" class="fancybox" data-fancybox-type="iframe" rel="post_group_<?php echo $val['id'] ?>"><img src="assets/images/play.png" alt=""></a></span>
                                                                         </div>
                                                                     </li>
                                                                 <?php } ?>
@@ -540,6 +568,7 @@
                                 <p class="no-data">No post comments available for this profile.</p>
                             <?php } ?>
                         </div>
+
 
                     </div>
                 </div>
@@ -588,7 +617,7 @@
                                     }
                                 } else {
                                     ?>
-                                <p class="no-data">Profile not having life gallery.</p>
+                                    <p class="no-data">Profile not having life gallery.</p>
                                 <?php } ?>
                             </ul>
                         </div>
@@ -614,11 +643,21 @@
                         <h2>Affiliations</h2>
                         <div class="profile-box-body">
                             <ul>
-                                <li><a href="">Sheets containing</a></li>
-                                <li><a href="">More and recently with </a></li>
-                                <li><a href="">Desktop publishing software</a></li>
-                                <li><a href="">Like aldus page</a></li>
-                                <li><a href="">Maker including versions</a></li>
+                                <?php if (isset($affiliations) && !empty($affiliations)) { ?>
+                                    <?php
+                                    foreach ($affiliations as $key => $value) {
+                                        if ($value['free_text'] == 1) {
+                                            ?>
+                                            <li><a><?php echo $value['name'] ?></a></li>
+                                        <?php } else { ?>
+                                            <li><a href="<?php echo site_url('affiliation/view/') . $value['slug'] ?>" ><?php echo $value['name'] ?></a></li>
+                                            <?php
+                                        }
+                                    }
+                                } else {
+                                    ?>
+                                    <li><p class="no-data">No Affiliations available.</p></li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </div>
@@ -632,12 +671,51 @@
         </div>
     </div>	
 </div>
+<div class="modal fade" id="timeline_details">
+    <div class="modal-dialog" role="document">
+        <div class="login-signup">
+            <div class="modal-body">
+                <table class="table">
+                    <tbody>
+                        <tr class="popup-input">
+                            <td><label>Title</label></td>
+                            <td><span class="timeline_title"></span></td>
+                        </tr>
+                        <tr class="popup-input">
+                            <td><label>Added on</label></td>
+                            <td><span class="timeline_date"></span></td>
+                        </tr>
+                        <tr class="popup-input">
+                            <td><label>Media</label></td>
+                            <td><span class="timeline_media"></span></td>
+                        </tr>
+                        <tr class="popup-input">
+                            <td><label>Details</label></td>
+                            <td><span class="timeline_details"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="pup-btn">
+                    <button type="button" onclick="$('#timeline_details').modal('toggle')" class="fa fa-close">close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
+    var user_logged_in = '<?php
+                                if (!$this->is_user_loggedin) {
+                                    echo "not";
+                                } else {
+                                    echo $this->is_user_loggedin;
+                                }
+                                ?>';
     var profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';
     var slug = '<?php echo isset($profile['slug']) ? $profile['slug'] : '' ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
     max_videos_count = <?php echo MAX_VIDEOS_COUNT ?>;
     delete_str = '<?php $this->load->view('delete_svg', true); ?>';
     user_image = '<?php echo USER_IMAGES ?>';
+    post_image = '<?php echo POST_IMAGES ?>';
 </script>
 <script src="assets/js/profile_detail.js"></script>

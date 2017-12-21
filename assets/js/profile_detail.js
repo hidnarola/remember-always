@@ -1,8 +1,10 @@
 var regex_img = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
 var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
+var http_regex = /^(https:\/\/)/i;
 post_data = [];
 post_types = [];
-
+start = 0;
+total_timeline_count = 0;
 $(function () {
     $(".fancybox")
             .fancybox({
@@ -17,9 +19,9 @@ $(function () {
         scrollButtons: {enable: true},
         theme: "3d",
         callbacks: {
-            onScroll: function () {
+            onTotalScroll: function () {
                 if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-                    var limitStart = $("#content-8 ul:not(li > li)").length;
+                    var limitStart = $(".post_ul > li").length;
 //                     $(".loader").show();
                     loadResults(limitStart);
                 }
@@ -34,41 +36,69 @@ $(function () {
 
             autoExpandHorizontalScroll: true, /*auto-expand width for horizontal scrolling: boolean*/
 
-            autoScrollOnFocus: true /*auto-scroll on focused elements: boolean*/
+            autoScrollOnFocus: false /*auto-scroll on focused elements: boolean*/
 
         },
     });
+
     /* For loading more post on scroll event */
     function loadResults(limitStart) {
-        $.ajax({
-            url: site_url + 'profile/load_posts/' + limitStart +'/'+ profile_id,
-            type: "post",
-            dataType: "json",
-            success: function (data) {
-                var string = '';
-//                $.each(data, function (index, value) {
-//                    string += '<li>' +
-//                            '<div class="comments-div-wrap"><span class="commmnet-postted-img">';
-//                    if (typeof value['image'] != 'undefined' && value['image'] != null) {
-//                        string += '<img src="' + user_image + value['media'] + '" width="100%" height="100%" />';
-//                    }
-//                    string += '</span>' +
-//                            '<h3><a href="' + user_image + value['slug'] + '">' + value['name'] + '</a></h3>' +
-//                            '<p>';
-//                    text = value['description'];
-//                    if (value['description'].length > 500) {
-////                        text = value['description'].preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...');
-//                        text = value['description'].substring(0, 500);
-//                        text += '...';
-//                    }
-//                    string += text;
-//                    string += '</p>';
-//                    string += '</div></li>';
-//                    $("#content-8 ul").append(string);
-//                });
+        if (start != limitStart) {
+            start = limitStart;
+            $.ajax({
+                url: site_url + 'profile/load_posts/' + limitStart + '/' + profile_id,
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    var string = '';
+                    $.each(data, function (index, value) {
+                        string += '<li>' +
+                                '<div class="comments-div-wrap"><span class="commmnet-postted-img">';
+                        if (typeof value['profile_image'] != 'undefined' && value['profile_image'] != null) {
+                            if (http_regex.test(value['profile_image'])) {
+                                string += '<img src="' + value['profile_image'] + '" />';
+                            } else {
+                                string += '<img src="' + user_image + value['profile_image'] + '" />';
+                            }
+                        }
+                        string += '</span>' +
+                                '<h3>' + value['firstname'] + ' ' + value['lastname'] + '<small>' + value['interval'] + '  Ago</small></h3>' +
+                                '<p>';
+                        text = value['comment'];
+                        if (value['comment'].length > 200) {
+//                        text = value['description'].preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...');
+                            text = value['comment'].substring(0, 200);
+                            text += '...';
+                        }
+                        string += text;
+                        string += '</p>';
+                        if (typeof value['media'] != 'undefined') {
+                            string += '<div class="comoon-ul-li list-02">' +
+                                    '<ul>';
+                            if (typeof value['media'][1] != 'undefined') {
+                                $.each(value['media'][1], function (i, v) {
+                                    string += '<li><div class="gallery-wrap"><span class="gallery-video-img">'
+                                            + '<a class="fancybox" href="' + post_image + v + '" data-fancybox-type="image" rel="post_group_' + value['id'] + '"><img src="' + post_image + v + '"></a>'
+                                            + '</span></div></li>'
+                                });
+                            }
+                            if (typeof value['media'][2] != 'undefined') {
+                                $.each(value['media'][2], function (i, v) {
+                                    string += '<li><div class="gallery-wrap"><span class="gallery-video-img">'
+                                            + '<video  width="100%" height="150px" controls=""><source src="' + post_image + v + '" type="video/mp4"></video>'
+                                            + '<span class="gallery-play-btn"><a href="' + post_image + v + '" class="fancybox" data-fancybox-type="iframe" rel="post_group_' + value['id'] + '"><img src="assets/images/play.png" alt=""></a></span>'
+                                            + '</span></div></li>'
+                                });
+                            }
+                            string += '</ul></div>';
+                        }
+                        string += '</div></li>';
+                    });
+                    $(".post_ul").append(string);
 //                $(".loader").hide();
-            }
-        });
+                }
+            });
+        }
     }
     /* Sharing with social media */
     function genericSocialShare(url) {
@@ -143,10 +173,58 @@ $(function () {
 //            form.submit();
         },
     });
+    $(document).on('click', "#post_btn", function (e) {
+        if (user_logged_in != true) {
+            e.preventDefault();
+            showErrorMSg('You must login to add post for this profile.');
+        }
+    });
     /* For changing background or cover image */
     $(document).on('change', "#cover_image", function () {
         readcoverURL(this);
     });
+
+    /* For displaying timeline details on click */
+    $(document).on('click', ".timeline", function () {
+        $('#timeline_details').modal();
+    });
+    /* For displaying more timeline on view more click */
+    $(document).on('click', ".view_more_timeline", function () {
+        var limit = $('.timeline_ul li').length;
+        loaTimeline(limit);
+    });
+    /* For loading more post on scroll event */
+    function loaTimeline(limitStart) {
+        $.ajax({
+            url: site_url + 'profile/load_timeline/' + limitStart + '/' + profile_id,
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                var string = '';
+                $.each(data, function (index, value) {
+                    total_timeline_count = value['total_count'];
+                    string += '<li><div class="lifetime-box"><h3><a href="">';
+                    string += value['interval'];
+                    string += '</a></h3>';
+                    string += '<p>' + value['title'] + '</p>';
+                    if (value['timeline_media'] != null && value['media_type'] == 1) {
+                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-image"></a></h6>';
+                    } else if (value['timeline_media'] != null && value['media_type'] == 2) {
+                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-play-circle-o"></a></h6>';
+                    } else {
+                        string += '<h6><a href = "" class = "fa fa-circle-o"></a></h6>';
+                    }
+                    string += '</div></li>';
+                });
+                $(".timeline_ul").append(string);
+                var limit = $('.timeline_ul li').length;
+                if(limit == total_timeline_count){
+                    $('.view_more_timeline').hide();
+                }
+            }
+        });
+
+    }
 });
 
 // Display the preview and error of cover image  */

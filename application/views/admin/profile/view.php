@@ -447,7 +447,7 @@ if ($this->session->flashdata('success')) {
                         $('.added_date').html(data['created_at']);
                         $('.description').html(data['description']);
                     } else {
-                        swal("Success!", "Selected Category is unregsitered so no more information is available.", "error");
+                        swal("Success!", "Affiliation is freetext so no more information is available.", "error");
                     }
                 }
             });
