@@ -384,10 +384,101 @@ function proceed_step() {
             }
 
         }
-    }else if (profile_process == 4) {
-        
+    } else if (profile_process == 4) {
+        console.log('here');
+        service_valid = 1;
+        if ($('#memorial_date').val() != '' || $('#memorial_time').val() != '' || $('#memorial_place').val() != '' || $('#memorial_address').val() != '' || $('#memorial_state').val() != '' || $('#memorial_city').val() != '' || $('#memorial_zip').val() != '') {
+            if (empty($('#memorial_date').val())) {
+                $('#memorial_date').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#memorial_time').val())) {
+                $('#memorial_time').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#memorial_place').val())) {
+                $('#memorial_place').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#memorial_address').val())) {
+                $('#memorial_address').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#memorial_state').val())) {
+                $('#memorial_state').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#memorial_city').val())) {
+                $('#memorial_city').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#memorial_zip').val())) {
+                $('#memorial_zip').addClass('error');
+                service_valid = 0;
+            }
+        }
+        if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
+            if (empty($('#funeral_date').val())) {
+                $('#funeral_date').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_time').val())) {
+                $('#funeral_time').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_place').val())) {
+                $('#funeral_place').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_address').val())) {
+                $('#funeral_address').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_state').val())) {
+                $('#funeral_state').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_city').val())) {
+                $('#funeral_city').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_zip').val())) {
+                $('#funeral_zip').addClass('error');
+                service_valid = 0;
+            }
+        }
+        if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
+            if (empty($('#burial_date').val())) {
+                $('#burial_date').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#burial_time').val())) {
+                $('#burial_time').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#burial_place').val())) {
+                $('#burial_place').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#burial_address').val())) {
+                $('#burial_address').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_state').val())) {
+                $('#burial_state').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_city').val())) {
+                $('#burial_city').addClass('error');
+                service_valid = 0;
+            } else if (empty($('#funeral_zip').val())) {
+                $('#burial_zip').addClass('error');
+                service_valid = 0;
+            }
+        }
+        if (service_valid == 1) {
+            // funeral service data
+            var formData = new FormData(document.getElementById("funeralservice-form"));
+            formData.append('profile_id', profile_id);
+            $.ajax({
+                url: site_url + "profile/add_services",
+                type: "POST",
+                data: formData,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        $('#profile_process').val(5);
+                        profile_steps('sixth-step');
+                    } else {
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        }
     }
-
 
     return false;
 }
@@ -490,7 +581,7 @@ function delete_media(obj, data) {
         data: {'gallery': data},
         dataType: "json",
         success: function (data) {
-            if (data.success == true) { 
+            if (data.success == true) {
                 if (data.type == 1) {
                     max_images_count++; //increase max images count if deleted media is image
                 } else {

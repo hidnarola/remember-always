@@ -408,24 +408,24 @@
                             <h2>Add Funeral Services<small>(optional)</small> </h2>
                             <p>In necessary, enter funeral services information. You will be able to remove this information later.</p>
                         </div>
-                        <form id="funeralservice-form">
+                        <form id="funeralservice-form" method="post">
                             <div class="step-form">
                                 <div class="step-05">
                                     <div class="step-05-l">
                                         <div class="input-wrap">
                                             <label class="label-css">Memorial Services & Viewing Section.</label>
                                             <div class="input-l">
-                                                <input type="text" name="memorial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo date('m/d/Y', strtotime($memorial_service['date'])) ?>">
+                                                <input type="text" name="memorial_date" id="memorial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo date('m/d/Y', strtotime($memorial_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="memorial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo date('h:i A', strtotime($memorial_service['time'])) ?>">
+                                                <input type="text" name="memorial_time" id="memorial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo date('h:i A', strtotime($memorial_service['time'])) ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="memorial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['place_name'] ?>">
+                                            <input type="text" name="memorial_place" id="memorial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="memorial_address" placeholder="Address" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['memorial_address'] ?>">
+                                            <input type="text" name="memorial_address" id="memorial_address" placeholder="Address" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['memorial_address'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-three-l">
@@ -466,7 +466,7 @@
                                                 </select>
                                             </div>
                                             <div class="input-three-r">
-                                                <input type="text" name="memorial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['zip'] ?>">
+                                                <input type="text" name="memorial_zip" id="memorial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -474,17 +474,17 @@
                                         <div class="input-wrap">
                                             <label class="label-css">Funeral Services section</label>
                                             <div class="input-l">
-                                                <input type="text" name="funeral_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo date('m/d/Y', strtotime($funeral_service['date'])) ?>">
+                                                <input type="text" name="funeral_date" id="funeral_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo date('m/d/Y', strtotime($funeral_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="funeral_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo date('h:i A', strtotime($funeral_service['time'])) ?>">
+                                                <input type="text" name="funeral_time" id="funeral_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo date('h:i A', strtotime($funeral_service['time'])) ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="funeral_place" placeholder="Name of place" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['place_name'] ?>">
+                                            <input type="text" name="funeral_place" id="funeral_place" placeholder="Name of place" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="funeral_address" placeholder="Address" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['address'] ?>">
+                                            <input type="text" name="funeral_address" id="funeral_address" placeholder="Address" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['address'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-three-l">
@@ -525,7 +525,7 @@
                                                 </select>
                                             </div>
                                             <div class="input-three-r">
-                                                <input type="text" name="funeral_zip" placeholder="Zip" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['zip'] ?>">
+                                                <input type="text" name="funeral_zip" id="funeral_zip" placeholder="Zip" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -533,17 +533,17 @@
                                         <div class="input-wrap">
                                             <label class="label-css">Burial Section</label>
                                             <div class="input-l">
-                                                <input type="text" name="burial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($burial_service) && !empty($burial_service)) echo date('m/d/Y', strtotime($burial_service['date'])) ?>">
+                                                <input type="text" name="burial_date" id="burial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($burial_service) && !empty($burial_service)) echo date('m/d/Y', strtotime($burial_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="burial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_time'] ?>">
+                                                <input type="text" name="burial_time" id="burial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_time'] ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_name" placeholder="Name of place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_name'] ?>">
+                                            <input type="text" name="burial_place" id="burial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_address" placeholder="Address" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_address'] ?>">
+                                            <input type="text" name="burial_address" id="burial_address" placeholder="Address" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_address'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-three-l">
@@ -564,7 +564,7 @@
                                             </div>
                                             <div class="input-three-m">
                                                 <?php
-                                                $cities_arr = $cities; 
+                                                $cities_arr = $cities;
                                                 if (isset($funeral_service) && !empty($funeral_service))
                                                     $cities_arr = $burial_cities;
                                                 ?>
@@ -584,7 +584,7 @@
                                                 </select>
                                             </div>
                                             <div class="input-three-r">
-                                                <input type="text" name="burial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['zip'] ?>">
+                                                <input type="text" name="burial_zip" id="burial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -592,7 +592,7 @@
                                 <div class="step-btm-btn">
                                     <button class="back" onclick="return back_step()">Back</button>
                                     <button class="skip" onclick="return skip_step()">Skip</button>
-                                    <button class="next" onclick="return false;">Next</button>
+                                    <button class="next" onclick="return proceed_step();">Next</button>
                                 </div>
                             </div>
                         </form>
