@@ -95,6 +95,10 @@ class Posts extends MY_Controller {
             $this->data['error'] = validation_errors();
         } else {
             if (isset($_FILES['image']) && !empty($_FILES['image']['name'][0])) {
+                $directory = 'profile_' . base64_decode(trim($this->input->post('profile_id')));
+                if (!file_exists(POST_IMAGES . $directory)) {
+                    mkdir(POST_IMAGES . $directory);
+                }
                 if (is_numeric($id)) {
                     if (isset($post_media) && !empty($post_media)) {
                         $exist_files = $this->input->post('hidden_other_image_id');
@@ -123,7 +127,7 @@ class Posts extends MY_Controller {
                     $_FILES['custom_image']['tmp_name'] = $_FILES['image']['tmp_name'][$key];
                     $_FILES['custom_image']['error'] = $_FILES['image']['error'][$key];
                     $_FILES['custom_image']['size'] = $_FILES['image']['size'][$key];
-                    $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES);
+                    $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory);
                     if (is_array($image_data)) {
                         $flag = 1;
                         $data['image_validation'] = $image_data['errors'];
@@ -139,7 +143,7 @@ class Posts extends MY_Controller {
                             );
                         } else {
                             $dataArr_media[] = array(
-                                'media' => $image,
+                                'media' => $directory . '/' . $image,
                                 'type' => 1,
                                 'created_at' => date('Y-m-d H:i:s'),
                             );
@@ -171,6 +175,10 @@ class Posts extends MY_Controller {
             }
 
             if (isset($_FILES['video']) && !empty($_FILES['video']['name'][0])) {
+                $directory = 'profile_' . base64_decode(trim($this->input->post('profile_id')));
+                if (!file_exists(POST_IMAGES . $directory)) {
+                    mkdir(POST_IMAGES . $directory);
+                }
                 if (is_numeric($id)) {
                     if (isset($post_media) && !empty($post_media)) {
                         $exist_video_files = $this->input->post('hidden_other_video_id');
@@ -199,7 +207,7 @@ class Posts extends MY_Controller {
                     $_FILES['custom_video']['tmp_name'] = $_FILES['video']['tmp_name'][$key];
                     $_FILES['custom_video']['error'] = $_FILES['video']['error'][$key];
                     $_FILES['custom_video']['size'] = $_FILES['video']['size'][$key];
-                    $video_data = upload_multiple_image('custom_video', end($extension), POST_IMAGES, 'video', 'mp4');
+                    $video_data = upload_multiple_image('custom_video', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
                     if (is_array($video_data)) {
                         $flag = 1;
                         $data['video_validation'] = $video_data['errors'];
@@ -215,7 +223,7 @@ class Posts extends MY_Controller {
                             );
                         } else {
                             $dataArr_media[] = array(
-                                'media' => $video,
+                                'media' => $directory . '/' . $video,
                                 'type' => 2,
                                 'created_at' => date('Y-m-d H:i:s'),
                             );
@@ -238,8 +246,8 @@ class Posts extends MY_Controller {
                         } else {
                             foreach ($dataArr_media as $key => $value) {
                                 if ($value['type'] == 2) {
-                                    var_dump($value);
-                                    p($dataArr_media[$key]['is_delete']);
+//                                    var_dump($value);
+//                                    p($dataArr_media[$key]['is_delete']);
                                     $dataArr_media[$key]['is_delete'] = 1;
                                 }
                             }

@@ -139,7 +139,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Image:</label>
+                                <label>Image: <span class="text-danger">*</span></label>
                                 <div class="row">
                                     <div class="media-left col-md-3" id="image_preview_div">
                                         <?php
@@ -230,7 +230,7 @@
                     required: true,
                 },
                 image: {
-                    // required: true,
+                     required: true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "MB",
@@ -245,7 +245,7 @@
             },
             errorPlacement: function (error, element) {
                 if (element.attr("name") == "image") {
-                    error.appendTo($(".proper_image"));
+                    error.insertAfter($(".uploader"));
                 } else if (element.hasClass('selectpicker')) {
                     error.insertAfter(element.parent().find('.bootstrap-select'));
                 } else {

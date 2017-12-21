@@ -95,7 +95,7 @@
                             <div class="row form-group mt-5">
                                 <div class="col-md-4">
                                     <label>State: <span class="text-danger">*</span></label>
-                                    <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');        ?>">-->
+                                    <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');         ?>">-->
                                     <select name="state" id="state" class="form-control selectpicker">
                                         <option value="">-- Select State --</option>
                                         <?php
@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label>City: <span class="text-danger">*</span></label>
-                                    <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');        ?>">-->
+                                    <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');         ?>">-->
                                     <select name="city" id="city" class="form-control selectpicker">
                                         <option value="">-- Select City --</option>
                                         <?php
@@ -148,17 +148,19 @@
                                 <input type="text" name="website" id="website" class="form-control" value="<?php echo isset($provider_data['website_url']) ? $provider_data['website_url'] : set_value('website'); ?>" placeholder="Please enter website url">
                             </div>
                             <div class="form-group">
-                                <label>Image:</label>
+                                <label>Image: <span class="text-danger">*</span></label>
                                 <div class="row">
-                                    <?php
-                                    if (isset($provider_data['image'])) {
-                                        ?>
-                                        <div class="col-md-3">
-                                            <img heigth="100" width="170" src="<?php echo base_url(PROVIDER_IMAGES . '/' . $provider_data['image']) ?>" alt="">
-                                        </div>
+                                    <div class="col-md-3" id="image_preview_div">
                                         <?php
-                                    }
-                                    ?>
+                                        if (isset($provider_data['image'])) {
+                                            ?>
+                                            <img heigth="100" width="170" src="<?php echo base_url(PROVIDER_IMAGES . '/' . $provider_data['image']) ?>" alt="">
+                                            <?php
+                                        } else {
+                                            ?>
+                                            <img heigth="100" width="170" src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" alt="">
+                                        <?php }?>
+                                    </div>
                                     <div class="col-md-9">
                                         <div class="media-body">
                                             <input type="file" name="image" id="image" class="file-styled">
@@ -167,6 +169,7 @@
                                         <span></span>
                                     </div>
                                 </div>
+                                <div id="proper_image" class="validation-error-label"></div>
                             </div>
                             <div class="text-right">
                                 <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
@@ -229,7 +232,7 @@
                     url: true
                 },
                 image: {
-                    // required: true,
+                    required: true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "KB",
@@ -243,13 +246,11 @@
                 },
             },
             errorPlacement: function (error, element) {
-                if (element.attr("name") == "banner_image") {
-                    error.insertAfter($(".uploader"));
-                } else if (element.attr("name") == "description") {
+                if (element.attr("name") == "description") {
                     error.insertAfter(element);
                 } else if (element.hasClass('selectpicker')) {
                     error.insertAfter(element.parent().find('.bootstrap-select'));
-                }else if (element.attr("name") == "image") {
+                } else if (element.attr("name") == "image") {
                     error.insertAfter($(".uploader"));
                 } else {
                     error.insertAfter(element);
@@ -261,7 +262,9 @@
             },
         });
     });
-
+    $(document).on('change', '#image', function (e) {
+        readURL(this);
+    })
     $(document).on('change', '#state', function () {
         var state_id = $("#state option:selected").val();
         $url = '<?php echo base_url() ?>' + 'admin/providers/get_city';
@@ -278,6 +281,43 @@
     $(".file-styled").uniform({
         fileButtonClass: 'action btn bg-pink'
     });
+
+    var _validFileExtensions = [".jpg", ".jpeg", ".png", ];
+    function readURL(input) {
+        var height = 730, width = 1600, img = '', file = '', val = '';
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                var valid_extensions = /(\.jpg|\.jpeg|\.png)$/i;
+                if (typeof (input.files[0]) != 'undefined') {
+                    if (valid_extensions.test(input.files[0].name)) {
+                        var html = '<img src="' + e.target.result + '" style="width: 170px; height: 100px; border-radius: 2px;" alt="">';
+                    } else {
+                        var html = '<img src="assets/admin/images/placeholder.jpg" style="width: 170px; height: 100px; border-radius: 2px;" alt="">';
+                    }
+                } else {
+                    var html = '<img src="assets/admin/images/placeholder.jpg" style="width: 170px; height: 100px; border-radius: 2px;" alt="">';
+                }
+                $('#image_preview_div').html(html);
+            }
+            reader.readAsDataURL(input.files[0]);
+            // check slider image dimension
+            var _URL = window.URL || window.webkitURL;
+            if ((file = input.files[0])) {
+                img = new Image();
+                img.onload = function () {
+//                    if (this.width < width || this.height < height) {
+//                        is_valid = false;
+//                        $('#proper_image').html('Photo should be ' + width + ' X ' + height + ' or more dimensions');
+//                    } else {
+//                        is_valid = true;
+//                        $('#proper_image').html('');
+//                    }
+                };
+                img.src = _URL.createObjectURL(file);
+            }
+        }
+    }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAylcYpcGylc8GTu_PYJI7sqPVn6ITrVnM&libraries=places&callback=initAutocomplete" async defer></script>
 <script type="text/javascript" src="<?php echo base_url('assets/admin/js/googleAutoComplete.js') ?>"></script>

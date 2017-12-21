@@ -56,7 +56,11 @@
                 <h3><?php echo isset($provider_data['name']) ? $provider_data['name'] : '' ?> <?php echo isset($provider_data['category_name']) ? '(' . $provider_data['category_name'] . ')' : '' ?>
                     <!--<small>Category : </small>-->
                 </h3>
-                <?php echo '<p>' . implode('</p><p>', array_filter(explode("\n", $provider_data['description']))) . '</p>' ?>
+                <p> <?php
+                    if (isset($provider_data['image']) && !is_null($provider_data['image'])) {
+                        ?>
+                    <a href ="<?php echo PROVIDER_IMAGES . $provider_data['image'] ?>" class="fancybox"><img src="<?php echo PROVIDER_IMAGES . $provider_data['image'] ?>"/></a>
+                    <?php } echo implode('</p><p>', array_filter(explode("\n", $provider_data['description']))) ?></p>
                 <div class="srvs-personal-dtl">
                     <h6 class="srvs-contact"><strong>City :</strong> <a><?php echo isset($provider_data['city_name']) ? $provider_data['city_name'] : '' ?></a></h6>
                     <h6 class="srvs-contact"><strong>State :</strong> <a><?php echo isset($provider_data['state_name']) ? $provider_data['state_name'] : '' ?></a></h6>
@@ -73,25 +77,25 @@
 <script>
     function initMap() {
         var prop_lat = '<?php
-                if (isset($provider_data)) {
-                    echo $provider_data['latitute'];
-                }
-                ?>';
+                    if (isset($provider_data)) {
+                        echo $provider_data['latitute'];
+                    }
+                    ?>';
         var prop_lng = '<?php
-                if (isset($provider_data)) {
-                    echo $provider_data['longitute'];
-                }
-                ?>';
+                    if (isset($provider_data)) {
+                        echo $provider_data['longitute'];
+                    }
+                    ?>';
         var prop_address = '<?php
-                if (isset($provider_data)) {
-                    echo $provider_data['location'];
-                }
-                ?>';
+                    if (isset($provider_data)) {
+                        echo $provider_data['location'];
+                    }
+                    ?>';
         var prop_zipcode = '<?php
-                if (isset($provider_data) && !empty($provider_data['zipcode'])) {
-                    echo $provider_data['zipcode'];
-                }
-                ?>';
+                    if (isset($provider_data) && !empty($provider_data['zipcode'])) {
+                        echo $provider_data['zipcode'];
+                    }
+                    ?>';
         if (prop_lat != '' && prop_lng != '') {
             var myLatlng = new google.maps.LatLng(parseFloat(prop_lat), parseFloat(prop_lng));
             console.log(document.getElementById('map'));
@@ -128,7 +132,7 @@
         }
 
     }
-
+    $(".fancybox").fancybox();
     $('#category').selectpicker({
         liveSearch: true,
         size: 5

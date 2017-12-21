@@ -24,9 +24,15 @@ class Profile extends MY_Controller {
 
             $post_id = 0;
             $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
-
             $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
             $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($is_left['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
+            $life_timeline = $this->load_timeline(0, $is_left['id'], true);
+            $sql = "SELECT * FROM ("
+                    . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $is_left['id'] . "
+                       UNION ALL
+                       SELECT p.id,a.name,'0' as free_text,slug,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND a.is_delete=0 
+                    ) a order by created_at";
+            $data['affiliations'] = $this->users_model->customQuery($sql);
             $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
             if (!empty($funnel_services)) {
                 foreach ($funnel_services as $key => $value) {
@@ -41,64 +47,69 @@ class Profile extends MY_Controller {
             }
             $posts = $this->load_posts(0, $is_left['id'], true);
             if ($_POST) {
-                $data = [];
-                $this->form_validation->set_rules('comment', 'comment', 'trim');
-                if ($this->form_validation->run() == FALSE) {
-                    $this->data['error'] = validation_errors();
+                if (!$this->is_user_loggedin) {
+//                    $this->session->set_flashdata('error', 'You must login to access this page');
                     $data['success'] = false;
-                    $data['error'] = 'Post not added.';
+                    $data['error'] = 'You must login to add post for this profile.';
                 } else {
-
-                    if (isset($_FILES['post_upload']) && !empty($_FILES['post_upload']['name'][0])) {
-                        $directory = 'profile_' . $is_left['id'];
-                        if (!file_exists(POST_IMAGES . $directory)) {
-                            mkdir(POST_IMAGES . $directory);
-                        }
-                        foreach ($_FILES['post_upload']['name'] as $key => $value) {
-                            $extension = explode('/', $_FILES['post_upload']['type'][$key]);
-                            $_FILES['custom_image']['name'] = $_FILES['post_upload']['name'][$key];
-                            $_FILES['custom_image']['type'] = $_FILES['post_upload']['type'][$key];
-                            $_FILES['custom_image']['tmp_name'] = $_FILES['post_upload']['tmp_name'][$key];
-                            $_FILES['custom_image']['error'] = $_FILES['post_upload']['error'][$key];
-                            $_FILES['custom_image']['size'] = $_FILES['post_upload']['size'][$key];
-                            if ($this->input->post('post_types')[$key] == 1) {
-                                $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory);
-                            } else {
-                                $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
+                    $data = [];
+                    $this->form_validation->set_rules('comment', 'comment', 'trim');
+                    if ($this->form_validation->run() == FALSE) {
+                        $this->data['error'] = validation_errors();
+                        $data['success'] = false;
+                        $data['error'] = 'Post not added.';
+                    } else {
+                        if (isset($_FILES['post_upload']) && !empty($_FILES['post_upload']['name'][0])) {
+                            $directory = 'profile_' . $is_left['id'];
+                            if (!file_exists(POST_IMAGES . $directory)) {
+                                mkdir(POST_IMAGES . $directory);
                             }
-                            if (is_array($image_data)) {
-                                $flag = 1;
-                                $data['success'] = false;
-                                $data['error'] = $image_data['errors'];
-                            } else {
-                                $image = $image_data;
-                                $dataArr_media[] = array(
-                                    'media' => $directory . '/' . $image,
-                                    'type' => $this->input->post('post_types')[$key],
-                                    'created_at' => date('Y-m-d H:i:s'),
-                                );
+                            foreach ($_FILES['post_upload']['name'] as $key => $value) {
+                                $extension = explode('/', $_FILES['post_upload']['type'][$key]);
+                                $_FILES['custom_image']['name'] = $_FILES['post_upload']['name'][$key];
+                                $_FILES['custom_image']['type'] = $_FILES['post_upload']['type'][$key];
+                                $_FILES['custom_image']['tmp_name'] = $_FILES['post_upload']['tmp_name'][$key];
+                                $_FILES['custom_image']['error'] = $_FILES['post_upload']['error'][$key];
+                                $_FILES['custom_image']['size'] = $_FILES['post_upload']['size'][$key];
+                                if ($this->input->post('post_types')[$key] == 1) {
+                                    $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory);
+                                } else {
+                                    $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
+                                }
+                                if (is_array($image_data)) {
+                                    $flag = 1;
+                                    $data['success'] = false;
+                                    $data['error'] = $image_data['errors'];
+                                } else {
+                                    $image = $image_data;
+                                    $dataArr_media[] = array(
+                                        'media' => $directory . '/' . $image,
+                                        'type' => $this->input->post('post_types')[$key],
+                                        'created_at' => date('Y-m-d H:i:s'),
+                                    );
+                                }
                             }
                         }
-                    }
 
-                    $dataArr = array(
-                        'profile_id' => $is_left['id'],
-                        'user_id' => $is_left['user_id'],
-                        'created_at' => date('Y-m-d H:i:s'),
-                    );
-                    if (!empty(trim($this->input->post('comment')))) {
-                        $dataArr['comment'] = trim($this->input->post('comment'));
-                    }
-                    $id = $this->users_model->common_insert_update('insert', TBL_POSTS, $dataArr);
-                    if (isset($dataArr_media) && !empty($dataArr_media)) {
-                        foreach ($dataArr_media as $key => $value) {
-                            $dataArr_media[$key]['post_id'] = $id;
+                        $dataArr = array(
+                            'profile_id' => $is_left['id'],
+                            'user_id' => $this->user_id,
+                            'created_at' => date('Y-m-d H:i:s'),
+                        );
+                        if (!empty(trim($this->input->post('comment')))) {
+                            $dataArr['comment'] = trim($this->input->post('comment'));
                         }
-                        $this->users_model->batch_insert_update('insert', TBL_POST_MEDIAS, $dataArr_media);
+                        $id = $this->users_model->common_insert_update('insert', TBL_POSTS, $dataArr);
+                        if (isset($dataArr_media) && !empty($dataArr_media)) {
+                            foreach ($dataArr_media as $key => $value) {
+                                $dataArr_media[$key]['post_id'] = $id;
+                            }
+                            $this->users_model->batch_insert_update('insert', TBL_POST_MEDIAS, $dataArr_media);
+                        }
+                        $this->session->set_flashdata('success', 'Post details has been inserted successfully.');
+                        $data['success'] = true;
+                        $data['data'] = 'Post details has been inserted successfully.';
                     }
-                    $this->session->set_flashdata('success', 'Post details has been inserted successfully.');
-                    $data['success'] = true;
-                    $data['data'] = 'Post details has been inserted successfully.';
                 }
                 echo json_encode($data);
                 exit;
@@ -109,6 +120,7 @@ class Profile extends MY_Controller {
             $data['funnel_services'] = $funnel_services_data;
             $data['posts'] = $posts;
             $data['life_gallery'] = $life_gallery;
+            $data['life_timeline'] = $life_timeline;
             $data['title'] = 'Profile';
             $data['breadcrumb'] = ['title' => 'User Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
             $this->template->load('default', 'profile/profile_detail', $data);
@@ -150,7 +162,43 @@ class Profile extends MY_Controller {
             return $final_post_data;
         } else {
             if (!empty($final_post_data)) {
+                foreach ($final_post_data as $key => $val) {
+                    $from_date = date_create($val['created_at']);
+                    $to_date = date_create(date('Y-m-d H:i:s'));
+                    $days_diff = date_diff($from_date, $to_date);
+                    $final_post_data[$key]['interval'] = format_days($days_diff);
+                }
                 echo json_encode($final_post_data);
+            } else {
+                echo '';
+            }
+        }
+    }
+
+    /**
+     * Display Life Timeline on page load and View more click.
+     */
+    public function load_timeline($start, $profile_id, $static = false) {
+        $offset = 3;
+        if ($static === false) {
+            $profile_id = base64_decode($profile_id);
+        }
+        $final_post_data = [];
+        $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*,(SELECT COUNT(*) FROM ' . TBL_LIFE_TIMELINE . ' l' . ' WHERE l.is_delete=0) as total_count', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.id DESC', 'limit' => $offset, 'offset' => $start]);
+        if ($static === true) {
+            return $timeline_data;
+        } else {
+            if (!empty($timeline_data)) {
+                foreach ($timeline_data as $k => $v) {
+                    if ($v['date'] != null) {
+                        $timeline_data[$k]['interval'] = $v['date'];
+                    } else if ($v['month'] != null) {
+                        $timeline_data[$k]['interval'] = $v['month'] . ' , ' . $v['year'];
+                    } else {
+                        $timeline_data[$k]['interval'] = $v['year'];
+                    }
+                }
+                echo json_encode($timeline_data);
             } else {
                 echo '';
             }

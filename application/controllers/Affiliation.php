@@ -30,7 +30,7 @@ class Affiliation extends MY_Controller {
             $this->session->set_flashdata('error', 'You must login to access this page');
             redirect('/');
         }
-        
+
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
@@ -45,11 +45,10 @@ class Affiliation extends MY_Controller {
                 if (!empty($cities)) {
                     $data['cities'] = $cities;
                 }
-                
             } else {
                 custom_show_404();
             }
-        } 
+        }
         $countries = $this->affiliation_model->sql_select(TBL_COUNTRY . ' c');
         $data['countries'] = $countries;
         $categories = $this->affiliation_model->sql_select(TBL_AFFILIATIONS_CATEGORY, null, ['where' => array('is_delete' => 0)]);
@@ -73,7 +72,16 @@ class Affiliation extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $data['error'] = validation_errors();
         } else {
+            if (!empty(trim($this->input->post('name')))) {
+                $slug = trim($this->input->post('name'));
+            }
+            if (isset($affiliation) && !empty($affiliation)) {
+                $slug = slug($slug, TBL_AFFILIATIONS, trim($id));
+            } else {
+                $slug = slug($slug, TBL_AFFILIATIONS);
+            }
             $dataArr = ['user_id' => $this->user_id,
+                'slug' => $slug,
                 'category_id' => base64_decode(trim($this->input->post('category'))),
                 'name' => trim(htmlentities($this->input->post('name'))),
                 'description' => $this->input->post('description'),
@@ -118,7 +126,7 @@ class Affiliation extends MY_Controller {
         $data['breadcrumb'] = ['title' => 'Add Affiliation', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'affiliation/manage', $data);
     }
-    
+
     /**
      * Get cities  or state based on type passed as data.
      * */
@@ -149,4 +157,27 @@ class Affiliation extends MY_Controller {
         }
         echo $options;
     }
+
+    /**
+     * View a Affiliation.
+     *
+     */
+    public function view($slug) {
+        if (isset($slug) && !empty($slug)) {
+            $affiliation_data = $this->affiliation_model->sql_select(TBL_AFFILIATIONS . ' a', 'a.*,ac.name as category_name,co.name as country_name,c.name as city_name,s.name as state_name', ['where' => array('a.slug' => trim($slug), 'a.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'ac.id=a.category_id AND ac.is_delete=0'), array('table' => TBL_COUNTRY . ' co', 'condition' => 'co.id=a.country'), array('table' => TBL_STATE . ' s', 'condition' => 's.id=a.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=a.city')]]);
+            if (!empty($affiliation_data)) {
+                $profiles = $this->affiliation_model->sql_select(TBL_PROFILE_AFFILIATION . ' pa', 'pa.*,p.firstname,p.lastname,p.profile_image,p.slug', ['where' => array('pa.affiliation_id' => trim($affiliation_data['id']))], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pa.profile_id AND p.is_delete=0')]]);
+                $data['profiles'] = $profiles;
+                $data['affiliation'] = $affiliation_data;
+            } else {
+                custom_show_404();
+            }
+            $data['title'] = 'Affiliations';
+            $data['breadcrumb'] = ['title' => 'Affiliations', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+            $this->template->load('default', 'affiliation/details', $data);
+        } else {
+            custom_show_404();
+        }
+    }
+
 }

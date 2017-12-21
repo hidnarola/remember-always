@@ -93,9 +93,16 @@ class Affiliations extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
-//            p($this->input->post());
-//            var_dump($this);
+            if (!empty(trim($this->input->post('name')))) {
+                $slug = trim($this->input->post('name'));
+            }
+            if (isset($affiliation) && !empty($affiliation)) {
+                $slug = slug($slug, TBL_AFFILIATIONS, trim($id));
+            } else {
+                $slug = slug($slug, TBL_AFFILIATIONS);
+            }
             $dataArr = ['user_id' => $this->user_id,
+                'slug' => $slug,
                 'category_id' => base64_decode(trim($this->input->post('category_id'))),
                 'name' => trim(htmlentities($this->input->post('name'))),
                 'description' => $this->input->post('description'),
@@ -149,7 +156,7 @@ class Affiliations extends MY_Controller {
     }
 
     /**
-     * Edit a Affiliation.
+     * View a Affiliation.
      *
      */
     public function view($id) {

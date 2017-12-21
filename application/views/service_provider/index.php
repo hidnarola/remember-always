@@ -128,13 +128,16 @@
         theme: "3d",
         callbacks: {
             onScroll: function () {
-                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                console.log("on scroll");
+               
+            }, /*user custom callback function on scroll event*/
+            onTotalScroll:function(){
+                 if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
                     var limitStart = $(".service_content li").length;
 //                     $(".loader").show();
                     loadResults(limitStart);
                 }
-            }, /*user custom callback function on scroll event*/
-
+            },
         },
         advanced: {
 
@@ -249,8 +252,8 @@
                     }
                     string += text;
                     string += '</p>';
-                    $(".service_content").append(string);
                 });
+                    $(".service_content").append(string);
 //                $(".loader").hide();
             }
         });
