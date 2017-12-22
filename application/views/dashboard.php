@@ -44,18 +44,28 @@
                 </div>
                 <div class="profile-box services-listings" id="affiliations" <?php echo (isset($slug) && ($slug == 'affiliations')) ? 'style="display:block;"' : 'style="display:none"' ?>>
                     <h2>Affiliations</h2>
-                    <ul class="srvs-list-ul">
-                        <li>
-                            <span></span>
-                            <h3><a href="">All Services Providers</a></h3>
-                            <p>It was popularised in the with the release sheets containing and more recently withdesktop publishing software a aldus.</p>
-                            <div class="user-update">
-                                <a href="" class="edit">Edit </a>
-                                <a href="" class="delete">Delete</a>
-                                <a href="" class="public">Public</a>
-                            </div>
-                        </li>
-                    </ul>
+                    <?php if (isset($affiliations) && !empty($affiliations)) { ?>
+                        <ul class="srvs-list-ul">
+                            <?php foreach ($affiliations as $key => $val) { ?>
+                                <li>
+                                    <span>
+                                        <?php
+                                        if (isset($val['image']) && $val['image'] != '') {
+                                            echo "<img src='" . AFFILIATION_IMAGE . $val['image'] . "' style='width:170px;'>";
+                                        }
+                                        ?>
+                                    </span>
+                                    <h3><a href=""><?php echo $val['name'] . ' (' . $val['category_name'] . ')' ?></a></h3>
+                                    <p><?php echo $val['description'] ?></p>
+                                    <div class="user-update">
+                                        <a href="<?php echo site_url('affiliation/edit/' . $val['slug']) ?>" class="edit">Edit </a>
+                                    </div>
+                                </li>
+                            <?php } ?>
+                        </ul>
+                    <?php } else { ?>
+                        <p class="no-data">No profiles are created.</p>
+                    <?php } ?>
                 </div>
             </div>
         </div>

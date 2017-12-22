@@ -25,8 +25,8 @@ class Dashboard extends MY_Controller {
             $data['profiles'] = $profiles;
             $data['slug'] = '';
         } else if ($slug == 'affiliations') {
-
-//            $data['profiles'] = $profiles;
+            $affiliations = $this->users_model->sql_select(TBL_AFFILIATIONS . ' a', 'a.*,ac.name as category_name', ['where' => ['a.is_delete' => 0, 'a.user_id' => $this->user_id]], ['join' => [array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'ac.id=a.category_id AND ac.is_delete=0')]]);
+            $data['affiliations'] = $affiliations;
             $data['slug'] = 'affiliations';
         } else if ($slug == 'profiles') {
             $profiles = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'user_id' => $this->user_id]]);
@@ -46,16 +46,16 @@ class Dashboard extends MY_Controller {
             $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'slug' => $slug]], ['single' => true]);
             if (!empty($is_left)) {
                 $this->users_model->common_insert_update('update', TBL_PROFILES, ['is_published' => 1, 'updated_at' => date('Y-m-d H:i:s')], ['id' => $is_left['id']]);
-                 $this->session->set_flashdata('success', 'Profile has been published successfully!');
+                $this->session->set_flashdata('success', 'Profile has been published successfully!');
                 $data['success'] = false;
                 $data['data'] = 'Profile has been published successfully!';
             } else {
-                 $this->session->set_flashdata('error', 'Invalid request profile not found.');
+                $this->session->set_flashdata('error', 'Invalid request profile not found.');
                 $data['success'] = false;
                 $data['error'] = 'Invalid request profile not found.';
             }
         } else {
-                 $this->session->set_flashdata('error', 'Invalid request.');
+            $this->session->set_flashdata('error', 'Invalid request.');
             $data['success'] = false;
             $data['error'] = 'Invalid request.';
         }
