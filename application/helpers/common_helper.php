@@ -180,7 +180,13 @@ function upload_image($image_name, $image_path) {
     $CI->upload->initialize($config);
     if ($CI->upload->do_upload($image_name)) {
         $img_data = $CI->upload->data();
-        $imgname = $img_data['file_name'];
+        $randname = uniqid() . time() . '.' . $extension;
+        $file_name = $randname . $img_data['file_ext'];
+        $old_path = $img_data['full_path'];
+        $new_path = $img_data['file_path'] . $file_name;
+        exec(FFMPEG_PATH . ' -i ' . $old_path . ' -vf scale=500:-1 ' . $new_path);
+        unlink($img_data['full_path']);
+        $imgname = $file_name;
     } else {
         $imgname = array('errors' => $CI->upload->display_errors());
     }
@@ -189,16 +195,16 @@ function upload_image($image_name, $image_path) {
 
 /**
  * Uploads video
- * @param string $video_name
- * @param string $video_path
+ * @param string $img_data_name
+ * @param string $img_data_path
  * @return array - Either name of the video if uploaded successfully or Array of errors if video is not uploaded successfully
  */
-function upload_video($video_name, $video_path) {
+function upload_video($img_data_name, $img_data_path) {
     $CI = & get_instance();
-    $extension = explode('/', $_FILES[$video_name]['type']);
+    $extension = explode('/', $_FILES[$img_data_name]['type']);
     $randname = uniqid() . time() . '.' . end($extension);
     $config = array(
-        'upload_path' => $video_path,
+        'upload_path' => $img_data_path,
         'allowed_types' => "mp4",
         'max_size' => (MAX_VIDEO_SIZE * 1024),
         'file_name' => $randname
@@ -206,9 +212,15 @@ function upload_video($video_name, $video_path) {
     //--Load the upload library
     $CI->load->library('upload');
     $CI->upload->initialize($config);
-    if ($CI->upload->do_upload($video_name)) {
+    if ($CI->upload->do_upload($img_data_name)) {
         $img_data = $CI->upload->data();
-        $vdoname = $img_data['file_name'];
+        $randname = uniqid() . time() . '.' . $extension;
+        $file_name = $randname . $img_data['file_ext'];
+        $img_file_name = $randname . '.jpg';
+        exec(FFMPEG_PATH . ' -i ' . $img_data['full_path'] . ' -vcodec libx264 -crf 20 ' . $img_data['file_path'] . $file_name);
+        exec(FFMPEG_PATH . ' -i ' . $img_data['full_path'] . ' -ss 00:00:01.000 -vframes 1 ' . $img_data['file_path'] . $img_file_name);
+        unlink($img_data['full_path']);
+        $vdoname = $file_name;
     } else {
         $vdoname = array('errors' => $CI->upload->display_errors());
     }
@@ -247,9 +259,21 @@ function upload_multiple_image($image_name, $extension, $image_path, $type = 'im
     if ($CI->upload->do_upload($image_name)) {
         $img_data = $CI->upload->data();
         if ($type == 'video') {
-            $imgname = array('upload_data' => $img_data);
+            $randname = uniqid() . time() . '.' . $extension;
+            $file_name = $randname . $img_data['file_ext'];
+            $img_file_name = $randname . '.jpg';
+            exec(FFMPEG_PATH . ' -i ' . $img_data['full_path'] . ' -vcodec libx264 -crf 20 ' . $img_data['file_path'] . $file_name);
+            exec(FFMPEG_PATH . ' -i ' . $img_data['full_path'] . ' -ss 00:00:01.000 -vframes 1 ' . $img_data['file_path'] . $img_file_name);
+            unlink($img_data['full_path']);
+            $imgname = $file_name;
         } else {
-            $imgname = $img_data['file_name'];
+            $randname = uniqid() . time() . '.' . $extension;
+            $file_name = $randname . $img_data['file_ext'];
+            $old_path = $img_data['full_path'];
+            $new_path = $img_data['file_path'] . $file_name;
+            exec(FFMPEG_PATH . ' -i ' . $old_path . ' -vf scale=500:-1 ' . $new_path);
+            unlink($img_data['full_path']);
+            $imgname = $file_name;
         }
     } else {
         $imgname = array('errors' => $CI->upload->display_errors());

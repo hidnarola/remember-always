@@ -85,7 +85,8 @@ $(function () {
                             if (typeof value['media'][2] != 'undefined') {
                                 $.each(value['media'][2], function (i, v) {
                                     string += '<li><div class="gallery-wrap"><span class="gallery-video-img">'
-                                            + '<video  width="100%" height="150px" controls=""><source src="' + post_image + v + '" type="video/mp4"></video>'
+                                            + '<img src="' + post_image + v.replace('mp4', 'jpg') + '">'
+//                                            + '<video  width="100%" height="150px" controls=""><source src="' + post_image + v + '" type="video/mp4"></video>'
                                             + '<span class="gallery-play-btn"><a href="' + post_image + v + '" class="fancybox" data-fancybox-type="iframe" rel="post_group_' + value['id'] + '"><img src="assets/images/play.png" alt=""></a></span>'
                                             + '</span></div></li>'
                                 });
@@ -203,9 +204,12 @@ $(function () {
                         $('#timeline_details .timeline_media').html('<img src="' + timeline_data.url + timeline_data.timeline_media + '"/ width="100px" height="100px">');
                     } else if (timeline_data.timeline_media != null && timeline_data.media_type == 2) {
                         $('#timeline_details .timeline_media').parent().parent().show();
-                        var video_str = '<span><span class="gallery-video-img"><video  width="100%" height="150px" controls="">';
+                        var video_str = '<span><span class="gallery-video-img">';
+                        video_str = '<video  width="100%" height="150px" controls="">';
                         video_str += '<source src="' + timeline_data.url + timeline_data.timeline_media + '" type="video/mp4">';
-                        video_str += '</video></span></span>';
+                        video_str += '</video>';
+//                        video_str += '<img src="' + timeline_data.url + timeline_data.timeline_media.replace('mp4', 'jpg') + '"/ width="100px" height="100px">';
+                        video_str += '</span></span>';
 //                        video_str += '<span class="gallery-play-btn"><a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="iframe" rel="timeline"><img src="assets/images/play.png" alt=""></a></span>'
                         video_str += '<span class="gallery-play-btn"><img src="assets/images/play.png" alt=""></span>'
                         $('#timeline_details .timeline_media').html(video_str);

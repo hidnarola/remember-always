@@ -213,21 +213,17 @@ class Posts extends MY_Controller {
                         $data['video_validation'] = $video_data['errors'];
                     } else {
                         $video = $video_data;
-                        $file_name = $video['upload_data']['file_name'];
-                        $img_file_name = $video['upload_data']['raw_name'] . '.jpg';
-                        exec(FFMPEG_PATH . ' -i ' . $video['upload_data']['full_path'] . ' -vcodec libx264 -crf 20 ' . $video['upload_data']['file_path'] . $file_name);
-                        exec(FFMPEG_PATH . ' -i ' . $video['upload_data']['full_path'] . ' -ss 00:00:01.000 -vframes 1 ' . $video['upload_data']['file_path'] . $img_file_name);
                         if (is_numeric($id)) {
                             $dataArr_media[] = array(
                                 'id' => "''",
                                 'post_id' => $id,
-                                'media' => $directory . '/' . $file_name,
+                                'media' => $directory . '/' . $video,
                                 'type' => 2,
                                 'created_at' => date('Y-m-d H:i:s'),
                             );
                         } else {
                             $dataArr_media[] = array(
-                                'media' => $directory . '/' . $file_name,
+                                'media' => $directory . '/' . $video,
                                 'type' => 2,
                                 'created_at' => date('Y-m-d H:i:s'),
                             );

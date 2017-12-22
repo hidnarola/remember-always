@@ -153,7 +153,7 @@
                                             <?php } else { ?>
                                                 <a class="fancybox" target="_blank" href="<?php echo AFFILIATION_IMAGE . $affiliation['image']; ?>" data-fancybox-group="gallery" ><img src="assets/admin/images/placeholder.jpg" height="90px" width="110px" alt="" class="img-circle"/></a>
                                             <?php } ?>
-                                            <button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php echo base64_encode($affiliation['id']) ?>')"><i class="icon-trash"></i> Remove</button>
+                                            <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id']) ?>')"><i class="icon-trash"></i> Remove</button>-->
                                         <?php } else {
                                             ?>
                                             <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt="">

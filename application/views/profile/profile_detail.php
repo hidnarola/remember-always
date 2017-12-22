@@ -551,9 +551,10 @@
                                                                     <li>
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
-                                                                                <video  width="100%" height="150px" controls="">
-                                                                                    <source src="<?php echo base_url(POST_IMAGES . $v) ?>" type="video/mp4">
-                                                                                </video>
+                                                                                <!--                                                                                <video  width="100%" height="150px" controls="">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)  ?>" type="video/mp4">
+                                                                                                                                                                </video>-->
+                                                                                <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
                                                                             <span class="gallery-play-btn"><a href="<?php echo base_url(POST_IMAGES . $v) ?>" class="fancybox" data-fancybox-type="iframe" rel="post_group_<?php echo $val['id'] ?>"><img src="assets/images/play.png" alt=""></a></span>
                                                                         </div>
@@ -607,9 +608,10 @@
                                             <li>
                                                 <div class="gallery-wrap">
                                                     <span class="gallery-video-img">
-                                                        <video  width="100%" height="100%"controls="">
-                                                            <source src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" type="video/mp4">
-                                                        </video>
+                                                        <!--                                                        <video  width="100%" height="100%"controls="">
+                                                                                                                    <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])  ?>" type="video/mp4">
+                                                                                                                </video>-->
+                                                        <img src="<?php echo base_url(PROFILE_IMAGES . str_replace('mp4', 'jpg', $val['media'])) ?>" width="100%" height="100%">
                                                     </span>
                                                     <span class="gallery-play-btn"><a href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="gallery"><img src="assets/images/play.png" alt=""></a></span>
                                                 </div>
@@ -701,7 +703,7 @@
                         </tr>
                     </tbody>
                 </table>
-                
+
             </div>
         </div>
     </div>
