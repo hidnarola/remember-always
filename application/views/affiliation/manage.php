@@ -26,7 +26,7 @@
                                                 if (isset($categories) && !empty($categories)) {
                                                     foreach ($categories as $key => $value) {
                                                         $selected = '';
-                                                        if (isset($provider_data['category_id']) && $provider_data['category_id'] == $value['id']) {
+                                                        if (isset($affiliation['category_id']) && $affiliation['category_id'] == $value['id']) {
                                                             $selected = 'selected';
                                                         }
                                                         ?>
@@ -42,14 +42,14 @@
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Name <span class="text-danger">*</span></label>
-                                            <input type="text" name="name" id="name" placeholder="Name" class="input-css" value="<?php echo isset($provider_data['name']) ? $provider_data['name'] : set_value('name'); ?>">
+                                            <input type="text" name="name" id="name" placeholder="Name" class="input-css" value="<?php echo isset($affiliation['name']) ? $affiliation['name'] : set_value('name'); ?>">
                                             <?php
                                             echo '<label id="name-error" class="error" for="name">' . form_error('name') . '</label>';
                                             ?>
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Description <span class="text-danger">*</span></label>
-                                            <textarea class="input-css textarea-css" id="description" name="description" placeholder="Description"><?php echo isset($provider_data['description']) ? $provider_data['description'] : set_value('description'); ?></textarea>
+                                            <textarea class="input-css textarea-css" id="description" name="description" placeholder="Description"><?php echo isset($affiliation['description']) ? $affiliation['description'] : set_value('description'); ?></textarea>
                                             <?php
                                             echo '<label id="description-error" class="error" for="description">' . form_error('description') . '</label>';
                                             ?>
@@ -63,7 +63,7 @@
                                                     if (isset($countries) && !empty($countries)) {
                                                         foreach ($countries as $key => $value) {
                                                             $selected = '';
-                                                            if (isset($provider_data) && $provider_data['country'] == $value['id']) {
+                                                            if (isset($affiliation) && $affiliation['country'] == $value['id']) {
                                                                 $selected = 'selected';
                                                             }
                                                             ?>
@@ -84,7 +84,7 @@
                                                     if (isset($states) && !empty($states)) {
                                                         foreach ($states as $key => $value) {
                                                             $selected = '';
-                                                            if (isset($provider_data) && $provider_data['state'] == $value['id']) {
+                                                            if (isset($affiliation) && $affiliation['state'] == $value['id']) {
                                                                 $selected = 'selected';
                                                             }
                                                             ?>
@@ -94,7 +94,7 @@
                                                     }
                                                     ?>
                                                 </select>
-                                                <input type="hidden" name="state_hidden" id="state_hidden" class="form-control" value="<?php echo isset($provider_data['state']) ? base64_encode($provider_data['state']) : set_value('state_hidden'); ?>" >
+                                                <input type="hidden" name="state_hidden" id="state_hidden" class="form-control" value="<?php echo isset($affiliation['state']) ? base64_encode($affiliation['state']) : set_value('state_hidden'); ?>" >
                                                 <?php
                                                 echo '<label id="state_hidden-error" class="error" for="state_hidden">' . form_error('state_hidden') . '</label>';
                                                 ?>
@@ -107,7 +107,7 @@
                                                     if (isset($cities) && !empty($cities)) {
                                                         foreach ($cities as $key => $value) {
                                                             $selected = '';
-                                                            if (isset($provider_data) && $provider_data['city'] == $value['id']) {
+                                                            if (isset($affiliation) && $affiliation['city'] == $value['id']) {
                                                                 $selected = 'selected';
                                                             }
                                                             ?>
@@ -128,8 +128,8 @@
                                             <div class="select-file-upload">
                                                 <span class="select-file_up_btn up_btn">
                                                     <?php
-                                                    if (isset($provider_data) && $provider_data['image'] != '') {
-                                                        echo "<img src='" . PROVIDER_IMAGES . $provider_data['image'] . "'>";
+                                                    if (isset($affiliation) && $affiliation['image'] != '') {
+                                                        echo "<img src='" . AFFILIATION_IMAGE . $affiliation['image'] . "' style='width:170px;'>";
                                                     } else {
                                                         echo 'Upload image for service provider<span>Select File</span>';
                                                     }

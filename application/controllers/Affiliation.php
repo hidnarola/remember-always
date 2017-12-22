@@ -25,16 +25,14 @@ class Affiliation extends MY_Controller {
      * Add a new affiliation.
      *
      */
-    public function add($id = null) {
+    public function add($slug = null) {
         if (!$this->is_user_loggedin) {
             $this->session->set_flashdata('error', 'You must login to access this page');
             redirect('/');
         }
 
-        if (!is_null($id))
-            $id = base64_decode($id);
-        if (is_numeric($id)) {
-            $affiliation = $this->affiliation_model->sql_select(TBL_AFFILIATIONS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+       if (!empty($slug)) {
+            $affiliation = $this->affiliation_model->sql_select(TBL_AFFILIATIONS, null, ['where' => array('slug' => trim($slug), 'is_delete' => 0)], ['single' => true]);
             if (!empty($affiliation)) {
                 $data['affiliation'] = $affiliation;
                 $states = $this->affiliation_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => $affiliation['country'])]);
@@ -76,7 +74,7 @@ class Affiliation extends MY_Controller {
                 $slug = trim($this->input->post('name'));
             }
             if (isset($affiliation) && !empty($affiliation)) {
-                $slug = slug($slug, TBL_AFFILIATIONS, trim($id));
+                $slug = slug($slug, TBL_AFFILIATIONS, trim($affiliation['id']));
             } else {
                 $slug = slug($slug, TBL_AFFILIATIONS);
             }
@@ -94,7 +92,7 @@ class Affiliation extends MY_Controller {
                     $flag = 1;
                     $data['image_validation'] = $image_data['errors'];
                 } else {
-                    if (is_numeric($id)) {
+                    if (!empty($slug)) {
                         if (!empty($affiliation)) {
                             unlink(AFFILIATION_IMAGE . $affiliation['image']);
                         }
@@ -103,17 +101,17 @@ class Affiliation extends MY_Controller {
                     $dataArr['image'] = $provider_image;
                 }
             } else {
-                if (is_numeric($id)) {
+                if (!empty($slug)) {
                     if (!empty($affiliation)) {
-                        $provider_image = $provider_data['image'];
-                        $dataArr['image'] = $provider_data['image'];
+                        $provider_image = $affiliation['image'];
+                        $dataArr['image'] = $affiliation['image'];
                     }
                 }
             }
 //            p($dataArr, 1);
-            if (is_numeric($id)) {
+            if (!empty($slug)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
-                $this->affiliation_model->common_insert_update('update', TBL_AFFILIATIONS, $dataArr, ['id' => $id]);
+                $this->affiliation_model->common_insert_update('update', TBL_AFFILIATIONS, $dataArr, ['id' => $affiliation['id']]);
                 $this->session->set_flashdata('success', 'Affiliation details has been updated successfully.');
             } else {
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
@@ -127,6 +125,14 @@ class Affiliation extends MY_Controller {
         $this->template->load('default', 'affiliation/manage', $data);
     }
 
+    
+    /**
+     * Edit a allifiation.
+     *
+     */
+    public function edit($slug) {
+        $this->add($slug);
+    }
     /**
      * Get cities  or state based on type passed as data.
      * */
@@ -157,7 +163,6 @@ class Affiliation extends MY_Controller {
         }
         echo $options;
     }
-
     /**
      * View a Affiliation.
      *
