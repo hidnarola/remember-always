@@ -2,6 +2,8 @@ body{margin:0;padding:0;border-top:4px solid #975979;}
 input:focus, textarea:focus, select:focus {outline-offset:0;}
 :focus {outline: -webkit-focus-ring-color auto 0;}
 a:focus {outline: none;outline-offset: none;text-decoration: none;}
+a:focus,
+a:hover{text-decoration:none;}
 
 
 /***** header *****/
@@ -557,9 +559,9 @@ ul.post-video li a img{width:100%;min-height:120px;}
 .srvs-personal-point:after{content:'';clear:both;display:block;}
 .srvs-personal-point{list-style:none;margin:0;padding:0 0 10px;}
 .srvs-personal-point li{widtH:49%;float:left;font-size:15px;color:#333;line-height:20px;font-weight:400;font-family:'Roboto';position:relative;padding:0 0 10px 12px;}
-.srvs-personal-point li:after{content:'\f0da';font-family:'FontAwesome';font-size:14px;color:#333;position:absolute;top:0;left:0;line-height:20px;}
+.srvs-personal-point li:after{content:'\f0da';font-family:'FontAwesome';font-size:14px;color:#333;position:absolute;top:0;left:0;line-height:20px;color:#666;}
 .srvs-personal-point li:nth-child(2n+2){float:right;}
-.srvs-personal-point li a{font-size:15px;color:#333;line-height:20px;font-weight:400;font-family:'Roboto';}
+.srvs-personal-point li a{font-size:15px;color:#666;line-height:20px;font-weight:400;font-family:'Roboto';}
 .srvs-personal-point li:hover:after,
 .srvs-personal-point li a:hover{color:#975979;text-decoration:none;}
 
@@ -701,3 +703,22 @@ ul.blog-list-ul li  .blog-box span{margin-bottom:10px;}
 #timeline_details .modal-body {padding: 0;}
 .table{border:1px solid #efefef;}
 .srvs-dtl-l img {max-width:300px;border: 8px solid #fff;box-shadow: 0 0 30px 0 rgba(0,0,0,.1);float: left;margin: 0 20px 10px 0;}
+.akk .srvs-dtl-l {width: 28%;}
+.akk .srvs-dtl-r {width:69%;}
+.profile-css-div h6{padding-bottom:0;}
+.table>tbody>tr>td, 
+.table>tbody>tr>th, 
+.table>tfoot>tr>td, 
+.table>tfoot>tr>th, 
+.table>thead>tr>td, 
+.table>thead>tr>th {padding:10px 15px; line-height:1.42857143; border-top:1px solid #eee; font-size:14px; color:#666; font-weight:400; vertical-align:middle;}
+.table .popup-input label {font-size:15px;margin-bottom:0;}
+#timeline_details .modal-body table tr:nth-child(2n+2){background:#efefef;}
+span.gallery-play-btn img{top: 50%; left: 50%; -webkit-transform:translate(-50%, -50%); -moz-transform:translate(-50%, -50%); transform:translate(-50%, -50%);position:absolute; }
+.timeline_media{display:inline-block; position:relative; }
+
+#timeline_details .pup-btn {position: absolute;top:-28px;right:-34px;width:auto;}
+#timeline_details .pup-btn button{ width:34px;height: 34px;background: #545454;color: #fff; border-radius: 80px;line-height:34px;border: 0;vertical-align: top;text-align: center;}
+#timeline_details .pup-btn i{vertical-align:top;    position: relative;top: -2px;left: 1px;}
+.swal2-modal .swal2-styled:focus {outline: none;box-shadow: none !important;}
+.custom_header{    font-size: 20px;font-weight: 500;font-family: 'Rubik';color: #975979;line-height: 100%;margin: 0 0 15px;border: 0;padding: 0;}

@@ -184,16 +184,16 @@ class Profile extends MY_Controller {
             $profile_id = base64_decode($profile_id);
         }
         $final_post_data = [];
-        $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*,(SELECT COUNT(*) FROM ' . TBL_LIFE_TIMELINE . ' l' . ' WHERE l.is_delete=0) as total_count', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.id DESC', 'limit' => $offset, 'offset' => $start]);
+        $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*,(SELECT COUNT(*) FROM ' . TBL_LIFE_TIMELINE . ' l' . ' WHERE l.is_delete=0) as total_count', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.date,lt.month,lt.year', 'limit' => $offset, 'offset' => $start]);
         if ($static === true) {
             return $timeline_data;
         } else {
             if (!empty($timeline_data)) {
                 foreach ($timeline_data as $k => $v) {
                     if ($v['date'] != null) {
-                        $timeline_data[$k]['interval'] = $v['date'];
+                        $timeline_data[$k]['interval'] = custom_format_date($v['date'], 'date');
                     } else if ($v['month'] != null) {
-                        $timeline_data[$k]['interval'] = $v['month'] . ' , ' . $v['year'];
+                        $timeline_data[$k]['interval'] = custom_format_date($v['month'], 'month') . ' , ' . $v['year'];
                     } else {
                         $timeline_data[$k]['interval'] = $v['year'];
                     }
@@ -203,6 +203,38 @@ class Profile extends MY_Controller {
                 echo '';
             }
         }
+    }
+
+    /**
+     * Display Life Timeline on page load and View more click.
+     */
+    public function view_timeline($id) {
+        if (!is_null($id))
+            $id = base64_decode($id);
+        $data = [];
+        if (is_numeric($id)) {
+            $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*', ['where' => array('lt.id' => trim($id), 'lt.is_delete' => 0)], ['single' => true]);
+            if (!empty($timeline_data)) {
+                $timeline_data['url'] = site_url(PROFILE_IMAGES);
+                if ($timeline_data['date'] != null) {
+                    $timeline_data['interval'] = custom_format_date($timeline_data['date'], 'date');
+                } else if ($timeline_data['month'] != null) {
+                    $timeline_data['interval'] = custom_format_date($timeline_data['month'], 'month') . ', ' . $timeline_data['year'];
+                } else {
+                    $timeline_data['interval'] = $timeline_data['year'];
+                }
+
+                $data['success'] = true;
+                $data['data'] = json_encode($timeline_data);
+            } else {
+                $data['success'] = false;
+                $data['error'] = 'Invalid request timeline not found.';
+            }
+        } else {
+            $data['success'] = false;
+            $data['error'] = 'Invalid request timeline not found.';
+        }
+        echo json_encode($data);
     }
 
     /**

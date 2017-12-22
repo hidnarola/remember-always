@@ -187,6 +187,38 @@ $(function () {
     /* For displaying timeline details on click */
     $(document).on('click', ".timeline", function () {
         $('#timeline_details').modal();
+        var timeline = $(this).data('timeline');
+        $.ajax({
+            url: site_url + 'profile/view_timeline/' + timeline,
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    //-- Remove default preview div
+                    var timeline_data = JSON.parse(data.data);
+                    $('#timeline_details .timeline_title').html(timeline_data.title);
+                    $('#timeline_details .timeline_date').html(timeline_data.interval);
+                    if (timeline_data.timeline_media != null && timeline_data.media_type == 1) {
+                        $('#timeline_details .timeline_media').parent().parent().show();
+                        $('#timeline_details .timeline_media').html('<img src="' + timeline_data.url + timeline_data.timeline_media + '"/ width="100px" height="100px">');
+                    } else if (timeline_data.timeline_media != null && timeline_data.media_type == 2) {
+                        $('#timeline_details .timeline_media').parent().parent().show();
+                        var video_str = '<span><span class="gallery-video-img"><video  width="100%" height="150px" controls="">';
+                        video_str += '<source src="' + timeline_data.url + timeline_data.timeline_media + '" type="video/mp4">';
+                        video_str += '</video></span></span>';
+//                        video_str += '<span class="gallery-play-btn"><a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="iframe" rel="timeline"><img src="assets/images/play.png" alt=""></a></span>'
+                        video_str += '<span class="gallery-play-btn"><img src="assets/images/play.png" alt=""></span>'
+                        $('#timeline_details .timeline_media').html(video_str);
+                    }
+                    if (timeline_data.details != null && timeline_data.details != '') {
+                        $('#timeline_details .timeline_details').parent().parent().show();
+                        $('#timeline_details .timeline_details').html(timeline_data.details);
+                    }
+                } else {
+                    showErrorMSg(data.error);
+                }
+            }
+        });
     });
     /* For displaying more timeline on view more click */
     $(document).on('click', ".view_more_timeline", function () {
@@ -208,17 +240,17 @@ $(function () {
                     string += '</a></h3>';
                     string += '<p>' + value['title'] + '</p>';
                     if (value['timeline_media'] != null && value['media_type'] == 1) {
-                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-image"></a></h6>';
+                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-image" data-timeline="'+btoa(value.id)+'"></a></h6>';
                     } else if (value['timeline_media'] != null && value['media_type'] == 2) {
-                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-play-circle-o"></a></h6>';
+                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-play-circle-o" data-timeline="'+btoa(value.id)+'"></a></h6>';
                     } else {
-                        string += '<h6><a href = "" class = "fa fa-circle-o"></a></h6>';
+                        string += '<h6><a href = "" class = "fa fa-circle-o" data-timeline="'+btoa(value.id)+'"></a></h6>';
                     }
                     string += '</div></li>';
                 });
                 $(".timeline_ul").append(string);
                 var limit = $('.timeline_ul li').length;
-                if(limit == total_timeline_count){
+                if (limit == total_timeline_count) {
                     $('.view_more_timeline').hide();
                 }
             }
@@ -240,8 +272,8 @@ function readcoverURL(input) {
                 if (valid_extensions.test(input.files[0].name)) {
                     img = new Image();
                     img.onload = function () {
-                        console.log("width", this.width);
-                        console.log("height", this.height);
+//                        console.log("width", this.width);
+//                        console.log("height", this.height);
                         if (this.width < width || this.height < height) {
                             showErrorMSg('Photo should be ' + width + ' X ' + height + ' or more dimensions');
                         } else {

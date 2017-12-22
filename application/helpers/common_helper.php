@@ -440,7 +440,41 @@ function format_days($days_diff) {
         }
     }
     return $result;
-//       . (($days_diff->m > 0) ? $days_diff->m . ' Month' . ($days_diff->m > 1 ? 's ' : ' ') : '') . (($days_diff->d > 0) ? $days_diff->d . ' Day' . ($days_diff->d > 1 ? 's ' : ' ') : '') . (($days_diff->h > 0) ? $days_diff->h . ' Hour' . ($days_diff->h > 1 ? 's ' : ' ') : '') . (($days_diff->i > 0) ? $days_diff->i . ' Minute' . ($days_diff->i > 1 ? 's ' : ' ') : '') .(($days_diff->s > 0) ? $days_diff->s . ' Second' . ($days_diff->s > 1 ? 's' : '') : '')
+}
+
+/**
+ * Format the date 
+ *
+ * @param object $date is the date to be passed.
+ * @param object $type is the type that user want, it can be date,month,year.
+ * @return string result
+ */
+function custom_format_date($data, $type, $full = false) {
+    $result = '';
+    $month = array('1' => array('short_name' => 'Jan', 'name' => 'Janurary'),
+        '2' => array('short_name' => 'Feb', 'name' => 'Feburary'),
+        '3' => array('short_name' => 'Mar', 'name' => 'March'),
+        '4' => array('short_name' => 'Apr', 'name' => 'April'),
+        '5' => array('short_name' => 'May', 'name' => 'May'),
+        '6' => array('short_name' => 'June', 'name' => 'June'),
+        '7' => array('short_name' => 'July', 'name' => 'July'),
+        '8' => array('short_name' => 'Aug', 'name' => 'August'),
+        '9' => array('short_name' => 'Sep', 'name' => 'September'),
+        '10' => array('short_name' => 'Oct', 'name' => 'October'),
+        '11' => array('short_name' => 'Nov', 'name' => 'November'),
+        '12' => array('short_name' => 'Dec', 'name' => 'December'),
+    );
+    if (!empty($data) && $type == 'date') {
+        $result = date('M, d, Y', strtotime($data));
+    } else if (!empty($data) && $type == 'month') {
+        if (key_exists($data, $month) && $full == true) {
+            $result = $month[$data]['name'];
+        } else if (key_exists($data, $month) && $full == false) {
+            $result = $month[$data]['short_name'];
+        }
+    }
+    
+    return $result;
 }
 
 /**
