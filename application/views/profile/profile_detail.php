@@ -317,20 +317,22 @@
                     <div class="profile-box lifetime-line">
                         <h2>Life Time Line</h2>
                         <div class="profile-box-body">
-                            <span>
-                                <?php
-                                if (isset($profile['profile_image']) && $profile['profile_image'] != '') {
-                                    echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "''>";
-                                } else {
-                                    echo "<img src='assets/images/profile-pic-01.jpg' alt='' />";
-                                }
+                            <?php
+                            $count = 0;
+                            $total_count = 0;
+                            if (isset($life_timeline) && !empty($life_timeline)) {
                                 ?>
-                            </span>
-                            <ul class="timeline_ul">
-                                <?php
-                                $count = 0;
-                                $total_count = 0;
-                                if (isset($life_timeline) && !empty($life_timeline)) {
+                                <span>
+                                    <?php
+                                    if (isset($profile['profile_image']) && $profile['profile_image'] != '') {
+                                        echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "''>";
+                                    } else {
+                                        echo "<img src='assets/images/profile-pic-01.jpg' alt='' />";
+                                    }
+                                    ?>
+                                </span>
+                                <ul class="timeline_ul">
+                                    <?php
                                     foreach ($life_timeline as $k => $v) {
                                         $total_count = $v['total_count'];
                                         ?>
@@ -339,9 +341,9 @@
                                                 <h3><a href="">
                                                         <?php
                                                         if ($v['date'] != null) {
-                                                            echo $v['date'];
+                                                            echo custom_format_date($v['date'], 'date');
                                                         } else if ($v['month'] != null) {
-                                                            echo $v['month'] . ' , ' . $v['year'];
+                                                            echo custom_format_date($v['month'], 'month') . ' , ' . $v['year'];
                                                         } else {
                                                             echo $v['year'];
                                                         }
@@ -349,22 +351,22 @@
                                                     </a></h3>
                                                 <p><?php echo $v['title']; ?></p>
                                                 <?php if ($v['timeline_media'] != null && $v['media_type'] == 1) { ?>
-                                                    <h6><a href="javascript:void(0)" class="timeline fa fa-image"></a></h6>
+                                                    <h6><a href="javascript:void(0)" class="timeline fa fa-image" data-timeline="<?php echo base64_encode($v['id']) ?>"></a></h6>
                                                 <?php } else if ($v['timeline_media'] != null && $v['media_type'] == 2) { ?>
-                                                    <h6><a href="" class = "fa fa-play-circle-o"></a></h6>
+                                                    <h6><a href="javascript:void(0)" class="timeline fa fa-play-circle-o" data-timeline="<?php echo base64_encode($v['id']) ?>"></a></h6>
                                                 <?php } else { ?>
-                                                    <h6><a href = "" class = "fa fa-circle-o"></a></h6>
+                                                    <h6><a href="javascript:void(0)" class="timeline fa fa-circle-o" data-timeline="<?php echo base64_encode($v['id']) ?>"></a></h6>
                                                 <?php } ?>
                                             </div>
                                         </li>
                                         <?php
                                         $count++;
                                     }
-                                } else {
                                     ?>
-                                    <li><p class="no-data">No timeline added.</li>
-                                <?php } ?>
-                            </ul>
+                                </ul>
+                            <?php } else { ?>
+                                <p class="no-data">No timeline added.</p>
+                            <?php } ?>
                             <?php if ($total_count != $count) { ?>
                                 <a href="javascript:void(0)" class="btn-btm-01 view_more_timeline">View More</a>
                             <?php } ?>
@@ -675,6 +677,10 @@
     <div class="modal-dialog" role="document">
         <div class="login-signup">
             <div class="modal-body">
+                <div class="pup-btn">
+                    <button type="button" onclick="$('#timeline_details').modal('toggle')"><i class="fa fa-close"></i></button>
+                </div>    
+                <div class="modal-header custom_header">Life Time Details</div>
                 <table class="table">
                     <tbody>
                         <tr class="popup-input">
@@ -695,14 +701,14 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="pup-btn">
-                    <button type="button" onclick="$('#timeline_details').modal('toggle')" class="fa fa-close">close</button>
-                </div>
+                
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
+    $('#timeline_details .timeline_media').parent().parent().hide();
+    $('#timeline_details .timeline_details').parent().parent().hide();
     var user_logged_in = '<?php
                                 if (!$this->is_user_loggedin) {
                                     echo "not";

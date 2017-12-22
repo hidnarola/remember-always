@@ -17,13 +17,13 @@
         <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
         <link href="assets/css/owl.carousel.css" rel="stylesheet" />
         <link href="assets/css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
+        <link href="assets/css/sweetalert2.css" rel="stylesheet" type="text/css">
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/developer.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" />
         <link href="assets/css/jquery.fancybox.css" rel="stylesheet" />
-
         <script type="text/javascript">
             //Set common javascript variable
             var site_url = "<?php echo site_url() ?>";
@@ -63,6 +63,7 @@
         <script src="assets/js/pnotify.custom.min.js"></script> 
         <script src="assets/js/jquery.fancybox.js"></script>
         <script src="assets/js/jquery.fancybox.pack.js"></script>
+        <script type="text/javascript" src="assets/js/sweetalert2.all.min.js"></script>
         <script src="assets/js/jquery.mCustomScrollbar.js"></script>
         <script src="assets/js/custom.js"></script> 
 
