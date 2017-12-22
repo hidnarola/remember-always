@@ -638,49 +638,47 @@
                                         <input type="file" name="fundraiser_media[]" id="fundraiser_media" multiple> 
                                     </div>
                                 </div>
+                                <ul class="select-gallery">
+                                    <li>
+                                        <div class="gallery-wrap">
+                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="gallery-wrap">
+                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
+                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="gallery-wrap">
+                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
+                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="gallery-wrap">
+                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
+                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="gallery-wrap">
+                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
+                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="gallery-wrap">
+                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
+                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
+                                        </div>
+                                    </li>
+                                </ul>
                             </div>
                         </form>
                     </div>
-                    <ul class="step-02-ul gallery-media">
 
-
-                        <li>
-                            <div class="upload-wrap">
-                                <span></span>
-                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
-                            </div>
-                        </li>
-                        <li>
-                            <div class="upload-wrap">
-                                <span></span>
-                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
-                            </div>
-                        </li>
-                        <li>
-                            <div class="upload-wrap">
-                                <span></span>
-                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
-                            </div>
-                        </li>
-                        <li>
-                            <div class="upload-wrap">
-                                <span></span>
-                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
-                            </div>
-                        </li>
-                        <li>
-                            <div class="upload-wrap">
-                                <span></span>
-                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
-                            </div>
-                        </li>
-                        <li>
-                            <div class="upload-wrap">
-                                <span></span>
-                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
-                            </div>
-                        </li>
-                    </ul>
                     <div class="step-btm-btn">
                         <button class="back" onclick="return back_step()">Back</button>
                         <button class="skip" onclick="return skip_step()">Skip</button>

@@ -118,9 +118,9 @@ function slug($text, $table, $id = NULL) {
     // lowercase
     $text = strtolower($text);
 
-    $used_actions = ['create', 'upload_gallery', 'delete_gallery', 'proceed_steps', 'add_facts', 'check_facts', 'delete_facts',
-        'add_affiliation', 'delete_affiliation', 'add_timeline', 'upload_cover_image', 'delete_timeline', 'lifetimeline', 'add_services',
-        'get_cities'];
+    $used_actions = ['create', 'upload_gallery', 'upload_cover_image', 'delete_gallery', 'upload_post', 'delete_post', 'proceed_steps',
+        'check_facts', 'add_facts', 'delete_facts', 'add_affiliation', 'delete_affiliation', 'check_affiliation', 'lifetimeline',
+        'add_timeline', 'delete_timeline', 'get_cities', 'add_services', 'add_fundraiser'];
     if (empty($text)) {
         $text = 'n-a';
     } elseif (in_array($text, $used_actions)) { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
@@ -473,7 +473,7 @@ function custom_format_date($data, $type, $full = false) {
             $result = $month[$data]['short_name'];
         }
     }
-    
+
     return $result;
 }
 

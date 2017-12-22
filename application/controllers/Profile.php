@@ -314,6 +314,7 @@ class Profile extends MY_Controller {
                     $data['memorial_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $service['state']]]);
                 }
             }
+            $data['fundraiser'] = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['single' => true]);
         }
         if ($this->input->post('profile_process')) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
@@ -937,7 +938,85 @@ class Profile extends MY_Controller {
      * Add fundraiser into profile
      */
     public function add_fundraiser() {
-        
+        if ($this->input->post('profile_id')) {
+            $profile_id = base64_decode($this->input->post('profile_id'));
+            $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+            if (!empty($profile)) {
+                if ($this->input->post('memorial_date') != '' || $this->input->post('memorial_time') != '' || $this->input->post('memorial_place') != '' || $this->input->post('memorial_address') != '' || $this->input->post('memorial_state') != '' || $this->input->post('memorial_city') != '' || $this->input->post('memorial_zip') != '') {
+                    $memorial_serivce = [
+                        'profile_id' => $profile_id,
+                        'service_type' => 'Memorial',
+                        'date' => date('Y-m-d', strtotime($this->input->post('memorial_date'))),
+                        'time' => date('H:i:s', strtotime($this->input->post('memorial_time'))),
+                        'place_name' => $this->input->post('memorial_place'),
+                        'address' => $this->input->post('memorial_address'),
+                        'city' => $this->input->post('memorial_city'),
+                        'state' => $this->input->post('memorial_state'),
+                        'zip' => $this->input->post('memorial_zip'),
+                    ];
+                    $m_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Memorial']], ['single' => true]);
+                    if (!empty($m_service)) {
+                        $memorial_serivce['updated_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('update', TBL_FUNERAL_SERVICES, $memorial_serivce, ['id' => $m_service['id']]);
+                    } else {
+                        $memorial_serivce['created_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('insert', TBL_FUNERAL_SERVICES, $memorial_serivce);
+                    }
+                }
+                if ($this->input->post('funeral_date') != '' || $this->input->post('funeral_time') != '' || $this->input->post('funeral_place') != '' || $this->input->post('funeral_address') != '' || $this->input->post('funeral_state') != '' || $this->input->post('funeral_city') != '' || $this->input->post('funeral_zip') != '') {
+                    $funeral_serivce = [
+                        'profile_id' => $profile_id,
+                        'service_type' => 'Funeral',
+                        'date' => date('Y-m-d', strtotime($this->input->post('funeral_date'))),
+                        'time' => date('H:i:s', strtotime($this->input->post('funeral_time'))),
+                        'place_name' => $this->input->post('funeral_place'),
+                        'address' => $this->input->post('funeral_address'),
+                        'city' => $this->input->post('funeral_city'),
+                        'state' => $this->input->post('funeral_state'),
+                        'zip' => $this->input->post('funeral_zip'),
+                    ];
+                    $f_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Funeral']], ['single' => true]);
+                    if (!empty($f_service)) {
+                        $funeral_serivce['updated_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('update', TBL_FUNERAL_SERVICES, $funeral_serivce, ['id' => $f_service['id']]);
+                    } else {
+                        $funeral_serivce['created_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('insert', TBL_FUNERAL_SERVICES, $funeral_serivce);
+                    }
+                }
+                if ($this->input->post('burial_date') != '' || $this->input->post('burial_time') != '' || $this->input->post('burial_place') != '' || $this->input->post('burial_address') != '' || $this->input->post('burial_state') != '' || $this->input->post('burial_city') != '' || $this->input->post('burial_zip') != '') {
+                    $burial_serivce = [
+                        'profile_id' => $profile_id,
+                        'service_type' => 'Funeral',
+                        'date' => date('Y-m-d', strtotime($this->input->post('burial_date'))),
+                        'time' => date('H:i:s', strtotime($this->input->post('burial_time'))),
+                        'place_name' => $this->input->post('burial_place'),
+                        'address' => $this->input->post('burial_address'),
+                        'city' => $this->input->post('burial_city'),
+                        'state' => $this->input->post('burial_state'),
+                        'zip' => $this->input->post('burial_zip'),
+                    ];
+                    $b_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Burial']], ['single' => true]);
+                    if (!empty($b_service)) {
+                        $b_service['updated_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('update', TBL_FUNERAL_SERVICES, $burial_serivce, ['id' => $b_service['id']]);
+                    } else {
+                        $b_service['created_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('insert', TBL_FUNERAL_SERVICES, $burial_serivce);
+                    }
+                }
+                $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 5], ['id' => $profile_id]);
+                $data['success'] = true;
+            } else {
+                $data['success'] = false;
+                $data['error'] = 'Something went wrong! Please try again later';
+            }
+        } else {
+            $data['success'] = false;
+            $data['error'] = 'Something went wrong! Please try again later,';
+        }
+        echo json_encode($data);
+        exit;
     }
 
     /**

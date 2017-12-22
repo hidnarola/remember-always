@@ -627,96 +627,7 @@ $("#gallery").change(function () {
         showErrorMSg("This browser does not support HTML5 FileReader.");
     }
 });
-$("#fundraiser_media").change(function () {
-    var dvPreview = $("#selected-preview");
-    if (typeof (FileReader) != "undefined") {
-        $($(this)[0].files).each(function (index) {
-            var file = $(this);
-            str = '';
-            if (regex_img.test(file[0].name.toLowerCase())) {
-                //-- check image and video count
-                if (image_count <= max_images_count) {
 
-                    // upload image
-                    var formData = new FormData();
-                    formData.append('profile_id', profile_id);
-                    formData.append('type', 'image');
-                    formData.append('gallery', file[0], file[0].name);
-                    $.ajax({
-                        url: site_url + "profile/upload_gallery",
-                        type: "POST",
-                        data: formData,
-                        dataType: "json",
-                        processData: false, // tell jQuery not to process the data
-                        contentType: false, // tell jQuery not to set contentType
-                        success: function (data) {
-                            if (data.success == true) {
-                                //-- Remove default preview div
-                                $('#default-preview').remove();
-                                var reader = new FileReader();
-
-                                reader.onload = function (e) {
-                                    str = '<li><div class="upload-wrap"><span>';
-                                    str += '<img src="' + e.target.result + '" style="width:100%">';
-                                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
-                                    str += delete_str;
-                                    str += '</a></div></li>';
-                                    dvPreview.append(str);
-                                }
-                                reader.readAsDataURL(file[0]);
-                            } else {
-                                showErrorMSg(data.error);
-                            }
-                        }
-                    });
-                } else {
-                    showErrorMSg("Limit is exceeded to upload images");
-                }
-                image_count++;
-
-            } else if (regex_video.test(file[0].name.toLowerCase())) {
-                if (video_count <= max_videos_count) {
-                    // upload video
-                    var videoData = new FormData();
-                    videoData.append('profile_id', profile_id);
-                    videoData.append('type', 'video');
-                    videoData.append('gallery', file[0], file[0].name);
-                    $.ajax({
-                        url: site_url + "profile/upload_gallery",
-                        type: "POST",
-                        data: videoData,
-                        dataType: "json",
-                        processData: false, // tell jQuery not to process the data
-                        contentType: false, // tell jQuery not to set contentType
-                        success: function (data) {
-                            if (data.success == true) {
-                                $('#default-preview').remove();
-                                str = '<li><div class="upload-wrap"><span>';
-                                str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
-                                str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
-                                str += delete_str;
-                                str += '</a></div></li>';
-                                dvPreview.append(str);
-
-                            } else {
-                                showErrorMSg(data.error);
-                            }
-                        }
-                    });
-
-                } else {
-                    showErrorMSg("Limit is exceeded to upload videos");
-                }
-                video_count++;
-
-            } else {
-                showErrorMSg(file[0].name + " is not a valid image/video file.");
-            }
-        });
-    } else {
-        showErrorMSg("This browser does not support HTML5 FileReader.");
-    }
-});
 function delete_media(obj, data) {
     $.ajax({
         url: site_url + "profile/delete_gallery",
@@ -1005,4 +916,96 @@ $(document).on('change', '.service-state', function () {
 //Textbox change event remove error class
 $(document).on('change', '#memorial_date,#memorial_time,#funeral_date,#funeral_time,#burial_date,#burial_time,#memorial_place,#funeral_place,#burial_place,#burial_address,#funeral_address,#memorial_address,#memorial_state,#memorial_city,#memorial_zip,#funeral_state,#funeral_city,#funeral_zip,#burial_state,#burial_city,#burial_zip', function () {
     $(this).removeClass('error');
+});
+
+//Tribute Fund Raiser Profile
+$("#fundraiser_media").change(function () {
+    var dvPreview = $("#selected-preview");
+    if (typeof (FileReader) != "undefined") {
+        $($(this)[0].files).each(function (index) {
+            var file = $(this);
+            str = '';
+            if (regex_img.test(file[0].name.toLowerCase())) {
+                //-- check image and video count
+                if (image_count <= max_images_count) {
+
+                    // upload image
+                    var formData = new FormData();
+                    formData.append('profile_id', profile_id);
+                    formData.append('type', 'image');
+                    formData.append('gallery', file[0], file[0].name);
+                    $.ajax({
+                        url: site_url + "profile/upload_gallery",
+                        type: "POST",
+                        data: formData,
+                        dataType: "json",
+                        processData: false, // tell jQuery not to process the data
+                        contentType: false, // tell jQuery not to set contentType
+                        success: function (data) {
+                            if (data.success == true) {
+                                //-- Remove default preview div
+                                $('#default-preview').remove();
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    str = '<li><div class="upload-wrap"><span>';
+                                    str += '<img src="' + e.target.result + '" style="width:100%">';
+                                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
+                                    str += delete_str;
+                                    str += '</a></div></li>';
+                                    dvPreview.append(str);
+                                }
+                                reader.readAsDataURL(file[0]);
+                            } else {
+                                showErrorMSg(data.error);
+                            }
+                        }
+                    });
+                } else {
+                    showErrorMSg("Limit is exceeded to upload images");
+                }
+                image_count++;
+
+            } else if (regex_video.test(file[0].name.toLowerCase())) {
+                if (video_count <= max_videos_count) {
+                    // upload video
+                    var videoData = new FormData();
+                    videoData.append('profile_id', profile_id);
+                    videoData.append('type', 'video');
+                    videoData.append('gallery', file[0], file[0].name);
+                    $.ajax({
+                        url: site_url + "profile/upload_gallery",
+                        type: "POST",
+                        data: videoData,
+                        dataType: "json",
+                        processData: false, // tell jQuery not to process the data
+                        contentType: false, // tell jQuery not to set contentType
+                        success: function (data) {
+                            if (data.success == true) {
+                                $('#default-preview').remove();
+                                str = '<li><div class="upload-wrap"><span>';
+                                str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
+                                str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
+                                str += delete_str;
+                                str += '</a></div></li>';
+                                dvPreview.append(str);
+
+                            } else {
+                                showErrorMSg(data.error);
+                            }
+                        }
+                    });
+
+                } else {
+                    showErrorMSg("Limit is exceeded to upload videos");
+                }
+                video_count++;
+
+            } else {
+                showErrorMSg(file[0].name + " is not a valid image/video file.");
+            }
+        });
+    } else {
+        showErrorMSg("This browser does not support HTML5 FileReader.");
+    }
 });
