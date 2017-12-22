@@ -47,7 +47,7 @@ class Dashboard extends MY_Controller {
             if (!empty($is_left)) {
                 $this->users_model->common_insert_update('update', TBL_PROFILES, ['is_published' => 1, 'updated_at' => date('Y-m-d H:i:s')], ['id' => $is_left['id']]);
                 $this->session->set_flashdata('success', 'Profile has been published successfully!');
-                $data['success'] = false;
+                $data['success'] = true;
                 $data['data'] = 'Profile has been published successfully!';
             } else {
                 $this->session->set_flashdata('error', 'Invalid request profile not found.');
@@ -55,10 +55,43 @@ class Dashboard extends MY_Controller {
                 $data['error'] = 'Invalid request profile not found.';
             }
         } else {
-            $this->session->set_flashdata('error', 'Invalid request.');
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
             $data['success'] = false;
-            $data['error'] = 'Invalid request.';
+            $data['error'] = 'Invalid request. Please try again!';
         }
+        echo json_encode($data);
+    }
+
+    /**
+     * Actions for user profiles
+     * @param int $id
+     * */
+    public function profile_action($action, $slug = NULL) {
+        $data = [];
+        if (!empty($slug) && !empty($action)) {
+            $profile_data = $this->users_model->sql_select(TBL_PROFILES, null, ['where' => array('slug' => trim($slug), 'is_delete' => 0)], ['single' => true]);
+            if (!empty($profile_data)) {
+                if ($action == 'delete') {
+                    $update_array = array(
+                        'is_delete' => 1,
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    );
+                }
+                $this->users_model->common_insert_update('update', TBL_PROFILES, $update_array, ['id' => $profile_data['id']]);
+                $this->session->set_flashdata('success', 'Profile has been deleted successfully!');
+                $data['success'] = true;
+                $data['data'] = 'Profile has been deleted successfully!';
+            } else {
+                $this->session->set_flashdata('error', 'Invalid request profile not found!');
+                $data['success'] = false;
+                $data['error'] = 'Invalid request profile not found.';
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
+            $data['success'] = false;
+            $data['error'] = 'Invalid request. Please try again!';
+        }
+        echo json_encode($data);
     }
 
 }

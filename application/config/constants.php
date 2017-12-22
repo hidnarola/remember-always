@@ -145,3 +145,10 @@ define('MAX_IMAGE_SIZE', 10);
 define('MAX_VIDEO_SIZE', 200);
 define('MAX_IMAGES_COUNT', 500);
 define('MAX_VIDEOS_COUNT', 50);
+
+/* to set ffmpeg exe file path*/
+if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
+  define('FFMPEG_PATH', 'D:/wamp64/www/HD/ffmpeg/bin/ffmpeg.exe');
+}else{
+  define('FFMPEG_PATH', 'C:\wamp64\www\remember-always\ffmpeg.exe');
+}

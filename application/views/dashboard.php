@@ -25,11 +25,18 @@
                         <ul class="srvs-list-ul">
                             <?php foreach ($profiles as $key => $val) { ?>
                                 <li>
-                                    <span></span>
-                                    <h3><a href=""><?php echo $val['firstname'] . ' ' . $val['lastname'] . ' (' . $val['nickname'] . ')' ?></a></h3>
+                                    <span>
+                                         <?php
+                                        if (isset($val['profile_image']) && $val['profile_image'] != '') {
+                                            echo "<img src='" . PROFILE_IMAGES . $val['profile_image'] . "' width='100%' height='100%' class='mCS_img_loaded'>";
+                                        }
+                                        ?>
+                                    </span>
+                                    <h3><a href="<?php echo site_url('profile/').$val['slug']?>"><?php echo $val['firstname'] . ' ' . $val['lastname'] . ' (' . $val['nickname'] . ')' ?></a></h3>
                                     <p><?php echo $val['life_bio'] ?></p>
                                     <div class="user-update">
-                                        <a href="javascript:void(0)" class="edit">Edit </a>
+                                        <a href="<?php echo site_url('profile/edit/').$val['slug']?>" class="edit">Edit </a>
+                                            <a href="javascript:void(0)" class="delete profile_delete" data-profile="<?php echo $val['slug'] ?>">Delete</a>
                                         <?php if ($val['is_published'] == 0) { ?>
                                             <a href="javascript:void(0)" class="public publish" data-profile="<?php echo $val['slug'] ?>">Publish</a>
                                         <?php } ?>
@@ -38,7 +45,7 @@
                             <?php } ?>
                         </ul>
                     <?php } else { ?>
-                        <p class="no-data">No profiles are created.</p>
+                        <p class="no-data">No profiles available.</p>
                     <?php } ?>
 
                 </div>
@@ -51,11 +58,11 @@
                                     <span>
                                         <?php
                                         if (isset($val['image']) && $val['image'] != '') {
-                                            echo "<img src='" . AFFILIATION_IMAGE . $val['image'] . "' style='width:170px;'>";
+                                            echo "<img src='" . AFFILIATION_IMAGE . $val['image'] . "' width='100%' height='100%' class='mCS_img_loaded'>";
                                         }
                                         ?>
                                     </span>
-                                    <h3><a href=""><?php echo $val['name'] . ' (' . $val['category_name'] . ')' ?></a></h3>
+                                    <h3><a href="<?php echo site_url('affiliation/view/').$val['slug']?>"><?php echo $val['name'] . ' (' . $val['category_name'] . ')' ?></a></h3>
                                     <p><?php echo $val['description'] ?></p>
                                     <div class="user-update">
                                         <a href="<?php echo site_url('affiliation/edit/' . $val['slug']) ?>" class="edit">Edit </a>
@@ -64,7 +71,7 @@
                             <?php } ?>
                         </ul>
                     <?php } else { ?>
-                        <p class="no-data">No profiles are created.</p>
+                        <p class="no-data">No profiles available.</p>
                     <?php } ?>
                 </div>
             </div>
@@ -102,6 +109,39 @@
         }, function (dismiss) {
             if (dismiss === 'cancel') {
                 swal("Cancelled", "Your profile is not published. :)", "error");
+            }
+        });
+        return false;
+    });
+    $(document).on('click', ".profile_delete", function () {
+        var id = $(this).data("profile");
+        var url = 'dashboard/profile_action/delete/' + id;
+        swal({
+            title: "Are you sure?",
+            text: "You want to delete this profile",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#FF7043",
+            confirmButtonText: "Yes!",
+            cancelButtonText: "No!",
+//            focusConfirm:true,
+            focusCancel: true,
+//          reverseButtons: true,
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    dataType: "json",
+                    success: function (data) {
+                    }
+                });
+                window.location.href = current_url;
+                return true;
+            }
+        }, function (dismiss) {
+            if (dismiss === 'cancel') {
+                swal("Cancelled", "Your profile is safe. :)", "error");
             }
         });
         return false;

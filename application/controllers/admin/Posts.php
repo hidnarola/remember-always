@@ -137,7 +137,7 @@ class Posts extends MY_Controller {
                             $dataArr_media[] = array(
                                 'id' => "''",
                                 'post_id' => $id,
-                                'media' => $image,
+                                'media' => $directory . '/' . $image,
                                 'type' => 1,
                                 'created_at' => date('Y-m-d H:i:s'),
                             );
@@ -208,7 +208,7 @@ class Posts extends MY_Controller {
                     $_FILES['custom_video']['error'] = $_FILES['video']['error'][$key];
                     $_FILES['custom_video']['size'] = $_FILES['video']['size'][$key];
                     $video_data = upload_multiple_image('custom_video', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
-                    if (is_array($video_data)) {
+                    if (key_exists('error', $video_data)) {
                         $flag = 1;
                         $data['video_validation'] = $video_data['errors'];
                     } else {
@@ -217,7 +217,7 @@ class Posts extends MY_Controller {
                             $dataArr_media[] = array(
                                 'id' => "''",
                                 'post_id' => $id,
-                                'media' => $video,
+                                'media' => $directory . '/' . $video,
                                 'type' => 2,
                                 'created_at' => date('Y-m-d H:i:s'),
                             );

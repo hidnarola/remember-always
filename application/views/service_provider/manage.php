@@ -140,14 +140,16 @@
                                             <div class="select-file-upload">
                                                 <span class="select-file_up_btn up_btn">
                                                     <?php
+                                                    $required = 'required="required"';
                                                     if (isset($provider_data) && $provider_data['image'] != '') {
+                                                        $required = '';
                                                         echo "<img src='" . PROVIDER_IMAGES . $provider_data['image'] . "'>";
                                                     } else {
                                                         echo 'Upload image for service provider<span>Select File</span>';
                                                     }
                                                     ?>
                                                 </span>
-                                                <input type="file" name="image" id="image" multiple="false" onchange="readURL(this);"> 
+                                                <input type="file" name="image" id="image" multiple="false" onchange="readURL(this);" <?php echo $required ?>> 
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +213,7 @@
                     url: true
                 },
                 image: {
-                    required:true,
+//                    required: true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "MB",

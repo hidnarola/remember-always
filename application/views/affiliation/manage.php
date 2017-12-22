@@ -128,14 +128,16 @@
                                             <div class="select-file-upload">
                                                 <span class="select-file_up_btn up_btn">
                                                     <?php
+                                                    $required='required="required"';
                                                     if (isset($affiliation) && $affiliation['image'] != '') {
+                                                        $required = '';
                                                         echo "<img src='" . AFFILIATION_IMAGE . $affiliation['image'] . "' style='width:170px;'>";
                                                     } else {
                                                         echo 'Upload image for service provider<span>Select File</span>';
                                                     }
                                                     ?>
                                                 </span>
-                                                <input type="file" name="image" id="image" multiple="false"> 
+                                                <input type="file" name="image" id="image" multiple="false" <?php echo $required ?>> 
                                             </div>
                                         </div>
                                     </div>
@@ -195,7 +197,7 @@
                     required: true,
                 },
                 image: {
-                    required:true,
+//                    required:true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "MB",

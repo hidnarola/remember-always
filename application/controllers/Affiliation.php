@@ -118,7 +118,7 @@ class Affiliation extends MY_Controller {
                 $id = $this->affiliation_model->common_insert_update('insert', TBL_AFFILIATIONS, $dataArr);
                 $this->session->set_flashdata('success', 'Affiliation has been added.');
             }
-            redirect('affiliation/add');
+            redirect('dashboard/affiliations');
         }
         $data['title'] = 'Affiliation';
         $data['breadcrumb'] = ['title' => 'Add Affiliation', 'links' => [['link' => site_url(), 'title' => 'Home']]];
