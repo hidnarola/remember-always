@@ -690,6 +690,7 @@ class Profile extends MY_Controller {
                         } else {
                             $lif_arr['timeline_media'] = $directory . '/' . $sub_directory . '/' . $image_data;
                         }
+                        $lif_arr['media_type'] = 1;
                     } elseif ($extension == 'mp4') {
                         $_FILES['life_video']['name'] = $_FILES['life_pic']['name'][$key];
                         $_FILES['life_video']['type'] = $_FILES['life_pic']['type'][$key];
@@ -705,6 +706,7 @@ class Profile extends MY_Controller {
                         } else {
                             $lif_arr['timeline_media'] = $directory . '/' . $sub_directory . '/' . $video_data;
                         }
+                        $lif_arr['media_type'] = 2;
                     } else {
                         $flag = 1;
                         $data['success'] = false;
@@ -927,7 +929,7 @@ class Profile extends MY_Controller {
             $data['success'] = false;
             $data['error'] = 'Something went wrong! Please try again later,';
         }
-        echo $profile_id = base64_decode($this->input->post('profile_id'));
+        echo json_encode($data);
         exit;
     }
 

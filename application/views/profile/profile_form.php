@@ -425,7 +425,7 @@
                                             <input type="text" name="memorial_place" id="memorial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="memorial_address" id="memorial_address" placeholder="Address" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['memorial_address'] ?>">
+                                            <input type="text" name="memorial_address" id="memorial_address" placeholder="Address" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['address'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-three-l">
@@ -543,7 +543,7 @@
                                             <input type="text" name="burial_place" id="burial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_address" id="burial_address" placeholder="Address" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_address'] ?>">
+                                            <input type="text" name="burial_address" id="burial_address" placeholder="Address" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['address'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-three-l">
@@ -613,21 +613,21 @@
                     <div class="step-06">
                         <div class="step-06-l">
                             <div class="input-wrap">
-                                <label class="label-css">Memorial Services & Viewing Section.</label>
-                                <input type="text" name="" placeholder="Date" class="input-css">
+                                <label class="label-css">Fundraiser Section.</label>
+                                <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Fundraiser Title" class="input-css">
                             </div>
                             <div class="input-wrap">
                                 <div class="input-l">
-                                    <input type="text" name="" placeholder="Fundraising Goal ($)" class="input-css">
+                                    <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0">
                                     <p>Leave empty for campaigns without a fundraising goal.</p>
                                 </div>
                                 <div class="input-r">
-                                    <input type="text" name="" placeholder="End Date" class="input-css">
+                                    <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css">
                                     <p>Leave empty ongoing fundraising campaigns.</p>
                                 </div>
                             </div>
                             <div class="input-wrap">
-                                <textarea class="input-css textarea-css" placeholder="Quod omittam vulputate quo ex."></textarea>
+                                <textarea class="input-css textarea-css" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"></textarea>
                             </div>
                         </div>
                         <div class="step-06-r">
