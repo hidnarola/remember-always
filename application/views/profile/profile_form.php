@@ -611,39 +611,80 @@
 
                 <div class="step-form">
                     <div class="step-06">
-                        <div class="step-06-l">
-                            <div class="input-wrap">
-                                <label class="label-css">Fundraiser Section.</label>
-                                <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Fundraiser Title" class="input-css">
-                            </div>
-                            <div class="input-wrap">
-                                <div class="input-l">
-                                    <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0">
-                                    <p>Leave empty for campaigns without a fundraising goal.</p>
+                        <form method="post" id="fundraiser_profile">
+                            <div class="step-06-l">
+                                <div class="input-wrap">
+                                    <label class="label-css">Fundraiser Section.</label>
+                                    <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Fundraiser Title" class="input-css">
                                 </div>
-                                <div class="input-r">
-                                    <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css">
-                                    <p>Leave empty ongoing fundraising campaigns.</p>
+                                <div class="input-wrap">
+                                    <div class="input-l">
+                                        <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0">
+                                        <p>Leave empty for campaigns without a fundraising goal.</p>
+                                    </div>
+                                    <div class="input-r">
+                                        <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css">
+                                        <p>Leave empty ongoing fundraising campaigns.</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="input-wrap">
-                                <textarea class="input-css textarea-css" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"></textarea>
-                            </div>
-                        </div>
-                        <div class="step-06-r">
-                            <div class="select-file">
-                                <div class="select-file-upload"> 
-                                    <span class="select-file_up_btn">Upload images, Or Videos to fundraiser page <span>Select Files</span></span>
-                                    <input type="file" name="my_doc_upload" id="my_doc_upload" multiple="false"> 
+                                <div class="input-wrap">
+                                    <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"></textarea>
                                 </div>
                             </div>
-                        </div>
-
+                            <div class="step-06-r">
+                                <div class="select-file">
+                                    <div class="select-file-upload"> 
+                                        <span class="select-file_up_btn">Upload images, Or Videos to fundraiser page <span>Select Files</span></span>
+                                        <input type="file" name="fundraiser_media[]" id="fundraiser_media" multiple> 
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
+                    <ul class="step-02-ul gallery-media">
+
+
+                        <li>
+                            <div class="upload-wrap">
+                                <span></span>
+                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
+                            </div>
+                        </li>
+                        <li>
+                            <div class="upload-wrap">
+                                <span></span>
+                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
+                            </div>
+                        </li>
+                        <li>
+                            <div class="upload-wrap">
+                                <span></span>
+                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
+                            </div>
+                        </li>
+                        <li>
+                            <div class="upload-wrap">
+                                <span></span>
+                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
+                            </div>
+                        </li>
+                        <li>
+                            <div class="upload-wrap">
+                                <span></span>
+                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
+                            </div>
+                        </li>
+                        <li>
+                            <div class="upload-wrap">
+                                <span></span>
+                                <a href="javascript:void(0)" class="remove-video"><?php $this->load->view('delete_svg'); ?></a>	
+                            </div>
+                        </li>
+                    </ul>
                     <div class="step-btm-btn">
                         <button class="back" onclick="return back_step()">Back</button>
                         <button class="skip" onclick="return skip_step()">Skip</button>
-                        <button class="next" onclick="return false;">Next</button>
+                        <button class="next" onclick="return proceed_step();">Next</button>
                     </div>
                 </div>
             </div>

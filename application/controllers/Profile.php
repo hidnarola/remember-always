@@ -934,6 +934,13 @@ class Profile extends MY_Controller {
     }
 
     /**
+     * Add fundraiser into profile
+     */
+    public function add_fundraiser() {
+        
+    }
+
+    /**
      * Upload profile post
      * @author AKK
      */

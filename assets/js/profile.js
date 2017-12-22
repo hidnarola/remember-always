@@ -495,6 +495,42 @@ function proceed_step() {
                 }
             });
         }
+    } else if (profile_process == 5) {
+        fundraiser_valid = 1;
+        if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_enddate').val() != '' || $('#fundraiser_details').val() != '') {
+            if ($('#fundraiser_title').val() == '') {
+                $('#fundraiser_title').addClass('error');
+                fundraiser_valid = 0;
+            }
+            if ($('#fundraiser_goal').val() == '') {
+                $('#fundraiser_goal').addClass('error');
+                fundraiser_valid = 0;
+            }
+            if ($('#fundraiser_enddate').val() == '') {
+                $('#fundraiser_enddate').addClass('error');
+                fundraiser_valid = 0;
+            }
+            if ($('#fundraiser_details').val() == '') {
+                $('#fundraiser_details').addClass('error');
+                fundraiser_valid = 0;
+            }
+        }
+        if (fundraiser_valid == 1) {
+            $.ajax({
+                url: site_url + "profile/add_services",
+                type: "POST",
+                data: $('#fundraiser_profile-form').serialize() + "&profile_id=" + profile_id,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        $('#profile_process').val(6);
+                        profile_steps('seventh-step');
+                    } else {
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        }
     }
 
     return false;
@@ -502,6 +538,96 @@ function proceed_step() {
 //-- Gallery step
 var image_count = 0, video_count = 0;
 $("#gallery").change(function () {
+    var dvPreview = $("#selected-preview");
+    if (typeof (FileReader) != "undefined") {
+        $($(this)[0].files).each(function (index) {
+            var file = $(this);
+            str = '';
+            if (regex_img.test(file[0].name.toLowerCase())) {
+                //-- check image and video count
+                if (image_count <= max_images_count) {
+
+                    // upload image
+                    var formData = new FormData();
+                    formData.append('profile_id', profile_id);
+                    formData.append('type', 'image');
+                    formData.append('gallery', file[0], file[0].name);
+                    $.ajax({
+                        url: site_url + "profile/upload_gallery",
+                        type: "POST",
+                        data: formData,
+                        dataType: "json",
+                        processData: false, // tell jQuery not to process the data
+                        contentType: false, // tell jQuery not to set contentType
+                        success: function (data) {
+                            if (data.success == true) {
+                                //-- Remove default preview div
+                                $('#default-preview').remove();
+                                var reader = new FileReader();
+
+                                reader.onload = function (e) {
+                                    str = '<li><div class="upload-wrap"><span>';
+                                    str += '<img src="' + e.target.result + '" style="width:100%">';
+                                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
+                                    str += delete_str;
+                                    str += '</a></div></li>';
+                                    dvPreview.append(str);
+                                }
+                                reader.readAsDataURL(file[0]);
+                            } else {
+                                showErrorMSg(data.error);
+                            }
+                        }
+                    });
+                } else {
+                    showErrorMSg("Limit is exceeded to upload images");
+                }
+                image_count++;
+
+            } else if (regex_video.test(file[0].name.toLowerCase())) {
+                if (video_count <= max_videos_count) {
+                    // upload video
+                    var videoData = new FormData();
+                    videoData.append('profile_id', profile_id);
+                    videoData.append('type', 'video');
+                    videoData.append('gallery', file[0], file[0].name);
+                    $.ajax({
+                        url: site_url + "profile/upload_gallery",
+                        type: "POST",
+                        data: videoData,
+                        dataType: "json",
+                        processData: false, // tell jQuery not to process the data
+                        contentType: false, // tell jQuery not to set contentType
+                        success: function (data) {
+                            if (data.success == true) {
+                                $('#default-preview').remove();
+                                str = '<li><div class="upload-wrap"><span>';
+                                str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
+                                str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
+                                str += delete_str;
+                                str += '</a></div></li>';
+                                dvPreview.append(str);
+
+                            } else {
+                                showErrorMSg(data.error);
+                            }
+                        }
+                    });
+
+                } else {
+                    showErrorMSg("Limit is exceeded to upload videos");
+                }
+                video_count++;
+
+            } else {
+                showErrorMSg(file[0].name + " is not a valid image/video file.");
+            }
+        });
+    } else {
+        showErrorMSg("This browser does not support HTML5 FileReader.");
+    }
+});
+$("#fundraiser_media").change(function () {
     var dvPreview = $("#selected-preview");
     if (typeof (FileReader) != "undefined") {
         $($(this)[0].files).each(function (index) {
