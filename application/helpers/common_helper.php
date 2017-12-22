@@ -246,7 +246,11 @@ function upload_multiple_image($image_name, $extension, $image_path, $type = 'im
     $CI->upload->initialize($config);
     if ($CI->upload->do_upload($image_name)) {
         $img_data = $CI->upload->data();
-        $imgname = $img_data['file_name'];
+        if ($type == 'video') {
+            $imgname = array('upload_data' => $img_data);
+        } else {
+            $imgname = $img_data['file_name'];
+        }
     } else {
         $imgname = array('errors' => $CI->upload->display_errors());
     }
@@ -473,7 +477,7 @@ function custom_format_date($data, $type, $full = false) {
             $result = $month[$data]['short_name'];
         }
     }
-    
+
     return $result;
 }
 
