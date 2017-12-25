@@ -1,5 +1,6 @@
 var regex_img = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
 var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
+fundraiser_media = [];
 $(function () {
     //-- Initialize datepicker
     $('.date-picker').datepicker({
@@ -921,85 +922,48 @@ $(document).on('change', '#memorial_date,#memorial_time,#funeral_date,#funeral_t
 
 //Tribute Fund Raiser Profile
 $("#fundraiser_media").change(function () {
-    var dvPreview = $("#selected-preview");
+    var dvPreview = $("#fundraiser_preview");
     if (typeof (FileReader) != "undefined") {
         $($(this)[0].files).each(function (index) {
             var file = $(this);
             str = '';
             if (regex_img.test(file[0].name.toLowerCase())) {
                 //-- check image and video count
-                if (image_count <= max_images_count) {
-
-                    // upload image
-                    var formData = new FormData();
-                    formData.append('profile_id', profile_id);
-                    formData.append('type', 'image');
-                    formData.append('gallery', file[0], file[0].name);
-                    $.ajax({
-                        url: site_url + "profile/upload_gallery",
-                        type: "POST",
-                        data: formData,
-                        dataType: "json",
-                        processData: false, // tell jQuery not to process the data
-                        contentType: false, // tell jQuery not to set contentType
-                        success: function (data) {
-                            if (data.success == true) {
-                                //-- Remove default preview div
-                                $('#default-preview').remove();
-                                var reader = new FileReader();
-
-                                reader.onload = function (e) {
-                                    str = '<li><div class="upload-wrap"><span>';
-                                    str += '<img src="' + e.target.result + '" style="width:100%">';
-                                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
-                                    str += delete_str;
-                                    str += '</a></div></li>';
-                                    dvPreview.append(str);
-                                }
-                                reader.readAsDataURL(file[0]);
-                            } else {
-                                showErrorMSg(data.error);
-                            }
-                        }
-                    });
-                } else {
-                    showErrorMSg("Limit is exceeded to upload images");
-                }
+//                if (max_fundimages_count <= max_fundimages_count) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        fundraiser_media.push(file[0]);
+                        var index = fundraiser_media.length - 1;
+                        fundraiser_media[index]['index'] = index;
+                        fundraiser_media[index]['media_type'] = 1;
+                        str = '<li><div class="gallery-wrap"><span>';
+                        str += '<img src="' + e.target.result + '" style="width:100%">';
+                        str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this)">';
+                        str += delete_str;
+                        str += '</a></div></li>';
+                        dvPreview.append(str);
+                    }
+                    reader.readAsDataURL(file[0]);
+//                } else {
+//                    showErrorMSg("Limit is exceeded to upload images");
+//                }
                 image_count++;
 
             } else if (regex_video.test(file[0].name.toLowerCase())) {
-                if (video_count <= max_videos_count) {
-                    // upload video
-                    var videoData = new FormData();
-                    videoData.append('profile_id', profile_id);
-                    videoData.append('type', 'video');
-                    videoData.append('gallery', file[0], file[0].name);
-                    $.ajax({
-                        url: site_url + "profile/upload_gallery",
-                        type: "POST",
-                        data: videoData,
-                        dataType: "json",
-                        processData: false, // tell jQuery not to process the data
-                        contentType: false, // tell jQuery not to set contentType
-                        success: function (data) {
-                            if (data.success == true) {
-                                $('#default-preview').remove();
-                                str = '<li><div class="upload-wrap"><span>';
-                                str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
-                                str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
-                                str += delete_str;
-                                str += '</a></div></li>';
-                                dvPreview.append(str);
-
-                            } else {
-                                showErrorMSg(data.error);
-                            }
-                        }
-                    });
-
-                } else {
-                    showErrorMSg("Limit is exceeded to upload videos");
-                }
+//                if (video_count <= max_fundvideos_count) {
+                    fundraiser_media.push(file[0]);
+                    var index = fundraiser_media.length - 1;
+                    fundraiser_media[index]['index'] = index;
+                    fundraiser_media[index]['media_type'] = 2;
+                    str = '<li><div class="gallery-wrap"><span>';
+                    str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
+                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this)">';
+                    str += delete_str;
+                    str += '</a></div></li>';
+                    dvPreview.append(str);
+//                } else {
+//                    showErrorMSg("Limit is exceeded to upload videos");
+//                }
                 video_count++;
 
             } else {
@@ -1010,8 +974,28 @@ $("#fundraiser_media").change(function () {
         showErrorMSg("This browser does not support HTML5 FileReader.");
     }
 });
+
+/**
+ * Redirect to preview profile page
+ * @param {type} obj
+ * @returns {Boolean}
+ */
 function preview_profile(obj) {
     var data_href = $(obj).attr('data-href');
     window.location.href = data_href;
     return false;
+}
+
+function delete_fundmedia(obj) {
+    $(post_data).each(function (key) {
+        if (typeof (post_data[key]) != 'undefined' && post_data[key]['index'] == index) {
+            delete post_data[key];
+        }
+    });
+    if (data == 1) {
+        image_count--; //increase max images count if deleted media is image
+    } else {
+        video_count--; //increase max videos count if deleted media is video
+    }
+    $(obj).parent('.gallery-wrap').parent('li').remove();
 }

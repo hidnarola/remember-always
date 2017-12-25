@@ -611,24 +611,24 @@
 
                 <div class="step-form">
                     <div class="step-06">
-                        <form method="post" id="fundraiser_profile">
+                        <form method="post" id="fundraiser_profile-form">
                             <div class="step-06-l">
                                 <div class="input-wrap">
                                     <label class="label-css">Fundraiser Section.</label>
-                                    <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Fundraiser Title" class="input-css">
+                                    <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Fundraiser Title" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>">
                                 </div>
                                 <div class="input-wrap">
                                     <div class="input-l">
-                                        <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0">
+                                        <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>">
                                         <p>Leave empty for campaigns without a fundraising goal.</p>
                                     </div>
                                     <div class="input-r">
-                                        <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css">
+                                        <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
                                         <p>Leave empty ongoing fundraising campaigns.</p>
                                     </div>
                                 </div>
                                 <div class="input-wrap">
-                                    <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"></textarea>
+                                    <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"><?php if (isset($fundraiser)) echo $fundraiser['fundraiser_details']; ?></textarea>
                                 </div>
                             </div>
                             <div class="step-06-r">
@@ -639,41 +639,33 @@
                                     </div>
                                 </div>
                                 <ul class="select-gallery">
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
-                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
-                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
-                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
-                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt=""></span>
-                                            <span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>
-                                        </div>
-                                    </li>
+                                    <?php
+                                    $fundimage_count = $fundvideo_count = 0;
+                                    if (isset($fundraiser)) {
+                                        foreach ($fundraiser_media as $key => $value) {
+                                            if ($value['type'] == 1) {
+                                                $fundimage_count++;
+                                                ?>
+                                                <li>
+                                                    <div class="gallery-wrap">
+                                                        <span class="gallery-video-img"><img src="<?php echo base_url() . TBL_FUNDRAISER_MEDIA . $value['media']; ?>" alt=""></span>
+                                                    </div>
+                                                </li>
+                                                <?php
+                                            } else {
+                                                $fundvideo_count++;
+                                                ?>
+                                                <li>
+                                                    <div class="gallery-wrap">
+                                                        <video style="width:100%;height:100%" controls><source src="<?php echo TBL_FUNDRAISER_MEDIA . $value['media'] ?>">Your browser does not support HTML5 video.</video>
+                                                    </div>
+                                                </li>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                    ?>
+                                    <div id="fundraiser_preview"></div>
                                 </ul>
                             </div>
                         </form>
@@ -751,6 +743,8 @@
     var profile_id = '<?php echo (isset($profile)) ? base64_encode($profile['id']) : 0 ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT - $image_count ?>;
     max_videos_count = <?php echo MAX_VIDEOS_COUNT - $video_count ?>;
+    max_fundimages_count = <?php echo MAX_IMAGES_COUNT - $fundimage_count ?>;
+    max_fundvideos_count = <?php echo MAX_VIDEOS_COUNT - $fundvideo_count ?>;
     max_facts_count = max_affiliation_count = 10;
     delete_str = '<?php $this->load->view('delete_svg', true); ?>';
     facts_count = <?php echo (isset($profile)) ? $facts_count : 0 ?>;

@@ -941,6 +941,8 @@ class Profile extends MY_Controller {
      * Add fundraiser into profile
      */
     public function add_fundraiser() {
+        p($_POST);
+        p($_FILES, 1);
         if ($this->input->post('profile_id')) {
             $profile_id = base64_decode($this->input->post('profile_id'));
             $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
