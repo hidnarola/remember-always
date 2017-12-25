@@ -630,7 +630,7 @@
                                 <div class="input-wrap">
                                     <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"><?php if (isset($fundraiser)) echo $fundraiser['fundraiser_details']; ?></textarea>
                                 </div>
-                            </div>
+                            </div> 
                             <div class="step-06-r">
                                 <div class="select-file">
                                     <div class="select-file-upload"> 

@@ -1,6 +1,7 @@
 var regex_img = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
 var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
 fundraiser_media = [];
+fundraiser_types = [];
 $(function () {
     //-- Initialize datepicker
     $('.date-picker').datepicker({
@@ -518,10 +519,20 @@ function proceed_step() {
             }
         }
         if (fundraiser_valid == 1) {
+            var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
+            postformData.append('comment', $('#comment').val());
+            $(fundraiser_media).each(function (key) {
+                if (fundraiser_media[key] != null) {
+                    fundraiser_types[key] = [];
+                    fundraiser_types[key] = fundraiser_media[key]['media_type'];
+                    postformData.append('fundraiser_media[]', fundraiser_media[key], fundraiser_media[key].name);
+                    postformData.append('fundraiser_types[]', fundraiser_types[key]);
+                }
+            });
             $.ajax({
-                url: site_url + "profile/add_services",
+                url: site_url + "profile/add_fundraiser",
                 type: "POST",
-                data: $('#fundraiser_profile-form').serialize() + "&profile_id=" + profile_id,
+                data: fundraiser_media,
                 dataType: "json",
                 success: function (data) {
                     if (data.success == true) {
@@ -921,6 +932,7 @@ $(document).on('change', '#memorial_date,#memorial_time,#funeral_date,#funeral_t
 });
 
 //Tribute Fund Raiser Profile
+var fundimage_count = 0, fundvideo_count = 0;
 $("#fundraiser_media").change(function () {
     var dvPreview = $("#fundraiser_preview");
     if (typeof (FileReader) != "undefined") {
@@ -929,7 +941,7 @@ $("#fundraiser_media").change(function () {
             str = '';
             if (regex_img.test(file[0].name.toLowerCase())) {
                 //-- check image and video count
-//                if (max_fundimages_count <= max_fundimages_count) {
+                if (fundimage_count <= max_fundimages_count) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         fundraiser_media.push(file[0]);
@@ -938,33 +950,33 @@ $("#fundraiser_media").change(function () {
                         fundraiser_media[index]['media_type'] = 1;
                         str = '<li><div class="gallery-wrap"><span>';
                         str += '<img src="' + e.target.result + '" style="width:100%">';
-                        str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this)">';
+                        str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this,1,' + index + ')">';
                         str += delete_str;
                         str += '</a></div></li>';
                         dvPreview.append(str);
                     }
                     reader.readAsDataURL(file[0]);
-//                } else {
-//                    showErrorMSg("Limit is exceeded to upload images");
-//                }
-                image_count++;
+                } else {
+                    showErrorMSg("Limit is exceeded to upload images");
+                }
+                fundimage_count++;
 
             } else if (regex_video.test(file[0].name.toLowerCase())) {
-//                if (video_count <= max_fundvideos_count) {
+                if (fundvideo_count <= max_fundvideos_count) {
                     fundraiser_media.push(file[0]);
                     var index = fundraiser_media.length - 1;
                     fundraiser_media[index]['index'] = index;
                     fundraiser_media[index]['media_type'] = 2;
                     str = '<li><div class="gallery-wrap"><span>';
                     str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
-                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this)">';
+                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this,2,' + index + ')">';
                     str += delete_str;
                     str += '</a></div></li>';
                     dvPreview.append(str);
-//                } else {
-//                    showErrorMSg("Limit is exceeded to upload videos");
-//                }
-                video_count++;
+                } else {
+                    showErrorMSg("Limit is exceeded to upload videos");
+                }
+                fundvideo_count++;
 
             } else {
                 showErrorMSg(file[0].name + " is not a valid image/video file.");
@@ -986,16 +998,16 @@ function preview_profile(obj) {
     return false;
 }
 
-function delete_fundmedia(obj) {
-    $(post_data).each(function (key) {
-        if (typeof (post_data[key]) != 'undefined' && post_data[key]['index'] == index) {
-            delete post_data[key];
+function delete_fundmedia(obj, type, index) {
+    $(fundraiser_media).each(function (key) {
+        if (typeof (fundraiser_media[key]) != 'undefined' && fundraiser_media[key]['index'] == index) {
+            delete fundraiser_media[key];
         }
     });
-    if (data == 1) {
-        image_count--; //increase max images count if deleted media is image
+    if (type == 1) {
+        fundimage_count--; //increase max images count if deleted media is image
     } else {
-        video_count--; //increase max videos count if deleted media is video
+        fundvideo_count--; //increase max videos count if deleted media is video
     }
     $(obj).parent('.gallery-wrap').parent('li').remove();
 }
