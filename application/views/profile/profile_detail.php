@@ -2,15 +2,6 @@
     <div class="container">
         <div class="create-profile-box create-profile-body">
             <div class="profile-head">
-<!--                <span>
-                <?php
-//                    if (isset($profile['cover_image']) && $profile['cover_image'] != '') {
-//                        echo "<img src='" . PROFILE_IMAGES . $profile['cover_image'] . "' style='width:1150px;height:339px;'>";
-//                    } else {
-//                        echo "<img src='assets/images/profile-pic.jpg' alt='' />";
-//                    }
-                ?>
-                </span>-->
                 <span class="profile-img">
                     <?php
                     if (isset($profile['cover_image']) && $profile['cover_image'] != '') {
@@ -38,14 +29,16 @@
                         }
                         ?>
                     </div>
-                    <h4><?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Popularised in the the release of' ?> <small> 
-                            <!--<i class="fa fa-map-marker"></i> Galley of type and, Scrambled-->
+                    <h4><?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Popularised in the the release of' ?> 
+                        <small> 
                             Born: <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('d M, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> 
-                            - Death: <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('d M, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?></small> </h4>
+                            - Death: <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('d M, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?>
+                        </small>
+                        <small>Created By: <?php echo isset($profile['u_fname']) ? $profile['u_fname'] . ' ' . $profile['u_lname'] : '-' ?></small> </h4>
                     <?php if (isset($profil['type']) && $profile['type'] == 2) { ?>
                         <a href="" class="donate-btn">Donate</a>
                     <?php } ?>
-                    <a href="" class="flowers-btn">Send Flowers</a>
+                    <a href="javascript:void(0)" class="flowers-btn">Send Flowers</a>
                     <div class="profile-share">
                         <h6>Share</h6>
                         <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -552,7 +545,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)  ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)     ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
@@ -609,7 +602,7 @@
                                                 <div class="gallery-wrap">
                                                     <span class="gallery-video-img">
                                                         <!--                                                        <video  width="100%" height="100%"controls="">
-                                                                                                                    <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])  ?>" type="video/mp4">
+                                                                                                                    <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])     ?>" type="video/mp4">
                                                                                                                 </video>-->
                                                         <img src="<?php echo base_url(PROFILE_IMAGES . str_replace('mp4', 'jpg', $val['media'])) ?>" width="100%" height="100%">
                                                     </span>
