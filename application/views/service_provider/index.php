@@ -54,6 +54,8 @@
                                             if (isset($value['image']) && !is_null($value['image'])) {
                                                 ?>
                                                 <img src="<?php echo PROVIDER_IMAGES . $value['image'] ?>" width="100%" height="100%"/>
+                                            <?php } else { ?>
+                                                <img src="assets/images/no_image.png" width="100%" height="100%"/>
                                             <?php } ?>
                                         </span>
                                         <h3><a href="<?php echo site_url('service_provider/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
@@ -74,11 +76,7 @@
                                 <p class="no-data">No Services available</p>
                             <?php } ?>
                         </ul>
-                        <!--<div class="loader"><img src="assets/images/loader2.gif" /></div>-->
                     </div>
-                    <!--                    <div class="loader" style="display: none">
-                                            <img src="assets/images/loader.gif" />
-                                        </div>-->
                 </div>
             </div>
             <div class="services-pro-r">
@@ -221,7 +219,7 @@
         }
         return false;
     }
-    
+
     function loadResults(limitStart) {
         $.ajax({
             url: '<?php echo site_url() ?>' + 'service_provider/load_providers/' + limitStart + srch_data,

@@ -18,7 +18,7 @@ class Profile extends MY_Controller {
      */
     public function index($slug) {
 
-        $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'slug' => $slug]], ['single' => true]);
+        $is_left = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true, 'join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')]]);
         if (!empty($is_left)) {
             $funnel_services_data = [];
 

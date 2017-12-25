@@ -35,14 +35,13 @@ class Affiliation extends MY_Controller {
      * Display affiliations
      */
     public function load_affiliations($start, $static = false) {
-        $offset = 3;
-        $services = $this->affiliation_model->get_all_affiliation('result', $this->input->get(), $start, $offset);
+        $offset = 5;
+        $affiliations = $this->affiliation_model->get_all_affiliation('result', $this->input->get(), $start, $offset);
         if ($static === true) {
-            return $services;
+            return $affiliations;
         } else {
-            if (!empty($services)) {
-//            p($services);
-                echo json_encode($services);
+            if (!empty($affiliations)) {
+                echo json_encode($affiliations);
             } else {
                 echo '';
             }

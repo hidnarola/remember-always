@@ -18,31 +18,17 @@ class Affiliation_model extends MY_Model {
      * @author : AKK
      */
     public function get_all_affiliation($type = 'result', $data = array(), $start = 0, $offset = 5) {
-        $this->db->select('a.*,ac.name as category');
+        $this->db->select('a.*,ac.name as category,con.name as con_name,st.name as s_name,c.name as c_name');
         $this->db->join(TBL_AFFILIATIONS_CATEGORY . ' ac', 'ac.id=a.category_id AND ac.is_delete=0', 'left');
-// if (!empty($keyword['value'])) {
-//            $this->db->having('name LIKE "%' . $keyword['value'] . '%" OR category_name LIKE "%' . $keyword['value'] . '%"', NULL);
-//        }
+        $this->db->join(TBL_COUNTRY . ' con', 'con.id=a.country', 'left');
+        $this->db->join(TBL_STATE . ' st', 'st.id=a.state', 'left');
+        $this->db->join(TBL_CITY . ' c', 'c.id=a.city', 'left');
         if (isset($data) && !empty($data)) {
             if (isset($data['category'])) {
-                $this->db->where('c.name LIKE ' . $this->db->escape('%' . $data['category'] . '%' . ''));
+                $this->db->where('ac.name LIKE ' . $this->db->escape('%' . $data['category'] . '%' . ''));
             }
             if (isset($data['keyword'])) {
-                $this->db->where('p.name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . ''));
-            }
-
-            if (isset($data['location'])) {
-                if (isset($data['lat']) && isset($data['long']) && !isset($data['location'])) {
-                    $latitude = $longitude = '';
-                    $latitude = $data['lat'];
-                    $longitude = $data['long'];
-                    if ($latitude != '' && $longitude != '') {
-                        $this->db->select('( 3959 * acos( cos( radians(' . $latitude . ') ) * cos( radians( p.latitute ) ) * cos( radians( p.longitute ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( p.latitute ) ) ) ) AS distance');
-                        $this->db->having('distance <', 50);
-                    }
-                } else {
-                    $this->db->where('p.zipcode LIKE ' . $this->db->escape('%' . $data['location'] . '%' . ''));
-                }
+                $this->db->having('a.name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR a.description LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR con_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR s_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR c_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . ''));
             }
         }
         if ($type == 'count') {
@@ -54,6 +40,7 @@ class Affiliation_model extends MY_Model {
         }
         return $res_data;
     }
+
 }
 
 /* End of file Category_model.php */

@@ -5,7 +5,7 @@
             <a href="<?php echo site_url('affiliation/add') ?>" class="pspl">Add Affiliation</a>
         </div>
         <div class="common-body">
-            <div class="services-form">
+            <div class="services-form funeral-srh">
                 <form method="get" name="affiliation_form" id="affiliation_form">
                     <div class="srvs-form-div">
                         <select name="category" id="category" class="selectpicker">
@@ -29,12 +29,6 @@
                         <input type="text" name="keyword" id="keyword" placeholder="Enter Keyword" class="input-css" value="<?php echo (isset($_GET['keyword'])) ? $_GET['keyword'] : set_value('keyword') ?>"/>
                     </div>
                     <div class="srvs-form-div">	
-                        <input type="text" name="location" id="location" placeholder="Location" class="input-css" value="<?php echo ($this->input->get('location') != '') ? $this->input->get('location') : set_value('location'); ?>"/>
-                    </div>
-                    <input type="hidden" name="lat" id="input-latitude" value="<?php echo ($this->input->get('lat') != '') ? $this->input->get('lat') : set_value('lat'); ?>">
-                    <input type="hidden" name="long" id="input-longitude" value="<?php echo ($this->input->get('long') != '') ? $this->input->get('long') : set_value('long'); ?>">
-
-                    <div class="srvs-form-div">	
                         <button type="button"  id="provider_srch_btn" class="next" disabled>Search</button>
                     </div>	
                 </form>
@@ -54,6 +48,8 @@
                                             if (isset($value['image']) && !is_null($value['image'])) {
                                                 ?>
                                                 <img src="<?php echo AFFILIATION_IMAGE . $value['image'] ?>" width="100%" height="100%"/>
+                                            <?php }else{ ?>
+                                                <img src="assets/images/no_image.png" width="100%" height="100%"/>
                                             <?php } ?>
                                         </span>
                                         <h3><a href="<?php echo site_url('affiliation/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
@@ -74,11 +70,7 @@
                                 <p class="no-data">No affiliations available</p>
                             <?php } ?>
                         </ul>
-                        <!--<div class="loader"><img src="assets/images/loader2.gif" /></div>-->
                     </div>
-                    <!--                    <div class="loader" style="display: none">
-                                            <img src="assets/images/loader.gif" />
-                                        </div>-->
                 </div>
             </div>
             <div class="services-pro-r">
@@ -95,7 +87,7 @@
                                 }
                             } else {
                                 ?>
-                                <li><p class="no-data">No Services Categories available.</p></li>
+                                <li><p class="no-data">No Affiliation Categories available.</p></li>
                             <?php } ?>
                         </ul>
 
@@ -113,7 +105,6 @@
         </div>
     </div>
 </div>
-<script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
     var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
     $('.loader').hide();
@@ -128,10 +119,6 @@
         scrollButtons: {enable: true},
         theme: "3d",
         callbacks: {
-            onScroll: function () {
-                console.log("on scroll");
-
-            }, /*user custom callback function on scroll event*/
             onTotalScroll: function () {
                 if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
                     var limitStart = $(".affiliation_content li").length;
@@ -152,30 +139,6 @@
 
         },
     });
-    var input = (document.getElementById('location'));
-    var options = {
-        componentRestrictions: {country: "us"}
-    };
-    var autocomplete = new google.maps.places.Autocomplete(input, options);
-    var infowindow = new google.maps.InfoWindow();
-    google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        infowindow.close();
-        var place = autocomplete.getPlace();
-        if (!place.geometry) {
-            return;
-        }
-        $('#input-latitude').val(place.geometry.location.lat());
-        $('#input-longitude').val(place.geometry.location.lng());
-        var address = '';
-        if (place.address_components) {
-            address = [
-                (place.address_components[0] && place.address_components[0].short_name || ''),
-                (place.address_components[1] && place.address_components[1].short_name || ''),
-                (place.address_components[2] && place.address_components[2].short_name || '')
-            ].join(' ');
-        }
-//            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-    });
     $(document).on('click', '.category_click', function () {
         submit_form($(this).data('value'));
     });
@@ -190,21 +153,16 @@
         }
     });
     $(document).on('click', '#provider_srch_btn', function () {
-        submit_form();
+        submit_form($('#category').val());
     });
     function submit_form(category) {
-        var location = $('#location').val();
         var keyword = $('#keyword').val();
-        var category = $('#category').val();
         if (location == '' && keyword == '' && category == '') {
             window.location.href = site_url + 'affiliation';
         } else if (location == '' && keyword == '' && category != '') {
             window.location.href = site_url + 'affiliation?category=' + category;
         } else {
             var url = '';
-            if (location != '') {
-                url += '?location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
-            }
             if (category != '') {
                 if (url != '')
                     url += '&category=' + category;
