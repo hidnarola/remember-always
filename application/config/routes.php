@@ -84,6 +84,7 @@ $route['profile/delete_timeline'] = 'profile/delete_timeline';
 $route['profile/get_cities'] = 'profile/get_cities';
 $route['profile/add_services'] = 'profile/add_services';
 $route['profile/add_fundraiser'] = 'profile/add_fundraiser';
+$route['profile/test'] = 'profile/test';
 $route['profile/(:any)'] = 'profile/index/$1';
 $route['blog/(:any)'] = 'blog/index/$1';
 $route['logout'] = 'login/logout';
