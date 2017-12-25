@@ -18,7 +18,35 @@ class Affiliation extends MY_Controller {
      * Display 
      */
     public function index() {
-        
+        $affiliation_categories = $this->affiliation_model->sql_select(TBL_AFFILIATIONS_CATEGORY, '*', ['where' => ['is_delete' => 0]]);
+
+        $data['affiliation_categories'] = $affiliation_categories;
+        $data['affiliations'] = $this->load_affiliations(0, true);
+        if (!empty($this->input->get())) {
+            $data['data'] = $this->input->get();
+        }
+        $data['title'] = 'Affiliation';
+
+        $data['breadcrumb'] = ['title' => 'Affiliation', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $this->template->load('default', 'affiliation/index', $data);
+    }
+
+    /**
+     * Display affiliations
+     */
+    public function load_affiliations($start, $static = false) {
+        $offset = 3;
+        $services = $this->affiliation_model->get_all_affiliation('result', $this->input->get(), $start, $offset);
+        if ($static === true) {
+            return $services;
+        } else {
+            if (!empty($services)) {
+//            p($services);
+                echo json_encode($services);
+            } else {
+                echo '';
+            }
+        }
     }
 
     /**
@@ -31,7 +59,7 @@ class Affiliation extends MY_Controller {
             redirect('/');
         }
 
-       if (!empty($slug)) {
+        if (!empty($slug)) {
             $affiliation = $this->affiliation_model->sql_select(TBL_AFFILIATIONS, null, ['where' => array('slug' => trim($slug), 'is_delete' => 0)], ['single' => true]);
             if (!empty($affiliation)) {
                 $data['affiliation'] = $affiliation;
@@ -125,7 +153,6 @@ class Affiliation extends MY_Controller {
         $this->template->load('default', 'affiliation/manage', $data);
     }
 
-    
     /**
      * Edit a allifiation.
      *
@@ -133,6 +160,7 @@ class Affiliation extends MY_Controller {
     public function edit($slug) {
         $this->add($slug);
     }
+
     /**
      * Get cities  or state based on type passed as data.
      * */
@@ -163,6 +191,7 @@ class Affiliation extends MY_Controller {
         }
         echo $options;
     }
+
     /**
      * View a Affiliation.
      *

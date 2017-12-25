@@ -1,18 +1,18 @@
 <div class="common-page">
     <div class="container">
         <div class="common-head">
-            <h2 class="h2title">Services Provider Directory</h2>
-            <a href="<?php echo site_url('service_provider/add') ?>" class="pspl">Post a Services Provider Listing</a>
+            <h2 class="h2title"><?php echo isset($title) ? $title : 'Affiliation' ?></h2>
+            <a href="<?php echo site_url('affiliation/add') ?>" class="pspl">Add Affiliation</a>
         </div>
         <div class="common-body">
             <div class="services-form">
-                <form method="get" name="provider_form" id="provider_form">
+                <form method="get" name="affiliation_form" id="affiliation_form">
                     <div class="srvs-form-div">
                         <select name="category" id="category" class="selectpicker">
                             <option value="">-- Select Category --</option>
                             <?php
-                            if (isset($service_categories) && !empty($service_categories)) {
-                                foreach ($service_categories as $key => $value) {
+                            if (isset($affiliation_categories) && !empty($affiliation_categories)) {
+                                foreach ($affiliation_categories as $key => $value) {
                                     $selected = '';
                                     if (isset($_GET['category']) && $_GET['category'] == $value['name']) {
                                         $selected = 'selected';
@@ -41,22 +41,22 @@
             </div>
             <div class="services-pro-l">
                 <div class="profile-box services-listings" >
-                    <h2>Services Listing</h2>
-                    <div id="service_ul_data">
-                        <ul class="srvs-list-ul service_content" >
+                    <h2>Affiliations Listing</h2>
+                    <div id="affiliation_ul_data" class="affiliation_ul_data">
+                        <ul class="srvs-list-ul affiliation_content" >
                             <?php
-                            if (isset($services) && !empty($services)) {
-                                foreach ($services as $key => $value) {
+                            if (isset($affiliations) && !empty($affiliations)) {
+                                foreach ($affiliations as $key => $value) {
                                     ?>
                                     <li>
                                         <span> 
                                             <?php
                                             if (isset($value['image']) && !is_null($value['image'])) {
                                                 ?>
-                                                <img src="<?php echo PROVIDER_IMAGES . $value['image'] ?>" width="100%" height="100%"/>
+                                                <img src="<?php echo AFFILIATION_IMAGE . $value['image'] ?>" width="100%" height="100%"/>
                                             <?php } ?>
                                         </span>
-                                        <h3><a href="<?php echo site_url('service_provider/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
+                                        <h3><a href="<?php echo site_url('affiliation/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
                                         <p><?php
                                             $text = $value['description'];
                                             if (strlen($value['description']) > 500) {
@@ -71,7 +71,7 @@
                                 }
                             } else {
                                 ?>
-                                <p class="no-data">No Services available</p>
+                                <p class="no-data">No affiliations available</p>
                             <?php } ?>
                         </ul>
                         <!--<div class="loader"><img src="assets/images/loader2.gif" /></div>-->
@@ -83,12 +83,12 @@
             </div>
             <div class="services-pro-r">
                 <div class="profile-box services-ctgr affiliations">
-                    <h2>Services Categories</h2>
+                    <h2>Affiliation Categories</h2>
                     <div class="profile-box-body">
                         <ul>
-                            <?php if (isset($service_categories) && !empty($service_categories)) { ?>
-                                <li><a href="<?php echo site_url('service_provider') ?>" class="<?php echo!isset($_GET['category']) ? 'active' : '' ?>">All Service Providers</a></li>
-                                <?php foreach ($service_categories as $key => $value) {
+                            <?php if (isset($affiliation_categories) && !empty($affiliation_categories)) { ?>
+                                <li><a href="<?php echo site_url('affiliation') ?>" class="<?php echo!isset($_GET['category']) ? 'active' : '' ?>">All Affiliations</a></li>
+                                <?php foreach ($affiliation_categories as $key => $value) {
                                     ?>
                                     <li><a href="javascript:void(0)" data-value="<?php echo $value['name'] ?>"class="category_click <?php echo isset($_GET['category']) && $_GET['category'] == $value['name'] ? 'active' : '' ?>"><?php echo $value['name'] ?></a></li>
                                     <?php
@@ -115,15 +115,15 @@
 </div>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
-    $('.loader').hide();
     var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
-    var provider_image = '<?php echo PROVIDER_IMAGES ?>';
-    var provider_url = '<?php echo site_url('service_provider/view/') ?>';
+    $('.loader').hide();
+    var affiliation_image = '<?php echo AFFILIATION_IMAGE ?>';
+    var affiliation_url = '<?php echo site_url('affiliation/view/') ?>';
     $('#category').selectpicker({
         liveSearch: true,
         size: 5
     });
-    $("#service_ul_data").mCustomScrollbar({
+    $("#affiliation_ul_data").mCustomScrollbar({
         axis: "y",
         scrollButtons: {enable: true},
         theme: "3d",
@@ -134,7 +134,7 @@
             }, /*user custom callback function on scroll event*/
             onTotalScroll: function () {
                 if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-                    var limitStart = $(".service_content li").length;
+                    var limitStart = $(".affiliation_content li").length;
 //                     $(".loader").show();
                     loadResults(limitStart);
                 }
@@ -190,16 +190,16 @@
         }
     });
     $(document).on('click', '#provider_srch_btn', function () {
-        submit_form($('#category').val());
+        submit_form();
     });
     function submit_form(category) {
         var location = $('#location').val();
         var keyword = $('#keyword').val();
-//        var category = $('#category').val();
+        var category = $('#category').val();
         if (location == '' && keyword == '' && category == '') {
-            window.location.href = site_url + 'service_provider';
+            window.location.href = site_url + 'affiliation';
         } else if (location == '' && keyword == '' && category != '') {
-            window.location.href = site_url + 'service_provider?category=' + category;
+            window.location.href = site_url + 'affiliation?category=' + category;
         } else {
             var url = '';
             if (location != '') {
@@ -217,15 +217,15 @@
                 else
                     url += '?keyword=' + keyword;
             }
-            window.location.href = site_url + 'service_provider' + url;
+            window.location.href = site_url + 'affiliation' + url;
         }
         return false;
     }
-    
+
     function loadResults(limitStart) {
         $.ajax({
-            url: '<?php echo site_url() ?>' + 'service_provider/load_providers/' + limitStart + srch_data,
-            type: "post",
+            url: '<?php echo site_url() ?>' + 'affiliation/load_affiliations/' + limitStart + srch_data,
+            type: "get",
             dataType: "json",
             success: function (data) {
                 var string = '';
@@ -233,10 +233,10 @@
                     string += '<li>' +
                             '<span>';
                     if (typeof value['image'] != 'undefined' && value['image'] != null) {
-                        string += '<img src="' + provider_image + value['image'] + '" width="100%" height="100%" />';
+                        string += '<img src="' + affiliation_image + value['image'] + '" width="100%" height="100%" />';
                     }
                     string += '</span>' +
-                            '<h3><a href="' + provider_url + value['slug'] + '">' + value['name'] + '</a></h3>' +
+                            '<h3><a href="' + affiliation_url + value['slug'] + '">' + value['name'] + '</a></h3>' +
                             '<p>';
                     text = value['description'];
                     if (value['description'].length > 500) {
@@ -247,8 +247,7 @@
                     string += text;
                     string += '</p>';
                 });
-                $(".service_content").append(string);
-//                $(".loader").hide();
+                $(".affiliation_content").append(string);
             }
         });
     }

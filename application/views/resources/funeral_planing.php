@@ -5,28 +5,30 @@
         </div>
         <div class="common-body">
             <div class="services-form funeral-srh">
-                <form>
+                <form method="get" name="resource_form" id="resource_form">
                     <div class="srvs-form-div">
-                        <select class="selectpicker">
-                            <option>Choose Funeral Planing Resorces</option>
-                            <option>Funeral Homes</option>
-                            <option>Cemeteries</option>
-                            <option>Crematories</option>
-                            <option>Florists</option>
-                            <option>Churches</option>
-                            <option>Officiants</option>
-                            <option>Caterers</option>
-                            <option>Headstone & Monuments</option>
-                            <option>Estate & Probate Servcies</option>
-                            <option>Legal Services</option>
-                            <option>Donation Organizations</option>
+                        <select name="category" id="category" class="selectpicker">
+                            <option value="">-- Select Category --</option>
+                            <?php
+                            if (isset($service_categories) && !empty($service_categories)) {
+                                foreach ($service_categories as $key => $value) {
+                                    $selected = '';
+                                    if (isset($_GET['category']) && $_GET['category'] == $value['name']) {
+                                        $selected = 'selected';
+                                    }
+                                    ?>
+                                    <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>"><?php echo $value['name']; ?></option>
+                                    <?php
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="srvs-form-div">	
-                        <input type="text" name="" placeholder="Zipcode or Pre-determine Zipcode" class="input-css"/>
+                        <input type="text" name="location" id="location" placeholder="Zipcode or Pre-determine Zipcode" class="input-css" value="<?php echo ($this->input->get('location') != '') ? $this->input->get('location') : set_value('location'); ?>"/>
                     </div>
                     <div class="srvs-form-div">	
-                        <button type="submit">Find Services Providers</button>
+                        <button type="button" id="resource_srch_btn">Find Services Providers</button>
                     </div>	
                 </form>
             </div>
@@ -277,3 +279,37 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('#category').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    $(document).on('click', '#resource_srch_btn', function () {
+//        window.location.href = "/";
+        submit_form($('#category').val());
+    });
+    function submit_form(category) {
+        var location = $('#location').val();
+        if (location == '' && category == '') {
+            $('#resource_form').attr('action', site_url + 'service_provider');
+            window.location.href = site_url + 'service_provider';
+        } else if (location == '' && category != '') {
+            window.location.href = site_url + 'service_provider?category=' + category;
+        } else {
+            console.log("snasn");
+            var url = '';
+            if (location != '') {
+                url += '?location=' + location.replace('::', ',');
+            }
+            if (category != '') {
+                if (url != '')
+                    url += '&category=' + category;
+                else
+                    url += '?category=' + category;
+            }
+            window.location.href = site_url + 'service_provider' + url;
+        }
+        return false;
+    }
+</script>
