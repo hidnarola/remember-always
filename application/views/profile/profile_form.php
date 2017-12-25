@@ -692,12 +692,12 @@
         <div class="container">
             <div class="create-profile-box step-finish step-06-wrap">
                 <div class="step-title">
-                    <h2>John's Life Profile is complete but not yet published.</h2>
+                    <h2><span id="profile_name">John's</span> Life Profile is complete but not yet published.</h2>
                     <p>You can click the back button below to make updates. <br/> Click the preview profile button to view and publish the profile.</p>
                 </div>
                 <div class="step-btm-btn">
                     <button class="back" onclick="return back_step()">Back</button>
-                    <button class="next" onclick="return false;">Preview Profile</button>
+                    <button class="next" onclick="return preview_profile(this);" data-href="" id="profile_slug">Preview Profile</button>
                 </div>
             </div>
         </div>

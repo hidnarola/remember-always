@@ -47,7 +47,6 @@ $(function () {
         rules: {
             select_affiliation: {
                 required: function (element) {
-                    console.log('text', $("#affiliation_text").is(':empty'));
                     return $("#affiliation_text").is(':empty');
                 }
             },
@@ -152,6 +151,8 @@ function submit_form() {
                                 remote: "This affiliation is already added",
                             }
                         });
+                        $('#profile_name').html(data.firstname + ' ' + data.lastname);
+                        $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
                         profile_steps('second-step');
                     } else {
                         $('#profile_process').val(0);
@@ -1009,3 +1010,8 @@ $("#fundraiser_media").change(function () {
         showErrorMSg("This browser does not support HTML5 FileReader.");
     }
 });
+function preview_profile(obj) {
+    var data_href = $(obj).attr('data-href');
+    window.location.href = data_href;
+    return false;
+}

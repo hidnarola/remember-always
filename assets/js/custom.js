@@ -10,7 +10,6 @@ $(function () {
         }
     });
     $(document).on('click', function (e) {
-        console.log('id', $(e.target).attr("id"));
         if ($(e.target).attr("id") != 'global_search' && $(e.target).attr('class') != 'header_search') {
             $(".search").removeClass("open");
         }

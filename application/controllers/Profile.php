@@ -315,6 +315,9 @@ class Profile extends MY_Controller {
                 }
             }
             $data['fundraiser'] = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['single' => true]);
+            if (!empty($data['fundraiser'])) {
+                $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, '*', ['where' => ['fundraiser_profile_id' => $data['fundraiser']['id'], 'is_delete' => 0]]);
+            }
         }
         if ($this->input->post('profile_process')) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
