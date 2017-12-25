@@ -19,8 +19,6 @@ class Service_provider extends MY_Controller {
      */
     public function index() {
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
-        $services = $this->providers_model->get_providers('result', $this->input->get());
-
         $data['service_categories'] = $service_categories;
         $data['services'] = $this->load_providers(0, true);
 

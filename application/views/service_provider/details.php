@@ -59,7 +59,7 @@
                 <p> <?php
                     if (isset($provider_data['image']) && !is_null($provider_data['image'])) {
                         ?>
-                    <a href ="<?php echo PROVIDER_IMAGES . $provider_data['image'] ?>" class="fancybox"><img src="<?php echo PROVIDER_IMAGES . $provider_data['image'] ?>"/></a>
+                        <a href ="<?php echo PROVIDER_IMAGES . $provider_data['image'] ?>" class="fancybox"><img src="<?php echo PROVIDER_IMAGES . $provider_data['image'] ?>"/></a>
                     <?php } echo implode('</p><p>', array_filter(explode("\n", $provider_data['description']))) ?></p>
                 <div class="srvs-personal-dtl">
                     <h6 class="srvs-contact"><strong>City :</strong> <a><?php echo isset($provider_data['city_name']) ? $provider_data['city_name'] : '' ?></a></h6>
@@ -136,9 +136,6 @@
     $('#category').selectpicker({
         liveSearch: true,
         size: 5
-    });
-    $(document).on('click', '.category_click', function () {
-        submit_form($(this).data('value'));
     });
     $(document).on('keyup paste', 'input[type="text"]', function () {
         if ($(this).val() != '') {

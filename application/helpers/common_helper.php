@@ -180,7 +180,7 @@ function upload_image($image_name, $image_path) {
     $CI->upload->initialize($config);
     if ($CI->upload->do_upload($image_name)) {
         $img_data = $CI->upload->data();
-        $randname = uniqid() . time() . '.' . $extension;
+        $randname = uniqid() . time();
         $file_name = $randname . $img_data['file_ext'];
         $old_path = $img_data['full_path'];
         $new_path = $img_data['file_path'] . $file_name;
@@ -214,7 +214,7 @@ function upload_video($img_data_name, $img_data_path) {
     $CI->upload->initialize($config);
     if ($CI->upload->do_upload($img_data_name)) {
         $img_data = $CI->upload->data();
-        $randname = uniqid() . time() . '.' . $extension;
+        $randname = uniqid() . time();
         $file_name = $randname . $img_data['file_ext'];
         $img_file_name = $randname . '.jpg';
         exec(FFMPEG_PATH . ' -i ' . $img_data['full_path'] . ' -vcodec libx264 -crf 20 ' . $img_data['file_path'] . $file_name);
@@ -259,7 +259,7 @@ function upload_multiple_image($image_name, $extension, $image_path, $type = 'im
     if ($CI->upload->do_upload($image_name)) {
         $img_data = $CI->upload->data();
         if ($type == 'video') {
-            $randname = uniqid() . time() . '.' . $extension;
+            $randname = uniqid() . time();
             $file_name = $randname . $img_data['file_ext'];
             $img_file_name = $randname . '.jpg';
             exec(FFMPEG_PATH . ' -i ' . $img_data['full_path'] . ' -vcodec libx264 -crf 20 ' . $img_data['file_path'] . $file_name);
@@ -267,7 +267,7 @@ function upload_multiple_image($image_name, $extension, $image_path, $type = 'im
             unlink($img_data['full_path']);
             $imgname = $file_name;
         } else {
-            $randname = uniqid() . time() . '.' . $extension;
+            $randname = uniqid() . time();
             $file_name = $randname . $img_data['file_ext'];
             $old_path = $img_data['full_path'];
             $new_path = $img_data['file_path'] . $file_name;

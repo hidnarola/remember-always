@@ -29,17 +29,20 @@ class Providers_model extends MY_Model {
             }
 
             if (isset($data['location'])) {
-                $latitude = $longitude = '';
-                $latitude = $data['lat'];
-                $longitude = $data['long'];
-                if ($latitude != '' && $longitude != '') {
-                    $this->db->select('( 3959 * acos( cos( radians(' . $latitude . ') ) * cos( radians( p.latitute ) ) * cos( radians( p.longitute ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( p.latitute ) ) ) ) AS distance');
-                    $this->db->having('distance <', 50);
+                if (isset($data['lat']) && isset($data['long']) && !isset($data['location'])) {
+                    $latitude = $longitude = '';
+                    $latitude = $data['lat'];
+                    $longitude = $data['long'];
+                    if ($latitude != '' && $longitude != '') {
+                        $this->db->select('( 3959 * acos( cos( radians(' . $latitude . ') ) * cos( radians( p.latitute ) ) * cos( radians( p.longitute ) - radians(' . $longitude . ') ) + sin( radians(' . $latitude . ') ) * sin( radians( p.latitute ) ) ) ) AS distance');
+                        $this->db->having('distance <', 50);
+                    }
+                } else {
+                    $this->db->where('p.zipcode LIKE ' . $this->db->escape('%' . $data['location'] . '%' . ''));
                 }
             }
         }
         $this->db->where(['p.is_delete' => 0, 'is_active' => 1]);
-//        $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
         if ($type == 'result') {
             $this->db->limit($offset, $start);
             $query = $this->db->get(TBL_SERVICE_PROVIDERS . ' p');

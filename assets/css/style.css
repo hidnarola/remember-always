@@ -558,9 +558,8 @@ ul.post-video li a img{width:100%;min-height:120px;}
 
 .srvs-personal-point:after{content:'';clear:both;display:block;}
 .srvs-personal-point{list-style:none;margin:0;padding:0 0 10px;}
-.srvs-personal-point li{widtH:49%;float:left;font-size:15px;color:#333;line-height:20px;font-weight:400;font-family:'Roboto';position:relative;padding:0 0 10px 12px;}
+.srvs-personal-point li{float:none;font-size:15px;color:#333;line-height:20px;font-weight:400;font-family:'Roboto';position:relative;padding:0 0 10px 12px;margin:0 30px 0 0;}
 .srvs-personal-point li:after{content:'\f0da';font-family:'FontAwesome';font-size:14px;color:#333;position:absolute;top:0;left:0;line-height:20px;color:#666;}
-.srvs-personal-point li:nth-child(2n+2){float:right;}
 .srvs-personal-point li a{font-size:15px;color:#666;line-height:20px;font-weight:400;font-family:'Roboto';}
 .srvs-personal-point li:hover:after,
 .srvs-personal-point li a:hover{color:#975979;text-decoration:none;}
@@ -735,3 +734,4 @@ ul.select-gallery li{width:31%;float:left;padding:8px;border:1px solid #e5e5e5;b
 .search form input {background: #fff; padding:9px 45px 12px 15px; line-height:32px; border-radius:4px; border:0; width:100%; font-size:18px; letter-spacing:0.02em; font-family:'Oswald'; font-weight:400; color:#666;}
 .search form button{background: transparent;border:0;width: 32px;height: auto;position: absolute;top: 15px;right:10px;}
 .search form button svg{fill:#975979;}
+.affiliation_ul_data{height: 200px}
