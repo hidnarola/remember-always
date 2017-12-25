@@ -12,7 +12,12 @@ $(function () {
                 closeEffect: 'none',
                 nextEffect: 'none',
                 prevEffect: 'none',
-                padding: 0
+                padding: 0,
+//                helpers: {
+//                    title: {
+//                        type: 'over'
+//                    }
+//                }
             });
     $("#content-8").mCustomScrollbar({
         axis: "y",
@@ -40,7 +45,6 @@ $(function () {
 
         },
     });
-
     /* For loading more post on scroll event */
     function loadResults(limitStart) {
         if (start != limitStart) {
@@ -124,8 +128,7 @@ $(function () {
         highlight: function (element, errorClass) {
             if ($(element).attr('name') === 'comment') {
                 $('#post-modal').modal();
-
-                console.log(post_data);
+//                console.log(post_data);
             }
         },
         messages: {
@@ -184,7 +187,6 @@ $(function () {
     $(document).on('change', "#cover_image", function () {
         readcoverURL(this);
     });
-
     /* For displaying timeline details on click */
     $(document).on('click', ".timeline", function () {
         $('#timeline_details').modal();
@@ -201,17 +203,15 @@ $(function () {
                     $('#timeline_details .timeline_date').html(timeline_data.interval);
                     if (timeline_data.timeline_media != null && timeline_data.media_type == 1) {
                         $('#timeline_details .timeline_media').parent().parent().show();
-                        $('#timeline_details .timeline_media').html('<img src="' + timeline_data.url + timeline_data.timeline_media + '"/ width="100px" height="100px">');
+                        $('#timeline_details .timeline_media').html('<a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="image" rel="timeline"><img src="' + timeline_data.url + timeline_data.timeline_media + '"/ width="100px" height="100px"></a>');
                     } else if (timeline_data.timeline_media != null && timeline_data.media_type == 2) {
                         $('#timeline_details .timeline_media').parent().parent().show();
                         var video_str = '<span><span class="gallery-video-img">';
-                        video_str = '<video  width="100%" height="150px" controls="">';
-                        video_str += '<source src="' + timeline_data.url + timeline_data.timeline_media + '" type="video/mp4">';
-                        video_str += '</video>';
-//                        video_str += '<img src="' + timeline_data.url + timeline_data.timeline_media.replace('mp4', 'jpg') + '"/ width="100px" height="100px">';
+                        video_str += '<img src="' + timeline_data.url + timeline_data.timeline_media.replace('mp4', 'jpg') + '"/ width="100px" height="100px"></a>';
                         video_str += '</span></span>';
-//                        video_str += '<span class="gallery-play-btn"><a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="iframe" rel="timeline"><img src="assets/images/play.png" alt=""></a></span>'
-                        video_str += '<span class="gallery-play-btn"><img src="assets/images/play.png" alt=""></span>'
+                        video_str += '<span class="gallery-play-btn">';
+                        video_str += '<a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="iframe" rel="timeline"><img src="assets/images/play.png" alt=""><a/>';
+                        video_str += +'</span>';
                         $('#timeline_details .timeline_media').html(video_str);
                     }
                     if (timeline_data.details != null && timeline_data.details != '') {
@@ -244,11 +244,11 @@ $(function () {
                     string += '</a></h3>';
                     string += '<p>' + value['title'] + '</p>';
                     if (value['timeline_media'] != null && value['media_type'] == 1) {
-                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-image" data-timeline="'+btoa(value.id)+'"></a></h6>';
+                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-image" data-timeline="' + btoa(value.id) + '"></a></h6>';
                     } else if (value['timeline_media'] != null && value['media_type'] == 2) {
-                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-play-circle-o" data-timeline="'+btoa(value.id)+'"></a></h6>';
+                        string += '<h6><a href="javascript:void(0)" class="timeline fa fa-play-circle-o" data-timeline="' + btoa(value.id) + '"></a></h6>';
                     } else {
-                        string += '<h6><a href = "" class = "fa fa-circle-o" data-timeline="'+btoa(value.id)+'"></a></h6>';
+                        string += '<h6><a href = "" class = "fa fa-circle-o" data-timeline="' + btoa(value.id) + '"></a></h6>';
                     }
                     string += '</div></li>';
                 });
@@ -259,10 +259,8 @@ $(function () {
                 }
             }
         });
-
     }
 });
-
 // Display the preview and error of cover image  */
 function readcoverURL(input) {
     var height = 330, width = 1120, img = '', file = '', val = '';
@@ -322,7 +320,6 @@ function readcoverURL(input) {
 function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
         reader.onload = function (e) {
             var html = '<img src="' + e.target.result + '" style="width: 170px; border-radius: 2px;" alt="">';
             $('.up_btn').html(html);
@@ -352,7 +349,7 @@ $(".post_gallery_upload").change(function () {
                             post_data[index]['index'] = index;
                             post_data[index]['media_type'] = 1;
                             str = '<li><div class="gallery-wrap"><span class="gallery-video-img">';
-                            str += '<img src="' + e.target.result + '" />';
+                            str += '<a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="custom_post_gallery" data-fancybox-type="image"><img src="' + e.target.result + '" /></a>';
                             str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,1, ' + index + ')">';
                             str += delete_str;
                             str += '</a></div></li>';
@@ -363,13 +360,11 @@ $(".post_gallery_upload").change(function () {
                         showErrorMSg("Limit is exceeded to upload images");
                     }
                     image_count++;
-
                 } else {
                     showErrorMSg(file[0].name + " is not a valid image file.");
                 }
             } else if (selected_type == 'video') {
                 if (regex_video.test(file[0].name.toLowerCase())) {
-//                console.log(video_count);
                     if (video_count <= max_videos_count) {
                         var reader = new FileReader();
                         reader.onload = function (e) {
@@ -377,14 +372,26 @@ $(".post_gallery_upload").change(function () {
                             var index = post_data.length - 1;
                             post_data[index]['index'] = index;
                             post_data[index]['media_type'] = 2;
-                            str = '<li><div class="gallery-wrap"><span class="gallery-video-img">';
-                            str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
+                            str = '<li><div class="gallery-wrap"><span class="gallery-video-img" id="gallery_' + index + '" >';
+                            str += '<video id="video_' + index + '" style="width:100%;height:100%;visibility:hidden" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
                             str += '</span>'
-                            str += '<span class="gallery-play-btn"><a href=""><img src="assets/images/play.png" alt=""></a></span>';
+                            str += '<span class="gallery-play-btn"><a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="custom_post_gallery" data-fancybox-type="iframe"><img src="assets/images/play.png" alt=""></a></span>';
                             str += '<a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,2, ' + index + ')">';
                             str += delete_str;
                             str += '</a></div></li>';
                             dvPreview.append(str);
+                                var video;
+                                video = document.querySelector('#video_' + index);
+                            video.addEventListener('loadeddata', function () {
+                                var canvas = document.createElement("canvas");
+                                canvas.width = video.videoWidth;
+                                canvas.height = video.videoHeight;
+                                canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                                var img = document.createElement("img");
+                                img.src = canvas.toDataURL();
+                                $('#gallery_' + index).prepend(img);
+                            }, false);
                         }
                         reader.readAsDataURL(file[0]);
                     } else {
@@ -402,7 +409,6 @@ $(".post_gallery_upload").change(function () {
         showErrorMSg("This browser does not support HTML5 FileReader.");
     }
 });
-
 function delete_media(obj, data, index) {
     $(post_data).each(function (key) {
         if (typeof (post_data[key]) != 'undefined' && post_data[key]['index'] == index) {
@@ -415,5 +421,4 @@ function delete_media(obj, data, index) {
         video_count--; //increase max videos count if deleted media is video
     }
     $(obj).parent('.gallery-wrap').parent('li').remove();
-
 }

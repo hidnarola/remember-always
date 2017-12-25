@@ -1096,4 +1096,24 @@ class Profile extends MY_Controller {
         exit;
     }
 
+    public function test() {
+//        $ch = curl_init();
+//        $username = '2017084657';
+//        $password = 'nyaryfm1';
+//        $auth = base64_encode("{$username}:{$password}");
+////        p($ch);
+//        curl_setopt_array(
+//                $ch, array(
+//            CURLOPT_URL => "https://www.floristone.com/api/rest/floristone/welcome",
+//            CURLOPT_HTTPHEADER => array("Authorization: {$auth}"),
+//            CURLOPT_RETURNTRANSFER => true
+//                )
+//        );
+////        $output = json_decode(curl_exec($ch));
+//       var_dump(curl_exec($ch));
+//        p(curl_getinfo($ch));
+//        curl_close($ch);
+//        p($output->WELCOME);
+    }
+
 }
