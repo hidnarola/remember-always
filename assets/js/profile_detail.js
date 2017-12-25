@@ -380,7 +380,7 @@ $(".post_gallery_upload").change(function () {
                             str += delete_str;
                             str += '</a></div></li>';
                             dvPreview.append(str);
-                                var video, $output;
+                                var video;
                                 video = document.querySelector('#video_' + index);
                             video.addEventListener('loadeddata', function () {
                                 var canvas = document.createElement("canvas");
