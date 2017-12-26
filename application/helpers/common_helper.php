@@ -118,9 +118,9 @@ function slug($text, $table, $id = NULL) {
     // lowercase
     $text = strtolower($text);
 
-    $used_actions = ['create', 'upload_gallery', 'upload_cover_image', 'delete_gallery', 'upload_post', 'delete_post', 'proceed_steps',
+    $used_actions = ['create', 'edit', 'index', 'load_posts', 'load_timeline', 'view_timeline', 'upload_cover_image', 'upload_gallery', 'delete_gallery', 'upload_post', 'delete_post', 'proceed_steps',
         'check_facts', 'add_facts', 'delete_facts', 'add_affiliation', 'delete_affiliation', 'check_affiliation', 'lifetimeline',
-        'add_timeline', 'delete_timeline', 'get_cities', 'add_services', 'add_fundraiser'];
+        'add_timeline', 'delete_timeline', 'get_cities', 'add_services', 'add_fundraiser', 'delete_fundmedia'];
     if (empty($text)) {
         $text = 'n-a';
     } elseif (in_array($text, $used_actions)) { //-- check if slug contains "create" OR "upload_gallery" keyword as its action of controller
