@@ -349,7 +349,7 @@
                                                                         <img src="<?php echo PROFILE_IMAGES . $value['timeline_media'] ?>" style="width: 170px; border-radius: 2px;" alt="">
                                                                     <?php } else if ($value['media_type'] == 2) {
                                                                         ?>
-                                                                        <video style="width:100%;" controls><source src="<?php echo $value['timeline_media'] ?>">Your browser does not support HTML5 video.</video>
+                                                                        <video style="width:100%;" controls><source src="<?php echo PROFILE_IMAGES . $value['timeline_media'] ?>">Your browser does not support HTML5 video.</video>
                                                                         <?php
                                                                     }
                                                                 } else {
@@ -628,7 +628,7 @@
                                     </div>
                                 </div>
                                 <div class="input-wrap">
-                                    <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"><?php if (isset($fundraiser)) echo $fundraiser['fundraiser_details']; ?></textarea>
+                                    <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
                                 </div>
                             </div> 
                             <div class="step-06-r">
@@ -648,7 +648,8 @@
                                                 ?>
                                                 <li>
                                                     <div class="gallery-wrap">
-                                                        <span class="gallery-video-img"><img src="<?php echo base_url() . TBL_FUNDRAISER_MEDIA . $value['media']; ?>" alt=""></span>
+                                                        <span><img src="<?php echo base_url() . FUNDRAISER_IMAGES . $value['media']; ?>" alt="" style="width:100%"></span>
+                                                        <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
                                                     </div>
                                                 </li>
                                                 <?php
@@ -657,7 +658,12 @@
                                                 ?>
                                                 <li>
                                                     <div class="gallery-wrap">
-                                                        <video style="width:100%;height:100%" controls><source src="<?php echo TBL_FUNDRAISER_MEDIA . $value['media'] ?>">Your browser does not support HTML5 video.</video>
+                                                        <span>
+                                                            <video style="width:100%;height:100%" controls>
+                                                                <source src="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>">Your browser does not support HTML5 video.
+                                                            </video>
+                                                        </span>
+                                                        <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
                                                     </div>
                                                 </li>
                                                 <?php
@@ -684,7 +690,21 @@
         <div class="container">
             <div class="create-profile-box step-finish step-06-wrap">
                 <div class="step-title">
-                    <h2><span id="profile_name">John's</span> Life Profile is complete but not yet published.</h2>
+                    <h2>
+                        <?php if (isset($profile) && $profile['is_published'] == 1) { ?>
+                            <span id="profile_name"><?php echo $profile['firstname'] . ' ' . $profile['lastname'] . '\'s' ?></span> Life Profile is complete!
+                        <?php } else { ?>
+                            <span id="profile_name"><?php
+                                if (isset($profile))
+                                    echo $profile['firstname'] . ' ' . $profile['lastname'] . '\'s';
+                                else
+                                    echo "John's"
+                                    ?></span> Life Profile is complete but not yet published.
+                            <?php
+                        }
+                        ?>
+
+                    </h2>
                     <p>You can click the back button below to make updates. <br/> Click the preview profile button to view and publish the profile.</p>
                 </div>
                 <div class="step-btm-btn">
@@ -741,6 +761,7 @@
 
 <script type="text/javascript">
     var profile_id = '<?php echo (isset($profile)) ? base64_encode($profile['id']) : 0 ?>';
+    var profile_slug = '<?php echo (isset($profile)) ? $profile['slug'] : "" ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT - $image_count ?>;
     max_videos_count = <?php echo MAX_VIDEOS_COUNT - $video_count ?>;
     max_fundimages_count = <?php echo MAX_IMAGES_COUNT - $fundimage_count ?>;
@@ -749,5 +770,9 @@
     delete_str = '<?php $this->load->view('delete_svg', true); ?>';
     facts_count = <?php echo (isset($profile)) ? $facts_count : 0 ?>;
     affiliation_count = <?php echo (isset($profile)) ? $affiliation_count : 0 ?>;
+    create_profile_url = site_url + "profile/create";
+    if (profile_id != 0) {
+        create_profile_url = site_url + "profile/edit/" + profile_slug;
+    }
 </script>
 <script src="assets/js/profile.js"></script>

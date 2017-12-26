@@ -128,7 +128,7 @@ function submit_form() {
             $('#profile_process').val(1);
             fd = new FormData(document.getElementById("create_profile_form"));
             $.ajax({
-                url: site_url + "profile/create",
+                url: create_profile_url,
                 type: "POST",
                 data: fd,
                 dataType: "json",
@@ -520,20 +520,22 @@ function proceed_step() {
         }
         if (fundraiser_valid == 1) {
             var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
-            postformData.append('comment', $('#comment').val());
+            postformData.append('profile_id', profile_id);
             $(fundraiser_media).each(function (key) {
                 if (fundraiser_media[key] != null) {
                     fundraiser_types[key] = [];
                     fundraiser_types[key] = fundraiser_media[key]['media_type'];
-                    postformData.append('fundraiser_media[]', fundraiser_media[key], fundraiser_media[key].name);
-                    postformData.append('fundraiser_types[]', fundraiser_types[key]);
+                    postformData.append('fundraiser_append_media[]', fundraiser_media[key], fundraiser_media[key].name);
+                    postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
                 }
             });
             $.ajax({
                 url: site_url + "profile/add_fundraiser",
                 type: "POST",
-                data: fundraiser_media,
+                data: postformData,
                 dataType: "json",
+                processData: false, // tell jQuery not to process the data
+                contentType: false, // tell jQuery not to set contentType
                 success: function (data) {
                     if (data.success == true) {
                         $('#profile_process').val(6);
@@ -1010,4 +1012,26 @@ function delete_fundmedia(obj, type, index) {
         fundvideo_count--; //increase max videos count if deleted media is video
     }
     $(obj).parent('.gallery-wrap').parent('li').remove();
+}
+
+function delete_fundajaxmedia(obj, media_id) {
+    $.ajax({
+        url: site_url + "profile/delete_fundmedia",
+        type: "POST",
+        data: {'media': media_id},
+        dataType: "json",
+        success: function (data) {
+            if (data.success == true) {
+                if (data.type == 1) {
+                    max_fundimages_count++; //increase max images count if deleted media is image
+                } else {
+                    max_fundvideos_count++; //increase max videos count if deleted media is video
+                }
+                $(obj).parent('.gallery-wrap').parent('li').remove();
+            } else {
+                showErrorMSg(data.error);
+            }
+        }
+    });
+
 }

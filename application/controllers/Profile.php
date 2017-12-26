@@ -14,116 +14,120 @@ class Profile extends MY_Controller {
     }
 
     /**
-     * Display login page for login
+     * Display profile detail page based on slug
+     * @author AKK
      */
-    public function index($slug) {
+    public function index($slug = null) {
+        if (!is_null($slug)) {
+            $is_left = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true, 'join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')]]);
+            if (!empty($is_left)) {
+                $funnel_services_data = [];
 
-        $is_left = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true, 'join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')]]);
-        if (!empty($is_left)) {
-            $funnel_services_data = [];
-
-            $post_id = 0;
-            $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
-            $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
-            $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($is_left['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
-            $life_timeline = $this->load_timeline(0, $is_left['id'], true);
-            $sql = "SELECT * FROM ("
-                    . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $is_left['id'] . "
+                $post_id = 0;
+                $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
+                $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
+                $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($is_left['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
+                $life_timeline = $this->load_timeline(0, $is_left['id'], true);
+                $sql = "SELECT * FROM ("
+                        . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $is_left['id'] . "
                        UNION ALL
                        SELECT p.id,a.name,'0' as free_text,slug,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND a.is_delete=0 
                     ) a order by created_at";
-            $data['affiliations'] = $this->users_model->customQuery($sql);
-            $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
-            if (!empty($funnel_services)) {
-                foreach ($funnel_services as $key => $value) {
-                    if ($value['service_type'] == 'Burial') {
-                        $funnel_services_data['Burial'] = $value;
-                    } else if ($value['service_type'] == 'Memorial') {
-                        $funnel_services_data['Memorial'] = $value;
-                    } else if ($value['service_type'] == 'Funeral') {
-                        $funnel_services_data['Funeral'] = $value;
+                $data['affiliations'] = $this->users_model->customQuery($sql);
+                $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
+                if (!empty($funnel_services)) {
+                    foreach ($funnel_services as $key => $value) {
+                        if ($value['service_type'] == 'Burial') {
+                            $funnel_services_data['Burial'] = $value;
+                        } else if ($value['service_type'] == 'Memorial') {
+                            $funnel_services_data['Memorial'] = $value;
+                        } else if ($value['service_type'] == 'Funeral') {
+                            $funnel_services_data['Funeral'] = $value;
+                        }
                     }
                 }
-            }
-            $posts = $this->load_posts(0, $is_left['id'], true);
-            if ($_POST) {
-                if (!$this->is_user_loggedin) {
+                $posts = $this->load_posts(0, $is_left['id'], true);
+                if ($_POST) {
+                    if (!$this->is_user_loggedin) {
 //                    $this->session->set_flashdata('error', 'You must login to access this page');
-                    $data['success'] = false;
-                    $data['error'] = 'You must login to add post for this profile.';
-                } else {
-                    $data = [];
-                    $this->form_validation->set_rules('comment', 'comment', 'trim');
-                    if ($this->form_validation->run() == FALSE) {
-                        $this->data['error'] = validation_errors();
                         $data['success'] = false;
-                        $data['error'] = 'Post not added.';
+                        $data['error'] = 'You must login to add post for this profile.';
                     } else {
-                        if (isset($_FILES['post_upload']) && !empty($_FILES['post_upload']['name'][0])) {
-                            $directory = 'profile_' . $is_left['id'];
-                            if (!file_exists(POST_IMAGES . $directory)) {
-                                mkdir(POST_IMAGES . $directory);
-                            }
-                            foreach ($_FILES['post_upload']['name'] as $key => $value) {
-                                $extension = explode('/', $_FILES['post_upload']['type'][$key]);
-                                $_FILES['custom_image']['name'] = $_FILES['post_upload']['name'][$key];
-                                $_FILES['custom_image']['type'] = $_FILES['post_upload']['type'][$key];
-                                $_FILES['custom_image']['tmp_name'] = $_FILES['post_upload']['tmp_name'][$key];
-                                $_FILES['custom_image']['error'] = $_FILES['post_upload']['error'][$key];
-                                $_FILES['custom_image']['size'] = $_FILES['post_upload']['size'][$key];
-                                if ($this->input->post('post_types')[$key] == 1) {
-                                    $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory);
-                                } else {
-                                    $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
+                        $data = [];
+                        $this->form_validation->set_rules('comment', 'comment', 'trim');
+                        if ($this->form_validation->run() == FALSE) {
+                            $this->data['error'] = validation_errors();
+                            $data['success'] = false;
+                            $data['error'] = 'Post not added.';
+                        } else {
+                            if (isset($_FILES['post_upload']) && !empty($_FILES['post_upload']['name'][0])) {
+                                $directory = 'profile_' . $is_left['id'];
+                                if (!file_exists(POST_IMAGES . $directory)) {
+                                    mkdir(POST_IMAGES . $directory);
                                 }
-                                if (is_array($image_data)) {
-                                    $flag = 1;
-                                    $data['success'] = false;
-                                    $data['error'] = $image_data['errors'];
-                                } else {
-                                    $image = $image_data;
-                                    $dataArr_media[] = array(
-                                        'media' => $directory . '/' . $image,
-                                        'type' => $this->input->post('post_types')[$key],
-                                        'created_at' => date('Y-m-d H:i:s'),
-                                    );
+                                foreach ($_FILES['post_upload']['name'] as $key => $value) {
+                                    $extension = explode('/', $_FILES['post_upload']['type'][$key]);
+                                    $_FILES['custom_image']['name'] = $_FILES['post_upload']['name'][$key];
+                                    $_FILES['custom_image']['type'] = $_FILES['post_upload']['type'][$key];
+                                    $_FILES['custom_image']['tmp_name'] = $_FILES['post_upload']['tmp_name'][$key];
+                                    $_FILES['custom_image']['error'] = $_FILES['post_upload']['error'][$key];
+                                    $_FILES['custom_image']['size'] = $_FILES['post_upload']['size'][$key];
+                                    if ($this->input->post('post_types')[$key] == 1) {
+                                        $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory);
+                                    } else {
+                                        $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
+                                    }
+                                    if (is_array($image_data)) {
+                                        $flag = 1;
+                                        $data['success'] = false;
+                                        $data['error'] = $image_data['errors'];
+                                    } else {
+                                        $image = $image_data;
+                                        $dataArr_media[] = array(
+                                            'media' => $directory . '/' . $image,
+                                            'type' => $this->input->post('post_types')[$key],
+                                            'created_at' => date('Y-m-d H:i:s'),
+                                        );
+                                    }
                                 }
                             }
-                        }
 
-                        $dataArr = array(
-                            'profile_id' => $is_left['id'],
-                            'user_id' => $this->user_id,
-                            'created_at' => date('Y-m-d H:i:s'),
-                        );
-                        if (!empty(trim($this->input->post('comment')))) {
-                            $dataArr['comment'] = trim($this->input->post('comment'));
-                        }
-                        $id = $this->users_model->common_insert_update('insert', TBL_POSTS, $dataArr);
-                        if (isset($dataArr_media) && !empty($dataArr_media)) {
-                            foreach ($dataArr_media as $key => $value) {
-                                $dataArr_media[$key]['post_id'] = $id;
+                            $dataArr = array(
+                                'profile_id' => $is_left['id'],
+                                'user_id' => $this->user_id,
+                                'created_at' => date('Y-m-d H:i:s'),
+                            );
+                            if (!empty(trim($this->input->post('comment')))) {
+                                $dataArr['comment'] = trim($this->input->post('comment'));
                             }
-                            $this->users_model->batch_insert_update('insert', TBL_POST_MEDIAS, $dataArr_media);
+                            $id = $this->users_model->common_insert_update('insert', TBL_POSTS, $dataArr);
+                            if (isset($dataArr_media) && !empty($dataArr_media)) {
+                                foreach ($dataArr_media as $key => $value) {
+                                    $dataArr_media[$key]['post_id'] = $id;
+                                }
+                                $this->users_model->batch_insert_update('insert', TBL_POST_MEDIAS, $dataArr_media);
+                            }
+                            $this->session->set_flashdata('success', 'Post details has been inserted successfully.');
+                            $data['success'] = true;
+                            $data['data'] = 'Post details has been inserted successfully.';
                         }
-                        $this->session->set_flashdata('success', 'Post details has been inserted successfully.');
-                        $data['success'] = true;
-                        $data['data'] = 'Post details has been inserted successfully.';
                     }
+                    echo json_encode($data);
+                    exit;
                 }
-                echo json_encode($data);
-                exit;
+                $data['url'] = current_url();
+                $data['profile'] = $is_left;
+                $data['fun_facts'] = $fun_facts;
+                $data['funnel_services'] = $funnel_services_data;
+                $data['posts'] = $posts;
+                $data['life_gallery'] = $life_gallery;
+                $data['life_timeline'] = $life_timeline;
+                $data['title'] = 'Profile';
+                $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+                $this->template->load('default', 'profile/profile_detail', $data);
             }
-            $data['url'] = current_url();
-            $data['profile'] = $is_left;
-            $data['fun_facts'] = $fun_facts;
-            $data['funnel_services'] = $funnel_services_data;
-            $data['posts'] = $posts;
-            $data['life_gallery'] = $life_gallery;
-            $data['life_timeline'] = $life_timeline;
-            $data['title'] = 'Profile';
-            $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
-            $this->template->load('default', 'profile/profile_detail', $data);
+        } else {
+            custom_show_404();
         }
     }
 
@@ -281,13 +285,21 @@ class Profile extends MY_Controller {
      * Create Profile Page
      * @author KU
      */
-    public function create() {
+    public function create($slug = null) {
         if (!$this->is_user_loggedin) {
             $this->session->set_flashdata('error', 'You must login to access this page');
             redirect('/');
         }
-        // check any user's profile is left to be published
-        $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_published' => 0, 'is_delete' => 0, 'user_id' => $this->user_id]], ['single' => true, 'order_by' => 'id DESC']);
+        // if slug is passed the get user profile details
+        $profile = [];
+        if (!is_null($slug)) {
+            $profile = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'user_id' => $this->user_id, 'slug' => $slug]], ['single' => true]);
+            //If profile in empty the display 404 page
+            if (empty($profile)) {
+                custom_show_404();
+            }
+        }
+        $is_left = $profile;
         if (!empty($is_left)) {
             $data['profile'] = $is_left;
             $data['profile_gallery'] = $this->users_model->sql_select(TBL_GALLERY, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['order_by' => 'id DESC']);
@@ -412,6 +424,19 @@ class Profile extends MY_Controller {
     }
 
     /**
+     * Edit profile page
+     * @param string $slug
+     * @author KU
+     */
+    public function edit($slug = null) {
+        if (!is_null($slug)) {
+            $this->create($slug);
+        } else {
+            custom_show_404();
+        }
+    }
+
+    /**
      * Upload profile gallery
      * @author KU
      */
@@ -470,11 +495,12 @@ class Profile extends MY_Controller {
      */
     public function delete_gallery() {
         $gallery = base64_decode($this->input->post('gallery'));
-        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
+        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media,type', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
         if (!empty($gallery_media)) {
             $this->users_model->common_delete(TBL_GALLERY, ['id' => $gallery]);
             unlink(PROFILE_IMAGES . $gallery_media['media']);
             $data['success'] = true;
+            $data['type'] = $gallery_media['type'];
         } else {
             $data['success'] = false;
             $data['error'] = "Invalid request!";
@@ -760,9 +786,9 @@ class Profile extends MY_Controller {
     public function lifetimeline() {
         $id = base64_decode($this->input->post('profile_id'));
         $timeline = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $id, 'is_delete' => 0]]);
+        $str = '';
         if (!empty($timeline)) {
             $timeline_count = count($timeline) - 1;
-            $str = '';
             foreach ($timeline as $key => $value) {
                 $str .= '<input type="hidden" name="timelineid[]" value="' . base64_encode($value['id']) . '"/>
                         <div class="step-06">
@@ -797,7 +823,7 @@ class Profile extends MY_Controller {
                         $str .= '<img src="' . PROFILE_IMAGES . $value['timeline_media'] . '" style="width: 170px; border-radius: 2px;" alt="">';
                     } else if ($value['media_type'] == 2) {
 
-                        $str .= '<video style="width:100%;" controls><source src="' . $value['timeline_media'] . '">Your browser does not support HTML5 video.</video>';
+                        $str .= '<video style="width:100%;" controls><source src="' . PROFILE_IMAGES . $value['timeline_media'] . '">Your browser does not support HTML5 video.</video>';
                     }
                 } else {
                     $str .= 'Upload Picture or Video? <span>Select</span>';
@@ -941,84 +967,96 @@ class Profile extends MY_Controller {
      * Add fundraiser into profile
      */
     public function add_fundraiser() {
-        p($_POST);
-        p($_FILES, 1);
         if ($this->input->post('profile_id')) {
             $profile_id = base64_decode($this->input->post('profile_id'));
-            $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
-            if (!empty($profile)) {
-                if ($this->input->post('memorial_date') != '' || $this->input->post('memorial_time') != '' || $this->input->post('memorial_place') != '' || $this->input->post('memorial_address') != '' || $this->input->post('memorial_state') != '' || $this->input->post('memorial_city') != '' || $this->input->post('memorial_zip') != '') {
-                    $memorial_serivce = [
-                        'profile_id' => $profile_id,
-                        'service_type' => 'Memorial',
-                        'date' => date('Y-m-d', strtotime($this->input->post('memorial_date'))),
-                        'time' => date('H:i:s', strtotime($this->input->post('memorial_time'))),
-                        'place_name' => $this->input->post('memorial_place'),
-                        'address' => $this->input->post('memorial_address'),
-                        'city' => $this->input->post('memorial_city'),
-                        'state' => $this->input->post('memorial_state'),
-                        'zip' => $this->input->post('memorial_zip'),
-                    ];
-                    $m_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Memorial']], ['single' => true]);
-                    if (!empty($m_service)) {
-                        $memorial_serivce['updated_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('update', TBL_FUNERAL_SERVICES, $memorial_serivce, ['id' => $m_service['id']]);
-                    } else {
-                        $memorial_serivce['created_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('insert', TBL_FUNERAL_SERVICES, $memorial_serivce);
-                    }
-                }
-                if ($this->input->post('funeral_date') != '' || $this->input->post('funeral_time') != '' || $this->input->post('funeral_place') != '' || $this->input->post('funeral_address') != '' || $this->input->post('funeral_state') != '' || $this->input->post('funeral_city') != '' || $this->input->post('funeral_zip') != '') {
-                    $funeral_serivce = [
-                        'profile_id' => $profile_id,
-                        'service_type' => 'Funeral',
-                        'date' => date('Y-m-d', strtotime($this->input->post('funeral_date'))),
-                        'time' => date('H:i:s', strtotime($this->input->post('funeral_time'))),
-                        'place_name' => $this->input->post('funeral_place'),
-                        'address' => $this->input->post('funeral_address'),
-                        'city' => $this->input->post('funeral_city'),
-                        'state' => $this->input->post('funeral_state'),
-                        'zip' => $this->input->post('funeral_zip'),
-                    ];
-                    $f_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Funeral']], ['single' => true]);
-                    if (!empty($f_service)) {
-                        $funeral_serivce['updated_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('update', TBL_FUNERAL_SERVICES, $funeral_serivce, ['id' => $f_service['id']]);
-                    } else {
-                        $funeral_serivce['created_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('insert', TBL_FUNERAL_SERVICES, $funeral_serivce);
-                    }
-                }
-                if ($this->input->post('burial_date') != '' || $this->input->post('burial_time') != '' || $this->input->post('burial_place') != '' || $this->input->post('burial_address') != '' || $this->input->post('burial_state') != '' || $this->input->post('burial_city') != '' || $this->input->post('burial_zip') != '') {
-                    $burial_serivce = [
-                        'profile_id' => $profile_id,
-                        'service_type' => 'Funeral',
-                        'date' => date('Y-m-d', strtotime($this->input->post('burial_date'))),
-                        'time' => date('H:i:s', strtotime($this->input->post('burial_time'))),
-                        'place_name' => $this->input->post('burial_place'),
-                        'address' => $this->input->post('burial_address'),
-                        'city' => $this->input->post('burial_city'),
-                        'state' => $this->input->post('burial_state'),
-                        'zip' => $this->input->post('burial_zip'),
-                    ];
-                    $b_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Burial']], ['single' => true]);
-                    if (!empty($b_service)) {
-                        $b_service['updated_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('update', TBL_FUNERAL_SERVICES, $burial_serivce, ['id' => $b_service['id']]);
-                    } else {
-                        $b_service['created_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('insert', TBL_FUNERAL_SERVICES, $burial_serivce);
-                    }
-                }
-                $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 5], ['id' => $profile_id]);
-                $data['success'] = true;
+            //Get fund raiser profile 
+            $fund_profile = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+            $data_array = [
+                'profile_id' => $profile_id,
+                'title' => trim($this->input->post('fundraiser_title')),
+                'goal' => trim($this->input->post('fundraiser_goal')),
+                'end_date' => date('Y-m-d', strtotime($this->input->post('fundraiser_enddate'))),
+                'details' => trim($this->input->post('fundraiser_details'))
+            ];
+            if (!empty($fund_profile)) {
+                $data_array['updated_at'] = date('Y-m-d H:i:s');
+                $fundraiser_id = $fund_profile['id'];
+                $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $data_array, ['id' => $fund_profile['id']]);
             } else {
-                $data['success'] = false;
-                $data['error'] = 'Something went wrong! Please try again later';
+                $data_array['created_at'] = date('Y-m-d H:i:s');
+                $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
+            }
+            $directory = 'profile_' . $profile_id;
+            if (!file_exists(FUNDRAISER_IMAGES . $directory)) {
+                mkdir(FUNDRAISER_IMAGES . $directory);
+            }
+            $flag = 0;
+            $dataArr_media = [];
+            if (isset($_FILES['fundraiser_append_media']['name'])) {
+                foreach ($_FILES['fundraiser_append_media']['name'] as $key => $value) {
+                    $extension = explode('/', $_FILES['fundraiser_append_media']['type'][$key]);
+                    $_FILES['custom_image']['name'] = $_FILES['fundraiser_append_media']['name'][$key];
+                    $_FILES['custom_image']['type'] = $_FILES['fundraiser_append_media']['type'][$key];
+                    $_FILES['custom_image']['tmp_name'] = $_FILES['fundraiser_append_media']['tmp_name'][$key];
+                    $_FILES['custom_image']['error'] = $_FILES['fundraiser_append_media']['error'][$key];
+                    $_FILES['custom_image']['size'] = $_FILES['fundraiser_append_media']['size'][$key];
+                    if ($this->input->post('fundraiser_append_types')[$key] == 1) {
+                        $image_data = upload_image('custom_image', FUNDRAISER_IMAGES . $directory);
+                    } else {
+                        $image_data = upload_video('custom_image', FUNDRAISER_IMAGES . $directory);
+                    }
+                    if (is_array($image_data)) {
+                        $flag = 1;
+                        $data['success'] = false;
+                        $data['error'] = $image_data['errors'];
+                    } else {
+                        $image = $image_data;
+                        $dataArr_media[] = array(
+                            'media' => $directory . '/' . $image,
+                            'type' => $this->input->post('fundraiser_append_types')[$key],
+                            'created_at' => date('Y-m-d H:i:s'),
+                        );
+                    }
+                }
+            }
+            if ($flag == 0) {
+                if (!empty($fund_profile)) {
+                    $data_array['updated_at'] = date('Y-m-d H:i:s');
+                    $fundraiser_id = $fund_profile['id'];
+                    $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $data_array, ['id' => $fund_profile['id']]);
+                } else {
+                    $data_array['created_at'] = date('Y-m-d H:i:s');
+                    $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
+                }
+                foreach ($dataArr_media as $media) {
+                    $media['fundraiser_profile_id'] = $fundraiser_id;
+                    $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_MEDIA, $media);
+                }
+                $this->users_model->common_insert_update('update', TBL_PROFILES, ['type' => 2, 'profile_process' => 6], ['id' => $profile_id]);
+                $data['success'] = true;
             }
         } else {
             $data['success'] = false;
-            $data['error'] = 'Something went wrong! Please try again later,';
+            $data['error'] = 'Something went wrong! Please try again later';
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Delete fundraiser media
+     * @author KU
+     */
+    public function delete_fundmedia() {
+        $media = base64_decode($this->input->post('media'));
+        $fund_media = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, 'media,type', ['where' => ['id' => $media, 'is_delete' => 0]], ['single' => true]);
+        if (!empty($fund_media)) {
+            $this->users_model->common_delete(TBL_FUNDRAISER_MEDIA, ['id' => $media]);
+            unlink(FUNDRAISER_IMAGES . $fund_media['media']);
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Invalid request!";
         }
         echo json_encode($data);
         exit;
@@ -1096,26 +1134,6 @@ class Profile extends MY_Controller {
         }
         echo json_encode($data);
         exit;
-    }
-
-    public function test() {
-//        $ch = curl_init();
-//        $username = '2017084657';
-//        $password = 'nyaryfm1';
-//        $auth = base64_encode("{$username}:{$password}");
-////        p($ch);
-//        curl_setopt_array(
-//                $ch, array(
-//            CURLOPT_URL => "https://www.floristone.com/api/rest/floristone/welcome",
-//            CURLOPT_HTTPHEADER => array("Authorization: {$auth}"),
-//            CURLOPT_RETURNTRANSFER => true
-//                )
-//        );
-////        $output = json_decode(curl_exec($ch));
-//       var_dump(curl_exec($ch));
-//        p(curl_getinfo($ch));
-//        curl_close($ch);
-//        p($output->WELCOME);
     }
 
 }
