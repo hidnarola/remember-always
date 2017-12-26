@@ -239,7 +239,7 @@ $(function () {
                 var string = '';
                 $.each(data, function (index, value) {
                     total_timeline_count = value['total_count'];
-                    string += '<li><div class="lifetime-box"><h3><a href="">';
+                    string += '<li><div class="lifetime-box"><h3><a>';
                     string += value['interval'];
                     string += '</a></h3>';
                     string += '<p>' + value['title'] + '</p>';
@@ -248,7 +248,7 @@ $(function () {
                     } else if (value['timeline_media'] != null && value['media_type'] == 2) {
                         string += '<h6><a href="javascript:void(0)" class="timeline fa fa-play-circle-o" data-timeline="' + btoa(value.id) + '"></a></h6>';
                     } else {
-                        string += '<h6><a href = "" class = "fa fa-circle-o" data-timeline="' + btoa(value.id) + '"></a></h6>';
+                        string += '<h6><a href = "javascript:void(0)" class="timeline fa fa-circle-o" data-timeline="' + btoa(value.id) + '"></a></h6>';
                     }
                     string += '</div></li>';
                 });

@@ -17,7 +17,7 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="">My Profile</a></li>
+                    <li><a href="<?php echo site_url('dashboard/profiles') ?>">My Profile</a></li>
                     <li><a href="<?php echo site_url('dashboard') ?>">Dashboard</a></li>
                     <li><a href="<?php echo site_url('editprofile') ?>">Edit Profile </a></li>
                     <li><a href="<?php echo site_url('logout') ?>">Logout</a></li>

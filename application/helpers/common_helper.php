@@ -493,7 +493,7 @@ function custom_format_date($data, $type, $full = false) {
         '12' => array('short_name' => 'Dec', 'name' => 'December'),
     );
     if (!empty($data) && $type == 'date') {
-        $result = date('M, d, Y', strtotime($data));
+        $result = date('M d, Y', strtotime($data));
     } else if (!empty($data) && $type == 'month') {
         if (key_exists($data, $month) && $full == true) {
             $result = $month[$data]['name'];

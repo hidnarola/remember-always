@@ -122,7 +122,7 @@ class Profile extends MY_Controller {
             $data['life_gallery'] = $life_gallery;
             $data['life_timeline'] = $life_timeline;
             $data['title'] = 'Profile';
-            $data['breadcrumb'] = ['title' => 'User Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+            $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
             $this->template->load('default', 'profile/profile_detail', $data);
         }
     }

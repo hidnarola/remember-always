@@ -14,11 +14,11 @@
                         ?>
                     </h2>
                     <?php if ($this->is_user_loggedin) { ?>
-                        <a href="<?php echo site_url('profile/create') ?>">Create a life profile</a>
+                        <a href="<?php echo site_url('profile/create') ?>">Create a Life Profile</a>
                     <?php } else { ?>
-                        <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Create a life profile</a>
+                        <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Create a Life Profile</a>
                     <?php } ?>
-                    <a href="<?php echo site_url('profile') ?>">Find a life profile</a>
+                    <a href="<?php echo site_url('profile') ?>">Find a Life Profile</a>
                 </div>
             </div>
             <?php
@@ -26,7 +26,6 @@
         ?>
     </div>
 </section>
-
 
 <section class="memorialize">
     <div class="container">
@@ -159,7 +158,7 @@
                             </g>
                         </svg></span>
                     <h3><a href="">Create <br/> a life profile</a></h3>
-                    <p>Share your loved one’slife story <br/> vividly add funeral details, in necessary.</p>
+                    <p>Share your loved one’s life story <br/> vividly; add funeral details if necessary.</p>
                 </div>
             </li>
             <li>
@@ -231,7 +230,7 @@
                             <g>
                             </g>
                         </svg></span>
-                    <h3><a href="">Add a<br/> Fundraiser (optional)</a> </h3>
+                    <h3><a href="">Add a Fundraiser<br/>(optional)</a> </h3>
                     <p>Get support for your loved <br/> one’s charity, foundation, or expenses.</p>
                 </div>
             </li>
@@ -293,8 +292,8 @@
                             </g>
                         </svg>
                     </span>
-                    <h3><a href="">Share with <br/>family & Friends</a></h3>
-                    <p>Sasily share with  <br/>as many or as few as you desire.</p>
+                    <h3><a href="">Share with <br/>family & friends</a></h3>
+                    <p>Easily share with  <br/>as many or as few as you desire.</p>
                 </div>
             </li>
             <li>
@@ -353,7 +352,7 @@
                             </g>
                         </svg></span>
                     <h3><a href="">Remember, <br/> Honor & Celebrate</a></h3>
-                    <p>Together share condolences, support, <br/> memories, stories photos, videos & more.</p>
+                    <p>Together share condolences, support, <br/> memories, photos, videos & more.</p>
                 </div>
             </li>
         </ul>
@@ -799,7 +798,7 @@
 
 <section class="blog-wrap">
     <div class="container">
-        <h2>Blog Posts <small>Informative and inspirational articles, stories tips</small></h2>
+        <h2>Blog Posts <small>Informative and inspirational articles, stories, and tips</small></h2>
         <div id="blog-carousel" class="owl-carousel  owl-theme">
             <?php
             if (isset($blogs) && !empty($blogs)) {

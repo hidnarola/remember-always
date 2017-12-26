@@ -9,6 +9,7 @@
                     } else {
                         echo "<img class='cover_img' src='assets/images/profile-pic.jpg' alt='' />";
                     }
+                    if(isset($profile) && $this->user_id == $profile['user_id']){
                     ?>
                     <div class="select-file">
                         <div class="select-file-upload"> 
@@ -18,6 +19,7 @@
                                 <!--</form>-->
                         </div>
                     </div>
+                    <?php }?>
                 </span>
                 <div class="profile-title">
                     <div class="profile-title-img">
@@ -31,10 +33,10 @@
                     </div>
                     <h4><?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Popularised in the the release of' ?> 
                         <small> 
-                            Born: <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('d M, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> 
-                            - Death: <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('d M, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?>
+                            Born: <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('M d, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> 
+                            - Death: <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('M d, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?>
                         </small>
-                        <small>Created By: <?php echo isset($profile['u_fname']) ? $profile['u_fname'] . ' ' . $profile['u_lname'] : '-' ?></small> </h4>
+                        <small>Created with love by: <?php echo isset($profile['u_fname']) ? $profile['u_fname'] . ' ' . $profile['u_lname'] : '-' ?></small> </h4>
                     <?php if (isset($profil['type']) && $profile['type'] == 2) { ?>
                         <a href="" class="donate-btn">Donate</a>
                     <?php } ?>
@@ -248,8 +250,8 @@
                                         <div class="panel-body">
                                             <?php if (isset($funnel_services['Memorial']) && !empty($funnel_services['Memorial'])) { ?>
                                                 <h5><?php echo $funnel_services['Memorial']['place_name'] ?></h5>
-                                                <p><strong>Time:</strong> <?php echo $funnel_services['Memorial']['time'] ?></p>
-                                                <p><strong>Date:</strong> (<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('d M, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p><strong>Time:</strong> <?php echo isset($funnel_services['Memorial']['time']) && !is_null($funnel_services['Memorial']['time']) ? date('h:i A', strtotime($funnel_services['Memorial']['time'])) : '00:00 AM' ?></p>
+                                                <p><strong>Date:</strong> (<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('M d, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</p>
                                                 <p><strong>Address:</strong> <?php echo $funnel_services['Memorial']['address'] ?></p>
                                                 <p><strong>City:</strong> <?php echo $funnel_services['Memorial']['city_name'] ?></p>
                                                 <p><strong>State:</strong> <?php echo $funnel_services['Memorial']['state_name'] ?></p>
@@ -270,8 +272,8 @@
                                         <div class="panel-body">
                                             <?php if (isset($funnel_services['Funeral']) && !empty($funnel_services['Funeral'])) { ?>
                                                 <h5><?php echo $funnel_services['Funeral']['place_name'] ?></h5>
-                                                <p><strong>Time:</strong> <?php echo $funnel_services['Funeral']['time'] ?></p>
-                                                <p><strong>Date: </strong> (<?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('d M, Y', strtotime($funnel_services['Funeral']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p><strong>Time:</strong> <?php echo isset($funnel_services['Funeral']['time']) && !is_null($funnel_services['Funeral']['time']) ? date('h:i A', strtotime($funnel_services['Funeral']['time'])) : '00:00 AM' ?></p>
+                                                <p><strong>Date: </strong> (<?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('M d, Y', strtotime($funnel_services['Funeral']['date'])) : '3 Nov, 1988' ?>)</p>
                                                 <p><strong>Address: </strong> <?php echo $funnel_services['Funeral']['address'] ?></p>
                                                 <p><strong>City: </strong> <?php echo $funnel_services['Funeral']['city_name'] ?></p>
                                                 <p><strong>State: </strong> <?php echo $funnel_services['Funeral']['state_name'] ?></p>
@@ -292,8 +294,8 @@
                                         <div class="panel-body">
                                             <?php if (isset($funnel_services['Burial']) && !empty($funnel_services['Burial'])) { ?>
                                                 <h5><?php echo $funnel_services['Burial']['place_name'] ?></h5>
-                                                <p><strong>Time:</strong> <?php echo $funnel_services['Burial']['time'] ?></p>
-                                                <p><strong>Date:</strong> (<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('d M, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                <p><strong>Time:</strong> <?php echo isset($funnel_services['Burial']['time']) && !is_null($funnel_services['Burial']['time']) ? date('h:i A', strtotime($funnel_services['Burial']['time'])) : '00:00 AM' ?></p>
+                                                <p><strong>Date:</strong> (<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('M d, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</p>
                                                 <p><strong>Address: </strong> <?php echo $funnel_services['Burial']['address'] ?></p>
                                                 <p><strong>City:</strong> <?php echo $funnel_services['Burial']['city_name'] ?></p>
                                                 <p><strong>State:</strong> <?php echo $funnel_services['Burial']['state_name'] ?></p>
@@ -308,7 +310,7 @@
                         </div>
                     </div>
                     <div class="profile-box lifetime-line">
-                        <h2>Life Time Line</h2>
+                        <h2>Life Timeline</h2>
                         <div class="profile-box-body">
                             <?php
                             $count = 0;
@@ -331,7 +333,7 @@
                                         ?>
                                         <li>
                                             <div class="lifetime-box">
-                                                <h3><a href="">
+                                                <h3><a>
                                                         <?php
                                                         if ($v['date'] != null) {
                                                             echo custom_format_date($v['date'], 'date');
@@ -368,7 +370,7 @@
                 </div>
                 <div class="profile-body-m">
                     <div class="profile-box life-bio">
-                        <h2>The Life Bio</h2>
+                        <h2>Life Bio</h2>
                         <div class="profile-box-body">
                             <p><?php echo isset($profile['life_bio']) && !is_null($profile['life_bio']) ? $profile['life_bio'] : 'Life bio not available for this profile.' ?></p>
                         </div>
@@ -490,7 +492,7 @@
                                         </div>
                                     </div>
                                     <!--<input type="hidden" name="post_data" id="post_data"/>-->
-                                    <button type="submit" name="post_btn" id="post_btn">Post</button>
+                                    <button type="submit" name="post_btn" id="post_btn" class="purple_btn">Post</button>
                                 </div>
                             </form>
                         </div>
@@ -675,7 +677,7 @@
                 <div class="pup-btn">
                     <button type="button" onclick="$('#timeline_details').modal('toggle')"><i class="fa fa-close"></i></button>
                 </div>    
-                <div class="modal-header custom_header">Life Time Details</div>
+                <div class="modal-header custom_header">Life Timeline Details</div>
                 <table class="table">
                     <tbody>
                         <tr class="popup-input">
@@ -683,7 +685,7 @@
                             <td><span class="timeline_title"></span></td>
                         </tr>
                         <tr class="popup-input">
-                            <td><label>Added on</label></td>
+                            <td><label>Event Date</label></td>
                             <td><span class="timeline_date"></span></td>
                         </tr>
                         <tr class="popup-input">
