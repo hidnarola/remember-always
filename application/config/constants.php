@@ -127,6 +127,7 @@ define('POST_IMAGES', 'uploads/post-images/');
 define('BLOG_POST_IMAGES', 'uploads/blog-post-images/');
 define('PAGE_BANNER', 'uploads/banners/');
 define('AFFILIATION_IMAGE', 'uploads/affiliation-images/');
+define('FUNDRAISER_IMAGES', 'uploads/fundraiser-images/');
 
 /**
  * Constants for Cookie
@@ -152,3 +153,9 @@ if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
 }else{
   define('FFMPEG_PATH', 'C:\wamp64\www\remember-always\ffmpeg.exe');
 }
+
+/**
+ * Constants for Floristone api for send flowers
+ */
+define('TEST_API_KEY', '724510');
+define('TEST_PASSWORD', 'K8Ew8o');

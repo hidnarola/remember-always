@@ -32,17 +32,39 @@ class Users extends MY_Controller {
         $is_left = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['id' => $this->user_id, 'is_delete' => 0,]], ['single' => true]);
         if (!empty($is_left)) {
             $data['user_data'] = $is_left;
+            $states = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => $is_left['country'])]);
+                if (!empty($states)) {
+                    $data['states'] = $states;
+                }
+                $cities = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => $is_left['state'])]);
+                if (!empty($cities)) {
+                    $data['cities'] = $cities;
+                }
         }
+        $countries = $this->users_model->sql_select(TBL_COUNTRY . ' c');
+        $data['countries'] = $countries;
         if ($_POST) {
+            $states = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => base64_decode($this->input->post('country')))]);
+            if (!empty($states)) {
+                $data['states'] = $states;
+            }
+            $cities = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => base64_decode($this->input->post('state')))]);
+            if (!empty($cities)) {
+                $data['cities'] = $cities;
+            }
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
             $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
+            $this->form_validation->set_rules('country', 'Country', 'trim|required');
+            $this->form_validation->set_rules('state', 'State', 'trim|required');
+            $this->form_validation->set_rules('city', 'City', 'trim|required');
+            $this->form_validation->set_rules('phone', 'Phone number', 'trim|required');
+            $this->form_validation->set_rules('zipcode', 'Zipcode', 'trim|required');
             if (isset($_POST['old_password']) && !empty(trim($_POST['old_password']))) {
                 $this->form_validation->set_rules('old_password', 'Password', 'trim|required|callback_check_password');
                 $this->form_validation->set_rules('new_password', 'Password', 'trim|required');
                 $this->form_validation->set_rules('confirm_password', 'Confirm password', 'trim|required|matches[new_password]');
             }
             if ($this->form_validation->run() == FALSE) {
-//                p(validation_errors());
                 $data['error'] = validation_errors();
                 $data['success'] = false;
             } else {
@@ -70,13 +92,22 @@ class Users extends MY_Controller {
                 $data = array(
                     'firstname' => trim($this->input->post('firstname')),
                     'lastname' => trim($this->input->post('lastname')),
+                    'address1' => trim($this->input->post('address1')),
+                    'country' => base64_decode(trim($this->input->post('country'))),
+                    'state' => base64_decode(trim($this->input->post('state'))),
+                    'city' => base64_decode(trim($this->input->post('city'))),
+                    'zipcode' => trim($this->input->post('zipcode')),
+                    'phone' => trim($this->input->post('phone')),
                     'profile_image' => $profile_image,
                 );
+                if(!empty(trim($this->input->post('address2')))){
+                    $data['address2'] = trim($this->input->post('address2'));
+                }
 //                $result = $this->users_model->get_user_detail(['id' => $this->user_id, 'is_delete' => 0]);
 //                if (!password_verify($this->input->post('old_password'), $is_left['password'])) {
 //                    $this->session->set_flashdata('error', 'You have entered wrong old password! Please try again.');
 //                } else {
-                if(!empty($this->input->post('new_password'))){
+                if (!empty($this->input->post('new_password'))) {
                     $data['password'] = password_hash($this->input->post('new_password'), PASSWORD_BCRYPT);
                 }
 //                p($data, 1);
@@ -145,6 +176,37 @@ class Users extends MY_Controller {
             $this->form_validation->set_message('check_password', 'You have entered wrong current password! Please try again.');
             return FALSE;
         }
+    }
+
+    /**
+     * Get cities  or state based on type passed as data.
+     * */
+    public function get_data() {
+        $id = base64_decode($this->input->post('id'));
+        $type = $this->input->post('type');
+        $options = '';
+        if ($type == 'city') {
+            $options = '<option value="">-- Select City --</option>';
+            if (is_numeric($id)) {
+                $data = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
+                if (!empty($data)) {
+                    foreach ($data as $row) {
+                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                    }
+                }
+            }
+        } else if ($type == 'state') {
+            $options = '<option value="">-- Select State --</option>';
+            if (is_numeric($id)) {
+                $data = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => trim($id))]);
+                if (!empty($data)) {
+                    foreach ($data as $row) {
+                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                    }
+                }
+            }
+        }
+        echo $options;
     }
 
 }

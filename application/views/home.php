@@ -6,7 +6,7 @@
                 <img src="<?php echo SLIDER_IMAGES . $image['image'] ?>" alt="<?php echo $key . '-slider' ?>" />
                 <div class="home-caption">
                     <h2>
-                        Your place to <span>Remember, Honor & Celebrate</span>loved ones, Together, Always.
+                        Your place to <span>remember, honor & celebrate</span>loved ones, together, always.
                         <?php
                         if ($image['description'] != '') {
                             echo '<br/>' . $image['description'];
