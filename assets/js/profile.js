@@ -8,6 +8,14 @@ $(function () {
         format: "mm/dd/yyyy",
         endDate: "date()"
     });
+    $(".fancybox")
+            .fancybox({
+                openEffect: 'none',
+                closeEffect: 'none',
+                nextEffect: 'none',
+                prevEffect: 'none',
+                padding: 0,
+            });
     // Setup validation
     $("#create_profile_form").validate({
         rules: {
@@ -582,7 +590,7 @@ $("#gallery").change(function () {
 
                                 reader.onload = function (e) {
                                     str = '<li><div class="upload-wrap"><span>';
-                                    str += '<img src="' + e.target.result + '" style="width:100%">';
+                                    str += '<a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="image"><img src="' + e.target.result + '"></a>';
                                     str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
                                     str += delete_str;
                                     str += '</a></div></li>';
@@ -616,13 +624,25 @@ $("#gallery").change(function () {
                         success: function (data) {
                             if (data.success == true) {
                                 $('#default-preview').remove();
-                                str = '<li><div class="upload-wrap"><span>';
-                                str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
-                                str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
+                                str = '<li><div class="upload-wrap"><span id="upload_gallery_' + index + '">';
+                                str += '<video id="video_' + index + '" style="width:100%;height:100%;visibility:hidden;" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
+                                str += '</span>';
+                                str += '<span class="gallery-play-btn"><a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="iframe"><img src="assets/images/play.png" alt=""></a></span>';
+                                str += '<a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
                                 str += delete_str;
                                 str += '</a></div></li>';
                                 dvPreview.append(str);
+                                var video = document.querySelector('#video_' + index);
+                                video.addEventListener('loadeddata', function () {
+                                    var canvas = document.createElement("canvas");
+                                    canvas.width = video.videoWidth;
+                                    canvas.height = video.videoHeight;
+                                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
+                                    var img = document.createElement("img");
+                                    img.src = canvas.toDataURL();
+                                    $('#upload_gallery_' + index).prepend(img);
+                                }, false);
                             } else {
                                 showErrorMSg(data.error);
                             }
@@ -951,7 +971,7 @@ $("#fundraiser_media").change(function () {
                         fundraiser_media[index]['index'] = index;
                         fundraiser_media[index]['media_type'] = 1;
                         str = '<li><div class="gallery-wrap"><span>';
-                        str += '<img src="' + e.target.result + '" style="width:100%">';
+                        str += '<a href="' + e.target.result + '" class="fancybox" data-fancybox-type="image" rel="fundraiser"><img src="' + e.target.result + '" style="width:100%"></a>';
                         str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this,1,' + index + ')">';
                         str += delete_str;
                         str += '</a></div></li>';
@@ -969,12 +989,25 @@ $("#fundraiser_media").change(function () {
                     var index = fundraiser_media.length - 1;
                     fundraiser_media[index]['index'] = index;
                     fundraiser_media[index]['media_type'] = 2;
-                    str = '<li><div class="gallery-wrap"><span>';
-                    str += '<video style="width:100%;height:100%" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
-                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this,2,' + index + ')">';
+                    str = '<li><div class="gallery-wrap"><span id="fund_' + index + '">';
+                    str += '<video id="fundvideo_' + index + '" style="width:100%;height:100%;visibility:hidden;" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
+                    str += '</span>';
+                    str += '<span class="gallery-play-btn"><a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="fundraiser" data-fancybox-type="iframe"><img src="assets/images/play.png" alt=""></a></span>';
+                    str += '<a href="javascript:void(0)" class="remove-video" onclick="delete_fundmedia(this,2,' + index + ')">';
                     str += delete_str;
                     str += '</a></div></li>';
                     dvPreview.append(str);
+                    var video = document.querySelector('#fundvideo_' + index);
+                    video.addEventListener('loadeddata', function () {
+                        var canvas = document.createElement("canvas");
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                        var img = document.createElement("img");
+                        img.src = canvas.toDataURL();
+                        $('#fund_' + index).prepend(img);
+                    }, false);
                 } else {
                     showErrorMSg("Limit is exceeded to upload videos");
                 }
