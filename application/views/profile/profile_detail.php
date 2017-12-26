@@ -37,7 +37,7 @@
                             - Death: <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('M d, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?>
                         </small>
                         <small>Created with love by: <?php echo isset($profile['u_fname']) ? $profile['u_fname'] . ' ' . $profile['u_lname'] : '-' ?></small> </h4>
-                    <?php if (isset($profil['type']) && $profile['type'] == 2) { ?>
+                    <?php if (isset($profile['type']) && $profile['type'] == 2) { ?>
                         <a href="" class="donate-btn">Donate</a>
                     <?php } ?>
                     <a href="javascript:void(0)" class="flowers-btn">Send Flowers</a>

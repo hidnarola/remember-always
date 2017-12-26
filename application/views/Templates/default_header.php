@@ -38,8 +38,8 @@
                     </g>
                 </svg>
             </a>
-            <form>
-                <input type="text" name="global_search" id="global_search" class="global_search" placeholder=""/>
+            <form action="<?php echo site_url('search') ?>">
+                <input type="text" name="keyword" id="global_search" class="global_search" placeholder="Search..."/>
                 <button type="submit" class="header_search">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129"  class="header_search">
                         <g>

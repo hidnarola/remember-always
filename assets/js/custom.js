@@ -5,8 +5,11 @@
 $(function () {
     //Prevent form submition by pressing enter key
     $(document).on('keypress', 'input', function (event) {
-        if (event.which == '13') {
-            event.preventDefault();
+        text_class = $(this).attr('class');
+        if (text_class != 'global_search') {
+            if (event.which == '13') {
+                event.preventDefault();
+            }
         }
     });
     $(document).on('click', function (e) {
