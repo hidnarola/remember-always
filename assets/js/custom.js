@@ -343,9 +343,13 @@ $.validator.addMethod("maxFileSize",
 );
 $.validator.addMethod('atleast_one_for_post', function (value, element, param) {
     if (($('input[name="images_post[]"]')[0].files.length == 0) && ($('input[name="video_post[]"]')[0].files.length == 0) && $.trim($('#comment').val()) == '') {
-//    if ($.trim($('#comment').val()) == '') {
         return false;
     } else {
         return true;
     }
 }, 'Post is Empty. Please enter post comment or slect image or video file for post.');
+
+jQuery.validator.addMethod("zipcodeUS", function(value, element) {
+//    return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
+    return this.optional(element) || /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/.test(value)
+}, "The specified US or Canadian ZIP Code is invalid");

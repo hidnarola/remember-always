@@ -34,8 +34,8 @@ a:hover{text-decoration:none;}
 .carousel{border-bottom:4px solid #975979;display:block;width:100%;margin:0;position:relative;}
 .home-caption{position:absolute;top:50%;left:0;width:100%;text-align:center;
 -webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);transform:translateY(-50%);}
-.home-caption h2{margin:0 0 60px;padding:0;font-family:'Oswald';font-size:36px;font-weight:300;color:#e7e2e4;}
-.home-caption h2 span{display:block;font-size:58px;font-weight:900;margin:15px 0;}
+.home-caption h2{margin:0 0 60px;padding:0;font-family:'Oswald';font-size:30px;font-weight:300;color:#e7e2e4;}
+.home-caption h2 span{display:block;font-size:48px;font-weight:900;margin:15px 0;}
 .home-caption a{line-height:44px;border:2px solid #e7e2e4;font-size:16px;font-family:'Rubik';font-weight:500;width:220px;display:inline-block;vertical-align:top;border-radius:4px;margin:0 10px;transition:ease-in-out .5s;}
 .home-caption a:nth-child(2){color:#38383a;background:#e7e2e4;}
 .home-caption a:nth-child(2):hover{background:transparent;color:#e7e2e4;text-decoration:none;}
@@ -311,6 +311,7 @@ font-family: 'Roboto';font-size: 16px;color: #aeaeae;line-height: 23px;text-tran
 a.remove-video{width:22px;height:22px;background:#ff8274;text-align:center;line-height:22px;border-radius:100px;position:absolute;bottom:-11px;right:-11px;}
 a.remove-video svg{fill:#fff;width:10px;height:10px;}
 a.remove-video:hover{opacity:.7;}
+.upload-wrap > span img {width:100%};
 
 .gallery-upload-wrap{width:100%;}
 .gallery-upload{position: relative;margin: 0;display: inline-block;background: #fff;border: 1px solid #e5e5e5;box-shadow: 3px 3px 3px 0 rgba(0,0,0,.1);border-radius: 
@@ -451,7 +452,7 @@ a.remove-video:hover{opacity:.7;}
 .comment-btm a:first-child svg{width:23px;}
 .comment-btm a svg{height:20px;fill:#999;vertical-align:middle;}
 .comment-btm button{float:right;padding:10px;width:124px;line-height:18px;color:#fff;font-size:18px;font-weight:500;font-family:'Rubik';background:#975979;border:2px solid #975979;border-radius:4px;}
-.comment-btm button:hover{background:transparent;color:#57585a;}
+.comment-btm button:hover{background:transparent;color:#975979;}
 
 .comments-div{display:block;width:100%;padding:0;height:600px;}
 .comments-div ul{ margin:0;padding:0;list-style:none;}

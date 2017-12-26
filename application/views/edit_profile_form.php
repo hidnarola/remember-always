@@ -44,6 +44,107 @@
                             <label class="label-css">E-mail</label>
                             <input type="text" name="email" placeholder="email" class="input-css" value="<?php echo (isset($user_data)) ? $user_data['email'] : set_value('email') ?>" readonly="" disabled="">
                         </div>
+                        <div class="input-r">
+                            <label class="label-css">Phone Number</label>
+                            <input type="text" name="phone" placeholder="phone" class="input-css" value="<?php echo (isset($user_data['phone'])) ? $user_data['phone'] : set_value('phone') ?>">
+                            <?php
+                            echo '<label id="phone-error" class="error" for="phone">' . form_error('phone') . '</label>';
+                            ?>
+                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <div class="input-l">
+                            <label class="label-css">Address 1</label>
+                            <input type="text" name="address1" placeholder="address1" class="input-css" value="<?php echo (isset($user_data['address1'])) ? $user_data['address1'] : set_value('address1') ?>">
+                            <?php
+                            echo '<label id="address1-error" class="error" for="address1">' . form_error('address1') . '</label>';
+                            ?>
+                        </div>
+                        <div class="input-r">
+                            <label class="label-css">Address 2</label>
+                            <input type="text" name="address2" placeholder="address2" class="input-css" value="<?php echo (isset($user_data['address2'])) ? $user_data['address2'] : set_value('address2') ?>">
+                            <?php
+                            echo '<label id="address2-error" class="error" for="address2">' . form_error('address2') . '</label>';
+                            ?>
+                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <div class="input-l">
+                            <label class="label-css">Country</label>
+                            <select name="country" id="country" class="selectpicker">
+                                <option value="">-- Select Country --</option>
+                                <?php
+                                if (isset($countries) && !empty($countries)) {
+                                    foreach ($countries as $key => $value) {
+                                        $selected = '';
+                                        if (isset($user_data['country']) && $user_data['country'] == $value['id']) {
+                                            $selected = 'selected';
+                                        }
+                                        ?>
+                                        <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('country', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                            <?php
+                            echo '<label id="country-error" class="error" for="country">' . form_error('country') . '</label>';
+                            ?>
+                        </div>
+                        <div class="input-r">
+                            <label class="label-css">State</label>
+                            <!--<input type="text" name="state" placeholder="state" class="input-css" value="<?php echo (isset($user_data['state'])) ? $user_data['state'] : set_value('state') ?>">-->
+                            <select name="state" id="state" class="selectpicker">
+                                <option value="">-- Select State --</option>
+                                <?php
+                                if (isset($states) && !empty($states)) {
+                                    foreach ($states as $key => $value) {
+                                        $selected = '';
+                                        if (isset($user_data['state']) && $user_data['state'] == $value['id']) {
+                                            $selected = 'selected';
+                                        }
+                                        ?>
+                                        <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                            <?php
+                            echo '<label id="state-error" class="error" for="state">' . form_error('state') . '</label>';
+                            ?>
+                        </div>
+                    </div>
+                    <div class="input-wrap">
+                        <div class="input-l">
+                            <label class="label-css">City</label>
+                            <select name="city" id="city" class="selectpicker">
+                                <option value="">-- Select City --</option>
+                                <?php
+                                if (isset($cities) && !empty($cities)) {
+                                    foreach ($cities as $key => $value) {
+                                        $selected = '';
+                                        if (isset($user_data['city']) && $user_data['city'] == $value['id']) {
+                                            $selected = 'selected';
+                                        }
+                                        ?>
+                                        <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                            <?php
+                            echo '<label id="city-error" class="error" for="city">' . form_error('city') . '</label>';
+                            ?>
+                        </div>
+                        <div class="input-r">
+                            <label class="label-css">Zipcode</label>
+                            <input type="text" name="zipcode" placeholder="zipcode" class="input-css" value="<?php echo (isset($user_data['zipcode'])) ? $user_data['zipcode'] : set_value('zipcode') ?>">
+                            <?php
+                            echo '<label id="zipcode-error" class="error" for="zipcode">' . form_error('zipcode') . '</label>';
+                            ?>
+                        </div>
                     </div>
                     <div class="input-wrap">
                         <div class="input-l">
@@ -84,8 +185,21 @@
 
 <script type="text/javascript">
     $(function () {
+        $('#country').selectpicker({
+            liveSearch: true,
+            size: 5
+        });
+        $('#city').selectpicker({
+            liveSearch: true,
+            size: 5
+        });
+        $('#state').selectpicker({
+            liveSearch: true,
+            size: 5
+        });
         // Setup validation
         $("#edit_profile_form").validate({
+            ignore: ['select:hidden'],
             rules: {
                 profile_image: {
                     extension: "jpg|png|jpeg",
@@ -99,6 +213,26 @@
                 },
                 lastname: {
                     required: true
+                },
+                phone: {
+                    required: true,
+                    phoneUS: true
+                },
+                address1: {
+                    required: true,
+                },
+                country: {
+                    required: true,
+                },
+                state: {
+                    required: true,
+                },
+                city: {
+                    required: true,
+                },
+                zipcode: {
+                    required: true,
+                    zipcodeUS:true
                 },
                 new_password: {
                     minlength: 5
@@ -117,6 +251,47 @@
                     equalTo: "Please enter the same password as new password."
                 },
             },
+            errorPlacement: function (error, element) {
+                if (element.hasClass('selectpicker')) {
+                    error.insertAfter(element.parent().find('.bootstrap-select'));
+                } else {
+                    error.insertAfter(element);
+                }
+            }
+        });
+    });
+    $(document).on('change', '#country', function () {
+        var country_id = $("#country option:selected").val();
+        $url = '<?php echo base_url() ?>' + 'users/get_data';
+        $.ajax({
+            type: "POST",
+            url: $url,
+            data: {
+                id: country_id,
+                type: 'state',
+            }
+        }).done(function (data) {
+            if (data != '') {
+                $("select#state").html(data);
+                $("select#state").selectpicker('refresh');
+            }
+        });
+    });
+    $(document).on('change', '#state', function () {
+        var state_id = $("#state option:selected").val();
+        $url = '<?php echo base_url() ?>' + 'users/get_data';
+        $.ajax({
+            type: "POST",
+            url: $url,
+            data: {
+                id: state_id,
+                type: 'city',
+            }
+        }).done(function (data) {
+            if (data != '') {
+                $("select#city").html(data);
+                $("select#city").selectpicker('refresh');
+            }
         });
     });
     $(document).on('blur', '#new_password', function () {

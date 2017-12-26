@@ -110,12 +110,15 @@
                                                         if ($value['type'] == 1) {
                                                             $image_count++;
                                                             ?>
-                                                            <img src="<?php echo PROFILE_IMAGES . $value['media'] ?>" style="width:100%">
+                                                            <a href="<?php echo PROFILE_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="upload_gallery">
+                                                                <img src="<?php echo PROFILE_IMAGES . $value['media'] ?>">
+                                                            </a>
                                                             <?php
                                                         } else {
                                                             $video_count++;
                                                             ?>
-                                                            <video style="width:100%;height:100%" controls><source src="<?php echo PROFILE_IMAGES . $value['media'] ?>">Your browser does not support HTML5 video.</video>
+                                                            <img src="<?php echo PROFILE_IMAGES . str_replace('mp4', 'jpg', $value['media']) ?>">
+                                                            <span class="gallery-play-btn"><a href="<?php echo base_url(PROFILE_IMAGES . $value['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="upload_gallery"><img src="assets/images/play.png" alt=""></a></span>
                                                         <?php } ?>
                                                     </span>
                                                     <a href="javascript:void(0)" class="remove-video" onclick="delete_media(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>	
@@ -648,7 +651,7 @@
                                                 ?>
                                                 <li>
                                                     <div class="gallery-wrap">
-                                                        <span><img src="<?php echo base_url() . FUNDRAISER_IMAGES . $value['media']; ?>" alt="" style="width:100%"></span>
+                                                        <span><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="image" rel="fundraiser"><img src="<?php echo base_url() . FUNDRAISER_IMAGES . $value['media']; ?>" alt="" style="width:100%"></a></span>
                                                         <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
                                                     </div>
                                                 </li>
@@ -659,9 +662,11 @@
                                                 <li>
                                                     <div class="gallery-wrap">
                                                         <span>
-                                                            <video style="width:100%;height:100%" controls>
-                                                                <source src="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>">Your browser does not support HTML5 video.
-                                                            </video>
+<!--                                                            <video style="width:100%;height:100%" controls>
+                                                                <source src="">Your browser does not support HTML5 video.
+                                                            </video>-->
+                                                            <img src="<?php echo FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $value['media']) ?>" style="width:100%">
+                                                            <span class="gallery-play-btn"><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="fundraiser"><img src="assets/images/play.png" alt=""></a></span>
                                                         </span>
                                                         <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
                                                     </div>
