@@ -31,6 +31,10 @@ a.helpful-btn{margin:20px auto 0;top:0;}
 .funeral-r{width:34%;}
 }
 
+@media (min-width:992px) and (max-width:1199px){
+.listing_data ul li {width: 50%;}
+}
+
 @media(min-width:768px) and (max-width:991px){
 .navbar.nav-menu {float: left;margin:16px 0 0;width:100%;}
 .navbar-nav {float: none;margin: 0;text-align: center;background: rgba(255,255,255,.1);}
@@ -53,7 +57,7 @@ a.helpful-btn{margin:20px auto 0;top:0;}
 .services-pro-r{padding:0 0 20px 20px;width:46%;}
 .funeral-l{width:56%;margin:0 0 25px;}
 .funeral-r{width:42%;}
-
+.listing_data ul li {width: 50%;}
 }
 @media(min-width:768px){
 .navbar-header{display:none;}
@@ -159,6 +163,9 @@ a.helpful-btn{margin:20px auto 0;top:0;}
 .funeral-l{width:100%;margin:0 0 25px;}
 .funeral-r{width:100%;}
 .funeral-srh .srvs-form-div:last-child {width:100% !important;margin-bottom:0;max-width:280px;}
+
+.profile_detail_left {float: left;width: 100%;padding: 0 15px;}
+.profile_detail_right {float: left;width: 100%;margin-top: 0;padding: 0 15px;text-align: center;}
 }
 
 

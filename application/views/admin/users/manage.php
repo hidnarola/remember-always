@@ -55,16 +55,102 @@ if ($this->session->flashdata('success')) {
                         <div class="panel panel-flat">
                             <div class="panel-body">
                                 <div class="form-group">
-                                    <label>First Name:</label>
-                                    <input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo isset($user_data['firstname']) ? $user_data['firstname'] : set_value('firstname'); ?>">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>First Name: <span class="text-danger">*</span></label>
+                                            <input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo isset($user_data['firstname']) ? $user_data['firstname'] : set_value('firstname'); ?>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Last Name: <span class="text-danger">*</span></label>
+                                            <input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo isset($user_data['lastname']) ? $user_data['lastname'] : set_value('lastname'); ?>">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>Last Name:</label>
-                                    <input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo isset($user_data['lastname']) ? $user_data['lastname'] : set_value('lastname'); ?>">
-                                </div>
-                                <div class="form-group">
-                                    <label>Email:</label>
+                                    <label>Email: <span class="text-danger">*</span></label>
                                     <input type="text" name="email" id="email" class="form-control" value="<?php echo isset($user_data['email']) ? $user_data['email'] : set_value('email'); ?>">
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="label-css">Address 1 <span class="text-danger">*</span></label>
+                                            <input type="text" name="address1" class="form-control" value="<?php echo (isset($user_data['address1'])) ? $user_data['address1'] : set_value('address1') ?>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="label-css">Address 2 </label>
+                                            <input type="text" name="address2"  class="form-control" value="<?php echo (isset($user_data['address2'])) ? $user_data['address2'] : set_value('address2') ?>">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group mt-5">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <label>Country: <span class="text-danger">*</span></label>
+                                            <select name="country" id="country" class="form-control selectpicker">
+                                                <option value="">-- Select Country --</option>
+                                                <?php
+                                                if (isset($countries) && !empty($countries)) {
+                                                    foreach ($countries as $key => $value) {
+                                                        $selected = '';
+                                                        if (isset($user_data['country']) && $user_data['country'] == $value['id']) {
+                                                            $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>State: <span class="text-danger">*</span></label>
+                                            <select name="state" id="state" class="form-control selectpicker">
+                                                <option value="">-- Select State --</option>
+                                                <?php
+                                                if (isset($states) && !empty($states)) {
+                                                    foreach ($states as $key => $value) {
+                                                        $selected = '';
+                                                        if (isset($user_data['state']) && $user_data['state'] == $value['id']) {
+                                                            $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label>City: <span class="text-danger">*</span></label>
+                                            <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($affiliation['city']) ? $affiliation['city'] : set_value('city');                                   ?>">-->
+                                            <select name="city" id="city" class="form-control selectpicker">
+                                                <option value="">-- Select City --</option>
+                                                <?php
+                                                if (isset($cities) && !empty($cities)) {
+                                                    foreach ($cities as $key => $value) {
+                                                        $selected = '';
+                                                        if (isset($user_data['city']) && $user_data['city'] == $value['id']) {
+                                                            $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Zipcode: <span class="text-danger">*</span></label>
+                                    <input type="text" name="zipcode" class="form-control" value="<?php echo (isset($user_data['zipcode'])) ? $user_data['zipcode'] : set_value('zipcode') ?>">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone: <span class="text-danger">*</span></label>
+                                    <input type="text" name="phone" class="form-control" value="<?php echo (isset($user_data['phone'])) ? $user_data['phone'] : set_value('phone') ?>">
                                 </div>
                                 <div class="text-right">
                                     <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
@@ -80,16 +166,18 @@ if ($this->session->flashdata('success')) {
     </div>
     <script type="text/javascript">
         $('document').ready(function () {
-
-//            jQuery.validator.addMethod("check_email_exists", function (value, element) {
-//                $.ajax({
-//                    url: base_url + '/admin/users/email_validation',
-//                    method: 'post',
-//                    data: {email : value},
-//                    success: function (response) {
-//                        console.log(response);
-//                    }
-//                });
+            $('#country').selectpicker({
+                liveSearch: true,
+                size: 5
+            });
+            $('#state').selectpicker({
+                liveSearch: true,
+                size: 5
+            });
+            $('#city').selectpicker({
+                liveSearch: true,
+                size: 5
+            });
             $("#user_form").validate({
                 ignore: [],
                 errorClass: 'validation-error-label',
@@ -111,17 +199,35 @@ if ($this->session->flashdata('success')) {
                     email: {
                         required: true,
                         email: true
-                    }
+                    },
+                    phone: {
+                        required: true,
+                        phoneUS: true
+                    },
+                    address1: {
+                        required: true,
+                    },
+                    country: {
+                        required: true,
+                    },
+                    state: {
+                        required: true,
+                    },
+                    city: {
+                        required: true,
+                    },
+                    zipcode: {
+                        required: true,
+                        customzipcode: true
+                    },
 
                 },
                 errorPlacement: function (error, element) {
-//                    if (element.attr("name") == "banner_image") {
-//                        error.insertAfter($(".uploader"));
-//                    } else if (element.attr("name") == "description") {
-//                        error.insertAfter(element.parent());
-//                    } else {
-                    error.insertAfter(element);
-//                    }
+                    if (element.hasClass('selectpicker')) {
+                        error.insertAfter(element.parent().find('.bootstrap-select'));
+                    } else {
+                        error.insertAfter(element);
+                    }
                 },
                 submitHandler: function (form) {
                     $('button[type="submit"]').attr('disabled', true);
@@ -133,4 +239,39 @@ if ($this->session->flashdata('success')) {
         $(".file-styled").uniform({
             fileButtonClass: 'action btn bg-pink'
         });
+        
+        $(document).on('change', '#country', function () {
+        var country_id = $("#country option:selected").val();
+        $url = '<?php echo base_url() ?>' + 'admin/users/get_data';
+        $.ajax({
+            type: "POST",
+            url: $url,
+            data: {
+                id: country_id,
+                type: 'state',
+            }
+        }).done(function (data) {
+            if (data != '') {
+                $("select#state").html(data);
+                $("select#state").selectpicker('refresh');
+            }
+        });
+    });
+    $(document).on('change', '#state', function () {
+        var state_id = $("#state option:selected").val();
+        $url = '<?php echo base_url() ?>' + 'admin/users/get_data';
+        $.ajax({
+            type: "POST",
+            url: $url,
+            data: {
+                id: state_id,
+                type: 'city',
+            }
+        }).done(function (data) {
+            if (data != '') {
+                $("select#city").html(data);
+                $("select#city").selectpicker('refresh');
+            }
+        });
+    });
     </script>

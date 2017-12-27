@@ -78,64 +78,66 @@
                                 <label>Description: <span class="text-danger">*</span></label>
                                 <textarea name="description" id="description" rows="4" cols="4" class="form-control"><?php echo isset($affiliation['description']) ? $affiliation['description'] : set_value('description'); ?></textarea>
                             </div>
-                            <div class="row form-group mt-5">
-                                <div class="col-md-4">
-                                    <label>Country: <span class="text-danger">*</span></label>
-                                    <select name="country" id="country" class="form-control selectpicker">
-                                        <option value="">-- Select Country --</option>
-                                        <?php
-                                        if (isset($countries) && !empty($countries)) {
-                                            foreach ($countries as $key => $value) {
-                                                $selected = '';
-                                                if (isset($affiliation) && $affiliation['country'] == $value['id']) {
-                                                    $selected = 'selected';
+                            <div class="form-group mt-5">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Country: <span class="text-danger">*</span></label>
+                                        <select name="country" id="country" class="form-control selectpicker">
+                                            <option value="">-- Select Country --</option>
+                                            <?php
+                                            if (isset($countries) && !empty($countries)) {
+                                                foreach ($countries as $key => $value) {
+                                                    $selected = '';
+                                                    if (isset($affiliation) && $affiliation['country'] == $value['id']) {
+                                                        $selected = 'selected';
+                                                    }
+                                                    ?>
+                                                    <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                    <?php
                                                 }
-                                                ?>
-                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
-                                                <?php
                                             }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>State: <span class="text-danger">*</span></label>
-                                    <select name="state" id="state" class="form-control selectpicker">
-                                        <option value="">-- Select State --</option>
-                                        <?php
-                                        if (isset($states) && !empty($states)) {
-                                            foreach ($states as $key => $value) {
-                                                $selected = '';
-                                                if (isset($affiliation) && $affiliation['state'] == $value['id']) {
-                                                    $selected = 'selected';
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>State: <span class="text-danger">*</span></label>
+                                        <select name="state" id="state" class="form-control selectpicker">
+                                            <option value="">-- Select State --</option>
+                                            <?php
+                                            if (isset($states) && !empty($states)) {
+                                                foreach ($states as $key => $value) {
+                                                    $selected = '';
+                                                    if (isset($affiliation) && $affiliation['state'] == $value['id']) {
+                                                        $selected = 'selected';
+                                                    }
+                                                    ?>
+                                                    <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                    <?php
                                                 }
-                                                ?>
-                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
-                                                <?php
                                             }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label>City: <span class="text-danger">*</span></label>
-                                    <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($affiliation['city']) ? $affiliation['city'] : set_value('city');                           ?>">-->
-                                    <select name="city" id="city" class="form-control selectpicker">
-                                        <option value="">-- Select City --</option>
-                                        <?php
-                                        if (isset($cities) && !empty($cities)) {
-                                            foreach ($cities as $key => $value) {
-                                                $selected = '';
-                                                if (isset($affiliation) && $affiliation['city'] == $value['id']) {
-                                                    $selected = 'selected';
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>City: <span class="text-danger">*</span></label>
+                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($affiliation['city']) ? $affiliation['city'] : set_value('city');                            ?>">-->
+                                        <select name="city" id="city" class="form-control selectpicker">
+                                            <option value="">-- Select City --</option>
+                                            <?php
+                                            if (isset($cities) && !empty($cities)) {
+                                                foreach ($cities as $key => $value) {
+                                                    $selected = '';
+                                                    if (isset($affiliation) && $affiliation['city'] == $value['id']) {
+                                                        $selected = 'selected';
+                                                    }
+                                                    ?>
+                                                    <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                    <?php
                                                 }
-                                                ?>
-                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
-                                                <?php
                                             }
-                                        }
-                                        ?>
-                                    </select>
+                                            ?>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -148,12 +150,12 @@
                                             $required = '';
                                             if (preg_match("/\.(png|jpg|jpeg)$/", $affiliation['image'])) {
                                                 ?>
-                                                                        <!--                                                <a class="fancybox" href="<?php // echo AFFILIATION_IMAGE . $affiliation['image'];          ?>" data-fancybox-group="gallery" ><img src="<?php // echo AFFILIATION_IMAGE . $affiliation['image'];          ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt=""></a>-->
+                                                                                <!--                                                <a class="fancybox" href="<?php // echo AFFILIATION_IMAGE . $affiliation['image'];           ?>" data-fancybox-group="gallery" ><img src="<?php // echo AFFILIATION_IMAGE . $affiliation['image'];           ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt=""></a>-->
                                                 <img src="<?php echo AFFILIATION_IMAGE . $affiliation['image']; ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt="">
                                             <?php } else { ?>
                                                 <a class="fancybox" target="_blank" href="<?php echo AFFILIATION_IMAGE . $affiliation['image']; ?>" data-fancybox-group="gallery" ><img src="assets/admin/images/placeholder.jpg" height="90px" width="110px" alt="" class="img-circle"/></a>
                                             <?php } ?>
-                                            <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id']) ?>')"><i class="icon-trash"></i> Remove</button>-->
+                                        <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id'])  ?>')"><i class="icon-trash"></i> Remove</button>-->
                                         <?php } else {
                                             ?>
                                             <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt="">
@@ -230,7 +232,7 @@
                     required: true,
                 },
                 image: {
-                     required: true,
+                    required: true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "MB",
@@ -341,7 +343,7 @@
     }
 
     function delete_media(data) {
-     $.ajax({
+        $.ajax({
             url: site_url + "admin/affiliations/delete_image",
             type: "POST",
             data: {'image': data},

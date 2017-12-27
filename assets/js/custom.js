@@ -353,3 +353,8 @@ jQuery.validator.addMethod("zipcodeUS", function(value, element) {
 //    return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
     return this.optional(element) || /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/.test(value)
 }, "The specified US or Canadian ZIP Code is invalid");
+
+$(document).on('click', '.manage_cart', function(){
+   var code = $(this).data('item');
+   
+});

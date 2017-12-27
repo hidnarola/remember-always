@@ -739,3 +739,41 @@ ul.select-gallery li{width:31%;float:left;padding:8px;border:1px solid #e5e5e5;b
 .search form button svg{fill:#975979;}
 .affiliation_ul_data{height: 500px}
 #fundraiser_profile-form .select-gallery a.remove-video {bottom: -19px;right: -15px;}
+
+/*** flowers listing page ***/
+ul.listing_data {margin: 0 -15px;padding: 0;list-style: none;}
+ul.listing_data li {padding: 0 15px;float: left;width: 33.33%;}
+.listing_inner_div {border: 0px solid #e5e5e5;position: relative;padding-bottom: 35px;margin-bottom: 40px;box-shadow: 0 0 15px 0 rgba(0,0,0,.1);    transition: ease-in-out .5s;}
+.lst_img {padding: 12px 20px 0;}
+.lst_img img {max-width: 100%;}
+.lst_product_name_xl {margin: 0 0 18px 0;padding: 0;font-family: 'Rubik';font-size: 16px;color: #975979;line-height: normal;font-weight: 500;text-align: center;min-height: 40px;}
+.lst_price {font-family: 'Roboto';font-size: 24px;color: #666;line-height: 20px;display: block;margin: 0;padding: 0;text-align: center;font-weight: 500;}
+.lst_btn {position: absolute;bottom: -15px;text-align: center;width: 100%;}
+.lst_info {border-radius: 4px;width: auto;color: #efeeee;font-weight: 400;font-size: 16px;font-family: 'Roboto';display: inline-block;vertical-align: top;line-height: 28px;padding: 0 20px;text-align: center;background: #57585a;border: 2px solid #57585a;margin: 0;transition: ease-in-out .5s;margin-right: 3px;}
+.buy_info {border-radius: 4px;width: auto;color: #efeeee;font-weight: 400;font-size: 16px;font-family: 'Roboto';display: inline-block;vertical-align: top;line-height: 28px;padding: 0 20px;text-align: center;margin: 0;background: #975979;border: 2px solid #975979;transition: ease-in-out .5s;margin-left: 3px;}
+.listing_inner_div:hover .lst_btn a.buy_info {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);background: transparent;color: #975979;}
+.listing_inner_div:hover .lst_btn a.lst_info {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);background: transparent;color: #57585a;}
+.listing_inner_div:hover {box-shadow: 0 0 30px 0 rgba(0,0,0,.1);}
+.listing_inner_div .lst_btn a:hover {cursor:pointer;}
+.listing_data:after,
+.listing_data ul:after {content: " ";display: block;clear: both;}
+.main_listing_data .paggination-wrap {margin-top: 0;}
+.funneral_flowers ul li a.active{text-decoration:none;color:#975779;}
+ul.sub_ul_custom li a {font-size: 14px;padding: 5px 10px;border-top: 1px solid #eee !important;}
+ul.sub_ul_custom li a:After {content: " ";}
+.funneral_flowers ul li:first-child a:After {content: " ";}
+
+/*** flowers Details page ***/
+.common-body-listing_profile:after,
+.profile_section_wrapper:after {content: " ";display: block;clear: both;}
+.profile_section_wrapper {margin: 0 -15px;}
+.profile_detail_left {float: left;width: 50%;padding: 0 15px;}
+.profile_detail_right {float: left;width: 50%;    margin-top: 40px;padding: 0 15px;}
+.item_name {margin: 0 0 15px;padding: 0;font-family: 'Rubik';font-size: 28px;color: #975979;line-height: normal;font-weight: 500;}
+.item_code {font-family: 'Roboto';font-size: 15px;color: #666;line-height: 24px;display: block;margin: 0;padding: 0 0 10px;}
+.item_description {font-family: 'Roboto';font-size: 15px;color: #666;line-height: 24px;display: block;margin: 0;padding: 0 0 10px;}
+.item_code {font-family: 'Roboto';font-size: 15px;color: #666;line-height: 24px;display: block;margin: 0;padding: 0 0 10px;}
+.item_price {font-family: 'Roboto';font-size: 30px;color: #666;line-height: 24px;display: block;margin: 0;padding: 15px 0 25px 0;font-weight: 500;}
+.disclaimer {font-family: 'Roboto';font-size: 12px;color: #666;line-height: 18px;display: block;margin: 0;padding: 0 0 10px;}
+#item_image img {max-width: 100%;}
+.common-body-listing_profile .comment-btm button {float:none;width:130px;font-family:'Roboto';}

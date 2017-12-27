@@ -12,15 +12,18 @@ class Floristone {
         $this->auth = base64_encode("{$this->username}:{$this->password}");
     }
 
-    public function send_flower($url = null) {
+    public function send_flower($url = null, $options = null) {
         if (isset($url) && !empty($url)) {
-            curl_setopt_array(
-                    $this->ch, array(
-                CURLOPT_URL => $url,
-//            CURLOPT_URL => "https://www.floristone.com/api/rest/flowershop/getproducts?code=T50-3A",
+            $curl_options = array(CURLOPT_URL => $url,
                 CURLOPT_HTTPHEADER => array("Authorization: {$this->auth}"),
-                CURLOPT_RETURNTRANSFER => true)
-            );
+                CURLOPT_RETURNTRANSFER => true);
+                if($options != null && !empty($options) && is_array($options)){
+                    foreach ($options as $key => $val){
+                        $curl_options[$key] = $val;
+                     }
+                }
+            curl_setopt_array($this->ch, $curl_options);
+
             $output = json_decode(curl_exec($this->ch));
             curl_close($this->ch);
         } else {
@@ -28,4 +31,5 @@ class Floristone {
         }
         return $output;
     }
+
 }
