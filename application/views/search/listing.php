@@ -12,7 +12,7 @@
                             <option value="service_provider" <?php if ($this->input->get('type') == 'service_provider') echo 'selected'; ?>>Service Provider</option>
                             <option value="affiliation" <?php if ($this->input->get('type') == 'affiliation') echo 'selected'; ?>>Affiliations</option>
                             <option value="blog" <?php if ($this->input->get('type') == 'blog') echo 'selected'; ?>>Blog</option>
-                            <option value="all" <?php if ($this->input->get('type') == 'blog') echo 'all'; ?>>All</option>
+                            <option value="all" <?php if ($this->input->get('type') == 'all') echo 'selected'; ?>>All</option>
                         </select>
                     </div>
                     <div class="srvs-form-div">
@@ -37,16 +37,32 @@
                                     $tag_class = '';
                                     if ($result['type'] == 'profile') {
                                         $tag_class = 'tag-profile';
-                                        echo "<img src='" . PROFILE_IMAGES . $result['image'] . "' alt=''>";
+                                        if ($result['image'] != '') {
+                                            echo "<img src='" . PROFILE_IMAGES . $result['image'] . "' alt=''>";
+                                        } else {
+                                            echo "<img src='assets/images/no_image.png' alt=''>";
+                                        }
                                     } elseif ($result['type'] == 'service_provider') {
                                         $tag_class = 'tag-services';
-                                        echo "<img src='" . PROVIDER_IMAGES . $result['image'] . "' alt=''>";
+                                        if ($result['image'] != '') {
+                                            echo "<img src='" . PROVIDER_IMAGES . $result['image'] . "' alt=''>";
+                                        } else {
+                                            echo "<img src='assets/images/no_image.png' alt=''>";
+                                        }
                                     } elseif ($result['type'] == 'affiliation') {
                                         $tag_class = 'tag-affiliation';
-                                        echo "<img src='" . AFFILIATION_IMAGE . $result['image'] . "' alt=''>";
+                                        if ($result['image'] != '') {
+                                            echo "<img src='" . AFFILIATION_IMAGE . $result['image'] . "' alt=''>";
+                                        } else {
+                                            echo "<img src='assets/images/no_image.png' alt=''>";
+                                        }
                                     } elseif ($result['type'] == 'blog') {
                                         $tag_class = 'tag-blog';
-                                        echo "<img src='" . BLOG_POST_IMAGES . $result['image'] . "' alt=''>";
+                                        if ($result['image'] != '') {
+                                            echo "<img src='" . BLOG_POST_IMAGES . $result['image'] . "' alt=''>";
+                                        } else {
+                                            echo "<img src='assets/images/no_image.png' alt=''>";
+                                        }
                                     }
                                     ?>
                                 </div>

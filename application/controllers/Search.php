@@ -40,6 +40,10 @@ class Search extends MY_Controller {
         $page_config = front_pagination();
         $page_config['per_page'] = 12;
         $page_config['base_url'] = site_url('search');
+        if ($this->input->get('type') != '') {
+            $page_config['suffix'] = '?type=' . $this->input->get('type') . '&keyword=' . $this->input->get('keyword') . '&location=' . $this->input->get('location');
+            $page_config['first_url'] = site_url('search') . '?type=' . $this->input->get('type') . '&keyword=' . $this->input->get('keyword') . '&location=' . $this->input->get('location');
+        }
         $offset = 12;
         $page_config['total_rows'] = $this->search_model->get_results('count', $start, $offset);
         $data['results'] = $this->search_model->get_results('result', $start, $offset);

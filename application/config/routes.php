@@ -95,6 +95,7 @@ $route['logout'] = 'login/logout';
 $route['editprofile'] = 'users/edit_profile';
 $route['changepassword'] = 'users/update_password';
 $route['dashboard/(:any)'] = 'dashboard/index/$1';
+$route['search/(:any)'] = 'search/index/$1';
 //$route['dashboard/(:any)/profile_publish/(:any)'] = 'dashboard/profile_publish/$2';
 
 $route['pages/(:any)'] = 'cms/index/$1';
