@@ -93,8 +93,9 @@ class Flowers extends MY_Controller {
      */
     public function cart() {
         $floristone = new Floristone();
-//        $cartname = 'abcdefg';
-        $cartname = 'abcdefg';
+//        p($this->session->unset_userdata('cart_id'));
+        $cartname = $this->session->userdata('cart_id');
+        p($cartname);
         $url = "https://www.floristone.com/api/rest/shoppingcart?sessionid=$cartname";
         $output = $floristone->send_flower($url);
         /* overall totak products or flowers available */
@@ -115,13 +116,28 @@ class Flowers extends MY_Controller {
                 if (!$this->is_user_loggedin) {
                     $cartname = hash('sha256', $_SERVER['REMOTE_ADDR']);
                 } else {
-                    $cartname = hash('sha256', $this->session->userdata('remalways_user')['email']);
+                    $cartname = hash('sha256', $this->session->userdata('remalways_user')['id']);
                 }
-                $this->session->set_userdata('cart_id', $cartname);
+                $session_option = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => array('sessionid' => 'adbahsbdjasb'));
+                $session_option = array(CURLOPT_CUSTOMREQUEST => "DELETE");
+//                $session_option = array(CURLOPT_POST => true);
+                $session_url = "https://www.floristone.com/api/rest/shoppingcart?sessionid=";
+                $floristone = new Floristone();
+                $output = $floristone->send_flower($session_url, $session_option);
+                var_dump($output);
+                if (!isset($output->errors)) {
+                    if (!empty($output)) {
+                        $this->session->set_userdata('cart_id', $cartname);
+                    } else {
+                        $cartname = '';
+                    }
+                } else {
+                    $cartname = '';
+                }
             } else {
                 $cartname = $this->session->userdata('cart_id');
             }
-            p($cartname);
+            var_dump($cartname);
             $floristone = new Floristone();
             $product = 'F1-509';
             $action = 'add';

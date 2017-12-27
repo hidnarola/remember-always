@@ -1,5 +1,6 @@
 <link type="text/css" href="assets/admin/css/fileinput.css">
 <script type="text/javascript" src="assets/admin/js/fileinput.js"></script>
+<script type="text/javascript" src="assets/admin/ckeditor/ckeditor.js"></script>
 <div class="page-header page-header-default">
     <div class="page-header-content">
         <div class="page-title">
@@ -127,12 +128,21 @@
 <?php } ?>
 <script type="text/javascript">
     $('document').ready(function () {
+        CKEDITOR.replace('description', {
+            height: '400px'
+        });
+        for (var i in CKEDITOR.instances) {
+            CKEDITOR.instances[i].on('change', function (e) {
+                if ($('#description').val() != '') {
+                    $('#description').valid();
+                }
+            });
+        }
         $(".file-styled").uniform({
             fileButtonClass: 'action btn bg-pink'
         });
 
         $("#blogpost_form").validate({
-            ignore: [],
             errorClass: 'validation-error-label',
             successClass: 'validation-valid-label',
             highlight: function (element, errorClass) {
