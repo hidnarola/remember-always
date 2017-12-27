@@ -11,7 +11,7 @@
                         <div class="blog-content">
                             <h3><a href="<?php echo site_url('blog/details/' . $blog_data['slug']) ?>"><?php echo $blog_data['title'] ?></a></h3>
                             <h6>by : <?php echo $blog_data['firstname'] . ' ' . $blog_data['lastname'] ?>  -  <?php echo date('d-M-Y', strtotime($blog_data['created_at'])); ?></h6>
-                            <p><?php echo implode('</p><p>', array_filter(explode("\n", $blog_data['description']))) ?></p>
+                            <p><?php echo $blog_data['description']; ?></p>
                         </div>
                     </div>
                 </div>	
