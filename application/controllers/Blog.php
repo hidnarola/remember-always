@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Service Provider Controller
- * Manage profile related functions
- * @author KU 
+ * Blog Controller
+ * Display all blogs
+ * @author AKK 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -15,7 +15,7 @@ class Blog extends MY_Controller {
     }
 
     /**
-     * Display login page for login
+     * Display Blog listing
      */
     public function index($start = 0) {
         $blog_list = $this->blogs_model->sql_select(TBL_BLOG_POST, '*', ['where' => ['is_delete' => 0, 'is_active' => 1]], ['order_by' => 'id DESC', 'limit' => 10]);
