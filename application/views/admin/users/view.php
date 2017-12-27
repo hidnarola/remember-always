@@ -78,6 +78,12 @@ if ($this->session->flashdata('success')) {
                                     <td><?php echo isset($user_data['created_at']) && !is_null($user_data['created_at']) ? date('d M Y', strtotime($user_data['created_at'])) : '-' ?></td>
                                 </tr>
                                 <tr>
+                                    <th class="text-nowrap">Phone :</th>
+                                    <td>
+                                        <?php echo isset($user_data['phone']) && !is_null($user_data['phone']) ? $user_data['phone'] : '-' ?>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <th class="text-nowrap">User Type :</th>
                                     <td>
                                         <?php
@@ -98,6 +104,43 @@ if ($this->session->flashdata('success')) {
                                         <?php echo isset($user_data['is_verify']) && $user_data['is_verify'] == '1' ? '<span class="label label-success">Verified</span>' : '<span class="label label-danger">NotVerified</span>' ?>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th class="text-nowrap">Address 1 :</th>
+                                    <td>
+                                        <?php echo isset($user_data['address1']) && !is_null($user_data['address1']) ? $user_data['address1'] : '-' ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">Address 2 :</th>
+                                    <td>
+                                        <?php echo isset($user_data['address2']) && !is_null($user_data['address2']) ? $user_data['address2'] : '-' ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">Country :</th>
+                                    <td>
+                                        <?php echo isset($user_data['country']) && !is_null($user_data['country']) ? $user_data['country_name'] : '-' ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">State :</th>
+                                    <td>
+                                        <?php echo isset($user_data['state']) && !is_null($user_data['state']) ? $user_data['state_name'] : '-' ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">City :</th>
+                                    <td>
+                                        <?php echo isset($user_data['city']) && !is_null($user_data['city']) ? $user_data['city_name'] : '-' ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-nowrap">Zipcode :</th>
+                                    <td>
+                                        <?php echo isset($user_data['zipcode']) && !is_null($user_data['zipcode']) ? $user_data['zipcode'] : '-' ?>
+                                    </td>
+                                </tr>
+
                                 <tr>
                                     <th class="text-nowrap custom_align_top">Profile :</th>
                                     <td>

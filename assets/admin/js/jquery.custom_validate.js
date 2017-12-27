@@ -1803,13 +1803,11 @@
             return true;
         }
     }, 'Please eneter comment or slect image or video file.');
-//    jQuery.validator.addMethod(
-//            "custom_mail",
-//            function (value, element, regexp) {
-//                return this.optional(element) || /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,})$/i.test(jQuery.trim(value));
-//            },
-//            "Please check your email."
-//            );
+
+    jQuery.validator.addMethod("customzipcode", function (value, element) {
+        return this.optional(element) || /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/.test(value)
+    }, "The specified US or Canadian ZIP Code is invalid");
+
 }(jQuery));
 
 function getWordCount(wordString) {

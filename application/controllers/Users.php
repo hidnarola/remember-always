@@ -33,13 +33,13 @@ class Users extends MY_Controller {
         if (!empty($is_left)) {
             $data['user_data'] = $is_left;
             $states = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => $is_left['country'])]);
-                if (!empty($states)) {
-                    $data['states'] = $states;
-                }
-                $cities = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => $is_left['state'])]);
-                if (!empty($cities)) {
-                    $data['cities'] = $cities;
-                }
+            if (!empty($states)) {
+                $data['states'] = $states;
+            }
+            $cities = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => $is_left['state'])]);
+            if (!empty($cities)) {
+                $data['cities'] = $cities;
+            }
         }
         $countries = $this->users_model->sql_select(TBL_COUNTRY . ' c');
         $data['countries'] = $countries;
@@ -54,6 +54,7 @@ class Users extends MY_Controller {
             }
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
             $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
+            $this->form_validation->set_rules('address1', 'Address 1', 'trim|required');
             $this->form_validation->set_rules('country', 'Country', 'trim|required');
             $this->form_validation->set_rules('state', 'State', 'trim|required');
             $this->form_validation->set_rules('city', 'City', 'trim|required');
@@ -100,7 +101,7 @@ class Users extends MY_Controller {
                     'phone' => trim($this->input->post('phone')),
                     'profile_image' => $profile_image,
                 );
-                if(!empty(trim($this->input->post('address2')))){
+                if (!empty(trim($this->input->post('address2')))) {
                     $data['address2'] = trim($this->input->post('address2'));
                 }
 //                $result = $this->users_model->get_user_detail(['id' => $this->user_id, 'is_delete' => 0]);

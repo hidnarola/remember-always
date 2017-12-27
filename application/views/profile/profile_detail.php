@@ -40,7 +40,7 @@
                     <?php if (isset($profile['type']) && $profile['type'] == 2) { ?>
                         <a href="" class="donate-btn">Donate</a>
                     <?php } ?>
-                    <a href="javascript:void(0)" class="flowers-btn">Send Flowers</a>
+                        <a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>
                     <div class="profile-share">
                         <h6>Share</h6>
                         <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"

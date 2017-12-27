@@ -740,56 +740,62 @@
         <div id="testimonial" class="owl-carousel  owl-theme">
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Exactly what I needed <small>NB, Orlando, Florida</small></h3>
+                    <p>Remember Always is exactly what I needed to memorialize my beloved grandmother. This site is so easy to use and has so many great features. Thank you!</p>
                 </div>
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> Felt like a warm place <small>RR, Bronx, New York</small></h3>
+                    <p>I love the name of this online memorial site and everything it has to offer. This just felt like a warm place to create a loving memorial (which they call Life Profile) for my sister.</p>
                 </div>
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Truly the best <small>KP, Queens, NY</small></h3>
+                    <p>Truly the best online memorial available!</p>
                 </div>
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> Awesome website! <small>CC, Phoenix, AZ</small></h3>
+                    <p>Kudos for creating this awesome website!  I love the Life Profile that I was able to create for my dear Dad.  The fundraiser option was a life saver. We were able to get support from our family and friends to help cover the funeral expenses.</p>
                 </div>
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Invaluable <small>TY, Miami, FL</small></h3>
+                    <p>When my Mom died, I had no idea how to deal with it.  The information and resources on Remember Always was invaluable.  I was able to know and do everything that was necessary during the tough time.</p>
                 </div>
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> Fabulous <small>RS, Daytona Beach, FL</small></h3>
+                    <p>This is a fabulous website!  Just what I needed to properly honor my late mother, forever. Thank you Remember Always.</p>
                 </div>
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> The best hands-down <small>RE, Bangalore, India</small></h3>
+                    <p>I looked at several online memorial offerings, and this one is hands-down the best. Thank you for creating such a great site for this purpose.</p>
                 </div>
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> I love it <small>JB, Kingston, Jamaica</small></h3>
+                    <p>I love how everyone can post pictures and videos on my Dad’s Life Profile.  I am seeing so many cool pics of him that I had never seen before.  I miss him, but this helps!</p>
                 </div>
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Scrambled it to make a <small>Admin Position</small></h3>
-                    <p>It was popularised in the with release of etra set sheets containing and more recently with desktop publishing like aldus.</p>
+                    <h3><span><img src="assets/images/img-01.jpg" alt="" /></span> Beautiful <small>DK, Atlanta, GA</small></h3>
+                    <p>I visit my Mom’s Life Profile every day.  It’s so beautiful!</p>
+                </div>
+            </div>
+            <div class="item">
+                <div class="member-box">
+                    <h3><span><img src="assets/images/img-02.jpg" alt="" /></span> A blessing <small>UT, Long Island, NY</small></h3>
+                    <p>This website is a blessing from above. I am so happy I found it and was able to create an online memorial for my grandfather.  He would have been proud!</p>
                 </div>
             </div>
         </div>

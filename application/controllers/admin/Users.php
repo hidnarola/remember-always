@@ -53,6 +53,14 @@ class Users extends MY_Controller {
             $user_data = $this->users_model->sql_select(TBL_USERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($user_data)) {
                 $this->data['user_data'] = $user_data;
+                $states = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => $user_data['country'])]);
+                if (!empty($states)) {
+                    $this->data['states'] = $states;
+                }
+                $cities = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => $user_data['state'])]);
+                if (!empty($cities)) {
+                    $this->data['cities'] = $cities;
+                }
                 $this->data['title'] = 'Remember Always Admin | Users';
                 $this->data['heading'] = 'Edit User';
             } else {
@@ -62,6 +70,9 @@ class Users extends MY_Controller {
             $this->data['title'] = 'Remember Always Admin | Users';
             $this->data['heading'] = 'Add User';
         }
+        
+        $countries = $this->users_model->sql_select(TBL_COUNTRY . ' c');
+        $this->data['countries'] = $countries;
         if (strtolower($this->input->method()) == 'post') {
             if (is_numeric($id)) {
                 if (!empty($user_data) && $user_data['email'] != trim($this->input->post('email'))) {
@@ -70,10 +81,25 @@ class Users extends MY_Controller {
             } else {
                 $unique_email = '|callback_email_validation';
             }
+
+            $states = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => base64_decode($this->input->post('country')))]);
+            if (!empty($states)) {
+                $this->data['states'] = $states;
+            }
+            $cities = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => base64_decode($this->input->post('state')))]);
+            if (!empty($cities)) {
+                $this->data['cities'] = $cities;
+            }
         }
         $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required' . $unique_email);
+        $this->form_validation->set_rules('address1', 'Address 1', 'trim|required');
+        $this->form_validation->set_rules('country', 'Country', 'trim|required');
+        $this->form_validation->set_rules('state', 'State', 'trim|required');
+        $this->form_validation->set_rules('city', 'City', 'trim|required');
+        $this->form_validation->set_rules('phone', 'Phone number', 'trim|required');
+        $this->form_validation->set_rules('zipcode', 'Zipcode', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
@@ -86,7 +112,16 @@ class Users extends MY_Controller {
                 'firstname' => trim($this->input->post('firstname')),
                 'lastname' => trim($this->input->post('lastname')),
                 'email' => trim($this->input->post('email')),
+                'address1' => trim($this->input->post('address1')),
+                'country' => base64_decode(trim($this->input->post('country'))),
+                'state' => base64_decode(trim($this->input->post('state'))),
+                'city' => base64_decode(trim($this->input->post('city'))),
+                'zipcode' => trim($this->input->post('zipcode')),
+                'phone' => trim($this->input->post('phone')),
             );
+            if (!empty(trim($this->input->post('address2')))) {
+                $dataArr['address2'] = trim($this->input->post('address2'));
+            }
             if (is_numeric($id)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->users_model->common_insert_update('update', TBL_USERS, $dataArr, ['id' => $id]);
@@ -134,7 +169,7 @@ class Users extends MY_Controller {
         if (is_numeric($id)) {
             $this->data['title'] = 'Remember Always Admin | Users';
             $this->data['heading'] = 'View Uesr Details';
-            $user_data = $this->users_model->sql_select(TBL_USERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
+            $user_data = $this->users_model->sql_select(TBL_USERS . ' u', 'u.*,con.name as country_name,st.name as state_name,c.name as city_name', ['where' => array('u.id' => trim($id), 'is_delete' => 0)], ['join'=>[array('table' => TBL_COUNTRY . ' con', 'condition' => 'con.id=u.country'),array('table' => TBL_STATE . ' st', 'condition' => 'st.id=u.state'),array('table' => TBL_CITY . ' c', 'condition' => 'c.id=u.city')],'single' => true]);
             if (!empty($user_data)) {
                 $this->data['user_data'] = $user_data;
             } else {
@@ -169,7 +204,38 @@ class Users extends MY_Controller {
         }
         redirect('admin/users');
     }
-
+    
+    /**
+     * Get cities  or state based on type passed as data.
+     * */
+    public function get_data() {
+        $id = base64_decode($this->input->post('id'));
+        $type = $this->input->post('type');
+        $options = '';
+        if ($type == 'city') {
+            $options = '<option value="">-- Select City --</option>';
+            if (is_numeric($id)) {
+                $data = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
+                if (!empty($data)) {
+                    foreach ($data as $row) {
+                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                    }
+                }
+            }
+        } else if ($type == 'state') {
+            $options = '<option value="">-- Select State --</option>';
+            if (is_numeric($id)) {
+                $data = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => trim($id))]);
+                if (!empty($data)) {
+                    foreach ($data as $row) {
+                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                    }
+                }
+            }
+        }
+        echo $options;
+    }
+    
     /**
      * Callback Validate function to check unique email validation
      * @return boolean
