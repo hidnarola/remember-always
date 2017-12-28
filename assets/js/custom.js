@@ -189,6 +189,67 @@ $(function () {
         }
     });
 });
+
+
+$(function () {
+    var suggestionEngine = new Bloodhound({
+        datumTokenizer: function (d) {
+            return Bloodhound.tokenizers.whitespace(d.value);
+        },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        remote: {
+            url: site_url + 'search/autocomplete?query=',
+            replace: function (url, query) {
+                return url + query;
+            },
+            ajax: {
+                type: "POST",
+                data: {
+                    q: function () {
+                        return $('#typehead_search').val()
+                    }
+                }
+            }
+        }
+    });
+
+    var suggestionTemplate = function (data) {
+//        if (data.image) {
+//            return '<div><img class="image" src="' + data.image + '"/> <p class="menu-text">' + data.title + '</p>' + '<p class="price menu-text"> $' + data.price + '</p></div>';
+//        } else {
+//            if (data.type == 'business') {
+//                biz_location = '';
+//                if (data.location != '' && data.location != null) {
+//                    biz_location = data.location;
+//                }
+//                return '<div><p class="menu-text"><a href="biz/' + data.slug + '">' + data.value + '</a><i style="float:right;">' + biz_location + '</i></p></div>';
+//            } else {
+//                return '<div><p class="menu-text">' + data.value + '</p></div>';
+//            }
+//        }
+        return '<div><p class="menu-text">' + data.name + '</p></div>';
+    }
+
+    suggestionEngine.initialize();
+
+
+    $('#global_search').typeahead(
+            {
+                highlight: true,
+                minLength: 1
+            },
+            {
+                name: 'search_location',
+                displayKey: 'value', //--- use for change value on change suggestions
+                source: suggestionEngine,
+                limit: 5,
+                templates: {
+                    notFound: '<p class="not"><i class="fa fa-info-circle" style="margin-top:1px;"></i>&nbsp; Not found </p>',
+                    suggestion: suggestionTemplate
+                }
+            }
+    );
+});
 /**
  * Display Login/signup modal
  * @param string modalType
@@ -349,12 +410,12 @@ $.validator.addMethod('atleast_one_for_post', function (value, element, param) {
     }
 }, 'Post is Empty. Please enter post comment or slect image or video file for post.');
 
-jQuery.validator.addMethod("zipcodeUS", function(value, element) {
+jQuery.validator.addMethod("custom_zipcode", function (value, element) {
 //    return this.optional(element) || /\d{5}-\d{4}$|^\d{5}$/.test(value)
     return this.optional(element) || /(^\d{5}(-\d{4})?$)|(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/.test(value)
 }, "The specified US or Canadian ZIP Code is invalid");
 
-$(document).on('click', '.manage_cart', function(){
-   var code = $(this).data('item');
-   
+$(document).on('click', '.manage_cart', function () {
+    var code = $(this).data('item');
+
 });
