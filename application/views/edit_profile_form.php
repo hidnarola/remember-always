@@ -232,7 +232,7 @@
                 },
                 zipcode: {
                     required: true,
-                    zipcodeUS:true
+                    custom_zipcode:true
                 },
                 new_password: {
                     minlength: 5

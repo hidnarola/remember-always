@@ -45,12 +45,12 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
                                 ?>
                                 <li>
                                     <div class="listing_inner_div">
-                                        <div class="lst_img"><img src="<?php echo $flowers[$key]->SMALL ?>" alt="Arrive In Style" class=""></div>
-                                        <h2 class="lst_product_name_xl"><?php echo $flowers[$key]->NAME ?></h2>
-                                        <p class="lst_price">$<?php echo $flowers[$key]->PRICE ?>5</p>
+                                        <div class="lst_img"><img src="<?php echo $val->SMALL ?>" alt="Arrive In Style" class=""></div>
+                                        <h2 class="lst_product_name_xl"><?php echo $val->NAME ?></h2>
+                                        <p class="lst_price">$<?php echo $val->PRICE ?>5</p>
                                         <div class="lst_btn">
-                                            <a href="<?php echo site_url('flowers/view/').$flowers[$key]->CODE?>" class="lst_info">Info</a>
-                                            <a href="javascript:void(0)" class="buy_info manage_cart" data-item="<?php echo $flowers[$key]->CODE ?>">Buy</a>
+                                            <a href="<?php echo site_url('flowers/view/').$val->CODE?>" class="lst_info">Info</a>
+                                            <a href="javascript:void(0)" class="buy_info manage_cart" onclick="return add_to_cart('<?php echo $val->CODE ?>'); ">Buy</a>
                                         </div>
                                     </div>
                                 </li>
@@ -67,3 +67,4 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
         </div>
     </div>
 </div>
+<script src="assets/js/flower.js"></script>
