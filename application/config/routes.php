@@ -90,12 +90,14 @@ $route['profile/(:any)'] = 'profile/index/$1';
 $route['flowers/view'] = 'flowers/view';
 $route['flowers/cart'] = 'flowers/cart';
 $route['flowers/get_data'] = 'flowers/get_data';
+$route['flowers/place_order'] = 'flowers/place_order';
 $route['flowers/(:any)'] = 'flowers/index/$1';
 $route['blog/(:any)'] = 'blog/index/$1';
 $route['logout'] = 'login/logout';
 $route['editprofile'] = 'users/edit_profile';
 $route['changepassword'] = 'users/update_password';
 $route['dashboard/(:any)'] = 'dashboard/index/$1';
+$route['search/autocomplete'] = 'search/autocomplete';
 $route['search/(:any)'] = 'search/index/$1';
 //$route['dashboard/(:any)/profile_publish/(:any)'] = 'dashboard/profile_publish/$2';
 

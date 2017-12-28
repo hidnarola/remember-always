@@ -676,6 +676,7 @@ ul.blog-list-ul li  .blog-box span{margin-bottom:10px;}
 .tag-blog{background:url(../images/tag-blog.png) no-repeat 0 0;display:block;width:48px;height:28px;position:absolute;top:-32px;left:0;}
 .tag-profile{background:url(../images/tag-profile.png) no-repeat 0 0;display:block;width:67px;height:28px;position:absolute;top:-32px;left:0;}
 .tag-services{background:url(../images/tag-services.png) no-repeat 0 0;display:block;width:140px;height:28px;position:absolute;top:-32px;left:0;}
+.tag-affiliation {background: url(../images/affliation.png) no-repeat 0 0;display: block;width: 100%;height: 28px;position: absolute;top: -32px;left: 0;}
 
 #service_ul_data{height:500px;}
 
@@ -832,7 +833,7 @@ ul.sub_ul_custom li a:After {content: " ";}
 .delivery_l .input-wrap {position: relative;padding-right: 30px;}
 .delivery_l .input-wrap i {position: absolute;right: 0;top: 50%;margin-top: -7px;font-size: 20px;color: #975979;}
 .delivery_l .input-wrap select {border: 1px solid #e5e5e5;padding: 15px;line-height: 20px;box-shadow: 3px 3px 3px 0 rgba(0,0,0,.1);color: #aeaeae;font-size: 15px;font-weight: 400;width: 100%;background: url(../images/drop_down.png);
--webkit-appearance: none;-moz-appearance: none;appearance: none;background-repeat: no-repeat;background-position: right;}
+                                -webkit-appearance: none;-moz-appearance: none;appearance: none;background-repeat: no-repeat;background-position: right;}
 .delivery_l form .input-wrap small {font-weight: 400;font-family: 'Rubik';color: #000;line-height: normal;margin: 10px 0 0px 0;padding: 0;display: inline-block;}
 .delivery_r h2 {font-size: 22px;font-weight: 400;font-family: 'Rubik';color: #975979;line-height: normal;margin: 0 0 20px 0;padding: 0;}
 .delivery_r .input-wrap select {border: 1px solid #e5e5e5;padding: 15px;line-height: 20px;box-shadow: 3px 3px 3px 0 rgba(0,0,0,.1);color: #aeaeae;font-size: 15px;font-weight: 400;width: 100%;background: url(../images/drop_down.png);-webkit-appearance: none;-moz-appearance: none;appearance: none;background-repeat: no-repeat;background-position: right;}

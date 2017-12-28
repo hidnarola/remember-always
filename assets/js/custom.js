@@ -232,23 +232,23 @@ $(function () {
 
     suggestionEngine.initialize();
 
-
-    $('#global_search').typeahead(
-            {
-                highlight: true,
-                minLength: 1
-            },
-            {
-                name: 'search_location',
-                displayKey: 'value', //--- use for change value on change suggestions
-                source: suggestionEngine,
-                limit: 5,
-                templates: {
-                    notFound: '<p class="not"><i class="fa fa-info-circle" style="margin-top:1px;"></i>&nbsp; Not found </p>',
-                    suggestion: suggestionTemplate
-                }
-            }
-    );
+    /*
+     $('#global_search').typeahead(
+     {
+     highlight: true,
+     minLength: 1
+     },
+     {
+     name: 'search_location',
+     displayKey: 'value', //--- use for change value on change suggestions
+     source: suggestionEngine,
+     limit: 5,
+     templates: {
+     notFound: '<p class="not"><i class="fa fa-info-circle" style="margin-top:1px;"></i>&nbsp; Not found </p>',
+     suggestion: suggestionTemplate
+     }
+     }
+     );*/
 });
 /**
  * Display Login/signup modal

@@ -5,7 +5,7 @@
         </div>
         <div class="common-body">
             <div class="services-form">
-                <form>
+                <form action="<?php echo site_url('search') ?>">
                     <div class="srvs-form-div">
                         <select name="type" class="selectpicker">
                             <option value="profile" <?php if ($this->input->get('type') == 'profile') echo 'selected'; ?>>Profile</option>

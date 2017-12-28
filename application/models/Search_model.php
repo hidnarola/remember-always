@@ -220,18 +220,16 @@ class Search_model extends MY_Model {
                 . ' UNION ALL '
                 . 'SELECT sp.name,sp.slug,sp.image,"service_provider" as type '
                 . 'FROM ' . TBL_SERVICE_PROVIDERS . ' sp '
-                . 'WHERE sp.is_delete=0 AND sp.is_active=1 AND (sp.name LIKE ' . $this->db->escape('%' . $search_text . '%') .
-                ')' .
+                . 'WHERE sp.is_delete=0 AND sp.is_active=1 AND sp.name LIKE ' . $this->db->escape('%' . $search_text . '%') .
                 ' UNION ALL ' .
-                'SELECT a.name,a.slug,a.image,a.description,"affiliation" as type '
+                'SELECT a.name,a.slug,a.image,"affiliation" as type '
                 . 'FROM ' . TBL_AFFILIATIONS . ' a'
-                . 'WHERE a.is_delete=0 AND a.is_approved=1 AND (a.name LIKE ' . $this->db->escape('%' . $search_text . '%') .
-                ')' .
+                . ' WHERE a.is_delete=0 AND a.is_approved=1 AND a.name LIKE ' . $this->db->escape('%' . $search_text . '%') .
                 ' UNION ALL ' .
-                'SELECT b.title as name,b.slug,b.image,b.description,"blog" as type '
+                'SELECT b.title as name,b.slug,b.image,"blog" as type '
                 . 'FROM ' . TBL_BLOG_POST . ' b '
-                . 'WHERE b.is_delete=0 AND b.is_active=1 AND (b.title LIKE ' . $this->db->escape('%' . $search_text . '%') .
-                ')) s ORDER BY name ASC';
+                . ' WHERE b.is_delete=0 AND b.is_active=1 AND b.title LIKE ' . $this->db->escape('%' . $search_text . '%') .
+                ') s ORDER BY name ASC';
         $data = $this->db->query($sql);
         return $data->result_array();
     }
