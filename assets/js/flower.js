@@ -92,7 +92,7 @@ $(function () {
             },
             r_card_msg: {
                 required: true,
-                max: 200
+//                max: 200
             },
         },
         errorPlacement: function (error, element) {
@@ -159,25 +159,22 @@ $(document).on('change', '.selectpicker', function () {
     }
 });
 $(document).on('focusout', '#r_zipcode', function () {
-    console.log($(this).val());
-    if ($(this).val() != '') {
-        var zip = $(this).val();
-        $url = site_url + 'flowers/get_data';
-        $.ajax({
-            type: "POST",
-            url: $url,
-            data: {
-                id: zip,
-                type: 'zip',
-            }
-        }).done(function (data) {
-            console.log(data);
-            if (data != '') {
-                $("select#r_d_date").html(data);
-                $("select#r_d_date").selectpicker('refresh');
-            }
-        });
-    }
+    var zip = $(this).val();
+    $url = site_url + 'flowers/get_data';
+    $.ajax({
+        type: "POST",
+        url: $url,
+        data: {
+            id: zip,
+            type: 'zip',
+        }
+    }).done(function (data) {
+        if (data != '') {
+            $("select#r_d_date").html(data);
+            $("select#r_d_date").selectpicker('refresh');
+        }
+    });
+
 });
 //-- Hide show steps based on step id
 function profile_steps(obj) {
@@ -232,21 +229,26 @@ function proceed_step() {
     var flower_process = $('#flower_process').val();
     if (flower_process == 1) {
         if ($('#cart_form').valid()) {
-//        $.ajax({
-//            url: site_url + "profile/proceed_steps",
-//            type: "POST",
-//            data: {flower_process: 2, profile_id: profile_id},
-//            dataType: "json",
-//            success: function (data) {
-//                if (data.success == true) {
-//                    $('#flower_process').val(2);
-//                    profile_steps('third-step');
-//                } else {
-//                    $('#flower_process').val(1);
-//                    showErrorMSg(data.error);
-//                }
-//            }
-//        });
+            console.log("in valid");
+            var fd = new FormData(document.getElementById("cart_form"));
+            $.ajax({
+                url: site_url + "flowers/place_order",
+                type: "POST",
+                data: fd,
+                dataType: "json",
+                processData: false, // tell jQuery not to process the data 
+                contentType: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.success == true) {
+                        $('#flower_process').val(2);
+                        profile_steps('third-step');
+                    } else {
+                        $('#flower_process').val(1);
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
         }
     } else if (flower_process == 2) {
         $.ajax({

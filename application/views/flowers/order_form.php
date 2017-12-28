@@ -144,7 +144,7 @@
                             </div>
                             <div class="input-wrap second">
                                 <label class="label-css">Flower Card Message <span class="text-danger">*</span><i class="fa fa-info-circle" aria-hidden="true"></i></label>
-                                <textarea name="r_card_msg"  class="input-css textarea-css" name="card_msg" id="card_msg"placeholder="Quod omittam vulputate quo ex." maxlength="200"></textarea>
+                                <textarea name="r_card_msg"  class="input-css textarea-css" id="card_msg" placeholder="Quod omittam vulputate quo ex." maxlength="200"></textarea>
                                 <big id="card_msg_count">(200 characters remaining)</big>
                             </div>
                             <div class="input-wrap third">
