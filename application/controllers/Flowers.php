@@ -76,6 +76,7 @@ class Flowers extends MY_Controller {
             $output = $floristone->send_flower($url);
             /* overall totak products or flowers available */
             if (!isset($output->errors)) {
+                p($output->PRODUCTS);
                 $data['flower'] = $output->PRODUCTS[0];
             } else {
                 custom_show_404();
@@ -93,38 +94,110 @@ class Flowers extends MY_Controller {
      */
     public function cart() {
         $floristone = new Floristone();
-//        p($this->session->unset_userdata('cart_id'));
         $cartname = $this->session->userdata('cart_id');
-        p($cartname);
         $url = "https://www.floristone.com/api/rest/shoppingcart?sessionid=$cartname";
         $output = $floristone->send_flower($url);
+        $cart_item = [];
         /* overall totak products or flowers available */
         if (!isset($output->errors)) {
-            var_dump($output);
-        } else {
-            var_dump($output);
-//            custom_show_404();
+            if (isset($output->products) && !empty($output->products)) {
+                foreach ($output->products as $key => $value) {
+                    $code = $output->products[$key]->CODE;
+                    $cart_floristone = new Floristone();
+                    $cart_url = "https://www.floristone.com/api/rest/flowershop/getproducts?code=$code";
+                    $cart_output = $cart_floristone->send_flower($cart_url);
+                    if (!isset($cart_output->errors)) {
+                        $cart_item[] = $cart_output->PRODUCTS[0];
+                    }
+                }
+//                $products = array(array('code' => 'S7-4450', 'rpa' => 0)); //one item
+//                $products = json_encode($products);
+//                $total_url = "https://www.floristone.com/api/rest/giftbaskets/gettotal?products=$products";
+//                $floristone = new Floristone();
+//                $output = $floristone->send_flower($total_url);
+//                if (!isset($output->errors)) {
+//                    var_dump($output);
+//                } else {
+//                    var_dump($output);
+//                }
+            }
         }
+        if ($this->input->method() == 'post') {
+            $states = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => base64_decode($this->input->post('country')))]);
+            if (!empty($states)) {
+                $data['states'] = $states;
+            }
+            $cities = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => base64_decode($this->input->post('state')))]);
+            if (!empty($cities)) {
+                $data['cities'] = $cities;
+            }
+        }
+        $data['cart_items'] = $cart_item;
+        $countries = $this->users_model->sql_select(TBL_COUNTRY . ' c');
+        $data['countries'] = $countries;
+        $data['title'] = 'My Cart';
+        $data['breadcrumb'] = ['title' => 'My Cart', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('flowers'), 'title' => 'Flowers']]];
+        $this->template->load('default', 'flowers/order_form', $data);
+    }
+
+    /**
+     * Get cities  or state based on type passed as data.
+     * */
+    public function get_data() {
+        $type = $this->input->post('type');
+        $options = '';
+        if ($type == 'city') {
+            $id = base64_decode($this->input->post('id'));
+            $options = '<option value="">-- Select City --</option>';
+            if (is_numeric($id)) {
+                $data = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
+                if (!empty($data)) {
+                    foreach ($data as $row) {
+                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                    }
+                }
+            }
+        } else if ($type == 'state') {
+            $id = base64_decode($this->input->post('id'));
+            $options = '<option value="">-- Select State --</option>';
+            if (is_numeric($id)) {
+                $data = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => trim($id))]);
+                if (!empty($data)) {
+                    foreach ($data as $row) {
+                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                    }
+                }
+            }
+        } else if ($type == 'zip') {
+            $zipcode = $this->input->post('id');
+            $options = '<option value="">-- Delivery Date --</option>';
+            $url = "https://www.floristone.com/api/rest/flowershop/checkdeliverydate?zipcode=$zipcode";
+            $floristone = new Floristone();
+            $output = $floristone->send_flower($url);
+            $dates = $output->DATES;
+            foreach ($dates as $val) {
+                $options .= "<option value = '" . $val . "'>" . $val . "</option>";
+            }
+        }
+        echo $options;
     }
 
     /**
      * Display particular flower details
      */
-    public function manage_cart($code = null) {
+    public function manage_cart($code = null, $action = null) {
+        $data = [];
         if (!empty($code) && $code != null) {
             if (empty($this->session->userdata('cart_id'))) {
                 if (!$this->is_user_loggedin) {
-                    $cartname = hash('sha256', $_SERVER['REMOTE_ADDR']);
+                    $cartname = hash('md5', $_SERVER['REMOTE_ADDR']);
                 } else {
-                    $cartname = hash('sha256', $this->session->userdata('remalways_user')['id']);
+                    $cartname = hash('md5', $this->session->userdata('remalways_user')['id']);
                 }
-                $session_option = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => array('sessionid' => 'adbahsbdjasb'));
-                $session_option = array(CURLOPT_CUSTOMREQUEST => "DELETE");
-//                $session_option = array(CURLOPT_POST => true);
-                $session_url = "https://www.floristone.com/api/rest/shoppingcart?sessionid=";
+                $session_option = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => array('sessionid' => $cartname));
+                $session_url = "https://www.floristone.com/api/rest/shoppingcart";
                 $floristone = new Floristone();
                 $output = $floristone->send_flower($session_url, $session_option);
-                var_dump($output);
                 if (!isset($output->errors)) {
                     if (!empty($output)) {
                         $this->session->set_userdata('cart_id', $cartname);
@@ -137,10 +210,58 @@ class Flowers extends MY_Controller {
             } else {
                 $cartname = $this->session->userdata('cart_id');
             }
-            var_dump($cartname);
             $floristone = new Floristone();
-            $product = 'F1-509';
-            $action = 'add';
+            $product = $code;
+            if ($action == 'add') {
+                $add_cart_option = array(CURLOPT_PUT => true);
+                $add_cart_url = "https://www.floristone.com/api/rest/shoppingcart?sessionid=$cartname&productcode=$product&action=$action";
+                $floristone = new Floristone();
+                $add_cart_output = $floristone->send_flower($add_cart_url, $add_cart_option);
+                if (!isset($add_cart_output->errors)) {
+//                    var_dump($add_cart_output->STATUS);
+                    $data['success'] = true;
+                    $data['data'] = 'Flower have been added to cart!';
+                } else {
+//                    var_dump($add_cart_output);
+                    $data['success'] = false;
+                    $data['error'] = 'Something went wrong pelase try again!';
+                }
+            } else if ($action == 'remove') {
+                $delete_cart_option = array(CURLOPT_PUT => true);
+                $delete_cart_url = "https://www.floristone.com/api/rest/shoppingcart?sessionid=$cartname&productcode=$product&action=$action";
+                $floristone = new Floristone();
+                $delete_cart_output = $floristone->send_flower($delete_cart_url, $delete_cart_option);
+                if (!isset($delete_cart_output->errors)) {
+//                    var_dump($delete_cart_output->STATUS);
+                    $data['success'] = true;
+                    $data['data'] = 'Flower have been remove from cart!';
+                } else {
+//                    var_dump($delete_cart_output);
+                    $data['success'] = false;
+                    $data['error'] = 'Something went wrong pelase try again!';
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = 'Invalid request, Please try again!';
+            }
+        } else {
+            $data['success'] = false;
+            $data['error'] = 'Invalid request, Please try again!';
+        }
+
+        echo json_encode($data);
+        exit;
+    }
+
+    public function check_date($zipcode = '19803') {
+//        19803
+        $url = "https://www.floristone.com/api/rest/flowershop/checkdeliverydate?zipcode=$zipcode";
+        $floristone = new Floristone();
+        $output = $floristone->send_flower($url);
+        $dates = $output->DATES;
+        echo("Available Delivery Dates: ");
+        for ($x = 0; $x < count($dates); $x++) {
+            echo $dates[$x] . '<br/>';
         }
     }
 

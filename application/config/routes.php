@@ -89,6 +89,7 @@ $route['profile/delete_fundmedia'] = 'profile/delete_fundmedia';
 $route['profile/(:any)'] = 'profile/index/$1';
 $route['flowers/view'] = 'flowers/view';
 $route['flowers/cart'] = 'flowers/cart';
+$route['flowers/get_data'] = 'flowers/get_data';
 $route['flowers/(:any)'] = 'flowers/index/$1';
 $route['blog/(:any)'] = 'blog/index/$1';
 $route['logout'] = 'login/logout';

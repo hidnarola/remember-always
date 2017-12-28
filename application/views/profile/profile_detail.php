@@ -571,14 +571,14 @@
                     </div>
                 </div>
                 <div class="profile-body-r">
-                    <?php if (isset($profil['type']) && $profile['type'] == 2) { ?>
+                     <?php if (isset($profile['type']) && $profile['type'] == 2) { ?>
                         <div class="profile-box fundraiser">
                             <h2>Tribute Fundraiser</h2>
                             <div class="profile-box-body">
                                 <span>Donated <big>86%</big></span>
                                 <h6>$9.00.000 <small>Raised of</small></h6>
-                                <h6>10.00.000 <small>Goal</small></h6>
-                                <a href="">Donation</a>
+                                <h6><?php echo isset($fundraiser) && !empty($fundraiser) ? $fundraiser['goal'] : '-' ?> <small>Goal</small></h6>
+                                <a href="javascript:void(0)">Donation</a>
                             </div>
                         </div>
                     <?php } ?>

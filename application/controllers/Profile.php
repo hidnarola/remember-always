@@ -22,8 +22,11 @@ class Profile extends MY_Controller {
             $is_left = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true, 'join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')]]);
             if (!empty($is_left)) {
                 $funnel_services_data = [];
-
                 $post_id = 0;
+                if($is_left['type'] == 2){
+                    $fundraiser = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES . ' f', null, ['where' => ['f.is_delete' => 0, 'f.profile_id' => $is_left['id']]], ['single' => true]);
+                    $data['fundraiser'] = $fundraiser;
+                }
                 $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
                 $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
                 $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($is_left['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
