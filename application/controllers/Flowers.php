@@ -253,16 +253,8 @@ class Flowers extends MY_Controller {
         exit;
     }
 
-    public function check_date($zipcode = '19803') {
-//        19803
-        $url = "https://www.floristone.com/api/rest/flowershop/checkdeliverydate?zipcode=$zipcode";
-        $floristone = new Floristone();
-        $output = $floristone->send_flower($url);
-        $dates = $output->DATES;
-        echo("Available Delivery Dates: ");
-        for ($x = 0; $x < count($dates); $x++) {
-            echo $dates[$x] . '<br/>';
-        }
+    public function place_order() {
+       p($this->input->post());
     }
 
 }
