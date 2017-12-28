@@ -22,7 +22,7 @@
                         <input type="text" name="location" placeholder="Location" class="input-css" value="<?php echo $this->input->get('location') ?>"/>
                     </div>
                     <div class="srvs-form-div">	
-                        <button type="submit" class="next">Search</button>
+                        <button type="submit" class="next global_search">Search</button>
                     </div>	
                 </form>
             </div>
@@ -83,8 +83,8 @@
                                     </h2>
                                     <p>
                                         <?php
-                                        if (strlen($result['description']) > 100)
-                                            echo substr($result['description'], 0, 100) . '...';
+                                        if (strlen($result['description']) > 90)
+                                            echo substr($result['description'], 0, 90) . '...';
                                         else
                                             echo $result['description'];
                                         ?>

@@ -49,3 +49,6 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 /*19-12-2017 */
 .blog-box span a img {border-radius: 4px;max-width: 100%;height: 214px;}
 .paggination-wrap ul li.active a{background: #975979;color: #fff;text-decoration: none;pointer-events:none;}
+
+/*28-12-2017  Twitter Searchobx- Set widht to 100%*/
+.twitter-typeahead{width:100%}
