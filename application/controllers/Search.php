@@ -46,4 +46,45 @@ class Search extends MY_Controller {
         exit;
     }
 
+    /**
+     * Displays search result for auto complete
+     */
+    public function get_result() {
+        $search_txt = trim($this->input->get_post('search_text'));
+
+        if ($search_txt != '') {
+            //if user search for profile then
+            $data = $this->search_model->get_all_details(TBL_PROFILES, 'CONCAT(firstname," ",lastname)="' . $search_txt . '" AND is_published = 1 AND is_delete = 0')->row_array();
+            if (count($data) > 0) {
+                echo json_encode(array('slug' => $data['slug'], 'type' => 'profile'));
+            } else {
+                $where = ['where' => ['name' => $search_txt, 'is_delete' => 0]];
+                $option = ['single' => true];
+
+                //--- If user searches for service provider name
+                $data = $this->search_model->sql_select(TBL_SERVICE_PROVIDERS, 'slug', $where, $option);
+                if (count($data) > 0) {
+                    echo json_encode(array('slug' => $data['slug'], 'type' => 'service_provider'));
+                } else {
+                    //--- if user search direct affiliation name
+                    $data = $this->search_model->sql_select(TBL_AFFILIATIONS, 'slug', $where, $option);
+                    if (count($data) > 0) {
+                        echo json_encode(array('slug' => $data['slug'], 'type' => 'affiliation'));
+                    } else {
+                        //--- if user search for blog post
+                        $data = $this->search_model->sql_select(TBL_BLOG_POST, 'slug', ['where' => ['title' => $search_txt]], $option);
+                        if (count($data) > 0) {
+                            echo json_encode(array('slug' => $data['slug'], 'type' => 'blog'));
+                        } else {
+                            echo json_encode(array('type' => ''));
+                        }
+                    }
+                }
+            }
+        } else {
+            echo json_encode(array('type' => ''));
+        }
+        exit;
+    }
+
 }

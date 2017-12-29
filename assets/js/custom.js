@@ -206,7 +206,7 @@ $(function () {
                 type: "POST",
                 data: {
                     q: function () {
-                        return $('#typehead_search').val()
+                        return $('#global_search').val()
                     }
                 }
             }
@@ -227,28 +227,70 @@ $(function () {
 //                return '<div><p class="menu-text">' + data.value + '</p></div>';
 //            }
 //        }
-        return '<div><p class="menu-text">' + data.name + '</p></div>';
+        if (data.type == 'profile')
+            return '<div><p class="menu-text"><a href="' + site_url + 'profile/' + data.slug + '">' + data.name + '</a></p></div>';
+        else if (data.type == 'service_provider')
+            return '<div><p class="menu-text"><a href="' + site_url + 'service_provider/view/' + data.slug + '">' + data.name + '<a/></p></div>';
+        else if (data.type == 'affiliation')
+            return '<div><p class="menu-text"><a href="' + site_url + 'affiliation/view/' + data.slug + '">' + data.name + '<a/></p></div>';
+        else if (data.type == 'blog')
+            return '<div><p class="menu-text"><a href="' + site_url + 'blog/details/' + data.slug + '">' + data.name + '<a/></p></div>';
     }
 
     suggestionEngine.initialize();
 
-    /*
-     $('#global_search').typeahead(
-     {
-     highlight: true,
-     minLength: 1
-     },
-     {
-     name: 'search_location',
-     displayKey: 'value', //--- use for change value on change suggestions
-     source: suggestionEngine,
-     limit: 5,
-     templates: {
-     notFound: '<p class="not"><i class="fa fa-info-circle" style="margin-top:1px;"></i>&nbsp; Not found </p>',
-     suggestion: suggestionTemplate
-     }
-     }
-     );*/
+
+    $('#global_search').typeahead(
+            {
+//                hint: true,
+                highlight: true,
+                minLength: 1
+            },
+            {
+                name: 'search_location',
+                displayKey: 'name', //--- use for change value on change suggestions
+                source: suggestionEngine,
+                limit: 5,
+                templates: {
+                    notFound: '<p class="not"><i class="fa fa-info-circle" style="margin-top:1px;"></i>&nbsp; Not found </p>',
+                    suggestion: suggestionTemplate
+                }
+            });
+
+    //--- if enter with search textbox
+    $("#global_search").keydown(function (e) {
+        var value = e.keyCode;
+        search_text = $(this).val();
+        if (value == 13) {
+
+            $.ajax({
+                url: site_url + 'search/get_result',
+                type: 'POST',
+                data: {search_text: search_text},
+                success: function (data) {
+                    data = JSON.parse(data);
+                    //--- check user search type and then redirect to valid result page
+                    if (data.type == 'profile') {
+//                        console.log(site_url + 'profile/' + data.slug);
+                        window.location = site_url + 'profile/' + data.slug;
+                    } else if (data.type == 'service_provider') {
+//                        console.log(site_url + 'service_provider/view/' + data.slug);
+                        window.location = site_url + 'service_provider/view/' + data.slug;
+                    } else if (data.type == 'affiliation') {
+//                        console.log(site_url + 'affiliation/view/' + data.slug);
+                        window.location = site_url + 'affiliation/view/' + data.slug;
+                    } else if (data.type == 'blog') {
+//                        console.log(site_url + 'blog/details/' + data.slug);
+                        window.location = site_url + 'blog/details/' + data.slug;
+                    } else {
+                        console.log('here...');
+
+                        $('#global_search_form').submit();
+                    }
+                }
+            });
+        }
+    });
 });
 /**
  * Display Login/signup modal
