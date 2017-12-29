@@ -76,7 +76,7 @@ class Flowers extends MY_Controller {
             $output = $floristone->send_flower($url);
             /* overall totak products or flowers available */
             if (!isset($output->errors)) {
-                p($output->PRODUCTS);
+//                p($output->PRODUCTS);
                 $data['flower'] = $output->PRODUCTS[0];
             } else {
                 custom_show_404();
@@ -110,16 +110,6 @@ class Flowers extends MY_Controller {
                         $cart_item[] = $cart_output->PRODUCTS[0];
                     }
                 }
-//                $products = array(array('code' => 'S7-4450', 'rpa' => 0)); //one item
-//                $products = json_encode($products);
-//                $total_url = "https://www.floristone.com/api/rest/giftbaskets/gettotal?products=$products";
-//                $floristone = new Floristone();
-//                $output = $floristone->send_flower($total_url);
-//                if (!isset($output->errors)) {
-//                    var_dump($output);
-//                } else {
-//                    var_dump($output);
-//                }
             }
         }
         if ($this->input->method() == 'post') {
@@ -190,7 +180,7 @@ class Flowers extends MY_Controller {
         if (!empty($code) && $code != null) {
             if (empty($this->session->userdata('cart_id'))) {
                 if (!$this->is_user_loggedin) {
-                    $cartname = hash('md5', $_SERVER['REMOTE_ADDR']);
+                    $cartname = hash('md5', $_SERVER['REMOTE_PORT']);
                 } else {
                     $cartname = hash('md5', $this->session->userdata('remalways_user')['id']);
                 }
@@ -218,11 +208,9 @@ class Flowers extends MY_Controller {
                 $floristone = new Floristone();
                 $add_cart_output = $floristone->send_flower($add_cart_url, $add_cart_option);
                 if (!isset($add_cart_output->errors)) {
-//                    var_dump($add_cart_output->STATUS);
                     $data['success'] = true;
                     $data['data'] = 'Flower have been added to cart!';
                 } else {
-//                    var_dump($add_cart_output);
                     $data['success'] = false;
                     $data['error'] = 'Something went wrong pelase try again!';
                 }
@@ -232,11 +220,9 @@ class Flowers extends MY_Controller {
                 $floristone = new Floristone();
                 $delete_cart_output = $floristone->send_flower($delete_cart_url, $delete_cart_option);
                 if (!isset($delete_cart_output->errors)) {
-//                    var_dump($delete_cart_output->STATUS);
                     $data['success'] = true;
                     $data['data'] = 'Flower have been remove from cart!';
                 } else {
-//                    var_dump($delete_cart_output);
                     $data['success'] = false;
                     $data['error'] = 'Something went wrong pelase try again!';
                 }
@@ -254,7 +240,221 @@ class Flowers extends MY_Controller {
     }
 
     public function place_order() {
-       p($this->input->post());
+        $process_step = $this->input->post('process_step');
+        $data = [];
+        if ($process_step == 1) {
+            if (empty($this->session->userdata('place_order'))) {
+                $this->session->set_userdata('place_order', $this->input->post());
+            } else {
+                $this->session->set_userdata('place_order', $this->input->post());
+            }
+            $data['success'] = true;
+            $data['data'] = 'Proceed';
+        } else if ($process_step == 2) {
+            $process_first_step_data = $this->session->userdata('place_order');
+            $current_data = $this->input->post();
+            $customer = json_encode(array(
+                'name' => $current_data['c_fname'] . ' ' . $current_data['c_lname'],
+                'address1' => $current_data['c_address1'],
+                'address2' => $current_data['c_address2'],
+                'zipcode' => '19803',
+                'city' => 'Wilmington',
+                'state' => 'DE',
+                'country' => 'US',
+                'phone' => '1231231234',
+                'email' => 'akk@narola.email',
+                'ip' => $_SERVER['REMOTE_ADDR']
+            ));
+//            F1-CPP
+            $ccinfo = json_encode(array(
+                'type' => 'vi',
+                'ccnum' => 1234512345123456,
+                'cvv2' => 123,
+                'expmonth' => 12,
+                'expyear' => 20
+            ));
+            $products = array();
+            $ordertotal = '';
+            $order_data = json_decode($this->get_order_total('recepient'));
+//            var_dump($order_data);
+            if ($order_data->success == true) {
+                $final_order_data = json_decode($order_data->data);
+                $ordertotal = $final_order_data->order_total;
+                $products = $final_order_data->product;
+            }
+            $api_order_data = array('products' => $products, 'customer' => $customer, 'ccinfo' => $ccinfo, 'ordertotal' => $ordertotal);
+            $api_order_floristone = new Floristone();
+            $api_order_url = "https://www.floristone.com/api/rest/flowershop/placeorder";
+            $api_order_option = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => $api_order_data);
+            $api_order_output = $api_order_floristone->send_flower($api_order_url, $api_order_option);
+            if (!isset($api_order_output->errors)) {
+                $data['success'] = true;
+                $data['data'] = 'order_placed';
+                var_dump($api_order_output);
+            } else {
+                var_dump($api_order_output);
+                $data['success'] = false;
+                $data['error'] = 'Something went wrong Your order is not placed please check your data is correct!';
+            }
+//            print_r(json_encode($data));
+            $data['success'] = true;
+            $data['data'] = 'Proceed';
+        } else {
+            $data['success'] = false;
+            $data['error'] = 'Invalid request, Please try again!';
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    public function get_order_total($recipient = null) {
+        $data = [];
+        $floristone = new Floristone();
+        $cartname = $this->session->userdata('cart_id');
+        $url = "https://www.floristone.com/api/rest/shoppingcart?sessionid=$cartname";
+        $output = $floristone->send_flower($url);
+        $products = array();
+        $final_products = array();
+        $cart_item = [];
+        $zipcode = '';
+        if (!empty($this->session->userdata('place_order'))) {
+            $zipcode = $this->session->userdata('place_order')['r_zipcode'];
+        }
+        if (isset($output->products) && !empty($output->products)) {
+            if ($recipient == 'recepient') {
+                foreach ($output->products as $key => $value) {
+                    $code = $value->CODE;
+                    $cart_floristone = new Floristone();
+                    $cart_url = "https://www.floristone.com/api/rest/flowershop/getproducts?code=$code";
+                    $cart_output = $cart_floristone->send_flower($cart_url);
+                    if (!isset($cart_output->errors)) {
+                        $products [] = array('code' => $code,
+                            'price' => $cart_output->PRODUCTS[0]->PRICE,
+                            "recipient" => array("zipcode" => $zipcode)
+                        );
+                        $final_products [] = array('code' => $code,
+                            'price' => $cart_output->PRODUCTS[0]->PRICE,
+                            'deliverydate' => date('Y-m-d', strtotime($this->session->userdata('place_order')['r_d_date'])),
+                            'cardmessage' => $this->session->userdata('place_order')['r_zipcode'],
+                            'specialinstructions' => $this->session->userdata('place_order')['r_zipcode'],
+                            'recipient' => array(
+                                'name' => $this->session->userdata('place_order')['r_name'],
+                                'institution' => $this->session->userdata('place_order')['r_institute'],
+                                'address1' => $this->session->userdata('place_order')['r_address1'],
+                                'address2' => $this->session->userdata('place_order')['r_address2'],
+//                                'city' => $this->session->userdata('place_order')['r_city'],
+//                                'state' => $this->session->userdata('place_order')['r_state'],
+//                                'country' => $this->session->userdata('place_order')['r_country'],
+                                'city' => 'Wilmington',
+                                'state' => 'DE',
+                                'country' => 'US',
+                                'phone' => $this->session->userdata('place_order')['r_phone'],
+                                'zipcode' => $zipcode
+                            )
+                        );
+                    }
+                }
+            } else {
+                foreach ($output->products as $key => $value) {
+                    $code = $value->CODE;
+                    $cart_floristone = new Floristone();
+                    $cart_url = "https://www.floristone.com/api/rest/flowershop/getproducts?code=$code";
+                    $cart_output = $cart_floristone->send_flower($cart_url);
+                    if (!isset($cart_output->errors)) {
+                        $products [] = array('code' => $code,
+                            'price' => $cart_output->PRODUCTS[0]->PRICE,
+                            "recipient" => array("zipcode" => $zipcode)
+                        );
+                    }
+                }
+            }
+        }
+        if ($recipient == 'recepient') {
+            if (!empty($products)) {
+                $total_floristone = new Floristone();
+                $total_url = "https://www.floristone.com/api/rest/flowershop/gettotal?products=" . json_encode($products);
+                $total_output = $total_floristone->send_flower($total_url);
+                if (!isset($total_output->errors)) {
+                    $data['success'] = true;
+                    $data['data'] = json_encode(array('order_total' => $total_output->ORDERTOTAL, 'product' => json_encode($final_products)));
+                } else {
+                    $data['success'] = false;
+                    $data['error'] = 'Something went wrong pelase try again!';
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = 'No Products available.';
+            }
+        } else {
+            if (!empty($products)) {
+                $total_floristone = new Floristone();
+                $total_url = "https://www.floristone.com/api/rest/flowershop/gettotal?products=" . json_encode($products);
+                $total_output = $total_floristone->send_flower($total_url);
+                if (!isset($total_output->errors)) {
+                    $data['success'] = true;
+                    $data['data'] = json_encode($total_output, JSON_FORCE_OBJECT);
+                } else {
+                    $data['success'] = false;
+                    $data['error'] = 'Something went wrong pelase try again!';
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = 'No Products available.';
+            }
+        }
+        if ($recipient == 'recepient') {
+            return json_encode($data);
+//            exit;
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    public function get_order_details($order_no = null) {
+        if (!empty($order_no) && $order_no != null) {
+            $data = [];
+            $floristone = new Floristone();
+            $url = "https://www.floristone.com/api/rest/flowershop/getorderinfo?orderno=$order_no";
+            $output = $floristone->send_flower($url);
+            if (!isset($output->errors)) {
+                var_dump($output);
+//            if ($recipient == 'recepient') {
+//                foreach ($output->products as $key => $value) {
+//                    $code = $value->CODE;
+//                    $cart_floristone = new Floristone();
+//                    $cart_url = "https://www.floristone.com/api/rest/flowershop/getproducts?code=$code";
+//                    $cart_output = $cart_floristone->send_flower($cart_url);
+//                    if (!isset($cart_output->errors)) {
+//                        $products [] = array('code' => $code,
+//                            'price' => $cart_output->PRODUCTS[0]->PRICE,
+//                            "recipient" => array("zipcode" => $zipcode)
+//                        );
+//                        $final_products [] = array('code' => $code,
+//                            'price' => $cart_output->PRODUCTS[0]->PRICE,
+//                            'deliverydate' => date('Y-m-d', strtotime($this->session->userdata('place_order')['r_d_date'])),
+//                            'cardmessage' => $this->session->userdata('place_order')['r_zipcode'],
+//                            'specialinstructions' => $this->session->userdata('place_order')['r_zipcode'],
+//                            'recipient' => array(
+//                                'name' => $this->session->userdata('place_order')['r_name'],
+//                                'institution' => $this->session->userdata('place_order')['r_institute'],
+//                                'address1' => $this->session->userdata('place_order')['r_address1'],
+//                                'address2' => $this->session->userdata('place_order')['r_address2'],
+////                                'city' => $this->session->userdata('place_order')['r_city'],
+////                                'state' => $this->session->userdata('place_order')['r_state'],
+////                                'country' => $this->session->userdata('place_order')['r_country'],
+//                                'city' => 'Wilmington',
+//                                'state' => 'DE',
+//                                'country' => 'US',
+//                                'phone' => $this->session->userdata('place_order')['r_phone'],
+//                                'zipcode' => $zipcode
+//                            )
+//                        );
+//                    }
+//                }
+            }
+        } else {
+            custom_show_404();
+        }
     }
 
 }

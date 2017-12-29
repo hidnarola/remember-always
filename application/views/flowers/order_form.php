@@ -44,9 +44,10 @@
                         </ul>
                         <div class="comment-btm checkout_btn">
                             <button onclick="return submit_form();">Check Out</button>
+                            <a href="<?php echo site_url() . 'flowers' ?>" class="back">Continue Shopping</a>
                         </div>
                     <?php } else { ?>
-                        <p class="no-data">Your cart is empty</p>
+                        <p class="no-data comment-btm checkout_btn">Your cart is empty <a href="<?php echo site_url() . 'flowers' ?>" class="back">Continue Shopping</a></p>
                     <?php } ?>
                 </div>
             </div>
@@ -77,11 +78,11 @@
                                     if (isset($countries) && !empty($countries)) {
                                         foreach ($countries as $key => $value) {
                                             $selected = '';
-                                            if (isset($_POST['country']) && $_POST['country'] == $value['id']) {
+                                            if (isset($_POST['r_country']) && $_POST['r_country'] == $value['sortname']) {
                                                 $selected = 'selected';
                                             }
                                             ?>
-                                            <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('country', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['sortname'] ?>"  <?php echo $this->input->method() == 'post' ? set_select('r_country', $value['sortname'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                             <?php
                                         }
                                     }
@@ -95,11 +96,11 @@
                                     if (isset($states) && !empty($states)) {
                                         foreach ($states as $key => $value) {
                                             $selected = '';
-                                            if (isset($_POST['state']) && $_POST['state'] == $value['id']) {
+                                            if (isset($_POST['r_state']) && $_POST['r_state'] == $value['name']) {
                                                 $selected = 'selected';
                                             }
                                             ?>
-                                            <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>" <?php echo $this->input->method() == 'post' ? set_select('r_state', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                             <?php
                                         }
                                     }
@@ -113,11 +114,11 @@
                                     if (isset($cities) && !empty($cities)) {
                                         foreach ($cities as $key => $value) {
                                             $selected = '';
-                                            if (isset($_POST['city']) && $_POST['city'] == $value['id']) {
+                                            if (isset($_POST['r_city']) && $_POST['r_city'] == $value['name']) {
                                                 $selected = 'selected';
                                             }
                                             ?>
-                                            <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>"  <?php echo $this->input->method() == 'post' ? set_select('city', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                             <?php
                                         }
                                     }
@@ -161,6 +162,146 @@
                         </div>
                     </form>
                 </div>
+            </div>
+            <div id="third-step" class="hide flowers-steps">
+                <form method="post" enctype="multipart/form-data" id="cart_deliver_form">
+                    <div class="form_delivery">
+                        <div class="delivery_l">
+                            <h2>Bill To</h2>
+                            <div class="input-wrap">
+                                <input type="text" name="c_fname" placeholder="First Name *" class="input-css">
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" name="c_lname" placeholder="Last Name *" class="input-css">
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" name="c_address1" placeholder="Address *" class="input-css">
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" name="c_address2" placeholder="Address 2" class="input-css">
+                            </div>
+                            <div class="input-wrap">
+                                <select name="c_country" id="c_country" class="c_country selectpicker">
+                                    <option value="">-- Select Country --</option>
+                                    <?php
+                                    if (isset($countries) && !empty($countries)) {
+                                        foreach ($countries as $key => $value) {
+                                            $selected = '';
+                                            if (isset($_POST['c_country']) && $_POST['c_country'] == $value['sortname']) {
+                                                $selected = 'selected';
+                                            }
+                                            ?>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['sortname'] ?>"  <?php echo $this->input->method() == 'post' ? set_select('c_country', $value['sortname'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="input-wrap">
+                                <select name="c_state" id="c_state" class="c_state selectpicker">
+                                    <option value="">-- Select State --</option>
+                                    <?php
+                                    if (isset($states) && !empty($states)) {
+                                        foreach ($states as $key => $value) {
+                                            $selected = '';
+                                            if (isset($_POST['c_state']) && $_POST['c_state'] == $value['name']) {
+                                                $selected = 'selected';
+                                            }
+                                            ?>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>" <?php echo $this->input->method() == 'post' ? set_select('c_state', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="input-wrap">
+                                <select name="c_city" id="c_city" class="c_city selectpicker">
+                                    <option value="">-- Select City --</option>
+                                    <?php
+                                    if (isset($cities) && !empty($cities)) {
+                                        foreach ($cities as $key => $value) {
+                                            $selected = '';
+                                            if (isset($_POST['c_city']) && $_POST['c_city'] == $value['name']) {
+                                                $selected = 'selected';
+                                            }
+                                            ?>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['name']?>"  <?php echo $this->input->method() == 'post' ? set_select('c_city', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" name="c_zipcode" placeholder="Zip Code *" class="input-css">
+                            </div>
+                            <div class="input-wrap">
+                                <input type="text" name="c_phone" placeholder="Phone *" class="input-css">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </div>
+                            <div class="input-wrap input-wrap_small">
+                                <input type="text" name="c_email" placeholder="Email *" class="input-css">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </div>
+                        </div>						
+                        <div class="delivery_r delivery_cart_payment">
+                            <div class="input-wrap">
+                                <label class="label-css">Credit Card *</label>
+                                <select name="c_card" id="c_card" class="card selectpicker">
+                                    <option value="" selected="selected">--Select Card--</option>
+                                    <option value="AX">American Express</option>
+                                    <option value="VI">Visa</option>
+                                    <option value="MC">MasterCard</option>
+                                    <option value="DI">Discover</option>
+                                </select>
+                            </div>
+                            <div class="input-wrap">
+                                <label class="label-css">Card Number</label>
+                                <input type="text" name="c_cardnumber" id="c_cardnumber" placeholder="Card Number*" class="input-css">
+                            </div>
+                            <div class="input-wrap input_exp">
+                                <label class="label-css">Expiration Date</label>
+                                <select name="c_month" id="c_month" class="mm selectpicker">
+                                    <option value="">-- MM --</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <select name="c_year" id="c_year" class="yy selectpicker">
+                                    <option value="" selected="selected">-- YYYY --</option>
+                                    <?php for ($i = date('Y'); $i <= date('Y', strtotime('+15 year')); $i++) { ?>
+                                        <option value="<?php echo substr($i, 2) ?>"><?php echo $i ?></option>
+                                    <?php } ?>
+                                </select>
+                            </div>
+                            <div class="input-wrap code">
+                                <label class="label-css">Security Code *</label>
+                                <input type="text" name="c_code" placeholder="cvv" class="input-css">
+                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            </div>
+                            <div class="custom_checkbox custom_check_margin">
+                                <input type="checkbox" id="substitute" />
+                                <label for="test1">Allow Substitutions</label>
+                            </div>
+                            <p class="p_mark">All flowers, plants, or containers may not always be available. By checking this box, you give us permission to make reasonable substitutions to ensure we deliver your order in a timely manner. Substitutions will not affect the value or quality of your order.</p>
+                            <div class="btn_continue">
+                                <button type="button" name="back" onclick="return back_step()">Back</button>
+                                <button type="button" name="cart_bill_btn" onclick="return proceed_step();">Continue</button>
+                            </div>
+                        </div>						
+                    </div>
+                </form>
             </div>
         </div>
     </div>

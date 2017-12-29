@@ -1,4 +1,37 @@
 $(function () {
+    jQuery.validator.addMethod("card_validator", function (value, element) {
+        var select_val = $("#c_card").val().toLowerCase();
+        var result = '';
+        if (select_val == 'ax') {
+            $('#c_cardnumber').validateCreditCard(function (value) {
+                result = value;
+            });
+
+            if (result.card_type != null && result.card_type.name == 'amex' && result.valid == true) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (select_val == 'vi' || select_val == 'mc' || select_val == 'di') {
+            $('#c_cardnumber').validateCreditCard(function (value) {
+                result = value;
+            });
+            if (result.card_type != null && (result.card_type.name == 'mastercard' || result.card_type.name == 'discover' || result.card_type.name == 'visa') && result.valid === true) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            $('#c_cardnumber').validateCreditCard(function (value) {
+                result = value;
+            });
+            if (result.valid) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }, "The specified US or Canadian ZIP Code is invalid");
     $(".fancybox")
             .fancybox({
                 openEffect: 'none',
@@ -11,10 +44,6 @@ $(function () {
         liveSearch: true,
         size: 5
     });
-    $('#r_d_date').selectpicker({
-        liveSearch: true,
-        size: 5
-    });
     $('.city').selectpicker({
         liveSearch: true,
         size: 5
@@ -23,43 +52,35 @@ $(function () {
         liveSearch: true,
         size: 5
     });
-//    $("#fun-fact-form").validate({
-//        rules: {
-//            fun_fact: {
-//                required: true
-//            },
-//            messages: {
-//                fun_fact: {
-//                    required: "Please Enter fun fact",
-//                },
-//            },
-//        },
-//    });
-//    $("#affiliation-form").validate({
-//        rules: {
-//            select_affiliation: {
-//                required: function (element) {
-//                    return $("#affiliation_text").is(':empty');
-//                }
-//            },
-//            affiliation_text: {
-//                required: function (element) {
-//                    if ($("#select_affiliation").val() == '')
-//                        return true;
-//                    else
-//                        return false;
-//                }
-//            },
-//            messages: {
-//                affiliation_text: {
-//                    required: "Please select or enter affiliation",
-//                },
-//            },
-//        },
-//    });
-//    var currentYear = (new Date).getFullYear();
-//
-//    // Deliver From data validation
+    $('#r_d_date').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    $('.c_country').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    $('.c_city').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    $('.c_state').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    $('#c_card').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    $('#c_month').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    $('#c_year').selectpicker({
+        liveSearch: true,
+        size: 5
+    });
+    // Deliver From data validation
     $('#cart_form').validate({
         ignore: ['select:hidden'],
         errorClass: 'error',
@@ -79,20 +100,24 @@ $(function () {
             r_city: {
                 required: true,
             },
+            r_address1: {
+                required: true,
+            },
             r_zipcode: {
                 required: true,
                 custom_zipcode: true
             },
             r_phone: {
                 required: true,
-                phoneUS: true
+                number: true,
+                maxlength: 10
             },
             r_d_date: {
                 required: true,
             },
             r_card_msg: {
                 required: true,
-//                max: 200
+//                maxlength: 200
             },
         },
         errorPlacement: function (error, element) {
@@ -101,21 +126,80 @@ $(function () {
             }
         }
     });
-    var shrt_des_maxChars = $("#card_msg");
-    var shrt_des_max_length = shrt_des_maxChars.attr('maxlength');
-    if (shrt_des_max_length > 0) {
-        shrt_des_maxChars.bind('keyup', function (e) {
-            shrt_des_length = new Number(shrt_des_maxChars.val().length);
-            shrt_des_counter = shrt_des_max_length - shrt_des_length;
+    $('#cart_deliver_form').validate({
+        ignore: ['select:hidden'],
+        errorClass: 'error',
+        rules: {
+            c_fname: {
+                required: true
+            },
+            c_lname: {
+                required: true,
+            },
+            c_country: {
+                required: true,
+            },
+            c_state: {
+                required: true,
+            },
+            c_city: {
+                required: true,
+            },
+            c_address1: {
+                required: true,
+            },
+            c_zipcode: {
+                required: true,
+                custom_zipcode: true
+            },
+            c_phone: {
+                required: true,
+                number: true,
+                maxlength: 10
+            },
+            c_email: {
+                required: true,
+            },
+            c_card: {
+                required: true,
+            },
+            c_cardnumber: {
+                required: true,
+//                card_validator: true,
+                number: true
+            },
+            c_month: {
+                required: true,
+            },
+            c_year: {
+                required: true,
+            },
+            c_code: {
+                required: true,
+                number: true
+            },
+        },
+        errorPlacement: function (error, element) {
+            if (element.hasClass('selectpicker')) {
+                element.parent().find('.bootstrap-select').addClass('error');
+            }
+        }
+    });
+    var shrt_des_maxlengthChars = $("#card_msg");
+    var shrt_des_maxlength_length = shrt_des_maxlengthChars.attr('maxlengthlength');
+    if (shrt_des_maxlength_length > 0) {
+        shrt_des_maxlengthChars.bind('keyup', function (e) {
+            shrt_des_length = new Number(shrt_des_maxlengthChars.val().length);
+            shrt_des_counter = shrt_des_maxlength_length - shrt_des_length;
             $("#card_msg_count").text("(" + shrt_des_counter + " characters remaining)");
         });
     }
-    var add_maxChars = $("#instruct");
-    var add_max_length = add_maxChars.attr('maxlength');
-    if (add_max_length > 0) {
-        add_maxChars.bind('keyup', function (e) {
-            add_length = new Number(add_maxChars.val().length);
-            add_counter = add_max_length - add_length;
+    var add_maxlengthChars = $("#instruct");
+    var add_maxlength_length = add_maxlengthChars.attr('maxlengthlength');
+    if (add_maxlength_length > 0) {
+        add_maxlengthChars.bind('keyup', function (e) {
+            add_length = new Number(add_maxlengthChars.val().length);
+            add_counter = add_maxlength_length - add_length;
             $("#instruct_count").text("(" + add_counter + " characters remaining)");
         });
     }
@@ -135,8 +219,8 @@ $(document).on('change', '.selectpicker', function () {
                 }
             }).done(function (data) {
                 if (data != '') {
-                    $("select#r_state").html(data);
-                    $("select#r_state").selectpicker('refresh');
+                    $("#r_state").html(data);
+                    $("#r_state").selectpicker('refresh');
                 }
             });
         } else if ($(this).parent().find('.bootstrap-select').hasClass('state')) {
@@ -151,8 +235,40 @@ $(document).on('change', '.selectpicker', function () {
                 }
             }).done(function (data) {
                 if (data != '') {
-                    $("select#r_city").html(data);
-                    $("select#r_city").selectpicker('refresh');
+                    $("#r_city").html(data);
+                    $("#r_city").selectpicker('refresh');
+                }
+            });
+        } else if ($(this).parent().find('.bootstrap-select').hasClass('c_country')) {
+            var country_id = $(this).val();
+            $url = site_url + 'flowers/get_data';
+            $.ajax({
+                type: "POST",
+                url: $url,
+                data: {
+                    id: country_id,
+                    type: 'state',
+                }
+            }).done(function (data) {
+                if (data != '') {
+                    $("#c_state").html(data);
+                    $("#c_state").selectpicker('refresh');
+                }
+            });
+        } else if ($(this).parent().find('.bootstrap-select').hasClass('c_state')) {
+            var state_id = $(this).val();
+            $url = site_url + 'flowers/get_data';
+            $.ajax({
+                type: "POST",
+                url: $url,
+                data: {
+                    id: state_id,
+                    type: 'city',
+                }
+            }).done(function (data) {
+                if (data != '') {
+                    $("#c_city").html(data);
+                    $("#c_city").selectpicker('refresh');
                 }
             });
         }
@@ -174,15 +290,14 @@ $(document).on('focusout', '#r_zipcode', function () {
             $("select#r_d_date").selectpicker('refresh');
         }
     });
-
 });
 //-- Hide show steps based on step id
 function profile_steps(obj) {
+    console.log(obj);
     $('.flowers-steps').addClass('hide');
     $('.steps-li').removeClass('current_active');
 //    $('.steps-li').removeClass('process-done');
     $('#' + obj + '-li').addClass('current_active');
-
     if (obj == 'first-step') {
         $('.main-steps').removeClass('hide');
         $('.title_cart').html('My Cart');
@@ -231,6 +346,7 @@ function proceed_step() {
         if ($('#cart_form').valid()) {
             console.log("in valid");
             var fd = new FormData(document.getElementById("cart_form"));
+            fd.append('process_step', flower_process);
             $.ajax({
                 url: site_url + "flowers/place_order",
                 type: "POST",
@@ -251,35 +367,57 @@ function proceed_step() {
             });
         }
     } else if (flower_process == 2) {
-        $.ajax({
-            url: site_url + "profile/proceed_steps",
-            type: "POST",
-            data: {flower_process: 3, profile_id: profile_id},
-            dataType: "json",
-            success: function (data) {
-                if (data.success == true) {
-                    $('#flower_process').val(3);
-                    if ($('#third-step').hasClass('hide') && $('#third1-step').hasClass('hide')) {
+        if ($('#cart_deliver_form').valid()) {
+            var fd = new FormData(document.getElementById("cart_deliver_form"));
+            fd.append('process_step', flower_process);
+            $.ajax({
+                url: site_url + "flowers/place_order",
+                type: "POST",
+                data: fd,
+                dataType: "json",
+                processData: false, // tell jQuery not to process the data 
+                contentType: false,
+                success: function (data) {
+                    console.log(data);
+                    if (data.success == true) {
+                        $('#flower_process').val(2);
                         profile_steps('third-step');
-                    } else if ($('#third1-step').hasClass('hide') && !$('#third-step').hasClass('hide')) {
-                        profile_steps('third1-step');
                     } else {
-                        profile_steps('forth-step');
+                        $('#flower_process').val(1);
+                        showErrorMSg(data.error);
                     }
-                } else {
-                    $('#flower_process').val(2);
-                    showErrorMSg(data.error);
                 }
-            }
-        });
+            });
+        }
+//        $.ajax({
+//            url: site_url + "profile/proceed_steps",
+//            type: "POST",
+//            data: {flower_process: 3, profile_id: profile_id},
+//            dataType: "json",
+//            success: function (data) {
+//                if (data.success == true) {
+//                    $('#flower_process').val(3);
+//                    if ($('#third-step').hasClass('hide') && $('#third1-step').hasClass('hide')) {
+//                        profile_steps('third-step');
+//                    } else if ($('#third1-step').hasClass('hide') && !$('#third-step').hasClass('hide')) {
+//                        profile_steps('third1-step');
+//                    } else {
+//                        profile_steps('forth-step');
+//                    }
+//                } else {
+//                    $('#flower_process').val(2);
+//                    showErrorMSg(data.error);
+//                }
+//            }
+//        });
     } else if (flower_process == 3) {
         if (!$('#third-step').hasClass('hide')) {
             profile_steps('third1-step');
         } else if ($('#third-step').hasClass('hide') && !$('#third1-step').hasClass('hide')) {
             profile_steps('forth-step');
         } else if ($('#third-step').hasClass('hide') && $('#third1-step').hasClass('hide')) {
-            // submit form and save data-- Save time line data
-            // check if title is not empty
+// submit form and save data-- Save time line data
+// check if title is not empty
             title_empty = 1;
             $('input[name="title[]"]').each(function () {
                 if ($(this).val() != '') {
@@ -499,10 +637,10 @@ $("#gallery").change(function () {
             var file = $(this);
             str = '';
             if (regex_img.test(file[0].name.toLowerCase())) {
-                //-- check image and video count
-                if (image_count <= max_images_count) {
+//-- check image and video count
+                if (image_count <= maxlength_images_count) {
 
-                    // upload image
+// upload image
                     var formData = new FormData();
                     formData.append('profile_id', profile_id);
                     formData.append('type', 'image');
@@ -519,7 +657,6 @@ $("#gallery").change(function () {
                                 //-- Remove default preview div
                                 $('#default-preview').remove();
                                 var reader = new FileReader();
-
                                 reader.onload = function (e) {
                                     str = '<li><div class="upload-wrap"><span>';
                                     str += '<a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="image"><img src="' + e.target.result + '"></a>';
@@ -538,10 +675,9 @@ $("#gallery").change(function () {
                     showErrorMSg("Limit is exceeded to upload images");
                 }
                 image_count++;
-
             } else if (regex_video.test(file[0].name.toLowerCase())) {
-                if (video_count <= max_videos_count) {
-                    // upload video
+                if (video_count <= maxlength_videos_count) {
+// upload video
                     var videoData = new FormData();
                     videoData.append('profile_id', profile_id);
                     videoData.append('type', 'video');
@@ -570,7 +706,6 @@ $("#gallery").change(function () {
                                     canvas.width = video.videoWidth;
                                     canvas.height = video.videoHeight;
                                     canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
                                     var img = document.createElement("img");
                                     img.src = canvas.toDataURL();
                                     $('#upload_gallery_' + index).prepend(img);
@@ -580,12 +715,10 @@ $("#gallery").change(function () {
                             }
                         }
                     });
-
                 } else {
                     showErrorMSg("Limit is exceeded to upload videos");
                 }
                 video_count++;
-
             } else {
                 showErrorMSg(file[0].name + " is not a valid image/video file.");
             }
@@ -594,7 +727,6 @@ $("#gallery").change(function () {
         showErrorMSg("This browser does not support HTML5 FileReader.");
     }
 });
-
 function delete_media(obj, data) {
     $.ajax({
         url: site_url + "profile/delete_gallery",
@@ -604,12 +736,11 @@ function delete_media(obj, data) {
         success: function (data) {
             if (data.success == true) {
                 if (data.type == 1) {
-                    max_images_count++; //increase max images count if deleted media is image
+                    maxlength_images_count++; //increase maxlength images count if deleted media is image
                 } else {
-                    max_videos_count++; //increase max videos count if deleted media is video
+                    maxlength_videos_count++; //increase maxlength videos count if deleted media is video
                 }
                 $(obj).parent('.upload-wrap').parent('li').remove();
-
             } else {
                 showErrorMSg(data.error);
             }
@@ -619,7 +750,7 @@ function delete_media(obj, data) {
 //-- Add fun fact step
 function add_funfact() {
     if ($('#fun-fact-form').valid()) {
-        if (facts_count < max_facts_count) {
+        if (facts_count < maxlength_facts_count) {
             $.ajax({
                 url: site_url + "profile/add_facts",
                 type: "POST",
@@ -664,7 +795,7 @@ function delete_facts(obj, data) {
         success: function (data) {
             if (data.success == true) {
                 $(obj).parent('.input-wrap-div').remove();
-                max_facts_count++;
+                maxlength_facts_count++;
             } else {
                 showErrorMSg(data.error);
             }
@@ -684,7 +815,7 @@ function findProperty(obj, key) {
 //-- Third Affiliation Step
 function add_affiliation() {
     if ($('#affiliation-form').valid()) {
-        if (affiliation_count < max_affiliation_count) {
+        if (affiliation_count < maxlength_affiliation_count) {
             $.ajax({
                 url: site_url + "profile/add_affiliation",
                 type: "POST",
@@ -717,7 +848,6 @@ function add_affiliation() {
                     }
                 }
             });
-
         } else {
             showErrorMSg('You can add up to 10 affiliations only.');
         }
@@ -788,14 +918,12 @@ $(document).on('click', '.remove_org_timeline_btn', function () {
             }
         }
     });
-
 });
-
 //onchange media event for life timeline
 $(document).on('change', '.timeline-media', function () {
     obj = $(this);
     if (this.files && this.files[0]) {
-        //-- check if file is image or not
+//-- check if file is image or not
         if (regex_img.test(this.files[0].name.toLowerCase())) {
             var reader = new FileReader();
             reader.onload = function (e) {
@@ -851,7 +979,6 @@ $(document).on('change', 'input[name="year[]"],input[name="month[]"],input[name=
         }
     }
 });
-
 // select box change event
 $(document).on('change', '.service-state', function () {
     state_val = $(this).val();
@@ -865,7 +992,6 @@ $(document).on('change', '.service-state', function () {
         city_id = 'burial_city';
     }
     $('#' + city_id).val();
-
     $.ajax({
         url: site_url + "profile/get_cities",
         type: "POST",
@@ -884,7 +1010,6 @@ $(document).on('change', '.service-state', function () {
 $(document).on('change', '#memorial_date,#memorial_time,#funeral_date,#funeral_time,#burial_date,#burial_time,#memorial_place,#funeral_place,#burial_place,#burial_address,#funeral_address,#memorial_address,#memorial_state,#memorial_city,#memorial_zip,#funeral_state,#funeral_city,#funeral_zip,#burial_state,#burial_city,#burial_zip', function () {
     $(this).removeClass('error');
 });
-
 //Tribute Fund Raiser Profile
 var fundimage_count = 0, fundvideo_count = 0;
 $("#fundraiser_media").change(function () {
@@ -894,8 +1019,8 @@ $("#fundraiser_media").change(function () {
             var file = $(this);
             str = '';
             if (regex_img.test(file[0].name.toLowerCase())) {
-                //-- check image and video count
-                if (fundimage_count <= max_fundimages_count) {
+//-- check image and video count
+                if (fundimage_count <= maxlength_fundimages_count) {
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         fundraiser_media.push(file[0]);
@@ -914,9 +1039,8 @@ $("#fundraiser_media").change(function () {
                     showErrorMSg("Limit is exceeded to upload images");
                 }
                 fundimage_count++;
-
             } else if (regex_video.test(file[0].name.toLowerCase())) {
-                if (fundvideo_count <= max_fundvideos_count) {
+                if (fundvideo_count <= maxlength_fundvideos_count) {
                     fundraiser_media.push(file[0]);
                     var index = fundraiser_media.length - 1;
                     fundraiser_media[index]['index'] = index;
@@ -935,7 +1059,6 @@ $("#fundraiser_media").change(function () {
                         canvas.width = video.videoWidth;
                         canvas.height = video.videoHeight;
                         canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
                         var img = document.createElement("img");
                         img.src = canvas.toDataURL();
                         $('#fund_' + index).prepend(img);
@@ -944,7 +1067,6 @@ $("#fundraiser_media").change(function () {
                     showErrorMSg("Limit is exceeded to upload videos");
                 }
                 fundvideo_count++;
-
             } else {
                 showErrorMSg(file[0].name + " is not a valid image/video file.");
             }
@@ -953,7 +1075,6 @@ $("#fundraiser_media").change(function () {
         showErrorMSg("This browser does not support HTML5 FileReader.");
     }
 });
-
 /**
  * Redirect to preview profile page
  * @param {type} obj
@@ -972,9 +1093,9 @@ function delete_fundmedia(obj, type, index) {
         }
     });
     if (type == 1) {
-        fundimage_count--; //increase max images count if deleted media is image
+        fundimage_count--; //increase maxlength images count if deleted media is image
     } else {
-        fundvideo_count--; //increase max videos count if deleted media is video
+        fundvideo_count--; //increase maxlength videos count if deleted media is video
     }
     $(obj).parent('.gallery-wrap').parent('li').remove();
 }
