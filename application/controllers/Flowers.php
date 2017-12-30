@@ -123,7 +123,7 @@ class Flowers extends MY_Controller {
             }
         }
         $data['cart_items'] = $cart_item;
-        $countries = $this->users_model->sql_select(TBL_COUNTRY . ' c');
+        $countries = $this->users_model->sql_select(TBL_COUNTRY . ' c', null, ['where_in' => ['id' => array('38', '231')]]);
         $data['countries'] = $countries;
         $data['title'] = 'My Cart';
         $data['breadcrumb'] = ['title' => 'My Cart', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('flowers'), 'title' => 'Flowers']]];
@@ -143,7 +143,7 @@ class Flowers extends MY_Controller {
                 $data = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
                 if (!empty($data)) {
                     foreach ($data as $row) {
-                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                        $options .= "<option value = '" . $row['name'] . "'>" . $row['name'] . "</option>";
                     }
                 }
             }
@@ -154,7 +154,12 @@ class Flowers extends MY_Controller {
                 $data = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => trim($id))]);
                 if (!empty($data)) {
                     foreach ($data as $row) {
-                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                        $shortcode = '';
+                        if ($row['shortcode'] != NULL) {
+                            $temp = explode('-', $row['shortcode']);
+                            $shortcode = $temp[1];
+                        }
+                        $options .= "<option value = '" . $shortcode . "' data-bind='" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
                     }
                 }
             }
@@ -166,7 +171,7 @@ class Flowers extends MY_Controller {
             $output = $floristone->send_flower($url);
             $dates = $output->DATES;
             foreach ($dates as $val) {
-                $options .= "<option value = '" . $val . "'>" . $val . "</option>";
+                $options .= "<option value = '" . $val . "'>" . date('M d, Y', strtotime($val)) . "</option>";
             }
         }
         echo $options;
@@ -257,22 +262,26 @@ class Flowers extends MY_Controller {
                 'name' => $current_data['c_fname'] . ' ' . $current_data['c_lname'],
                 'address1' => $current_data['c_address1'],
                 'address2' => $current_data['c_address2'],
-                'zipcode' => '19803',
-                'city' => 'Wilmington',
-                'state' => 'DE',
-                'country' => 'US',
-                'phone' => '1231231234',
-                'email' => 'akk@narola.email',
+                'zipcode' => $current_data['c_zipcode'],
+                'city' => $current_data['c_city'],
+                'state' => $current_data['c_state'],
+                'country' => $current_data['c_country'],
+                'phone' => $current_data['c_phone'],
+                'email' => $current_data['c_email'],
                 'ip' => $_SERVER['REMOTE_ADDR']
             ));
 //            F1-CPP
             $ccinfo = json_encode(array(
-                'type' => 'vi',
-                'ccnum' => 1234512345123456,
-                'cvv2' => 123,
-                'expmonth' => 12,
-                'expyear' => 20
+                'type' => strtolower($current_data['c_card']),
+                'ccnum' => $current_data['c_cardnumber'],
+                'cvv2' => $current_data['c_code'],
+                'expmonth' => $current_data['c_month'],
+                'expyear' => $current_data['c_year']
             ));
+//            p($this->input->post());
+//            p($customer);
+//            p("=====================");
+//            p($ccinfo);
             $products = array();
             $ordertotal = '';
             $order_data = json_decode($this->get_order_total('recepient'));
@@ -283,22 +292,21 @@ class Flowers extends MY_Controller {
                 $products = $final_order_data->product;
             }
             $api_order_data = array('products' => $products, 'customer' => $customer, 'ccinfo' => $ccinfo, 'ordertotal' => $ordertotal);
+            if (isset($_POST['substitute'])) {
+                $api_order_data['allowsubstitutions'] = 1;
+            }
+//            p($api_order_data);
             $api_order_floristone = new Floristone();
             $api_order_url = "https://www.floristone.com/api/rest/flowershop/placeorder";
             $api_order_option = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => $api_order_data);
             $api_order_output = $api_order_floristone->send_flower($api_order_url, $api_order_option);
             if (!isset($api_order_output->errors)) {
                 $data['success'] = true;
-                $data['data'] = 'order_placed';
-                var_dump($api_order_output);
+                $data['order_no'] = $api_order_output->ORDERNO;
             } else {
-                var_dump($api_order_output);
                 $data['success'] = false;
                 $data['error'] = 'Something went wrong Your order is not placed please check your data is correct!';
             }
-//            print_r(json_encode($data));
-            $data['success'] = true;
-            $data['data'] = 'Proceed';
         } else {
             $data['success'] = false;
             $data['error'] = 'Invalid request, Please try again!';
@@ -335,19 +343,16 @@ class Flowers extends MY_Controller {
                         $final_products [] = array('code' => $code,
                             'price' => $cart_output->PRODUCTS[0]->PRICE,
                             'deliverydate' => date('Y-m-d', strtotime($this->session->userdata('place_order')['r_d_date'])),
-                            'cardmessage' => $this->session->userdata('place_order')['r_zipcode'],
+                            'cardmessage' => $this->session->userdata('place_order')['r_card_msg'],
                             'specialinstructions' => $this->session->userdata('place_order')['r_zipcode'],
                             'recipient' => array(
                                 'name' => $this->session->userdata('place_order')['r_name'],
                                 'institution' => $this->session->userdata('place_order')['r_institute'],
                                 'address1' => $this->session->userdata('place_order')['r_address1'],
                                 'address2' => $this->session->userdata('place_order')['r_address2'],
-//                                'city' => $this->session->userdata('place_order')['r_city'],
-//                                'state' => $this->session->userdata('place_order')['r_state'],
-//                                'country' => $this->session->userdata('place_order')['r_country'],
-                                'city' => 'Wilmington',
-                                'state' => 'DE',
-                                'country' => 'US',
+                                'city' => $this->session->userdata('place_order')['r_city'],
+                                'state' => $this->session->userdata('place_order')['r_state'],
+                                'country' => $this->session->userdata('place_order')['r_country'],
                                 'phone' => $this->session->userdata('place_order')['r_phone'],
                                 'zipcode' => $zipcode
                             )
@@ -417,41 +422,12 @@ class Flowers extends MY_Controller {
             $url = "https://www.floristone.com/api/rest/flowershop/getorderinfo?orderno=$order_no";
             $output = $floristone->send_flower($url);
             if (!isset($output->errors)) {
-                var_dump($output);
-//            if ($recipient == 'recepient') {
-//                foreach ($output->products as $key => $value) {
-//                    $code = $value->CODE;
-//                    $cart_floristone = new Floristone();
-//                    $cart_url = "https://www.floristone.com/api/rest/flowershop/getproducts?code=$code";
-//                    $cart_output = $cart_floristone->send_flower($cart_url);
-//                    if (!isset($cart_output->errors)) {
-//                        $products [] = array('code' => $code,
-//                            'price' => $cart_output->PRODUCTS[0]->PRICE,
-//                            "recipient" => array("zipcode" => $zipcode)
-//                        );
-//                        $final_products [] = array('code' => $code,
-//                            'price' => $cart_output->PRODUCTS[0]->PRICE,
-//                            'deliverydate' => date('Y-m-d', strtotime($this->session->userdata('place_order')['r_d_date'])),
-//                            'cardmessage' => $this->session->userdata('place_order')['r_zipcode'],
-//                            'specialinstructions' => $this->session->userdata('place_order')['r_zipcode'],
-//                            'recipient' => array(
-//                                'name' => $this->session->userdata('place_order')['r_name'],
-//                                'institution' => $this->session->userdata('place_order')['r_institute'],
-//                                'address1' => $this->session->userdata('place_order')['r_address1'],
-//                                'address2' => $this->session->userdata('place_order')['r_address2'],
-////                                'city' => $this->session->userdata('place_order')['r_city'],
-////                                'state' => $this->session->userdata('place_order')['r_state'],
-////                                'country' => $this->session->userdata('place_order')['r_country'],
-//                                'city' => 'Wilmington',
-//                                'state' => 'DE',
-//                                'country' => 'US',
-//                                'phone' => $this->session->userdata('place_order')['r_phone'],
-//                                'zipcode' => $zipcode
-//                            )
-//                        );
-//                    }
-//                }
+//                var_dump($output);
+                $data['order_data'] = $output;
             }
+            $data['title'] = 'Order Details';
+            $data['breadcrumb'] = ['title' => 'Order Details', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('flowers'), 'title' => 'Flowers']]];
+            $this->template->load('default', 'flowers/order_details', $data);
         } else {
             custom_show_404();
         }

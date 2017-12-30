@@ -110,7 +110,8 @@ $(function () {
             r_phone: {
                 required: true,
                 number: true,
-                maxlength: 10
+                maxlength: 10,
+                minlength: 10,
             },
             r_d_date: {
                 required: true,
@@ -155,10 +156,12 @@ $(function () {
             c_phone: {
                 required: true,
                 number: true,
-                maxlength: 10
+                maxlength: 10,
+                minlength: 10,
             },
             c_email: {
                 required: true,
+                email: true
             },
             c_card: {
                 required: true,
@@ -208,7 +211,7 @@ $(document).on('change', '.selectpicker', function () {
     if ($(this).val() != '') {
         $(this).parent().find('.bootstrap-select').removeClass('error');
         if ($(this).parent().find('.bootstrap-select').hasClass('country')) {
-            var country_id = $(this).val();
+            var country_id = $('option:selected', this).attr('data-bind');
             $url = site_url + 'flowers/get_data';
             $.ajax({
                 type: "POST",
@@ -221,10 +224,12 @@ $(document).on('change', '.selectpicker', function () {
                 if (data != '') {
                     $("#r_state").html(data);
                     $("#r_state").selectpicker('refresh');
+                    $("#r_city").html('<option value="">-- Select City --</option>');
+                    $("#r_city").selectpicker('refresh');
                 }
             });
         } else if ($(this).parent().find('.bootstrap-select').hasClass('state')) {
-            var state_id = $(this).val();
+            var state_id = $('option:selected', this).attr('data-bind');
             $url = site_url + 'flowers/get_data';
             $.ajax({
                 type: "POST",
@@ -240,7 +245,7 @@ $(document).on('change', '.selectpicker', function () {
                 }
             });
         } else if ($(this).parent().find('.bootstrap-select').hasClass('c_country')) {
-            var country_id = $(this).val();
+            var country_id = $('option:selected', this).attr('data-bind');
             $url = site_url + 'flowers/get_data';
             $.ajax({
                 type: "POST",
@@ -256,7 +261,7 @@ $(document).on('change', '.selectpicker', function () {
                 }
             });
         } else if ($(this).parent().find('.bootstrap-select').hasClass('c_state')) {
-            var state_id = $(this).val();
+            var state_id = $('option:selected', this).attr('data-bind');
             $url = site_url + 'flowers/get_data';
             $.ajax({
                 type: "POST",
@@ -293,7 +298,7 @@ $(document).on('focusout', '#r_zipcode', function () {
 });
 //-- Hide show steps based on step id
 function profile_steps(obj) {
-    console.log(obj);
+//    console.log(obj);
     $('.flowers-steps').addClass('hide');
     $('.steps-li').removeClass('current_active');
 //    $('.steps-li').removeClass('process-done');
@@ -378,10 +383,10 @@ function proceed_step() {
                 processData: false, // tell jQuery not to process the data 
                 contentType: false,
                 success: function (data) {
-                    console.log(data);
                     if (data.success == true) {
                         $('#flower_process').val(2);
-                        profile_steps('third-step');
+                        showSuccessMSg('Your order is successfully placed!');
+                        window.location.href = site_url + 'flowers/get_order_details/' + data.order_no;
                     } else {
                         $('#flower_process').val(1);
                         showErrorMSg(data.error);

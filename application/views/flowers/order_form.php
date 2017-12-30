@@ -82,7 +82,7 @@
                                                 $selected = 'selected';
                                             }
                                             ?>
-                                            <option <?php echo $selected; ?> value="<?php echo $value['sortname'] ?>"  <?php echo $this->input->method() == 'post' ? set_select('r_country', $value['sortname'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['sortname'] ?>" data-bind="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('r_country', $value['sortname'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                             <?php
                                         }
                                     }
@@ -96,11 +96,16 @@
                                     if (isset($states) && !empty($states)) {
                                         foreach ($states as $key => $value) {
                                             $selected = '';
-                                            if (isset($_POST['r_state']) && $_POST['r_state'] == $value['name']) {
+                                            $shortcode = '';
+                                            if ($row['shortcode'] != NULL) {
+                                                $temp = explode('-', $value['shortcode']);
+                                                $shortcode = $temp[1];
+                                            }
+                                            if (isset($_POST['r_state']) && $_POST['r_state'] == $shortcode) {
                                                 $selected = 'selected';
                                             }
                                             ?>
-                                            <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>" <?php echo $this->input->method() == 'post' ? set_select('r_state', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <option <?php echo $selected; ?> value="<?php echo $shortcode; ?>" data-bind="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('r_state', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                             <?php
                                         }
                                     }
@@ -136,7 +141,7 @@
                             </div>
                         </div>						
                         <div class="delivery_r">
-                            <h2>Delivery Date <span class="text-danger">*</span></h2>	
+                            <h2>Delivery Date <span class="text-danger">*</span></h2>
                             <div class="input-wrap">
                                 <label class="label-css">Select your delivery date below.<i class="fa fa-info-circle" aria-hidden="true" title="This order usually can be delivered today if it is placed before 1:00PM recipients local time. Orders received after that cutoff will be delivered the following day unless the following day is Sunday in which case the delivery will be made on Monday."></i></label>
                                 <select name="r_d_date" id="r_d_date" class="selectpicker">
@@ -191,7 +196,7 @@
                                                 $selected = 'selected';
                                             }
                                             ?>
-                                            <option <?php echo $selected; ?> value="<?php echo $value['sortname'] ?>"  <?php echo $this->input->method() == 'post' ? set_select('c_country', $value['sortname'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['sortname'] ?>" data-bind="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('c_country', $value['sortname'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                             <?php
                                         }
                                     }
@@ -205,11 +210,16 @@
                                     if (isset($states) && !empty($states)) {
                                         foreach ($states as $key => $value) {
                                             $selected = '';
-                                            if (isset($_POST['c_state']) && $_POST['c_state'] == $value['name']) {
+                                            $shortcode = '';
+                                            if ($row['shortcode'] != NULL) {
+                                                $temp = explode('-', $value['shortcode']);
+                                                $shortcode = $temp[1];
+                                            }
+                                            if (isset($_POST['c_state']) && $_POST['c_state'] == $shortcode) {
                                                 $selected = 'selected';
                                             }
                                             ?>
-                                            <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>" <?php echo $this->input->method() == 'post' ? set_select('c_state', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <option <?php echo $selected; ?> value="<?php echo $shortcode; ?>" data-bind="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('c_state', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                             <?php
                                         }
                                     }
@@ -227,7 +237,7 @@
                                                 $selected = 'selected';
                                             }
                                             ?>
-                                            <option <?php echo $selected; ?> value="<?php echo $value['name']?>"  <?php echo $this->input->method() == 'post' ? set_select('c_city', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                            <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>"  <?php echo $this->input->method() == 'post' ? set_select('c_city', $value['name'], TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                             <?php
                                         }
                                     }
@@ -291,8 +301,8 @@
                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                             </div>
                             <div class="custom_checkbox custom_check_margin">
-                                <input type="checkbox" id="substitute" />
-                                <label for="test1">Allow Substitutions</label>
+                                <input type="checkbox" name="substitute" id="substitute" />
+                                <label for="substitute">Allow Substitutions</label>
                             </div>
                             <p class="p_mark">All flowers, plants, or containers may not always be available. By checking this box, you give us permission to make reasonable substitutions to ensure we deliver your order in a timely manner. Substitutions will not affect the value or quality of your order.</p>
                             <div class="btn_continue">
