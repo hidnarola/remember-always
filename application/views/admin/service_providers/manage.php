@@ -98,7 +98,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label>State: <span class="text-danger">*</span></label>
-                                        <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');          ?>">-->
+                                        <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');            ?>">-->
                                         <select name="state" id="state" class="form-control selectpicker">
                                             <option value="">-- Select State --</option>
                                             <?php
@@ -119,7 +119,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label>City: <span class="text-danger">*</span></label>
-                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');          ?>">-->
+                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');            ?>">-->
                                         <select name="city" id="city" class="form-control selectpicker">
                                             <option value="">-- Select City --</option>
                                             <?php
@@ -156,7 +156,9 @@
                                 <div class="row">
                                     <div class="col-md-3" id="image_preview_div">
                                         <?php
+                                        $required = 'required';
                                         if (isset($provider_data['image'])) {
+                                            $required = '';
                                             ?>
                                             <img heigth="100" width="170" src="<?php echo base_url(PROVIDER_IMAGES . '/' . $provider_data['image']) ?>" alt="">
                                             <?php
@@ -167,7 +169,7 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="media-body">
-                                            <input type="file" name="image" id="image" class="file-styled">
+                                            <input type="file" name="image" id="image" class="file-styled" <?php echo $required ?>>
                                             <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
                                         </div>
                                         <span></span>
@@ -236,7 +238,7 @@
                     url: true
                 },
                 image: {
-                    required: true,
+//                    required: true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "KB",

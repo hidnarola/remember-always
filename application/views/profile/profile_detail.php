@@ -498,7 +498,7 @@
                         </div>
                         <div class="comments-div"  id="content-8">
                             <?php if (isset($posts) && !empty($posts)) { ?>
-                                <ul class="post_ul">
+                                <ul class="post_ul post_ul_responsive_view">
                                     <?php
                                     foreach ($posts as $key => $val) {
                                         $from_date = date_create($val['created_at']);

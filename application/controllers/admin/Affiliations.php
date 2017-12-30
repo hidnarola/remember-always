@@ -127,12 +127,10 @@ class Affiliations extends MY_Controller {
             } else {
                 if (is_numeric($id)) {
                     if (!empty($affiliation)) {
-                        $provider_image = $provider_data['image'];
-                        $dataArr['image'] = $provider_data['image'];
+                        $dataArr['image'] = $affiliation['image'];
                     }
                 }
             }
-//            p($dataArr, 1);
             if (is_numeric($id)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->affiliation_model->common_insert_update('update', TBL_AFFILIATIONS, $dataArr, ['id' => $id]);
