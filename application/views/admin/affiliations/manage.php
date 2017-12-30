@@ -120,7 +120,6 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label>City: <span class="text-danger">*</span></label>
-                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($affiliation['city']) ? $affiliation['city'] : set_value('city');                            ?>">-->
                                         <select name="city" id="city" class="form-control selectpicker">
                                             <option value="">-- Select City --</option>
                                             <?php
@@ -143,27 +142,26 @@
                             <div class="form-group">
                                 <label>Image: <span class="text-danger">*</span></label>
                                 <div class="row">
-                                    <div class="media-left col-md-3" id="image_preview_div">
+                                    <div class="media-left col-md-2" id="image_preview_div">
                                         <?php
                                         $required = 'required';
                                         if (isset($affiliation) && $affiliation['image'] != '') {
                                             $required = '';
                                             if (preg_match("/\.(png|jpg|jpeg)$/", $affiliation['image'])) {
                                                 ?>
-                                                                                <!--                                                <a class="fancybox" href="<?php // echo AFFILIATION_IMAGE . $affiliation['image'];           ?>" data-fancybox-group="gallery" ><img src="<?php // echo AFFILIATION_IMAGE . $affiliation['image'];           ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt=""></a>-->
                                                 <img src="<?php echo AFFILIATION_IMAGE . $affiliation['image']; ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt="">
                                             <?php } else { ?>
                                                 <a class="fancybox" target="_blank" href="<?php echo AFFILIATION_IMAGE . $affiliation['image']; ?>" data-fancybox-group="gallery" ><img src="assets/admin/images/placeholder.jpg" height="90px" width="110px" alt="" class="img-circle"/></a>
                                             <?php } ?>
-                                        <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id'])  ?>')"><i class="icon-trash"></i> Remove</button>-->
+    <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id'])                 ?>')"><i class="icon-trash"></i> Remove</button>-->
                                         <?php } else {
                                             ?>
                                             <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt="">
                                         <?php } ?>
                                     </div>
-                                    <div class="col-md-9">
+                                    <div class="col-md-5">
                                         <div class="media-body">
-                                            <input type="file" name="image" id="image" class="file-styled">
+                                            <input type="file" name="image" id="image" class="file-styled" <?php echo $required ?>>
                                             <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size <?php echo MAX_IMAGE_SIZE ?>MB</span>
                                         </div>
                                         <div class="proper_image validation-error-label"></div>
@@ -183,6 +181,11 @@
     <?php $this->load->view('Templates/admin_footer'); ?>
 </div>
 <script type="text/javascript">
+<?php if (isset($affiliation)) { ?>
+        is_valid = true;
+<?php } else { ?>
+        is_valid = false;
+<?php } ?>
     $('.fancybox').fancybox();
     $('#category_id').selectpicker({
         liveSearch: true,
@@ -232,7 +235,7 @@
                     required: true,
                 },
                 image: {
-                    required: true,
+//                    required: true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "MB",
