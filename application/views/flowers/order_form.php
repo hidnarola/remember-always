@@ -297,7 +297,7 @@
                             </div>
                             <div class="input-wrap code">
                                 <label class="label-css">Security Code *</label>
-                                <input type="text" name="c_code" placeholder="cvv" class="input-css">
+                                <input type="password" name="c_code" placeholder="cvv" class="input-css">
                                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                             </div>
                             <div class="custom_checkbox custom_check_margin">
