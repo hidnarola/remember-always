@@ -386,7 +386,7 @@ function proceed_step() {
                     if (data.success == true) {
                         $('#flower_process').val(2);
                         showSuccessMSg('Your order is successfully placed!');
-                        window.location.href = site_url + 'flowers/get_order_details/' + data.order_no;
+//                        window.location.href = site_url + 'flowers/get_order_details/' + data.order_no;
                     } else {
                         $('#flower_process').val(1);
                         showErrorMSg(data.error);
