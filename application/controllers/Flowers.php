@@ -270,7 +270,6 @@ class Flowers extends MY_Controller {
                 'email' => $current_data['c_email'],
                 'ip' => $_SERVER['REMOTE_ADDR']
             ));
-//            F1-CPP
             $ccinfo = json_encode(array(
                 'type' => strtolower($current_data['c_card']),
                 'ccnum' => $current_data['c_cardnumber'],
@@ -278,10 +277,6 @@ class Flowers extends MY_Controller {
                 'expmonth' => $current_data['c_month'],
                 'expyear' => $current_data['c_year']
             ));
-//            p($this->input->post());
-//            p($customer);
-//            p("=====================");
-//            p($ccinfo);
             $products = array();
             $ordertotal = '';
             $order_data = json_decode($this->get_order_total('recepient'));
@@ -295,7 +290,6 @@ class Flowers extends MY_Controller {
             if (isset($_POST['substitute'])) {
                 $api_order_data['allowsubstitutions'] = 1;
             }
-//            p($api_order_data);
             $api_order_floristone = new Floristone();
             $api_order_url = "https://www.floristone.com/api/rest/flowershop/placeorder";
             $api_order_option = array(CURLOPT_POST => true, CURLOPT_POSTFIELDS => $api_order_data);
@@ -303,6 +297,12 @@ class Flowers extends MY_Controller {
             if (!isset($api_order_output->errors)) {
                 $data['success'] = true;
                 $data['order_no'] = $api_order_output->ORDERNO;
+                $delete_cart_floristone = new Floristone();
+                $cart = $this->session->userdata('cart_id');
+                $delete_cart_url = "https://www.floristone.com/api/rest/shoppingcart?sessionid=$cart";
+                $delete_cart_option = array(CURLOPT_CUSTOMREQUEST => "DELETE");
+                $delete_cart_output = $delete_cart_floristone->send_flower($delete_cart_url, $delete_cart_option);
+                $this->session->unset_userdata('cart_id');
             } else {
                 $data['success'] = false;
                 $data['error'] = 'Something went wrong Your order is not placed please check your data is correct!';

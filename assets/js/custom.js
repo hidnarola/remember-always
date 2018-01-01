@@ -459,5 +459,10 @@ jQuery.validator.addMethod("custom_zipcode", function (value, element) {
 
 $(document).on('click', '.manage_cart', function () {
     var code = $(this).data('item');
-
 });
+
+/* Sharing with social media */
+function genericSocialShare(url) {
+    window.open(url, 'sharer', 'toolbar=0,status=0,width=648,height=395');
+    return true;
+}
