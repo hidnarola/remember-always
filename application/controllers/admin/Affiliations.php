@@ -41,7 +41,7 @@ class Affiliations extends MY_Controller {
     }
 
     /**
-     * Add a new allifiation.
+     * Add a new affiliation.
      *
      */
     public function add($id = null) {
@@ -146,7 +146,7 @@ class Affiliations extends MY_Controller {
     }
 
     /**
-     * Edit a allifiation.
+     * Edit a Affiliation.
      *
      */
     public function edit($id) {
@@ -177,7 +177,7 @@ class Affiliations extends MY_Controller {
     }
 
     /**
-     * Delete allifiation category
+     * Delete affiliation category
      * @param int $id
      * */
     public function delete($id = NULL) {
