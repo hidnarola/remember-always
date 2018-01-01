@@ -9,17 +9,17 @@
                     } else {
                         echo "<img class='cover_img' src='assets/images/profile-pic.jpg' alt='' />";
                     }
-                    if(isset($profile) && $this->user_id == $profile['user_id']){
-                    ?>
-                    <div class="select-file">
-                        <div class="select-file-upload"> 
-                            <!--<form id="cover-photo-form">-->
-                            <span class="select-file_up_btn"><i class="fa fa-pencil"></i></span>
-                            <input type="file" name="cover_image" id="cover_image" multiple="false">
-                                <!--</form>-->
+                    if (isset($profile) && $this->user_id == $profile['user_id']) {
+                        ?>
+                        <div class="select-file">
+                            <div class="select-file-upload"> 
+                                <!--<form id="cover-photo-form">-->
+                                <span class="select-file_up_btn"><i class="fa fa-pencil"></i></span>
+                                <input type="file" name="cover_image" id="cover_image" multiple="false">
+                                    <!--</form>-->
+                            </div>
                         </div>
-                    </div>
-                    <?php }?>
+                    <?php } ?>
                 </span>
                 <div class="profile-title">
                     <div class="profile-title-img">
@@ -40,7 +40,7 @@
                     <?php if (isset($profile['type']) && $profile['type'] == 2) { ?>
                         <a href="" class="donate-btn">Donate</a>
                     <?php } ?>
-                        <a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>
+                    <a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>
                     <div class="profile-share">
                         <h6>Share</h6>
                         <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -81,17 +81,17 @@
                                 <g>
                                 </g>
                             </svg></a>
-                        <a href="javascript:void(0)" onclick="javascript:genericSocialShare('https://pinterest.com/pin/create/bookmarklet/?url=<?php echo $url; ?>')" title="Pintrest Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                                                                                                                                                                  viewBox="0 0 112.198 112.198" style="enable-background:new 0 0 112.198 112.198;" xml:space="preserve">
+                        <!--<a href="javascript:void(0)" onclick="javascript:genericSocialShare('https://www.linkedin.com/shareArticle?url=<?php echo $url; ?>&title=<?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Profile Sharing'; ?>')" title="Linked-in Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"-->
+                        <a href="javascript:void(0)" onclick="javascript:genericSocialShare('https://www.linkedin.com/shareArticle?url=<?php echo $url; ?>&title=<?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Profile Sharing'; ?>')" title="Linked-in Share">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 viewBox="0 0 291.319 291.319" style="enable-background:new 0 0 291.319 291.319;" xml:space="preserve">
                                 <g>
-                                    <circle style="fill:#CB2027;" cx="56.099" cy="56.1" r="56.098"/>
-                                    <g>
-                                        <path style="fill:#F1F2F2;" d="M60.627,75.122c-4.241-0.328-6.023-2.431-9.349-4.45c-1.828,9.591-4.062,18.785-10.679,23.588
-                                              c-2.045-14.496,2.998-25.384,5.34-36.941c-3.992-6.72,0.48-20.246,8.9-16.913c10.363,4.098-8.972,24.987,4.008,27.596
-                                              c13.551,2.724,19.083-23.513,10.679-32.047c-12.142-12.321-35.343-0.28-32.49,17.358c0.695,4.312,5.151,5.621,1.78,11.571
-                                              c-7.771-1.721-10.089-7.85-9.791-16.021c0.481-13.375,12.018-22.74,23.59-24.036c14.635-1.638,28.371,5.374,30.267,19.14
-                                              C85.015,59.504,76.275,76.33,60.627,75.122L60.627,75.122z"/>
-                                    </g>
+                                    <path style="fill:#0E76A8;" d="M145.659,0c80.45,0,145.66,65.219,145.66,145.66s-65.21,145.659-145.66,145.659S0,226.1,0,145.66
+                                          S65.21,0,145.659,0z"/>
+                                    <path style="fill:#FFFFFF;" d="M82.079,200.136h27.275v-90.91H82.079V200.136z M188.338,106.077
+                                          c-13.237,0-25.081,4.834-33.483,15.504v-12.654H127.48v91.21h27.375v-49.324c0-10.424,9.55-20.593,21.512-20.593
+                                          s14.912,10.169,14.912,20.338v49.57h27.275v-51.6C218.553,112.686,201.584,106.077,188.338,106.077z M95.589,100.141
+                                          c7.538,0,13.656-6.118,13.656-13.656S103.127,72.83,95.589,72.83s-13.656,6.118-13.656,13.656S88.051,100.141,95.589,100.141z"/>
                                 </g>
                                 <g>
                                 </g>
@@ -123,7 +123,8 @@
                                 </g>
                                 <g>
                                 </g>
-                            </svg></a>
+                            </svg>
+                        </a>
                         <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://twitter.com/share?url=<?php echo $url; ?>')" title="Twitter Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                                                                                                                             viewBox="0 0 112.197 112.197" style="enable-background:new 0 0 112.197 112.197;" xml:space="preserve">
                                 <g>
@@ -547,7 +548,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)     ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)      ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
@@ -571,7 +572,7 @@
                     </div>
                 </div>
                 <div class="profile-body-r">
-                     <?php if (isset($profile['type']) && $profile['type'] == 2) { ?>
+                    <?php if (isset($profile['type']) && $profile['type'] == 2) { ?>
                         <div class="profile-box fundraiser">
                             <h2>Tribute Fundraiser</h2>
                             <div class="profile-box-body">
@@ -604,7 +605,7 @@
                                                 <div class="gallery-wrap">
                                                     <span class="gallery-video-img">
                                                         <!--                                                        <video  width="100%" height="100%"controls="">
-                                                                                                                    <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])     ?>" type="video/mp4">
+                                                                                                                    <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])      ?>" type="video/mp4">
                                                                                                                 </video>-->
                                                         <img src="<?php echo base_url(PROFILE_IMAGES . str_replace('mp4', 'jpg', $val['media'])) ?>" width="100%" height="100%">
                                                     </span>

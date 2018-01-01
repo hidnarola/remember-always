@@ -59,11 +59,11 @@
                             <h2>Deliver To</h2>
                             <div class="input-wrap">
                                 <input type="text" name="r_name" placeholder="Name *" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="Name of person receiving flowers. If this is for a funeral home, please put the name of the deceased here."></i>
                             </div>
                             <div class="input-wrap">
                                 <input type="text" name="r_institute" placeholder="Institution" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="If these flowers are going to an institution, such as a business or a funeral home, please put the name of that institution here."></i>
                             </div>
                             <div class="input-wrap">
                                 <input type="text" name="r_address1" placeholder="Address1 *" class="input-css">
@@ -132,24 +132,26 @@
                             </div>
                             <div class="input-wrap">
                                 <input type="text" name="r_zipcode" id="r_zipcode" placeholder="Zip Code *" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="5 digit Zip Code for United States, example: 10118 | 7 character Postal Code for Canada, example: M5V 2T6"></i>
                             </div>
                             <div class="input-wrap input-wrap_small">
                                 <input type="text" name="r_phone" placeholder="Phone *" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="Recipient's Phone Number. 10 digits. Acceptable formats: xxx-xxx-xxxx, (xxx) xxx-xxxx, xxxxxxxxxx"></i>
                                 <small>xxx-xxx-xxxx</small>
                             </div>
                         </div>						
                         <div class="delivery_r">
                             <h2>Delivery Date <span class="text-danger">*</span></h2>
                             <div class="input-wrap">
-                                <label class="label-css">Select your delivery date below.<i class="fa fa-info-circle" aria-hidden="true" title="This order usually can be delivered today if it is placed before 1:00PM recipients local time. Orders received after that cutoff will be delivered the following day unless the following day is Sunday in which case the delivery will be made on Monday."></i></label>
+                                <label class="label-css">Select your delivery date below.
+                                    <i class="fa fa-info-circle" data-placement="left" title="This order usually can be delivered today if it is placed before 1:00PM recipients local time. Orders received after that cutoff will be delivered the following day unless the following day is Sunday in which case the delivery will be made on Monday."></i></label>
                                 <select name="r_d_date" id="r_d_date" class="selectpicker">
                                     <option value="">--Delivery Date--</option>
                                 </select>
                             </div>
                             <div class="input-wrap second">
-                                <label class="label-css">Flower Card Message <span class="text-danger">*</span><i class="fa fa-info-circle" aria-hidden="true"></i></label>
+                                <label class="label-css">Flower Card Message <span class="text-danger">*</span>
+                                    <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" title="Card message. 200 characters maximum."></i></label>
                                 <textarea name="r_card_msg"  class="input-css textarea-css" id="card_msg" placeholder="Quod omittam vulputate quo ex." maxlength="200"></textarea>
                                 <big id="card_msg_count">(200 characters remaining)</big>
                             </div>
@@ -159,7 +161,6 @@
                                 <textarea name="r_instruct" class="input-css textarea-css" name="instruct" id="instruct" placeholder="Quod omittam vulputate quo ex." maxlength="100"></textarea>
                                 <big id="instruct_count">(100 characters remaining)</big>
                             </div>
-
                         </div>
                         <div class="comment-btm cart_btn">
                             <button class="back" onclick="return back_step()">Back</button>
@@ -249,11 +250,10 @@
                             </div>
                             <div class="input-wrap">
                                 <input type="text" name="c_phone" placeholder="Phone *" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="Your phone number. 15 digits maximum."></i>
                             </div>
                             <div class="input-wrap input-wrap_small">
                                 <input type="text" name="c_email" placeholder="Email *" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
                             </div>
                         </div>						
                         <div class="delivery_r delivery_cart_payment">
@@ -273,43 +273,47 @@
                             </div>
                             <div class="input-wrap input_exp">
                                 <label class="label-css">Expiration Date</label>
-                                <select name="c_month" id="c_month" class="mm selectpicker">
-                                    <option value="">-- MM --</option>
-                                    <option value="01">01</option>
-                                    <option value="02">02</option>
-                                    <option value="03">03</option>
-                                    <option value="04">04</option>
-                                    <option value="05">05</option>
-                                    <option value="06">06</option>
-                                    <option value="07">07</option>
-                                    <option value="08">08</option>
-                                    <option value="09">09</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                                <select name="c_year" id="c_year" class="yy selectpicker">
-                                    <option value="" selected="selected">-- YYYY --</option>
-                                    <?php for ($i = date('Y'); $i <= date('Y', strtotime('+15 year')); $i++) { ?>
-                                        <option value="<?php echo substr($i, 2) ?>"><?php echo $i ?></option>
-                                    <?php } ?>
-                                </select>
+                                <div class="mm">
+                                    <select name="c_month" id="c_month" class="selectpicker">
+                                        <option value="">-- MM --</option>
+                                        <option value="01">01</option>
+                                        <option value="02">02</option>
+                                        <option value="03">03</option>
+                                        <option value="04">04</option>
+                                        <option value="05">05</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
+                                <div class="yy">
+                                    <select name="c_year" id="c_year" class="selectpicker">
+                                        <option value="" selected="selected">-- YYYY --</option>
+                                        <?php for ($i = date('Y'); $i <= date('Y', strtotime('+15 year')); $i++) { ?>
+                                            <option value="<?php echo substr($i, 2) ?>"><?php echo $i ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                             </div>
                             <div class="input-wrap code">
                                 <label class="label-css">Security Code *</label>
                                 <input type="password" name="c_code" placeholder="cvv" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" title="Security Code. 3 digit number on back of card for MasterCard, Visa, Discover. 4 digit number on front of card for AMEX"></i>
                             </div>
                             <div class="custom_checkbox custom_check_margin">
                                 <input type="checkbox" name="substitute" id="substitute" />
                                 <label for="substitute">Allow Substitutions</label>
                             </div>
                             <p class="p_mark">All flowers, plants, or containers may not always be available. By checking this box, you give us permission to make reasonable substitutions to ensure we deliver your order in a timely manner. Substitutions will not affect the value or quality of your order.</p>
-                            <div class="btn_continue">
-                                <button type="button" name="back" onclick="return back_step()">Back</button>
-                                <button type="button" name="cart_bill_btn" onclick="return proceed_step();">Continue</button>
-                            </div>
-                        </div>						
+                        </div>					
+                    </div>
+                    <div class="comment-btm cart_btn btn_extra_div">
+                        <button type="button" class="back" onclick="return back_step()">Back</button>
+                        <button type="button" name="cart_bill_btn" onclick="return proceed_step();">Continue</button>
                     </div>
                 </form>
             </div>
