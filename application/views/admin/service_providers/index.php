@@ -139,7 +139,7 @@
 
                         if (full.is_active == '1') {
                             var type = 'approve';
-                            action += '<a href="' + site_url + 'admin/providers/action/unapprove/' + btoa(full.id) + '" title="UnApprove Service Provider" data-type="' + type + '" onclick="return confirm_approve(this)"><i class="icon-cross"></i> Approve</a>';
+                            action += '<a href="' + site_url + 'admin/providers/action/unapprove/' + btoa(full.id) + '" title="UnApprove Service Provider" data-type="' + type + '" onclick="return confirm_approve(this)"><i class="icon-cross"></i>UnApprove</a>';
                         } else {
                             var type = 'unapprove';
                             action += '<a href="' + site_url + 'admin/providers/action/approve/' + btoa(full.id) + '" title="Approve Service Provider" data-type="' + type + '" onclick="return confirm_approve(this)"><i class="icon-check"></i> Approve</a>';
@@ -192,11 +192,11 @@
         if (type == 'approve') {
             swal({
                 title: "Are you sure?",
-                text: "You want to approve this service!",
+                text: "You want to unapprove this service!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#FF7043",
-                confirmButtonText: "Yes, Approve it!",
+                confirmButtonText: "Yes, UnApprove it!",
                 cancelButtonText: "No, cancel plz!"
             }).then(function (isConfirm) {
                 if (isConfirm) {
@@ -212,11 +212,11 @@
         } else if (type == 'unapprove') {
             swal({
                 title: "Are you sure?",
-                text: "You want to Unapprove this service!",
+                text: "You want to Approve this service!",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#FF7043",
-                confirmButtonText: "Yes, UnApprove it!",
+                confirmButtonText: "Yes, Approve it!",
                 cancelButtonText: "No, cancel plz!"
             }).then(function (isConfirm) {
                 if (isConfirm) {

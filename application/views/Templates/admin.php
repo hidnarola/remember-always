@@ -96,7 +96,7 @@ $Path = $_SERVER['PATH_INFO'];
                                     <li <?php echo strtolower($this->controller) == 'categories' || strtolower($this->controller) == 'affiliation_categories' ? 'class="active"' : '' ?>>
                                         <a href="#" class="has-ul"><i class="icon-grid"></i> <span>Categories</span></a>
                                         <ul class="hidden-ul" style="<?php echo strtolower($this->controller) == 'categories' || strtolower($this->controller) == 'affiliation_categories' ? 'display:block' : '' ?>">
-                                            <li <?php echo strtolower($this->controller) == 'categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/categories') ?>"><i class="icon-list-unordered"></i><span>Service</span></a></li>
+                                            <li <?php echo strtolower($this->controller) == 'categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/categories') ?>"><i class="icon-list-unordered"></i><span>Service Provider</span></a></li>
                                             <li <?php echo strtolower($this->controller) == 'affiliation_categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/affiliation_categories') ?>"><i class="icon-list-unordered"></i><span>Affiliation</span></a></li>
                                         </ul>
                                     </li>

@@ -202,12 +202,12 @@ class Affiliation extends MY_Controller {
                 $profiles = $this->affiliation_model->sql_select(TBL_PROFILE_AFFILIATION . ' pa', 'pa.*,p.firstname,p.lastname,p.profile_image,p.slug', ['where' => array('pa.affiliation_id' => trim($affiliation_data['id']))], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pa.profile_id AND p.is_delete=0')]]);
                 $data['profiles'] = $profiles;
                 $data['affiliation'] = $affiliation_data;
+                $data['title'] = 'Affiliations';
+                $data['breadcrumb'] = ['title' => $affiliation_data['name'], 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('affiliation'), 'title' => 'Affiliations']]];
+                $this->template->load('default', 'affiliation/details', $data);
             } else {
                 custom_show_404();
             }
-            $data['title'] = 'Affiliations';
-            $data['breadcrumb'] = ['title' => 'Affiliations', 'links' => [['link' => site_url(), 'title' => 'Home']]];
-            $this->template->load('default', 'affiliation/details', $data);
         } else {
             custom_show_404();
         }

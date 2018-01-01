@@ -80,7 +80,7 @@
 
                                     <div class="media-body">
                                         <input type="file" name="image" id="image" class="file-styled" <?php echo $required ?>>
-                                        <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
+                                        <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size <?php echo MAX_IMAGE_SIZE ?>MB</span>
                                     </div>
                                     <span></span>
                                 </div>

@@ -14,31 +14,13 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .upload-wrap span {padding: 0px;}
 .text-danger{color:red}
 
-.services-ctgr ul li a.active {
-    text-decoration: none;
-    color: #975779;
-}
-.fa-facebook:hover{
-    text-decoration: none;
-    color:#3b5998;
-}
-.fa-twitter:hover{
-    text-decoration: none;
-    color:#0084b4;
-}
-.fa-google-plus:hover{
-    text-decoration: none;
-    color:#dd4b39;
-}
-.fa-pinterest:hover{
-    text-decoration: none;
-    color:#c8232c;
-}
+.services-ctgr ul li a.active {text-decoration: none;color: #975779;}
+.fa-facebook:hover{text-decoration: none;color:#3b5998;}
+.fa-twitter:hover{text-decoration: none;color:#0084b4;}
+.fa-google-plus:hover{text-decoration: none;color:#dd4b39;}
+.fa-pinterest:hover{text-decoration: none;color:#c8232c;}
 
-.srvs-dtl-l iframe, .srvs-dtl-l .custom_map {
-    width: 100%;
-    height: 450px;
-}
+.srvs-dtl-l iframe, .srvs-dtl-l .custom_map {width: 100%;height: 450px;}
 /*15-12-2017*/
 .p-10 {padding: 10px!important;}
 .add_timeline_btn,.remove_timeline_btn,.remove_org_timeline_btn{cursor: pointer;}
@@ -47,9 +29,13 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 /*18-12-2017 */
 .custom_error_container div{text-align: center;}
 /*19-12-2017 */
-.blog-box span a img {border-radius: 4px;max-width: 100%;height: 214px;}
+.blog-box span a img {border-radius: 4px;max-width: 100%;height: 214px;margin: 0 auto;display: block;}
 .paggination-wrap ul li.active a{background: #975979;color: #fff;text-decoration: none;pointer-events:none;}
 
 /*28-12-2017  Twitter Searchobx- Set width to 100%*/
 .twitter-typeahead{width:100%}
 .menu-text a {color: #666}
+
+/*1-1-2018 search profile page change*/
+.srh-list-img img {height: 100%;display: block;margin: 0 auto;}
+.srh-list-img {background: #cccccc52;}

@@ -194,7 +194,7 @@
     })
     var _validFileExtensions = [".jpg", ".jpeg", ".png", ];
     function readURL(input) {
-        var height = 730, width = 1600, img = '', file = '', val = '';
+        var height = 215, width = 345, img = '', file = '', val = '';
         if (input.files && input.files[0]) {
             var reader = new FileReader();
             reader.onload = function (e) {

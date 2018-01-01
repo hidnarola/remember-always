@@ -25,13 +25,13 @@ class Home_slider_model extends MY_Model {
         $keyword = $this->input->get('search');
         if (!empty($keyword['value'])) {
 //            $this->db->having('description LIKE "%' . $keyword['value'] . '%" OR is_active LIKE "%' . $keyword['value'] . '%"', NULL);
-            $this->db->having('description LIKE "%' . $keyword['value'] . '%"', NULL);
+            $this->db->where('description LIKE ' . $this->db->escape('%' . $keyword['value'] . '%'));
         }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
-        $this->db->limit($this->input->get('length'), $this->input->get('start'));
         if ($count == 'count') {
             $res_data = $this->db->get(TBL_SLIDER . ' s')->num_rows();
         } else {
+            $this->db->limit($this->input->get('length'), $this->input->get('start'));
             $res_data = $this->db->get(TBL_SLIDER . ' s,(SELECT @a:= ' . $start . ') AS a')->result_array();
         }
         return $res_data;

@@ -23,7 +23,7 @@ class Profile extends MY_Controller {
             if (!empty($is_left)) {
                 $funnel_services_data = [];
                 $post_id = 0;
-                if($is_left['type'] == 2){
+                if ($is_left['type'] == 2) {
                     $fundraiser = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES . ' f', null, ['where' => ['f.is_delete' => 0, 'f.profile_id' => $is_left['id']]], ['single' => true]);
                     $data['fundraiser'] = $fundraiser;
                 }
@@ -126,7 +126,7 @@ class Profile extends MY_Controller {
                 $data['life_gallery'] = $life_gallery;
                 $data['life_timeline'] = $life_timeline;
                 $data['title'] = 'Profile';
-                $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+                $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('search'), 'title' => 'Profiles']]];
                 $this->template->load('default', 'profile/profile_detail', $data);
             }
         } else {

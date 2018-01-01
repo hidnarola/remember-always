@@ -76,7 +76,7 @@
                 paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
             },
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-            order: [[0, "desc"]],
+            order: [[0, "ASC"]],
             ajax: url,
             columns: [
                 {

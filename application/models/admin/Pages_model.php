@@ -27,10 +27,10 @@ class Pages_model extends MY_Model {
             $this->db->having('navigation_name LIKE "%' . $keyword['value'] . '%"', NULL);
         }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
-        $this->db->limit($this->input->get('length'), $this->input->get('start'));
         if ($count == 'count') {
             $res_data = $this->db->get(TBL_PAGES . ' p')->num_rows();
         } else {
+            $this->db->limit($this->input->get('length'), $this->input->get('start'));
             $res_data = $this->db->get(TBL_PAGES . ' p,(SELECT @a:= ' . $start . ') AS a')->result_array();
         }
         return $res_data;

@@ -105,7 +105,7 @@ $(function () {
             });
         }
     }
-    
+
     /* add new post form validation */
     $('#post_form').validate({
         onkeyup: false,
@@ -193,6 +193,8 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 if (data.success == true) {
+                    //-- Empty previous divs 
+                    $('#timeline_details .timeline_title,#timeline_details .timeline_date,#timeline_details .timeline_media,#timeline_details .timeline_details').html('');
                     //-- Remove default preview div
                     var timeline_data = JSON.parse(data.data);
                     $('#timeline_details .timeline_title').html(timeline_data.title);
@@ -207,7 +209,7 @@ $(function () {
                         video_str += '</span></span>';
                         video_str += '<span class="gallery-play-btn">';
                         video_str += '<a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="iframe" rel="timeline"><img src="assets/images/play.png" alt=""><a/>';
-                        video_str += +'</span>';
+                        video_str += '</span>';
                         $('#timeline_details .timeline_media').html(video_str);
                     }
                     if (timeline_data.details != null && timeline_data.details != '') {

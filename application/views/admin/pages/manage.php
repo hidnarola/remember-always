@@ -91,7 +91,7 @@ if ($this->session->flashdata('success')) {
                                         <div class="col-md-9">
                                             <div class="media-body">
                                                 <input type="file" name="banner_image" id="banner_image" class="file-styled">
-                                                <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size 700Kb</span>
+                                                <span class="help-block">Accepted formats:  png, jpg , jpeg. Max file size <?php echo MAX_IMAGE_SIZE ?>MB</span>
                                             </div>
                                             <span></span>
                                         </div>
@@ -174,8 +174,8 @@ if ($this->session->flashdata('success')) {
                         // required: true,
                         extension: "jpg|png|jpeg",
                         maxFileSize: {
-                            "unit": "KB",
-                            "size": 700
+                            "unit": "MB",
+                            "size": max_image_size
                         }
                     }
                 },

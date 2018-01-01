@@ -59,7 +59,7 @@
 
                                     <div class="media-body">
                                         <input type="file" name="profile_image" id="profile_image" class="file-styled" onchange="readURL(this);">
-                                        <span class="help-block">Accepted formats: png, jpg. Max file size 2Mb</span>
+                                        <span class="help-block">Accepted formats: png, jpg. Max file size <?php echo MAX_IMAGE_SIZE ?>MB</span>
                                     </div>
                                 </div>
                                 <?php
@@ -214,7 +214,7 @@
             extension: "jpg|png|jpeg",
             maxFileSize: {
                 "unit": "MB",
-                "size": 2
+                "size": max_image_size
             }
         });
     });

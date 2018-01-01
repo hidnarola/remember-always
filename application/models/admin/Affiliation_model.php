@@ -21,7 +21,7 @@ class Affiliation_model extends MY_Model {
         $start = $this->input->get('start');
         $length = $this->input->get('length');
         $keyword = $this->input->get('search');
-        $columns = ['a.id', 'a.name', 'a.created_at', 'ac.name as category_name','is_approved','is_delete'];
+        $columns = ['a.id', 'a.name', 'a.created_at', 'ac.name as category_name', 'is_approved', 'is_delete'];
         $this->db->select('a.id,a.name,a.created_at,ac.name as category_name,is_approved,a.is_delete', false);
         $this->db->join(TBL_AFFILIATIONS_CATEGORY . ' ac', 'ac.id=a.category_id AND ac.is_delete=0', 'left');
 //        $sql = "SELECT * FROM ("
@@ -33,11 +33,11 @@ class Affiliation_model extends MY_Model {
             $this->db->having('name LIKE "%' . $keyword['value'] . '%" OR category_name LIKE "%' . $keyword['value'] . '%"', NULL);
         }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);
-        $this->db->limit($length, $start);
         $this->db->where('a.is_delete', '0');
         if ($count == 'count') {
             $res_data = $this->db->get(TBL_AFFILIATIONS . ' a')->num_rows();
         } else {
+            $this->db->limit($length, $start);
             $res_data = $this->db->get(TBL_AFFILIATIONS . ' a')->result_array();
         }
         return $res_data;

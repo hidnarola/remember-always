@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Categories Controller for Service provider categories
+ * Categories Controller for Service provider categories and Affiliation categories
  * @author AKK 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -14,7 +14,7 @@ class Categories extends MY_Controller {
     }
 
     /**
-     * Display login page for login
+     * Display service categories listing page
      */
     public function index() {
 
@@ -23,22 +23,22 @@ class Categories extends MY_Controller {
     }
 
     /**
-     * Display login page for login
+     * Get category list for Ajax data table
      */
     public function get_categories() {
         $final['recordsFiltered'] = $final['recordsTotal'] = $this->category_model->get_all_categories('count');
         $final['redraw'] = 1;
-        $donors = $this->category_model->get_all_categories('result');
-//        foreach ($donors as $key => $val) {
-//            $donors[$key] = $val;
-//            $donors[$key]['created'] = date('m/d/Y', strtotime($val['created']));
-//        }
-        $final['data'] = $donors;
+        $start = $this->input->get('start') + 1;
+        $categories = $this->category_model->get_all_categories('result');
+        foreach ($categories as $key => $cat) {
+            $categories[$key]['test_id'] = $start++;
+        }
+        $final['data'] = $categories;
         echo json_encode($final);
     }
 
     /**
-     * Add a new service catgeory.
+     * Add a new service provider category.
      *
      */
     public function add($id = null) {
@@ -50,13 +50,13 @@ class Categories extends MY_Controller {
             if (!empty($category)) {
                 $this->data['category'] = $category;
                 $this->data['title'] = 'Remember Always Admin | Service Category';
-                $this->data['heading'] = 'Edit Service Category';
+                $this->data['heading'] = 'Edit Service Provider Category';
             } else {
                 custom_show_404();
             }
         } else {
             $this->data['title'] = 'Remember Always Admin | Service Category';
-            $this->data['heading'] = 'Add Service Category';
+            $this->data['heading'] = 'Add Service Provider Category';
         }
         if (strtolower($this->input->method()) == 'post') {
             if (is_numeric($id)) {
@@ -87,7 +87,7 @@ class Categories extends MY_Controller {
     }
 
     /**
-     * Edit a service catgeory.
+     * Edit a service provider category.
      *
      */
     public function edit($id) {
@@ -121,9 +121,7 @@ class Categories extends MY_Controller {
      * @return boolean
      */
     public function catgeory_exists($value) {
-//        p($value);
         $result = $this->category_model->sql_select(TBL_SERVICE_CATEGORIES, 'name', ['where' => array('name' => trim($value), 'is_delete' => 0)], ['single' => true]);
-//        p($result, 1);
         if (!empty($result)) {
             if (trim($value) != $result['name']) {
                 return TRUE;

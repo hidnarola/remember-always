@@ -4,12 +4,15 @@
             <h2 class="h2title">Affiliations</h2>
         </div>
         <div class="common-body akk">
-            <?php if ($affiliation['image'] != null) { ?>
-                <div class="srvs-dtl-l">
+            <div class="srvs-dtl-l">
+                <?php if ($affiliation['image'] != null) { ?>
                     <img src="<?php echo AFFILIATION_IMAGE . $affiliation['image'] ?>" />
-                </div>
-            <?php } ?>
-              <div class="srvs-dtl-r <?php echo ($affiliation['image'] == null) ? 'full-width': ''?>">
+                <?php } else { ?>
+                    <img src="assets/images/no_image.png" />
+                <?php }
+                ?>
+            </div>
+            <div class="srvs-dtl-r <?php echo ($affiliation['image'] == null) ? 'full-width' : '' ?>">
                 <h3><?php echo isset($affiliation['name']) ? $affiliation['name'] : '' ?> <?php echo isset($affiliation['category_name']) ? '(' . $affiliation['category_name'] . ')' : '' ?>
                 </h3>
                 <p><?php implode('</p><p>', array_filter(explode("\n", $affiliation['description']))) ?></p>
