@@ -358,7 +358,7 @@ a.remove-video:hover{opacity:.7;}
 
 .select-file{position: relative;margin:22px 0 0;display: inline-block;background: #fff;border: 1px solid #e5e5e5;box-shadow: 3px 3px 3px 0 rgba(0,0,0,.1);border-radius:0;padding:20px;height:218px;display:table;width: 100%;}
 .select-file-upload{height:100%;vertical-align:middle;display:table;width: 100%;}
-.select-file-upload input[type=file] {position: absolute; top:0; bottom: 0; left: 0; right: 0; opacity: 0; cursor: pointer; width:100%;}
+.select-file-upload input[type=file] {position: absolute; top:-25px; bottom: 0; left: 0; right: 0; opacity: 0; cursor: pointer; width:100%;}
 .select-file_up_btn{background:#efefef; box-shadow: none; padding:0; float: none; display: block; color: #fff; text-align: center; font-size:15px; font-family: 'Roboto'; font-size:15px; color:#aeaeae;line-height:24px; height:100%;display:table-cell;vertical-align:middle;font-weight:400;}
 .select-file_up_btn span{background:#fff;width:170px;padding:10px;line-height:30px;color:#666;font-size:16px;font-weight:400;display:block;margin:10px auto 0;text-transform:uppercase;}
 .step-finish .step-title{margin:0;padding:70px 0;}
@@ -921,7 +921,9 @@ ul.sub_ul_custom li a:After {content: " ";}
 .input-wrap .bootstrap-select button span.caret {display: none;}
 .loader {position: fixed;left: 0;top: 0;right: 0;bottom: 0;width: 100%;background: rgba(0,0,0,0.50);z-index: 9;}
 .loader svg {position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);}  
-
+.search.open form {z-index: 99;}
+.login-user {z-index: 9;}
+.upload-btn input[type=file] {width: 100%;}
 
 /*** media start here ****/
 
@@ -986,7 +988,8 @@ a.helpful-btn{margin:20px auto 0;top:0;}
 .srvs-list-ul span {width: 68px;height: 68px;}
 .srvs-list-ul li {padding: 8px 0 25px 85px;}
 .bootstrap-select>.dropdown-toggle {font-family: 'roboto';text-transform: capitalize;}
- 
+.create-profile_wrappers .create-profile-top {padding: 0 0 50px;}
+
 }
 
 @media(min-width:768px) and (max-width:991px){
@@ -1050,6 +1053,12 @@ ul.listing_data li {width: 50%;}
 .srvs-list-ul span {width: 68px;height: 68px;}
 .srvs-list-ul li {padding: 8px 0 25px 85px;}
 .bootstrap-select>.dropdown-toggle {font-family: 'roboto';text-transform: capitalize;}
+.step-01-l img {width: 100% !important;}
+.create-profile_wrappers .create-profile-top {padding: 0 0 50px;}
+.create-profile_wrappers .create-profile-top a {width: 160px;}
+.upload-btn {display: block;padding: 10px;}
+.step-01-l-wrap:after {content: " ";display: block;clear: both;}
+.step-btm-btn {margin: 10px 0 0;}
 }
 
 @media(min-width:768px){
@@ -1227,6 +1236,14 @@ label.error, label.error p {display: none;}
 .funeral-r a.btn-link {padding: 10px;line-height: 14px;font-size: 14px;max-width: 150px;}
 .srvs-list-ul li {padding: 0px 0 15px 65px;}
 .bootstrap-select>.dropdown-toggle {font-family: 'roboto';text-transform: capitalize;}
+.create-profile_wrappers .create-profile-top {padding: 0 0 35px;}
+.process-step ul li.active:first-child:after {left: 0;}
+.process-step a.save-draft {position: relative;left: 0;top: 0;text-align: right;float: right;margin: 20px 10px 0 0px;}    
+.create-profile_wrappers .upload-btn {width: 100%;max-width: 210px;}
+.step-btm-btn button {line-height: 32px;}
+.step-btm-btn button {width: 70px;}
+.input-wrap.four-input input {width: 100%;margin: 0 0 15px 0;}
+.input-wrap.four-input span {line-height: 34px;text-align: center;width: 100%;}
 }
 
 

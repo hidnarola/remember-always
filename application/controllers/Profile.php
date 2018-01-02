@@ -303,6 +303,9 @@ class Profile extends MY_Controller {
             }
         }
         $is_left = $profile;
+        $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $data['title'] = 'Remember Always | Create Profile';
+
         if (!empty($is_left)) {
             $data['profile'] = $is_left;
             $data['profile_gallery'] = $this->users_model->sql_select(TBL_GALLERY, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['order_by' => 'id DESC']);
@@ -333,6 +336,8 @@ class Profile extends MY_Controller {
             if (!empty($data['fundraiser'])) {
                 $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, '*', ['where' => ['fundraiser_profile_id' => $data['fundraiser']['id'], 'is_delete' => 0]]);
             }
+            $data['breadcrumb'] = ['title' => 'Edit a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+            $data['title'] = 'Remember Always | Edit Profile';
         }
         if ($this->input->post('profile_process')) {
             $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
@@ -421,8 +426,6 @@ class Profile extends MY_Controller {
         $data['cities'] = [];
         $data['states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => 234]]);
         $data['affiliations'] = $this->users_model->sql_select(TBL_AFFILIATIONS, 'id,name', ['where' => ['is_approved' => 1, 'is_delete' => 0]]);
-        $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
-        $data['title'] = 'Remember Always | Create Profile';
         $this->template->load('default', 'profile/profile_form', $data);
     }
 
@@ -468,6 +471,7 @@ class Profile extends MY_Controller {
                         $id = $this->users_model->common_insert_update('insert', TBL_GALLERY, ['profile_id' => $profile_id, 'user_id' => $this->user_id, 'media' => $directory . '/' . $sub_directory . '/' . $image_data, 'type' => 1, 'created_at' => date('Y-m-d H:i:s')]);
                         $data['success'] = true;
                         $data['data'] = base64_encode($id);
+                        $data['image'] = $image_data;
                     }
                 } elseif ($this->input->post('type') == 'video') {
                     $video_data = upload_video('gallery', PROFILE_IMAGES . $directory . '/' . $sub_directory);
@@ -478,6 +482,7 @@ class Profile extends MY_Controller {
                         $id = $this->users_model->common_insert_update('insert', TBL_GALLERY, ['profile_id' => $profile_id, 'user_id' => $this->user_id, 'media' => $directory . '/' . $sub_directory . '/' . $video_data, 'type' => 2, 'created_at' => date('Y-m-d H:i:s')]);
                         $data['success'] = true;
                         $data['data'] = base64_encode($id);
+                        $data['video'] = $video_data;
                     }
                 }
             } else {

@@ -41,6 +41,13 @@
                         <a href="" class="donate-btn">Donate</a>
                     <?php } ?>
                     <a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>
+                    <!-- Edit profile and publish profile buttons if created profile is of logged in user-->
+                    <?php if ($profile['user_id'] == $this->user_id) { ?>
+                        <a href="<?php echo site_url('profile/edit/' . $profile['slug']) ?>" class="edit-profile-btn">Edit</a>
+                    <?php } ?>
+                    <?php if ($profile['user_id'] == $this->user_id && $profile['is_published'] == 0) { ?>
+                        <a href="<?php echo site_url('profile/publish/' . $profile['slug']) ?>" class="publish-profile-btn">Publish</a>
+                    <?php } ?>
                     <div class="profile-share">
                         <h6>Share</h6>
                         <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -548,7 +555,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)      ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)             ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
@@ -605,7 +612,7 @@
                                                 <div class="gallery-wrap">
                                                     <span class="gallery-video-img">
                                                         <!--                                                        <video  width="100%" height="100%"controls="">
-                                                                                                                    <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])      ?>" type="video/mp4">
+                                                                                                                    <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])             ?>" type="video/mp4">
                                                                                                                 </video>-->
                                                         <img src="<?php echo base_url(PROFILE_IMAGES . str_replace('mp4', 'jpg', $val['media'])) ?>" width="100%" height="100%">
                                                     </span>

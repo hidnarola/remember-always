@@ -5,10 +5,17 @@
 <link href="assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
 <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 <!-- /theme JS files -->
-<div class="create-profile">
+<div class="create-profile create-profile_wrappers"> 
     <div class="create-profile-top">
         <div class="container">
-            <h2>Create a Life Profile.</h2>
+            <h2>
+                <?php
+                if (isset($profile))
+                    echo "Edit a Life Profile.";
+                else
+                    echo "Create a Life Profile.";
+                ?>
+            </h2>
             <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur auto edit.</p>
             <a href="javascript:void(0)" onclick="$('#create_profile_form').valid()">Save and Finish Later</a>
         </div>
@@ -110,7 +117,7 @@
                                                         if ($value['type'] == 1) {
                                                             $image_count++;
                                                             ?>
-                                                            <a href="<?php echo PROFILE_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="upload_gallery">
+                                                            <a href="<?php echo PROFILE_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="image" rel="upload_gallery">
                                                                 <img src="<?php echo PROFILE_IMAGES . $value['media'] ?>">
                                                             </a>
                                                             <?php
@@ -609,16 +616,15 @@
             <div class="create-profile-box step-06-wrap">
                 <div class="step-title">
                     <h2>Create a Tribute Fundraiser<small>(optional)</small> </h2>
-                    <p>In necessary, enter funeral services information. You will be able to remove this information later.</p>
+                    <p>If desired, create a Tribute Fundraiser in honor of your loved one.</p>
                 </div>
-
                 <div class="step-form">
                     <div class="step-06">
                         <form method="post" id="fundraiser_profile-form">
                             <div class="step-06-l">
                                 <div class="input-wrap">
-                                    <label class="label-css">Fundraiser Section.</label>
-                                    <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Fundraiser Title" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>">
+                                    <label class="label-css">Tribute Fundraiser Title.</label>
+                                    <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>">
                                 </div>
                                 <div class="input-wrap">
                                     <div class="input-l">
@@ -631,7 +637,8 @@
                                     </div>
                                 </div>
                                 <div class="input-wrap">
-                                    <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Quod omittam vulputate quo ex. Cu ullum viris latine has, ea saepe aperiri vim, priei justo nostrud. Eam aliquid minimum et, quis timeam pri at, an qui volumus partiendo"><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
+                                    <label class="label-css">Description</label>
+                                    <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed."><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
                                 </div>
                             </div> 
                             <div class="step-06-r">
@@ -662,9 +669,9 @@
                                                 <li>
                                                     <div class="gallery-wrap">
                                                         <span>
-<!--                                                            <video style="width:100%;height:100%" controls>
-                                                                <source src="">Your browser does not support HTML5 video.
-                                                            </video>-->
+                                                            <!--                                                            <video style="width:100%;height:100%" controls>
+                                                                                                                            <source src="">Your browser does not support HTML5 video.
+                                                                                                                        </video>-->
                                                             <img src="<?php echo FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $value['media']) ?>" style="width:100%">
                                                             <span class="gallery-play-btn"><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="fundraiser"><img src="assets/images/play.png" alt=""></a></span>
                                                         </span>
@@ -758,6 +765,7 @@
                 </form>
                 <div class="pup-btn">
                     <button type="button" onclick="return add_affiliation();" id="add-funfact-btn">Add</button>
+                    <a class="affiliation-btn" href="<?php echo site_url('affiliation') ?>" target="_blank">Go to Affiliations</a>
                 </div>
             </div>
         </div>
@@ -779,5 +787,7 @@
     if (profile_id != 0) {
         create_profile_url = site_url + "profile/edit/" + profile_slug;
     }
+    profile_images = '<?php echo PROFILE_IMAGES ?>';
+    var bottom = $('#selected-preview').position().top + $('#selected-preview').outerHeight(true);
 </script>
 <script src="assets/js/profile.js"></script>

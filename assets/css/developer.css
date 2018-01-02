@@ -39,3 +39,10 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 /*1-1-2018 search profile page change*/
 .srh-list-img img {height: 100%;display: block;margin: 0 auto;}
 .srh-list-img {background: #cccccc52;}
+/*2-1-2018 Affiliation button*/
+.affiliation-btn {background: #975979;border-radius: 4px;padding: 10px;line-height: 20px;border: 2px solid #975979;font-size: 16px;color: #fff;font-weight: 500;font-family: 'Rubik';width: 210px;text-transform: uppercase;}
+.affiliation-btn:hover, .affiliation-btn:focus{color:#fff;}
+.edit-profile-btn{border: 2px solid #57585a;background: #57585a;}
+.publish-profile-btn{border: 2px solid #a94442;background: #a94442;}
+.edit-profile-btn:hover {background: transparent;color: #57585a;text-decoration: none;}
+.publish-profile-btn:hover {background: transparent;color: #a94442;text-decoration: none;}

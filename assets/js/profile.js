@@ -135,6 +135,7 @@ function submit_form() {
         if ($('#create_profile_form').valid()) {
             $('#profile_process').val(1);
             fd = new FormData(document.getElementById("create_profile_form"));
+            $('.loader').show();
             $.ajax({
                 url: create_profile_url,
                 type: "POST",
@@ -143,6 +144,7 @@ function submit_form() {
                 processData: false, // tell jQuery not to process the data
                 contentType: false, // tell jQuery not to set contentType
                 success: function (data) {
+                    $('.loader').hide();
                     if (data.success == true) {
                         profile_id = btoa(data.data.id);
                         // add validation of unique fun fact rule
@@ -199,12 +201,13 @@ function profile_steps(obj) {
         $('#first-step-li,#second-step-li').addClass('process-done');
     } else if (obj == 'forth-step') {
         //-- Display timeline data
-
+        $('.loader').show();
         $.ajax({
             url: site_url + "profile/lifetimeline",
             type: "POST",
             data: {profile_id: profile_id},
             success: function (data) {
+                $('.loader').hide();
                 $('.timeline-div').html(data);
 
                 $('.date-picker').datepicker({
@@ -231,6 +234,10 @@ function profile_steps(obj) {
         $('#' + obj).removeClass('hide');
         $('#first-step-li,#second-step-li,#third-step-li,#forth-step-li').addClass('process-done');
     }
+    //-- Scroll to top of profile div section 
+    $('html, body').animate({
+        'scrollTop': $(".create-profile").position().top
+    }, 1000);
 }
 function back_step() {
     var profile_process = $('#profile_process').val();
@@ -303,12 +310,14 @@ function skip_step() {
 function proceed_step() {
     var profile_process = $('#profile_process').val();
     if (profile_process == 1) {
+        $('.loader').show();
         $.ajax({
             url: site_url + "profile/proceed_steps",
             type: "POST",
             data: {profile_process: 2, profile_id: profile_id},
             dataType: "json",
             success: function (data) {
+                $('.loader').hide();
                 if (data.success == true) {
                     $('#profile_process').val(2);
                     profile_steps('third-step');
@@ -319,12 +328,14 @@ function proceed_step() {
             }
         });
     } else if (profile_process == 2) {
+        $('.loader').show();
         $.ajax({
             url: site_url + "profile/proceed_steps",
             type: "POST",
             data: {profile_process: 3, profile_id: profile_id},
             dataType: "json",
             success: function (data) {
+                $('.loader').hide();
                 if (data.success == true) {
                     $('#profile_process').val(3);
                     if ($('#third-step').hasClass('hide') && $('#third1-step').hasClass('hide')) {
@@ -358,6 +369,7 @@ function proceed_step() {
                 if ($('#timeline-form').valid() && validate_timeline_date()) {
                     fd = new FormData(document.getElementById("timeline-form"));
                     fd.append('profile_id', profile_id);
+                    $('.loader').show();
                     $.ajax({
                         url: site_url + "profile/add_timeline",
                         type: "POST",
@@ -366,6 +378,7 @@ function proceed_step() {
                         processData: false, // tell jQuery not to process the data 
                         contentType: false, // tell jQuery not to set contentType
                         success: function (data) {
+                            $('.loader').hide();
                             if (data.success == true) {
                                 $('#profile_process').val(4);
                                 profile_steps('fifth-step');
@@ -377,12 +390,14 @@ function proceed_step() {
                     });
                 }
             } else {
+                $('.loader').show();
                 $.ajax({
                     url: site_url + "profile/proceed_steps",
                     type: "POST",
                     data: {profile_process: 4, profile_id: profile_id},
                     dataType: "json",
                     success: function (data) {
+                        $('.loader').hide();
                         if (data.success == true) {
                             $('#profile_process').val(4);
                             profile_steps('fifth-step');
@@ -491,12 +506,14 @@ function proceed_step() {
         }
 
         if (service_valid == 1) {
+            $('.loader').show();
             $.ajax({
                 url: site_url + "profile/add_services",
                 type: "POST",
                 data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id,
                 dataType: "json",
                 success: function (data) {
+                    $('.loader').hide();
                     if (data.success == true) {
                         $('#profile_process').val(5);
                         profile_steps('sixth-step');
@@ -537,6 +554,7 @@ function proceed_step() {
                     postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
                 }
             });
+            $('.loader').show();
             $.ajax({
                 url: site_url + "profile/add_fundraiser",
                 type: "POST",
@@ -545,6 +563,7 @@ function proceed_step() {
                 processData: false, // tell jQuery not to process the data
                 contentType: false, // tell jQuery not to set contentType
                 success: function (data) {
+                    $('.loader').hide();
                     if (data.success == true) {
                         $('#profile_process').val(6);
                         profile_steps('seventh-step');
@@ -575,6 +594,7 @@ $("#gallery").change(function () {
                     formData.append('profile_id', profile_id);
                     formData.append('type', 'image');
                     formData.append('gallery', file[0], file[0].name);
+                    $('.loader').show();
                     $.ajax({
                         url: site_url + "profile/upload_gallery",
                         type: "POST",
@@ -583,6 +603,7 @@ $("#gallery").change(function () {
                         processData: false, // tell jQuery not to process the data
                         contentType: false, // tell jQuery not to set contentType
                         success: function (data) {
+                            $('.loader').hide();
                             if (data.success == true) {
                                 //-- Remove default preview div
                                 $('#default-preview').remove();
@@ -614,6 +635,7 @@ $("#gallery").change(function () {
                     videoData.append('profile_id', profile_id);
                     videoData.append('type', 'video');
                     videoData.append('gallery', file[0], file[0].name);
+                    $('.loader').show();
                     $.ajax({
                         url: site_url + "profile/upload_gallery",
                         type: "POST",
@@ -622,6 +644,7 @@ $("#gallery").change(function () {
                         processData: false, // tell jQuery not to process the data
                         contentType: false, // tell jQuery not to set contentType
                         success: function (data) {
+                            $('.loader').hide();
                             if (data.success == true) {
                                 $('#default-preview').remove();
                                 str = '<li><div class="upload-wrap"><span id="upload_gallery_' + index + '">';
@@ -664,12 +687,14 @@ $("#gallery").change(function () {
 });
 
 function delete_media(obj, data) {
+    $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_gallery",
         type: "POST",
         data: {'gallery': data},
         dataType: "json",
         success: function (data) {
+            $('.loader').hide();
             if (data.success == true) {
                 if (data.type == 1) {
                     max_images_count++; //increase max images count if deleted media is image
@@ -688,12 +713,14 @@ function delete_media(obj, data) {
 function add_funfact() {
     if ($('#fun-fact-form').valid()) {
         if (facts_count < max_facts_count) {
+            $('.loader').show();
             $.ajax({
                 url: site_url + "profile/add_facts",
                 type: "POST",
                 data: {facts: $('#fun_fact').val(), profile_id: profile_id},
                 dataType: "json",
                 success: function (data) {
+                    $('.loader').hide();
                     if (data.success == true) {
                         facts_count++;
                         $('#default-facts').remove();
@@ -724,12 +751,14 @@ function add_funfact() {
     return false;
 }
 function delete_facts(obj, data) {
+    $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_facts",
         type: "POST",
         data: {'fact': data},
         dataType: "json",
         success: function (data) {
+            $('.loader').hide();
             if (data.success == true) {
                 $(obj).parent('.input-wrap-div').remove();
                 max_facts_count++;
@@ -753,12 +782,14 @@ function findProperty(obj, key) {
 function add_affiliation() {
     if ($('#affiliation-form').valid()) {
         if (affiliation_count < max_affiliation_count) {
+            $('.loader').show();
             $.ajax({
                 url: site_url + "profile/add_affiliation",
                 type: "POST",
                 data: {select_affiliation: $('#select_affiliation').val(), affiliation_text: $('#affiliation_text').val(), profile_id: profile_id},
                 dataType: "json",
                 success: function (data) {
+                    $('.loader').hide();
                     if (data.success == true) {
                         $('#default-facts').remove();
                         str = '';
@@ -793,12 +824,14 @@ function add_affiliation() {
     return false;
 }
 function delete_affiliation(obj, data, type) {
+    $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_affiliation",
         type: "POST",
         data: {'affiliation': data, 'type': type},
         dataType: "json",
         success: function (data) {
+            $('.loader').hide();
             if (data.success == true) {
                 affiliation_count--;
                 $(obj).parent('.input-wrap-div').remove();
@@ -843,12 +876,14 @@ $(document).on('click', '.remove_timeline_btn', function () {
 $(document).on('click', '.remove_org_timeline_btn', function () {
     var id = $(this).attr('data-id');
     var obj = $(this);
+    $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_timeline",
         type: "POST",
         data: {id: id},
         dataType: "json",
         success: function (data) {
+            $('.loader').hide();
             if (data.success == true) {
                 obj.parent('.step-06-l').parent('.step-06').remove();
             } else {
@@ -933,13 +968,14 @@ $(document).on('change', '.service-state', function () {
         city_id = 'burial_city';
     }
     $('#' + city_id).val();
-
+    $('.loader').show();
     $.ajax({
         url: site_url + "profile/get_cities",
         type: "POST",
         data: {state: state_val},
         dataType: "json",
         success: function (data) {
+            $('.loader').hide();
             var options = "<option value=''>Select City</option>";
             for (var i = 0; i < data.length; i++) {
                 options += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
@@ -1048,12 +1084,14 @@ function delete_fundmedia(obj, type, index) {
 }
 
 function delete_fundajaxmedia(obj, media_id) {
+    $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_fundmedia",
         type: "POST",
         data: {'media': media_id},
         dataType: "json",
         success: function (data) {
+            $('.loader').hide();
             if (data.success == true) {
                 if (data.type == 1) {
                     max_fundimages_count++; //increase max images count if deleted media is image

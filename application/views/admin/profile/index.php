@@ -37,10 +37,7 @@
         </div>
     </div>
     <div class="panel panel-flat">
-        <div class="panel-heading text-right">
-
-<!--<a href="<?php // echo site_url('admin/users/add')     ?>" class="btn btn-success btn-labeled"><b><i class="icon-plus-circle2"></i></b> Add User</a>-->
-        </div>
+        <div class="panel-heading text-right"></div>
         <!--<div class="table-responsive">-->
         <table class="table datatable-basic">
             <thead>
@@ -96,7 +93,7 @@
                     width: '5%',
                     render: function (data, type, full, meta) {
                         if (data != null) {
-                            var action = '<a class="fancybox" href="<?php echo base_url() . USER_IMAGES ?>' + data + '" data-fancybox-group="gallery" ><img src="<?php echo base_url(USER_IMAGES) ?>' + data + '" style="width: 58px; height: 58px; border - radius: 2px; " alt="' + data + '"></a>';
+                            var action = '<a class="fancybox" href="<?php echo base_url() . PROFILE_IMAGES ?>' + data + '" data-fancybox-group="gallery" ><img src="<?php echo base_url() . PROFILE_IMAGES ?>' + data + '" style="width: 58px; height: 58px; border - radius: 2px; " alt="' + data + '"></a>';
                         } else {
                             var action = '<img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" class="img-circle img-lg" alt="' + data + '">';
                         }
@@ -186,13 +183,11 @@
                         action += '</a>';
                         action += '<ul class="dropdown-menu dropdown-menu-right">';
                         action += '<li>';
-//                        action += '<a href="' + site_url + 'admin/users/edit/' + btoa(full.id) + '" title="Edit Service Provider"><i class="icon-pencil3"></i> Edit</a>';
                         if (full.is_blocked == 1) {
                             action += '<a href="' + site_url + 'admin/users/profile_action/unblock/' + btoa(full.id) + '/' + user_id + '" title="Unblock Profile"><i class="icon-user-check"></i> Unblock Profile</a>';
                         } else {
                             action += '<a href="' + site_url + 'admin/users/profile_action/block/' + btoa(full.id) + '/' + user_id + '" title="Block Profile"><i class="icon-user-block"></i> Block Profile</a>';
                         }
-//                        action += '<a href="' + site_url + 'admin/users/profile/' + btoa(full.id) + '" title="Manage Profile"><i class="icon-profile"></i> Manage Profile</a>';
                         action += '<a href="' + site_url + 'admin/users/viewprofile/' + btoa(full.id) + '" title="View Profile"><i class="icon-book"></i> View</a>';
                         action += '<a href="' + site_url + 'admin/users/profile_action/delete/' + btoa(full.id) + '/' + user_id + '" onclick="return confirm_alert(this)" title="Delete Profile"><i class="icon-trash"></i> Delete</a>'
                         action += '</li>';
