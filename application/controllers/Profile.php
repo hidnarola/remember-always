@@ -125,7 +125,7 @@ class Profile extends MY_Controller {
                 $data['posts'] = $posts;
                 $data['life_gallery'] = $life_gallery;
                 $data['life_timeline'] = $life_timeline;
-                $data['title'] = 'Profile';
+                $data['title'] = $is_left['firstname'] . ' ' . $is_left['lastname'] . ' | Profile';
                 $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('search'), 'title' => 'Profiles']]];
                 $this->template->load('default', 'profile/profile_detail', $data);
             }
@@ -305,6 +305,9 @@ class Profile extends MY_Controller {
         $is_left = $profile;
         $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Create Profile';
+        $data['cities'] = [];
+        $data['states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => 234]]);
+        $data['countries'] = $this->users_model->sql_select(TBL_COUNTRY, 'id,name');
 
         if (!empty($is_left)) {
             $data['profile'] = $is_left;
@@ -423,8 +426,7 @@ class Profile extends MY_Controller {
             echo json_encode($data);
             exit;
         }
-        $data['cities'] = [];
-        $data['states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => 234]]);
+
         $data['affiliations'] = $this->users_model->sql_select(TBL_AFFILIATIONS, 'id,name', ['where' => ['is_approved' => 1, 'is_delete' => 0]]);
         $this->template->load('default', 'profile/profile_form', $data);
     }

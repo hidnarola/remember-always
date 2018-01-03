@@ -157,7 +157,7 @@
                             <g>
                             </g>
                         </svg></span>
-                    <h3><a href="">Create <br/> a life profile</a></h3>
+                    <h3><a href="">Create <br/> a Life Profile</a></h3>
                     <p>Share your loved one’s life story <br/> vividly; add funeral details if necessary.</p>
                 </div>
             </li>

@@ -1,3 +1,8 @@
+/**
+ * Manage profile detail page js functions
+ * @author AKK
+ */
+
 var regex_img = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
 var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
 var http_regex = /^(https:\/\/)/i;
@@ -201,12 +206,12 @@ $(function () {
                     $('#timeline_details .timeline_date').html(timeline_data.interval);
                     if (timeline_data.timeline_media != null && timeline_data.media_type == 1) {
                         $('#timeline_details .timeline_media').parent().parent().show();
-                        $('#timeline_details .timeline_media').html('<a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="image" rel="timeline"><img src="' + timeline_data.url + timeline_data.timeline_media + '"/ width="100px" height="100px"></a>');
+                        $('#timeline_details .timeline_media').html('<a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="image" rel="timeline"><img src="' + timeline_data.url + timeline_data.timeline_media + '"/ width="100%"></a>');
                     } else if (timeline_data.timeline_media != null && timeline_data.media_type == 2) {
                         $('#timeline_details .timeline_media').parent().parent().show();
-                        var video_str = '<span><span class="gallery-video-img">';
-                        video_str += '<img src="' + timeline_data.url + timeline_data.timeline_media.replace('mp4', 'jpg') + '"/ width="100px" height="100px"></a>';
-                        video_str += '</span></span>';
+                        var video_str = '<span>';
+                        video_str += '<img src="' + timeline_data.url + timeline_data.timeline_media.replace('mp4', 'jpg') + '"/ width="100%"></a>';
+                        video_str += '</span>';
                         video_str += '<span class="gallery-play-btn">';
                         video_str += '<a href="' + timeline_data.url + timeline_data.timeline_media + '" class="fancybox" data-fancybox-type="iframe" rel="timeline"><img src="assets/images/play.png" alt=""><a/>';
                         video_str += '</span>';

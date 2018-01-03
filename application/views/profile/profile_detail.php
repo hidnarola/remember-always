@@ -341,17 +341,24 @@
                                         ?>
                                         <li>
                                             <div class="lifetime-box">
-                                                <h3><a>
-                                                        <?php
-                                                        if ($v['date'] != null) {
-                                                            echo custom_format_date($v['date'], 'date');
-                                                        } else if ($v['month'] != null) {
-                                                            echo custom_format_date($v['month'], 'month') . ' , ' . $v['year'];
-                                                        } else {
-                                                            echo $v['year'];
-                                                        }
-                                                        ?>
-                                                    </a></h3>
+                                                <h3>
+                                                    <?php
+                                                    if ($v['date'] != null) {
+                                                        $lifetimeline_date = custom_format_date($v['date'], 'date');
+                                                    } else if ($v['month'] != null) {
+                                                        $lifetimeline_date = custom_format_date($v['month'], 'month') . ' , ' . $v['year'];
+                                                    } else {
+                                                        $lifetimeline_date = $v['year'];
+                                                    }
+                                                    ?>
+                                                    <?php if ($v['timeline_media'] != null && $v['media_type'] == 1) { ?>
+                                                        <a href="javascript:void(0)" class="timeline" data-timeline="<?php echo base64_encode($v['id']) ?>"><?php echo $lifetimeline_date ?></a>
+                                                    <?php } else if ($v['timeline_media'] != null && $v['media_type'] == 2) { ?>
+                                                        <a href="javascript:void(0)" class="timeline" data-timeline="<?php echo base64_encode($v['id']) ?>"><?php echo $lifetimeline_date ?></a>
+                                                    <?php } else { ?>
+                                                        <a href="javascript:void(0)" class="timeline" data-timeline="<?php echo base64_encode($v['id']) ?>"><?php echo $lifetimeline_date ?></a>
+                                                    <?php } ?>
+                                                </h3>
                                                 <p><?php echo $v['title']; ?></p>
                                                 <?php if ($v['timeline_media'] != null && $v['media_type'] == 1) { ?>
                                                     <h6><a href="javascript:void(0)" class="timeline fa fa-image" data-timeline="<?php echo base64_encode($v['id']) ?>"></a></h6>
@@ -555,7 +562,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)             ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
@@ -611,9 +618,6 @@
                                             <li>
                                                 <div class="gallery-wrap">
                                                     <span class="gallery-video-img">
-                                                        <!--                                                        <video  width="100%" height="100%"controls="">
-                                                                                                                    <source src="<?php // echo base_url(PROFILE_IMAGES . $val['media'])             ?>" type="video/mp4">
-                                                                                                                </video>-->
                                                         <img src="<?php echo base_url(PROFILE_IMAGES . str_replace('mp4', 'jpg', $val['media'])) ?>" width="100%" height="100%">
                                                     </span>
                                                     <span class="gallery-play-btn"><a href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="gallery"><img src="assets/images/play.png" alt=""></a></span>

@@ -476,6 +476,7 @@ function format_days($days_diff) {
  * @param object $date is the date to be passed.
  * @param object $type is the type that user want, it can be date,month,year.
  * @return string result
+ * @author akk
  */
 function custom_format_date($data, $type, $full = false) {
     $result = '';
