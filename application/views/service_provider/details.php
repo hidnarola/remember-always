@@ -62,6 +62,7 @@
                         <a href ="<?php echo PROVIDER_IMAGES . $provider_data['image'] ?>" class="fancybox"><img src="<?php echo PROVIDER_IMAGES . $provider_data['image'] ?>"/></a>
                     <?php } echo implode('</p><p>', array_filter(explode("\n", $provider_data['description']))) ?></p>
                 <div class="srvs-personal-dtl">
+                    <h6 class="srvs-contact"><strong>Country :</strong> <a><?php echo isset($provider_data['country_name']) ? $provider_data['country_name'] : '' ?></a></h6>
                     <h6 class="srvs-contact"><strong>City :</strong> <a><?php echo isset($provider_data['city_name']) ? $provider_data['city_name'] : '' ?></a></h6>
                     <h6 class="srvs-contact"><strong>State :</strong> <a><?php echo isset($provider_data['state_name']) ? $provider_data['state_name'] : '' ?></a></h6>
                     <h6 class="srvs-contact"><strong>Zip Code :</strong> <a><?php echo isset($provider_data['zipcode']) ? $provider_data['zipcode'] : '' ?></a></h6>

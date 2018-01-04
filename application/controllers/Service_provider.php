@@ -2,8 +2,8 @@
 
 /**
  * Service Provider Controller
- * Manage profile related functions
- * @author KU 
+ * Manage service provider related operations
+ * @author AKK 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -15,7 +15,7 @@ class Service_provider extends MY_Controller {
     }
 
     /**
-     * Display login page for login
+     * Display listing of all service providers
      */
     public function index() {
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
@@ -28,7 +28,7 @@ class Service_provider extends MY_Controller {
     }
 
     /**
-     * Display login page for login
+     * Load service providers 
      */
     public function load_providers($start, $static = false) {
         $offset = 5;
@@ -37,7 +37,6 @@ class Service_provider extends MY_Controller {
             return $services;
         } else {
             if (!empty($services)) {
-//            p($services);
                 echo json_encode($services);
             } else {
                 echo '';
@@ -52,7 +51,11 @@ class Service_provider extends MY_Controller {
         if (isset($slug) && !empty($slug)) {
             $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
             $data['service_categories'] = $service_categories;
-            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS . ' sp', 'sp.*,sc.name as category_name,c.name as city_name,s.name as state_name', ['where' => array('sp.slug' => $slug, 'sp.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_SERVICE_CATEGORIES . ' sc', 'condition' => 'sc.id=sp.service_category_id AND sc.is_delete=0'), array('table' => TBL_STATE . ' s', 'condition' => 's.id=sp.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=sp.city')]]);
+            $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS . ' sp', 'sp.*,sc.name as category_name,c.name as city_name,s.name as state_name,cn.name as country_name', ['where' => array('sp.slug' => $slug, 'sp.is_delete' => 0)], ['single' => true,
+                'join' => [array('table' => TBL_SERVICE_CATEGORIES . ' sc', 'condition' => 'sc.id=sp.service_category_id AND sc.is_delete=0'),
+                    array('table' => TBL_COUNTRY . ' cn', 'condition' => 'cn.id=sp.country'),
+                    array('table' => TBL_STATE . ' s', 'condition' => 's.id=sp.state'),
+                    array('table' => TBL_CITY . ' c', 'condition' => 'c.id=sp.city')]]);
             if (!empty($provider_data)) {
                 $data['provider_data'] = $provider_data;
             } else {
@@ -68,29 +71,28 @@ class Service_provider extends MY_Controller {
 
     /**
      * Add a new service provider directory listing.
-     *
+     * @param int $id
      */
     public function add($id = null) {
         if (!$this->is_user_loggedin) {
             $this->session->set_flashdata('error', 'You must login to access this page');
             redirect('/');
         }
-
+        $data['countries'] = $this->providers_model->sql_select(TBL_COUNTRY, 'id,name');
         if (!is_null($id))
             $id = base64_decode($id);
         if (is_numeric($id)) {
             $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($provider_data)) {
-                $cities = $this->providers_model->sql_select(TBL_CITY . ' c', 'c.*', ['where' => array('c.state_id' => $provider_data['state'])]);
-                $data['cities'] = $cities;
+                $data['states'] = $this->providers_model->sql_select(TBL_STATE, 'id,name', ['where' => array('country_id' => $provider_data['country'])]);
+                $data['cities'] = $this->providers_model->sql_select(TBL_CITY, 'id,name', ['where' => array('state_id' => $provider_data['state'])]);
                 $data['provider_data'] = $provider_data;
             } else {
                 custom_show_404();
             }
         }
 
-        $states = $this->providers_model->sql_select(TBL_STATE . ' s', 's.*', ['where' => array('c.id' => 231)], ['join' => [array('table' => TBL_COUNTRY . ' c', 'condition' => 'c.id=s.country_id')]]);
-        $data['states'] = $states;
+
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, null, ['where' => array('is_delete' => 0)]);
         $data['service_categories'] = $service_categories;
         if ($this->input->method() == 'post') {
@@ -103,17 +105,14 @@ class Service_provider extends MY_Controller {
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('street1', 'Street Address 1', 'trim|required');
-        $this->form_validation->set_rules('city', 'City', 'trim|required');
+        $this->form_validation->set_rules('country', 'Country', 'trim|required');
         $this->form_validation->set_rules('state_hidden', 'State', 'trim|required');
+        $this->form_validation->set_rules('city', 'City', 'trim|required');
         $this->form_validation->set_rules('phone_number', 'Phone Number', 'trim|required');
         $this->form_validation->set_rules('website', 'Website Url', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
-            p(validation_errors());
-//            p($_POST);
             $data['error'] = validation_errors();
         } else {
-//            p($_FILES);
-//            p($this->input->post(),1);
             if (!empty(trim(htmlentities($this->input->post('name'))))) {
                 $slug = trim(htmlentities($this->input->post('name')));
             }
@@ -135,6 +134,7 @@ class Service_provider extends MY_Controller {
                 'street1' => trim($this->input->post('street1')),
                 'city' => base64_decode(trim($this->input->post('city'))),
                 'state' => base64_decode(trim($this->input->post('state_hidden'))),
+                'country' => base64_decode(trim($this->input->post('country'))),
                 'phone_number' => trim($this->input->post('phone_number')),
                 'website_url' => trim($this->input->post('website')),
             ];
@@ -170,7 +170,6 @@ class Service_provider extends MY_Controller {
                     }
                 }
             }
-//            p($dataArr, 1);
             if (is_numeric($id)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);

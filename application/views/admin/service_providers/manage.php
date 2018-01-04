@@ -94,11 +94,28 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class=" form-group mt-5">
+                            <div class="form-group mt-5">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <label>Country: <span class="text-danger">*</span></label>
+                                        <select name="country" id="country" class="form-control selectpicker">
+                                            <option value="">-- Select Country --</option>
+                                            <?php
+                                            foreach ($countries as $key => $value) {
+                                                $selected = '';
+                                                if (isset($provider_data) && $provider_data['country'] == $value['id']) {
+                                                    $selected = 'selected';
+                                                }
+                                                ?>
+                                                <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('country', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                <?php
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
                                         <label>State: <span class="text-danger">*</span></label>
-                                        <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');             ?>">-->
+                                        <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');                     ?>">-->
                                         <select name="state" id="state" class="form-control selectpicker">
                                             <option value="">-- Select State --</option>
                                             <?php
@@ -117,9 +134,9 @@
                                         </select>
                                         <input type="hidden" name="state_hidden" id="state_hidden" class="form-control" value="<?php echo isset($provider_data['state']) ? base64_encode($provider_data['state']) : set_value('state_hidden'); ?>" >
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label>City: <span class="text-danger">*</span></label>
-                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');             ?>">-->
+                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');                     ?>">-->
                                         <select name="city" id="city" class="form-control selectpicker">
                                             <option value="">-- Select City --</option>
                                             <?php
@@ -137,7 +154,7 @@
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label>Zip Code: </label>
                                         <input type="text" name="zipcode" id="zipcode" class="form-control" value="<?php echo isset($provider_data['zipcode']) ? $provider_data['zipcode'] : set_value('zipcode'); ?>" readonly="">
                                     </div>
@@ -190,11 +207,7 @@
     <?php $this->load->view('Templates/admin_footer'); ?>
 </div>
 <script type="text/javascript">
-    $('#city').selectpicker({
-        liveSearch: true,
-        size: 5
-    });
-    $('#state').selectpicker({
+    $('#city,#state,#country').selectpicker({
         liveSearch: true,
         size: 5
     });
@@ -223,10 +236,13 @@
                 street1: {
                     required: true,
                 },
-                city: {
+                country: {
                     required: true,
                 },
                 state: {
+                    required: true,
+                },
+                city: {
                     required: true,
                 },
                 phone: {
@@ -271,8 +287,34 @@
     $(document).on('change', '#image', function (e) {
         readURL(this);
     })
+    //-- Get states based on country dropdown change event
+    $(document).on('change', '#country', function () {
+        country_val = $(this).val();
+        $('#state').val('');
+        $('#city').val('');
+        if (country_val != '') {
+            $('#country').valid();
+            $('.loader').show();
+            $.ajax({
+                url: site_url + "profile/get_states",
+                type: "POST",
+                data: {country: atob(country_val)},
+                dataType: "json",
+                success: function (data) {
+                    $('.loader').hide();
+                    var options = "<option value=''>Select state</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        options += '<option value=' + btoa(data[i].id) + '>' + data[i].name + '</option>';
+                    }
+                    $('#state').empty().append(options);
+                    $('#state').selectpicker('refresh');
+                }
+            });
+        }
+    });
     $(document).on('change', '#state', function () {
         var state_id = $("#state option:selected").val();
+        $('#state_hidden').val(state_id);
         $url = '<?php echo base_url() ?>' + 'admin/providers/get_city';
         $.ajax({
             type: "POST",
@@ -282,6 +324,7 @@
             }
         }).done(function (data) {
             $("select#city").html(data);
+            $('#city').selectpicker('refresh');
         });
     });
     $(".file-styled").uniform({
@@ -326,9 +369,36 @@
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAylcYpcGylc8GTu_PYJI7sqPVn6ITrVnM&libraries=places&callback=initAutocomplete" async defer></script>
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/googleAutoComplete.js') ?>"></script>
-<style>
-    .hide {
-        display: none;
+<!--<script type="text/javascript" src="<?php echo base_url('assets/admin/js/googleAutoComplete.js') ?>"></script>-->
+<script type="text/javascript">
+    function initAutocomplete() {
+        var input = document.getElementById('street1');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', function () {
+            var places = autocomplete.getPlace();
+            if (places.length == 0) {
+                swal("Cancelled", "Your entered address is not able to track on google so please enter correct address. :)", "error");
+                return;
+            }
+
+            if (typeof places.geometry !== 'undefined') {
+//                $('#location').val(places.formatted_address);
+                $('#latitute').val(places.geometry.location.lat());
+                $('#longitute').val(places.geometry.location.lng());
+            } else {
+                googleLocationIssuePrompt();
+            }
+
+        });
+
     }
-</style>
+
+    function googleLocationIssuePrompt() {
+        swal("Cancelled", "Your entered address is not able to track on google so please enter correct address. :)", "error");
+    }
+
+    $(document).ready(function () {
+        $(document).on('change', '#street1', initAutocomplete);
+    });
+</script>
+<style type="text/css">  .hide{display: none;} </style>

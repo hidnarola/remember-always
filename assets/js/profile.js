@@ -289,18 +289,17 @@ function skip_step() {
     } else if (profile_process == 3) {
         if (!$('#third-step').hasClass('hide')) {
             profile_steps('third1-step');
+        } else if (!$('#third1-step').hasClass('hide')) {
+            profile_steps('forth-step');
         } else {
             $('#profile_process').val(4);
-            profile_steps('forth-step');
+            profile_steps('fifth-step');
         }
     } else if (profile_process == 4) {
         $('#profile_process').val(5);
-        profile_steps('fifth-step');
+        profile_steps('sixth-step');
     } else if (profile_process == 5) {
         $('#profile_process').val(6);
-        profile_steps('sixth-step');
-    } else if (profile_process == 6) {
-        $('#profile_process').val(7);
         profile_steps('seventh-step');
     }
     return false;
@@ -412,7 +411,7 @@ function proceed_step() {
         }
     } else if (profile_process == 4) {
         service_valid = 1;
-        if ($('#memorial_date').val() != '' || $('#memorial_time').val() != '' || $('#memorial_place').val() != '' || $('#memorial_address').val() != '' || $('#memorial_state').val() != '' || $('#memorial_city').val() != '' || $('#memorial_zip').val() != '') {
+        if ($('#memorial_date').val() != '' || $('#memorial_time').val() != '' || $('#memorial_place').val() != '' || $('#memorial_address').val() != '' || $('#memorial_country').val() != '' || $('#memorial_state').val() != '' || $('#memorial_city').val() != '' || $('#memorial_zip').val() != '') {
             if ($('#memorial_date').val() == '') {
                 $('#memorial_date').addClass('error');
                 service_valid = 0;
@@ -429,6 +428,10 @@ function proceed_step() {
                 $('#memorial_address').addClass('error');
                 service_valid = 0;
             }
+            if ($('#memorial_country').val() == '') {
+                $('#memorial_country').addClass('error');
+                service_valid = 0;
+            }
             if ($('#memorial_state').val() == '') {
                 $('#memorial_state').addClass('error');
                 service_valid = 0;
@@ -443,7 +446,7 @@ function proceed_step() {
             }
         }
 
-        if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
+        if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_country').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
             if ($('#funeral_date').val() == '') {
                 $('#funeral_date').addClass('error');
                 service_valid = 0;
@@ -460,6 +463,10 @@ function proceed_step() {
                 $('#funeral_address').addClass('error');
                 service_valid = 0;
             }
+            if ($('#funeral_country').val() == '') {
+                $('#funeral_country').addClass('error');
+                service_valid = 0;
+            }
             if ($('#funeral_state').val() == '') {
                 $('#funeral_state').addClass('error');
                 service_valid = 0;
@@ -474,7 +481,7 @@ function proceed_step() {
             }
         }
 
-        if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
+        if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_country').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
             if ($('#burial_date').val() == '') {
                 $('#burial_date').addClass('error');
                 service_valid = 0;
@@ -489,6 +496,10 @@ function proceed_step() {
             }
             if ($('#burial_address').val() == '') {
                 $('#burial_address').addClass('error');
+                service_valid = 0;
+            }
+            if ($('#burial_country').val() == '') {
+                $('#burial_country').addClass('error');
                 service_valid = 0;
             }
             if ($('#burial_state').val() == '') {
@@ -955,7 +966,42 @@ $(document).on('change', 'input[name="year[]"],input[name="month[]"],input[name=
     }
 });
 
-// select box change event
+// country dropdown change event
+$(document).on('change', '.service-country', function () {
+    country_val = $(this).val();
+    country_id = $(this).attr('id');
+    state_id = city_id = '';
+    if (country_id == 'memorial_country') {
+        state_id = 'memorial_state';
+        city_id = 'memorial_city';
+    } else if (country_id == 'funeral_country') {
+        state_id = 'funeral_state';
+        city_id = 'funeral_city';
+    } else if (country_id == 'burial_country') {
+        state_id = 'burial_state';
+        city_id = 'burial_city';
+    }
+    $('#' + state_id).val('');
+    $('#' + city_id).val('');
+    if (country_val != '') {
+        $('.loader').show();
+        $.ajax({
+            url: site_url + "profile/get_states",
+            type: "POST",
+            data: {country: country_val},
+            dataType: "json",
+            success: function (data) {
+                $('.loader').hide();
+                var options = "<option value=''>Select state</option>";
+                for (var i = 0; i < data.length; i++) {
+                    options += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                }
+                $('#' + state_id).empty().append(options);
+            }
+        });
+    }
+});
+// state dropdown change event
 $(document).on('change', '.service-state', function () {
     state_val = $(this).val();
     state_id = $(this).attr('id');
@@ -967,25 +1013,27 @@ $(document).on('change', '.service-state', function () {
     } else if (state_id == 'burial_state') {
         city_id = 'burial_city';
     }
-    $('#' + city_id).val();
-    $('.loader').show();
-    $.ajax({
-        url: site_url + "profile/get_cities",
-        type: "POST",
-        data: {state: state_val},
-        dataType: "json",
-        success: function (data) {
-            $('.loader').hide();
-            var options = "<option value=''>Select City</option>";
-            for (var i = 0; i < data.length; i++) {
-                options += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+    $('#' + city_id).val('');
+    if (state_val != '') {
+        $('.loader').show();
+        $.ajax({
+            url: site_url + "profile/get_cities",
+            type: "POST",
+            data: {state: state_val},
+            dataType: "json",
+            success: function (data) {
+                $('.loader').hide();
+                var options = "<option value=''>Select City</option>";
+                for (var i = 0; i < data.length; i++) {
+                    options += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                }
+                $('#' + city_id).empty().append(options);
             }
-            $('#' + city_id).empty().append(options);
-        }
-    });
+        });
+    }
 });
 //Textbox change event remove error class
-$(document).on('change', '#memorial_date,#memorial_time,#funeral_date,#funeral_time,#burial_date,#burial_time,#memorial_place,#funeral_place,#burial_place,#burial_address,#funeral_address,#memorial_address,#memorial_state,#memorial_city,#memorial_zip,#funeral_state,#funeral_city,#funeral_zip,#burial_state,#burial_city,#burial_zip', function () {
+$(document).on('change', '#memorial_date,#memorial_time,#funeral_date,#funeral_time,#burial_date,#burial_time,#memorial_place,#funeral_place,#burial_place,#burial_address,#funeral_address,#memorial_address,#memorial_country,#memorial_state,#memorial_city,#memorial_zip,#funeral_country,#funeral_state,#funeral_city,#funeral_zip,#burial_country,#burial_state,#burial_city,#burial_zip', function () {
     $(this).removeClass('error');
 });
 
@@ -1083,6 +1131,11 @@ function delete_fundmedia(obj, type, index) {
     $(obj).parent('.gallery-wrap').parent('li').remove();
 }
 
+/**
+ * Ajax call to this function delete fund media
+ * @param {object} obj
+ * @param string media_id
+ */
 function delete_fundajaxmedia(obj, media_id) {
     $('.loader').show();
     $.ajax({

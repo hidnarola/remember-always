@@ -63,7 +63,7 @@
         <script src="assets/js/pnotify.custom.min.js"></script> 
         <script src="assets/js/jquery.fancybox.js"></script>
         <script src="assets/js/jquery.fancybox.pack.js"></script>
-        <script type="text/javascript" src="assets/js/sweetalert2.all.min.js"></script>
+        <script src="assets/js/sweetalert2.all.min.js"></script>
         <script src="assets/js/jquery.mCustomScrollbar.js"></script>
         <script src="assets/js/typeahead.bundle.js"></script>
         <script src="assets/js/jquery.creditCardValidator.js"></script> 

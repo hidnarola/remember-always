@@ -21,23 +21,27 @@
                         <h2>Donations</h2>	
                         <ul class="ul_donate_detail	">
                             <li>
-                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                <div class="listing_img"><img src="assets/images/helpful-img.jpg" alt="" class=""></div>
                                 <h6>Kirti kirti<span class="span_rs">$ 350</span></h6>
+								<p class="p_date">5th Jan, 2017</p>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
                             </li>
                             <li>
-                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                <div class="listing_img"><img src="assets/images/helpful-img.jpg" alt="" class=""></div>
                                 <h6>Kirti kirti<span class="span_rs">$ 350</span></h6>
+								<p class="p_date">12th Dec, 2017</p>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
                             </li>
                             <li>
-                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                <div class="listing_img"><img src="assets/images/helpful-img.jpg" alt="" class=""></div>
                                 <h6>Kirti kirti<span class="span_rs">$ 350</span></h6>
+								<p class="p_date">1th Feb, 2017</p>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
                             </li>
                             <li>
-                                <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                                <div class="listing_img"><img src="assets/images/helpful-img.jpg" alt="" class=""></div>
                                 <h6>Kirti kirti<span class="span_rs">$ 350</span></h6>
+								<p class="p_date">30th Mar, 2017</p>
                                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
                             </li>
                         </ul>

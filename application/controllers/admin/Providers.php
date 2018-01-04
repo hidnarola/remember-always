@@ -2,7 +2,7 @@
 
 /**
  * Providers Controller to manage service providers
- * @author KU 
+ * @author AKK 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -17,7 +17,7 @@ class Providers extends MY_Controller {
      * Display listing of service provider
      */
     public function index() {
-       $data['title'] = 'Remember Always Admin | Service Providers';
+        $data['title'] = 'Remember Always Admin | Service Providers';
         $this->template->load('admin', 'admin/service_providers/index', $data);
     }
 
@@ -50,9 +50,8 @@ class Providers extends MY_Controller {
         if (is_numeric($id)) {
             $provider_data = $this->providers_model->sql_select(TBL_SERVICE_PROVIDERS, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($provider_data)) {
-                $cities = $this->providers_model->sql_select(TBL_CITY . ' c', 'c.*', ['where' => array('c.state_id' => $provider_data['state'])]);
-//                $states = $this->providers_model->sql_select(TBL_STATE . ' s', null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['join' => [array('table' => TBL_COUNTRY . ' c', 'condition' => 'c.id=s.country_id AND s.is_delete=0')]]);
-                $this->data['cities'] = $cities;
+                $this->data['states'] = $this->providers_model->sql_select(TBL_STATE, 'id,name', ['where' => array('country_id' => $provider_data['country'])]);
+                $this->data['cities'] = $this->providers_model->sql_select(TBL_CITY, 'id,name', ['where' => array('state_id' => $provider_data['state'])]);
                 $this->data['provider_data'] = $provider_data;
                 $this->data['title'] = 'Remember Always Admin | Service Providers';
                 $this->data['heading'] = 'Edit Service Provider';
@@ -64,8 +63,8 @@ class Providers extends MY_Controller {
             $this->data['heading'] = 'Add Service Provider';
         }
 
-        $states = $this->providers_model->sql_select(TBL_STATE . ' s', 's.*', ['where' => array('c.id' => 231)], ['join' => [array('table' => TBL_COUNTRY . ' c', 'condition' => 'c.id=s.country_id')]]);
-        $this->data['states'] = $states;
+        $this->data['countries'] = $this->providers_model->sql_select(TBL_COUNTRY, 'id,name');
+
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, null, ['where' => array('is_delete' => 0)]);
         $this->data['service_categories'] = $service_categories;
         if ($this->input->method() == 'post') {
@@ -105,6 +104,7 @@ class Providers extends MY_Controller {
                 'street1' => trim($this->input->post('street1')),
                 'city' => base64_decode(trim($this->input->post('city'))),
                 'state' => base64_decode(trim($this->input->post('state_hidden'))),
+                'country' => base64_decode(trim($this->input->post('country'))),
                 'phone_number' => trim($this->input->post('phone')),
                 'website_url' => trim($this->input->post('website')),
             ];
@@ -136,7 +136,6 @@ class Providers extends MY_Controller {
                     }
                 }
             }
-//            p($dataArr, 1);
             if (is_numeric($id)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->providers_model->common_insert_update('update', TBL_SERVICE_PROVIDERS, $dataArr, ['id' => $id]);

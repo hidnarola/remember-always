@@ -65,28 +65,39 @@ $route['admin/users/posts/(:any)'] = 'admin/posts/index/$1';
 $route['forgot_password'] = 'login/forgot_password';
 $route['reset_password'] = 'login/reset_password';
 $route['verify'] = 'signup/verify';
+
+/* Profile Routes */
+
+$route['profile/load_posts/(:any)/(:any)/(:any)'] = 'profile/load_posts/$1/$2/$3';
+$route['profile/load_timeline/(:any)/(:any)'] = 'profile/load_timeline/$1/$2';
+$route['profile/load_timeline/(:any)/(:any)/(:any)'] = 'profile/load_timeline/$1/$2/$3';
+$route['profile/view_timeline/(:any)'] = 'profile/view_timeline/$1';
+$route['profile/upload_cover_image'] = 'profile/upload_cover_image';
+
 $route['profile/create'] = 'profile/create';
 $route['profile/edit/(:any)'] = 'profile/edit/$1';
+
 $route['profile/upload_gallery'] = 'profile/upload_gallery';
-$route['profile/upload_cover_image'] = 'profile/upload_cover_image';
 $route['profile/delete_gallery'] = 'profile/delete_gallery';
-$route['profile/upload_post'] = 'profile/upload_post';
-$route['profile/delete_post'] = 'profile/delete_post';
 $route['profile/proceed_steps'] = 'profile/proceed_steps';
-$route['profile/check_facts/(:any)'] = 'profile/check_facts/$1';
 $route['profile/add_facts'] = 'profile/add_facts';
+$route['profile/check_facts/(:any)'] = 'profile/check_facts/$1';
 $route['profile/delete_facts'] = 'profile/delete_facts';
 $route['profile/add_affiliation'] = 'profile/add_affiliation';
-$route['profile/delete_affiliation'] = 'profile/delete_affiliation';
 $route['profile/check_affiliation/(:any)'] = 'profile/check_affiliation/$1';
-$route['profile/lifetimeline'] = 'profile/lifetimeline';
+$route['profile/delete_affiliation'] = 'profile/delete_affiliation';
 $route['profile/add_timeline'] = 'profile/add_timeline';
 $route['profile/delete_timeline'] = 'profile/delete_timeline';
+$route['profile/lifetimeline'] = 'profile/lifetimeline';
+$route['profile/get_states'] = 'profile/get_states';
 $route['profile/get_cities'] = 'profile/get_cities';
 $route['profile/add_services'] = 'profile/add_services';
 $route['profile/add_fundraiser'] = 'profile/add_fundraiser';
 $route['profile/delete_fundmedia'] = 'profile/delete_fundmedia';
+$route['profile/upload_post'] = 'profile/upload_post';
+$route['profile/delete_post'] = 'profile/delete_post';
 $route['profile/(:any)'] = 'profile/index/$1';
+
 $route['flowers/view'] = 'flowers/view';
 $route['flowers/cart'] = 'flowers/cart';
 $route['flowers/get_data'] = 'flowers/get_data';

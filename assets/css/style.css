@@ -264,7 +264,9 @@ a.helpful-btn:hover{text-decoration:none;opacity:.9;}
 .input-css{background:#fff;border:1px solid #e5e5e5;padding:15px;line-height:20px;box-shadow:3px 3px 3px 0 rgba(0,0,0,.1);color:#aeaeae;font-size:15px;font-weight:400;width:100%;}
 .input-l{width:48.5%;float:left;}
 .input-r{width:48.5%;float:right;}
-.textarea-css{height:140px;}
+
+
+.textarea-css {height: auto;border: 0;box-shadow: none;padding: 0;min-height: 60px;}  
 
 .step-btm-btn{padding:20px 0;display:inline-block;text-align:center;width:100%;vertical-align:top;border-top:1px solid #efefef;margin:40px 0 0;}
 .step-btm-btn button{border-radius:4px;width:150px;color:#efeeee;font-weight:500;font-size:16px;font-family:'Roboto';display:inline-block;vertical-align:top;line-height:42px;padding:0 10px;text-align:center;margin:0 10px;}
@@ -372,7 +374,7 @@ a.remove-video:hover{opacity:.7;}
 .profile-title h4{padding:0;display:block;font-family:'Rubik';font-size:24px;font-weight:500;color:#fff;line-height:normal;float:left;margin:-90px 0 0;}
 .profile-title  h4 small{display:block; font-family:'rubik';font-size:14px;font-weight:400;color:#fff;margin:10px 0 0;padding:0;}
 .profile-title h4 small i{vertical-align:middle;margin:0 5px 0 0;font-size:20px;}
-.profile-title > a{display:inline-block;vertical-align:middle;font-family:'Rubik';font-weight:500;font-size:14px;padding:10px;line-height:20px; border-radius:4px;color:#fff;margin:20px 30px 0 0;width:152px;text-align:center;}
+.profile-title > a {display: inline-block;vertical-align: middle;font-family: 'Rubik';font-weight: 500;font-size: 14px;padding: 10px;line-height: 20px;border-radius: 4px;color: #fff;margin: 20px 15px 0 0;width: 142px;text-align: center;}
 .donate-btn{border:2px solid #8f63ca;background:#8f63ca;}
 .donate-btn:hover{background:transparent;color:#8f63ca;text-decoration:none;}
 .flowers-btn{border:2px solid #49baa0;background:#49baa0;}
@@ -743,7 +745,7 @@ ul.select-gallery li{width:31%;float:left;padding:8px;border:1px solid #e5e5e5;b
 
 /*** flowers listing page ***/
 ul.listing_data {margin: 0 -15px;padding: 0;list-style: none;}
-ul.listing_data li {padding: 0 15px;float: left;width: 33.33%;}
+ul.listing_data li {padding: 0 15px;float: left;width: 33.33%;min-height: 370px;}
 .listing_inner_div {border: 0px solid #e5e5e5;position: relative;padding-bottom: 35px;margin-bottom: 40px;box-shadow: 0 0 15px 0 rgba(0,0,0,.1);    transition: ease-in-out .5s;}
 .lst_img {padding: 12px 20px 0;min-height: 160px;}
 .lst_img img {max-width: 100%;}
@@ -919,11 +921,14 @@ ul.sub_ul_custom li a:After {content: " ";}
 .comment-btm.cart_btn.btn_extra_div {margin-top: 10px;}  
 .input-wrap .bootstrap-select button {background: url(../images/drop_down.png) !important;-webkit-appearance: none !important;appearance: none !important;-moz-appearance: none !important;background-repeat: no-repeat !important;background-position: right !important;}
 .input-wrap .bootstrap-select button span.caret {display: none;}
-.loader {position: fixed;left: 0;top: 0;right: 0;bottom: 0;width: 100%;background: rgba(0,0,0,0.50);z-index: 9;}
+.loader {position: fixed;left: 0;top: 0;right: 0;bottom: 0;width: 100%;background: rgba(0,0,0,0.50);z-index: 999;}
 .loader svg {position: absolute;left: 50%;top: 50%;transform: translate(-50%,-50%);}  
 .search.open form {z-index: 99;}
 .login-user {z-index: 9;}
 .upload-btn input[type=file] {width: 100%;}
+.upload-wrap span {display: inline-block;height: 100%;background: #f1f1f1;}
+.upload-wrap span span.gallery-play-btn {background: rgba(0,0,0,.6);}
+
 
 /*** Donate page style **/
 
@@ -945,9 +950,12 @@ ul.sub_ul_custom li a:After {content: " ";}
 .donate_detail {margin-top: 30px;box-shadow: 0 0 8px 0 rgba(0,0,0,0.1);padding: 20px;}
 .donate_detail h2 {margin: 0;padding: 0;font-family: 'Rubik';font-size: 22px;color: #975979;line-height: normal;font-weight: 500;margin-bottom: 20px;}
 .ul_donate_detail {padding: 0;margin: 0;list-style: none;}
-.ul_donate_detail li {position: relative;padding: 0 0 15px 0;border-bottom: 1px solid #e5e5e5;margin: 0 0 15px 40px;}
+.ul_donate_detail li {position: relative;padding: 0 0 15px 0;border-bottom: 1px solid #e5e5e5;margin: 0 0 15px 75px;}
+.listing_img {position: absolute;left: -75px;}
+.listing_img img {width: 60px;height: 60px;border-radius: 50%;box-shadow: 0 0 6px 0 rgba(0,0,0,0.10);}
 .ul_donate_detail li i {font-size: 22px;color: #975979;position: absolute;left: -40px;top: -2px;}
-.ul_donate_detail li h6 {padding: 0;font-size: 14px;line-height: normal;display: block;font-family: 'Rubik';font-weight: 700;color: #57585a;margin: 0 0 5px 0;}
+.ul_donate_detail li h6 {padding: 0;font-size: 14px;line-height: normal;display: block;font-family: 'Rubik';font-weight: 700;color: #57585a;margin: 0 0 3px 0;}
+.ul_donate_detail li p.p_date {font-size: 12px;margin-bottom: 10px;color: #b5b5b5;font-weight: 400;}
 .ul_donate_detail li h6 .span_rs {color: red;float: right;}
 .ul_donate_detail li p {margin: 0;padding: 0;font-size: 13px;color: #999;line-height: normal;display: block;font-family: 'Roboto';}
 .ul_donate_detail li:last-child {border: 0;margin-bottom: 0;padding: 0;}

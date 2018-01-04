@@ -437,46 +437,6 @@
                                         <div class="input-wrap">
                                             <input type="text" name="memorial_address" id="memorial_address" placeholder="Address" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['address'] ?>">
                                         </div>
-                                        <!--                                            <div class="input-wrap"><div class="input-three-l">
-                                                                                        <select name="memorial_state" id="memorial_state" class="input-css service-state" placeholder="State">
-                                                                                            <option value="">Select state</option>
-                                        <?php
-                                        foreach ($states as $state) {
-                                            $selected = '';
-                                            if (isset($memorial_service) && !empty($memorial_service)) {
-                                                if ($state['id'] == $memorial_service['state'])
-                                                    $selected = 'selected';
-                                            }
-                                            ?>
-                                                                                                                    <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
-                                        <?php }
-                                        ?>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                    <div class="input-three-m">
-                                        <?php
-                                        $cities_arr = $cities;
-                                        if (isset($memorial_service) && !empty($memorial_service))
-                                            $cities_arr = $memorial_cities;
-                                        ?>
-                                                                                        <select name="memorial_city" id="memorial_city" class="input-css" placeholder="State">
-                                                                                            <option value="">Select City</option>
-                                        <?php
-                                        foreach ($cities_arr as $city) {
-                                            $selected = '';
-                                            if (isset($memorial_service) && !empty($memorial_service)) {
-                                                if ($city['id'] == $memorial_service['city'])
-                                                    $selected = 'selected';
-                                            }
-                                            ?>
-                                                                                                                    <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
-                                        <?php }
-                                        ?>
-                                                                                        </select>
-                                                                                    </div>
-                                                                                    <div class="input-three-r">
-                                                                                        <input type="text" name="memorial_zip" id="memorial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['zip'] ?>">
-                                                                                    </div></div>-->
                                         <div class="input-wrap">
                                             <div class="input-l">
                                                 <select name="memorial_country" id="memorial_country" class="input-css service-country" placeholder="Country">
@@ -498,7 +458,7 @@
                                                 <select name="memorial_state" id="memorial_state" class="input-css service-state" placeholder="State">
                                                     <option value="">Select state</option>
                                                     <?php
-                                                    foreach ($states as $state) {
+                                                    foreach ($memorial_states as $state) {
                                                         $selected = '';
                                                         if (isset($memorial_service) && !empty($memorial_service)) {
                                                             if ($state['id'] == $memorial_service['state'])
@@ -513,15 +473,10 @@
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
-                                                <?php
-                                                $cities_arr = $cities;
-                                                if (isset($memorial_service) && !empty($memorial_service))
-                                                    $cities_arr = $memorial_cities;
-                                                ?>
                                                 <select name="memorial_city" id="memorial_city" class="input-css" placeholder="State">
                                                     <option value="">Select City</option>
                                                     <?php
-                                                    foreach ($cities_arr as $city) {
+                                                    foreach ($memorial_cities as $city) {
                                                         $selected = '';
                                                         if (isset($memorial_service) && !empty($memorial_service)) {
                                                             if ($city['id'] == $memorial_service['city'])
@@ -575,7 +530,7 @@
                                                 <select name="funeral_state" id="funeral_state" class="input-css service-state" placeholder="State">
                                                     <option value="">Select state</option>
                                                     <?php
-                                                    foreach ($states as $state) {
+                                                    foreach ($funeral_states as $state) {
                                                         $selected = '';
                                                         if (isset($funeral_service) && !empty($funeral_service)) {
                                                             if ($state['id'] == $funeral_service['state'])
@@ -590,15 +545,10 @@
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
-                                                <?php
-                                                $cities_arr = $cities;
-                                                if (isset($funeral_service) && !empty($funeral_service))
-                                                    $cities_arr = $funeral_cities;
-                                                ?>
                                                 <select name="funeral_city" id="funeral_city" class="input-css" placeholder="City">
                                                     <option value="">Select City</option>
                                                     <?php
-                                                    foreach ($cities_arr as $city) {
+                                                    foreach ($funeral_cities as $city) {
                                                         $selected = '';
                                                         if (isset($memorial_service) && !empty($funeral_service)) {
                                                             if ($city['id'] == $funeral_service['city'])
@@ -652,7 +602,7 @@
                                                 <select name="burial_state" id="burial_state" class="input-css service-state" placeholder="State">
                                                     <option value="">Select state</option>
                                                     <?php
-                                                    foreach ($states as $state) {
+                                                    foreach ($burial_states as $state) {
                                                         $selected = '';
                                                         if (isset($burial_service) && !empty($burial_service)) {
                                                             if ($state['id'] == $burial_service['state'])
@@ -667,15 +617,10 @@
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
-                                                <?php
-                                                $cities_arr = $cities;
-                                                if (isset($funeral_service) && !empty($funeral_service))
-                                                    $cities_arr = $burial_cities;
-                                                ?>
                                                 <select name="burial_city" id="burial_city" class="input-css" placeholder="City">
                                                     <option value="">Select City</option>
                                                     <?php
-                                                    foreach ($cities_arr as $city) {
+                                                    foreach ($burial_cities as $city) {
                                                         $selected = '';
                                                         if (isset($burial_service) && !empty($burial_service)) {
                                                             if ($city['id'] == $burial_service['city'])

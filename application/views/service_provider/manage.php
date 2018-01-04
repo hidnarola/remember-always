@@ -1,4 +1,3 @@
-<!-- /theme JS files -->
 <div class="create-profile">
     <div class="create-profile-top">
         <div class="container">
@@ -11,10 +10,6 @@
                 <div class="step-form">
                     <form method="post" enctype="multipart/form-data" id="provider_form">
                         <div id="forth-step">
-                            <div class="step-title">
-<!--                                <h2>Add <small>(optional)</small> </h2>
-                                <p>Enter information about important milestones in your loved ones life.</p>-->
-                            </div>
                             <div class="step-form">
                                 <div class="step-06">
                                     <div class="step-06-l">
@@ -73,7 +68,26 @@
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <div class="input-three-l">
+                                            <div class="input-l">
+                                                <select name="country" id="country" class="selectpicker">
+                                                    <option value="">-- Select Country --</option>
+                                                    <?php
+                                                    foreach ($countries as $key => $value) {
+                                                        $selected = '';
+                                                        if (isset($provider_data) && $provider_data['country'] == $value['id']) {
+                                                            $selected = 'selected';
+                                                        }
+                                                        ?>
+                                                        <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('country', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                        <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <?php
+                                                echo '<label id="country-error" class="error" for="country">' . form_error('country') . '</label>';
+                                                ?>
+                                            </div>
+                                            <div class="input-r">
                                                 <select name="state" id="state" class="selectpicker">
                                                     <option value="">-- Select State --</option>
                                                     <?php
@@ -95,7 +109,9 @@
                                                 echo '<label id="state_hidden-error" class="error" for="state_hidden">' . form_error('state_hidden') . '</label>';
                                                 ?>
                                             </div>
-                                            <div class="input-three-m">
+                                        </div>
+                                        <div class="input-wrap">
+                                            <div class="input-l">
                                                 <select name="city" id="city" class="selectpicker">
                                                     <option value="">-- Select City --</option>
                                                     <?php
@@ -116,7 +132,7 @@
                                                 echo '<label id="city-error" class="error" for="city">' . form_error('city') . '</label>';
                                                 ?>
                                             </div>
-                                            <div class="input-three-r">
+                                            <div class="input-r">
                                                 <input type="text" name="zipcode" id="zipcode" placeholder="Zip" class="input-css" value="<?php echo isset($provider_data['zipcode']) ? $provider_data['zipcode'] : set_value('zipcode'); ?>"> 
                                             </div>
                                         </div>
@@ -143,7 +159,7 @@
                                                     $required = 'required="required"';
                                                     if (isset($provider_data) && $provider_data['image'] != '') {
                                                         $required = '';
-                                                        echo "<img src='" . PROVIDER_IMAGES . $provider_data['image'] . "'>";
+                                                        echo "<img src='" . PROVIDER_IMAGES . $provider_data['image'] . "' width='100%'>";
                                                     } else {
                                                         echo 'Upload image for service provider<span>Select File</span>';
                                                     }
@@ -170,15 +186,7 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $('#category').selectpicker({
-            liveSearch: true,
-            size: 5
-        });
-        $('#city').selectpicker({
-            liveSearch: true,
-            size: 5
-        });
-        $('#state').selectpicker({
+        $('#category,#city,#state,#country').selectpicker({
             liveSearch: true,
             size: 5
         });
@@ -198,6 +206,9 @@
                 street1: {
                     required: true,
                 },
+                country: {
+                    required: true,
+                },
                 city: {
                     required: true,
                 },
@@ -213,7 +224,6 @@
                     url: true
                 },
                 image: {
-//                    required: true,
                     extension: "jpg|png|jpeg",
                     maxFileSize: {
                         "unit": "MB",
@@ -241,20 +251,54 @@
             },
         });
     });
-
+    //-- Get states based on country dropdown change event
+    $(document).on('change', '#country', function () {
+        country_val = $(this).val();
+        $('#state').val('');
+        $('#city').val('');
+        if (country_val != '') {
+            $('#country').valid();
+            $('.loader').show();
+            $.ajax({
+                url: site_url + "profile/get_states",
+                type: "POST",
+                data: {country: atob(country_val)},
+                dataType: "json",
+                success: function (data) {
+                    $('.loader').hide();
+                    var options = "<option value=''>Select state</option>";
+                    for (var i = 0; i < data.length; i++) {
+                        options += '<option value=' + btoa(data[i].id) + '>' + data[i].name + '</option>';
+                    }
+                    $('#state').empty().append(options);
+                    $('#state').selectpicker('refresh');
+                }
+            });
+        }
+    });
     $(document).on('change', '#state', function () {
         var state_id = $("#state option:selected").val();
-        $url = '<?php echo site_url() ?>' + 'service_provider/get_cities_by_state';
-        $.ajax({
-            type: "POST",
-            url: $url,
-            data: {
-                stateid: state_id,
-            }
-        }).done(function (data) {
-            $("select#city").html(data);
-            $('select#city').selectpicker('refresh');
-        });
+        $('#state_hidden').val(state_id);
+        $('#city').val('');
+        if (state_id != '') {
+            $('#state').valid();
+            $('.loader').show();
+            $url = site_url + 'service_provider/get_cities_by_state';
+            $.ajax({
+                type: "POST",
+                url: $url,
+                data: {
+                    stateid: state_id,
+                }
+            }).done(function (data) {
+                $('.loader').hide();
+                $("select#city").html(data);
+                $('select#city').selectpicker('refresh');
+            });
+        }
+    });
+    $(document).on('change', '#city', function () {
+        $(this).valid();
     });
     // Display the preview of image on image upload
     function readURL(input) {
@@ -264,7 +308,7 @@
             reader.onload = function (e) {
                 var valid_extensions = /(\.jpg|\.jpeg|\.png)$/i;
                 if (valid_extensions.test(input.files[0].name)) {
-                    var html = '<img src="' + e.target.result + '" style="width: 170px; border-radius: 2px;" alt="">';
+                    var html = '<img src="' + e.target.result + '" style="width: 100%;" alt="">';
                     $('.up_btn').html(html);
                 }
             }
@@ -273,5 +317,35 @@
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAylcYpcGylc8GTu_PYJI7sqPVn6ITrVnM&libraries=places&callback=initAutocomplete" async defer></script>
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/googleAutoComplete.js') ?>"></script>
-<style>
+<script type="text/javascript">
+    function initAutocomplete() {
+        var input = document.getElementById('street1');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.addListener('place_changed', function () {
+            var places = autocomplete.getPlace();
+            if (places.length == 0) {
+                swal("Cancelled", "Your entered address is not able to track on google so please enter correct address. :)", "error");
+                return;
+            }
+
+            if (typeof places.geometry !== 'undefined') {
+//                $('#location').val(places.formatted_address);
+                $('#latitute').val(places.geometry.location.lat());
+                $('#longitute').val(places.geometry.location.lng());
+            } else {
+                googleLocationIssuePrompt();
+            }
+
+        });
+
+    }
+
+    function googleLocationIssuePrompt() {
+        swal("Cancelled", "Your entered address is not able to track on google so please enter correct address. :)", "error");
+    }
+
+    $(document).ready(function () {
+        $(document).on('change', '#street1', initAutocomplete);
+    });
+
+</script>

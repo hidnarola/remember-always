@@ -52,7 +52,6 @@ class Profile extends MY_Controller {
                 $posts = $this->load_posts(0, $is_left['id'], true);
                 if ($_POST) {
                     if (!$this->is_user_loggedin) {
-//                    $this->session->set_flashdata('error', 'You must login to access this page');
                         $data['success'] = false;
                         $data['error'] = 'You must login to add post for this profile.';
                     } else {
@@ -136,6 +135,7 @@ class Profile extends MY_Controller {
 
     /**
      * Display Post on page load and called on scroll event.
+     * @author AKK
      */
     public function load_posts($start, $profile_id, $static = false) {
         $offset = 5;
@@ -183,7 +183,8 @@ class Profile extends MY_Controller {
     }
 
     /**
-     * Display Life Timeline on page load and View more click.
+     * Display Life Time line on page load and View more click.
+     * @author AKK
      */
     public function load_timeline($start, $profile_id, $static = false) {
         $offset = 3;
@@ -213,7 +214,8 @@ class Profile extends MY_Controller {
     }
 
     /**
-     * Display Life Timeline on page load and View more click.
+     * Display Life Time line on page load and View more click.
+     * @author AKK
      */
     public function view_timeline($id) {
         if (!is_null($id))
@@ -305,9 +307,9 @@ class Profile extends MY_Controller {
         $is_left = $profile;
         $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Create Profile';
-        $data['cities'] = [];
-        $data['states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => 234]]);
         $data['countries'] = $this->users_model->sql_select(TBL_COUNTRY, 'id,name');
+        $data['memorial_states'] = $data['funeral_states'] = $data['burial_states'] = [];
+        $data['memorial_cities'] = $data['funeral_cities'] = $data['burial_cities'] = [];
 
         if (!empty($is_left)) {
             $data['profile'] = $is_left;
@@ -326,12 +328,15 @@ class Profile extends MY_Controller {
             foreach ($services as $service) {
                 if ($service['service_type'] == 'Burial') {
                     $data['burial_service'] = $service;
+                    $data['burial_states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => $service['country']]]);
                     $data['burial_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $service['state']]]);
                 } elseif ($service['service_type'] == 'Funeral') {
                     $data['funeral_service'] = $service;
+                    $data['funeral_states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => $service['country']]]);
                     $data['funeral_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $service['state']]]);
                 } elseif ($service['service_type'] == 'Memorial') {
                     $data['memorial_service'] = $service;
+                    $data['memorial_states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => $service['country']]]);
                     $data['memorial_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $service['state']]]);
                 }
             }
@@ -776,6 +781,9 @@ class Profile extends MY_Controller {
         exit;
     }
 
+    /**
+     * Delete time line section
+     */
     public function delete_timeline() {
         $id = base64_decode($this->input->post('id'));
         if (!empty($id)) {
@@ -879,6 +887,16 @@ class Profile extends MY_Controller {
     }
 
     /**
+     * Get states 
+     */
+    public function get_states() {
+        $country_id = $this->input->post('country');
+        $states = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => $country_id]]);
+        echo json_encode($states);
+        exit;
+    }
+
+    /**
      * Get cities 
      */
     public function get_cities() {
@@ -906,6 +924,7 @@ class Profile extends MY_Controller {
                         'address' => $this->input->post('memorial_address'),
                         'city' => $this->input->post('memorial_city'),
                         'state' => $this->input->post('memorial_state'),
+                        'country' => $this->input->post('memorial_country'),
                         'zip' => $this->input->post('memorial_zip'),
                     ];
                     $m_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Memorial']], ['single' => true]);
@@ -927,6 +946,7 @@ class Profile extends MY_Controller {
                         'address' => $this->input->post('funeral_address'),
                         'city' => $this->input->post('funeral_city'),
                         'state' => $this->input->post('funeral_state'),
+                        'country' => $this->input->post('funeral_country'),
                         'zip' => $this->input->post('funeral_zip'),
                     ];
                     $f_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Funeral']], ['single' => true]);
@@ -941,13 +961,14 @@ class Profile extends MY_Controller {
                 if ($this->input->post('burial_date') != '' || $this->input->post('burial_time') != '' || $this->input->post('burial_place') != '' || $this->input->post('burial_address') != '' || $this->input->post('burial_state') != '' || $this->input->post('burial_city') != '' || $this->input->post('burial_zip') != '') {
                     $burial_serivce = [
                         'profile_id' => $profile_id,
-                        'service_type' => 'Funeral',
+                        'service_type' => 'Burial',
                         'date' => date('Y-m-d', strtotime($this->input->post('burial_date'))),
                         'time' => date('H:i:s', strtotime($this->input->post('burial_time'))),
                         'place_name' => $this->input->post('burial_place'),
                         'address' => $this->input->post('burial_address'),
                         'city' => $this->input->post('burial_city'),
                         'state' => $this->input->post('burial_state'),
+                        'country' => $this->input->post('burial_country'),
                         'zip' => $this->input->post('burial_zip'),
                     ];
                     $b_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Burial']], ['single' => true]);
