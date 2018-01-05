@@ -157,7 +157,7 @@
                             <g>
                             </g>
                         </svg></span>
-                    <h3><a href="">Create <br/> a Life Profile</a></h3>
+                    <h3><a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="http://clientapp.narola.online/HD/remember-always/profile/create">Create <br/> a Life Profile</a></h3>
                     <p>Share your loved one’s life story <br/> vividly; add funeral details if necessary.</p>
                 </div>
             </li>
@@ -292,7 +292,7 @@
                             </g>
                         </svg>
                     </span>
-                    <h3><a href="">Share with <br/>family & friends</a></h3>
+                    <h3><a href="<?php echo site_url('search') ?>">Share with <br/>family & friends</a></h3>
                     <p>Easily share with  <br/>as many or as few as you desire.</p>
                 </div>
             </li>
@@ -351,7 +351,7 @@
                             <g>
                             </g>
                         </svg></span>
-                    <h3><a href="">Remember, <br/> Honor & Celebrate</a></h3>
+                    <h3><a href="<?php echo site_url('search') ?>">Remember, <br/> Honor & Celebrate</a></h3>
                     <p>Together share condolences, support, <br/> memories, photos, videos & more.</p>
                 </div>
             </li>

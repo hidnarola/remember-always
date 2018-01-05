@@ -83,9 +83,6 @@
                                     </div>
                                 </div>
                             </div>	
-                            <!--                            <div class="step-btm-btn">
-                                                            <button class="next" onclick="return submit_form();">Save/Update</button>
-                                                        </div>-->
                         </form>
                     </div>
                     <div id="second-step" class="profile-steps tab-pane">
@@ -177,12 +174,6 @@
                                 </ul>
                             </div>	
                             <div id="dvPreview"></div>
-                            <!--                            <div class="step-btm-btn">
-                                                            <button class="next" onclick="return proceed_step();">Save/Update</button>
-                                                            <button class="back" onclick="return back_step()">Publish</button>
-                                                            <button class="skip" onclick="return skip_step()">Preview</button>
-                                                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
-                                                        </div>-->
                         </div>
                     </div>
                     <div id="third-step" class="profile-steps tab-pane">
@@ -242,11 +233,6 @@
                                     <p>Favourite saying</p>
                                 </div>
                             </div>	
-                            <!--                            <div class="step-btm-btn">
-                                                            <button class="back" onclick="return back_step()">Back</button>
-                                                            <button class="skip" onclick="return skip_step()">Skip</button>
-                                                            <button class="next" onclick="return proceed_step();">Next</button>
-                                                        </div>-->
                         </div>
                     </div>
                     <div id="third1-step" class="profile-steps tab-pane">
@@ -306,11 +292,6 @@
                                     <p>Sports Teams or involvement in sports</p>
                                 </div>
                             </div>	
-                            <!--                            <div class="step-btm-btn">
-                                                            <button class="back" onclick="return back_step()">Back</button>
-                                                            <button class="skip" onclick="return skip_step()">Skip</button>
-                                                            <button class="next" onclick="return proceed_step();">Next</button>
-                                                        </div>-->
                         </div>
                     </div>
                     <div id="forth-step" class="profile-steps tab-pane">
@@ -406,11 +387,6 @@
                                         </div>
                                     <?php } ?>
                                 </div>
-                                <!--                                <div class="step-btm-btn">
-                                                                    <button class="back" onclick="return back_step()">Back</button>
-                                                                    <button class="skip" onclick="return skip_step()">Skip</button>
-                                                                    <button class="next" onclick="return proceed_step();">Next</button>
-                                                                </div>-->
                             </form>
                         </div>
                     </div>
@@ -639,11 +615,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--                                <div class="step-btm-btn">
-                                                                    <button class="back" onclick="return back_step()">Back</button>
-                                                                    <button class="skip" onclick="return skip_step()">Skip</button>
-                                                                    <button class="next" onclick="return proceed_step();">Next</button>
-                                                                </div>-->
                             </div>
                         </form>
                     </div>
@@ -703,9 +674,6 @@
                                                         <li>
                                                             <div class="gallery-wrap">
                                                                 <span>
-                                                                    <!--                                                            <video style="width:100%;height:100%" controls>
-                                                                                                                                    <source src="">Your browser does not support HTML5 video.
-                                                                                                                                </video>-->
                                                                     <img src="<?php echo FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $value['media']) ?>" style="width:100%">
                                                                     <span class="gallery-play-btn"><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="fundraiser"><img src="assets/images/play.png" alt=""></a></span>
                                                                 </span>
