@@ -17,25 +17,25 @@
                 ?>
             </h2>
             <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur auto edit.</p>
-            <a href="javascript:void(0)" onclick="$('#create_profile_form').valid()">Save and Finish Later</a>
         </div>
     </div>
     <div class="create-profile-body main-steps">
         <div class="container">
-            <div class="create-profile-box">
-                <div class="process-step">
-                    <ul>
-                        <li class="active steps-li" id="first-step-li"><a href="javascript:void(0);">01</a></li>
-                        <li class="steps-li" id="second-step-li"><a href="javascript:void(0);">02</a></li>
-                        <li class="steps-li" id="third-step-li"><a href="javascript:void(0);">03</a></li>
-                        <li class="steps-li" id="forth-step-li"><a href="javascript:void(0);">04</a></li>
-                        <li class="steps-li" id="fifth-step-li"><a href="javascript:void(0);">05</a></li>
+            <div class="create-profile-box create_pl">
+                <div class="process-step process-step_change">
+                    <ul class="ul_tab_custom nav nav-tabs responsive process-step process-step_change" id="myTab">
+                        <li class="active steps-li" id="first-step-li"><a href="#first-step">Basic Info</a></li>
+                        <li class="steps-li" id="second-step-li"><a href="#second-step">Life Gallery</a></li>
+                        <li class="steps-li" id="third-step-li"><a href="#third-step">Fun Facts</a></li>
+                        <li class="steps-li" id="third1-step-li"><a href="#third1-step">Affiliations</a></li>
+                        <li class="steps-li" id="forth-step-li"><a href="#forth-step">Life Timeline</a></li>
+                        <li class="steps-li" id="fifth-step-li"><a href="#fifth-step">Funeral Services</a></li>
+                        <li class="steps-li" id="sixth-step-li"><a href="#sixth-step">Tribute Fundraiser</a></li>
+                        <li class="steps-li" id="seventh-step-li"><a href="#seventh-step">Share</a></li>
                     </ul>
-                    <a href="javascript:void(0)" class="save-draft" onclick="$('#create_profile_form').valid()">Save as draft</a>
                 </div>
-                <div class="step-form">
-
-                    <div id="first-step" class="profile-steps">
+                <div class="step-form tab-content responsive">
+                    <div id="first-step" class="profile-steps tab-pane active">
                         <form method="post" enctype="multipart/form-data" id="create_profile_form">
                             <input type="hidden" name="profile_process" id="profile_process" value="0"/>
                             <div class="step-01-l-wrap">
@@ -83,12 +83,12 @@
                                     </div>
                                 </div>
                             </div>	
-                            <div class="step-btm-btn">
-                                <button class="next" onclick="return submit_form();">Next</button>
-                            </div>
+                            <!--                            <div class="step-btm-btn">
+                                                            <button class="next" onclick="return submit_form();">Save/Update</button>
+                                                        </div>-->
                         </form>
                     </div>
-                    <div id="second-step" class="hide profile-steps">
+                    <div id="second-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Create Life Gallery<small>(optional)</small> </h2>
                             <p>Add Photo/Video files of your loved one. <br/> You will be able to add more or remove previously uploaded files late.</p>
@@ -177,14 +177,15 @@
                                 </ul>
                             </div>	
                             <div id="dvPreview"></div>
-                            <div class="step-btm-btn">
-                                <button class="back" onclick="return back_step()">Back</button>
-                                <button class="skip" onclick="return skip_step()">Skip</button>
-                                <button class="next" onclick="return proceed_step();">Next</button>
-                            </div>
+                            <!--                            <div class="step-btm-btn">
+                                                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                                                            <button class="back" onclick="return back_step()">Publish</button>
+                                                            <button class="skip" onclick="return skip_step()">Preview</button>
+                                                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                                                        </div>-->
                         </div>
                     </div>
-                    <div id="third-step" class="hide profile-steps">
+                    <div id="third-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Add A Fun Facts<small>(optional)</small> </h2>
                             <p>Add up to 10fun facts about your loved one.<br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
@@ -241,14 +242,14 @@
                                     <p>Favourite saying</p>
                                 </div>
                             </div>	
-                            <div class="step-btm-btn">
-                                <button class="back" onclick="return back_step()">Back</button>
-                                <button class="skip" onclick="return skip_step()">Skip</button>
-                                <button class="next" onclick="return proceed_step();">Next</button>
-                            </div>
+                            <!--                            <div class="step-btm-btn">
+                                                            <button class="back" onclick="return back_step()">Back</button>
+                                                            <button class="skip" onclick="return skip_step()">Skip</button>
+                                                            <button class="next" onclick="return proceed_step();">Next</button>
+                                                        </div>-->
                         </div>
                     </div>
-                    <div id="third1-step" class="hide profile-steps">
+                    <div id="third1-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Add Affilliations<small>(optional)</small> </h2>
                             <p>Add up to 10fun Affiliations about your loved one. <br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
@@ -305,14 +306,14 @@
                                     <p>Sports Teams or involvement in sports</p>
                                 </div>
                             </div>	
-                            <div class="step-btm-btn">
-                                <button class="back" onclick="return back_step()">Back</button>
-                                <button class="skip" onclick="return skip_step()">Skip</button>
-                                <button class="next" onclick="return proceed_step();">Next</button>
-                            </div>
+                            <!--                            <div class="step-btm-btn">
+                                                            <button class="back" onclick="return back_step()">Back</button>
+                                                            <button class="skip" onclick="return skip_step()">Skip</button>
+                                                            <button class="next" onclick="return proceed_step();">Next</button>
+                                                        </div>-->
                         </div>
                     </div>
-                    <div id="forth-step" class="hide profile-steps">
+                    <div id="forth-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Life Timeline<small>(optional)</small> </h2>
                             <p>Enter information about important milestones in your loved ones life.</p>
@@ -405,15 +406,15 @@
                                         </div>
                                     <?php } ?>
                                 </div>
-                                <div class="step-btm-btn">
-                                    <button class="back" onclick="return back_step()">Back</button>
-                                    <button class="skip" onclick="return skip_step()">Skip</button>
-                                    <button class="next" onclick="return proceed_step();">Next</button>
-                                </div>
+                                <!--                                <div class="step-btm-btn">
+                                                                    <button class="back" onclick="return back_step()">Back</button>
+                                                                    <button class="skip" onclick="return skip_step()">Skip</button>
+                                                                    <button class="next" onclick="return proceed_step();">Next</button>
+                                                                </div>-->
                             </form>
                         </div>
                     </div>
-                    <div id="fifth-step" class="hide profile-steps">
+                    <div id="fifth-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Add Funeral Services<small>(optional)</small> </h2>
                             <p>In necessary, enter funeral services information. You will be able to remove this information later.</p>
@@ -638,129 +639,119 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="step-btm-btn">
-                                    <button class="back" onclick="return back_step()">Back</button>
-                                    <button class="skip" onclick="return skip_step()">Skip</button>
-                                    <button class="next" onclick="return proceed_step();">Next</button>
-                                </div>
+                                <!--                                <div class="step-btm-btn">
+                                                                    <button class="back" onclick="return back_step()">Back</button>
+                                                                    <button class="skip" onclick="return skip_step()">Skip</button>
+                                                                    <button class="next" onclick="return proceed_step();">Next</button>
+                                                                </div>-->
                             </div>
                         </form>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>	
-    <div class="create-profile-body hide profile-steps" id="sixth-step">
-        <div class="container">
-            <div class="create-profile-box step-06-wrap">
-                <div class="step-title">
-                    <h2>Create a Tribute Fundraiser<small>(optional)</small> </h2>
-                    <p>If desired, create a Tribute Fundraiser in honor of your loved one.</p>
-                </div>
-                <div class="step-form">
-                    <div class="step-06">
-                        <form method="post" id="fundraiser_profile-form">
-                            <div class="step-06-l">
-                                <div class="input-wrap">
-                                    <label class="label-css">Tribute Fundraiser Title.</label>
-                                    <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>">
-                                </div>
-                                <div class="input-wrap">
-                                    <div class="input-l">
-                                        <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>">
-                                        <p>Leave empty for campaigns without a fundraising goal.</p>
-                                    </div>
-                                    <div class="input-r">
-                                        <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
-                                        <p>Leave empty ongoing fundraising campaigns.</p>
-                                    </div>
-                                </div>
-                                <div class="input-wrap">
-                                    <label class="label-css">Description</label>
-                                    <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed."><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
-                                </div>
-                            </div> 
-                            <div class="step-06-r">
-                                <div class="select-file">
-                                    <div class="select-file-upload"> 
-                                        <span class="select-file_up_btn">Upload images, Or Videos to fundraiser page <span>Select Files</span></span>
-                                        <input type="file" name="fundraiser_media[]" id="fundraiser_media" multiple> 
-                                    </div>
-                                </div>
-                                <ul class="select-gallery">
-                                    <?php
-                                    $fundimage_count = $fundvideo_count = 0;
-                                    if (isset($fundraiser)) {
-                                        foreach ($fundraiser_media as $key => $value) {
-                                            if ($value['type'] == 1) {
-                                                $fundimage_count++;
-                                                ?>
-                                                <li>
-                                                    <div class="gallery-wrap">
-                                                        <span><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="image" rel="fundraiser"><img src="<?php echo base_url() . FUNDRAISER_IMAGES . $value['media']; ?>" alt="" style="width:100%"></a></span>
-                                                        <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
-                                                    </div>
-                                                </li>
-                                                <?php
-                                            } else {
-                                                $fundvideo_count++;
-                                                ?>
-                                                <li>
-                                                    <div class="gallery-wrap">
-                                                        <span>
-                                                            <!--                                                            <video style="width:100%;height:100%" controls>
-                                                                                                                            <source src="">Your browser does not support HTML5 video.
-                                                                                                                        </video>-->
-                                                            <img src="<?php echo FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $value['media']) ?>" style="width:100%">
-                                                            <span class="gallery-play-btn"><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="fundraiser"><img src="assets/images/play.png" alt=""></a></span>
-                                                        </span>
-                                                        <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
-                                                    </div>
-                                                </li>
-                                                <?php
+                    <div id="sixth-step" class="profile-steps tab-pane">
+                        <div class="step-title">
+                            <h2>Create a Tribute Fundraiser<small>(optional)</small> </h2>
+                            <p>If desired, create a Tribute Fundraiser in honor of your loved one.</p>
+                        </div>
+                        <div class="step-form">
+                            <div class="step-06">
+                                <form method="post" id="fundraiser_profile-form">
+                                    <div class="step-06-l">
+                                        <div class="input-wrap">
+                                            <label class="label-css">Tribute Fundraiser Title.</label>
+                                            <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>">
+                                        </div>
+                                        <div class="input-wrap">
+                                            <div class="input-l">
+                                                <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>">
+                                                <p>Leave empty for campaigns without a fundraising goal.</p>
+                                            </div>
+                                            <div class="input-r">
+                                                <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
+                                                <p>Leave empty ongoing fundraising campaigns.</p>
+                                            </div>
+                                        </div>
+                                        <div class="input-wrap">
+                                            <label class="label-css">Description</label>
+                                            <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed."><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
+                                        </div>
+                                    </div> 
+                                    <div class="step-06-r">
+                                        <div class="select-file">
+                                            <div class="select-file-upload"> 
+                                                <span class="select-file_up_btn">Upload images, Or Videos to fundraiser page <span>Select Files</span></span>
+                                                <input type="file" name="fundraiser_media[]" id="fundraiser_media" multiple> 
+                                            </div>
+                                        </div>
+                                        <ul class="select-gallery">
+                                            <?php
+                                            $fundimage_count = $fundvideo_count = 0;
+                                            if (isset($fundraiser)) {
+                                                foreach ($fundraiser_media as $key => $value) {
+                                                    if ($value['type'] == 1) {
+                                                        $fundimage_count++;
+                                                        ?>
+                                                        <li>
+                                                            <div class="gallery-wrap">
+                                                                <span><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="image" rel="fundraiser"><img src="<?php echo base_url() . FUNDRAISER_IMAGES . $value['media']; ?>" alt="" style="width:100%"></a></span>
+                                                                <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
+                                                            </div>
+                                                        </li>
+                                                        <?php
+                                                    } else {
+                                                        $fundvideo_count++;
+                                                        ?>
+                                                        <li>
+                                                            <div class="gallery-wrap">
+                                                                <span>
+                                                                    <!--                                                            <video style="width:100%;height:100%" controls>
+                                                                                                                                    <source src="">Your browser does not support HTML5 video.
+                                                                                                                                </video>-->
+                                                                    <img src="<?php echo FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $value['media']) ?>" style="width:100%">
+                                                                    <span class="gallery-play-btn"><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="fundraiser"><img src="assets/images/play.png" alt=""></a></span>
+                                                                </span>
+                                                                <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
+                                                            </div>
+                                                        </li>
+                                                        <?php
+                                                    }
+                                                }
                                             }
-                                        }
-                                    }
-                                    ?>
-                                    <div id="fundraiser_preview"></div>
-                                </ul>
+                                            ?>
+                                            <div id="fundraiser_preview"></div>
+                                        </ul>
+                                    </div>
+                                </form>
                             </div>
-                        </form>
-                    </div>
 
+
+                        </div>
+                    </div>
+                    <div id="seventh-step" class="profile-steps tab-pane">
+                        <div class="step-title">
+                            <h2>
+                                <?php if (isset($profile) && $profile['is_published'] == 1) { ?>
+                                    <span id="profile_name"><?php echo $profile['firstname'] . ' ' . $profile['lastname'] . '\'s' ?></span> Life Profile is complete!
+                                <?php } else { ?>
+                                    <span id="profile_name"><?php
+                                        if (isset($profile))
+                                            echo $profile['firstname'] . ' ' . $profile['lastname'] . '\'s';
+                                        else
+                                            echo "John's"
+                                            ?></span> Life Profile is complete but not yet published.
+                                    <?php
+                                }
+                                ?>
+
+                            </h2>
+                            <p>Click the preview profile button to view and publish the profile.</p>
+                        </div>
+                    </div>
                     <div class="step-btm-btn">
-                        <button class="back" onclick="return back_step()">Back</button>
-                        <button class="skip" onclick="return skip_step()">Skip</button>
-                        <button class="next" onclick="return proceed_step();">Next</button>
+                        <button class="next" onclick="return proceed_step();">Save/Update</button>
+                        <button class="back" onclick="return back_step()">Publish</button>
+                        <button class="skip" onclick="return skip_step()">Preview</button>
+                        <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>	
-    <div class="create-profile-body hide profile-steps" id="seventh-step" >
-        <div class="container">
-            <div class="create-profile-box step-finish step-06-wrap">
-                <div class="step-title">
-                    <h2>
-                        <?php if (isset($profile) && $profile['is_published'] == 1) { ?>
-                            <span id="profile_name"><?php echo $profile['firstname'] . ' ' . $profile['lastname'] . '\'s' ?></span> Life Profile is complete!
-                        <?php } else { ?>
-                            <span id="profile_name"><?php
-                                if (isset($profile))
-                                    echo $profile['firstname'] . ' ' . $profile['lastname'] . '\'s';
-                                else
-                                    echo "John's"
-                                    ?></span> Life Profile is complete but not yet published.
-                            <?php
-                        }
-                        ?>
-
-                    </h2>
-                    <p>You can click the back button below to make updates. <br/> Click the preview profile button to view and publish the profile.</p>
-                </div>
-                <div class="step-btm-btn">
-                    <button class="back" onclick="return back_step()">Back</button>
-                    <button class="next" onclick="return preview_profile(this);" data-href="" id="profile_slug">Preview Profile</button>
                 </div>
             </div>
         </div>

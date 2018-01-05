@@ -63,7 +63,7 @@ function p($data, $is_die = false) {
 
 /**
  * Print last executed query
- * @param boolean $bool - if set to true then excecution will stop after print
+ * @param boolean $bool - if set to true then execution will stop after print
  */
 function qry($bool = false) {
     $CI = & get_instance();

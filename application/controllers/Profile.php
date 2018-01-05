@@ -19,22 +19,22 @@ class Profile extends MY_Controller {
      */
     public function index($slug = null) {
         if (!is_null($slug)) {
-            $is_left = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true, 'join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')]]);
-            if (!empty($is_left)) {
+            $profile = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true, 'join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')]]);
+            if (!empty($profile)) {
                 $funnel_services_data = [];
                 $post_id = 0;
-                if ($is_left['type'] == 2) {
-                    $fundraiser = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES . ' f', null, ['where' => ['f.is_delete' => 0, 'f.profile_id' => $is_left['id']]], ['single' => true]);
+                if ($profile['type'] == 2) {
+                    $fundraiser = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, null, ['where' => ['is_delete' => 0, 'profile_id' => $profile['id']]], ['single' => true]);
                     $data['fundraiser'] = $fundraiser;
                 }
-                $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($is_left['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
-                $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($is_left['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
-                $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($is_left['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
-                $life_timeline = $this->load_timeline(0, $is_left['id'], true);
+                $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($profile['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
+                $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($profile['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
+                $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($profile['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
+                $life_timeline = $this->load_timeline(0, $profile['id'], true);
                 $sql = "SELECT * FROM ("
-                        . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $is_left['id'] . "
+                        . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $profile['id'] . "
                        UNION ALL
-                       SELECT p.id,a.name,'0' as free_text,slug,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND a.is_delete=0 
+                       SELECT p.id,a.name,'0' as free_text,slug,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $profile['id'] . " AND a.is_delete=0 
                     ) a order by created_at";
                 $data['affiliations'] = $this->users_model->customQuery($sql);
                 $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
@@ -49,7 +49,7 @@ class Profile extends MY_Controller {
                         }
                     }
                 }
-                $posts = $this->load_posts(0, $is_left['id'], true);
+                $posts = $this->load_posts(0, $profile['id'], true);
                 if ($_POST) {
                     if (!$this->is_user_loggedin) {
                         $data['success'] = false;
@@ -63,7 +63,7 @@ class Profile extends MY_Controller {
                             $data['error'] = 'Post not added.';
                         } else {
                             if (isset($_FILES['post_upload']) && !empty($_FILES['post_upload']['name'][0])) {
-                                $directory = 'profile_' . $is_left['id'];
+                                $directory = 'profile_' . $profile['id'];
                                 if (!file_exists(POST_IMAGES . $directory)) {
                                     mkdir(POST_IMAGES . $directory);
                                 }
@@ -95,7 +95,7 @@ class Profile extends MY_Controller {
                             }
 
                             $dataArr = array(
-                                'profile_id' => $is_left['id'],
+                                'profile_id' => $profile['id'],
                                 'user_id' => $this->user_id,
                                 'created_at' => date('Y-m-d H:i:s'),
                             );
@@ -118,15 +118,17 @@ class Profile extends MY_Controller {
                     exit;
                 }
                 $data['url'] = current_url();
-                $data['profile'] = $is_left;
+                $data['profile'] = $profile;
                 $data['fun_facts'] = $fun_facts;
                 $data['funnel_services'] = $funnel_services_data;
                 $data['posts'] = $posts;
                 $data['life_gallery'] = $life_gallery;
                 $data['life_timeline'] = $life_timeline;
-                $data['title'] = $is_left['firstname'] . ' ' . $is_left['lastname'] . ' | Profile';
+                $data['title'] = $profile['firstname'] . ' ' . $profile['lastname'] . ' | Profile';
                 $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('search'), 'title' => 'Profiles']]];
                 $this->template->load('default', 'profile/profile_detail', $data);
+            } else {
+                custom_show_404();
             }
         } else {
             custom_show_404();
@@ -192,9 +194,11 @@ class Profile extends MY_Controller {
             $profile_id = base64_decode($profile_id);
         }
         $final_post_data = [];
+        $total_records = $this->users_model->sql_select(TBL_LIFE_TIMELINE, 'id', ['where' => ['is_delete' => 0, 'profile_id' => trim($profile_id)]], ['count' => TRUE]);
         $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*,(SELECT COUNT(*) FROM ' . TBL_LIFE_TIMELINE . ' l' . ' WHERE l.is_delete=0) as total_count', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.date,lt.month,lt.year', 'limit' => $offset, 'offset' => $start]);
         if ($static === true) {
-            return $timeline_data;
+            $final = ['timeline_data' => $timeline_data, 'total_count' => $total_records];
+            return $final;
         } else {
             if (!empty($timeline_data)) {
                 foreach ($timeline_data as $k => $v) {
@@ -206,10 +210,9 @@ class Profile extends MY_Controller {
                         $timeline_data[$k]['interval'] = $v['year'];
                     }
                 }
-                echo json_encode($timeline_data);
-            } else {
-                echo '';
             }
+            $final = ['timeline_data' => $timeline_data, 'total_count' => $total_records];
+            echo json_encode($final);
         }
     }
 
@@ -999,58 +1002,24 @@ class Profile extends MY_Controller {
      */
     public function add_fundraiser() {
         if ($this->input->post('profile_id')) {
-            $profile_id = base64_decode($this->input->post('profile_id'));
-            //Get fund raiser profile 
-            $fund_profile = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
-            $data_array = [
-                'profile_id' => $profile_id,
-                'title' => trim($this->input->post('fundraiser_title')),
-                'goal' => trim($this->input->post('fundraiser_goal')),
-                'end_date' => date('Y-m-d', strtotime($this->input->post('fundraiser_enddate'))),
-                'details' => trim($this->input->post('fundraiser_details'))
-            ];
-            if (!empty($fund_profile)) {
-                $data_array['updated_at'] = date('Y-m-d H:i:s');
-                $fundraiser_id = $fund_profile['id'];
-                $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $data_array, ['id' => $fund_profile['id']]);
-            } else {
-                $data_array['created_at'] = date('Y-m-d H:i:s');
-                $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
-            }
-            $directory = 'profile_' . $profile_id;
-            if (!file_exists(FUNDRAISER_IMAGES . $directory)) {
-                mkdir(FUNDRAISER_IMAGES . $directory);
-            }
-            $flag = 0;
-            $dataArr_media = [];
-            if (isset($_FILES['fundraiser_append_media']['name'])) {
-                foreach ($_FILES['fundraiser_append_media']['name'] as $key => $value) {
-                    $extension = explode('/', $_FILES['fundraiser_append_media']['type'][$key]);
-                    $_FILES['custom_image']['name'] = $_FILES['fundraiser_append_media']['name'][$key];
-                    $_FILES['custom_image']['type'] = $_FILES['fundraiser_append_media']['type'][$key];
-                    $_FILES['custom_image']['tmp_name'] = $_FILES['fundraiser_append_media']['tmp_name'][$key];
-                    $_FILES['custom_image']['error'] = $_FILES['fundraiser_append_media']['error'][$key];
-                    $_FILES['custom_image']['size'] = $_FILES['fundraiser_append_media']['size'][$key];
-                    if ($this->input->post('fundraiser_append_types')[$key] == 1) {
-                        $image_data = upload_image('custom_image', FUNDRAISER_IMAGES . $directory);
-                    } else {
-                        $image_data = upload_video('custom_image', FUNDRAISER_IMAGES . $directory);
-                    }
-                    if (is_array($image_data)) {
-                        $flag = 1;
-                        $data['success'] = false;
-                        $data['error'] = $image_data['errors'];
-                    } else {
-                        $image = $image_data;
-                        $dataArr_media[] = array(
-                            'media' => $directory . '/' . $image,
-                            'type' => $this->input->post('fundraiser_append_types')[$key],
-                            'created_at' => date('Y-m-d H:i:s'),
-                        );
-                    }
+            if (trim($this->input->post('fundraiser_title')) != '' && trim($this->input->post('fundraiser_details')) != '') {
+                $profile_id = base64_decode($this->input->post('profile_id'));
+                //Get fund raiser profile 
+                $fund_profile = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+                $goal = $end_date = null;
+                if (!empty($this->input->post('fundraiser_goal')) && $this->input->post('fundraiser_goal') > 0) {
+                    $goal = $this->input->post('fundraiser_goal');
                 }
-            }
-            if ($flag == 0) {
+                if (!empty($this->input->post('fundraiser_enddate'))) {
+                    $end_date = $this->input->post('fundraiser_enddate');
+                }
+                $data_array = [
+                    'profile_id' => $profile_id,
+                    'title' => trim($this->input->post('fundraiser_title')),
+                    'goal' => $goal,
+                    'end_date' => $end_date,
+                    'details' => trim($this->input->post('fundraiser_details'))
+                ];
                 if (!empty($fund_profile)) {
                     $data_array['updated_at'] = date('Y-m-d H:i:s');
                     $fundraiser_id = $fund_profile['id'];
@@ -1059,12 +1028,58 @@ class Profile extends MY_Controller {
                     $data_array['created_at'] = date('Y-m-d H:i:s');
                     $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
                 }
-                foreach ($dataArr_media as $media) {
-                    $media['fundraiser_profile_id'] = $fundraiser_id;
-                    $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_MEDIA, $media);
+                $directory = 'profile_' . $profile_id;
+                if (!file_exists(FUNDRAISER_IMAGES . $directory)) {
+                    mkdir(FUNDRAISER_IMAGES . $directory);
                 }
-                $this->users_model->common_insert_update('update', TBL_PROFILES, ['type' => 2, 'profile_process' => 6], ['id' => $profile_id]);
-                $data['success'] = true;
+                $flag = 0;
+                $dataArr_media = [];
+                if (isset($_FILES['fundraiser_append_media']['name'])) {
+                    foreach ($_FILES['fundraiser_append_media']['name'] as $key => $value) {
+                        $extension = explode('/', $_FILES['fundraiser_append_media']['type'][$key]);
+                        $_FILES['custom_image']['name'] = $_FILES['fundraiser_append_media']['name'][$key];
+                        $_FILES['custom_image']['type'] = $_FILES['fundraiser_append_media']['type'][$key];
+                        $_FILES['custom_image']['tmp_name'] = $_FILES['fundraiser_append_media']['tmp_name'][$key];
+                        $_FILES['custom_image']['error'] = $_FILES['fundraiser_append_media']['error'][$key];
+                        $_FILES['custom_image']['size'] = $_FILES['fundraiser_append_media']['size'][$key];
+                        if ($this->input->post('fundraiser_append_types')[$key] == 1) {
+                            $image_data = upload_image('custom_image', FUNDRAISER_IMAGES . $directory);
+                        } else {
+                            $image_data = upload_video('custom_image', FUNDRAISER_IMAGES . $directory);
+                        }
+                        if (is_array($image_data)) {
+                            $flag = 1;
+                            $data['success'] = false;
+                            $data['error'] = $image_data['errors'];
+                        } else {
+                            $image = $image_data;
+                            $dataArr_media[] = array(
+                                'media' => $directory . '/' . $image,
+                                'type' => $this->input->post('fundraiser_append_types')[$key],
+                                'created_at' => date('Y-m-d H:i:s'),
+                            );
+                        }
+                    }
+                }
+                if ($flag == 0) {
+                    if (!empty($fund_profile)) {
+                        $data_array['updated_at'] = date('Y-m-d H:i:s');
+                        $fundraiser_id = $fund_profile['id'];
+                        $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $data_array, ['id' => $fund_profile['id']]);
+                    } else {
+                        $data_array['created_at'] = date('Y-m-d H:i:s');
+                        $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
+                    }
+                    foreach ($dataArr_media as $media) {
+                        $media['fundraiser_profile_id'] = $fundraiser_id;
+                        $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_MEDIA, $media);
+                    }
+                    $this->users_model->common_insert_update('update', TBL_PROFILES, ['type' => 2, 'profile_process' => 6], ['id' => $profile_id]);
+                    $data['success'] = true;
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = 'Please enter required details to add a Fundraiser';
             }
         } else {
             $data['success'] = false;

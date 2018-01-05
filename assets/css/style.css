@@ -266,7 +266,7 @@ a.helpful-btn:hover{text-decoration:none;opacity:.9;}
 .input-r{width:48.5%;float:right;}
 
 
-.textarea-css {height: auto;border: 0;box-shadow: none;padding: 0;min-height: 60px;}  
+.textarea-css {/*height: auto;border: 0;box-shadow: none;padding: 0;min-height: 60px;*/height:140px;}  
 
 .step-btm-btn{padding:20px 0;display:inline-block;text-align:center;width:100%;vertical-align:top;border-top:1px solid #efefef;margin:40px 0 0;}
 .step-btm-btn button{border-radius:4px;width:150px;color:#efeeee;font-weight:500;font-size:16px;font-family:'Roboto';display:inline-block;vertical-align:top;line-height:42px;padding:0 10px;text-align:center;margin:0 10px;}
@@ -981,6 +981,30 @@ label.label_big {margin: 0;padding: 0;font-family: 'Rubik';font-size: 16px;color
 .thanks_msg p span{font-weight: 600;font-size: 46px;}
 .thanks_msg {padding: 35px 15px 0 15px;text-align: center;clear: both;}
 .common-body.common-body_donation:before {display: none;}
+
+
+
+
+.process-step.process-step_change ul:before {display: none;} 
+.process-step.process-step_change ul li:after{display: none !important;} 
+.process-step.process-step_change ul li.active:before{display: none !important;} 
+.process-step.process-step_change ul li {width: auto;}
+.process-step.process-step_change ul {padding: 0;margin: 0;}
+.create-profile-box.create_pl {padding: 0;}
+.create-profile-box.create_pl .process-step.process-step_change {margin: 0;}
+.create-profile-box.create_pl {padding: 30px;}
+.create_pl .step-form {padding: 30px;box-shadow: 0px 4px 10px 0 rgba(0,0,0,0.15);background: #fff;z-index: 10;position: relative;}
+.process-step.process-step_change ul li a {width: auto;height: auto;color: #333;background: transparent;font-size: 16px;font-weight: 500;font-family: 'roboto';padding: 10px 25px;line-height: 24px;border-radius: 0;border-top: 4px solid transparent;    position: relative;}
+.process-step.process-step_change ul li.active a {box-shadow: none;border-top: 4px solid #975979;color: #975979;background: #fff;}
+.process-step.process-step_change ul li.active a:before {content: " ";position: absolute;top: 0px;left: 0;box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);height: 100%;width: 100%;z-index: -1;}
+.create-profile-box.create_pl {padding: 0;background: transparent;box-shadow: none;}
+.create-profile-box.create_pl .step-title {margin: 0;}
+.step-btm-btn button.save_update {border: 2px solid #49baa0;background: #49baa0;}
+.create-profile-box.create_pl .step-btm-btn button.skip {border: 2px solid #8f63ca;background: #8f63ca;}
+.create-profile-box.create_pl .step-btm-btn button {width: 180px;}
+.create-profile-box.create_pl .step-btm-btn button.skip:hover {background: transparent;color: #8f63ca;}
+.step-btm-btn button.save_update:hover {color: #49baa0;background: transparent;}
+.step-btm-btn button {transition: ease-in-out .5s;}
 
 /*** media start here ****/
 

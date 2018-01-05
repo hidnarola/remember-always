@@ -240,11 +240,19 @@ $(function () {
             dataType: "json",
             success: function (data) {
                 var string = '';
-                $.each(data, function (index, value) {
-                    total_timeline_count = value['total_count'];
-                    string += '<li><div class="lifetime-box"><h3><a>';
+                total_timeline_count = data.total_count;
+                $.each(data.timeline_data, function (index, value) {
+                    string += '<li><div class="lifetime-box"><h3>';
+                    if (value['timeline_media'] != null && value['media_type'] == 1) {
+                        string += '<a href="javascript:void(0)" class="timeline" data-timeline="' + btoa(value.id) + '">';
+                    } else if (value['timeline_media'] != null && value['media_type'] == 2) {
+                        string += '<a href="javascript:void(0)" class="timeline" data-timeline="' + btoa(value.id) + '">';
+                    } else {
+                        string += '<a href = "javascript:void(0)" class="timeline" data-timeline="' + btoa(value.id) + '">';
+                    }
                     string += value['interval'];
-                    string += '</a></h3>';
+                    string += '</a>';
+                    string += '</h3>';
                     string += '<p>' + value['title'] + '</p>';
                     if (value['timeline_media'] != null && value['media_type'] == 1) {
                         string += '<h6><a href="javascript:void(0)" class="timeline fa fa-image" data-timeline="' + btoa(value.id) + '"></a></h6>';

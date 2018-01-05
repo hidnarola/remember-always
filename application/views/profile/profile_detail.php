@@ -13,10 +13,8 @@
                         ?>
                         <div class="select-file">
                             <div class="select-file-upload"> 
-                                <!--<form id="cover-photo-form">-->
                                 <span class="select-file_up_btn"><i class="fa fa-pencil"></i></span>
                                 <input type="file" name="cover_image" id="cover_image" multiple="false">
-                                    <!--</form>-->
                             </div>
                         </div>
                     <?php } ?>
@@ -33,11 +31,10 @@
                     </div>
                     <h4><?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Popularised in the the release of' ?> 
                         <small> 
-                            Born: <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('M d, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> 
-                            - Death: <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('M d, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?>
+                            <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('M d, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> - <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('M d, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?>
                         </small>
                         <small>Created with love by: <?php echo isset($profile['u_fname']) ? $profile['u_fname'] . ' ' . $profile['u_lname'] : '-' ?></small> </h4>
-                    <?php if (isset($profile['type']) && $profile['type'] == 2) { ?>
+                    <?php if (isset($profile['type']) && $profile['type'] == 2 && !empty($fundraiser)) { ?>
                         <a href="" class="donate-btn">Donate</a>
                     <?php } ?>
                     <a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>
@@ -46,12 +43,12 @@
                         <a href="<?php echo site_url('profile/edit/' . $profile['slug']) ?>" class="edit-profile-btn">Edit</a>
                     <?php } ?>
                     <?php if ($profile['user_id'] == $this->user_id && $profile['is_published'] == 0) { ?>
-                        <a href="<?php echo site_url('profile/publish/' . $profile['slug']) ?>" class="publish-profile-btn">Publish</a>
+                        <a href="javascript:void(0)" class="publish-profile-btn" onclick="$('#email_popup').modal('toggle')">Publish</a>
                     <?php } ?>
                     <div class="profile-share">
                         <h6>Share</h6>
-                        <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                                                                                                                                                     viewBox="0 0 112.196 112.196" style="enable-background:new 0 0 112.196 112.196;" xml:space="preserve">
+                        <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" title="Facebook Share">
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 112.196 112.196" style="enable-background:new 0 0 112.196 112.196;" xml:space="preserve">
                                 <g>
                                     <circle style="fill:#3B5998;" cx="56.098" cy="56.098" r="56.098"/>
                                     <path style="fill:#FFFFFF;" d="M70.201,58.294h-10.01v36.672H45.025V58.294h-7.213V45.406h7.213v-8.34
@@ -87,7 +84,8 @@
                                 </g>
                                 <g>
                                 </g>
-                            </svg></a>
+                            </svg>
+                        </a>
                         <!--<a href="javascript:void(0)" onclick="javascript:genericSocialShare('https://www.linkedin.com/shareArticle?url=<?php echo $url; ?>&title=<?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Profile Sharing'; ?>')" title="Linked-in Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"-->
                         <a href="javascript:void(0)" onclick="javascript:genericSocialShare('https://www.linkedin.com/shareArticle?url=<?php echo $url; ?>&title=<?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Profile Sharing'; ?>')" title="Linked-in Share">
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -244,79 +242,81 @@
             </div>
             <div class="profile-body">
                 <div class="profile-body-l">
-                    <div class="profile-box">
-                        <h2>Funeral Services</h2>
-                        <div class="profile-box-body according-tab">
-                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingOne">
-                                        <h4 class="panel-title">
-                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Memorial Service & Viewing Section</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                        <div class="panel-body">
-                                            <?php if (isset($funnel_services['Memorial']) && !empty($funnel_services['Memorial'])) { ?>
-                                                <h5><?php echo $funnel_services['Memorial']['place_name'] ?></h5>
-                                                <p><strong>Time:</strong> <?php echo isset($funnel_services['Memorial']['time']) && !is_null($funnel_services['Memorial']['time']) ? date('h:i A', strtotime($funnel_services['Memorial']['time'])) : '00:00 AM' ?></p>
-                                                <p><strong>Date:</strong> (<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('M d, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                <p><strong>Address:</strong> <?php echo $funnel_services['Memorial']['address'] ?></p>
-                                                <p><strong>City:</strong> <?php echo $funnel_services['Memorial']['city_name'] ?></p>
-                                                <p><strong>State:</strong> <?php echo $funnel_services['Memorial']['state_name'] ?></p>
-                                                <p><strong>Zipcode:</strong> <?php echo $funnel_services['Memorial']['zip'] ?></p>
-                                            <?php } else { ?>
-                                                <p class="general-text">Memorial service not available.</p>
-                                            <?php } ?>
+                    <?php if (!empty($funnel_services['Memorial']) || !empty($funnel_services['Funeral']) || !empty($funnel_services['Burial'])) { ?>
+                        <div class="profile-box">
+                            <h2>Funeral Services</h2>
+                            <div class="profile-box-body according-tab">
+                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingOne">
+                                            <h4 class="panel-title">
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Memorial Service & Viewing Section</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                            <div class="panel-body">
+                                                <?php if (isset($funnel_services['Memorial']) && !empty($funnel_services['Memorial'])) { ?>
+                                                    <h5><?php echo $funnel_services['Memorial']['place_name'] ?></h5>
+                                                    <p><strong>Time:</strong> <?php echo isset($funnel_services['Memorial']['time']) && !is_null($funnel_services['Memorial']['time']) ? date('h:i A', strtotime($funnel_services['Memorial']['time'])) : '00:00 AM' ?></p>
+                                                    <p><strong>Date:</strong> (<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('M d, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                    <p><strong>Address:</strong> <?php echo $funnel_services['Memorial']['address'] ?></p>
+                                                    <p><strong>City:</strong> <?php echo $funnel_services['Memorial']['city_name'] ?></p>
+                                                    <p><strong>State:</strong> <?php echo $funnel_services['Memorial']['state_name'] ?></p>
+                                                    <p><strong>Zipcode:</strong> <?php echo $funnel_services['Memorial']['zip'] ?></p>
+                                                <?php } else { ?>
+                                                    <p class="general-text">Memorial service not available.</p>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingTwo">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Funeral Service Section</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                                        <div class="panel-body">
-                                            <?php if (isset($funnel_services['Funeral']) && !empty($funnel_services['Funeral'])) { ?>
-                                                <h5><?php echo $funnel_services['Funeral']['place_name'] ?></h5>
-                                                <p><strong>Time:</strong> <?php echo isset($funnel_services['Funeral']['time']) && !is_null($funnel_services['Funeral']['time']) ? date('h:i A', strtotime($funnel_services['Funeral']['time'])) : '00:00 AM' ?></p>
-                                                <p><strong>Date: </strong> (<?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('M d, Y', strtotime($funnel_services['Funeral']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                <p><strong>Address: </strong> <?php echo $funnel_services['Funeral']['address'] ?></p>
-                                                <p><strong>City: </strong> <?php echo $funnel_services['Funeral']['city_name'] ?></p>
-                                                <p><strong>State: </strong> <?php echo $funnel_services['Funeral']['state_name'] ?></p>
-                                                <p><strong>Zipcode: </strong> <?php echo $funnel_services['Funeral']['zip'] ?></p>
-                                            <?php } else { ?>
-                                                <p class="general-text">Funeral service not available.</p>
-                                            <?php } ?>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingTwo">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Funeral Service Section</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                            <div class="panel-body">
+                                                <?php if (isset($funnel_services['Funeral']) && !empty($funnel_services['Funeral'])) { ?>
+                                                    <h5><?php echo $funnel_services['Funeral']['place_name'] ?></h5>
+                                                    <p><strong>Time:</strong> <?php echo isset($funnel_services['Funeral']['time']) && !is_null($funnel_services['Funeral']['time']) ? date('h:i A', strtotime($funnel_services['Funeral']['time'])) : '00:00 AM' ?></p>
+                                                    <p><strong>Date: </strong> (<?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('M d, Y', strtotime($funnel_services['Funeral']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                    <p><strong>Address: </strong> <?php echo $funnel_services['Funeral']['address'] ?></p>
+                                                    <p><strong>City: </strong> <?php echo $funnel_services['Funeral']['city_name'] ?></p>
+                                                    <p><strong>State: </strong> <?php echo $funnel_services['Funeral']['state_name'] ?></p>
+                                                    <p><strong>Zipcode: </strong> <?php echo $funnel_services['Funeral']['zip'] ?></p>
+                                                <?php } else { ?>
+                                                    <p class="general-text">Funeral service not available.</p>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading" role="tab" id="headingThree">
-                                        <h4 class="panel-title">
-                                            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Burial Section</a>
-                                        </h4>
-                                    </div>
-                                    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                                        <div class="panel-body">
-                                            <?php if (isset($funnel_services['Burial']) && !empty($funnel_services['Burial'])) { ?>
-                                                <h5><?php echo $funnel_services['Burial']['place_name'] ?></h5>
-                                                <p><strong>Time:</strong> <?php echo isset($funnel_services['Burial']['time']) && !is_null($funnel_services['Burial']['time']) ? date('h:i A', strtotime($funnel_services['Burial']['time'])) : '00:00 AM' ?></p>
-                                                <p><strong>Date:</strong> (<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('M d, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                <p><strong>Address: </strong> <?php echo $funnel_services['Burial']['address'] ?></p>
-                                                <p><strong>City:</strong> <?php echo $funnel_services['Burial']['city_name'] ?></p>
-                                                <p><strong>State:</strong> <?php echo $funnel_services['Burial']['state_name'] ?></p>
-                                                <p><strong>Zipcode: </strong> <?php echo $funnel_services['Burial']['zip'] ?></p>
-                                            <?php } else { ?>
-                                                <p class="general-text">Burial service not available.</p>
-                                            <?php } ?>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading" role="tab" id="headingThree">
+                                            <h4 class="panel-title">
+                                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Burial Section</a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                            <div class="panel-body">
+                                                <?php if (isset($funnel_services['Burial']) && !empty($funnel_services['Burial'])) { ?>
+                                                    <h5><?php echo $funnel_services['Burial']['place_name'] ?></h5>
+                                                    <p><strong>Time:</strong> <?php echo isset($funnel_services['Burial']['time']) && !is_null($funnel_services['Burial']['time']) ? date('h:i A', strtotime($funnel_services['Burial']['time'])) : '00:00 AM' ?></p>
+                                                    <p><strong>Date:</strong> (<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('M d, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</p>
+                                                    <p><strong>Address: </strong> <?php echo $funnel_services['Burial']['address'] ?></p>
+                                                    <p><strong>City:</strong> <?php echo $funnel_services['Burial']['city_name'] ?></p>
+                                                    <p><strong>State:</strong> <?php echo $funnel_services['Burial']['state_name'] ?></p>
+                                                    <p><strong>Zipcode: </strong> <?php echo $funnel_services['Burial']['zip'] ?></p>
+                                                <?php } else { ?>
+                                                    <p class="general-text">Burial service not available.</p>
+                                                <?php } ?>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    <?php } ?>
                     <div class="profile-box lifetime-line">
                         <h2>Life Timeline</h2>
                         <div class="profile-box-body">
@@ -336,8 +336,9 @@
                                 </span>
                                 <ul class="timeline_ul">
                                     <?php
-                                    foreach ($life_timeline as $k => $v) {
-                                        $total_count = $v['total_count'];
+                                    $total_count = $life_timeline['total_count'];
+                                    $timeline = $life_timeline['timeline_data'];
+                                    foreach ($timeline as $k => $v) {
                                         ?>
                                         <li>
                                             <div class="lifetime-box">
@@ -562,7 +563,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                            ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
@@ -586,7 +587,7 @@
                     </div>
                 </div>
                 <div class="profile-body-r">
-                    <?php if (isset($profile['type']) && $profile['type'] == 2) { ?>
+                    <?php if (isset($profile['type']) && $profile['type'] == 2 && !empty($fundraiser)) { ?>
                         <div class="profile-box fundraiser">
                             <h2>Tribute Fundraiser</h2>
                             <div class="profile-box-body">
@@ -711,6 +712,29 @@
                     </tbody>
                 </table>
 
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="email_popup">
+    <div class="modal-dialog" role="document">
+        <div class="login-signup">
+            <div class="modal-body">
+                <div class="pup-btn">
+                    <button type="button" onclick="$('#email_popup').modal('toggle')"><i class="fa fa-close"></i></button>
+                </div>    
+                <div class="modal-header custom_header text-center">
+                    Email family & friends (optional)
+                    <label class="label-css">Share the Life Profile via email's</label>
+                </div>
+                <div class="input-wrap">
+                    <label class="label-css">Enter up to 30 email addresses separated by commas</label>
+                    <textarea class="input-css textarea-css" name="email_friends" id="email_friends" placeholder="Enter up to 30 email addresses separated by commas;you will be able to send more later if needed. To share with more than 30 people via email,you can use your regular email to share the Life Profile link."></textarea>
+                </div>
+                <div class="step-btm-btn">
+                    <button class="skip" onclick="return skip_email()">Skip</button>
+                    <button class="next" onclick="return share_email();">Next</button>
+                </div>
             </div>
         </div>
     </div>

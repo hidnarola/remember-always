@@ -67,6 +67,7 @@
         <script src="assets/js/jquery.mCustomScrollbar.js"></script>
         <script src="assets/js/typeahead.bundle.js"></script>
         <script src="assets/js/jquery.creditCardValidator.js"></script> 
+        <script src="assets/js/responsive-tabs.js"></script>  
         <script src="assets/js/custom.js"></script> 
 
     </head>
@@ -80,22 +81,22 @@
         <div class="loader" style="display:none">
             <!--<img src="assets/images/loader.svg" />-->
             <svg class="lds-microsoft" width="80px"  height="80px"  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: none;"><g transform="rotate(0)"><circle cx="73.801" cy="68.263" fill="#fff" r="3" transform="rotate(19.9989 50 50)">
-  <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="0s"></animateTransform>
-</circle><circle cx="68.263" cy="73.801" fill="#fff" r="3" transform="rotate(31.0642 50 50)">
-  <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.062s"></animateTransform>
-</circle><circle cx="61.481" cy="77.716" fill="#fff" r="3" transform="rotate(45.4963 50 50)">
-  <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.125s"></animateTransform>
-</circle><circle cx="53.916" cy="79.743" fill="#fff" r="3" transform="rotate(63.1103 50 50)">
-  <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.187s"></animateTransform>
-</circle><circle cx="46.084" cy="79.743" fill="#fff" r="3" transform="rotate(84.5772 50 50)">
-  <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.25s"></animateTransform>
-</circle><circle cx="38.519" cy="77.716" fill="#fff" r="3" transform="rotate(109.033 50 50)">
-  <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.312s"></animateTransform>
-</circle><circle cx="31.737" cy="73.801" fill="#fff" r="3" transform="rotate(136.705 50 50)">
-  <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.375s"></animateTransform>
-</circle><circle cx="26.199" cy="68.263" fill="#fff" r="3" transform="rotate(165.784 50 50)">
-  <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.437s"></animateTransform>
-</circle><animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;0 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s"></animateTransform></g></svg>
+            <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="0s"></animateTransform>
+            </circle><circle cx="68.263" cy="73.801" fill="#fff" r="3" transform="rotate(31.0642 50 50)">
+            <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.062s"></animateTransform>
+            </circle><circle cx="61.481" cy="77.716" fill="#fff" r="3" transform="rotate(45.4963 50 50)">
+            <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.125s"></animateTransform>
+            </circle><circle cx="53.916" cy="79.743" fill="#fff" r="3" transform="rotate(63.1103 50 50)">
+            <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.187s"></animateTransform>
+            </circle><circle cx="46.084" cy="79.743" fill="#fff" r="3" transform="rotate(84.5772 50 50)">
+            <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.25s"></animateTransform>
+            </circle><circle cx="38.519" cy="77.716" fill="#fff" r="3" transform="rotate(109.033 50 50)">
+            <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.312s"></animateTransform>
+            </circle><circle cx="31.737" cy="73.801" fill="#fff" r="3" transform="rotate(136.705 50 50)">
+            <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.375s"></animateTransform>
+            </circle><circle cx="26.199" cy="68.263" fill="#fff" r="3" transform="rotate(165.784 50 50)">
+            <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.437s"></animateTransform>
+            </circle><animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;0 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s"></animateTransform></g></svg>
         </div>
         <?php
         $this->load->view('Templates/default_header');
