@@ -75,6 +75,7 @@ $route['profile/upload_cover_image'] = 'profile/upload_cover_image';
 
 $route['profile/create'] = 'profile/create';
 $route['profile/edit/(:any)'] = 'profile/edit/$1';
+$route['profile/publish/(:any)'] = 'profile/publish/$1';
 
 $route['profile/upload_gallery'] = 'profile/upload_gallery';
 $route['profile/delete_gallery'] = 'profile/delete_gallery';

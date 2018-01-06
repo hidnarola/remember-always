@@ -22,18 +22,18 @@
     <div class="create-profile-body main-steps">
         <div class="container">
             <div class="create-profile-box create_pl">
-                <div class="process-step process-step_change">
-                    <ul class="ul_tab_custom nav nav-tabs responsive process-step process-step_change" id="myTab">
-                        <li class="active steps-li" id="first-step-li"><a href="#first-step">Basic Info</a></li>
-                        <li class="steps-li" id="second-step-li"><a href="#second-step">Life Gallery</a></li>
-                        <li class="steps-li" id="third-step-li"><a href="#third-step">Fun Facts</a></li>
-                        <li class="steps-li" id="third1-step-li"><a href="#third1-step">Affiliations</a></li>
-                        <li class="steps-li" id="forth-step-li"><a href="#forth-step">Life Timeline</a></li>
-                        <li class="steps-li" id="fifth-step-li"><a href="#fifth-step">Funeral Services</a></li>
-                        <li class="steps-li" id="sixth-step-li"><a href="#sixth-step">Tribute Fundraiser</a></li>
-                        <li class="steps-li" id="seventh-step-li"><a href="#seventh-step">Share</a></li>
-                    </ul>
-                </div>
+
+                <ul class="ul_tab_custom ul_tab_custom_new nav nav-tabs responsive" id="myTab">
+                    <li class="active steps-li" id="first-step-li"><a href="#first-step">Basic Info</a></li>
+                    <li class="steps-li" id="second-step-li"><a href="#second-step">Life Gallery</a></li>
+                    <li class="steps-li" id="third-step-li"><a href="#third-step">Fun Facts</a></li>
+                    <li class="steps-li" id="third1-step-li"><a href="#third1-step">Affiliations</a></li>
+                    <li class="steps-li" id="forth-step-li"><a href="#forth-step">Life Timeline</a></li>
+                    <li class="steps-li" id="fifth-step-li"><a href="#fifth-step">Funeral Services</a></li>
+                    <li class="steps-li" id="sixth-step-li"><a href="#sixth-step">Tribute Fundraiser</a></li>
+                    <li class="steps-li" id="seventh-step-li"><a href="#seventh-step">Share</a></li>
+                </ul>
+
                 <div class="step-form tab-content responsive">
                     <div id="first-step" class="profile-steps tab-pane active">
                         <form method="post" enctype="multipart/form-data" id="create_profile_form">
@@ -84,6 +84,12 @@
                                 </div>
                             </div>	
                         </form>
+                        <div class="step-btm-btn">
+                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="back" onclick="return publish_profile()">Publish</button>
+                            <button class="skip" onclick="return skip_step()">Preview</button>
+                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                        </div>
                     </div>
                     <div id="second-step" class="profile-steps tab-pane">
                         <div class="step-title">
@@ -175,6 +181,12 @@
                             </div>	
                             <div id="dvPreview"></div>
                         </div>
+                        <div class="step-btm-btn">
+                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="back" onclick="return publish_profile()">Publish</button>
+                            <button class="skip" onclick="return skip_step()">Preview</button>
+                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                        </div>
                     </div>
                     <div id="third-step" class="profile-steps tab-pane">
                         <div class="step-title">
@@ -234,6 +246,12 @@
                                 </div>
                             </div>	
                         </div>
+                        <div class="step-btm-btn">
+                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="back" onclick="return publish_profile()">Publish</button>
+                            <button class="skip" onclick="return skip_step()">Preview</button>
+                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                        </div>
                     </div>
                     <div id="third1-step" class="profile-steps tab-pane">
                         <div class="step-title">
@@ -292,6 +310,12 @@
                                     <p>Sports Teams or involvement in sports</p>
                                 </div>
                             </div>	
+                        </div>
+                        <div class="step-btm-btn">
+                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="back" onclick="return publish_profile()">Publish</button>
+                            <button class="skip" onclick="return skip_step()">Preview</button>
+                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="forth-step" class="profile-steps tab-pane">
@@ -388,6 +412,12 @@
                                     <?php } ?>
                                 </div>
                             </form>
+                        </div>
+                        <div class="step-btm-btn">
+                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="back" onclick="return publish_profile()">Publish</button>
+                            <button class="skip" onclick="return skip_step()">Preview</button>
+                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="fifth-step" class="profile-steps tab-pane">
@@ -617,6 +647,12 @@
                                 </div>
                             </div>
                         </form>
+                        <div class="step-btm-btn">
+                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="back" onclick="return publish_profile()">Publish</button>
+                            <button class="skip" onclick="return skip_step()">Preview</button>
+                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                        </div>
                     </div>
                     <div id="sixth-step" class="profile-steps tab-pane">
                         <div class="step-title">
@@ -629,7 +665,7 @@
                                     <div class="step-06-l">
                                         <div class="input-wrap">
                                             <label class="label-css">Tribute Fundraiser Title.</label>
-                                            <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>">
+                                            <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>>
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
@@ -643,7 +679,7 @@
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Description</label>
-                                            <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed."><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
+                                            <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed." <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
                                         </div>
                                     </div> 
                                     <div class="step-06-r">
@@ -690,8 +726,12 @@
                                     </div>
                                 </form>
                             </div>
-
-
+                        </div>
+                        <div class="step-btm-btn">
+                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="back" onclick="return publish_profile()">Publish</button>
+                            <button class="skip" onclick="return skip_step()">Preview</button>
+                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="seventh-step" class="profile-steps tab-pane">
@@ -713,12 +753,10 @@
                             </h2>
                             <p>Click the preview profile button to view and publish the profile.</p>
                         </div>
-                    </div>
-                    <div class="step-btm-btn">
-                        <button class="next" onclick="return proceed_step();">Save/Update</button>
-                        <button class="back" onclick="return back_step()">Publish</button>
-                        <button class="skip" onclick="return skip_step()">Preview</button>
-                        <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                        <div class="step-btm-btn">
+                            <button class="back" onclick="return publish_profile()">Publish</button>
+                            <button class="skip" onclick="return skip_step()">Preview</button>
+                        </div>
                     </div>
                 </div>
             </div>

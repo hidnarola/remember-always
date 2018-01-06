@@ -2,15 +2,39 @@ var regex_img = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
 var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
 fundraiser_media = [];
 fundraiser_types = [];
+currentTab = 'first-step';
 $(function () {
     //-- Tab Concepts for profile
     $('ul.nav.nav-tabs  a').click(function (e) {
         e.preventDefault();
         $(this).tab('show');
     });
-
+    //-- Display accordian in mobile view
     fakewaffle.responsiveTabs(['xs', 'sm']);
 
+    //-- Update current tab on clicking of any tab
+    $('ul.nav.nav-tabs  a').on('shown.bs.tab', function (e) {
+        current_tab = $(e.target).attr('href'); // get current tab
+        currentTab = current_tab.substr(1);
+        if (currentTab == 'forth-step') {
+            //-- Display timeline data
+            $('.loader').show();
+            $.ajax({
+                url: site_url + "profile/lifetimeline",
+                type: "POST",
+                data: {profile_id: profile_id},
+                success: function (data) {
+                    $('.loader').hide();
+                    $('.timeline-div').html(data);
+
+                    $('.date-picker').datepicker({
+                        format: "mm/dd/yyyy",
+                        endDate: "date()"
+                    });
+                }
+            });
+        }
+    });
 
     //-- Initialize datepicker
     $('.date-picker').datepicker({
@@ -174,7 +198,8 @@ function submit_form() {
                         });
                         $('#profile_name').html(data.firstname + ' ' + data.lastname);
                         $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
-                        profile_steps('second-step');
+                        $('.nav-tabs a[href="#second-step"]').tab('show');
+
                     } else {
                         $('#profile_process').val(0);
                         showErrorMSg(data.error);
@@ -304,55 +329,69 @@ function skip_step() {
 
 // Proceeds steps
 function proceed_step() {
-    var profile_process = $('#profile_process').val();
-    if (profile_process == 1) {
-        $('.loader').show();
-        $.ajax({
-            url: site_url + "profile/proceed_steps",
-            type: "POST",
-            data: {profile_process: 2, profile_id: profile_id},
-            dataType: "json",
-            success: function (data) {
-                $('.loader').hide();
-                if (data.success == true) {
-                    $('#profile_process').val(2);
-                    profile_steps('third-step');
-                } else {
-                    $('#profile_process').val(1);
-                    showErrorMSg(data.error);
-                }
-            }
-        });
-    } else if (profile_process == 2) {
-        $('.loader').show();
-        $.ajax({
-            url: site_url + "profile/proceed_steps",
-            type: "POST",
-            data: {profile_process: 3, profile_id: profile_id},
-            dataType: "json",
-            success: function (data) {
-                $('.loader').hide();
-                if (data.success == true) {
-                    $('#profile_process').val(3);
-                    if ($('#third-step').hasClass('hide') && $('#third1-step').hasClass('hide')) {
-                        profile_steps('third-step');
-                    } else if ($('#third1-step').hasClass('hide') && !$('#third-step').hasClass('hide')) {
-                        profile_steps('third1-step');
+    //-- check if required field is fill up by user
+    if (profile_id == 0) {
+        $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('#create_profile_form').valid();
+    } else {
+        var profile_process = $('#profile_process').val();
+        if (currentTab == 'second-step') {
+            $('.loader').show();
+            $.ajax({
+                url: site_url + "profile/proceed_steps",
+                type: "POST",
+                data: {profile_process: 2, profile_id: profile_id},
+                dataType: "json",
+                success: function (data) {
+                    $('.loader').hide();
+                    if (data.success == true) {
+                        $('#profile_process').val(2);
+                        //--display fun facts step
+                        $('.nav-tabs a[href="#third-step"]').tab('show');
                     } else {
-                        profile_steps('forth-step');
+                        $('#profile_process').val(1);
+                        showErrorMSg(data.error);
                     }
-                } else {
-                    $('#profile_process').val(2);
-                    showErrorMSg(data.error);
                 }
-            }
-        });
-    } else if (profile_process == 3) {
-        if (!$('#third-step').hasClass('hide')) {
-            profile_steps('third1-step');
-        } else if ($('#third-step').hasClass('hide') && !$('#third1-step').hasClass('hide')) {
-            profile_steps('forth-step');
-        } else if ($('#third-step').hasClass('hide') && $('#third1-step').hasClass('hide')) {
+            });
+        } else if (currentTab == 'third-step') {
+            $('.loader').show();
+            $.ajax({
+                url: site_url + "profile/proceed_steps",
+                type: "POST",
+                data: {profile_process: 3, profile_id: profile_id},
+                dataType: "json",
+                success: function (data) {
+                    $('.loader').hide();
+                    if (data.success == true) {
+                        $('#profile_process').val(3);
+                        //--display add affiliation step
+                        $('.nav-tabs a[href="#third1-step"]').tab('show');
+                    } else {
+                        $('#profile_process').val(2);
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        } else if (currentTab == 'third1-step') {
+            $('.loader').show();
+            $.ajax({
+                url: site_url + "profile/proceed_steps",
+                type: "POST",
+                data: {profile_process: 3, profile_id: profile_id},
+                dataType: "json",
+                success: function (data) {
+                    $('.loader').hide();
+                    if (data.success == true) {
+                        $('#profile_process').val(3);
+                        //--display life timeline step
+                        $('.nav-tabs a[href="#forth-step"]').tab('show');
+                    } else {
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        } else if (currentTab == 'forth-step') {
             // submit form and save data-- Save time line data
             // check if title is not empty
             title_empty = 1;
@@ -377,7 +416,8 @@ function proceed_step() {
                             $('.loader').hide();
                             if (data.success == true) {
                                 $('#profile_process').val(4);
-                                profile_steps('fifth-step');
+                                //--display funeral services tab
+                                $('.nav-tabs a[href="#fifth-step"]').tab('show');
                             } else {
                                 $('#profile_process').val(3);
                                 showErrorMSg(data.error);
@@ -396,7 +436,8 @@ function proceed_step() {
                         $('.loader').hide();
                         if (data.success == true) {
                             $('#profile_process').val(4);
-                            profile_steps('fifth-step');
+                            //--display funeral services tab
+                            $('.nav-tabs a[href="#fifth-step"]').tab('show');
                         } else {
                             $('#profile_process').val(3);
                             showErrorMSg(data.error);
@@ -404,215 +445,243 @@ function proceed_step() {
                     }
                 });
             }
+        } else if (currentTab == '#fifth-step') {
+            service_valid = 1;
+            if ($('#memorial_date').val() != '' || $('#memorial_time').val() != '' || $('#memorial_place').val() != '' || $('#memorial_address').val() != '' || $('#memorial_country').val() != '' || $('#memorial_state').val() != '' || $('#memorial_city').val() != '' || $('#memorial_zip').val() != '') {
+                if ($('#memorial_date').val() == '') {
+                    $('#memorial_date').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#memorial_time').val() == '') {
+                    $('#memorial_time').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#memorial_place').val() == '') {
+                    $('#memorial_place').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#memorial_address').val() == '') {
+                    $('#memorial_address').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#memorial_country').val() == '') {
+                    $('#memorial_country').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#memorial_state').val() == '') {
+                    $('#memorial_state').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#memorial_city').val() == '') {
+                    $('#memorial_city').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#memorial_zip').val() == '') {
+                    $('#memorial_zip').addClass('error');
+                    service_valid = 0;
+                }
+            }
 
-        }
-    } else if (profile_process == 4) {
-        service_valid = 1;
-        if ($('#memorial_date').val() != '' || $('#memorial_time').val() != '' || $('#memorial_place').val() != '' || $('#memorial_address').val() != '' || $('#memorial_country').val() != '' || $('#memorial_state').val() != '' || $('#memorial_city').val() != '' || $('#memorial_zip').val() != '') {
-            if ($('#memorial_date').val() == '') {
-                $('#memorial_date').addClass('error');
-                service_valid = 0;
+            if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_country').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
+                if ($('#funeral_date').val() == '') {
+                    $('#funeral_date').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#funeral_time').val() == '') {
+                    $('#funeral_time').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#funeral_place').val() == '') {
+                    $('#funeral_place').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#funeral_address').val() == '') {
+                    $('#funeral_address').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#funeral_country').val() == '') {
+                    $('#funeral_country').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#funeral_state').val() == '') {
+                    $('#funeral_state').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#funeral_city').val() == '') {
+                    $('#funeral_city').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#funeral_zip').val() == '') {
+                    $('#funeral_zip').addClass('error');
+                    service_valid = 0;
+                }
             }
-            if ($('#memorial_time').val() == '') {
-                $('#memorial_time').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#memorial_place').val() == '') {
-                $('#memorial_place').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#memorial_address').val() == '') {
-                $('#memorial_address').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#memorial_country').val() == '') {
-                $('#memorial_country').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#memorial_state').val() == '') {
-                $('#memorial_state').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#memorial_city').val() == '') {
-                $('#memorial_city').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#memorial_zip').val() == '') {
-                $('#memorial_zip').addClass('error');
-                service_valid = 0;
-            }
-        }
 
-        if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_country').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
-            if ($('#funeral_date').val() == '') {
-                $('#funeral_date').addClass('error');
-                service_valid = 0;
+            if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_country').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
+                if ($('#burial_date').val() == '') {
+                    $('#burial_date').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#burial_time').val() == '') {
+                    $('#burial_time').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#burial_place').val() == '') {
+                    $('#burial_place').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#burial_address').val() == '') {
+                    $('#burial_address').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#burial_country').val() == '') {
+                    $('#burial_country').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#burial_state').val() == '') {
+                    $('#burial_state').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#burial_city').val() == '') {
+                    $('#burial_city').addClass('error');
+                    service_valid = 0;
+                }
+                if ($('#burial_zip').val() == '') {
+                    $('#burial_zip').addClass('error');
+                    service_valid = 0;
+                }
             }
-            if ($('#funeral_time').val() == '') {
-                $('#funeral_time').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#funeral_place').val() == '') {
-                $('#funeral_place').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#funeral_address').val() == '') {
-                $('#funeral_address').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#funeral_country').val() == '') {
-                $('#funeral_country').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#funeral_state').val() == '') {
-                $('#funeral_state').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#funeral_city').val() == '') {
-                $('#funeral_city').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#funeral_zip').val() == '') {
-                $('#funeral_zip').addClass('error');
-                service_valid = 0;
-            }
-        }
 
-        if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_country').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
-            if ($('#burial_date').val() == '') {
-                $('#burial_date').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#burial_time').val() == '') {
-                $('#burial_time').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#burial_place').val() == '') {
-                $('#burial_place').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#burial_address').val() == '') {
-                $('#burial_address').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#burial_country').val() == '') {
-                $('#burial_country').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#burial_state').val() == '') {
-                $('#burial_state').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#burial_city').val() == '') {
-                $('#burial_city').addClass('error');
-                service_valid = 0;
-            }
-            if ($('#burial_zip').val() == '') {
-                $('#burial_zip').addClass('error');
-                service_valid = 0;
-            }
-        }
-
-        if (service_valid == 1) {
-            $('.loader').show();
-            $.ajax({
-                url: site_url + "profile/add_services",
-                type: "POST",
-                data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id,
-                dataType: "json",
-                success: function (data) {
-                    $('.loader').hide();
-                    if (data.success == true) {
-                        $('#profile_process').val(5);
-                        profile_steps('sixth-step');
-                    } else {
-                        showErrorMSg(data.error);
+            if (service_valid == 1) {
+                $('.loader').show();
+                $.ajax({
+                    url: site_url + "profile/add_services",
+                    type: "POST",
+                    data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id,
+                    dataType: "json",
+                    success: function (data) {
+                        $('.loader').hide();
+                        if (data.success == true) {
+                            $('#profile_process').val(5);
+                            //--display add affiliation step
+                            $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                        } else {
+                            showErrorMSg(data.error);
+                        }
                     }
-                }
-            });
-        }
-    } else if (profile_process == 5) {
-        if ($('#fundraiser_profile-form').valid()) {
-            fundraiser_valid = 1, entered_detail = 0;
-            if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_enddate').val() != '' || $('#fundraiser_details').val() != '') {
-                if ($('#fundraiser_title').val() == '') {
-                    $('#fundraiser_title').addClass('error');
-                    fundraiser_valid = 0;
-                }
-
-                if ($('#fundraiser_goal').val() != '' && $('#fundraiser_goal').val() < 0) {
-                    $('#fundraiser_goal').addClass('error');
-                    fundraiser_valid = 0;
-                } else {
-                    $('#fundraiser_goal').removeClass('error');
-                }
-                /*
-                 if ($('#fundraiser_enddate').val() == '') {
-                 $('#fundraiser_enddate').addClass('error');
-                 fundraiser_valid = 0;
-                 }*/
-                if ($('#fundraiser_details').val() == '') {
-                    $('#fundraiser_details').addClass('error');
-                    fundraiser_valid = 0;
-                }
-                entered_detail = 1;
+                });
             }
-            if (fundraiser_valid == 1) {
-                if (entered_detail == 1) {
-                    var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
-                    postformData.append('profile_id', profile_id);
-                    $(fundraiser_media).each(function (key) {
-                        if (fundraiser_media[key] != null) {
-                            fundraiser_types[key] = [];
-                            fundraiser_types[key] = fundraiser_media[key]['media_type'];
-                            postformData.append('fundraiser_append_media[]', fundraiser_media[key], fundraiser_media[key].name);
-                            postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
-                        }
-                    });
-                    $('.loader').show();
-                    $.ajax({
-                        url: site_url + "profile/add_fundraiser",
-                        type: "POST",
-                        data: postformData,
-                        dataType: "json",
-                        processData: false, // tell jQuery not to process the data
-                        contentType: false, // tell jQuery not to set contentType
-                        success: function (data) {
-                            $('.loader').hide();
-                            if (data.success == true) {
-                                $('#profile_process').val(6);
-                                profile_steps('seventh-step');
-                            } else {
-                                showErrorMSg(data.error);
+        } else if (currentTab == 'sixth-step"') {
+            if ($('#fundraiser_profile-form').valid()) {
+                fundraiser_valid = 1, entered_detail = 0;
+                if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_enddate').val() != '' || $('#fundraiser_details').val() != '') {
+                    if ($('#fundraiser_title').val() == '') {
+                        $('#fundraiser_title').addClass('error');
+                        fundraiser_valid = 0;
+                    }
+
+                    if ($('#fundraiser_goal').val() != '' && $('#fundraiser_goal').val() < 0) {
+                        $('#fundraiser_goal').addClass('error');
+                        fundraiser_valid = 0;
+                    } else {
+                        $('#fundraiser_goal').removeClass('error');
+                    }
+                    /*
+                     if ($('#fundraiser_enddate').val() == '') {
+                     $('#fundraiser_enddate').addClass('error');
+                     fundraiser_valid = 0;
+                     }*/
+                    if ($('#fundraiser_details').val() == '') {
+                        $('#fundraiser_details').addClass('error');
+                        fundraiser_valid = 0;
+                    }
+                    entered_detail = 1;
+                }
+                if (fundraiser_valid == 1) {
+                    if (entered_detail == 1) {
+                        var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
+                        postformData.append('profile_id', profile_id);
+                        $(fundraiser_media).each(function (key) {
+                            if (fundraiser_media[key] != null) {
+                                fundraiser_types[key] = [];
+                                fundraiser_types[key] = fundraiser_media[key]['media_type'];
+                                postformData.append('fundraiser_append_media[]', fundraiser_media[key], fundraiser_media[key].name);
+                                postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
                             }
-                        }
-                    });
-                } else {
-                    //-- update profile step do not store fundraiser detail into database
-                    $('.loader').show();
-                    $.ajax({
-                        url: site_url + "profile/proceed_steps",
-                        type: "POST",
-                        data: {profile_process: 6, profile_id: profile_id},
-                        dataType: "json",
-                        processData: false, // tell jQuery not to process the data
-                        contentType: false, // tell jQuery not to set contentType
-                        success: function (data) {
-                            $('.loader').hide();
-                            if (data.success == true) {
-                                $('#profile_process').val(6);
-                                profile_steps('seventh-step');
-                            } else {
-                                showErrorMSg(data.error);
+                        });
+                        $('.loader').show();
+                        $.ajax({
+                            url: site_url + "profile/add_fundraiser",
+                            type: "POST",
+                            data: postformData,
+                            dataType: "json",
+                            processData: false, // tell jQuery not to process the data
+                            contentType: false, // tell jQuery not to set contentType
+                            success: function (data) {
+                                $('.loader').hide();
+                                if (data.success == true) {
+                                    $('#profile_process').val(6);
+                                    $('.nav-tabs a[href="#seventh-step"]').tab('show');
+                                } else {
+                                    showErrorMSg(data.error);
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        //-- update profile step do not store fundraiser detail into database
+                        $('.loader').show();
+                        $.ajax({
+                            url: site_url + "profile/proceed_steps",
+                            type: "POST",
+                            data: {profile_process: 6, profile_id: profile_id},
+                            dataType: "json",
+                            processData: false, // tell jQuery not to process the data
+                            contentType: false, // tell jQuery not to set contentType
+                            success: function (data) {
+                                $('.loader').hide();
+                                if (data.success == true) {
+                                    $('#profile_process').val(6);
+                                    $('.nav-tabs a[href="#seventh-step"]').tab('show');
+                                } else {
+                                    showErrorMSg(data.error);
+                                }
+                            }
+                        });
+                    }
                 }
             }
         }
     }
-
     return false;
+}
+function publish_profile() {
+//-- check profile is valid for publish
+    if (profile_id == 0) {
+        $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('#create_profile_form').valid();
+    } else {
+        swal({
+            title: "Are you sure?",
+            text: "You want to publish this profile",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#FF7043",
+            confirmButtonText: "Yes!",
+            cancelButtonText: "No!",
+//            focusConfirm:true,
+            focusCancel: true,
+//          reverseButtons: true,
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+//                window.location.href = current_url;
+//                return true;
+            }
+        }, function (dismiss) {
+            if (dismiss === 'cancel') {
+                swal("Cancelled", "Your profile is not published. :)", "error");
+            }
+        });
+    }
 }
 //-- Gallery step
 var image_count = 0, video_count = 0;

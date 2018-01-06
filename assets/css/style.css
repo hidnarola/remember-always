@@ -1005,8 +1005,20 @@ label.label_big {margin: 0;padding: 0;font-family: 'Rubik';font-size: 16px;color
 .create-profile-box.create_pl .step-btm-btn button.skip:hover {background: transparent;color: #8f63ca;}
 .step-btm-btn button.save_update:hover {color: #49baa0;background: transparent;}
 .step-btm-btn button {transition: ease-in-out .5s;}
+.process-step.process-step_change {margin: 0;}
+.ul_tab_custom_new li.active a:before {content: " ";position: absolute;top: 0px;left: 0;box-shadow:0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);height: 100%;width: 100%;z-index: -1;}
+.ul_tab_custom_new li.active a {box-shadow: none;border-top: 4px solid #975979 !important;color: #975979;background: #fff;border-left: 0;border-right: 0;border-bottom: 0;}
+.ul_tab_custom_new li a {width: auto;height: auto;color: #333;background: transparent;font-size: 16px;font-weight: 500;font-family: 'roboto';padding: 10px 25px;line-height: 24px;border-radius: 0;border-top: 4px solid transparent !important;position: relative;border-left: 0 !important;border-right: 0 !important;border-bottom: 0 !important;margin: 0 !important;}
+.ul_tab_custom_new li {width: auto;position: relative;margin: 0;vertical-align: top;}
+.ul_tab_custom_new {list-style: none;margin: 0;padding: 0;z-index: 10;position: relative;border: 0;line-height: 100%;vertical-align: top;}
+.ul_tab_custom_new li a:hover {background: transparent;}
+
+
+
+
 
 /*** media start here ****/
+
 
 
 @media (min-width:1200px){
@@ -1075,8 +1087,9 @@ label.label_big {margin: 0;padding: 0;font-family: 'Rubik';font-size: 16px;color
     .donation_enter {margin-bottom: 10px;display: inline-block;}
     .input-wrap.input_enter_dn .input-css {width: 100%;}
     .donation_enter_span {display: block;margin: 10px 0 0 0;}
+	.ul_tab_custom_new li a {padding: 10px 15px;}
 
-}
+}  
 
 @media(min-width:768px) and (max-width:991px){
     .navbar.nav-menu {float: left;margin:16px 0 0;width:100%;}
@@ -1152,6 +1165,12 @@ label.label_big {margin: 0;padding: 0;font-family: 'Rubik';font-size: 16px;color
     .donation_enter {margin-bottom: 10px;display: inline-block;}
     .input-wrap.input_enter_dn .input-css {width: 100%;}
     .donation_enter_span {display: block;margin: 10px 0 0 0;}
+	.create-profile-box.create_pl .panel-group .panel .collapse .profile-steps {margin-top: 0px;border-top: 1px solid #eee;}
+.create-profile-box.create_pl .panel-group .panel .collapse {border-left: 3px solid #975979 !important;}
+.create-profile-box.create_pl .panel-group .panel .panel-heading {border: 0;padding: 15px;background: #fff;border-left: 3px solid #975979 !important;border-radius: 0;}
+.create-profile-box.create_pl .panel-group .panel .panel-heading h4 {font-size: 16px;font-weight: 500;font-family: 'roboto';margin: 0;padding: 0;border: 0;}
+.create-profile-box.create_pl .panel-group .panel {border: 0;border-radius: 0;margin: 0 0 10px 0;box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);}
+.create-profile-box.create_pl .panel-group .panel .collapsing .profile-steps {border-top: 0 !important;}
 }
 
 @media(min-width:768px){
@@ -1364,6 +1383,13 @@ label.label_big {margin: 0;padding: 0;font-family: 'Rubik';font-size: 16px;color
     .thanks_msg p span {font-size: 26px;}
     .thanks_msg {padding: 35px 0px 0 0px;}
     .common-body.common-body_donation {margin-top: 20px;}
+	.create-profile-box.create_pl .panel-group .panel .collapse .profile-steps {margin-top: 0px;border-top: 1px solid #eee;}
+.create-profile-box.create_pl .panel-group .panel .collapse {border-left: 3px solid #975979 !important;}
+.create-profile-box.create_pl .panel-group .panel .panel-heading {border: 0;padding: 15px;background: #fff;border-left: 3px solid #975979 !important;border-radius: 0;}
+.create-profile-box.create_pl .panel-group .panel .panel-heading h4 {font-size: 16px;font-weight: 500;font-family: 'roboto';margin: 0;padding: 0;border: 0;}
+.create-profile-box.create_pl .panel-group .panel {border: 0;border-radius: 0;margin: 0 0 10px 0;box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);}
+.create-profile-box.create_pl .panel-group .panel .collapsing .profile-steps {border-top: 0 !important;}
+.gallery-upload input[type=file] {width: 100%;}  
 }
 
 

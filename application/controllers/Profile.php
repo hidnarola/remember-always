@@ -453,6 +453,26 @@ class Profile extends MY_Controller {
     }
 
     /**
+     * Publish profile feature
+     * @param string $slug
+     * @author KU
+     */
+    public function publish($slug = null) {
+        if (!is_null($slug)) {
+            $profile = $this->users_model->sql_select(TBL_PROFILES, 'id', ['where' => ['is_delete' => 0, 'user_id' => $this->user_id, 'slug' => $slug]], ['single' => true]);
+            if (!empty($profile)) {
+                $this->users_model->common_insert_update('update', TBL_PROFILES, ['is_published' => 1], ['id' => $profile['id']]);
+                $this->session->set_flashdata('success', 'Profile is published successfully.');
+                site_url('profile/' . $slug);
+            } else {
+                custom_show_404();
+            }
+        } else {
+            custom_show_404();
+        }
+    }
+
+    /**
      * Upload profile gallery
      * @author KU
      */
@@ -1011,7 +1031,7 @@ class Profile extends MY_Controller {
                     $goal = $this->input->post('fundraiser_goal');
                 }
                 if (!empty($this->input->post('fundraiser_enddate'))) {
-                    $end_date = $this->input->post('fundraiser_enddate');
+                    $end_date = date('Y-m-d', strtotime($this->input->post('fundraiser_enddate')));
                 }
                 $data_array = [
                     'profile_id' => $profile_id,
