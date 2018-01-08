@@ -432,3 +432,76 @@ function delete_media(obj, data, index) {
     }
     $(obj).parent('.gallery-wrap').parent('li').remove();
 }
+
+/**
+ * Toggle popups based on params passed
+ * @param string show id of modal to be displayed
+ * @param string hide id of modal to be hidden
+ * @author KU
+ */
+function display_popup(show, hide) {
+    $('#' + show).modal();
+    $('#' + hide).modal('hide');
+}
+
+/**
+ * Display confirmation before publish function
+ * @author KU
+ */
+function publish_profile() {
+    swal({
+        title: "Are you sure?",
+        text: "You want to publish this profile",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#FF7043",
+        confirmButtonText: "Yes!",
+        cancelButtonText: "No!",
+//            focusConfirm:true,
+        focusCancel: true,
+//          reverseButtons: true,
+    }).then(function (isConfirm) {
+        if (isConfirm) {
+            window.location.href = site_url + 'profile/publish/' + profile_slug;
+            return true;
+        }
+    }, function (dismiss) {
+        if (dismiss === 'cancel') {
+            swal("Cancelled", "Your profile is not published. :(", "error");
+        }
+    });
+
+}
+
+
+/**
+ * Check email form is valid or not if valid the call to ajax function for email send
+ * @returns {undefined}
+ */
+function share_email() {
+    if ($('#share_email_form').valid()) {
+        var emails = $('#email_friends').val();
+        var emails_arr = emails.split(',');
+        $('.loader').show();
+        if (emails_arr.length <= 30) {
+            $.ajax({
+                url: site_url + "profile/send_profile_email",
+                type: "POST",
+                data: $('#share_email_form').serialize(),
+                dataType: "json",
+                success: function (data) {
+                    $('.loader').hide();
+                    if (data.success == true) {
+                        display_popup('email_popup', 'fbshare_popup')
+                    } else {
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        } else {
+            $('#email_friends-error').show();
+            $('#email_friends-error').text('You can add upto 30 email addresses only!');
+        }
+
+    }
+}

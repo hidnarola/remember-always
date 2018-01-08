@@ -96,6 +96,7 @@ $route['profile/add_fundraiser'] = 'profile/add_fundraiser';
 $route['profile/delete_fundmedia'] = 'profile/delete_fundmedia';
 $route['profile/upload_post'] = 'profile/upload_post';
 $route['profile/delete_post'] = 'profile/delete_post';
+$route['profile/send_profile_email'] = 'profile/send_profile_email';
 $route['profile/(:any)'] = 'profile/index/$1';
 
 $route['flowers/view'] = 'flowers/view';

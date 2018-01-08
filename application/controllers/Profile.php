@@ -1206,4 +1206,29 @@ class Profile extends MY_Controller {
         exit;
     }
 
+    /**
+     * Send profile through email
+     */
+    public function send_profile_email() {
+        $emails = $this->input->post('email_friends');
+        if (!empty($emails)) {
+            $email_arrs = explode(',', $this->input->post('emails'));
+            $valid = 1;
+            foreach ($email_arrs as $arr) {
+                
+            }
+            $email_data['subject'] = 'Remember Always - Share Profile';
+
+            $slug = $this->input->post('profile_slug');
+            $email_data['name'] = $this->session->userdata('user')['firstname'] . ' ' . $this->session->userdata('user')['lastname'];
+            $email_data['url'] = site_url('profile/' . $slug);
+            send_mail(trim($this->input->post('email')), 'share_profile', $email_data);
+        } else {
+            $data['success'] = false;
+            $data['error'] = "Please enter email addresses to share!";
+        }
+        echo json_encode($data);
+        exit;
+    }
+
 }
