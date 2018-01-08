@@ -114,6 +114,9 @@ define('TBL_SERVICE_PROVIDERS', 'service_providers');
 define('TBL_SLIDER', 'slider');
 define('TBL_STATE', 'states');
 define('TBL_USERS', 'users');
+define('TBL_QUESTIONS', 'questions');
+define('TBL_ANSWERS', 'answers');
+define('TBL_COMMENTS', 'comments');
 
 /**
  * Constants for Images
