@@ -463,7 +463,7 @@ class Profile extends MY_Controller {
             if (!empty($profile)) {
                 $this->users_model->common_insert_update('update', TBL_PROFILES, ['is_published' => 1], ['id' => $profile['id']]);
                 $this->session->set_flashdata('success', 'Profile is published successfully.');
-                site_url('profile/' . $slug);
+                redirect('profile/' . $slug);
             } else {
                 custom_show_404();
             }
@@ -831,6 +831,10 @@ class Profile extends MY_Controller {
         if (!empty($timeline)) {
             $timeline_count = count($timeline) - 1;
             foreach ($timeline as $key => $value) {
+                $date = '';
+                if ($date != '') {
+                    $date = date('m/d/Y', strtotime($value['date']));
+                }
                 $str .= '<input type="hidden" name="timelineid[]" value="' . base64_encode($value['id']) . '"/>
                         <div class="step-06">
                             <div class="step-06-l">
@@ -839,7 +843,7 @@ class Profile extends MY_Controller {
                                     <input type="text" name="title[]" placeholder="Title" class="input-css" value="' . $value['title'] . '">
                                 </div>
                                 <div class="input-wrap four-input">
-                                    <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="' . date('m/d/Y', strtotime($value['date'])) . '"> <span>Or</span>
+                                    <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="' . $date . '"> <span>Or</span>
                                     <input type="number" name="month[]" placeholder="Month" class="input-css" value="' . $value['month'] . '">
                                     <input type="number" name="month_year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '"><span>Or</span>
                                     <input type="number" name="year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '">

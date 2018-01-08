@@ -86,9 +86,11 @@
                         </form>
                         <div class="step-btm-btn">
                             <button class="next" onclick="return proceed_step();">Save/Update</button>
-                            <button class="back" onclick="return publish_profile()">Publish</button>
-                            <button class="skip" onclick="return skip_step()">Preview</button>
-                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                                <button class="back" onclick="return publish_profile()">Publish</button>
+                            <?php } ?>
+                            <button class="skip" onclick="return preview_profile()">Preview</button>
+                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="second-step" class="profile-steps tab-pane">
@@ -183,9 +185,11 @@
                         </div>
                         <div class="step-btm-btn">
                             <button class="next" onclick="return proceed_step();">Save/Update</button>
-                            <button class="back" onclick="return publish_profile()">Publish</button>
-                            <button class="skip" onclick="return skip_step()">Preview</button>
-                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                                <button class="back" onclick="return publish_profile()">Publish</button>
+                            <?php } ?>
+                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
+                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="third-step" class="profile-steps tab-pane">
@@ -248,9 +252,11 @@
                         </div>
                         <div class="step-btm-btn">
                             <button class="next" onclick="return proceed_step();">Save/Update</button>
-                            <button class="back" onclick="return publish_profile()">Publish</button>
-                            <button class="skip" onclick="return skip_step()">Preview</button>
-                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                                <button class="back" onclick="return publish_profile()">Publish</button>
+                            <?php } ?>
+                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
+                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="third1-step" class="profile-steps tab-pane">
@@ -313,9 +319,11 @@
                         </div>
                         <div class="step-btm-btn">
                             <button class="next" onclick="return proceed_step();">Save/Update</button>
-                            <button class="back" onclick="return publish_profile()">Publish</button>
-                            <button class="skip" onclick="return skip_step()">Preview</button>
-                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                                <button class="back" onclick="return publish_profile()">Publish</button>
+                            <?php } ?>
+                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
+                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="forth-step" class="profile-steps tab-pane">
@@ -339,7 +347,7 @@
                                                         <input type="text" name="title[]" placeholder="Title" class="input-css" value="<?php echo $value['title'] ?>">
                                                     </div>
                                                     <div class="input-wrap four-input">
-                                                        <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="<?php echo date('m/d/Y', strtotime($value['date'])) ?>"> <span>Or</span>
+                                                        <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="<?php if ($value['date'] != '') echo date('m/d/Y', strtotime($value['date'])) ?>"> <span>Or</span>
                                                         <input type="number" name="month[]" placeholder="Month" class="input-css" value="<?php echo $value['month'] ?>">
                                                         <input type="number" name="month_year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>"><span>Or</span>
                                                         <input type="number" name="year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>">
@@ -415,9 +423,11 @@
                         </div>
                         <div class="step-btm-btn">
                             <button class="next" onclick="return proceed_step();">Save/Update</button>
-                            <button class="back" onclick="return publish_profile()">Publish</button>
-                            <button class="skip" onclick="return skip_step()">Preview</button>
-                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                                <button class="back" onclick="return publish_profile()">Publish</button>
+                            <?php } ?>
+                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
+                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="fifth-step" class="profile-steps tab-pane">
@@ -649,9 +659,11 @@
                         </form>
                         <div class="step-btm-btn">
                             <button class="next" onclick="return proceed_step();">Save/Update</button>
-                            <button class="back" onclick="return publish_profile()">Publish</button>
-                            <button class="skip" onclick="return skip_step()">Preview</button>
-                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                                <button class="back" onclick="return publish_profile()">Publish</button>
+                            <?php } ?>
+                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
+                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="sixth-step" class="profile-steps tab-pane">
@@ -729,9 +741,11 @@
                         </div>
                         <div class="step-btm-btn">
                             <button class="next" onclick="return proceed_step();">Save/Update</button>
-                            <button class="back" onclick="return publish_profile()">Publish</button>
-                            <button class="skip" onclick="return skip_step()">Preview</button>
-                            <button class="save_update" onclick="return proceed_step();">Save and Finish Later</button>
+                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                                <button class="back" onclick="return publish_profile()">Publish</button>
+                            <?php } ?>
+                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
+                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
                         </div>
                     </div>
                     <div id="seventh-step" class="profile-steps tab-pane">
@@ -754,8 +768,10 @@
                             <p>Click the preview profile button to view and publish the profile.</p>
                         </div>
                         <div class="step-btm-btn">
-                            <button class="back" onclick="return publish_profile()">Publish</button>
-                            <button class="skip" onclick="return skip_step()">Preview</button>
+                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                                <button class="back" onclick="return publish_profile()">Publish</button>
+                            <?php } ?>
+                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
                         </div>
                     </div>
                 </div>

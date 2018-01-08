@@ -47,6 +47,8 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .edit-profile-btn:hover {background: transparent;color: #57585a;text-decoration: none;}
 .publish-profile-btn:hover {background: transparent;color: #a94442;text-decoration: none;}
 /*5-1-2018 Publish Profile button pop ups*/
-#email_popup .pup-btn {position: absolute;top: -28px;right: -34px;width: auto;}
-#email_popup .pup-btn button {width: 34px;height: 34px;background: #545454;color: #fff;border-radius: 80px;line-height: 34px;border: 0;vertical-align: top;text-align: center;}
-#email_popup .pup-btn i {vertical-align: top;position: relative;top: -2px;left: 1px;}
+.publish-share-modal .pup-btn {position: absolute;top: -28px;right: -34px;width: auto;}
+.publish-share-modal .pup-btn button {width: 34px;height: 34px;background: #545454;color: #fff;border-radius: 80px;line-height: 34px;border: 0;vertical-align: top;text-align: center;}
+.publish-share-modal .pup-btn i {vertical-align: top;position: relative;top: -2px;left: 1px;}
+/*8-1-2018 popup buttons*/
+.publish-share-modal .step-btm-btn{margin:0;padding: 20px 0 0 0;}
