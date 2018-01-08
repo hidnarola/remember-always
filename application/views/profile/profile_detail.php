@@ -563,7 +563,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                            ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                              ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
@@ -716,7 +716,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="email_popup">
+<div class="modal fade publish-share-modal" id="email_popup">
     <div class="modal-dialog" role="document">
         <div class="login-signup">
             <div class="modal-body">
@@ -732,6 +732,28 @@
                     <textarea class="input-css textarea-css" name="email_friends" id="email_friends" placeholder="Enter up to 30 email addresses separated by commas;you will be able to send more later if needed. To share with more than 30 people via email,you can use your regular email to share the Life Profile link."></textarea>
                 </div>
                 <div class="step-btm-btn">
+                    <button class="skip" onclick="$('#fbshare_popup').modal('toggle')">Skip</button>
+                    <button class="next" onclick="return share_email();">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade publish-share-modal" id="fbshare_popup">
+    <div class="modal-dialog" role="document">
+        <div class="login-signup">
+            <div class="modal-body">
+                <div class="pup-btn">
+                    <button type="button" onclick="$('#fbshare_popup').modal('toggle')"><i class="fa fa-close"></i></button>
+                </div>    
+                <div class="modal-header custom_header text-center">
+                    Share on facebook (optional)
+                    <label class="label-css">Share the Life Profile via facebook</label>
+                </div>
+                <div class="input-wrap">
+                    <a class="btn btn-primary" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo $url; ?>')" href="javascript:void(0)">Post to Facebook</a>
+                </div>
+                <div class="step-btm-btn">
                     <button class="skip" onclick="return skip_email()">Skip</button>
                     <button class="next" onclick="return share_email();">Next</button>
                 </div>
@@ -739,16 +761,16 @@
         </div>
     </div>
 </div>
+<?php
+if (!$this->is_user_loggedin)
+    $user_logged_in = "not";
+else
+    $user_logged_in = $this->is_user_loggedin;
+?>
 <script type="text/javascript">
     $('#timeline_details .timeline_media').parent().parent().hide();
     $('#timeline_details .timeline_details').parent().parent().hide();
-    var user_logged_in = '<?php
-                                if (!$this->is_user_loggedin) {
-                                    echo "not";
-                                } else {
-                                    echo $this->is_user_loggedin;
-                                }
-                                ?>';
+    var user_logged_in = '<?php echo $user_logged_in ?>';
     var profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';
     var slug = '<?php echo isset($profile['slug']) ? $profile['slug'] : '' ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
