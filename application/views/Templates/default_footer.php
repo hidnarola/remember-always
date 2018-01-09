@@ -8,10 +8,6 @@
             <ul>
                 <li><a href="<?php echo site_url('/') ?>">Home</a></li>
                 <li><a href="<?php echo site_url('blog') ?>">Blogs</a></li>
-                <!--                <li><a href="">Blog</a></li>
-                                <li><a href="">About</a></li>
-                                <li><a href="">FAQ</a></li>
-                                    <li><a href="">Features</a></li>-->
                 <?php
                 $header_links = get_pages('footer');
                 if (isset($header_links)) {
@@ -39,13 +35,14 @@
         </div>
         <div class="ftr-contact ftr-sepretor">
             <h3>Contact us</h3>
-            <p><strong>Address :</strong> An unknown printer took <br/> Galley of type scrambled </p>
-            <p><strong>Phone :</strong> (+91) 9876 - 543 - 210</p>
-            <p><strong>E-mail :</strong> support@remember.com</p>
+            <p><strong>Address :</strong><br/><a href="https://www.google.com/maps/place/3415+W+Lake+Mary+Blvd+%23951965lake,+Lake+Mary,+FL+32746,+USA/@28.7554428,-81.3406926,17z/data=!4m5!3m4!1s0x88e76d583d725ad1:0x93eca9ac4182673a!8m2!3d28.7554428!4d-81.3385039" target="_blank"> 3415 W. Lake Mary Blvd. #951965 <br/> Lake Mary, FL 32795 </a></p>
+            <p><strong>Phone :</strong> 863-703-6036</p>
+            <p><strong>E-mail :</strong> support@rememberalways.com</p>
         </div>
         <div class="ftr-follow ftr-sepretor">
             <h3>Follow Us</h3>
-            <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            <a href="">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;"
                             xml:space="preserve">
                     <g>
@@ -86,8 +83,10 @@
                     </g>
                     <g>
                     </g>
-                </svg></a>
-            <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                </svg>
+            </a>
+            <a href="">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;"
                             xml:space="preserve">
                     <g>
@@ -133,8 +132,10 @@
                     </g>
                     <g>
                     </g>
-                </svg></a>
-            <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                </svg>
+            </a>
+            <a href="">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;"
                             xml:space="preserve">
                     <g>
@@ -191,8 +192,10 @@
                     </g>
                     <g>
                     </g>
-                </svg></a>
-            <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                </svg>
+            </a>
+            <a href="">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;"
                             xml:space="preserve">
                     <g>
@@ -241,8 +244,10 @@
                     </g>
                     <g>
                     </g>
-                </svg></a>
-            <a href=""><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                </svg>
+            </a>
+            <a href="">
+                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             width="49.652px" height="49.652px" viewBox="0 0 49.652 49.652" style="enable-background:new 0 0 49.652 49.652;"
                             xml:space="preserve">
                     <g>
@@ -290,9 +295,9 @@
                     </g>
                     <g>
                     </g>
-                </svg></a>
+                </svg>
+            </a>
         </div>
-
         <div class="ftr-btm">
             <p>© Copyright 2017  -  All Right Reserved. </p>
         </div>

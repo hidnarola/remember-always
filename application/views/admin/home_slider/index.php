@@ -113,8 +113,7 @@
                     visible: true,
                     width: "10%",
                     render: function (data, type, full, meta) {
-                        var action = '<a class="fancybox" href="<?php echo base_url() . SLIDER_IMAGES ?>' + data + '" data-fancybox-group="gallery" ><img src="<?php echo base_url() . SLIDER_IMAGES ?>' + data + '" style="width: 58px; height: 58px; border - radius: 2px; " alt="' + data + '"></a>';
-//                                    var action = '<img src="' + site_url + 'assets/admin/images/placeholder.jpg" style="width: 58px; height: 58px; border-radius: 2px;" alt="">';
+                        var action = '<a class="fancybox" href="<?php echo base_url() . SLIDER_IMAGES ?>' + data + '" data-fancybox-group="gallery" ><img src="<?php echo base_url() . SLIDER_IMAGES ?>' + data + '" style="height:58px;border-radius:2px;" alt="' + data + '"></a>';
                         return action;
                     }
                 },

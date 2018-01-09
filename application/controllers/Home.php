@@ -22,14 +22,4 @@ class Home extends MY_Controller {
         $this->template->load('default', 'home', $data);
     }
 
-    public function test() {
-        $states = $this->users_model->sql_select(TBL_STATE, 'id,name');
-        foreach ($states as $key => $state) {
-            $data = $this->users_model->sql_select('states_subdivisions', 'state_subdivision_code', ['where' => ['state_subdivision_name' => $state['name']]], ['single' => true]);
-            if (!empty($data)) {
-                $this->users_model->common_insert_update('update', TBL_STATE, ['shortcode' => $data['state_subdivision_code']], ['id' => $state['id']]);
-            }
-        }
-    }
-
 }

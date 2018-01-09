@@ -29,7 +29,8 @@ $(function () {
 
                     $('.date-picker').datepicker({
                         format: "mm/dd/yyyy",
-                        endDate: "date()"
+                        endDate: "date()",
+                        autoclose: true,
                     });
                 }
             });
@@ -39,7 +40,8 @@ $(function () {
     //-- Initialize datepicker
     $('.date-picker').datepicker({
         format: "mm/dd/yyyy",
-        endDate: "date()"
+        endDate: "date()",
+        autoclose: true,
     });
     $(".fancybox")
             .fancybox({
@@ -143,11 +145,23 @@ $(function () {
             }
         }
     });
-    $('.service-datepicker').datepicker({format: "mm/dd/yyyy", startDate: "date()"});
+    $("#fundraiser_profile-form").validate({
+        rules: {
+            fundraiser_goal: {
+                min: 250
+            }
+        },
+        messages: {
+            fundraiser_goal: {
+                min: "Please enter amount greater than or equal to $250.",
+            }
+        }
+    });
+    $('.service-datepicker').datepicker({format: "mm/dd/yyyy", startDate: "date()", autoclose: true});
     $('.service-time').datetimepicker({
         format: 'LT'
     });
-    $('#fundraiser_enddate').datepicker({format: "mm/dd/yyyy", startDate: "date()"});
+    $('#fundraiser_enddate').datepicker({format: "mm/dd/yyyy", startDate: "date()", autoclose: true});
 });
 // Display the preview of image on image upload
 function readURL(input) {
@@ -242,7 +256,8 @@ function profile_steps(obj) {
 
                 $('.date-picker').datepicker({
                     format: "mm/dd/yyyy",
-                    endDate: "date()"
+                    endDate: "date()",
+                    autoclose: true,
                 });
             }
         });
@@ -331,7 +346,7 @@ function skip_step() {
 // Proceeds steps
 function proceed_step() {
     //-- check if required field is fill up by user
-    if (profile_id == 0) {
+    if (currentTab != 'first-step' && profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
         $('#create_profile_form').valid();
     } else {
@@ -624,7 +639,7 @@ function proceed_step() {
                         fundraiser_valid = 0;
                     }
 
-                    if ($('#fundraiser_goal').val() != '' && $('#fundraiser_goal').val() < 0) {
+                    if ($('#fundraiser_goal').val() != '' && $('#fundraiser_goal').val() < 250) {
                         $('#fundraiser_goal').addClass('error');
                         fundraiser_valid = 0;
                     } else {
@@ -978,6 +993,7 @@ function add_funfact() {
                     $('.loader').hide();
                     if (data.success == true) {
                         facts_count++;
+                        $('#third-step').find('.default-fact-empty').removeClass('default-fact-empty');
                         $('#default-facts').remove();
                         str = '<div class="input-wrap-div">';
                         str += '<div class="input-css">' + $('#fun_fact').val() + '</div>';
@@ -1131,7 +1147,7 @@ function save_funeral_tribute() {
                                 fundraiser_valid = 0;
                             }
 
-                            if ($('#fundraiser_goal').val() != '' && $('#fundraiser_goal').val() < 0) {
+                            if ($('#fundraiser_goal').val() != '' && $('#fundraiser_goal').val() < 250) {
                                 $('#fundraiser_goal').addClass('error');
                                 fundraiser_valid = 0;
                             } else {
@@ -1252,17 +1268,20 @@ function add_affiliation() {
                 success: function (data) {
                     $('.loader').hide();
                     if (data.success == true) {
-                        $('#default-facts').remove();
+                        $('#third1-step').find('.default-fact-empty').removeClass('default-fact-empty');
+                        $('#default-affiliation').remove();
                         str = '';
                         $.each(data.data, function (i, v) {
                             str += '<div class="input-wrap-div">';
                             str += '<div class="input-css">' + v.name + '</div>';
                             str += '<a href="javascript:void(0)" onclick="delete_affiliation(this,\'' + v.id + '\',' + v.type + ')">';
                             str += delete_str;
-                            str += '</div>';
+                            str += '</a></div>';
                         });
                         affiliation_count = data.affiliation_count;
-                        $('#selected-affiliation').append(str);
+                        $('#selected-affiliation').prepend(str);
+//                        $('#selected-affiliation').append(str);
+                        $('#select_affiliation').val('');
                         $("#affiliation-form")[0].reset();
                         $('#affiliation-modal').modal('hide');
                         $("#affiliation-form").validate().resetForm();
@@ -1315,7 +1334,7 @@ $(document).on('click', '.add_timeline_btn', function () {
             timeline_div.find('input[name="month[]"]').val('');
             timeline_div.find('input[name="month_year[]"]').val('');
             timeline_div.find('input[name="year[]"]').val('');
-            timeline_div.find('input[name="details[]"]').val('');
+            timeline_div.find('textarea[name="details[]"]').val('');
             timeline_div.find('input[name="life_pic[]"]').val('');
             timeline_div.find('.select-file_up_btn').html("Upload Picture or Video? <span>Select</span>");
             $('.timeline-div').append(timeline_div);
@@ -1325,7 +1344,8 @@ $(document).on('click', '.add_timeline_btn', function () {
             //-- Initialize datepicker
             $('.date-picker').datepicker({
                 format: "mm/dd/yyyy",
-                endDate: "date()"
+                endDate: "date()",
+                autoclose: true,
             });
         }
     }
@@ -1600,7 +1620,7 @@ function delete_fundajaxmedia(obj, media_id) {
 }
 //-- Remove error class if amount is valid
 $('#fundraiser_goal').change(function () {
-    if ($(this).val() > 0) {
+    if ($(this).val() >= 250) {
         $(this).removeClass('error');
     }
 });

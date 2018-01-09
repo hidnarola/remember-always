@@ -310,7 +310,8 @@ class Profile extends MY_Controller {
         $is_left = $profile;
         $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Create Profile';
-        $data['countries'] = $this->users_model->sql_select(TBL_COUNTRY, 'id,name');
+        $data['countries'] = $this->users_model->customQuery('SELECT id,name FROM ' . TBL_COUNTRY . ' order by id=231 DESC');
+        ;
         $data['memorial_states'] = $data['funeral_states'] = $data['burial_states'] = [];
         $data['memorial_cities'] = $data['funeral_cities'] = $data['burial_cities'] = [];
 
@@ -840,14 +841,14 @@ class Profile extends MY_Controller {
                             <div class="step-06-l">
                                 <div class="input-wrap">
                                     <label class="label-css">Title</label>
-                                    <input type="text" name="title[]" placeholder="Title" class="input-css" value="' . $value['title'] . '">
+                                    <input type="text" name="title[]" placeholder="Life Event" class="input-css" value="' . $value['title'] . '">
                                 </div>
                                 <div class="input-wrap four-input">
                                     <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="' . $date . '"> <span>Or</span>
                                     <input type="number" name="month[]" placeholder="Month" class="input-css" value="' . $value['month'] . '">
                                     <input type="number" name="month_year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '"><span>Or</span>
                                     <input type="number" name="year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '">
-                                    <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                    <p>You may enter a Full date, a Month/Year, or a Year.</p>
                                 </div>
                                 <div class="input-wrap">
                                     <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)">' . $value['details'] . '</textarea>
@@ -885,14 +886,14 @@ class Profile extends MY_Controller {
                         <div class="step-06-l">
                             <div class="input-wrap">
                                 <label class="label-css">Title</label>
-                                <input type="text" name="title[]" placeholder="Title" class="input-css">
+                                <input type="text" name="title[]" placeholder="Life Event" class="input-css">
                             </div>
                             <div class="input-wrap four-input">
                                 <input type="text" name="date[]" placeholder="Date" class="input-css date-picker"> <span>Or</span>
                                 <input type="number" name="month[]" placeholder="Month" class="input-css">
                                 <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
                                 <input type="number" name="year[]" placeholder="Year" class="input-css">
-                                <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                <p>You may enter a Full date, a Month/Year, or a Year.</p>
                             </div>
                             <div class="input-wrap">
                                 <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"></textarea>
@@ -1026,66 +1027,24 @@ class Profile extends MY_Controller {
      */
     public function add_fundraiser() {
         if ($this->input->post('profile_id')) {
-            if (trim($this->input->post('fundraiser_title')) != '' && trim($this->input->post('fundraiser_details')) != '') {
-                $profile_id = base64_decode($this->input->post('profile_id'));
-                //Get fund raiser profile 
-                $fund_profile = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
-                $goal = $end_date = null;
-                if (!empty($this->input->post('fundraiser_goal')) && $this->input->post('fundraiser_goal') > 0) {
+            if (trim($this->input->post('fundraiser_title')) != '' && trim($this->input->post('fundraiser_details')) != '' && trim($this->input->post('fundraiser_goal')) != '') {
+                if ($this->input->post('fundraiser_goal') >= 250) {
+                    $profile_id = base64_decode($this->input->post('profile_id'));
+                    //Get fund raiser profile 
+                    $fund_profile = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+                    $end_date = null;
                     $goal = $this->input->post('fundraiser_goal');
-                }
-                if (!empty($this->input->post('fundraiser_enddate'))) {
-                    $end_date = date('Y-m-d', strtotime($this->input->post('fundraiser_enddate')));
-                }
-                $data_array = [
-                    'profile_id' => $profile_id,
-                    'title' => trim($this->input->post('fundraiser_title')),
-                    'goal' => $goal,
-                    'end_date' => $end_date,
-                    'details' => trim($this->input->post('fundraiser_details'))
-                ];
-                if (!empty($fund_profile)) {
-                    $data_array['updated_at'] = date('Y-m-d H:i:s');
-                    $fundraiser_id = $fund_profile['id'];
-                    $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $data_array, ['id' => $fund_profile['id']]);
-                } else {
-                    $data_array['created_at'] = date('Y-m-d H:i:s');
-                    $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
-                }
-                $directory = 'profile_' . $profile_id;
-                if (!file_exists(FUNDRAISER_IMAGES . $directory)) {
-                    mkdir(FUNDRAISER_IMAGES . $directory);
-                }
-                $flag = 0;
-                $dataArr_media = [];
-                if (isset($_FILES['fundraiser_append_media']['name'])) {
-                    foreach ($_FILES['fundraiser_append_media']['name'] as $key => $value) {
-                        $extension = explode('/', $_FILES['fundraiser_append_media']['type'][$key]);
-                        $_FILES['custom_image']['name'] = $_FILES['fundraiser_append_media']['name'][$key];
-                        $_FILES['custom_image']['type'] = $_FILES['fundraiser_append_media']['type'][$key];
-                        $_FILES['custom_image']['tmp_name'] = $_FILES['fundraiser_append_media']['tmp_name'][$key];
-                        $_FILES['custom_image']['error'] = $_FILES['fundraiser_append_media']['error'][$key];
-                        $_FILES['custom_image']['size'] = $_FILES['fundraiser_append_media']['size'][$key];
-                        if ($this->input->post('fundraiser_append_types')[$key] == 1) {
-                            $image_data = upload_image('custom_image', FUNDRAISER_IMAGES . $directory);
-                        } else {
-                            $image_data = upload_video('custom_image', FUNDRAISER_IMAGES . $directory);
-                        }
-                        if (is_array($image_data)) {
-                            $flag = 1;
-                            $data['success'] = false;
-                            $data['error'] = $image_data['errors'];
-                        } else {
-                            $image = $image_data;
-                            $dataArr_media[] = array(
-                                'media' => $directory . '/' . $image,
-                                'type' => $this->input->post('fundraiser_append_types')[$key],
-                                'created_at' => date('Y-m-d H:i:s'),
-                            );
-                        }
+
+                    if (!empty($this->input->post('fundraiser_enddate'))) {
+                        $end_date = date('Y-m-d', strtotime($this->input->post('fundraiser_enddate')));
                     }
-                }
-                if ($flag == 0) {
+                    $data_array = [
+                        'profile_id' => $profile_id,
+                        'title' => trim($this->input->post('fundraiser_title')),
+                        'goal' => $goal,
+                        'end_date' => $end_date,
+                        'details' => trim($this->input->post('fundraiser_details'))
+                    ];
                     if (!empty($fund_profile)) {
                         $data_array['updated_at'] = date('Y-m-d H:i:s');
                         $fundraiser_id = $fund_profile['id'];
@@ -1094,12 +1053,58 @@ class Profile extends MY_Controller {
                         $data_array['created_at'] = date('Y-m-d H:i:s');
                         $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
                     }
-                    foreach ($dataArr_media as $media) {
-                        $media['fundraiser_profile_id'] = $fundraiser_id;
-                        $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_MEDIA, $media);
+                    $directory = 'profile_' . $profile_id;
+                    if (!file_exists(FUNDRAISER_IMAGES . $directory)) {
+                        mkdir(FUNDRAISER_IMAGES . $directory);
                     }
-                    $this->users_model->common_insert_update('update', TBL_PROFILES, ['type' => 2, 'profile_process' => 6], ['id' => $profile_id]);
-                    $data['success'] = true;
+                    $flag = 0;
+                    $dataArr_media = [];
+                    if (isset($_FILES['fundraiser_append_media']['name'])) {
+                        foreach ($_FILES['fundraiser_append_media']['name'] as $key => $value) {
+                            $extension = explode('/', $_FILES['fundraiser_append_media']['type'][$key]);
+                            $_FILES['custom_image']['name'] = $_FILES['fundraiser_append_media']['name'][$key];
+                            $_FILES['custom_image']['type'] = $_FILES['fundraiser_append_media']['type'][$key];
+                            $_FILES['custom_image']['tmp_name'] = $_FILES['fundraiser_append_media']['tmp_name'][$key];
+                            $_FILES['custom_image']['error'] = $_FILES['fundraiser_append_media']['error'][$key];
+                            $_FILES['custom_image']['size'] = $_FILES['fundraiser_append_media']['size'][$key];
+                            if ($this->input->post('fundraiser_append_types')[$key] == 1) {
+                                $image_data = upload_image('custom_image', FUNDRAISER_IMAGES . $directory);
+                            } else {
+                                $image_data = upload_video('custom_image', FUNDRAISER_IMAGES . $directory);
+                            }
+                            if (is_array($image_data)) {
+                                $flag = 1;
+                                $data['success'] = false;
+                                $data['error'] = $image_data['errors'];
+                            } else {
+                                $image = $image_data;
+                                $dataArr_media[] = array(
+                                    'media' => $directory . '/' . $image,
+                                    'type' => $this->input->post('fundraiser_append_types')[$key],
+                                    'created_at' => date('Y-m-d H:i:s'),
+                                );
+                            }
+                        }
+                    }
+                    if ($flag == 0) {
+                        if (!empty($fund_profile)) {
+                            $data_array['updated_at'] = date('Y-m-d H:i:s');
+                            $fundraiser_id = $fund_profile['id'];
+                            $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $data_array, ['id' => $fund_profile['id']]);
+                        } else {
+                            $data_array['created_at'] = date('Y-m-d H:i:s');
+                            $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
+                        }
+                        foreach ($dataArr_media as $media) {
+                            $media['fundraiser_profile_id'] = $fundraiser_id;
+                            $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_MEDIA, $media);
+                        }
+                        $this->users_model->common_insert_update('update', TBL_PROFILES, ['type' => 2, 'profile_process' => 6], ['id' => $profile_id]);
+                        $data['success'] = true;
+                    }
+                } else {
+                    $data['success'] = false;
+                    $data['error'] = 'Please enter amount greater than or equal to $250';
                 }
             } else {
                 $data['success'] = false;

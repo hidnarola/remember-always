@@ -6,19 +6,52 @@
                 <img src="<?php echo SLIDER_IMAGES . $image['image'] ?>" alt="<?php echo $key . '-slider' ?>" />
                 <div class="home-caption">
                     <h2>
-                        Your place to <span>remember, honor & celebrate</span>loved ones, together, always.
                         <?php
-                        if ($image['description'] != '') {
-                            echo '<br/>' . $image['description'];
+                        $lines = explode("\n", $image['description']);
+                        if (count($lines) == 1) {
+                            echo "<span>" . $image['description'] . "</span>";
+                        } else {
+                            foreach ($lines as $line_key => $line) {
+                                if ($line_key == 1) {
+                                    echo "<span>" . $line . "</span>";
+                                } else {
+                                    echo $line;
+                                }
+                            }
                         }
                         ?>
                     </h2>
-                    <?php if ($this->is_user_loggedin) { ?>
-                        <a href="<?php echo site_url('profile/create') ?>">Create a Life Profile</a>
-                    <?php } else { ?>
-                        <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Create a Life Profile</a>
-                    <?php } ?>
-                    <a href="<?php echo site_url('search') ?>">Find a Life Profile</a>
+
+                    <?php
+                    if ($this->is_user_loggedin) {
+                        if ($key == 1) {
+                            echo '<a href="' . site_url('profile/create') . '">Create a Life Profile with a Tribute Fundraiser</a>';
+                        } else if ($key == 2) {
+                            echo '<a href="' . site_url('profile/create') . '">Access Resources</a>';
+                        } else {
+                            echo '<a href="' . site_url('profile/create') . '">Create a Life Profile</a>';
+                        }
+                        ?>
+                        <?php
+                    } else {
+                        if ($key == 1) {
+                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Create a Life Profile with a Tribute Fundraiser</a>';
+                        } else if ($key == 2) {
+                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Access Resources</a>';
+                        } else {
+                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Create a Life Profile</a>';
+                        }
+                        ?>
+                        <?php
+                    }
+                    if ($key == 1) {
+                        echo '<a href="' . site_url('search') . '">Add a Tribute Fundraiser to a Life Profile</a>';
+                    } else if ($key == 2) {
+                        
+                    } else {
+                        echo '<a href="' . site_url('search') . '">Find a Life Profile</a>';
+                    }
+                    ?>
                 </div>
             </div>
             <?php

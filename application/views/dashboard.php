@@ -26,17 +26,25 @@
                             <?php foreach ($profiles as $key => $val) { ?>
                                 <li>
                                     <span>
-                                         <?php
+                                        <?php
                                         if (isset($val['profile_image']) && $val['profile_image'] != '') {
                                             echo "<img src='" . PROFILE_IMAGES . $val['profile_image'] . "' width='100%' height='100%' class='mCS_img_loaded'>";
                                         }
                                         ?>
                                     </span>
-                                    <h3><a href="<?php echo site_url('profile/').$val['slug']?>"><?php echo $val['firstname'] . ' ' . $val['lastname'] . ' (' . $val['nickname'] . ')' ?></a></h3>
+                                    <h3>
+                                        <a href="<?php echo site_url('profile/') . $val['slug'] ?>">
+                                            <?php
+                                            echo $val['firstname'] . ' ' . $val['lastname'];
+                                            if ($val['nickname'] != '')
+                                                echo ' (' . $val['nickname'] . ')';
+                                            ?>
+                                        </a>
+                                    </h3>
                                     <p><?php echo $val['life_bio'] ?></p>
                                     <div class="user-update">
-                                        <a href="<?php echo site_url('profile/edit/').$val['slug']?>" class="edit">Edit </a>
-                                            <a href="javascript:void(0)" class="delete profile_delete" data-profile="<?php echo $val['slug'] ?>">Delete</a>
+                                        <a href="<?php echo site_url('profile/edit/') . $val['slug'] ?>" class="edit">Edit </a>
+                                        <a href="javascript:void(0)" class="delete profile_delete" data-profile="<?php echo $val['slug'] ?>">Delete</a>
                                         <?php if ($val['is_published'] == 0) { ?>
                                             <a href="javascript:void(0)" class="public publish" data-profile="<?php echo $val['slug'] ?>">Publish</a>
                                         <?php } ?>
@@ -62,7 +70,7 @@
                                         }
                                         ?>
                                     </span>
-                                    <h3><a href="<?php echo site_url('affiliation/view/').$val['slug']?>"><?php echo $val['name'] . ' (' . $val['category_name'] . ')' ?></a></h3>
+                                    <h3><a href="<?php echo site_url('affiliation/view/') . $val['slug'] ?>"><?php echo $val['name'] . ' (' . $val['category_name'] . ')' ?></a></h3>
                                     <p><?php echo $val['description'] ?></p>
                                     <div class="user-update">
                                         <a href="<?php echo site_url('affiliation/edit/' . $val['slug']) ?>" class="edit">Edit </a>

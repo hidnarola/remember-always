@@ -165,6 +165,7 @@ function slug($text, $table, $id = NULL) {
  * @return array - Either name of the image if uploaded successfully or Array of errors if image is not uploaded successfully
  */
 function upload_image($image_name, $image_path) {
+
     $CI = & get_instance();
     $extension = explode('/', $_FILES[$image_name]['type']);
     $randname = uniqid() . time() . '.' . end($extension);
@@ -181,13 +182,17 @@ function upload_image($image_name, $image_path) {
     $CI->upload->initialize($config);
     if ($CI->upload->do_upload($image_name)) {
         $img_data = $CI->upload->data();
-        $randname = uniqid() . time();
-        $file_name = $randname . $img_data['file_ext'];
-        $old_path = $img_data['full_path'];
-        $new_path = $img_data['file_path'] . $file_name;
-        exec(FFMPEG_PATH . ' -i ' . $old_path . ' -vf scale=500:-1 ' . $new_path);
-        unlink($img_data['full_path']);
-        $imgname = $file_name;
+        /*
+          $randname = uniqid() . time();
+          $file_name = $randname . $img_data['file_ext'];
+          $old_path = $img_data['full_path'];
+          $new_path = $img_data['file_path'] . $file_name;
+          exec(FFMPEG_PATH . ' -i ' . $old_path . ' -vf scale=500:-1 ' . $new_path);
+          unlink($img_data['full_path']);
+          $imgname = $file_name; */
+        
+//        $new_line = exec(FFMPEG_PATH . ' -i ' . $filepath . ' -vf "scale=min\'(4032,iw)\':-2" ' . $filepath_new);
+        $imgname = $img_data['file_name'];
     } else {
         $imgname = array('errors' => $CI->upload->display_errors());
     }

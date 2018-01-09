@@ -52,3 +52,6 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .publish-share-modal .pup-btn i {vertical-align: top;position: relative;top: -2px;left: 1px;}
 /*8-1-2018 popup buttons*/
 .publish-share-modal .step-btm-btn{margin:0;padding: 20px 0 0 0;}
+/*9-1-2018 Footer Address link*/
+.ftr-contact p a {color: #c5c5c5;}
+.blog-box {min-height: 360px;} /*To set height of the blog box same*/

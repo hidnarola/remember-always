@@ -43,13 +43,15 @@
                                     <div class="upload-btn"> 
                                         <span class="up_btn">
                                             <?php
+                                            $profile_required = 'required';
                                             if (isset($profile) && $profile['profile_image'] != '') {
+                                                $profile_required = '';
                                                 echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "' style='width: 170px;'>";
                                             } else
                                                 echo "Upload Profile Picture";
                                             ?>
                                         </span>
-                                        <input type="file" name="profile_image" id="profile_image" multiple="false" onchange="readURL(this);"> 
+                                        <input type="file" name="profile_image" id="profile_image" multiple="false" onchange="readURL(this);" <?php echo $profile_required ?>> 
                                     </div>
                                 </div>
 
@@ -197,8 +199,12 @@
                             <h2>Add A Fun Facts<small>(optional)</small> </h2>
                             <p>Add up to 10fun facts about your loved one.<br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
                         </div>
-
-                        <div class="step-form">
+                        <?php
+                        $fact_class = 'default-fact-empty';
+                        if (isset($fun_facts) && !empty($fun_facts))
+                            $fact_class = '';
+                        ?>
+                        <div class="step-form <?php echo $fact_class ?>">
                             <div class="step-03">
                                 <div class="step-03-l">
                                     <?php
@@ -265,9 +271,10 @@
                             <p>Add up to 10fun Affiliations about your loved one. <br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
                         </div>
 
-                        <div class="step-form">
+                        <div class="step-form <?php if (!isset($profile_affiliations)) echo "default-fact-empty" ?>">
                             <div class="step-03">
                                 <div class="step-03-l">
+                                    <div id="selected-affiliation"></div>
                                     <?php
                                     $affiliation_count = 0;
                                     if (isset($profile_affiliations) && !empty($profile_affiliations)) {
@@ -301,7 +308,6 @@
                                             </div>
                                         </div>
                                     <?php } ?>
-                                    <div id="selected-affiliation"></div>
                                 </div>
                                 <div class="step-03-m">
                                     <button type="button" onclick="$('#affiliation-modal').modal('show')">Add Affiliation</button>
@@ -344,14 +350,14 @@
                                                 <div class="step-06-l">
                                                     <div class="input-wrap">
                                                         <label class="label-css">Title</label>
-                                                        <input type="text" name="title[]" placeholder="Title" class="input-css" value="<?php echo $value['title'] ?>">
+                                                        <input type="text" name="title[]" placeholder="Life Event" class="input-css" value="<?php echo $value['title'] ?>">
                                                     </div>
                                                     <div class="input-wrap four-input">
                                                         <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="<?php if ($value['date'] != '') echo date('m/d/Y', strtotime($value['date'])) ?>"> <span>Or</span>
                                                         <input type="number" name="month[]" placeholder="Month" class="input-css" value="<?php echo $value['month'] ?>">
                                                         <input type="number" name="month_year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>"><span>Or</span>
                                                         <input type="number" name="year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>">
-                                                        <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                                        <p>You may enter a Full date, a Month/Year, or a Year.</p>
                                                     </div>
                                                     <div class="input-wrap">
                                                         <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"><?php echo $value['details']; ?></textarea>
@@ -394,14 +400,14 @@
                                             <div class="step-06-l">
                                                 <div class="input-wrap">
                                                     <label class="label-css">Title</label>
-                                                    <input type="text" name="title[]" placeholder="Title" class="input-css">
+                                                    <input type="text" name="title[]" placeholder="Life Event" class="input-css">
                                                 </div>
                                                 <div class="input-wrap four-input">
                                                     <input type="text" name="date[]" placeholder="Date" class="input-css date-picker"> <span>Or</span>
                                                     <input type="number" name="month[]" placeholder="Month" class="input-css">
                                                     <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
                                                     <input type="number" name="year[]" placeholder="Year" class="input-css">
-                                                    <p>You may enter a Year a, Month/Year, or a full date.</p>
+                                                    <p>You may enter a Full date, a Month/Year, or a Year.</p>
                                                 </div>
                                                 <div class="input-wrap">
                                                     <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"></textarea>
@@ -681,8 +687,8 @@
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
-                                                <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>">
-                                                <p>Leave empty for campaigns without a fundraising goal.</p>
+                                                <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>>
+                                                <p>Minimum goal is $250.</p>
                                             </div>
                                             <div class="input-r">
                                                 <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
