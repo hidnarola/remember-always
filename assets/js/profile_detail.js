@@ -449,6 +449,7 @@ function display_popup(show, hide) {
  * @author KU
  */
 function publish_profile() {
+    $('#fbshare_popup').modal('hide');
     swal({
         title: "Are you sure?",
         text: "You want to publish this profile",
@@ -462,7 +463,7 @@ function publish_profile() {
 //          reverseButtons: true,
     }).then(function (isConfirm) {
         if (isConfirm) {
-            window.location.href = site_url + 'profile/publish/' + profile_slug;
+            window.location.href = site_url + 'profile/publish/' + slug;
             return true;
         }
     }, function (dismiss) {
@@ -492,9 +493,10 @@ function share_email() {
                 success: function (data) {
                     $('.loader').hide();
                     if (data.success == true) {
-                        display_popup('email_popup', 'fbshare_popup')
+                        display_popup('fbshare_popup', 'email_popup');
                     } else {
-                        showErrorMSg(data.error);
+                        $('#email_friends-error').show();
+                        $('#email_friends-error').text(data.error);
                     }
                 }
             });

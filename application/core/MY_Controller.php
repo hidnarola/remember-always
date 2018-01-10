@@ -67,6 +67,10 @@ class MY_Controller extends CI_Controller {
             }
             //-- If already logged in and try to access login or signup page
             if ($this->is_user_loggedin) {
+                $this->tribute_profile_count = $this->users_model->sql_select(TBL_PROFILES, 'slug', ['where' => ['is_delete' => 0, 'type' => 1]], ['count' => true]);
+                if ($this->tribute_profile_count == 1) {
+                    $this->tribute_profile = $this->users_model->sql_select(TBL_PROFILES, 'slug', ['where' => ['is_delete' => 0, 'type' => 1]], ['single' => true]);
+                }
                 $this->user_id = $this->session->userdata('remalways_user')['id'];
                 if ((strtolower($this->controller) == 'login' && strtolower($this->action) != 'logout') || strtolower($this->controller) == 'signup') {
                     redirect('home');

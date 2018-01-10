@@ -176,8 +176,9 @@ class Service_provider extends MY_Controller {
                 $this->session->set_flashdata('success', 'Service Provider details has been updated successfully.');
             } else {
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
+                $dataArr['is_active'] = 0;
                 $id = $this->providers_model->common_insert_update('insert', TBL_SERVICE_PROVIDERS, $dataArr);
-                $this->session->set_flashdata('success', 'Service Provider listing has been added successfully.');
+                $this->session->set_flashdata('success', 'Service Provider listing has been added successfully. It will be visible once approved by Administrator');
             }
             redirect('service_provider');
         }

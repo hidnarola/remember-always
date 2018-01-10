@@ -19,7 +19,13 @@ class Profile extends MY_Controller {
      */
     public function index($slug = null) {
         if (!is_null($slug)) {
-            $profile = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true, 'join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0')]]);
+            $profile = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname,c.name as country,s.name as state,ci.name as city', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true,
+                'join' => [
+                    array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0'),
+                    array('table' => TBL_COUNTRY . ' c', 'condition' => 'p.country=c.id'),
+                    array('table' => TBL_STATE . ' s', 'condition' => 'p.state=s.id'),
+                    array('table' => TBL_CITY . ' ci', 'condition' => 'p.city=ci.id'),
+            ]]);
             if (!empty($profile)) {
                 $funnel_services_data = [];
                 $post_id = 0;
@@ -307,27 +313,28 @@ class Profile extends MY_Controller {
                 custom_show_404();
             }
         }
-        $is_left = $profile;
         $data['breadcrumb'] = ['title' => 'Create a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $data['title'] = 'Remember Always | Create Profile';
         $data['countries'] = $this->users_model->customQuery('SELECT id,name FROM ' . TBL_COUNTRY . ' order by id=231 DESC');
-        ;
-        $data['memorial_states'] = $data['funeral_states'] = $data['burial_states'] = [];
-        $data['memorial_cities'] = $data['funeral_cities'] = $data['burial_cities'] = [];
+        $data['profile_states'] = $data['memorial_states'] = $data['funeral_states'] = $data['burial_states'] = [];
+        $data['profile_cities'] = $data['memorial_cities'] = $data['funeral_cities'] = $data['burial_cities'] = [];
 
-        if (!empty($is_left)) {
-            $data['profile'] = $is_left;
-            $data['profile_gallery'] = $this->users_model->sql_select(TBL_GALLERY, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['order_by' => 'id DESC']);
-            $data['fun_facts'] = $this->users_model->sql_select(TBL_FUN_FACTS, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
+        if (!empty($profile)) {
+            $data['profile'] = $profile;
+            $data['profile_states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => $profile['country']]]);
+            $data['profile_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $profile['state']]]);
+
+            $data['profile_gallery'] = $this->users_model->sql_select(TBL_GALLERY, '*', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]], ['order_by' => 'id DESC']);
+            $data['fun_facts'] = $this->users_model->sql_select(TBL_FUN_FACTS, '*', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]]);
             //-- Get profile Affiliations
             $sql = "SELECT * FROM ("
-                    . "SELECT id,affiliation_text as name,'1' as free_text,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $is_left['id'] . "
+                    . "SELECT id,affiliation_text as name,'1' as free_text,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $profile['id'] . "
                        UNION ALL
-                       SELECT p.id,a.name,'0' as free_text,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $is_left['id'] . " AND a.is_delete=0 
+                       SELECT p.id,a.name,'0' as free_text,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $profile['id'] . " AND a.is_delete=0 
                     ) a order by created_at";
             $data['profile_affiliations'] = $this->users_model->customQuery($sql);
-            $data['timeline'] = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
-            $services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]]);
+            $data['timeline'] = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]]);
+            $services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, '*', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]]);
             $data['burial_service'] = $data['funeral_service'] = $data['memorial_service'] = $data['burial_cities'] = $data['funeral_cities'] = $data['memorial_cities'] = [];
             foreach ($services as $service) {
                 if ($service['service_type'] == 'Burial') {
@@ -344,7 +351,7 @@ class Profile extends MY_Controller {
                     $data['memorial_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $service['state']]]);
                 }
             }
-            $data['fundraiser'] = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $is_left['id'], 'is_delete' => 0]], ['single' => true]);
+            $data['fundraiser'] = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]], ['single' => true]);
             if (!empty($data['fundraiser'])) {
                 $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, '*', ['where' => ['fundraiser_profile_id' => $data['fundraiser']['id'], 'is_delete' => 0]]);
             }
@@ -356,82 +363,95 @@ class Profile extends MY_Controller {
             $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
             $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'trim|required');
             $this->form_validation->set_rules('date_of_death', 'Date of Death', 'trim|required');
+            $this->form_validation->set_rules('country', 'Country', 'trim|required');
+            $this->form_validation->set_rules('state', 'State', 'trim|required');
+            $this->form_validation->set_rules('city', 'City', 'trim|required');
 
             if ($this->form_validation->run() == FALSE) {
                 $data['error'] = validation_errors();
                 $data['success'] = false;
             } else {
+                if (strtotime($this->input->post('date_of_birth')) < strtotime($this->input->post('date_of_death'))) {
 
-                $profile_process = $this->input->post('profile_process');
-                $flag = 0;
-                $profile_image = '';
-                if (!empty($is_left)) {
-                    $profile_image = $is_left['profile_image'];
-                }
-                if (!empty($this->input->post('nickname'))) {
-                    $slug = trim($this->input->post('nickname'));
-                } else {
-                    $slug = trim($this->input->post('firstname')) . '-' . trim($this->input->post('lastname'));
-                }
-                if (!empty($is_left)) {
-                    $slug = slug($slug, TBL_PROFILES, $is_left['id']);
-                } else {
-                    $slug = slug($slug, TBL_PROFILES);
-                }
-
-                //-- check if profile image is there in $_FILES array
-                if ($_FILES['profile_image']['name'] != '') {
-                    $directory = 'user_' . $this->user_id;
-                    if (!file_exists(PROFILE_IMAGES . $directory)) {
-                        mkdir(PROFILE_IMAGES . $directory);
+                    $profile_process = $this->input->post('profile_process');
+                    $flag = 0;
+                    $profile_image = '';
+                    if (!empty($profile)) {
+                        $profile_image = $profile['profile_image'];
+                    }
+                    if (!empty($this->input->post('nickname'))) {
+                        $slug = trim($this->input->post('nickname'));
+                    } else {
+                        $slug = trim($this->input->post('firstname')) . '-' . trim($this->input->post('lastname'));
+                    }
+                    if (!empty($profile)) {
+                        $slug = slug($slug, TBL_PROFILES, $profile['id']);
+                    } else {
+                        $slug = slug($slug, TBL_PROFILES);
                     }
 
-                    $image_data = upload_image('profile_image', PROFILE_IMAGES . $directory);
-                    if (is_array($image_data)) {
-                        $flag = 1;
-                        $data['error'] = $image_data['errors'];
-                        $data['success'] = false;
-                    } else {
-                        if ($profile_image != '') {
-                            unlink(PROFILE_IMAGES . $profile_image);
+                    //-- check if profile image is there in $_FILES array
+                    if ($_FILES['profile_image']['name'] != '') {
+                        $directory = 'user_' . $this->user_id;
+                        if (!file_exists(PROFILE_IMAGES . $directory)) {
+                            mkdir(PROFILE_IMAGES . $directory);
                         }
-                        $profile_image = $directory . '/' . $image_data;
-                    }
-                }
 
-                if ($flag != 1) {
-                    $data = array(
-                        'user_id' => $this->user_id,
-                        'profile_process' => $this->input->post('profile_process'),
-                        'firstname' => trim($this->input->post('firstname')),
-                        'lastname' => trim($this->input->post('lastname')),
-                        'nickname' => trim($this->input->post('nickname')),
-                        'slug' => $slug,
-                        'profile_image' => $profile_image,
-                        'life_bio' => trim($this->input->post('life_bio')),
-                        'date_of_birth' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_birth'))),
-                        'date_of_death' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_death'))),
-                    );
-                    if (!empty($is_left)) {
-                        $data['updated_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('update', TBL_PROFILES, $data, ['id' => $is_left['id']]);
-                        $profile_id = $is_left['id'];
-                    } else {
-                        $data['created_at'] = date('Y-m-d H:i:s');
-                        $profile_id = $this->users_model->common_insert_update('insert', TBL_PROFILES, $data);
-                    }
-                    if (!file_exists(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id)) {
-                        mkdir(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id);
-                        if ($_FILES['profile_image']['name'] != '') {
-                            rename(PROFILE_IMAGES . $profile_image, PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id . '/' . $image_data);
-                            $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_image' => 'user_' . $this->user_id . '/profile_' . $profile_id . '/' . $image_data], ['id' => $profile_id]);
+                        $image_data = upload_image('profile_image', PROFILE_IMAGES . $directory);
+                        if (is_array($image_data)) {
+                            $flag = 1;
+                            $data['error'] = $image_data['errors'];
+                            $data['success'] = false;
+                        } else {
+                            if ($profile_image != '') {
+                                unlink(PROFILE_IMAGES . $profile_image);
+                            }
+                            $profile_image = $directory . '/' . $image_data;
                         }
                     }
-                    $data['id'] = $profile_id;
-                    $data['success'] = true;
-                    $data['data'] = $data;
+
+                    if ($flag != 1) {
+                        $data = array(
+                            'user_id' => $this->user_id,
+                            'profile_process' => $this->input->post('profile_process'),
+                            'firstname' => trim($this->input->post('firstname')),
+                            'lastname' => trim($this->input->post('lastname')),
+                            'nickname' => trim($this->input->post('nickname')),
+                            'slug' => $slug,
+                            'profile_image' => $profile_image,
+                            'life_bio' => trim($this->input->post('life_bio')),
+                            'date_of_birth' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_birth'))),
+                            'date_of_death' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_death'))),
+                            'country' => $this->input->post('country'),
+                            'state' => $this->input->post('state'),
+                            'city' => $this->input->post('city')
+                        );
+                        if (!empty($profile)) {
+                            $data['updated_at'] = date('Y-m-d H:i:s');
+                            $this->users_model->common_insert_update('update', TBL_PROFILES, $data, ['id' => $profile['id']]);
+                            $profile_id = $profile['id'];
+                        } else {
+                            $data['created_at'] = date('Y-m-d H:i:s');
+                            $data['is_published'] = 0;
+                            $profile_id = $this->users_model->common_insert_update('insert', TBL_PROFILES, $data);
+                        }
+                        if (!file_exists(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id)) {
+                            mkdir(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id);
+                            if ($_FILES['profile_image']['name'] != '') {
+                                rename(PROFILE_IMAGES . $profile_image, PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id . '/' . $image_data);
+                                $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_image' => 'user_' . $this->user_id . '/profile_' . $profile_id . '/' . $image_data], ['id' => $profile_id]);
+                            }
+                        }
+                        $data['id'] = $profile_id;
+                        $data['success'] = true;
+                        $data['data'] = $data;
+                    }
+                } else {
+                    $data['success'] = false;
+                    $data['error'] = 'Date of birth must be smaller than Date of death';
                 }
             }
+
             echo json_encode($data);
             exit;
         }
@@ -1217,17 +1237,33 @@ class Profile extends MY_Controller {
     public function send_profile_email() {
         $emails = $this->input->post('email_friends');
         if (!empty($emails)) {
-            $email_arrs = explode(',', $this->input->post('emails'));
+            $email_arrs = explode(',', $this->input->post('email_friends'));
             $valid = 1;
+            $not_valid_emails = [];
             foreach ($email_arrs as $arr) {
-                
+                if (!filter_var($arr, FILTER_VALIDATE_EMAIL)) {
+                    $valid = 0;
+                    $not_valid_emails[] = $arr;
+                }
             }
-            $email_data['subject'] = 'Remember Always - Share Profile';
-
-            $slug = $this->input->post('profile_slug');
-            $email_data['name'] = $this->session->userdata('user')['firstname'] . ' ' . $this->session->userdata('user')['lastname'];
-            $email_data['url'] = site_url('profile/' . $slug);
-            send_mail(trim($this->input->post('email')), 'share_profile', $email_data);
+            if ($valid == 1) {
+                foreach ($email_arrs as $arr) {
+                    $email_data['subject'] = 'Remember Always - Share Profile';
+                    $slug = $this->input->post('profile_slug');
+                    $email_data['name'] = $this->session->userdata('remalways_user')['firstname'] . ' ' . $this->session->userdata('remalways_user')['lastname'];
+                    $email_data['url'] = site_url('profile/' . $slug);
+                    send_mail($arr, 'share_profile', $email_data);
+                }
+                $data['success'] = true;
+            } else {
+                $data['success'] = false;
+                if (count($not_valid_emails) > 1) {
+                    $msg = implode(',', $not_valid_emails) . ' are not valid emails';
+                } else {
+                    $msg = implode(',', $not_valid_emails) . ' is not valid email';
+                }
+                $data['error'] = $msg;
+            }
         } else {
             $data['success'] = false;
             $data['error'] = "Please enter email addresses to share!";

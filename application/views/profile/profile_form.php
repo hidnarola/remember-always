@@ -76,6 +76,53 @@
                                             <input type="text" name="date_of_death" placeholder="Dath of Death" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
                                         </div>
                                     </div>
+                                    <div class="input-wrap">
+                                        <select name="country" id="country" class="input-css service-country" placeholder="Country">
+                                            <option value="">Select Country</option>
+                                            <?php
+                                            foreach ($countries as $country) {
+                                                $selected = '';
+                                                if (isset($profile) && $profile['country'] == $country['id']) {
+                                                    $selected = 'selected';
+                                                }
+                                                ?>
+                                                <option value="<?php echo $country['id'] ?>" <?php echo $selected ?>><?php echo $country['name'] ?></option>
+                                            <?php }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="input-wrap">
+                                        <div class="input-l">
+                                            <select name="state" id="state" class="input-css service-state" placeholder="State">
+                                                <option value="">Select state</option>
+                                                <?php
+                                                foreach ($profile_states as $state) {
+                                                    $selected = '';
+                                                    if (isset($profile) && $profile['state'] == $state['id']) {
+                                                        $selected = 'selected';
+                                                    }
+                                                    ?>
+                                                    <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
+                                                <?php }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="input-r">
+                                            <select name="city" id="city" class="input-css service-city" placeholder="City">
+                                                <option value="">Select city</option>
+                                                <?php
+                                                foreach ($profile_cities as $city) {
+                                                    $selected = '';
+                                                    if (isset($profile) && $profile['city'] == $city['id']) {
+                                                        $selected = 'selected';
+                                                    }
+                                                    ?>
+                                                    <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
+                                                <?php }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="step-01-r">
                                     <div class="input-wrap">

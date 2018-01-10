@@ -136,6 +136,7 @@ class Blog_post extends MY_Controller {
                     $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $dataArr, ['id' => $id]);
                     $this->session->set_flashdata('success', 'Blog Post details has been updated successfully.');
                 } else {
+                    $dataArr['is_active'] = 0;
                     $dataArr['created_at'] = date('Y-m-d H:i:s');
                     $id = $this->blog_post_model->common_insert_update('insert', TBL_BLOG_POST, $dataArr);
                     $this->session->set_flashdata('success', 'Blog Post details has been inserted successfully.');

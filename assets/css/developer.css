@@ -55,3 +55,5 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 /*9-1-2018 Footer Address link*/
 .ftr-contact p a {color: #c5c5c5;}
 .blog-box {min-height: 360px;} /*To set height of the blog box same*/
+/*10-1-2018 Share on Social Media Popup*/
+#fbshare_popup .profile-share{float: none;}

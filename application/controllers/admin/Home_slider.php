@@ -108,6 +108,7 @@ class Home_slider extends MY_Controller {
                     $this->session->set_flashdata('success', 'Slider details has been updated successfully.');
                 } else {
                     $dataArr['created_at'] = date('Y-m-d H:i:s');
+                    $dataArr['is_active'] = 1;
                     $id = $this->home_slider_model->common_insert_update('insert', TBL_SLIDER, $dataArr);
                     $this->session->set_flashdata('success', 'Slider details has been inserted successfully.');
                 }

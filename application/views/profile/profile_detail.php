@@ -33,6 +33,7 @@
                         <small> 
                             <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('M d, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> - <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('M d, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?>
                         </small>
+                        <small><i class="fa fa-map-marker"></i><?php echo $profile['country'] . ', ' . $profile['state'] . ', ' . $profile['city'] ?></small>
                         <small>Created with love by: <?php echo isset($profile['u_fname']) ? $profile['u_fname'] . ' ' . $profile['u_lname'] : '-' ?></small> </h4>
                     <?php if (isset($profile['type']) && $profile['type'] == 2 && !empty($fundraiser)) { ?>
                         <a href="" class="donate-btn">Donate</a>
@@ -563,7 +564,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                        ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                             ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
@@ -660,7 +661,7 @@
                                     foreach ($affiliations as $key => $value) {
                                         if ($value['free_text'] == 1) {
                                             ?>
-                                            <li><?php echo $value['name'] ?></li>
+                                            <li><a><?php echo $value['name'] ?></a></li>
                                         <?php } else { ?>
                                             <li><a href="<?php echo site_url('affiliation/view/') . $value['slug'] ?>" ><?php echo $value['name'] ?></a></li>
                                             <?php

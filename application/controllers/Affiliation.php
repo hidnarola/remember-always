@@ -135,15 +135,15 @@ class Affiliation extends MY_Controller {
                     }
                 }
             }
-//            p($dataArr, 1);
             if (!empty($slug)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->affiliation_model->common_insert_update('update', TBL_AFFILIATIONS, $dataArr, ['id' => $affiliation['id']]);
                 $this->session->set_flashdata('success', 'Affiliation details has been updated successfully.');
             } else {
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
+                $dataArr['is_approved'] = 0;
                 $id = $this->affiliation_model->common_insert_update('insert', TBL_AFFILIATIONS, $dataArr);
-                $this->session->set_flashdata('success', 'Affiliation has been added.');
+                $this->session->set_flashdata('success', 'Affiliation has been added successfully. It will be visible once approved by Administrator');
             }
             redirect('dashboard/affiliations');
         }

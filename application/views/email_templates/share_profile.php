@@ -67,7 +67,7 @@
                                 <p style='margin: 1em 0;'>
                                     <br>
                                     Hi There,
-                                    <?php echo $name ?> has shared following life profile. To view this profile please click on below link
+                                    <?php echo $name ?> has shared following life profile. To view this profile please click on below link.
                                     <?php echo 'If link is not working then copy & paste URL in your browser <br><br><b>URL: </b>' . $url ?>
                                 </p>
                             </td>

@@ -109,7 +109,7 @@ class Affiliations extends MY_Controller {
                 'country' => base64_decode(trim($this->input->post('country'))),
                 'state' => base64_decode(trim($this->input->post('state'))),
                 'city' => base64_decode(trim($this->input->post('city'))),
-                'is_approved' => 1];
+            ];
             if ($_FILES['image']['name'] != '') {
                 $image_data = upload_image('image', AFFILIATION_IMAGE);
                 if (is_array($image_data)) {
@@ -137,6 +137,7 @@ class Affiliations extends MY_Controller {
                 $this->session->set_flashdata('success', 'Affiliation details has been updated successfully.');
             } else {
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
+                $dataArr['is_approved'] = 1;
                 $id = $this->affiliation_model->common_insert_update('insert', TBL_AFFILIATIONS, $dataArr);
                 $this->session->set_flashdata('success', 'Affiliation has been inserted successfully.');
             }

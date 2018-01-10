@@ -190,7 +190,13 @@
                             <g>
                             </g>
                         </svg></span>
-                    <h3><a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="http://clientapp.narola.online/HD/remember-always/profile/create">Create <br/> a Life Profile</a></h3>
+                    <h3>
+                        <?php if ($this->is_user_loggedin) { ?>
+                            <a href="<?php echo site_url('profile/create') ?>">Create <br/> a Life Profile</a>
+                        <?php } else { ?>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="http://clientapp.narola.online/HD/remember-always/profile/create">Create <br/> a Life Profile</a>
+                        <?php } ?>
+                    </h3>
                     <p>Share your loved one’s life story <br/> vividly; add funeral details if necessary.</p>
                 </div>
             </li>
@@ -263,7 +269,22 @@
                             <g>
                             </g>
                         </svg></span>
-                    <h3><a href="">Add a Fundraiser<br/>(optional)</a> </h3>
+                    <h3>
+                        <?php
+                        if ($this->is_user_loggedin) {
+                            if ($this->tribute_profile_count == 0) {
+                                ?>
+                                <a href="<?php echo site_url('profile/create') ?>">Add a Fundraiser<br/>(optional)</a>
+                            <?php } else if ($this->tribute_profile_count == 1) {
+                                ?>
+                                <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug']) ?>">Add a Fundraiser<br/>(optional)</a>
+                            <?php } else { ?>
+                                <a href="<?php echo site_url('profile/dashboard') ?>">Add a Fundraiser<br/>(optional)</a>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Add a Fundraiser<br/>(optional)</a>
+                        <?php } ?>
+                    </h3>
                     <p>Get support for your loved <br/> one’s charity, foundation, or expenses.</p>
                 </div>
             </li>
