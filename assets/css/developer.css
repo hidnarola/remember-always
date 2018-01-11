@@ -57,3 +57,6 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .blog-box {min-height: 360px;} /*To set height of the blog box same*/
 /*10-1-2018 Share on Social Media Popup*/
 #fbshare_popup .profile-share{float: none;}
+/*11-1-2018 Dashobard profile share icon*/
+.dashboard-share a{margin: 0;padding: 0;}
+.dashboard-share.profile-share{padding: 0 2px;}

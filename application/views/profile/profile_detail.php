@@ -564,7 +564,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                             ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                                   ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
@@ -588,14 +588,14 @@
                     </div>
                 </div>
                 <div class="profile-body-r">
-                    <?php if (isset($profile['type']) && $profile['type'] == 2 && !empty($fundraiser)) { ?>
+                    <?php if ($profile['type'] == 2 && $profile['is_published'] == 1 && !empty($fundraiser)) { ?>
                         <div class="profile-box fundraiser">
                             <h2>Tribute Fundraiser</h2>
                             <div class="profile-box-body">
-                                <span>Donated <big>86%</big></span>
-                                <h6>$9.00.000 <small>Raised of</small></h6>
-                                <h6><?php echo isset($fundraiser) && !empty($fundraiser) ? $fundraiser['goal'] : '-' ?> <small>Goal</small></h6>
-                                <a href="javascript:void(0)">Donation</a>
+                                <span>Donated <big><?php echo round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']) ?>%</big></span>
+                                <h6>$<?php echo $fundraiser['total_donation'] ?> <small>Raised of</small></h6>
+                                <h6>$<?php echo $fundraiser['goal'] ?> <small>Goal</small></h6>
+                                <a href="<?php echo site_url('donate/' . $profile['slug']) ?>">Donation</a>
                             </div>
                         </div>
                     <?php } ?>

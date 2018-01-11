@@ -22,20 +22,27 @@
     <div class="create-profile-body main-steps">
         <div class="container">
             <div class="create-profile-box create_pl">
-
+                <?php
+                $tribute_class = '';
+                $profile_class = 'active';
+                if ($this->input->get('tribute') == 1) {
+                    $tribute_class = 'active';
+                    $profile_class = '';
+                }
+                ?>
                 <ul class="ul_tab_custom ul_tab_custom_new nav nav-tabs responsive" id="myTab">
-                    <li class="active steps-li" id="first-step-li"><a href="#first-step">Basic Info</a></li>
+                    <li class="steps-li <?php echo $profile_class ?>" id="first-step-li"><a href="#first-step">Basic Info</a></li>
                     <li class="steps-li" id="second-step-li"><a href="#second-step">Life Gallery</a></li>
                     <li class="steps-li" id="third-step-li"><a href="#third-step">Fun Facts</a></li>
                     <li class="steps-li" id="third1-step-li"><a href="#third1-step">Affiliations</a></li>
                     <li class="steps-li" id="forth-step-li"><a href="#forth-step">Life Timeline</a></li>
                     <li class="steps-li" id="fifth-step-li"><a href="#fifth-step">Funeral Services</a></li>
-                    <li class="steps-li" id="sixth-step-li"><a href="#sixth-step">Tribute Fundraiser</a></li>
+                    <li class="steps-li <?php echo $tribute_class ?>" id="sixth-step-li"><a href="#sixth-step">Tribute Fundraiser</a></li>
                     <li class="steps-li" id="seventh-step-li"><a href="#seventh-step">Share</a></li>
                 </ul>
 
                 <div class="step-form tab-content responsive">
-                    <div id="first-step" class="profile-steps tab-pane active">
+                    <div id="first-step" class="profile-steps tab-pane <?php echo $profile_class ?>">
                         <form method="post" enctype="multipart/form-data" id="create_profile_form">
                             <input type="hidden" name="profile_process" id="profile_process" value="0"/>
                             <div class="step-01-l-wrap">
@@ -719,7 +726,7 @@
                             <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
                         </div>
                     </div>
-                    <div id="sixth-step" class="profile-steps tab-pane">
+                    <div id="sixth-step" class="profile-steps tab-pane <?php echo $tribute_class ?>">
                         <div class="step-title">
                             <h2>Create a Tribute Fundraiser<small>(optional)</small> </h2>
                             <p>If desired, create a Tribute Fundraiser in honor of your loved one.</p>

@@ -118,6 +118,9 @@ $route['search/get_result'] = 'search/get_result';
 $route['search/(:any)'] = 'search/index/$1';
 //$route['dashboard/(:any)/profile_publish/(:any)'] = 'dashboard/profile_publish/$2';
 
+/* Donation page routes*/
+$route['donate/(:any)'] = 'donate/index/$1';
+
 $route['pages/(:any)'] = 'cms/index/$1';
 
 $route['404_override'] = 'pagenotfound';

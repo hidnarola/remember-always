@@ -13,9 +13,28 @@ class Donate extends MY_Controller {
         parent::__construct();
     }
 
-    public function index() {
-        $data['title'] = 'Donation';
-        $this->template->load('default', 'donate/index', $data);
+    /**
+     * Display donation listing page of particular fundraiser profile
+     * @param string $slug
+     */
+    public function index($slug = null) {
+        if (!is_null($slug)) {
+            $fundraiser = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES . ' f', 'f.id as fundraiser_id,p.slug,p.id,p.firstname,p.lastname,f.title,f.goal,f.total_donation,f.end_date,f.details', ['where' => ['p.slug' => $slug, 'p.is_delete' => 0, 'p.is_published' => 1]], [
+                'single' => true,
+                'join' => [
+                    array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=f.profile_id'),
+            ]]);
+            if (!empty($fundraiser)) {
+                $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, 'media,type', ['where' => ['fundraiser_profile_id' => $fundraiser['fundraiser_id']]]);
+                $data['fundraiser'] = $fundraiser;
+                $data['title'] = 'Donation';
+                $this->template->load('default', 'donate/index', $data);
+            } else {
+                show_404();
+            }
+        } else {
+            show_404();
+        }
     }
 
     public function first() {

@@ -199,7 +199,7 @@ class Affiliation extends MY_Controller {
         if (isset($slug) && !empty($slug)) {
             $affiliation_data = $this->affiliation_model->sql_select(TBL_AFFILIATIONS . ' a', 'a.*,ac.name as category_name,co.name as country_name,c.name as city_name,s.name as state_name', ['where' => array('a.slug' => trim($slug), 'a.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'ac.id=a.category_id AND ac.is_delete=0'), array('table' => TBL_COUNTRY . ' co', 'condition' => 'co.id=a.country'), array('table' => TBL_STATE . ' s', 'condition' => 's.id=a.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=a.city')]]);
             if (!empty($affiliation_data)) {
-                $profiles = $this->affiliation_model->sql_select(TBL_PROFILE_AFFILIATION . ' pa', 'pa.*,p.firstname,p.lastname,p.profile_image,p.slug', ['where' => array('pa.affiliation_id' => trim($affiliation_data['id']))], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pa.profile_id AND p.is_delete=0')]]);
+                $profiles = $this->affiliation_model->sql_select(TBL_PROFILE_AFFILIATION . ' pa', 'pa.*,p.firstname,p.lastname,p.profile_image,p.slug', ['where' => array('pa.affiliation_id' => trim($affiliation_data['id']), 'is_published' => 1)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pa.profile_id AND p.is_delete=0')]]);
                 $data['profiles'] = $profiles;
                 $data['affiliation'] = $affiliation_data;
                 $data['title'] = 'Affiliations';

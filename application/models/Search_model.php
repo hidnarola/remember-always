@@ -102,7 +102,7 @@ class Search_model extends MY_Model {
                 $this->db->select('slug,title as name,image,description,"blog" as type');
                 $this->db->where(['is_delete' => 0, 'is_active' => 1]);
                 if ($keyword != '') {
-                    $this->db->where('(name LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                    $this->db->where('(title LIKE ' . $this->db->escape('%' . $keyword . '%') .
                             ' OR description LIKE ' . $this->db->escape('%' . $keyword . '%') .
                             ')');
                 }

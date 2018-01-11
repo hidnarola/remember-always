@@ -277,9 +277,9 @@
                                 <a href="<?php echo site_url('profile/create') ?>">Add a Fundraiser<br/>(optional)</a>
                             <?php } else if ($this->tribute_profile_count == 1) {
                                 ?>
-                                <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug']) ?>">Add a Fundraiser<br/>(optional)</a>
+                                <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Add a Fundraiser<br/>(optional)</a>
                             <?php } else { ?>
-                                <a href="<?php echo site_url('profile/dashboard') ?>">Add a Fundraiser<br/>(optional)</a>
+                                <a href="<?php echo site_url('dashboard/profiles') ?>">Add a Fundraiser<br/>(optional)</a>
                             <?php } ?>
                         <?php } else { ?>
                             <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Add a Fundraiser<br/>(optional)</a>
@@ -346,7 +346,22 @@
                             </g>
                         </svg>
                     </span>
-                    <h3><a href="<?php echo site_url('search') ?>">Share with <br/>family & friends</a></h3>
+                    <h3>
+                        <?php
+                        if ($this->is_user_loggedin) {
+                            if ($this->tribute_profile_count == 0) {
+                                ?>
+                                <a href="<?php echo site_url('search') ?>">Share with <br/>family & friends</a>
+                            <?php } else if ($this->tribute_profile_count == 1) {
+                                ?>
+                                <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Share with <br/>family & friends</a>
+                            <?php } else { ?>
+                                <a href="<?php echo site_url('dashboard/profiles') ?>">Share with <br/>family & friends</a>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <a href="<?php echo site_url('search') ?>">Share with <br/>family & friends</a>
+                        <?php } ?>
+                    </h3>
                     <p>Easily share with  <br/>as many or as few as you desire.</p>
                 </div>
             </li>
@@ -405,7 +420,22 @@
                             <g>
                             </g>
                         </svg></span>
-                    <h3><a href="<?php echo site_url('search') ?>">Remember, <br/> Honor & Celebrate</a></h3>
+                    <h3>
+                        <?php
+                        if ($this->is_user_loggedin) {
+                            if ($this->tribute_profile_count == 0) {
+                                ?>
+                                <a href="<?php echo site_url('search') ?>">Remember, <br/> Honor & Celebrate</a>
+                            <?php } else if ($this->tribute_profile_count == 1) {
+                                ?>
+                                <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Remember, <br/> Honor & Celebrate</a>
+                            <?php } else { ?>
+                                <a href="<?php echo site_url('dashboard/profiles') ?>">Remember, <br/> Honor & Celebrate</a>
+                            <?php } ?>
+                        <?php } else { ?>
+                            <a href="<?php echo site_url('search') ?>">Remember, <br/> Honor & Celebrate</a>
+                        <?php } ?>
+                    </h3>
                     <p>Together share condolences, support, <br/> memories, photos, videos & more.</p>
                 </div>
             </li>

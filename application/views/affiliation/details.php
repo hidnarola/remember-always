@@ -13,17 +13,27 @@
                 ?>
             </div>
             <div class="srvs-dtl-r <?php echo ($affiliation['image'] == null) ? 'full-width' : '' ?>">
-                <h3><?php echo isset($affiliation['name']) ? $affiliation['name'] : '' ?> <?php echo isset($affiliation['category_name']) ? '(' . $affiliation['category_name'] . ')' : '' ?>
+                <h3>
+                    <?php echo isset($affiliation['name']) ? $affiliation['name'] : '' ?> <?php echo isset($affiliation['category_name']) ? '(' . $affiliation['category_name'] . ')' : '' ?>
                 </h3>
-                <p><?php implode('</p><p>', array_filter(explode("\n", $affiliation['description']))) ?></p>
-                <div class="srvs-personal-dtl">
-                    <h6 class="srvs-contact"><strong>Country :</strong> <a><?php echo isset($affiliation['country_name']) ? $affiliation['country_name'] : '' ?></a></h6>
-                    <h6 class="srvs-contact"><strong>State :</strong> <a><?php echo isset($affiliation['state_name']) ? $affiliation['state_name'] : '' ?></a></h6>
-                    <h6 class="srvs-contact"><strong>City :</strong> <a><?php echo isset($affiliation['city_name']) ? $affiliation['city_name'] : '' ?></a></h6>
-                </div>
+                <p><i class="fa fa-map-marker"></i>
+                    <?php
+                    echo isset($affiliation['city_name']) ? $affiliation['city_name'] . ', ' : '';
+                    echo isset($affiliation['state_name']) ? $affiliation['state_name'] . ', ' : '';
+                    echo isset($affiliation['country_name']) ? $affiliation['country_name'] : ''
+                    ?>
+                </p>
+
+<!--<p><?php echo implode('</p><p>', array_filter(explode("\n", $affiliation['description']))) ?></p>-->
+                <p><?php echo $affiliation['description'] ?></p>
+                <!--                <div class="srvs-personal-dtl">
+                                    <h6 class="srvs-contact"><strong>Country :</strong> <a><?php ?></a></h6>
+                                    <h6 class="srvs-contact"><strong>State :</strong> <a><?php echo isset($affiliation['state_name']) ? $affiliation['state_name'] : '' ?></a></h6>
+                                    <h6 class="srvs-contact"><strong>City :</strong> <a><?php echo isset($affiliation['city_name']) ? $affiliation['city_name'] : '' ?></a></h6>
+                                </div>-->
 
                 <div class="srvs-personal-dtl profile-css-div">
-                    <h6 class="srvs-contact"><strong>Profile :</strong>
+                    <h6 class="srvs-contact"><strong>Profiles:</strong>
                     </h6>
                 </div>
                 <?php if (isset($profiles) && !empty($profiles)) { ?>
