@@ -90,9 +90,9 @@ $Path = $_SERVER['PATH_INFO'];
                             <div class="category-content no-padding">
                                 <ul class="navigation navigation-main navigation-accordion">
                                     <li <?php echo strtolower($this->controller) == 'dashboard' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/dashboard') ?>"><i class="icon-home2"></i><span>Dashboard</span></a></li>
-                                    <li <?php echo strtolower($this->controller) == 'affiliations' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/affiliations') ?>"><i class="icon-office"></i><span>Manage Affiliations <?php echo isset($this->un_approved_affiliation['un_approved_count']) && $this->un_approved_affiliation['un_approved_count'] != 0 ? '<span class="label bg-warning-400">' . $this->un_approved_affiliation['un_approved_count'] . '</span>' : '' ?></span></a></li>
-                                    <li <?php echo strtolower($this->controller) == 'pages' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/pages') ?>"><i class="icon-magazine"></i><span>Manage Pages</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'home_slider' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/home_slider') ?>"><i class="icon-stack"></i><span>Home Slider</span></a></li>
+                                    <li <?php echo strtolower($this->controller) == 'pages' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/pages') ?>"><i class="icon-magazine"></i><span>Manage Pages</span></a></li>
+                                    <li <?php echo strtolower($this->controller) == 'blog_post' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/blog_post') ?>"><i class="icon-books"></i><span>Blog Posts</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'categories' || strtolower($this->controller) == 'affiliation_categories' ? 'class="active"' : '' ?>>
                                         <a href="#" class="has-ul"><i class="icon-grid"></i> <span>Categories</span></a>
                                         <ul class="hidden-ul" style="<?php echo strtolower($this->controller) == 'categories' || strtolower($this->controller) == 'affiliation_categories' ? 'display:block' : '' ?>">
@@ -100,10 +100,10 @@ $Path = $_SERVER['PATH_INFO'];
                                             <li <?php echo strtolower($this->controller) == 'affiliation_categories' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/affiliation_categories') ?>"><i class="icon-list-unordered"></i><span>Affiliation</span></a></li>
                                         </ul>
                                     </li>
+                                    <li <?php echo strtolower($this->controller) == 'affiliations' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/affiliations') ?>"><i class="icon-office"></i><span>Manage Affiliations <?php echo isset($this->un_approved_affiliation['un_approved_count']) && $this->un_approved_affiliation['un_approved_count'] != 0 ? '<span class="label bg-warning-400">' . $this->un_approved_affiliation['un_approved_count'] . '</span>' : '' ?></span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'providers' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/providers') ?>"><i class="icon-hammer-wrench"></i><span>Service Providers <?php echo isset($this->un_approved['un_approved_count']) && $this->un_approved['un_approved_count'] != 0 ? '<span class="label bg-warning-400">' . $this->un_approved['un_approved_count'] . '</span>' : '' ?></span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'posts' && !preg_match("/\/users\//i", $Path) ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/posts') ?>"><i class="icon-comment"></i><span>Posts</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'users' || preg_match("/\/users\//i", $Path) ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/users') ?>"><i class="icon-users2"></i><span>Users</span></a></li>
-                                    <li <?php echo strtolower($this->controller) == 'blog_post' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/blog_post') ?>"><i class="icon-books"></i><span>Blog Posts</span></a></li>
                                     <li class=""><a href="<?php echo site_url('logout') ?>"><i class="icon-switch2"></i> <span>Logout</span></a></li>
                                 </ul>
                             </div>

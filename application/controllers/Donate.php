@@ -26,8 +26,13 @@ class Donate extends MY_Controller {
             ]]);
             if (!empty($fundraiser)) {
                 $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, 'media,type', ['where' => ['fundraiser_profile_id' => $fundraiser['fundraiser_id']]]);
+                $data['donations'] = $this->users_model->sql_select(TBL_DONATIONS . ' d', 'u.firstname,u.lastname,u.profile_image,d.details,d.amount,d.created_at', ['where' => ['d.is_delete' => 0, 'p.slug' => $slug]], [
+                    'join' => [
+                        array('table' => TBL_PROFILES . ' p', 'condition' => 'd.profile_id=p.id'),
+                        array('table' => TBL_USERS . ' u', 'condition' => 'd.user_id=u.id'),
+                ]]);
                 $data['fundraiser'] = $fundraiser;
-                $data['title'] = 'Donation';
+                $data['title'] = $fundraiser['title'] . ' | Donations';
                 $this->template->load('default', 'donate/index', $data);
             } else {
                 show_404();

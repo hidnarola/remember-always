@@ -36,7 +36,7 @@
                         <small><i class="fa fa-map-marker"></i><?php echo $profile['country'] . ', ' . $profile['state'] . ', ' . $profile['city'] ?></small>
                         <small>Created with love by: <?php echo isset($profile['u_fname']) ? $profile['u_fname'] . ' ' . $profile['u_lname'] : '-' ?></small> </h4>
                     <?php if (isset($profile['type']) && $profile['type'] == 2 && !empty($fundraiser)) { ?>
-                        <a href="" class="donate-btn">Donate</a>
+                        <a href="<?php echo site_url('donate/' . $profile['slug']) ?>" class="donate-btn">Donate</a>
                     <?php } ?>
                     <a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>
                     <!-- Edit profile and publish profile buttons if created profile is of logged in user-->
@@ -564,7 +564,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                                   ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                                       ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>

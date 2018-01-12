@@ -455,7 +455,7 @@
             <ul>
                 <li>
                     <div class="helpful-box">
-                        <h3><a href="">Funeral Planning <br/>Guide & Tips</a></h3>
+                        <h3><a href="<?php echo site_url('funeral_planing') ?>">Funeral Planning <br/>Guide & Tips</a></h3>
                         <p>Step-by-step guide on funeral planning, <br/>tips for finding and choosing a...</p>
                         <span><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                    viewBox="0 0 295.315 295.315" style="enable-background:new 0 0 295.315 295.315;" xml:space="preserve">
@@ -518,8 +518,8 @@
                 </li>
                 <li>
                     <div class="helpful-box">
-                        <h3><a href="">Grief Coping <br/> resources</a></h3>
-                        <p>Ask questions, get support, share support, learn from other...</p>
+                        <h3><a href="<?php echo site_url('community') ?>">Online Support Community</a></h3>
+                        <p>Get and give support, advice and information from and to other community member. Join in.</p>
                         <span><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                    viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
                                 <g>
@@ -733,10 +733,11 @@
                 </li>
                 <li>
                     <div class="helpful-box">
-                        <h3><a href="">Tips & tools for getting <br/> financial support</a></h3>
-                        <p>Get the financial support you need during a difficult time...</p>
-                        <span><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                   viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
+                        <h3><a href="<?php echo site_url('funeral_resources') ?>">Grief and Financial Support</a></h3>
+                        <p>Tips and resources for handling grief and getting financial support during a difficult time.</p>
+                        <span>
+                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                 viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
                                 <g>
                                     <g>
                                         <path d="M502,492.001h-8v-292c0-5.523-4.477-10-10-10h-80c-5.523,0-10,4.477-10,10v107c0,5.523,4.477,10,10,10s10-4.477,10-10v-97
@@ -809,7 +810,8 @@
                                 </g>
                                 <g>
                                 </g>
-                            </svg></span>
+                            </svg>
+                        </span>
                     </div>
                 </li>
             </ul>

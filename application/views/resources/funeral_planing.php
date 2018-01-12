@@ -267,7 +267,7 @@
                     </div>
                 </div>
                 <div class="profile-box fun-facts">
-                    <h2>online Support Community</h2>
+                    <h2>Online Support Community</h2>
                     <div class="profile-box-body">
                         <p>Ask questions or search for answers in our Online Set  Support Community. </p>
                         <a href="" class="btn-link color-02">Visit Community <i class="fa fa-paper-plane"></i></a>

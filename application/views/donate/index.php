@@ -19,30 +19,29 @@
                     <div class="donate_detail">
                         <h2>Donations</h2>	
                         <ul class="ul_donate_detail">
-                            <li>
-                                <div class="listing_img"><img src="assets/images/helpful-img.jpg" alt="" class=""></div>
-                                <h6>Kirti kirti<span class="span_rs">$ 350</span></h6>
-                                <p class="p_date">5th Jan, 2017</p>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
-                            </li>
-                            <li>
-                                <div class="listing_img"><img src="assets/images/helpful-img.jpg" alt="" class=""></div>
-                                <h6>Kirti kirti<span class="span_rs">$ 350</span></h6>
-                                <p class="p_date">12th Dec, 2017</p>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
-                            </li>
-                            <li>
-                                <div class="listing_img"><img src="assets/images/helpful-img.jpg" alt="" class=""></div>
-                                <h6>Kirti kirti<span class="span_rs">$ 350</span></h6>
-                                <p class="p_date">1th Feb, 2017</p>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
-                            </li>
-                            <li>
-                                <div class="listing_img"><img src="assets/images/helpful-img.jpg" alt="" class=""></div>
-                                <h6>Kirti kirti<span class="span_rs">$ 350</span></h6>
-                                <p class="p_date">30th Mar, 2017</p>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</p>
-                            </li>
+                            <?php
+                            if (!empty($donations)) {
+                                foreach ($donations as $donation) {
+                                    ?>
+                                    <li>
+                                        <div class="listing_img">
+                                            <?php if ($donation['profile_image'] != '') { ?>
+                                                <img src="<?php echo USER_IMAGES . $donation['profile_image'] ?>" alt="" class="">
+                                            <?php } else { ?>
+                                                <img src="assets/images/no_image.png" alt="no image" class="">
+                                            <?php }
+                                            ?>
+                                        </div>
+                                        <h6><?php echo $donation['firstname'] . ' ' . $donation['lastname'] ?><span class="span_rs">$ <?php echo $donation['amount'] ?></span></h6>
+                                        <p class="p_date"><?php echo date('M d, Y', strtotime($donation['created_at'])) ?></p>
+                                        <p><?php echo $donation['details'] ?></p>
+                                    </li>
+                                    <?php
+                                }
+                            } else {
+                                echo "No donations yet!";
+                            }
+                            ?>
                         </ul>
                     </div>
                 </div>
@@ -54,9 +53,18 @@
                                     <div class="gallery-wrap">
                                         <?php if ($media['type'] == 1) { ?>
                                             <span class="gallery-video-img">
-                                                <img src="<?php echo base_url() . FUNDRAISER_IMAGES . $media['media'] ?>" alt="" class="mCS_img_loaded">
+                                                <a href="<?php echo base_url(FUNDRAISER_IMAGES . $media['media']) ?>" class="fancybox" data-fancybox-type="image"  rel="gallery">
+                                                    <img src="<?php echo base_url(FUNDRAISER_IMAGES . $media['media']) ?>" alt="" class="mCS_img_loaded">
+                                                </a>
                                             </span>
-                                        <?php } ?>
+                                        <?php } else if ($media['type'] == 2) { ?>
+                                            <span class="gallery-video-img">
+                                                <img src="<?php echo base_url(FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $media['media'])) ?>" alt="">
+                                            </span>
+                                            <span class="gallery-play-btn">
+                                                <a href="<?php echo base_url(FUNDRAISER_IMAGES . $media['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="gallery"><img src="assets/images/play.png" alt=""></a>
+                                            </span>
+                                                <?php } ?>
                                     </div>
                                 </li>
                                 <?php
@@ -69,3 +77,16 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $(".fancybox").fancybox(
+                {
+                    openEffect: 'none',
+                    closeEffect: 'none',
+                    nextEffect: 'none',
+                    prevEffect: 'none',
+                    padding: 0,
+                }
+        );
+    });
+</script>

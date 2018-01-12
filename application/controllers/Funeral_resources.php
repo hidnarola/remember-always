@@ -1,7 +1,7 @@
 <?php
 
 /**
- * funeral_resources Controller
+ * Funeral_resources Controller
  * Display all funeral resources
  * @author KU 
  */

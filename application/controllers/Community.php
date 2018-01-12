@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Questions Controller
- * Display search results
+ * Community Controller
+ * Manage Online Community
  * @author KU 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Questions extends MY_Controller {
+class Community extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -18,9 +18,9 @@ class Questions extends MY_Controller {
      * Display all questions pages.
      */
     public function index() {
-//        $data['title'] = 'Remember Always | Community';
-//        $data['breadcrumb'] = ['title' => 'List of all questions', 'links' => [['link' => site_url(), 'title' => 'Home']]];
-//        $this->template->load('default', 'community/questions', $data);
+        $data['title'] = 'Remember Always | Community';
+        $data['breadcrumb'] = ['title' => 'Online Community', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $this->template->load('default', 'community/listing', $data);
     }
 
     /**
@@ -36,7 +36,7 @@ class Questions extends MY_Controller {
                 custom_show_404();
             }
             $data['title'] = 'Remember Always | Community';
-            $data['breadcrumb'] = ['title' => 'Question Details', 'links' => [['link' => site_url(), 'title' => 'Home'],['link' => site_url('questions'), 'title' => 'Questions']]];
+            $data['breadcrumb'] = ['title' => 'Question Details', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('questions'), 'title' => 'Questions']]];
             $this->template->load('default', 'community/questions', $data);
         } else {
             custom_show_404();
