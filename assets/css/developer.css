@@ -60,3 +60,8 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 /*11-1-2018 Dashobard profile share icon*/
 .dashboard-share a{margin: 0;padding: 0;}
 .dashboard-share.profile-share{padding: 0 2px;}
+/*13-1-2018 Color change for online community*/
+.helpful-l ul li:nth-child(2) .helpful-box {background: #975979;}
+.helpful-l ul li:nth-child(2) p {color: #fff;}
+.helpful-l ul li:nth-child(2) h3 a {color: #fff;}
+

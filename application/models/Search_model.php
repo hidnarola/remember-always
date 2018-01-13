@@ -35,7 +35,7 @@ class Search_model extends MY_Model {
                             ' OR life_bio LIKE ' . $this->db->escape('%' . $keyword . '%') .
                             ')');
                 }
-                $this->db->order_by('id DESC');
+                $this->db->order_by('name');
                 if ($type == 'result') {
                     $this->db->limit($offset, $start);
                     $query = $this->db->get(TBL_PROFILES);
@@ -62,7 +62,7 @@ class Search_model extends MY_Model {
                     $this->db->join(TBL_CITY . ' as c', 's.city=c.id', 'left');
                     $this->db->join(TBL_STATE . ' as st', 's.state=st.id', 'left');
                 }
-                $this->db->order_by('s.id DESC');
+                $this->db->order_by('s.name');
                 if ($type == 'result') {
                     $this->db->limit($offset, $start);
                     $query = $this->db->get(TBL_SERVICE_PROVIDERS . ' s');
@@ -89,7 +89,7 @@ class Search_model extends MY_Model {
                     $this->db->join(TBL_STATE . ' as st', 'a.state=st.id', 'left');
                     $this->db->join(TBL_CITY . ' as c', 'a.city=c.id', 'left');
                 }
-                $this->db->order_by('a.id DESC');
+                $this->db->order_by('a.name');
                 if ($type == 'result') {
                     $this->db->limit($offset, $start);
                     $query = $this->db->get(TBL_AFFILIATIONS . ' a');
@@ -106,7 +106,7 @@ class Search_model extends MY_Model {
                             ' OR description LIKE ' . $this->db->escape('%' . $keyword . '%') .
                             ')');
                 }
-                $this->db->order_by('id DESC');
+                $this->db->order_by('title');
                 if ($type == 'result') {
                     $this->db->limit($offset, $start);
                     $query = $this->db->get(TBL_BLOG_POST);
@@ -172,7 +172,7 @@ class Search_model extends MY_Model {
                             . 'WHERE b.is_delete=0 AND b.is_active=1' . $where_blog . ') as s';
                 }
 
-                $sql .= ' ORDER BY s.id DESC';
+                $sql .= ' ORDER BY s.name';
                 if ($type == 'result') {
                     $sql .= ' LIMIT ' . $start . ',' . $offset;
                     $query = $this->db->query($sql);
@@ -192,7 +192,7 @@ class Search_model extends MY_Model {
                         ' OR life_bio LIKE ' . $this->db->escape('%' . $keyword . '%') .
                         ')');
             }
-            $this->db->order_by('id DESC');
+            $this->db->order_by('name');
             if ($type == 'result') {
                 $this->db->limit($offset, $start);
                 $query = $this->db->get(TBL_PROFILES . ' p');

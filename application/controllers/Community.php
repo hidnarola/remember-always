@@ -66,7 +66,7 @@ class Community extends MY_Controller {
             }
         } else {
             $data['success'] = false;
-            $data['error'] = 'something wnet wrong pelase try again!';
+            $data['error'] = 'something went wrong pelase try again!';
         }
 
         echo json_encode($data);

@@ -16,7 +16,7 @@
                     echo "Create a Life Profile.";
                 ?>
             </h2>
-            <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur auto edit.</p>
+            <p>A great way to honor your loved one.</p>
         </div>
     </div>
     <div class="create-profile-body main-steps">
@@ -80,7 +80,7 @@
                                             <input type="text" name="date_of_birth" placeholder="Date of Birth" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_birth'])) : set_value('date_of_birth') ?>"/>
                                         </div>
                                         <div class="input-r">
-                                            <input type="text" name="date_of_death" placeholder="Dath of Death" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
+                                            <input type="text" name="date_of_death" placeholder="Date of Death" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
                                         </div>
                                     </div>
                                     <div class="input-wrap">
@@ -151,8 +151,8 @@
                     </div>
                     <div id="second-step" class="profile-steps tab-pane">
                         <div class="step-title">
-                            <h2>Create Life Gallery<small>(optional)</small> </h2>
-                            <p>Add Photo/Video files of your loved one. <br/> You will be able to add more or remove previously uploaded files late.</p>
+                            <h2>Create Life Gallery <small>(optional)</small> </h2>
+                            <p>Add Photo/Video files of your loved one. <br/> You will be able to add more or remove previously uploaded files later.</p>
                         </div>
 
                         <div class="step-form">
@@ -250,8 +250,8 @@
                     </div>
                     <div id="third-step" class="profile-steps tab-pane">
                         <div class="step-title">
-                            <h2>Add A Fun Facts<small>(optional)</small> </h2>
-                            <p>Add up to 10fun facts about your loved one.<br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
+                            <h2>Add A Fun Facts <small>(optional)</small> </h2>
+                            <p>Add up to 10 fun facts about your loved one.<br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
                         </div>
                         <?php
                         $fact_class = 'default-fact-empty';
@@ -305,8 +305,8 @@
                                     <p>Place of birth or where they grew up.</p>
                                     <p>Family information</p>
                                     <p>School(s) Attended</p>
-                                    <p>Favourite hobby</p>
-                                    <p>Favourite saying</p>
+                                    <p>Favorite hobby</p>
+                                    <p>Favorite saying</p>
                                 </div>
                             </div>	
                         </div>
@@ -321,7 +321,7 @@
                     </div>
                     <div id="third1-step" class="profile-steps tab-pane">
                         <div class="step-title">
-                            <h2>Add Affilliations<small>(optional)</small> </h2>
+                            <h2>Add Affilliations <small>(optional)</small> </h2>
                             <p>Add up to 10fun Affiliations about your loved one. <br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
                         </div>
 
@@ -388,7 +388,7 @@
                     </div>
                     <div id="forth-step" class="profile-steps tab-pane">
                         <div class="step-title">
-                            <h2>Life Timeline<small>(optional)</small> </h2>
+                            <h2>Life Timeline <small>(optional)</small> </h2>
                             <p>Enter information about important milestones in your loved ones life.</p>
                         </div>
                         <div class="step-form">
@@ -492,7 +492,7 @@
                     </div>
                     <div id="fifth-step" class="profile-steps tab-pane">
                         <div class="step-title">
-                            <h2>Add Funeral Services<small>(optional)</small> </h2>
+                            <h2>Add Funeral Services <small>(optional)</small> </h2>
                             <p>In necessary, enter funeral services information. You will be able to remove this information later.</p>
                         </div>
                         <form id="funeralservice-form" method="post">
@@ -728,7 +728,7 @@
                     </div>
                     <div id="sixth-step" class="profile-steps tab-pane <?php echo $tribute_class ?>">
                         <div class="step-title">
-                            <h2>Create a Tribute Fundraiser<small>(optional)</small> </h2>
+                            <h2>Create a Tribute Fundraiser <small>(optional)</small> </h2>
                             <p>If desired, create a Tribute Fundraiser in honor of your loved one.</p>
                         </div>
                         <div class="step-form">
