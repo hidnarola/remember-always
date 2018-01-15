@@ -103,7 +103,7 @@
                                             <p>
                                                 <?php
                                                 if (strlen($result['description']) > 90)
-                                                    echo substr($result['description'], 0, 90) . '...';
+                                                    echo substr(strip_tags($result['description']), 0, 90) . '...';
                                                 else
                                                     echo $result['description'];
                                                 ?>
@@ -210,10 +210,10 @@
 if (!empty($results)) {
     foreach ($results as $key => $result) {
         ?>
-                                                                                                                                            <li>
-                                                                                                                                                <div class="srh-list-box">
-                                                                                                                                                    <div class="srh-list-img">
-                                                                                                                                                        <a href=""><img src="assets/images/helpful-img.jpg" alt="" /></a>
+                                                                                                                                                            <li>
+                                                                                                                                                                <div class="srh-list-box">
+                                                                                                                                                                    <div class="srh-list-img">
+                                                                                                                                                                        <a href=""><img src="assets/images/helpful-img.jpg" alt="" /></a>
         <?php
         $tag_class = '';
         if ($result['type'] == 'profile') {
@@ -246,10 +246,10 @@ if (!empty($results)) {
             }
         }
         ?>
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="srh-list-dtl">
-                                                                                                                                                        <div class="<?php echo $tag_class ?>"></div>
-                                                                                                                                                        <h2>
+                                                                                                                                                                    </div>
+                                                                                                                                                                    <div class="srh-list-dtl">
+                                                                                                                                                                        <div class="<?php echo $tag_class ?>"></div>
+                                                                                                                                                                        <h2>
         <?php
         if ($result['type'] == 'profile') {
             echo "<a href='" . site_url('profile/' . $result['slug']) . "'>" . $result['name'] . "</a>";
@@ -261,23 +261,23 @@ if (!empty($results)) {
             echo "<a href='" . site_url('blog/details/' . $result['slug']) . "'>" . $result['name'] . "</a>";
         }
         ?>
-                                                                                                                                                        </h2>
-                                                                                                                                                        <p>
+                                                                                                                                                                        </h2>
+                                                                                                                                                                        <p>
         <?php
         if (strlen($result['description']) > 90)
             echo substr($result['description'], 0, 90) . '...';
         else
             echo $result['description'];
         ?>
-                                                                                                                                                        </p>
-                                                                                                                                                    </div>
-                                                                                                                                                </div>
-                                                                                                                                            </li>
+                                                                                                                                                                        </p>
+                                                                                                                                                                    </div>
+                                                                                                                                                                </div>
+                                                                                                                                                            </li>
         <?php
     }
 }else {
     ?>
-                                                                                <p class="no-data">No records available</p>
+                                                                                        <p class="no-data">No records available</p>
 <?php }
 ?>
                 </ul>
