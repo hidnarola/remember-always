@@ -48,10 +48,10 @@
                                         <?php if ($val['type'] == 1) { ?>
                                             <a href="<?php echo site_url('profile/edit/' . $val['slug'] . '?tribute=1') ?>" class="flowers-btn">Add a fundraiser </a>
                                         <?php } ?>
-                                        <a href="javascript:void(0)" class="delete profile_delete" data-profile="<?php echo $val['slug'] ?>">Delete</a>
                                         <?php if ($val['is_published'] == 0) { ?>
                                             <a href="javascript:void(0)" class="public publish" data-profile="<?php echo $val['slug'] ?>">Publish</a>
                                         <?php } ?>
+                                        <a href="javascript:void(0)" class="delete profile_delete" data-profile="<?php echo $val['slug'] ?>">Delete</a>
                                         <div class="dashboard-share profile-share">
                                             <a href="javascript:void(0)" onclick="javascript:genericSocialShare('http://www.facebook.com/sharer.php?u=<?php echo site_url('profile/' . $val['slug']) ?>')" title="Facebook Share">
                                                 <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 112.196 112.196" style="enable-background:new 0 0 112.196 112.196;" xml:space="preserve">

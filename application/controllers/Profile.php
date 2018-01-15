@@ -732,93 +732,92 @@ class Profile extends MY_Controller {
         if (!empty($profile)) {
             $life_timeline = [];
             foreach ($post_arr['title'] as $key => $arr) {
-                $lif_arr = ['profile_id' => $profile_id];
-                $lif_arr['title'] = trim($this->input->post('title')[$key]);
-                if ($this->input->post('date')[$key] != '') {
-                    $lif_arr['date'] = date('Y-m-d', strtotime($this->input->post('date')[$key]));
-                    $lif_arr['month'] = date('n', strtotime($this->input->post('date')[$key]));
-                    $lif_arr['year'] = date('Y', strtotime($this->input->post('date')[$key]));
-                } elseif ($this->input->post('month')[$key] != '') {
-                    $lif_arr['month'] = $this->input->post('month')[$key];
-                    $lif_arr['year'] = $this->input->post('month_year')[$key];
-                    $lif_arr['date'] = null;
-                } elseif ($this->input->post('year')[$key] != '') {
-                    $lif_arr['month'] = null;
-                    $lif_arr['year'] = $this->input->post('year')[$key];
-                    $lif_arr['date'] = null;
-                }
-                $lif_arr['details'] = $this->input->post('details')[$key];
-
-
-                if ($_FILES['life_pic']['name'][$key] != '') {
-
-                    $directory = 'user_' . $profile['user_id'];
-                    if (!file_exists(PROFILE_IMAGES . $directory)) {
-                        mkdir(PROFILE_IMAGES . $directory);
+                if (trim($this->input->post('title')[$key]) != '') {
+                    $lif_arr = ['profile_id' => $profile_id];
+                    $lif_arr['title'] = trim($this->input->post('title')[$key]);
+                    $lif_arr['year'] = $lif_arr['month'] = $lif_arr['date'] = null;
+                    if ($this->input->post('day')[$key] != '' && $this->input->post('month')[$key] != '' && $this->input->post('year')[$key] != '') {
+                        $lif_arr['date'] = date('Y-m-d', strtotime($this->input->post('year')[$key] . '-' . $this->input->post('month')[$key] . '-' . $this->input->post('day')[$key]));
                     }
-                    $sub_directory = 'profile_' . $profile_id;
-                    if (!file_exists(PROFILE_IMAGES . $directory . '/' . $sub_directory)) {
-                        mkdir(PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                    if ($this->input->post('month')[$key] != '') {
+                        $lif_arr['month'] = $this->input->post('month')[$key];
                     }
+                    if ($this->input->post('year')[$key] != '') {
+                        $lif_arr['year'] = $this->input->post('year')[$key];
+                    }
+                    $lif_arr['details'] = $this->input->post('details')[$key];
 
-                    $extension = explode('/', $_FILES['life_pic']['type'][$key]);
-                    $extension = end($extension);
-                    // check file extension image/video
-                    if (in_array($extension, ['jpg', 'jpeg', 'png', 'bmp', 'gif'])) {
-                        $_FILES['life_image']['name'] = $_FILES['life_pic']['name'][$key];
-                        $_FILES['life_image']['type'] = $_FILES['life_pic']['type'][$key];
-                        $_FILES['life_image']['tmp_name'] = $_FILES['life_pic']['tmp_name'][$key];
-                        $_FILES['life_image']['error'] = $_FILES['life_pic']['error'][$key];
-                        $_FILES['life_image']['size'] = $_FILES['life_pic']['size'][$key];
-                        $image_data = upload_image('life_image', PROFILE_IMAGES . $directory . '/' . $sub_directory);
-                        if (is_array($image_data)) {
+
+                    if ($_FILES['life_pic']['name'][$key] != '') {
+
+                        $directory = 'user_' . $profile['user_id'];
+                        if (!file_exists(PROFILE_IMAGES . $directory)) {
+                            mkdir(PROFILE_IMAGES . $directory);
+                        }
+                        $sub_directory = 'profile_' . $profile_id;
+                        if (!file_exists(PROFILE_IMAGES . $directory . '/' . $sub_directory)) {
+                            mkdir(PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                        }
+
+                        $extension = explode('/', $_FILES['life_pic']['type'][$key]);
+                        $extension = end($extension);
+                        // check file extension image/video
+                        if (in_array($extension, ['jpg', 'jpeg', 'png', 'bmp', 'gif'])) {
+                            $_FILES['life_image']['name'] = $_FILES['life_pic']['name'][$key];
+                            $_FILES['life_image']['type'] = $_FILES['life_pic']['type'][$key];
+                            $_FILES['life_image']['tmp_name'] = $_FILES['life_pic']['tmp_name'][$key];
+                            $_FILES['life_image']['error'] = $_FILES['life_pic']['error'][$key];
+                            $_FILES['life_image']['size'] = $_FILES['life_pic']['size'][$key];
+                            $image_data = upload_image('life_image', PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                            if (is_array($image_data)) {
+                                $flag = 1;
+                                $data['success'] = false;
+                                $data['error'] = $image_data['errors'];
+                                break;
+                            } else {
+                                $lif_arr['timeline_media'] = $directory . '/' . $sub_directory . '/' . $image_data;
+                            }
+                            $lif_arr['media_type'] = 1;
+                        } elseif ($extension == 'mp4') {
+                            $_FILES['life_video']['name'] = $_FILES['life_pic']['name'][$key];
+                            $_FILES['life_video']['type'] = $_FILES['life_pic']['type'][$key];
+                            $_FILES['life_video']['tmp_name'] = $_FILES['life_pic']['tmp_name'][$key];
+                            $_FILES['life_video']['error'] = $_FILES['life_pic']['error'][$key];
+                            $_FILES['life_video']['size'] = $_FILES['life_pic']['size'][$key];
+                            $video_data = upload_video('life_video', PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                            if (is_array($video_data)) {
+                                $flag = 1;
+                                $data['success'] = false;
+                                $data['error'] = $video_data['errors'];
+                                break;
+                            } else {
+                                $lif_arr['timeline_media'] = $directory . '/' . $sub_directory . '/' . $video_data;
+                            }
+                            $lif_arr['media_type'] = 2;
+                        } else {
                             $flag = 1;
                             $data['success'] = false;
-                            $data['error'] = $image_data['errors'];
+                            $data['error'] = 'You have not uploaded valid image/upload';
                             break;
-                        } else {
-                            $lif_arr['timeline_media'] = $directory . '/' . $sub_directory . '/' . $image_data;
                         }
-                        $lif_arr['media_type'] = 1;
-                    } elseif ($extension == 'mp4') {
-                        $_FILES['life_video']['name'] = $_FILES['life_pic']['name'][$key];
-                        $_FILES['life_video']['type'] = $_FILES['life_pic']['type'][$key];
-                        $_FILES['life_video']['tmp_name'] = $_FILES['life_pic']['tmp_name'][$key];
-                        $_FILES['life_video']['error'] = $_FILES['life_pic']['error'][$key];
-                        $_FILES['life_video']['size'] = $_FILES['life_pic']['size'][$key];
-                        $video_data = upload_video('life_video', PROFILE_IMAGES . $directory . '/' . $sub_directory);
-                        if (is_array($video_data)) {
-                            $flag = 1;
-                            $data['success'] = false;
-                            $data['error'] = $video_data['errors'];
-                            break;
+                    }
+                    $life_timeline[] = $lif_arr;
+                }
+                if ($flag == 0) {
+                    foreach ($life_timeline as $key => $arr) {
+                        if (isset($this->input->post('timelineid')[$key])) {
+                            $arr['updated_at'] = date('Y-m-d H:i:s');
+                            $this->users_model->common_insert_update('update', TBL_LIFE_TIMELINE, $arr, ['id' => base64_decode($this->input->post('timelineid')[$key])]);
                         } else {
-                            $lif_arr['timeline_media'] = $directory . '/' . $sub_directory . '/' . $video_data;
+                            $arr['created_at'] = date('Y-m-d H:i:s');
+                            $this->users_model->common_insert_update('insert', TBL_LIFE_TIMELINE, $arr);
                         }
-                        $lif_arr['media_type'] = 2;
-                    } else {
-                        $flag = 1;
-                        $data['success'] = false;
-                        $data['error'] = 'You have not uploaded valid image/upload';
-                        break;
                     }
-                }
-                $life_timeline[] = $lif_arr;
-            }
-            if ($flag == 0) {
-                foreach ($life_timeline as $key => $arr) {
-                    if (isset($this->input->post('timelineid')[$key])) {
-                        $arr['updated_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('update', TBL_LIFE_TIMELINE, $arr, ['id' => base64_decode($this->input->post('timelineid')[$key])]);
-                    } else {
-                        $arr['created_at'] = date('Y-m-d H:i:s');
-                        $this->users_model->common_insert_update('insert', TBL_LIFE_TIMELINE, $arr);
-                    }
-                }
 //                $this->users_model->batch_insert_update('insert', TBL_LIFE_TIMELINE, $life_timeline);
-                $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 4], ['id' => $profile_id]);
+                    $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 4], ['id' => $profile_id]);
 
-                $data['success'] = true;
+                    $data['success'] = true;
+                }
             }
         }
         echo json_encode($data);
@@ -852,9 +851,9 @@ class Profile extends MY_Controller {
         if (!empty($timeline)) {
             $timeline_count = count($timeline) - 1;
             foreach ($timeline as $key => $value) {
-                $date = '';
-                if ($date != '') {
-                    $date = date('m/d/Y', strtotime($value['date']));
+                $day = '';
+                if ($value['date'] != '') {
+                    $day = date('d', strtotime($value['date'])) + 0;
                 }
                 $str .= '<input type="hidden" name="timelineid[]" value="' . base64_encode($value['id']) . '"/>
                         <div class="step-06">
@@ -863,15 +862,19 @@ class Profile extends MY_Controller {
                                     <label class="label-css">Title</label>
                                     <input type="text" name="title[]" placeholder="Life Event" class="input-css" value="' . $value['title'] . '">
                                 </div>
-                                <div class="input-wrap four-input">
-                                    <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="' . $date . '"> <span>Or</span>
-                                    <input type="number" name="month[]" placeholder="Month" class="input-css" value="' . $value['month'] . '">
-                                    <input type="number" name="month_year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '"><span>Or</span>
-                                    <input type="number" name="year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '">
-                                    <p>You may enter a Full date, a Month/Year, or a Year.</p>
+                                <div class="input-wrap">
+                                    <div class="input-three-l">
+                                        <input type="number" name="year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '">
+                                    </div>
+                                    <div class="input-three-m">
+                                        <input type="number" name="month[]" placeholder="Month" class="input-css" value="' . $value['month'] . '">
+                                    </div>
+                                    <div class="input-three-r">
+                                        <input type="number" name="day[]" placeholder="Day" class="input-css" value="' . $day . '">
+                                    </div>
                                 </div>
                                 <div class="input-wrap">
-                                    <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)">' . $value['details'] . '</textarea>
+                                    <textarea class="input-css textarea-css" name="details[]" placeholder="Details (optional)">' . $value['details'] . '</textarea>
                                 </div>';
                 if ($key == $timeline_count) {
                     $str .= '<a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>';
@@ -908,15 +911,19 @@ class Profile extends MY_Controller {
                                 <label class="label-css">Title</label>
                                 <input type="text" name="title[]" placeholder="Life Event" class="input-css">
                             </div>
-                            <div class="input-wrap four-input">
-                                <input type="text" name="date[]" placeholder="Date" class="input-css date-picker"> <span>Or</span>
-                                <input type="number" name="month[]" placeholder="Month" class="input-css">
-                                <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
-                                <input type="number" name="year[]" placeholder="Year" class="input-css">
-                                <p>You may enter a Full date, a Month/Year, or a Year.</p>
+                            <div class="input-wrap">
+                                <div class="input-three-l">
+                                    <input type="number" name="year[]" placeholder="Year" class="input-css">
+                                </div>
+                                <div class="input-three-m">
+                                    <input type="number" name="month[]" placeholder="Month" class="input-css">
+                                </div>
+                                <div class="input-three-r">
+                                    <input type="number" name="day[]" placeholder="Day" class="input-css">
+                                </div>
                             </div>
                             <div class="input-wrap">
-                                <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"></textarea>
+                                <textarea class="input-css textarea-css" name="details[]" placeholder="Details (optional)"></textarea>
                             </div>
                             <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
                         </div>

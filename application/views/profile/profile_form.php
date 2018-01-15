@@ -66,10 +66,10 @@
                                     <div class="input-wrap">
                                         <label class="label-css">Add Profile Details</label>
                                         <div class="input-l">
-                                            <input type="text" name="firstname" placeholder="First Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['firstname'] : set_value('firstname') ?>" />
+                                            <input type="text" id="firstname" name="firstname" placeholder="First Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['firstname'] : set_value('firstname') ?>" />
                                         </div>
                                         <div class="input-r">
-                                            <input type="text" name="lastname" placeholder="Last Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['lastname'] : set_value('lastname') ?>"/>
+                                            <input type="text" id="lastname" name="lastname" placeholder="Last Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['lastname'] : set_value('lastname') ?>"/>
                                         </div>
                                     </div>
                                     <div class="input-wrap">
@@ -367,7 +367,7 @@
                                     <button type="button" onclick="$('#affiliation-modal').modal('show')">Add Affiliation</button>
                                 </div>
                                 <div class="step-03-r">
-                                    <h6>Affiliations are things your loved on was <br/> associated with and that were important to hm or her.</h6>
+                                    <h6>Affiliations are things your loved one was <br/> associated with and that were important to hm or her.</h6>
                                     <h5>Example Incluse things such as:</h5>
                                     <p>Schools attended</p>
                                     <p>Organizations and clubs</p>
@@ -389,7 +389,7 @@
                     <div id="forth-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Life Timeline <small>(optional)</small> </h2>
-                            <p>Enter information about important milestones in your loved ones life.</p>
+                            <p>Enter information about important milestones in your loved one's life.</p>
                         </div>
                         <div class="step-form">
                             <form id="timeline-form">
@@ -406,15 +406,19 @@
                                                         <label class="label-css">Title</label>
                                                         <input type="text" name="title[]" placeholder="Life Event" class="input-css" value="<?php echo $value['title'] ?>">
                                                     </div>
-                                                    <div class="input-wrap four-input">
-                                                        <input type="text" name="date[]" placeholder="Date" class="input-css date-picker" value="<?php if ($value['date'] != '') echo date('m/d/Y', strtotime($value['date'])) ?>"> <span>Or</span>
-                                                        <input type="number" name="month[]" placeholder="Month" class="input-css" value="<?php echo $value['month'] ?>">
-                                                        <input type="number" name="month_year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>"><span>Or</span>
-                                                        <input type="number" name="year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>">
-                                                        <p>You may enter a Full date, a Month/Year, or a Year.</p>
+                                                    <div class="input-wrap">
+                                                        <div class="input-three-l">
+                                                            <input type="number" name="year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>">
+                                                        </div>
+                                                        <div class="input-three-m">
+                                                            <input type="number" name="month[]" placeholder="Month" class="input-css" value="<?php echo $value['month'] ?>">
+                                                        </div>
+                                                        <div class="input-three-r">
+                                                            <input type="number" name="day[]" placeholder="Day" class="input-css" value="<?php if ($value['date'] != '') echo date('d', strtotime($value['date'])) ?>">
+                                                        </div>
                                                     </div>
                                                     <div class="input-wrap">
-                                                        <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"><?php echo $value['details']; ?></textarea>
+                                                        <textarea class="input-css textarea-css" name="details[]" placeholder="Details (optional)"><?php echo $value['details']; ?></textarea>
                                                     </div>
                                                     <?php if ($key == $timeline_count) { ?>
                                                         <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
@@ -456,15 +460,19 @@
                                                     <label class="label-css">Title</label>
                                                     <input type="text" name="title[]" placeholder="Life Event" class="input-css">
                                                 </div>
-                                                <div class="input-wrap four-input">
-                                                    <input type="text" name="date[]" placeholder="Date" class="input-css date-picker"> <span>Or</span>
-                                                    <input type="number" name="month[]" placeholder="Month" class="input-css">
-                                                    <input type="number" name="month_year[]" placeholder="Year" class="input-css"><span>Or</span>
-                                                    <input type="number" name="year[]" placeholder="Year" class="input-css">
-                                                    <p>You may enter a Full date, a Month/Year, or a Year.</p>
+                                                <div class="input-wrap">
+                                                    <div class="input-three-l">
+                                                        <input type="number" name="year[]" placeholder="Year" class="input-css">
+                                                    </div>
+                                                    <div class="input-three-m">
+                                                        <input type="number" name="month[]" placeholder="Month" class="input-css">
+                                                    </div>
+                                                    <div class="input-three-r">
+                                                        <input type="number" name="day[]" placeholder="Day" class="input-css">
+                                                    </div>
                                                 </div>
                                                 <div class="input-wrap">
-                                                    <textarea class="input-css textarea-css" name="details[]" placeholder="Details(optional)"></textarea>
+                                                    <textarea class="input-css textarea-css" name="details[]" placeholder="Details (optional)"></textarea>
                                                 </div>
                                                 <a class="add_timeline_btn label-css"><i class="fa fa-plus"></i> Add another life timeline entry.</a>
                                             </div>
@@ -493,7 +501,7 @@
                     <div id="fifth-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Add Funeral Services <small>(optional)</small> </h2>
-                            <p>In necessary, enter funeral services information. You will be able to remove this information later.</p>
+                            <p>If necessary, enter funeral services information. You will be able to remove this information later.</p>
                         </div>
                         <form id="funeralservice-form" method="post">
                             <div class="step-form">
@@ -817,9 +825,7 @@
                                     <span id="profile_name"><?php
                                         if (isset($profile))
                                             echo $profile['firstname'] . ' ' . $profile['lastname'] . '\'s';
-                                        else
-                                            echo "John's"
-                                            ?></span> Life Profile is complete but not yet published.
+                                        ?></span> Life Profile is complete but not yet published.
                                     <?php
                                 }
                                 ?>

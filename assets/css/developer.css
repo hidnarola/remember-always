@@ -64,4 +64,5 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .helpful-l ul li:nth-child(2) .helpful-box {background: #975979;}
 .helpful-l ul li:nth-child(2) p {color: #fff;}
 .helpful-l ul li:nth-child(2) h3 a {color: #fff;}
-
+/*15-1-2018 Center blog image*/
+.blog-box span{text-align: center;}

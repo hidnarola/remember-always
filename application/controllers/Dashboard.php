@@ -21,7 +21,7 @@ class Dashboard extends MY_Controller {
             redirect('/');
         }
         if ($slug == '') {
-            $profiles = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'user_id' => $this->user_id]]);
+            $profiles = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'user_id' => $this->user_id]], ['order_by' => 'firstname']);
             $data['profiles'] = $profiles;
             $data['slug'] = '';
         } else if ($slug == 'affiliations') {

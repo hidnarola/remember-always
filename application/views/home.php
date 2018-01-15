@@ -62,7 +62,7 @@
 
 <section class="memorialize">
     <div class="container">
-        <h2>Memorialize & remember in a few easy steps. <span>It’s free and always will be.</span></h2>
+        <h2>Memorialize & remember in a few easy steps. <span>It's free.</span></h2>
         <ul>
             <li>
                 <div class="white-box">
@@ -274,15 +274,15 @@
                         if ($this->is_user_loggedin) {
                             if ($this->tribute_profile_count == 0) {
                                 ?>
-                                <a href="<?php echo site_url('profile/create') ?>">Add a Fundraiser<br/>(optional)</a>
+                                <a href="<?php echo site_url('profile/create') ?>">Add a Tribute <br/>Fundraiser(optional)</a>
                             <?php } else if ($this->tribute_profile_count == 1) {
                                 ?>
-                                <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Add a Fundraiser<br/>(optional)</a>
+                                <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Add a Tribute <br/>Fundraiser(optional)</a>
                             <?php } else { ?>
-                                <a href="<?php echo site_url('dashboard/profiles') ?>">Add a Fundraiser<br/>(optional)</a>
+                                <a href="<?php echo site_url('dashboard/profiles') ?>">Add a Tribute <br/>Fundraiser(optional)</a>
                             <?php } ?>
                         <?php } else { ?>
-                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Add a Fundraiser<br/>(optional)</a>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Add a Tribute <br/>Fundraiser(optional)</a>
                         <?php } ?>
                     </h3>
                     <p>Get support for your loved <br/> one’s charity, foundation, or expenses.</p>

@@ -438,7 +438,7 @@ a.remove-video:hover{opacity:.7;}
 .affiliations ul li{display:block;width:100%;display:block;}
 .affiliations ul li a{display:block;border-bottom:1px solid #efefef;padding:10px;line-height:28px;font-family:'Rubik';font-size:16px;font-weight:400;color:#999;position:relative;}
 .affiliations ul li:last-child a{border:0;}
-.affiliations ul li a:after{content:'\f0da';font-family:'FontAwesome';font-size:16px;color:#999;position:absolute;top:50%;right:10px;
+.affiliations ul li .official_affiliation:after{content:'\f0da';font-family:'FontAwesome';font-size:16px;color:#999;position:absolute;top:50%;right:10px;
                             -webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);transform:translateY(-50%);}
 .affiliations ul li a:hover:after,
 .affiliations ul li a:hover{text-decoration:none;color:#975779;}

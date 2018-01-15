@@ -125,16 +125,22 @@ $(function () {
     $('#timeline-form').validate({
         rules: {
             'title[]': {
-                'required': true
+                required: true
+            },
+            'year[]': {
+                required: true,
+                minlength: 4,
+                max: currentYear
             },
             'month[]': {
                 min: 1,
                 max: 12
             },
-            'month_year[]': {
-                max: currentYear
+            'day[]': {
+                min: 1,
+                max: 31
             },
-            'year[]': {
+            'month_year[]': {
                 max: currentYear
             },
             'life_pic[]': {
@@ -742,87 +748,93 @@ function preview_profile() {
  */
 function save_finish() {
     //-- check required feild is entered by user if yes save first step data
-    if ($('#create_profile_form').valid()) {
-        $('#profile_process').val(1);
-        fd = new FormData(document.getElementById("create_profile_form"));
-        $('.loader').show();
-        $.ajax({
-            url: create_profile_url,
-            type: "POST",
-            data: fd,
-            async: false,
-            dataType: "json",
-            processData: false, // tell jQuery not to process the data
-            contentType: false, // tell jQuery not to set contentType
-            success: function (data) {
-                if (data.success == true) {
-                    profile_id = btoa(data.data.id);
-                    // add validation of unique fun fact rule
-                    var rules = $('#fun_fact').rules();
-                    if (!findProperty(rules, 'remote')) {
-                        $('#fun_fact').rules('add', {
-                            remote: site_url + 'profile/check_facts/' + profile_id,
-                            messages: {
-                                remote: "This fun fact is already added",
-                            }
-                        });
-                    }
-                    $('#affiliation_text').rules('add', {
-                        remote: site_url + 'profile/check_affiliation/' + profile_id,
-                        messages: {
-                            remote: "This affiliation is already added",
-                        }
-                    });
-                    $('#profile_name').html(data.firstname + ' ' + data.lastname);
-                    $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
-                    profile_slug = data.slug;
-
-                    //-- Save timeline data
-                    // check if title is not empty
-                    title_empty = 1;
-                    $('input[name="title[]"]').each(function () {
-                        if ($(this).val() != '') {
-                            title_empty = 0;
-                        }
-                    });
-                    if (title_empty == 0) {
-                        if ($('#timeline-form').valid() && validate_timeline_date()) {
-                            fd = new FormData(document.getElementById("timeline-form"));
-                            fd.append('profile_id', profile_id);
-                            $.ajax({
-                                url: site_url + "profile/add_timeline",
-                                type: "POST",
-                                data: fd,
-                                dataType: "json",
-                                async: false,
-                                processData: false, // tell jQuery not to process the data 
-                                contentType: false, // tell jQuery not to set contentType
-                                success: function (data) {
-                                    if (data.success == true) {
-                                        $('#profile_process').val(4);
-                                        save_funeral_tribute();
-                                    } else {
-                                        $('.loader').hide();
-                                        $('#profile_process').val(3);
-                                        $('.nav-tabs a[href="#forth-step"]').tab('show');
-                                        showErrorMSg(data.error);
-                                    }
+    //-- check if required field is fill up by user
+    if (currentTab != 'first-step' && profile_id == 0) {
+        $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('#create_profile_form').valid();
+    } else {
+        if ($('#create_profile_form').valid()) {
+            $('#profile_process').val(1);
+            fd = new FormData(document.getElementById("create_profile_form"));
+            $('.loader').show();
+            $.ajax({
+                url: create_profile_url,
+                type: "POST",
+                data: fd,
+                async: false,
+                dataType: "json",
+                processData: false, // tell jQuery not to process the data
+                contentType: false, // tell jQuery not to set contentType
+                success: function (data) {
+                    if (data.success == true) {
+                        profile_id = btoa(data.data.id);
+                        // add validation of unique fun fact rule
+                        var rules = $('#fun_fact').rules();
+                        if (!findProperty(rules, 'remote')) {
+                            $('#fun_fact').rules('add', {
+                                remote: site_url + 'profile/check_facts/' + profile_id,
+                                messages: {
+                                    remote: "This fun fact is already added",
                                 }
                             });
                         }
+                        $('#affiliation_text').rules('add', {
+                            remote: site_url + 'profile/check_affiliation/' + profile_id,
+                            messages: {
+                                remote: "This affiliation is already added",
+                            }
+                        });
+                        $('#profile_name').html(data.firstname + ' ' + data.lastname);
+                        $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
+                        profile_slug = data.slug;
+
+                        //-- Save timeline data
+                        // check if title is not empty
+                        title_empty = 1;
+                        $('input[name="title[]"]').each(function () {
+                            if ($(this).val() != '') {
+                                title_empty = 0;
+                            }
+                        });
+                        if (title_empty == 0) {
+                            if ($('#timeline-form').valid() && validate_timeline_date()) {
+                                fd = new FormData(document.getElementById("timeline-form"));
+                                fd.append('profile_id', profile_id);
+                                $.ajax({
+                                    url: site_url + "profile/add_timeline",
+                                    type: "POST",
+                                    data: fd,
+                                    dataType: "json",
+                                    async: false,
+                                    processData: false, // tell jQuery not to process the data 
+                                    contentType: false, // tell jQuery not to set contentType
+                                    success: function (data) {
+                                        if (data.success == true) {
+                                            $('#profile_process').val(4);
+                                            save_funeral_tribute();
+                                        } else {
+                                            $('.loader').hide();
+                                            $('#profile_process').val(3);
+                                            $('.nav-tabs a[href="#forth-step"]').tab('show');
+                                            showErrorMSg(data.error);
+                                        }
+                                    }
+                                });
+                            }
+                        } else {
+                            save_funeral_tribute();
+                        }
                     } else {
-                        save_funeral_tribute();
+                        $('.loader').hide();
+                        $('.nav-tabs a[href="#first-step"]').tab('show');
+                        $('#profile_process').val(0);
+                        showErrorMSg(data.error);
                     }
-                } else {
-                    $('.loader').hide();
-                    $('.nav-tabs a[href="#first-step"]').tab('show');
-                    $('#profile_process').val(0);
-                    showErrorMSg(data.error);
                 }
-            }
-        });
-    } else {
-        $('.nav-tabs a[href="#first-step"]').tab('show');
+            });
+        } else {
+            $('.nav-tabs a[href="#first-step"]').tab('show');
+        }
     }
     return false;
 }
@@ -1351,16 +1363,15 @@ function delete_affiliation(obj, data, type) {
 }
 
 //-- Forth Timeline step
-// Add timline button
+// Add timeline button
 $(document).on('click', '.add_timeline_btn', function () {
     if ($('#timeline-form').valid()) {
         if (validate_timeline_date()) {
             timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
             timeline_div.find('input[name="timelineid[]"]').val('');
             timeline_div.find('input[name="title[]"]').val('');
-            timeline_div.find('input[name="date[]"]').val('');
+            timeline_div.find('input[name="day[]"]').val('');
             timeline_div.find('input[name="month[]"]').val('');
-            timeline_div.find('input[name="month_year[]"]').val('');
             timeline_div.find('input[name="year[]"]').val('');
             timeline_div.find('textarea[name="details[]"]').val('');
             timeline_div.find('input[name="life_pic[]"]').val('');
@@ -1426,16 +1437,27 @@ $(document).on('change', '.timeline-media', function () {
 //Validates date,month and year
 function validate_timeline_date() {
     valid = 1;
-    $('input[name="date[]"]').each(function () {
-        date = $(this);
-        month = $(this).siblings('input[name="month[]"]');
-        month_year = $(this).siblings('input[name="month_year[]"]');
-        year = $(this).siblings('input[name="year[]"]');
-        if (date.val() == '' && (month.val() == '' || month_year.val() == '') && year.val() == '') {
-            date.addClass('error');
+    $('input[name="day[]"]').each(function () {
+        day = $(this);
+        month = $(this).parent('.input-three-r').siblings('.input-three-m').find('input[name="month[]"]');
+        year = $(this).parent('.input-three-r').siblings('.input-three-l').find('input[name="year[]"]');
+        if (day.val() != '' && month.val() == '') {
+            month.addClass('error');
             valid = 0;
         } else {
-            date.removeClass('error');
+            month.removeClass('error');
+        }
+        if (day.val() != '' && month.val() != '' && year.val() != '') {
+            if (isValidDate(day.val(), month.val(), year.val())) {
+                day.removeClass('error');
+                month.removeClass('error');
+                year.removeClass('error');
+            } else {
+                valid = 0;
+                day.addClass('error');
+                month.addClass('error');
+                year.addClass('error');
+            }
         }
     });
     if (valid == 0) {
@@ -1656,4 +1678,31 @@ $('#fundraiser_goal').change(function () {
     if ($(this).val() >= 250) {
         $(this).removeClass('error');
     }
+});
+function isValidDate(day, month, year) {
+    console.log('year is ', year);
+    console.log('year lenght is ', year.length);
+    var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+// Adjust for leap years
+    if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+        monthLength[1] = 29;
+
+    let errors = []
+
+    if (!(month > 0 && month < 13)) {
+        errors.push("month");
+    }
+
+    if (day < 0 || day > monthLength[month - 1]) {
+        errors.push("day");
+    }
+    if (errors.length == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+$('#firstname,#lastname').change(function () {
+    $('#profile_name').html($('#firstname').val()+' '+$('#lastname').val());
 });
