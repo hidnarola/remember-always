@@ -29,7 +29,6 @@ class Community extends MY_Controller {
         $offset = 5;
         $page_config['total_rows'] = $this->community_model->get_results('count');
         $data['questions'] = $this->community_model->get_results('result', $start, $offset);
-        qry();
         $this->pagination->initialize($page_config);
 
         $data['links'] = $this->pagination->create_links();
