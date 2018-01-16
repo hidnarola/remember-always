@@ -15,9 +15,25 @@ class Community extends MY_Controller {
     }
 
     /**
-     * Display all questions pages.
+     * Listing of all question with pagination for online community
+     * @param int $start
      */
-    public function index() {
+    public function index($start = 0) {
+        $page_config = front_pagination();
+        $page_config['per_page'] = 5;
+        $page_config['base_url'] = site_url('community');
+        if ($this->input->get('keyword') != '') {
+            $page_config['suffix'] = '?keyword=' . $this->input->get('keyword');
+            $page_config['first_url'] = site_url('community') . '?keyword=' . $this->input->get('keyword');
+        }
+        $offset = 5;
+        $page_config['total_rows'] = $this->community_model->get_results('count');
+        $data['questions'] = $this->community_model->get_results('result', $start, $offset);
+        qry();
+        $this->pagination->initialize($page_config);
+
+        $data['links'] = $this->pagination->create_links();
+
         $data['title'] = 'Remember Always | Community';
         $data['breadcrumb'] = ['title' => 'Online Community', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'community/listing', $data);

@@ -22,4 +22,10 @@ class Home extends MY_Controller {
         $this->template->load('default', 'home', $data);
     }
 
+    public function test() {
+        require_once(APPPATH . 'vendor/stripe/init.php');
+
+        $stripe = \Stripe\Stripe::setApiKey("sk_test_N9gt1bWxLOcFaoNGuYI1mCvk");
+    }
+
 }

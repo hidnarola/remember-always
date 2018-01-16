@@ -35,6 +35,12 @@ class Search_model extends MY_Model {
                             ' OR life_bio LIKE ' . $this->db->escape('%' . $keyword . '%') .
                             ')');
                 }
+                if ($location != '') {
+                    $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ')');
+                }
                 $this->db->order_by('name');
                 $this->db->join(TBL_COUNTRY . ' as cn', 'p.country=cn.id', 'left');
                 $this->db->join(TBL_STATE . ' as st', 'p.state=st.id', 'left');
@@ -42,10 +48,10 @@ class Search_model extends MY_Model {
 
                 if ($type == 'result') {
                     $this->db->limit($offset, $start);
-                    $query = $this->db->get(TBL_PROFILES);
+                    $query = $this->db->get(TBL_PROFILES . ' p');
                     $result = $query->result_array();
                 } else {
-                    $query = $this->db->get(TBL_PROFILES);
+                    $query = $this->db->get(TBL_PROFILES . ' p');
                     $result = $query->num_rows();
                 }
             } elseif ($search_type == 'service_provider') {
@@ -60,11 +66,10 @@ class Search_model extends MY_Model {
                 // if location is not empty
                 if ($location != '') {
                     $this->db->where('(s.location LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
                             ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
                             ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
                             ')');
-                    $this->db->join(TBL_CITY . ' as c', 's.city=c.id', 'left');
-                    $this->db->join(TBL_STATE . ' as st', 's.state=st.id', 'left');
                 }
                 $this->db->order_by('s.name');
                 $this->db->join(TBL_COUNTRY . ' as cn', 's.country=cn.id', 'left');
@@ -126,6 +131,7 @@ class Search_model extends MY_Model {
                 }
             } else {
                 $where_profile = $where_provider = $where_affiliation = $where_blog = '';
+                $location_profile = $location_provider = $location_affiliation = '';
                 if ($keyword != '') {
                     $where_profile = ' AND (p.firstname LIKE ' . $this->db->escape('%' . $keyword . '%') .
                             ' OR p.lastname LIKE ' . $this->db->escape('%' . $keyword . '%') .
@@ -142,24 +148,33 @@ class Search_model extends MY_Model {
                             ' OR b.description LIKE ' . $this->db->escape('%' . $keyword . '%') .
                             ')';
                 }
+                if ($location != '') {
+                    $location_profile = ' AND (pc.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR ps.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR pci.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ')';
+                    $location_provider = ' AND (c.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR sc.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ')';
+                    $location_affiliation = ' AND (cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR sts.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ' OR ci.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                            ')';
+                }
 
                 $sql = 'SELECT s.* FROM (SELECT p.id,CONCAT(firstname," ",lastname) as name,slug,profile_image as image,life_bio as description,"profile" as type,pc.name as country,ps.name as state,pci.name as city '
                         . 'FROM ' . TBL_PROFILES . ' p '
                         . ' LEFT JOIN ' . TBL_COUNTRY . ' pc ON p.country=pc.id LEFT JOIN ' . TBL_STATE . ' ps ON p.state = ps.id LEFT JOIN ' . TBL_CITY . ' pci ON p.city=pci.id '
-                        . 'WHERE p.is_delete=0 AND p.is_published=1' . $where_profile
+                        . 'WHERE p.is_delete=0 AND p.is_published=1' . $where_profile . $location_profile
                         . ' UNION ALL '
                         . 'SELECT sp.id,sp.name,sp.slug,sp.image,sp.description,"service_provider" as type,c.name as country,st.name as state,sc.name as city  '
                         . 'FROM ' . TBL_SERVICE_PROVIDERS . ' sp LEFT JOIN ' . TBL_COUNTRY . ' c ON sp.country=c.id LEFT JOIN ' . TBL_STATE . ' st ON sp.state = st.id LEFT JOIN ' . TBL_CITY . ' sc ON sp.city=sc.id '
-                        . 'WHERE sp.is_delete=0 AND sp.is_active=1 AND (sp.location LIKE ' . $this->db->escape('%' . $location . '%') .
-                        ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                        ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') . ')' . $where_provider .
+                        . 'WHERE sp.is_delete=0 AND sp.is_active=1 ' . $where_provider . $location_provider .
                         ' UNION ALL ' .
                         'SELECT a.id,a.name,a.slug,a.image,a.description,"affiliation" as type,cn.name as country,sts.name as state,ci.name as city '
                         . 'FROM ' . TBL_AFFILIATIONS . ' a LEFT JOIN ' . TBL_COUNTRY . ' cn ON a.country=cn.id LEFT JOIN ' . TBL_STATE . ' sts ON a.state=sts.id LEFT JOIN ' . TBL_CITY . ' ci ON a.city=ci.id '
-                        . 'WHERE a.is_delete=0 AND a.is_approved=1 AND (cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                        ' OR sts.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                        ' OR ci.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                        ')' . $where_affiliation .
+                        . 'WHERE a.is_delete=0 AND a.is_approved=1 ' . $where_affiliation . $location_affiliation .
                         ' UNION ALL ' .
                         'SELECT b.id,b.title as name,b.slug,b.image,b.description,"blog" as type,"" as country,"" as state,"" as city '
                         . 'FROM ' . TBL_BLOG_POST . ' b '
@@ -189,6 +204,13 @@ class Search_model extends MY_Model {
             $this->db->join(TBL_COUNTRY . ' as cn', 'p.country=cn.id', 'left');
             $this->db->join(TBL_STATE . ' as st', 'p.state=st.id', 'left');
             $this->db->join(TBL_CITY . ' as c', 'p.city=c.id', 'left');
+
+            if ($location != '') {
+                $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ')');
+            }
             $this->db->order_by('name');
             if ($type == 'result') {
 

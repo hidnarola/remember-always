@@ -30,7 +30,7 @@
                 <a href="javascript:void(0)" onclick="showModal('sign-up')">SIGN UP</a>
             </div>
         <?php } ?>
-        <div class="search">
+        <div class="search header_search_div">
             <a href="javascript:void(0)" onclick="viewSearchbox()" class="header_search">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129" class="header_search">
                     <g>

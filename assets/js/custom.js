@@ -13,7 +13,7 @@ $(function () {
         }
     });
     $(document).on('click', function (e) {
-        if ($(e.target).attr("id") != 'global_search' && $(e.target).attr('class') != 'header_search') {
+        if ($(e.target).attr("id") != 'global_search' && $(e.target).attr('class') != 'header_search' && $(e.target).attr('id') != 'community_search') {
             $(".search").removeClass("open");
         }
     });
@@ -376,8 +376,14 @@ function updateQueryStringParameter(uri, key, value) {
 }
 //Display searchbox on click event
 function viewSearchbox() {
-    if (!$('.search').hasClass('open')) {
-        $('.search').addClass('open');
+    if (!$('.header_search_div').hasClass('open')) {
+        $('.header_search_div').addClass('open');
+    }
+}
+//Display searchbox on click event for community searchbox
+function viewCommunitySearch() {
+    if (!$('.community_search_div').hasClass('open')) {
+        $('.community_search_div').addClass('open');
     }
 }
 /**
