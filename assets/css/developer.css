@@ -66,3 +66,10 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .helpful-l ul li:nth-child(2) h3 a {color: #fff;}
 /*15-1-2018 Center blog image*/
 .blog-box span{text-align: center;}
+/*17-1-2018 Span class*/
+.comments-div-wrap h3 a{color: #333;}
+.que_author{float: left;}
+.comments-div-wrap .btn_continue a:hover {background: transparent !important; color: #ec4f4f;}
+.no-data.text-left{text-align: left;}
+.user-update.community-action-btn{text-align: right;}
+.community-action-btn .delete{margin-right: 0px;}

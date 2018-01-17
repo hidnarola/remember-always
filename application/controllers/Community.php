@@ -39,6 +39,127 @@ class Community extends MY_Controller {
     }
 
     /**
+     * Post question functionality
+     * @author KU
+     */
+    public function post_question() {
+        //-- check user is logged in or not
+        if ($this->is_user_loggedin) {
+            if ($this->input->post('question_slug') != '') {
+                $question = $this->community_model->sql_select(TBL_QUESTIONS, 'id,title', ['where' => array('slug' => trim($this->input->post('question_slug')), 'is_delete' => 0, 'user_id' => $this->user_id)], ['single' => true]);
+                if (trim($this->input->post('que_title')) != $question['title']) {
+                    $this->form_validation->set_rules('que_title', 'Title', 'trim|required|min_length[5]|callback_title_validation');
+                } else {
+                    $this->form_validation->set_rules('que_title', 'Title', 'trim|required|min_length[5]');
+                }
+            } else {
+                $this->form_validation->set_rules('que_title', 'Title', 'trim|required|min_length[5]|callback_title_validation');
+            }
+            $this->form_validation->set_rules('que_description', 'Description', 'trim|required|min_length[10]');
+            if ($this->form_validation->run() == FALSE) {
+                $this->session->set_flashdata('error', validation_errors());
+            } else {
+
+                $data = [
+                    'user_id' => $this->user_id,
+                    'title' => trim($this->input->post('que_title')),
+                    'description' => trim($this->input->post('que_description')),
+                ];
+
+                if ($this->input->post('question_slug') != '') {
+                    $question = $this->community_model->sql_select(TBL_QUESTIONS, 'id', ['where' => array('slug' => trim($this->input->post('question_slug')), 'is_delete' => 0, 'user_id' => $this->user_id)], ['single' => true]);
+                    if (!empty($question)) {
+                        $data['updated_at'] = date('Y-m-d H:i:s');
+                        $data['slug'] = slug(trim($this->input->post('que_title')), TBL_QUESTIONS, $question['id']);
+                        $id = $this->community_model->common_insert_update('update', TBL_QUESTIONS, $data, ['id' => $question['id']]);
+                        $this->session->set_flashdata('success', 'Your question updated successfully!');
+                    } else {
+                        $this->session->set_flashdata('error', 'Something went worng! Please try again later.');
+                    }
+                } else {
+                    $data['created_at'] = date('Y-m-d H:i:s');
+                    $data['slug'] = slug(trim($this->input->post('que_title')), TBL_QUESTIONS);
+                    $id = $this->community_model->common_insert_update('insert', TBL_QUESTIONS, $data);
+                    $this->session->set_flashdata('success', 'Your question posted successfully!');
+                }
+            }
+            redirect('community');
+        } else {
+            custom_show_404();
+        }
+    }
+
+    /**
+     * Callback Validate function to validate uniqueness of question title
+     * @return boolean
+     */
+    public function title_validation() {
+        $question = $this->community_model->sql_select(TBL_QUESTIONS, 'id', ['where' => array('title' => trim($this->input->post('que_title')), 'is_delete' => 0)], ['single' => true]);
+        if (!empty($question)) {
+            $this->form_validation->set_message('title_validation', 'Question already exist!');
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Check question already exist or not
+     * @param string $slug
+     */
+    public function check_question($slug = null) {
+        $title = trim($this->input->get('que_title'));
+        $where = ['title' => $title, 'is_delete' => 0];
+        if (!is_null($slug)) {
+            $where = ['title' => $title, 'is_delete' => 0, 'slug!=' => $slug];
+        }
+        $question = $this->users_model->sql_select(TBL_QUESTIONS, 'id', ['where' => $where], ['single' => true]);
+        if (!empty($question)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
+    }
+
+    /**
+     * Ajax call to this function get question detail to edit particular question
+     * @author KU
+     */
+    public function get_question() {
+        $slug = $this->input->post('slug');
+        $question_data = $this->community_model->sql_select(TBL_QUESTIONS, 'title,slug,description', ['where' => array('slug' => trim($slug), 'is_delete' => 0, 'user_id' => $this->user_id)], ['single' => true]);
+        if (!empty($question_data)) {
+            $data['question'] = $question_data;
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = 'something wnet wrong pelase try again!';
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Delete uploaded question
+     * @param string $slug
+     */
+    public function delete_question($slug = null) {
+        if (!is_null($slug)) {
+            $question = $this->community_model->sql_select(TBL_QUESTIONS, 'id', ['where' => array('slug' => trim($slug), 'is_delete' => 0, 'user_id' => $this->user_id)], ['single' => true]);
+            if (!empty($question)) {
+                $this->community_model->common_insert_update('update', TBL_QUESTIONS, ['is_delete' => 1], ['id' => $question['id']]);
+                $this->session->set_flashdata('success', 'Your question deleted successfully!');
+                redirect('community');
+            } else {
+                custom_show_404();
+            }
+        } else {
+            custom_show_404();
+        }
+    }
+
+    /**
      * Display question details pages.
      */
     public function view($slug = null) {
@@ -47,12 +168,13 @@ class Community extends MY_Controller {
             $question_data = $this->community_model->sql_select(TBL_QUESTIONS . ' q', 'q.*,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id', ['where' => array('slug' => trim($slug), 'q.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=q.user_id AND u.is_delete=0')], 'single' => true]);
             if (!empty($question_data)) {
                 $data['question'] = $question_data;
+                $data['recent_questions'] = $this->community_model->sql_select(TBL_QUESTIONS . ' q', 'q.title,q.slug,u.firstname,u.lastname', ['where' => array('q.slug!=' => trim($slug), 'q.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=q.user_id')]]);
             } else {
                 custom_show_404();
             }
             $data['title'] = 'Remember Always | Community';
-            $data['breadcrumb'] = ['title' => 'Question Details', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('questions'), 'title' => 'Questions']]];
-            $this->template->load('default', 'community/questions', $data);
+            $data['breadcrumb'] = ['title' => 'Question Details', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('community'), 'title' => 'Questions']]];
+            $this->template->load('default', 'community/question', $data);
         } else {
             custom_show_404();
         }

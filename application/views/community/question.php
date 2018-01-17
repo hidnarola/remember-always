@@ -23,21 +23,22 @@
 
                                     </span>
                                     <h3 class="main_q"><?php echo isset($question) ? $question['title'] : '-' ?>
-                                        <small>Asked By: <?php echo $question['firstname'] . ' ' . $question['lastname'] ?>  
+                                        <small>
+                                            Asked By: <?php echo $question['firstname'] . ' ' . $question['lastname'] ?>  
                                             <?php
                                             $from_date = date_create($question['created_at']);
                                             $to_date = date_create(date('Y-m-d H:i:s'));
                                             $days_diff = date_diff($from_date, $to_date);
                                             echo format_days($days_diff);
-                                            ?> Ago</small>
+                                            ?> Ago
+                                        </small>
                                     </h3>
                                     <p><?php echo isset($question) ? $question['description'] : '-' ?></p>
                                     <div class="btn_continue"><a href="javascript:void(0)" id="answer">Answer It</a></div>
                                     <div class="post_text" style="display:none;">
-                                        <!--<form id="add_answer_form" method="post" action="<?php // echo site_url('questions/action')  ?>">-->
                                         <form id="add_answer_form" method="post">
                                             <textarea name="description" class="input-css" id="description" placeholder="Add Answer"></textarea>
-                                            <a href="javascript:void(0)" id="add_answer" data-question="<?php echo $question['slug']?>">Post</a>
+                                            <a href="javascript:void(0)" id="add_answer" data-question="<?php echo $question['slug'] ?>">Post</a>
                                         </form>
                                     </div>
                                 </div>
@@ -79,7 +80,7 @@
                                                     </div>
                                                 </li>
                                                 <li>
-                                                    <div class="post_text"	>
+                                                    <div class="post_text">
                                                         <textarea placeholder="Add Comment"></textarea>
                                                         <a href="#">Post</a>
                                                     </div>
@@ -109,50 +110,31 @@
                 </div>
             </div>
             <div class="user_right_q">
-                <h2>Related QUESTIONS</h2>
-                <ul class="ul_related_q">
-                    <li>
-                        <div class="related_q">
-                            <h6><a>What does scanaty mean in social studies?</a></h6>
-                            <p>Asked by: <span>Monica Anderson</span></p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="related_q">
-                            <h6><a>What does scanaty mean in social studies?</a></h6>
-                            <p>Asked by: <a>Monica Anderson</a></p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="related_q">
-                            <h6><a>What does scanaty mean in social studies?</a></h6>
-                            <p>Asked by: <a>Monica Anderson</a></p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="related_q">
-                            <h6><a>What does scanaty mean in social studies?</a></h6>
-                            <p>Asked by: <a>Monica Anderson</a></p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="related_q">
-                            <h6><a>What does scanaty mean in social studies?</a></h6>
-                            <p>Asked by: <a>Monica Anderson</a></p>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="related_q">
-                            <h6><a>What does scanaty mean in social studies?</a></h6>
-                            <p>Asked by: <a>Monica Anderson</a></p>
-                        </div>
-                    </li>
-                </ul>
+                <h2>Recent QUESTIONS</h2>
+                <?php if (!empty($recent_questions)) { ?>
+                    <ul class="ul_related_q">
+                        <?php
+                        foreach ($recent_questions as $que) {
+                            ?>
+                            <li>
+                                <div class="related_q">
+                                    <h6><a href="<?php echo site_url('community/view/' . $que['slug']) ?>"><?php echo $que['title'] ?>?</a></h6>
+                                    <p>Asked by: <span><?php echo $que['firstname'] . ' ' . $que['lastname'] ?></span></p>
+                                </div>
+                            </li>
+                        <?php }
+                        ?>
+                    </ul>
+                    <?php
+                } else {
+                    echo '<p class="no-data text-left">We have no recent questions!</p>';
+                }
+                ?>
             </div>
         </div>
     </div>
 </div>
 <script>
-var current_url = '<?php echo isset($url) ? $url : '' ?>';
+    var current_url = '<?php echo isset($url) ? $url : '' ?>';
 </script>
 <script src="assets/js/community.js"></script>

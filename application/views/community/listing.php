@@ -1,17 +1,26 @@
+<style type="text/css">.input-css.error{border:1px solid red;}</style>
 <div class="common-page common_questionnaire">
     <div class="container">
         <div class="main_post_question">
             <div class="user_left_q">
-                <div class="white_bg top_m add_an add_q_section" id="add_question_div" style="display:none;">
-                    <h2 class="head_q blue">Add Your Question<a href="javascript:void(0)" id="close_que_btn"><i class="fa fa-times" aria-hidden="true"></i></a></h2>
-                    <div class="input-wrap">
-                        <textarea class="input-css textarea-css" placeholder="Quod omittam vulputate quo ex."></textarea>
+                <form id="post_que_form" action="<?php echo site_url('community/post_question') ?>" method="post">
+                    <div class="white_bg top_m add_an add_q_section" id="add_question_div" style="display:none;">
+                        <h2 class="head_q blue" id="que_label">Add Your Question<a href="javascript:void(0)" id="close_que_btn"><i class="fa fa-times" aria-hidden="true"></i></a></h2>
+                        <div class="input-wrap">
+                            <input type="text" class="input-css" name="que_title" id="que_title" placeholder="Enter title of question"/>
+                        </div>
+                        <div class="input-wrap">
+                            <textarea class="input-css textarea-css" name="que_description" id="que_description" placeholder="Describe your question"></textarea>
+                        </div>
+                        <input type="hidden" name="question_slug" id="question_slug" value=""/>
+                        <div class="an_btn">
+                            <a href="javascript:void(0)" class="post_que_btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i>Post</a>
+                        </div>
                     </div>
-                    <div class="an_btn"><a href="#"><i class="fa fa-long-arrow-right" aria-hidden="true"></i>Post</a></div>
-                </div>	
+                </form>
                 <div class="toggle_btn">
                     <a href="javascript:void(0)" class="a_toggle" id="que_btn"><i class="fa fa-question" aria-hidden="true"></i>Add Your Question</a>
-                    <div class="search community_search_div">
+                    <div class="search community_search_div <?php if ($this->input->get('keyword') != '') echo "open" ?>">
                         <a href="javascript:void(0)" onclick="viewCommunitySearch()" class="header_search">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129" class="header_search">
                                 <g>
@@ -20,7 +29,7 @@
                             </svg>
                         </a>
                         <form action="<?php echo site_url('community') ?>" id="community_search_form">
-                            <input type="text" name="keyword" id="community_search" class="global_search" placeholder="Search..."/>
+                            <input type="text" name="keyword" id="community_search" class="global_search" placeholder="Search..." value="<?php echo $this->input->get('keyword') ?>"/>
                             <button type="submit" class="header_search">
                                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129"  class="header_search">
                                     <g>
@@ -31,6 +40,7 @@
                         </form>
                     </div>
                 </div>	
+                <?php if ($this->input->get('keyword') != '') echo '<h3>Search result for "' . $this->input->get('keyword') . '"</h3>'; ?>
                 <?php foreach ($questions as $question) { ?>
                     <div class="white_bg question_section">
                         <div class="comments-div first_q">
@@ -38,29 +48,61 @@
                                 <li>
                                     <div class="comments-div-wrap">
                                         <span class="commmnet-postted-img">
-                                            <?php if ($question['profile_image'] != '') { ?>
-                                                <img src="<?php echo USER_IMAGES . $question['profile_image'] ?>">
-                                                <?php } ?>
+                                            <?php
+                                            if (isset($question['profile_image']) && !is_null($question['profile_image'])) {
+                                                if (is_null($question['facebook_id']) && is_null($question['google_id'])) {
+                                                    ?>
+                                                    <a class="fancybox" href="<?php echo base_url(USER_IMAGES . $question['profile_image']); ?>" data-fancybox-group="gallery" ><img src="<?php echo base_url(USER_IMAGES . $question['profile_image']); ?>" class="img-responsive content-group" alt=""></a>
+                                                <?php } else { ?>
+                                                    <a class="fancybox" href="<?php echo $question['profile_image']; ?>" data-fancybox-group="gallery" ><img src="<?php echo $question['profile_image']; ?>" class="img-responsive content-group" alt=""></a>
+                                                    <?php
+                                                }
+                                            }
+                                            ?>
                                         </span>
                                         <?php
                                         $from_date = date_create($question['created_at']);
                                         $to_date = date_create(date('Y-m-d H:i:s'));
                                         $days_diff = date_diff($from_date, $to_date);
                                         ?>
-                                        <h3 class="main_q"><?php echo $question['title'] ?><?php echo "<small>By:" . $question['firstname'] . ' ' . $question['lastname'] . "</small>"; ?><small><?php echo format_days($days_diff) . ' ago'; ?></small></h3>
+                                        <h3 class="main_q">
+                                            <a href="<?php echo site_url('community/view/' . $question['slug']) ?>"><?php echo $question['title'] ?></a>
+                                            <small>
+                                                <?php
+                                                $format = format_days($days_diff);
+                                                echo $format;
+                                                if ($format != 'Just Now')
+                                                    echo ' ago';
+                                                ?>
+                                            </small>
+                                        </h3>
                                         <p><?php echo $question['description'] ?></p>
                                     </div>
                                 </li>
                             </ul>
-                            <div class="comment_tag cl_black"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $question['answers'] ?> Answer</div>
+
+                            <div class="comment_tag cl_black">
+                                <span class="que_author"><?php echo "By : " . $question['firstname'] . ' ' . $question['lastname'] ?></span>
+                                <i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $question['answers'] ?> Answer<?php if ($question['answers'] > 1) echo "s"; ?>
+                            </div>
+                            <?php if ($question['user_id'] == $this->user_id && $question['answers'] == 0) { ?>
+                                <div class="user-update community-action-btn">
+                                    <a class="edit edit_que_btn" data-slug="<?php echo $question['slug'] ?>" href="javascript:void(0)">Edit</a>
+                                    <a class="delete delete_que_btn" data-slug="<?php echo $question['slug'] ?>" href="javascript:void(0)">Delete</a>
+                                </div>
+                                <?php
+                            }
+                            ?>
                         </div>
                     </div>
                     <?php
                 }
                 ?>
-                <div class="paggination-wrap">
-                    <?php echo $links ?>
-                </div>
+                <?php if (!empty($links)) { ?>
+                    <div class="paggination-wrap">
+                        <?php echo $links ?>
+                    </div>
+                <?php } ?>
             </div>
             <div class="user_right_q">
                 <div class="profile-box ad">
@@ -73,15 +115,4 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $('#que_btn').click(function () {
-        $('.a_toggle').hide();
-        $('.a_toggle').addClass('hideqdiv');
-        $('#add_question_div').show();
-    });
-    $('#close_que_btn').click(function () {
-        $('#add_question_div').hide();
-        $('.a_toggle').removeClass('hideqdiv');
-        $('.a_toggle').show();
-    });
-</script>
+<script src="assets/js/community.js"></script>

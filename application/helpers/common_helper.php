@@ -190,7 +190,7 @@ function upload_image($image_name, $image_path) {
           exec(FFMPEG_PATH . ' -i ' . $old_path . ' -vf scale=500:-1 ' . $new_path);
           unlink($img_data['full_path']);
           $imgname = $file_name; */
-        
+
 //        $new_line = exec(FFMPEG_PATH . ' -i ' . $filepath . ' -vf "scale=min\'(4032,iw)\':-2" ' . $filepath_new);
         $imgname = $img_data['file_name'];
     } else {
@@ -472,6 +472,8 @@ function format_days($days_diff) {
         } else {
             $result .= $days_diff->s . ' Second';
         }
+    } else {
+        $result .= 'Just Now';
     }
     return $result;
 }

@@ -118,11 +118,19 @@ $route['search/get_result'] = 'search/get_result';
 $route['search/(:any)'] = 'search/index/$1';
 //$route['dashboard/(:any)/profile_publish/(:any)'] = 'dashboard/profile_publish/$2';
 
-/* Donation page routes*/
+/* Donation page routes */
 $route['donate/first'] = 'donate/first';
 $route['donate/second'] = 'donate/second';
 $route['donate/third'] = 'donate/third';
 $route['donate/(:any)'] = 'donate/index/$1';
+
+/* Community page routes */
+$route['community/post_question'] = 'community/post_question';
+$route['community/get_question'] = 'community/get_question';
+$route['community/check_question'] = 'community/check_question';
+$route['community/check_question/(:any)'] = 'community/check_question/$1';
+$route['community/(:any)'] = 'community/index/$1';
+
 
 $route['pages/(:any)'] = 'cms/index/$1';
 
