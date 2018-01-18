@@ -19,7 +19,11 @@
                     </div>
                 </form>
                 <div class="toggle_btn">
-                    <a href="javascript:void(0)" class="a_toggle" id="que_btn"><i class="fa fa-question" aria-hidden="true"></i>Add Your Question</a>
+                    <?php if ($this->is_user_loggedin) { ?>
+                        <a href="javascript:void(0)" class="a_toggle" id="que_btn"><i class="fa fa-question" aria-hidden="true"></i>Add Your Question</a>
+                    <?php } else { ?>
+                        <a href="javascript:void(0)" class="a_toggle" onclick="loginModal(this)" data-redirect="<?php echo site_url('community') ?>"><i class="fa fa-question" aria-hidden="true"></i>Add Your Question</a>
+                    <?php } ?>
                     <div class="search community_search_div <?php if ($this->input->get('keyword') != '') echo "open" ?>">
                         <a href="javascript:void(0)" onclick="viewCommunitySearch()" class="header_search">
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129" class="header_search">

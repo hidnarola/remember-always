@@ -129,8 +129,10 @@ $route['community/post_question'] = 'community/post_question';
 $route['community/get_question'] = 'community/get_question';
 $route['community/check_question'] = 'community/check_question';
 $route['community/check_question/(:any)'] = 'community/check_question/$1';
+$route['community/add_answers'] = 'community/add_answers';
+$route['community/get_comments'] = 'community/get_comments';
+$route['community/post_comment'] = 'community/post_comment';
 $route['community/(:any)'] = 'community/index/$1';
-
 
 $route['pages/(:any)'] = 'cms/index/$1';
 

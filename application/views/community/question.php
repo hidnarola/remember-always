@@ -36,8 +36,9 @@
                                     <p><?php echo isset($question) ? $question['description'] : '-' ?></p>
                                     <div class="btn_continue"><a href="javascript:void(0)" id="answer">Answer It</a></div>
                                     <div class="post_text" style="display:none;">
-                                        <form id="add_answer_form" method="post">
+                                        <form id="add_answer_form" method="post" action="<?php echo site_url('community/add_answers') ?>">
                                             <textarea name="description" class="input-css" id="description" placeholder="Add Answer"></textarea>
+                                            <input type="hidden" name="slug" value="<?php echo $question['slug'] ?>"/>
                                             <a href="javascript:void(0)" id="add_answer" data-question="<?php echo $question['slug'] ?>">Post</a>
                                         </form>
                                     </div>
@@ -53,60 +54,69 @@
                     </ul>
                 </div>
                 <div class="white_bg top_m">
-                    <h2 class="head_q blue">Other Answer<span>(2)</span></h2>
+                    <h2 class="head_q blue">Other Answer<?php if ($question['answers'] > 1) echo 's' ?><span>(<?php echo $question['answers'] ?>)</span></h2>
                     <div class="comments-div first_q best_q other_q">
                         <ul>
-                            <li>
-                                <div class="comments-div-wrap">
-                                    <span class="commmnet-postted-img"></span>
-                                    <h3>Sheets containing and recently<small>20min Ago</small></h3>
-                                    <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                    <div class="comment_tag clicked"><i class="fa fa-comment-o" aria-hidden="true"></i>2 Comment</div>
-                                    <div class="inner_cooment_div">
-                                        <div class="comments-div">
-                                            <ul>
-                                                <li>
-                                                    <div class="comments-div-wrap">
-                                                        <span class="commmnet-postted-img"></span>
-                                                        <h3>Sheets containing and recently<small>3month Ago</small></h3>
-                                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="comments-div-wrap">
-                                                        <span class="commmnet-postted-img"></span>
-                                                        <h3>Sheets containing and recently<small>3month Ago</small></h3>
-                                                        <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="post_text">
-                                                        <textarea placeholder="Add Comment"></textarea>
-                                                        <a href="#">Post</a>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                            <?php
+                            if (!empty($answers)) {
+                                foreach ($answers as $answer) {
+                                    ?>
+                                    <li>
+                                        <div class="comments-div-wrap">
+                                            <span class="commmnet-postted-img">
+                                                <?php
+                                                if (isset($answer['profile_image']) && !is_null($answer['profile_image'])) {
+                                                    if (is_null($answer['facebook_id']) && is_null($answer['google_id'])) {
+                                                        ?>
+                                                        <a class="fancybox" href="<?php echo base_url(USER_IMAGES . $answer['profile_image']); ?>" data-fancybox-group="gallery" ><img src="<?php echo base_url(USER_IMAGES . $answer['profile_image']); ?>" class="img-responsive content-group" alt=""></a>
+                                                    <?php } else { ?>
+                                                        <a class="fancybox" href="<?php echo $answer['profile_image']; ?>" data-fancybox-group="gallery" ><img src="<?php echo $answer['profile_image']; ?>" class="img-responsive content-group" alt=""></a>
+                                                        <?php
+                                                    }
+                                                }
+                                                ?> 
+                                            </span>
+                                            <?php
+                                            $from_date = date_create($answer['created_at']);
+                                            $to_date = date_create(date('Y-m-d H:i:s'));
+                                            $days_diff = date_diff($from_date, $to_date);
+                                            ?>
+                                            <h3><?php echo $answer['firstname'] . ' ' . $answer['lastname'] ?>
+                                                <small>
+                                                    <?php
+                                                    $format = format_days($days_diff);
+                                                    echo $format;
+                                                    if ($format != 'Just Now')
+                                                        echo ' ago';
+                                                    ?>
+                                                </small>
+                                            </h3>
+                                            <p><?php echo $answer['answer'] ?></p>
+                                            <div class="comment_tag answer_comments cl_black" data-answer="<?php echo $answer['id'] ?>"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $answer['comments'] ?> Comment<?php if ($answer['comments'] > 0) echo 's' ?></div>
+                                            <div class="inner_cooment_div" id="comment_<?php echo $answer['id'] ?>" style="display: none">
+                                                <div class="comments-div">
+                                                    <ul>
+                                                        <li>
+                                                            <form method="post" id="comment_form_<?php echo $answer['id'] ?>">
+                                                                <div class="post_text">
+                                                                    <textarea placeholder="Add Comment" name="comment" id="comment_text_<?php echo $answer['id'] ?>" required="required"></textarea>
+                                                                    <a href="javascript:void(0)" class="post_comment" data-answer="<?php echo $answer['id'] ?>">Post</a>
+                                                                </div>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>	
                                         </div>
-                                    </div>	
-
-                                </div>
-                            </li>
-                            <li>
-                                <div class="comments-div-wrap">
-                                    <span class="commmnet-postted-img"></span>
-                                    <h3>Sheets containing and recently<small>20min Ago</small></h3>
-                                    <p>Was popularised the release sheets containing more recently desktop publishing software a aldus pop pageMaker including.</p>
-                                    <div class="comment_tag">
-                                        <i class="fa fa-comment-o" aria-hidden="true"></i>Add a Comment</div>
-                                    <div class="post_text" style="display:none;">
-                                        <textarea placeholder="Add Comment"></textarea>
-                                        <a href="#">Post</a>
-                                    </div>
-                                </div>
-                            </li>
+                                    </li>
+                                    <?php
+                                }
+                            }else {
+                                echo "No answers to this question yet!";
+                            }
+                            ?>
                         </ul>
                     </div>	
-
                 </div>
             </div>
             <div class="user_right_q">
@@ -134,7 +144,15 @@
         </div>
     </div>
 </div>
+<?php
+$loggend_in = 0;
+if ($this->is_user_loggedin) {
+    $loggend_in = 1;
+}
+?>
 <script>
     var current_url = '<?php echo isset($url) ? $url : '' ?>';
+    var user_image = '<?php echo base_url(USER_IMAGES) ?>';
+    var logged_in = <?php echo $loggend_in ?>;
 </script>
 <script src="assets/js/community.js"></script>

@@ -46,11 +46,14 @@ class Community extends MY_Controller {
         //-- check user is logged in or not
         if ($this->is_user_loggedin) {
             if ($this->input->post('question_slug') != '') {
-                $question = $this->community_model->sql_select(TBL_QUESTIONS, 'id,title', ['where' => array('slug' => trim($this->input->post('question_slug')), 'is_delete' => 0, 'user_id' => $this->user_id)], ['single' => true]);
-                if (trim($this->input->post('que_title')) != $question['title']) {
-                    $this->form_validation->set_rules('que_title', 'Title', 'trim|required|min_length[5]|callback_title_validation');
-                } else {
-                    $this->form_validation->set_rules('que_title', 'Title', 'trim|required|min_length[5]');
+                $select = '(SELECT count(id) FROM ' . TBL_ANSWERS . ' WHERE question_id=q.id AND is_delete=0) answers';
+                $question = $this->community_model->sql_select(TBL_QUESTIONS . ' q', 'q.id,q.title,' . $select, ['where' => array('q.slug' => trim($this->input->post('question_slug')), 'q.is_delete' => 0, 'q.user_id' => $this->user_id)], ['single' => true]);
+                if (!empty($question)) {
+                    if (trim($this->input->post('que_title')) != $question['title']) {
+                        $this->form_validation->set_rules('que_title', 'Title', 'trim|required|min_length[5]|callback_title_validation');
+                    } else {
+                        $this->form_validation->set_rules('que_title', 'Title', 'trim|required|min_length[5]');
+                    }
                 }
             } else {
                 $this->form_validation->set_rules('que_title', 'Title', 'trim|required|min_length[5]|callback_title_validation');
@@ -67,8 +70,7 @@ class Community extends MY_Controller {
                 ];
 
                 if ($this->input->post('question_slug') != '') {
-                    $question = $this->community_model->sql_select(TBL_QUESTIONS, 'id', ['where' => array('slug' => trim($this->input->post('question_slug')), 'is_delete' => 0, 'user_id' => $this->user_id)], ['single' => true]);
-                    if (!empty($question)) {
+                    if (!empty($question) && $question['answers'] == 0) {
                         $data['updated_at'] = date('Y-m-d H:i:s');
                         $data['slug'] = slug(trim($this->input->post('que_title')), TBL_QUESTIONS, $question['id']);
                         $id = $this->community_model->common_insert_update('update', TBL_QUESTIONS, $data, ['id' => $question['id']]);
@@ -134,7 +136,7 @@ class Community extends MY_Controller {
             $data['success'] = true;
         } else {
             $data['success'] = false;
-            $data['error'] = 'something wnet wrong pelase try again!';
+            $data['error'] = 'something went wrong pelase try again!';
         }
         echo json_encode($data);
         exit;
@@ -165,10 +167,31 @@ class Community extends MY_Controller {
     public function view($slug = null) {
         if ($slug != null) {
             $data['url'] = current_url();
-            $question_data = $this->community_model->sql_select(TBL_QUESTIONS . ' q', 'q.*,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id', ['where' => array('slug' => trim($slug), 'q.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=q.user_id AND u.is_delete=0')], 'single' => true]);
+            $select = '(SELECT count(id) FROM ' . TBL_ANSWERS . ' WHERE question_id=q.id AND is_delete=0) answers';
+            $question_data = $this->community_model->sql_select(TBL_QUESTIONS . ' q', 'q.*,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id,' . $select, ['where' => array('slug' => trim($slug), 'q.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=q.user_id AND u.is_delete=0')], 'single' => true]);
             if (!empty($question_data)) {
                 $data['question'] = $question_data;
-                $data['recent_questions'] = $this->community_model->sql_select(TBL_QUESTIONS . ' q', 'q.title,q.slug,u.firstname,u.lastname', ['where' => array('q.slug!=' => trim($slug), 'q.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=q.user_id')]]);
+                $data['recent_questions'] = $this->community_model->sql_select(TBL_QUESTIONS . ' q', 'q.title,q.slug,u.firstname,u.lastname', ['where' => array('q.slug!=' => trim($slug), 'q.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=q.user_id')], 'order_by' => 'q.created_at DESC', 'limit' => 5]);
+                $comment = '(SELECT count(id) FROM ' . TBL_COMMENTS . ' WHERE answer_id=a.id AND is_delete=0) comments';
+                $data['answers'] = $answers = $this->community_model->sql_select(TBL_ANSWERS . ' a', 'a.answer,a.created_at,a.id,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id,' . $comment, ['where' => array('a.question_id' => $question_data['id'], 'a.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=a.user_id')]]);
+                /*
+                  $comments = [];
+                  if (!empty($answers)) {
+                  $ids = array_column($answers, 'id');
+                  $comments = $this->community_model->sql_select(TBL_COMMENTS . ' c', 'c.comment,c.created_at,c.answer_id', ['where' => array('c.is_delete' => 0), 'where_in' => array('c.answer_id' => $ids)], ['join' => [array('table' => TBL_ANSWERS . ' a', 'condition' => 'c.answer_id=a.id')]]);
+                  $answers_arr = [];
+                  foreach ($answers as $key => $answer) {
+                  $answers_arr[$key] = $answer;
+                  $comment_arr = [];
+                  foreach ($comments as $comment) {
+                  if ($comment['answer_id'] == $answer['id']) {
+                  $comment_arr[] = $comment;
+                  }
+                  }
+                  $answers_arr[$key]['comments'] = $comment_arr;
+                  }
+                  }
+                 */
             } else {
                 custom_show_404();
             }
@@ -182,32 +205,80 @@ class Community extends MY_Controller {
 
     /**
      * It is used to add new answer of particular question.
+     * @author AKK
      */
     public function add_answers() {
         $slug = $this->input->post('slug');
         $data = [];
         if ($slug != null) {
-            $question_data = $this->community_model->sql_select(TBL_QUESTIONS . ' q', null, ['where' => array('slug' => trim($slug), 'q.is_delete' => 0)], ['single' => true]);
+            $question_data = $this->community_model->sql_select(TBL_QUESTIONS . ' q', 'id,slug', ['where' => array('slug' => trim($slug), 'q.is_delete' => 0)], ['single' => true]);
             if (!empty($question_data)) {
-
-                $dataArr = array('description' => $this->input->post('description'),
+                $dataArr = array(
                     'user_id' => $this->user_id,
                     'question_id' => $question_data['id'],
+                    'answer' => $this->input->post('description'),
                     'created_at' => date('Y-m-d H:i:s'));
                 $id = $this->community_model->common_insert_update('insert', TBL_ANSWERS, $dataArr);
                 $this->session->set_flashdata('success', 'Answer has been added successfully.');
-                $data['success'] = true;
             } else {
-                $data['success'] = false;
-                $data['error'] = 'something wnet wrong pelase try again!';
+                $this->session->set_flashdata('error', 'Something went wrong pelase try again!');
             }
+        } else {
+            $this->session->set_flashdata('error', 'Something went wrong pelase try again!');
+        }
+        redirect('community/view/' . $question_data['slug']);
+    }
+
+    /**
+     * Ajax call to this function get comments given to answer
+     * @author KU
+     */
+    public function get_comments() {
+        $id = $this->input->post('answer');
+        $answer = $this->community_model->sql_select(TBL_ANSWERS, 'id,answer,created_at', ['where' => array('id' => $id, 'is_delete' => 0)], ['single' => true]);
+        if (!empty($answer)) {
+            $comments = $answer = $this->community_model->sql_select(TBL_COMMENTS . ' c', 'c.comment,c.created_at,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id', ['where' => array('c.answer_id' => $id, 'c.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=c.user_id')], 'order_by' => 'c.created_at DESC']);
+            $data['comments'] = $comments;
+            $data['answer'] = $answer;
+            $data['success'] = true;
         } else {
             $data['success'] = false;
             $data['error'] = 'something went wrong pelase try again!';
         }
-
         echo json_encode($data);
         exit;
+    }
+
+    /**
+     * Post comment functionality
+     * @author KU
+     */
+    public function post_comment() {
+        //-- check user is logged in or not
+        if ($this->is_user_loggedin) {
+            if ($this->input->post('comment') != '' && $this->input->post('answer') != '') {
+                $answer = $this->community_model->sql_select(TBL_ANSWERS, 'id', ['where' => array('id' => $this->input->post('answer'), 'is_delete' => 0)], ['single' => true]);
+                if (!empty($answer)) {
+                    $data = [
+                        'user_id' => $this->user_id,
+                        'comment' => trim($this->input->post('comment')),
+                        'answer_id' => $answer,
+                        'created_at' => date('Y-m-d H:i:s')
+                    ];
+                    $id = $this->community_model->common_insert_update('insert', TBL_COMMENTS, $data);
+                    $data['success'] = true;
+                } else {
+                    $data['success'] = false;
+                    $data['error'] = 'Something went wrong. Please try again later.';
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = 'Missing Parameter';
+            }
+        } else {
+            $data['success'] = false;
+            $data['error'] = 'Please login to post a comment!';
+        }
     }
 
 }
