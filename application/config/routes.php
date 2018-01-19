@@ -134,6 +134,10 @@ $route['community/get_comments'] = 'community/get_comments';
 $route['community/post_comment'] = 'community/post_comment';
 $route['community/(:any)'] = 'community/index/$1';
 
+/* Funeral Planning routes */
+$route['funeral_planing'] = 'funeral_resources/planing';
+
+$route['contact'] = 'cms/contact';
 $route['pages/(:any)'] = 'cms/index/$1';
 
 $route['404_override'] = 'pagenotfound';

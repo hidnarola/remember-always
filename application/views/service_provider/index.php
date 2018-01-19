@@ -10,17 +10,16 @@
                     <div class="srvs-form-div">
                         <select name="category" id="category" class="selectpicker">
                             <option value="">-- Select Category --</option>
+                            <option value="yelp" <?php if ($this->input->get('category') == 'yelp') echo 'selected' ?>>Yelp</option>
                             <?php
-                            if (isset($service_categories) && !empty($service_categories)) {
-                                foreach ($service_categories as $key => $value) {
-                                    $selected = '';
-                                    if (isset($_GET['category']) && $_GET['category'] == $value['name']) {
-                                        $selected = 'selected';
-                                    }
-                                    ?>
-                                    <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>"><?php echo $value['name']; ?></option>
-                                    <?php
+                            foreach ($service_categories as $key => $value) {
+                                $selected = '';
+                                if (urldecode($this->input->get('category')) == $value['name']) {
+                                    $selected = 'selected';
                                 }
+                                ?>
+                                <option value="<?php echo $value['name'] ?>" <?php echo $selected; ?> ><?php echo $value['name']; ?></option>
+                                <?php
                             }
                             ?>
                         </select>
@@ -46,30 +45,49 @@
                         <ul class="srvs-list-ul service_content" >
                             <?php
                             if (isset($services) && !empty($services)) {
-                                foreach ($services as $key => $value) {
-                                    ?>
-                                    <li>
-                                        <span> 
-                                            <?php
-                                            if (isset($value['image']) && !is_null($value['image'])) {
-                                                ?>
-                                                <img src="<?php echo PROVIDER_IMAGES . $value['image'] ?>" width="100%" height="100%"/>
-                                            <?php } else { ?>
-                                                <img src="assets/images/no_image.png" width="100%" height="100%"/>
-                                            <?php } ?>
-                                        </span>
-                                        <h3><a href="<?php echo site_url('service_provider/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
-                                        <p><?php
-                                            $text = $value['description'];
-                                            if (strlen($value['description']) > 500) {
-                                                $text = preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...', $value['description']);
-                                                echo $text;
-                                            } else {
-                                                echo $text;
-                                            }
-                                            ?></p>
-                                    </li>
-                                    <?php
+                                if ($this->input->get('category') == 'yelp') {
+                                    foreach ($services as $key => $value) {
+                                        ?>
+                                        <li>
+                                            <span> 
+                                                <?php if ($value['image_url'] != '') { ?>
+                                                    <img src="<?php echo $value['image_url'] ?>" width="100%" height="100%"/>
+                                                <?php } else { ?>
+                                                    <img src="assets/images/no_image.png" width="100%" height="100%"/>
+                                                <?php } ?>
+                                            </span>
+                                            <h3><a href="<?php echo $value['url'] ?>"><?php echo $value['name'] ?></a></h3>
+                                            <p><?php echo $value['location']['address1'] . ',' . $value['location']['city'] . ',' . $value['location']['zip_code'] . ',' . $value['location']['country']; ?></p>
+                                            <p><?php echo 'Phone: ' . $value['phone']; ?></p>
+                                        </li>
+                                        <?php
+                                    }
+                                } else {
+                                    foreach ($services as $key => $value) {
+                                        ?>
+                                        <li>
+                                            <span> 
+                                                <?php
+                                                if (isset($value['image']) && !is_null($value['image'])) {
+                                                    ?>
+                                                    <img src="<?php echo PROVIDER_IMAGES . $value['image'] ?>" width="100%" height="100%"/>
+                                                <?php } else { ?>
+                                                    <img src="assets/images/no_image.png" width="100%" height="100%"/>
+                                                <?php } ?>
+                                            </span>
+                                            <h3><a href="<?php echo site_url('service_provider/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
+                                            <p><?php
+                                                $text = $value['description'];
+                                                if (strlen($value['description']) > 500) {
+                                                    $text = preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...', $value['description']);
+                                                    echo $text;
+                                                } else {
+                                                    echo $text;
+                                                }
+                                                ?></p>
+                                        </li>
+                                        <?php
+                                    }
                                 }
                             } else {
                                 ?>
@@ -84,19 +102,16 @@
                     <h2>Services Categories</h2>
                     <div class="profile-box-body">
                         <ul>
+                            <li><a href="javascript:void(0)" class="category_click <?php if ($this->input->get('category') == 'yelp') echo 'active'; ?>">Yelp</a></li>
                             <?php if (isset($service_categories) && !empty($service_categories)) { ?>
-                                <li><a href="<?php echo site_url('service_provider') ?>" class="<?php echo!isset($_GET['category']) ? 'active' : '' ?>">All Service Providers</a></li>
                                 <?php foreach ($service_categories as $key => $value) {
                                     ?>
                                     <li><a href="javascript:void(0)" data-value="<?php echo $value['name'] ?>"class="category_click <?php echo isset($_GET['category']) && $_GET['category'] == $value['name'] ? 'active' : '' ?>"><?php echo $value['name'] ?></a></li>
                                     <?php
                                 }
-                            } else {
-                                ?>
-                                <li><p class="no-data">No Services Categories available.</p></li>
-                            <?php } ?>
+                            }
+                            ?>
                         </ul>
-
                     </div>
                 </div>
             </div>
@@ -119,7 +134,7 @@
     var provider_url = '<?php echo site_url('service_provider/view/') ?>';
     $('#category').selectpicker({
         liveSearch: true,
-        size: 5
+        size: 7
     });
     $("#service_ul_data").mCustomScrollbar({
         axis: "y",
@@ -222,28 +237,47 @@
 
     function loadResults(limitStart) {
         $.ajax({
-            url: '<?php echo site_url() ?>' + 'service_provider/load_providers/' + limitStart + srch_data,
+            url: site_url + 'service_provider/load_providers/' + limitStart + srch_data,
             type: "post",
             dataType: "json",
             success: function (data) {
                 var string = '';
+                category = $('#category').val();
                 $.each(data, function (index, value) {
-                    string += '<li>' +
-                            '<span>';
-                    if (typeof value['image'] != 'undefined' && value['image'] != null) {
-                        string += '<img src="' + provider_image + value['image'] + '" width="100%" height="100%" />';
-                    }
-                    string += '</span>' +
-                            '<h3><a href="' + provider_url + value['slug'] + '">' + value['name'] + '</a></h3>' +
-                            '<p>';
-                    text = value['description'];
-                    if (value['description'].length > 500) {
+                    if (category == 'yelp') {
+                        string += '<li>';
+                        string += '<span>';
+                        if (value['image_url'] != '') {
+                            string += '<img src="' + value['image_url'] + '" width="100%" height="100%" />';
+                        } else {
+                            string += '<img src="assets/images/no_image.png" width="100%" height="100%"/>';
+                        }
+                        string += '</span>';
+                        string += '<h3><a href="' + value['url'] + '">' + value['name'] + '</a></h3>';
+                        string += '<p>';
+                        string += value['location']['address1'] + ',' + value['location']['city'] + ',' + value['location']['zip_code'] + ',' + value['location']['country'];
+                        string += '</p>';
+                        string += '<p>Phone: ' + value['phone'] + '</p>';
+                        string += '</li>';
+                    } else {
+                        string += '<li>';
+                        string += '<span>';
+                        if (typeof value['image'] != 'undefined' && value['image'] != null) {
+                            string += '<img src="' + provider_image + value['image'] + '" width="100%" height="100%" />';
+                        }
+                        string += '</span>';
+                        string += '<h3><a href="' + provider_url + value['slug'] + '">' + value['name'] + '</a></h3>';
+                        string += '<p>';
+                        text = value['description'];
+                        if (value['description'].length > 500) {
 //                        text = value['description'].preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...');
-                        text = value['description'].substring(0, 500);
-                        text += '...';
+                            text = value['description'].substring(0, 500);
+                            text += '...';
+                        }
+                        string += text;
+                        string += '</p>';
+                        string += '</li>';
                     }
-                    string += text;
-                    string += '</p>';
                 });
                 $(".service_content").append(string);
 //                $(".loader").hide();

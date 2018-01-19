@@ -92,7 +92,7 @@
                                                 </small>
                                             </h3>
                                             <p><?php echo $answer['answer'] ?></p>
-                                            <div class="comment_tag answer_comments cl_black" data-answer="<?php echo $answer['id'] ?>"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $answer['comments'] ?> Comment<?php if ($answer['comments'] > 0) echo 's' ?></div>
+                                            <div class="comment_tag answer_comments cl_black" data-answer="<?php echo $answer['id'] ?>"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $answer['comments'] ?> Comment<?php if ($answer['comments'] > 1) echo 's' ?></div>
                                             <div class="inner_cooment_div" id="comment_<?php echo $answer['id'] ?>" style="display: none">
                                                 <div class="comments-div">
                                                     <ul>
@@ -143,7 +143,10 @@
             </div>
         </div>
     </div>
+    <li class="right_msg" data-index="1">121</li>
+    <li class="right_msg" data-index="2">1324</li>
 </div>
+
 <?php
 $loggend_in = 0;
 if ($this->is_user_loggedin) {
@@ -154,5 +157,11 @@ if ($this->is_user_loggedin) {
     var current_url = '<?php echo isset($url) ? $url : '' ?>';
     var user_image = '<?php echo base_url(USER_IMAGES) ?>';
     var logged_in = <?php echo $loggend_in ?>;
+    var cur_year = '<?php echo date('Y') ?>';
+    var cur_month = '<?php echo date('m') ?>';
+    var cur_day = '<?php echo date('d') ?>';
+    var cur_hour = '<?php echo date('H') ?>';
+    var cur_min = '<?php echo date('i') ?>';
+    var cur_s = '<?php echo date('s') ?>';
 </script>
 <script src="assets/js/community.js"></script>

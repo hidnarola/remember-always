@@ -1,4 +1,4 @@
-// Question listing and question detail page
+/**Javascript for Question listing and question detail page**/
 $(function () {
     //-- Question listing page --//
 
@@ -116,9 +116,16 @@ $(function () {
     });
 
 
-    //-- Question detail page--//
+    /** Question detail page **/
     $(document).on('click', '#answer', function () {
-        $('.post_text').toggle();
+        if (logged_in == 1) {
+            $('.post_text').toggle();
+        } else {
+            // if not logged in then display login modal
+            $('#login-form').attr('action', site_url + 'login?redirect=' + btoa(current_url));
+            $('#login').modal();
+            $('.nav-tabs a[href="#log-in"]').tab('show');
+        }
     });
 
 
@@ -146,7 +153,7 @@ $(function () {
         answer = obj.attr('data-answer');
         if (!$(this).hasClass('clicked')) {
             obj.addClass('clicked');
-            show_comments(answer);
+            show_comments(answer, obj);
         } else {
             $('#comment_' + answer).hide();
             obj.removeClass('clicked');
@@ -158,9 +165,7 @@ $(function () {
         if (logged_in == 1) {
             obj = $(this);
             answer = obj.attr('data-answer');
-            console.log('id is ','comment_' + answer);
             comment = $('#comment_text_' + answer).val();
-            console.log('coomment values is ', comment);
             if ($('#comment_form_' + answer).valid()) {
                 $.ajax({
                     url: site_url + "community/post_comment",
@@ -171,7 +176,7 @@ $(function () {
                     success: function (data) {
                         $('.loader').hide();
                         if (data.success == true) {
-                            show_comments(answer);
+                            show_comments(answer, obj);
                         } else {
                             showErrorMSg(data.error);
                         }
@@ -195,7 +200,7 @@ $(function () {
             });
 
 });
-function show_comments(answer) {
+function show_comments(answer, obj) {
     $('.loader').show();
     $.ajax({
         url: site_url + "community/get_comments",
@@ -207,12 +212,16 @@ function show_comments(answer) {
             $('.loader').hide();
             if (data.success == true) {
                 total_comments = data.comments.length;
-                obj.html('<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_comments + ' Comment');
+                comment_label = '<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_comments + ' Comment';
+                if (total_comments > 1) {
+                    comment_label = '<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_comments + ' Comments';
+                }
+                obj.html(comment_label);
                 str = '';
                 comment_str = '<li>';
                 comment_str += '<form method="post" id="comment_form_' + answer + '">';
                 comment_str += '<div class="post_text">';
-                comment_str += '<textarea placeholder="Add Comment" name="comment" id="comment_' + answer + '" required="required"></textarea>';
+                comment_str += '<textarea placeholder="Add Comment" name="comment" id="comment_text_' + answer + '" required="required"></textarea>';
                 comment_str += '<a href="javascript:void(0)" class="post_comment" data-answer="' + answer + '">Post</a>';
                 comment_str += '</div>';
                 comment_str += '</form>';
@@ -223,7 +232,7 @@ function show_comments(answer) {
                     str += '<li>';
                     str += '<div class="comments-div-wrap">';
                     str += '<span class="commmnet-postted-img">';
-                    if (value.profile_image != '') {
+                    if (value.profile_image != null) {
                         if (value.facebook_id != '' || value.google_id != '') {
                             str += '<a class="fancybox" href="' + value.profile_image + '" data-fancybox-group="gallery" ><img src="' + value.profile_image + '" class="img-responsive content-group" alt=""></a>';
                         } else {
@@ -231,20 +240,49 @@ function show_comments(answer) {
                         }
                     }
                     str += '</span>';
-                    str += '<h3>' + value.firstname + ' ' + value.lastname + '<small>' + value.created_at + '</small></h3>';
-                    str += '<p>' + value.answer + '</p>'
+                    split_date = value.created_at.split(' ');
+                    splited_date = split_date[0].split('-');
+                    splited_time = split_date[1].split(':');
+                    posted_time = timeDifference(new Date(cur_year, cur_month, cur_day, cur_hour, cur_min, cur_s), new Date(splited_date[0], splited_date[1], splited_date[2], splited_time[0], splited_time[1], splited_time[2]));
+                    str += '<h3>' + value.firstname + ' ' + value.lastname + '<small>' + posted_time + '</small></h3>';
+                    str += '<p>' + value.comment + '</p>'
                     str += '</div>';
                     str += '</li>';
                 });
                 str += comment_str;
                 str += '</ul>';
                 str += '</div>';
-                $('#comment_' + answer).html(str);
                 $('#comment_' + answer).show();
+                $('#comment_' + answer).html(str);
 
             } else {
                 showErrorMSg(data.error);
             }
         }
     });
+}
+
+function timeDifference(current, previous) {
+    var msPerMinute = 60 * 1000;
+    var msPerHour = msPerMinute * 60;
+    var msPerDay = msPerHour * 24;
+    var msPerMonth = msPerDay * 30;
+    var msPerYear = msPerDay * 365;
+
+    var elapsed = current - previous;
+    if (elapsed < 0) {
+        return 'Just now';
+    } else if (elapsed < msPerMinute) {
+        return Math.round(elapsed / 1000) + ' seconds ago';
+    } else if (elapsed < msPerHour) {
+        return Math.round(elapsed / msPerMinute) + ' minutes ago';
+    } else if (elapsed < msPerDay) {
+        return Math.round(elapsed / msPerHour) + ' hours ago';
+    } else if (elapsed < msPerMonth) {
+        return Math.round(elapsed / msPerDay) + ' days ago';
+    } else if (elapsed < msPerYear) {
+        return Math.round(elapsed / msPerMonth) + ' months ago';
+    } else {
+        return Math.round(elapsed / msPerYear) + ' years ago';
+    }
 }

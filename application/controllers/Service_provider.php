@@ -22,7 +22,7 @@ class Service_provider extends MY_Controller {
         $data['service_categories'] = $service_categories;
         $data['services'] = $this->load_providers(0, true);
 
-        $data['title'] = 'Services Provider Directory';
+        $data['title'] = 'Remember Always | Services Provider Directory';
         $data['breadcrumb'] = ['title' => 'Services Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'service_provider/index', $data);
     }
@@ -32,7 +32,11 @@ class Service_provider extends MY_Controller {
      */
     public function load_providers($start, $static = false) {
         $offset = 5;
-        $services = $this->providers_model->get_providers('result', $this->input->get(), $start, $offset);
+        if ($this->input->get('category') == 'yelp') {
+            $services = $this->get_yelp_businesses($start);
+        } else {
+            $services = $this->providers_model->get_providers('result', $this->input->get(), $start, $offset);
+        }
         if ($static === true) {
             return $services;
         } else {
@@ -186,6 +190,50 @@ class Service_provider extends MY_Controller {
         $data['breadcrumb'] = ['title' => 'Post Service Provider Listing', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('service_provider'), 'title' => 'Service Provider Listing']]];
 
         $this->template->load('default', 'service_provider/manage', $data);
+    }
+
+    /**
+     * Get yelp businesses 
+     * @author KU
+     */
+
+    /**
+     * Get yelp businesses
+     * @param int $start
+     * @athur KU
+     */
+    public function get_yelp_businesses($start) {
+        $this->config->load('yelp');
+
+        $apiKey = $this->config->item('yelp_api');
+        $api_host = $this->config->item('api_host');
+        $search_path = $this->config->item('search_path');
+        $business_path = $this->config->item('business_path');
+        $url_params = ['limit' => 10, 'offset' => $start, 'categories' => 'funeralservices'];
+
+        $url = $api_host . $search_path;
+        if ($this->input->get('keyword') != '') {
+            $url_params['term'] = $this->input->get('keyword');
+        }
+        if ($this->input->get('lat') != '' && $this->input->get('long') != '') {
+            $url_params['latitude'] = $this->input->get('lat');
+            $url_params['longitude'] = $this->input->get('long');
+        } else {
+            $url_params['location'] = 'US';
+        }
+        $url .= "?" . http_build_query($url_params);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization:Bearer ' . $apiKey]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        $arr = json_decode($result, true);
+        if (!empty($arr) && isset($arr['businesses'])) {
+            return $arr['businesses'];
+        } else {
+            return [];
+        }
+//        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//        curl_close($ch);
     }
 
 }

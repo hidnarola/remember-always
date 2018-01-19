@@ -1,40 +1,12 @@
 <div class="common-page">
     <div class="container">
         <div class="common-head">
-            <h2 class="h2title">Funeral Planing Resorces</h2>
+            <h2 class="h2title">Funeral Planing</h2>
         </div>
         <div class="common-body">
-            <div class="services-form funeral-srh">
-                <form method="get" name="resource_form" id="resource_form">
-                    <div class="srvs-form-div">
-                        <select name="category" id="category" class="selectpicker">
-                            <option value="">-- Select Category --</option>
-                            <?php
-                            if (isset($service_categories) && !empty($service_categories)) {
-                                foreach ($service_categories as $key => $value) {
-                                    $selected = '';
-                                    if (isset($_GET['category']) && $_GET['category'] == $value['name']) {
-                                        $selected = 'selected';
-                                    }
-                                    ?>
-                                    <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>"><?php echo $value['name']; ?></option>
-                                    <?php
-                                }
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="srvs-form-div">	
-                        <input type="text" name="location" id="location" placeholder="Zipcode or Pre-determine Zipcode" class="input-css" value="<?php echo ($this->input->get('location') != '') ? $this->input->get('location') : set_value('location'); ?>"/>
-                    </div>
-                    <div class="srvs-form-div">	
-                        <button type="button" id="resource_srch_btn">Find Services Providers</button>
-                    </div>	
-                </form>
-            </div>
             <div class="funeral-l">
                 <div class="profile-box">
-                    <h2>Funeral Planing To Do's & Checklist</h2>
+                    <h2>Funeral Planing Checklist</h2>
                     <p>Planing a Funeral can be overwhelming. The Below information will guide you through the process, and provide access to resources at each step.</p>
 
                     <div class="according-tab">
@@ -42,201 +14,282 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-01">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse01" aria-expanded="true" aria-controls="collapse01"> 1. Identify if your loved one had any final wishes or a last will and testament that may include end-of-life wishes.</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse01" aria-expanded="true" aria-controls="collapse01">1. Pre- Planning</a>
                                     </h4>
                                 </div>
                                 <div id="collapse01" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapse-01">
                                     <div class="panel-body">
-                                        <p class="general-text">If yes, then the information in these documents (or verbal wishes) need to be used to determine how to proceed with planning the end of life events.  These documents may explicitly indicate your loved one’s wishes on some of the below items.  If you do not know if these documents exist, contact your loved one’s attorney to find out if he/she has these documents.  Read these documents carefully, and use any relevant information to guide your planning.</p>
+                                        <p>
+                                            a. Therapy – This is not an easy process so it’s okay to enlist the help of a professional
+                                        </p>
+                                        <p>
+                                            b. Meditation/ Quiet Reflection/ Prayer 
+                                        </p>
+                                        <p>
+                                            c. Think about the wishes of the deceased (check the will if there is one)
+                                        </p>
+                                        <p>
+                                            d. Select a Theme- Traditional or unique method to honor the deceased
+                                        </p>
+                                        <p>
+                                            e. Select a Team- You will likely have close family or friends who are willing to help. Let them.
+                                        </p>
+                                        <p>
+                                            f. Create a planning team email group, text group, and/or whatsapp group.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-02">
                                     <h4 class="panel-title">
-                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse02" aria-expanded="false" aria-controls="collapse02">2. Decide on Final State of Body – burial, entombment, cremation, or donation.</a>
+                                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse02" aria-expanded="false" aria-controls="collapse02">2. Method Selection</a>
                                     </h4>
                                 </div>
                                 <div id="collapse02" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-02">
                                     <div class="panel-body">
-                                        <p>This is a decision that will drive most other decisions.  Will the deceased be buried, entombed or cremated?</p>
-                                        <p> If the decision is a traditional burial, then you will need to choose a Funeral Home / Funeral Director.You will also need to pick a casket, choose a cemetery, and secure a burial spot.  You will need a burial permit. If you use a funeral home, they will include this as a part of their service.You will also need to decide on a memorial/grave marker and the inscription to be on it, but this does not have to be done immediately.</p>
-                                        <p>If entombment, you will need to choose a mausoleum, and a tomb.</p>
-                                        <p>If cremation, you will need to choose a crematory. <br/>You (the family) will also need to determine how the ashes will be handled – handed over to a single person in a single container, split (multiple containers to multiple family members) or scattered.You will also need to choose an urn (container for the ashes) or urns (if ashes will be split for multiple family members).</p>
-                                        <p>If your loved one had chosen to donate their body to science or organs to someone in need, then of course, there would be no burial, entombment, or creation.   You would need to inform the hospital that your loved one is a body or organ donator.  </p>
-                                        <p>You may contact the below organizations to learn more about donating a loved one’s body to science.</p>
-                                        <p><strong>…. List them here …..</strong></br> And you may visit this website <a href="">www.organdonor.gov</a> to learn more about organ donation.</p>
-                                        <p>Use our directory search to find providers in your area, including funeral homes, crematories, churches, other religious institutions, venues/halls for rent, caterers, flower shops and more.</p>
+                                        <p> 
+                                            a. Select Internment method: Burial, Entombment, Cremation, bio-urn, …
+                                        </p>
+                                        <p>
+                                            b. Select location
+                                        </p>
+                                        <p>
+                                            c. Ceremony Type: Traditional funeral w/ casket and wake, Memorial service, ...
+                                        </p>
+                                        <p>
+                                            d. Purchase Burial plot, casket or urn
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-03">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse03" aria-expanded="true" aria-controls="collapse03"> 3.	Decide on the ceremony type(s).  Traditional funeral service, memorial service</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse03" aria-expanded="true" aria-controls="collapse03">3. Ceremony Planning</a>
                                     </h4>
                                 </div>
                                 <div id="collapse03" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-03">
                                     <div class="panel-body">
-                                        <p>Based on the decided Final State of Body, you will then need to decide on the type of memorial event. </p>
-                                        <p>You may have a traditional funeral ceremony, in which in many cases, the body of the deceased is present in a casket. This is typically a fairly formal event held at a church or other religious institution, or at a funeral home. </p>
-                                        <p>A wake or viewing is typically done before the funeral service.  This is an event that allows family and friends to more intimately view the deceased, and speak with others.</p>
-                                        <p>If you are doing a cremation, then you will need to have a memorial service. Of course, this type of service will not have a body displayed.  This type of service may also be held at a church or other places of worship, or at a funeral home, but are sometimes held at other event places or even at a family member’s home.</p>
+                                        <p>
+                                            a. Engage your team to help
+                                        </p>
+                                        <p>
+                                            b. Select Clergy & ceremony location
+                                        </p>
+                                        <p>
+                                            c. Select funeral home.  See How to select a Funeral Home and Director.
+                                        </p>
+                                        <p>
+                                            d. Decide on a date/ time
+                                        </p>
+                                        <p>
+                                            e. Decide whether there will be a wake, funeral, memorial, repast, family gathering
+                                        </p>
+                                        <p>
+                                            f. Eulogy- Select one or more people to do the eulogy
+                                        </p>
+                                        <p>
+                                            g. Reading- Select Scriptures, Poems or other material to be read at the service and select people to do this
+                                        </p>
+                                        <p>
+                                            h. Music – Select song & hymns to be used at the service
+                                        </p>
+                                        <p>
+                                            i. Plan the attire for the deceased
+                                        </p>
+                                        <p>
+                                            j. Floral arrangements.  You can conveniently shop for flowers here.
+                                        </p>
+                                        <p>
+                                            k. Find pictures and videos for the memorial
+                                        </p>
+                                        <p>
+                                            l. Select Pall bearers if there will be a casket
+                                        </p>
+                                        <p>
+                                            m. Plan for the order of events & create the program
+                                        </p>
+                                        <p>
+                                            n. Order memorial or obituary cards
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-04">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse04" aria-expanded="true" aria-controls="collapse04">4. Choose a Funeral Home.</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse04" aria-expanded="true" aria-controls="collapse04">4. Select & Purchase Funeral Products</a>
                                     </h4>
                                 </div>
                                 <div id="collapse04" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-04">
                                     <div class="panel-body">
-                                        <p>To decide on a funeral home, you may simply go with a provider based on the recommendation of someone that you trust, or you may choose to interview one or more funeral directors before making a decision.</p>
-                                        <p>If you are not capable of doing this, you may ask a close family member or friend to do this on your behalf.</p>
-                                        <div class="inr-points">
-                                            <h4>The things you need to determine when interviewing funeral homes are:</h4>
-                                            <ul>	
-                                                <li>Does the funeral home offer what you need?</li>
-                                                <li>Are the funeral home prices competitive?  The only way to know this is to speak with more than one funeral home.</li>
-                                                <li>Is the funeral home able to meet your religious and cultural needs?</li>
-                                                <li>Does the funeral home have the type of staff, facility and amenities that you need?  Will the location be the most convenient for you and others?</li>
-                                                <li>Are the funeral director and other staff members warm and friendly?</li>
-                                                <li>Do the funeral director and other staff members operate in a non-pressuring manner?</li>
-                                                <li>Check the reviews for the funeral homes you are considering.</li>
-                                                <li>If possible, ask your network for feedback on the funeral homes you are considering. </li>
-                                            </ul>	
-                                        </div>
-                                        <p>The answer to all (or most) of the above questions should be “Yes” and the reviews and feedback should be vastly positive.  After you have spoken with at least two funeral homes, compare the results, and then make your decision.</p>
-                                        <p>Use our directory search to find providers in your area, including funeral homes, caterers, flower shops and more.</p>
+                                        <p> 
+                                            a. Memorial Register
+                                        </p>
+                                        <p>
+                                            b. Memorial/ Obituary Cards
+                                        </p>
+                                        <p>
+                                            c. Funeral Program
+                                        </p>
+                                        <p>
+                                            d. Casket 
+                                        </p>
+                                        <p>
+                                            e. Grave Marker
+                                        </p>
+                                        <p>
+                                            f. Urn
+                                        </p>
+                                        <p>
+                                            g. Burial Plot
+                                        </p>
+                                        <p>
+                                            h. Tombstone
+                                        </p>
+                                        <!--                                        <div class="inr-points">
+                                                                                    <h4>The things you need to determine when interviewing funeral homes are:</h4>
+                                                                                    <ul>	
+                                                                                        <li>Does the funeral home offer what you need?</li>
+                                                                                        <li>Are the funeral home prices competitive?  The only way to know this is to speak with more than one funeral home.</li>
+                                                                                        <li>Is the funeral home able to meet your religious and cultural needs?</li>
+                                                                                        <li>Does the funeral home have the type of staff, facility and amenities that you need?  Will the location be the most convenient for you and others?</li>
+                                                                                        <li>Are the funeral director and other staff members warm and friendly?</li>
+                                                                                        <li>Do the funeral director and other staff members operate in a non-pressuring manner?</li>
+                                                                                        <li>Check the reviews for the funeral homes you are considering.</li>
+                                                                                        <li>If possible, ask your network for feedback on the funeral homes you are considering. </li>
+                                                                                    </ul>	
+                                                                                </div>-->
+
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-05">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse05" aria-expanded="true" aria-controls="collapse05">5.Decide on a place or places.</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse05" aria-expanded="true" aria-controls="collapse05">5. Repast/Reception</a>
                                     </h4>
                                 </div>
                                 <div id="collapse05" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-05">
                                     <div class="panel-body">
-                                        <p>You will need to decide on where you want to host the memorial event.  At a church, mosque, funeral home, event venue, home, etc.   This will likely be driven by the deceased loved one’s religious affiliation, availability, and cost.</p>
-                                        <p>Estimate the number of guests and make sure to choose a place that is within your budget, and large enough to comfortably fit everyone.</p>
-                                        <p>Use our directory search to find providers in your area, including funeral homes, churches, venues/halls for rent, caterers, flower shops and more.</p>
+                                        <p> 
+                                            a. Select venue: family home, funeral home, restaurant, reception hall
+                                        </p>
+                                        <p>
+                                            b. Determine who will be invited to get preliminary number of attendees
+                                        </p>
+                                        <p>
+                                            c. Determine food selection & Order food
+                                        </p>
+                                        <p>
+                                            d. Send out invitations (use Remember Always profile, email, or text to notify family and friends)
+                                        </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-06">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse06" aria-expanded="true" aria-controls="collapse06">6. Decide on an officiant or clergy person.</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse06" aria-expanded="true" aria-controls="collapse06">6. Communication</a>
                                     </h4>
                                 </div>
                                 <div id="collapse06" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-06">
                                     <div class="panel-body">
-                                        <p>You will need to decide if you want to have an officiant, such as a clergy member, who will preside over the memorial service.  This decision will be likely driven by the religious affiliation of the deceased loved one.</p>
-                                        <p>The officiant may be a member of the deceased person’s religious institution clergy or that of a family member.</p>
-                                        <p>The main thing to decide on here is – does the officiant connect with you and will he/she be able to connect with those that attend the memorial event?</p>
-                                        <p>Use our directory search to find providers in your area, including funeral homes, churches, venues/halls for rent, caterers, flower shops and more.</p>
+                                        <p>
+                                            a. Create online memorial with all key information & distribute via email or social websites. See How to create a Life Profile (online memorial)
+                                        </p>
+                                        <p>
+                                            b. Send Obituary information to the newspaper for publishing (optional)</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-07">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse07" aria-expanded="true" aria-controls="collapse07">7. Plan the memorial service/event. There are a lot of tasks involved in this step.</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse07" aria-expanded="true" aria-controls="collapse07">7. Funeral Funding Options/ Support</a>
                                     </h4>
                                 </div>
                                 <div id="collapse07" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-07">
                                     <div class="panel-body">
-                                        <p>You and the family will want to decide on and assign who is responsible for each of the tasks below. By assigning it to someone early on, it helps to ensure that different tasks are worked early and not forgotten.</p>
-                                        <div class="inr-points">
-                                            <ul>
-                                                <li>Choose one or more people (typically close family members or friends) to do the Eulogy.</li>
-                                                <li>Choose one or more people to read scriptures, poems, or other materials.</li>
-                                                <li>Choose the music (songs, hymns) that will be used through the event.</li>
-                                                <li>Choose musical instrument players – such as organist, pianist, or guitarist, etc.</li>
-                                                <li>Decide on what the deceased will be dressed in for the final resting.</li>
-                                                <li>Decide on floral arrangements.</li>
-                                                <li>Choose pictures and videos that you would like to display during the memorial event</li>
-                                                <li>Decide what religious or other important artifacts or activities need to be displayed or performed.</li>
-                                                <li>Decide on the date and time for all memorial events – family only event, wake, memorial event, funeral, etc.</li>
-                                                <li>Determine who the pallbearers will be</li>
-                                                <li>Decide if food will be provided at any of the memorial events. And if food will be provided, choose what type of food, and how will it be provided.</li>
-                                                <li>Get a memorial register.</li>
-                                                <li>Create memorial cards.</li>
-                                                <li>Make sure to thank specific people as appropriate and thank everyone in general.</li>
-                                            </ul>
-                                        </div>	
-                                        <p>Use our directory search to find providers in your area, including funeral homes, churches, venues/halls for rent, caterers, flower shops and more.</p>
+                                        <p>
+                                            a. Create a Tribute Fundraiser to support funeral costs, if needed. See How to create a Tribute Fundraiser.
+                                        </p>
+                                        <p>
+                                            b. Create a Scholarship fund or donation to an affinity group in honor of the deceased </p>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-08">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse08" aria-expanded="true" aria-controls="collapse08">8. Obituary Information.</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse08" aria-expanded="true" aria-controls="collapse08">8. Estate Admin</a>
                                     </h4>
                                 </div>
                                 <div id="collapse08" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-08">
                                     <div class="panel-body">
-                                        <p>You will need to create an obituary or life biography for the deceased person, and then decide where to publish it.  An obituary or life biography is a description of your loved one’s life, and it may also contain the memorial event information.</p>
-                                        <p>Traditionally people have published obituaries or biographies in the newspaper.  This is still a common practice, but things are changing as more people are now publishing obituaries or life biographies on the web (making it accessible to the world) instead of paying to publish it in a local paper.</p>
-                                        <p>Gather the information needed for the obituary and write it.  You may follow these guidelines to help you create an obituary or life biography. … … … … … </p>
+                                        <p>
+                                            a. Obtain Death certificates
+                                        </p>
+                                        <p>
+                                            b. Life insurance
+                                        </p>
+                                        <p>
+                                            c. Mortgage insurance
+                                        </p>
+                                        <p>
+                                            d. Pension
+                                        </p>
+                                        <p>
+                                            e. Retirement Benefits
+                                        </p>
+                                        <p>
+                                            f. Transfer possessions, auto, boat, camper
+                                        </p>
+                                        <p>
+                                            g. Probate court
+                                        </p>
+                                        <p>
+                                            h. Bank account
+                                        </p>
+                                        <p>
+                                            i. Credit cards
+                                        </p>
+                                        <p>
+                                            j. Filing federal, state or city income taxes
+                                        </p>
+                                        <p>
+                                            k. Insured loans and credit card claims
+                                        </p>
+                                        <p>
+                                            l. Bereavement leave
+                                        </p>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-09">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse09" aria-expanded="true" aria-controls="collapse09">9. Paying for the memorial event and other expenses.</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse09" aria-expanded="true" aria-controls="collapse09">9. Grieving/ Adjustment</a>
                                     </h4>
                                 </div>
                                 <div id="collapse09" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-09">
                                     <div class="panel-body">
-                                        <p>When a loved one passes away, there are some significant expenses that arise from carrying out the various end-of-life events.  These expenses can be overwhelming, and especially so if the passing was unexpected. </p>
-                                        <p><strong>Keep costs low</strong> <br/>
-                                            The average traditional funeral cost approx. $7,500.  But with the very basics, a funeral can cost approx. $3,000.</p>
-                                        <p>You can also consider a cremation, where a basic cremation cost approx. $1,000. Make sure to get a full and complete estimate with itemized costs from the funeral homes or crematories you are considering.  Stay focused on what you need and avoid unnecessary services that the funeral home may try to upsell you on.</p>
-                                        <div class="inr-points">
-                                            <ul>
-                                                <li> <strong>Share the costs</strong> <br/>
-                                                    When applicable and possible, split the costs among a few close family members.  For example, for the funeral of an elderly parent, the adult children can choose to split the funeral expenses in some way, easing the burden on any one person.</li>
-                                                <li><strong>Check with the employer of the deceased person</strong> In some cases, the employer of a person who has died may have benefits that cover some funeral expenses.</li>
-                                                <li><strong>Check the Social Security Benefits for the survivor of the deceased person</strong>
-                                                    If the person that has died was receiving Social Security Benefits, the surviving spouse may be entitled to a one-time benefit of about $250 to help with funeral expenses.  Although this is not a large amount, it can still be very helpful if you are on a tight budget.</li>
-                                                <li><strong>Benefits for Veterans</strong> <br/> There are some benefits available for veterans for funeral expenses.</li>
-                                                <li><strong>Create an online memorial fundraiser</strong> Create an online memorial fundraiser, such as the Tribute Fundraiser on the Remember Always site, to secure donations from family and friends.  These people will be honored to help in any way they can.  And many small donations add up to a significant amount of money, while being a non-burden to each donor.</li>
-                                                <li><strong>Get a funeral expenses loan</strong> There are several companies that offer loans for covering funeral expenses.  You could also get a personal loan. However, in this age of social media and crowd-funding, why would you not do a memorial fundraiser instead?</li>
-                                            </ul>
-                                        </div>	
+                                        <p>Take some time for yourself to focus on grieving and you time; Also consider others that are equally affected and connect with them</p>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-10">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse10" aria-expanded="true" aria-controls="collapse10">10.	Final things to do</a>
+                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse10" aria-expanded="true" aria-controls="collapse10">10. Send "thank you" messages </a>
                                     </h4>
                                 </div>
                                 <div id="collapse10" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-10">
                                     <div class="panel-body">
-                                        <div class="inr-points">
-                                            <ul>
-                                                <li>Thank everyone that helped put together the events. Thank You’s can be posted and shared via the person’s online memorial (Life Profile).</li>
-                                                <li>Thank everyone for their condolences and support.  Thank You’s can be posted and shared via the person’s online memorial (Life Profile).</li>
-                                                <li>Get a death certificate</li>
-                                                <li>Request any life insurance benefits you may entitled to</li>
-                                                <li>Request any social security benefits you may entitled to</li>
-                                                <li>Collect all fundraiser donations which may have come in after the funeral</li>
-                                                <li>Make all final payments to service providers</li>
-                                                <li>Create an online memorial (if not already done) to remember your loved one together with family, friends, and associates.</li>
-                                                <li>Set up a legacy fundraiser</li>
-                                                <li>Deal with and close out any legal matters that need to be attended to.</li>
-                                            </ul>
-                                        </div>	
-                                        <p>Use our directory search to find providers in your area, including probate attorneys, funeral homes, churches, venues/halls for rent, caterers, flower shops and more.</p>
+                                        <p>mail, email or social media, and post on Remember Always profile</p>
                                     </div>
                                 </div>
                             </div>
@@ -246,17 +299,17 @@
             </div>
             <div class="funeral-r">
                 <div class="profile-box fun-facts">
-                    <h2>Funeral Expenses</h2>
+                    <h2>Service Providers Doirectory</h2>
                     <div class="profile-box-body">
-                        <p>Funeral cost, Tips for paying for a funeral.</p>
-                        <a href="" class="btn-link">Learn more <i class="fa fa-plus"></i></a> </a>
+                        <p>Find service providers in your area, such as, funeral homes, crematories, florists, caterers, attorneys, tax advisors, and more.</p>
+                        <a href="<?php echo site_url('service_provider') ?>" class="btn-link">Find Service Providers. <i class="fa fa-plus"></i></a> </a>
                     </div>
                 </div>
                 <div class="profile-box fun-facts">
-                    <h2>Funeral Announcements</h2>
+                    <h2>Did you know?</h2>
                     <div class="profile-box-body">
-                        <p>Make Funeral Annoucements through a life profile.</p>
-                        <a href="" class="btn-link">Learn more <i class="fa fa-plus"></i></a> </a>
+                        <p>A Life Profile can help you to communicate Funeral Services information and help you to centralize pictures and videos in one place.</p>
+                        <a href="<?php echo site_url('profile/create') ?>" class="btn-link">Create a Life Profile <i class="fa fa-plus"></i></a> </a>
                     </div>
                 </div>
                 <div class="profile-box fun-facts">

@@ -36,3 +36,4 @@ application/cache/*
 #-------------------------
 /nbproject/
 .idea/*
+application/config/yelp.php

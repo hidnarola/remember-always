@@ -1,137 +1,61 @@
-<script type="text/javascript" src="assets/js/jquery.validate.js"></script>
-<script src="assets/js/bootstrap/bootstrap-select.min.js" type="text/javascript"></script>
-<link href="assets/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">
-<div class="main-inner">
-    <div class="content">
-        <div class="mt-150">
-            <div class="hero-image">
-                <div style="background-image: url('<?php echo PAGE_BANNER . '/DSCF1584-Edit.jpg' ?>');" class="hero-image-inner">
-                    <div class="hero-image-content">
-                        <div class="container">
-                            <h1><?php echo $page_title ?></h1>
-                            <p>You may use the form below to reach us for any questions, support and feed back</p>
-                        </div><!-- /.container -->
-                    </div><!-- /.hero-image-content -->
-                </div><!-- /.hero-image-inner -->
-            </div>
+<div class="common-page">
+    <div class="container">
+        <div class="common-head">
+            <h2 class="h2title">Contact Us</h2>
         </div>
-        <div class="container">
-            <div class="content">
-                <div class="contact-form-wrapper clearfix background-white p30">
-                    <form action="" method="post" class="contact-form" id="feedback-form" enctype="multipart/form-data">
-                        <div class="row">
-                            <?php if (isset($error) && $error != '') { ?>
-                                <div class="alert alert-danger alert-dismissable" role="alert">
-                                    <button type="button" class="close alert_close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <?php echo $error ?>
-                                </div>
-                            <?php } ?>
-                            <?php
-                            if ($this->session->flashdata('message')) {
-                                $message = $this->session->flashdata('message');
-                                ?>
-                                <div class="alert <?php echo $message['class']; ?> alert-dismissable" role="alert">
-                                    <button type="button" class="close alert_close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <?php echo $message['msg']; ?> 
-                                </div>
-                                <?php
-                            }
-                            ?>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="contact-form-name">Name <span>*</span></label>
-                                    <input type="text" class="form-control" id="contact-form-name" name="name">
-                                </div><!-- /.form-group -->
-                            </div><!-- /.col-* -->
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="contact-form-email">E-mail <span>*</span></label>
-                                    <input type="text" class="form-control" id="contact-form-email" name="email" value="<?php echo ($this->session->userdata('user')['email_id'] != '') ? $this->session->userdata('user')['email_id'] : ''; ?>">
-                                </div><!-- /.form-group -->
-                            </div><!-- /.col-* -->
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="contact-form-email">Inquiry Type <span>*</span></label>
-                                    <select id="inquiry_type" name="inquiry_type" class="form-control bs-select-hidden" title="Category">
-                                        <option selected="selected" value="General inquiry">General inquiry</option>
-                                        <option value="Feedback / comment">Feedback / comment</option>
-                                        <option value="Support and technical questions">Support and technical questions</option>
-                                        <option class="frm_other_trigger" value="Other">Other</option>
-                                    </select>
-                                </div><!-- /.form-group -->
-                            </div><!-- /.col-* -->
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label for="">File Upload:</label>
-                                    <input type="file" id="cover_photo" name="cover_photo">
-                                    <label for="description" style="color:red;" class="" id="proper_image"></label>
-                                </div>
-                            </div>
-                        </div><!-- /.row -->
-                        <div class="form-group">
-                            <label for="contact-form-message">Message <span>*</span></label>
-                            <textarea rows="6" id="message" name="message" class="form-control"></textarea><div class="textarea-resize"></div>
-                        </div><!-- /.form-group -->
-                        <div class="g-recaptcha" data-sitekey="<?php echo GOOGLE_SITE_KEY ?>"></div>
-                        <button class="btn btn-primary pull-right" id="post" type="button">Post Message</button>
-                    </form><!-- /.contact-form -->
-                </div><!-- /.contact-form-wrapper -->
+
+        <!--<div style="background-image: url('<?php // echo PAGE_BANNER.'/'.$page_data['banner_image']                     ?>');" class="hero-image-inner">-->
+
+        <div class="common-body">
+            <div class="srvs-dtl-l">
+                <div class="profile-box">
+                    <div id="map" class="custom_map"></div>
+                </div>
+            </div>
+            <div class="srvs-dtl-r">
+                <p><strong>Address :</strong><br/><a href="https://www.google.com/maps/place/3415+W+Lake+Mary+Blvd+%23951965lake,+Lake+Mary,+FL+32746,+USA/@28.7554428,-81.3406926,17z/data=!4m5!3m4!1s0x88e76d583d725ad1:0x93eca9ac4182673a!8m2!3d28.7554428!4d-81.3385039" target="_blank"> 3415 W. Lake Mary Blvd. #951965 <br/> Lake Mary, FL 32795 </a></p>
+                <p><strong>Phone :</strong> 863-703-6036</p>
+                <p><strong>E-mail :</strong> support@rememberalways.com</p>
             </div>
         </div>
     </div>
 </div>
+<script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI&callback=initMap" async defer></script>
 <script>
-    $(document).ready(function () {
-        $('#inquiry_type').selectpicker({
-            size: 5
+    function initMap() {
+
+        var myLatlng = new google.maps.LatLng(28.7554428, -81.3406926);
+        console.log(document.getElementById('map'));
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: myLatlng,
+            zoom: 16,
+//                allowfullscreen:true,
         });
-        setTimeout(function () {
-            $(".alert").hide()
-        }, 5000);
-    });
-    $(document).on('click', '#post', function () {
-        if ($('#feedback-form').valid()) {
-            $('.loading').show();
-            $('#feedback-form').submit();
-        }
-    })
-    $("#feedback-form").validate({
-        ignore: ':not(select:hidden, input:visible, textarea:visible)',
-        rules: {
-            name: {
-                required: true
-            },
-            email: {
-                first_email: true,
-                email: true,
-                required: true
-            },
-            message: {
-                required: true,
-                wordMin: ['20'],
-                // wordMax : ['50']
-            },
-            cover_photo: {
-                extension: "jpg|png|jpeg",
-                maxFileSize: {
-                    "unit": "KB",
-                    "size": 700
-                }
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({
+            'address': prop_address
+        }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                var service = new google.maps.places.PlacesService(map);
+                console.log(results[0]['place_id']);
+                service.getDetails({
+                    placeId: results[0]['place_id']
+                }, function (place, status) {
+                    marker.setPosition(place.geometry.location);
+                    if (status === google.maps.places.PlacesServiceStatus.OK) {
+                        infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + place.formatted_address);
+                        infowindow.open(map, marker);
+                    }
+                });
             }
-        },
-        messages: {
-            "message": {
-                wordMin: 'Your description is too short. Please enter more description.',
-                wordMax: 'Your description is too long. Please enter short description.'
-            }
-        },
-    });
+        });
+
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+            map: map,
+            anchorPoint: new google.maps.Point(0, -25),
+            position: {lat: parseFloat(prop_lat), lng: parseFloat(prop_lng)}
+        });
+    }
+
 </script>

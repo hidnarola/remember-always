@@ -195,7 +195,7 @@ class Community extends MY_Controller {
             } else {
                 custom_show_404();
             }
-            $data['title'] = 'Remember Always | Community';
+            $data['title'] = 'Remember Always | '.$question_data['title'];
             $data['breadcrumb'] = ['title' => 'Question Details', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('community'), 'title' => 'Questions']]];
             $this->template->load('default', 'community/question', $data);
         } else {
@@ -237,7 +237,7 @@ class Community extends MY_Controller {
         $id = $this->input->post('answer');
         $answer = $this->community_model->sql_select(TBL_ANSWERS, 'id,answer,created_at', ['where' => array('id' => $id, 'is_delete' => 0)], ['single' => true]);
         if (!empty($answer)) {
-            $comments = $answer = $this->community_model->sql_select(TBL_COMMENTS . ' c', 'c.comment,c.created_at,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id', ['where' => array('c.answer_id' => $id, 'c.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=c.user_id')], 'order_by' => 'c.created_at DESC']);
+            $comments = $this->community_model->sql_select(TBL_COMMENTS . ' c', 'c.comment,c.created_at,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id', ['where' => array('c.answer_id' => $id, 'c.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=c.user_id')], 'order_by' => 'c.created_at DESC']);
             $data['comments'] = $comments;
             $data['answer'] = $answer;
             $data['success'] = true;
@@ -262,7 +262,7 @@ class Community extends MY_Controller {
                     $data = [
                         'user_id' => $this->user_id,
                         'comment' => trim($this->input->post('comment')),
-                        'answer_id' => $answer,
+                        'answer_id' => $answer['id'],
                         'created_at' => date('Y-m-d H:i:s')
                     ];
                     $id = $this->community_model->common_insert_update('insert', TBL_COMMENTS, $data);
@@ -279,6 +279,8 @@ class Community extends MY_Controller {
             $data['success'] = false;
             $data['error'] = 'Please login to post a comment!';
         }
+        echo json_encode($data);
+        exit;
     }
 
 }
