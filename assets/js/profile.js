@@ -85,6 +85,24 @@ $(function () {
         },
 
     });
+
+    //-- Make city2 dropdown as select2 tags
+    $(".service-country").select2({
+        theme: "bootstrap"
+    });
+    $(".service-state").select2({
+        theme: "bootstrap"
+    });
+    $(".service-city").select2({
+        tags: true,
+        theme: "bootstrap"
+    });
+
+    //-- Validate country,state and city dropdown on change event
+    $(".service-city").change(function () {
+        $(this).valid();
+    });
+
     $("#fun-fact-form").validate({
         rules: {
             fun_fact: {
@@ -1488,6 +1506,7 @@ $(document).on('change', 'input[name="year[]"],input[name="month[]"],input[name=
 
 // country dropdown change event
 $(document).on('change', '.service-country', function () {
+    $(this).valid();
     country_val = $(this).val();
     country_id = $(this).attr('id');
     state_id = city_id = '';
@@ -1526,6 +1545,7 @@ $(document).on('change', '.service-country', function () {
 });
 // state dropdown change event
 $(document).on('change', '.service-state', function () {
+    $(this).valid();
     state_val = $(this).val();
     state_id = $(this).attr('id');
     city_id = '';
@@ -1550,7 +1570,7 @@ $(document).on('change', '.service-state', function () {
                 $('.loader').hide();
                 var options = "<option value=''>Select City</option>";
                 for (var i = 0; i < data.length; i++) {
-                    options += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    options += '<option value=' + data[i].name + '>' + data[i].name + '</option>';
                 }
                 $('#' + city_id).empty().append(options);
             }
@@ -1704,5 +1724,5 @@ function isValidDate(day, month, year) {
     }
 }
 $('#firstname,#lastname').change(function () {
-    $('#profile_name').html($('#firstname').val()+' '+$('#lastname').val());
+    $('#profile_name').html($('#firstname').val() + ' ' + $('#lastname').val());
 });

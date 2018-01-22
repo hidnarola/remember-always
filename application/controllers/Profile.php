@@ -373,6 +373,17 @@ class Profile extends MY_Controller {
             } else {
                 if (strtotime($this->input->post('date_of_birth')) < strtotime($this->input->post('date_of_death'))) {
 
+                    $city = $this->input->post('city');
+                    $state = $this->input->post('state');
+                    //-- Check city is available in db if not then insert with new record
+                    $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
+                    if (empty($city_data)) {
+                        $city_arr = ['name' => $city, 'state_id' => $state];
+                        $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
+                    } else {
+                        $city_id = $city_data['id'];
+                    }
+
                     $profile_process = $this->input->post('profile_process');
                     $flag = 0;
                     $profile_image = '';
@@ -424,7 +435,7 @@ class Profile extends MY_Controller {
                             'date_of_death' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_death'))),
                             'country' => $this->input->post('country'),
                             'state' => $this->input->post('state'),
-                            'city' => $this->input->post('city')
+                            'city' => $city_id
                         );
                         if (!empty($profile)) {
                             $data['updated_at'] = date('Y-m-d H:i:s');
@@ -813,9 +824,7 @@ class Profile extends MY_Controller {
                             $this->users_model->common_insert_update('insert', TBL_LIFE_TIMELINE, $arr);
                         }
                     }
-//                $this->users_model->batch_insert_update('insert', TBL_LIFE_TIMELINE, $life_timeline);
                     $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 4], ['id' => $profile_id]);
-
                     $data['success'] = true;
                 }
             }
@@ -847,13 +856,15 @@ class Profile extends MY_Controller {
     public function lifetimeline() {
         $id = base64_decode($this->input->post('profile_id'));
         $timeline = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $id, 'is_delete' => 0]]);
+        $month_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+        $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
         $str = '';
         if (!empty($timeline)) {
             $timeline_count = count($timeline) - 1;
             foreach ($timeline as $key => $value) {
-                $day = '';
+                $time_day = '';
                 if ($value['date'] != '') {
-                    $day = date('d', strtotime($value['date'])) + 0;
+                    $time_day = date('d', strtotime($value['date'])) + 0;
                 }
                 $str .= '<input type="hidden" name="timelineid[]" value="' . base64_encode($value['id']) . '"/>
                         <div class="step-06">
@@ -866,12 +877,29 @@ class Profile extends MY_Controller {
                                     <div class="input-three-l">
                                         <input type="number" name="year[]" placeholder="Year" class="input-css" value="' . $value['year'] . '">
                                     </div>
-                                    <div class="input-three-m">
-                                        <input type="number" name="month[]" placeholder="Month" class="input-css" value="' . $value['month'] . '">
-                                    </div>
-                                    <div class="input-three-r">
-                                        <input type="number" name="day[]" placeholder="Day" class="input-css" value="' . $day . '">
-                                    </div>
+                                    <div class="input-three-m">';
+                $str .= '<select name="month[]" placeholder="Month" class="input-css">
+                                                                <option value="">Select Month</option>';
+
+                foreach ($month_arr as $month) {
+                    $selected = '';
+                    if ($month == $value['month'])
+                        $selected = 'selected';
+                    $str .= "<option value='" . $month . "' " . $selected . ">" . $month . "</option>";
+                }
+
+                $str .= '</select>
+                </div>
+                                    <div class="input-three-r">';
+                $str .= '<select name="day[]" placeholder="Day" class="input-css"><option value="">Select Day</option>';
+
+                foreach ($day_arr as $day) {
+                    $selected = '';
+                    if ($day == $time_day)
+                        $selected = 'selected';
+                    $str .= "<option value='" . $day . "' $selected>" . $day . "</option>";
+                }
+                $str .= '</select></div>
                                 </div>
                                 <div class="input-wrap">
                                     <textarea class="input-css textarea-css" name="details[]" placeholder="Details (optional)">' . $value['details'] . '</textarea>
@@ -916,11 +944,21 @@ class Profile extends MY_Controller {
                                     <input type="number" name="year[]" placeholder="Year" class="input-css">
                                 </div>
                                 <div class="input-three-m">
-                                    <input type="number" name="month[]" placeholder="Month" class="input-css">
-                                </div>
-                                <div class="input-three-r">
-                                    <input type="number" name="day[]" placeholder="Day" class="input-css">
-                                </div>
+                                                        <select name="month[]" placeholder="Month" class="input-css">
+                                                            <option value="">Select Month</option>';
+            foreach ($month_arr as $month) {
+                $str .= "<option value='" . $month . "'>" . $month . "</option>";
+            }
+            $str .= '</select>
+                            </div>
+                        <div class="input-three-r">
+                            <select name="day[]" placeholder="Day" class="input-css">
+                                <option value="">Select Day</option>';
+            foreach ($day_arr as $day) {
+                $str .= "<option value='" . $day . "'>" . $day . "</option>";
+            }
+            $str .= '</select>
+                        </div>
                             </div>
                             <div class="input-wrap">
                                 <textarea class="input-css textarea-css" name="details[]" placeholder="Details (optional)"></textarea>
@@ -970,6 +1008,19 @@ class Profile extends MY_Controller {
             $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
             if (!empty($profile)) {
                 if ($this->input->post('memorial_date') != '' || $this->input->post('memorial_time') != '' || $this->input->post('memorial_place') != '' || $this->input->post('memorial_address') != '' || $this->input->post('memorial_state') != '' || $this->input->post('memorial_city') != '' || $this->input->post('memorial_zip') != '') {
+                    $city_id = null;
+                    if ($this->input->post('memorial_state') != '' && $this->input->post('memorial_city') != '') {
+                        $state = $this->input->post('memorial_state');
+                        $city = $this->input->post('memorial_city');
+                        //-- Check city is available in db if not then insert with new record
+                        $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
+                        if (empty($city_data)) {
+                            $city_arr = ['name' => $city, 'state_id' => $state];
+                            $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
+                        } else {
+                            $city_id = $city_data['id'];
+                        }
+                    }
                     $memorial_serivce = [
                         'profile_id' => $profile_id,
                         'service_type' => 'Memorial',
@@ -977,7 +1028,7 @@ class Profile extends MY_Controller {
                         'time' => date('H:i:s', strtotime($this->input->post('memorial_time'))),
                         'place_name' => $this->input->post('memorial_place'),
                         'address' => $this->input->post('memorial_address'),
-                        'city' => $this->input->post('memorial_city'),
+                        'city' => $city_id,
                         'state' => $this->input->post('memorial_state'),
                         'country' => $this->input->post('memorial_country'),
                         'zip' => $this->input->post('memorial_zip'),
@@ -992,6 +1043,19 @@ class Profile extends MY_Controller {
                     }
                 }
                 if ($this->input->post('funeral_date') != '' || $this->input->post('funeral_time') != '' || $this->input->post('funeral_place') != '' || $this->input->post('funeral_address') != '' || $this->input->post('funeral_state') != '' || $this->input->post('funeral_city') != '' || $this->input->post('funeral_zip') != '') {
+                    $city_id = null;
+                    if ($this->input->post('funeral_state') != '' && $this->input->post('funeral_city') != '') {
+                        $state = $this->input->post('funeral_state');
+                        $city = $this->input->post('funeral_city');
+                        //-- Check city is available in db if not then insert with new record
+                        $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
+                        if (empty($city_data)) {
+                            $city_arr = ['name' => $city, 'state_id' => $state];
+                            $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
+                        } else {
+                            $city_id = $city_data['id'];
+                        }
+                    }
                     $funeral_serivce = [
                         'profile_id' => $profile_id,
                         'service_type' => 'Funeral',
@@ -999,7 +1063,7 @@ class Profile extends MY_Controller {
                         'time' => date('H:i:s', strtotime($this->input->post('funeral_time'))),
                         'place_name' => $this->input->post('funeral_place'),
                         'address' => $this->input->post('funeral_address'),
-                        'city' => $this->input->post('funeral_city'),
+                        'city' => $city_id,
                         'state' => $this->input->post('funeral_state'),
                         'country' => $this->input->post('funeral_country'),
                         'zip' => $this->input->post('funeral_zip'),
@@ -1014,6 +1078,19 @@ class Profile extends MY_Controller {
                     }
                 }
                 if ($this->input->post('burial_date') != '' || $this->input->post('burial_time') != '' || $this->input->post('burial_place') != '' || $this->input->post('burial_address') != '' || $this->input->post('burial_state') != '' || $this->input->post('burial_city') != '' || $this->input->post('burial_zip') != '') {
+                    $city_id = null;
+                    if ($this->input->post('burial_state') != '' && $this->input->post('burial_city') != '') {
+                        $state = $this->input->post('burial_state');
+                        $city = $this->input->post('burial_city');
+                        //-- Check city is available in db if not then insert with new record
+                        $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
+                        if (empty($city_data)) {
+                            $city_arr = ['name' => $city, 'state_id' => $state];
+                            $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
+                        } else {
+                            $city_id = $city_data['id'];
+                        }
+                    }
                     $burial_serivce = [
                         'profile_id' => $profile_id,
                         'service_type' => 'Burial',
@@ -1021,7 +1098,7 @@ class Profile extends MY_Controller {
                         'time' => date('H:i:s', strtotime($this->input->post('burial_time'))),
                         'place_name' => $this->input->post('burial_place'),
                         'address' => $this->input->post('burial_address'),
-                        'city' => $this->input->post('burial_city'),
+                        'city' => $city_id,
                         'state' => $this->input->post('burial_state'),
                         'country' => $this->input->post('burial_country'),
                         'zip' => $this->input->post('burial_zip'),

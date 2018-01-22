@@ -20,22 +20,22 @@
                                 <div id="collapse01" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapse-01">
                                     <div class="panel-body">
                                         <p>
-                                            a. Therapy – This is not an easy process so it’s okay to enlist the help of a professional
+                                            <span class="list_left">a.</span> Therapy – This is not an easy process so it’s okay to enlist the help of a professional
                                         </p>
                                         <p>
-                                            b. Meditation/ Quiet Reflection/ Prayer 
+                                            <span class="list_left">b.</span> Meditation/ Quiet Reflection/ Prayer 
                                         </p>
                                         <p>
-                                            c. Think about the wishes of the deceased (check the will if there is one)
+                                            <span class="list_left">c.</span> Think about the wishes of the deceased (check the will if there is one)
                                         </p>
                                         <p>
-                                            d. Select a Theme- Traditional or unique method to honor the deceased
+                                            <span class="list_left">d.</span> Select a Theme- Traditional or unique method to honor the deceased
                                         </p>
                                         <p>
-                                            e. Select a Team- You will likely have close family or friends who are willing to help. Let them.
+                                            <span class="list_left">e.</span> Select a Team- You will likely have close family or friends who are willing to help. Let them.
                                         </p>
                                         <p>
-                                            f. Create a planning team email group, text group, and/or whatsapp group.
+                                            <span class="list_left">f.</span> Create a planning team email group, text group, and/or whatsapp group.
                                         </p>
                                     </div>
                                 </div>
@@ -49,16 +49,16 @@
                                 <div id="collapse02" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-02">
                                     <div class="panel-body">
                                         <p> 
-                                            a. Select Internment method: Burial, Entombment, Cremation, bio-urn, …
+                                            <span class="list_left">a.</span> Select Internment method: Burial, Entombment, Cremation, bio-urn, …
                                         </p>
                                         <p>
-                                            b. Select location
+                                            <span class="list_left">b.</span> Select location
                                         </p>
                                         <p>
-                                            c. Ceremony Type: Traditional funeral w/ casket and wake, Memorial service, ...
+                                            <span class="list_left">c.</span> Ceremony Type: Traditional funeral w/ casket and wake, Memorial service, ...
                                         </p>
                                         <p>
-                                            d. Purchase Burial plot, casket or urn
+                                            <span class="list_left">d.</span> Purchase Burial plot, casket or urn
                                         </p>
                                     </div>
                                 </div>
@@ -72,46 +72,46 @@
                                 <div id="collapse03" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-03">
                                     <div class="panel-body">
                                         <p>
-                                            a. Engage your team to help
+                                            <span class="list_left">a.</span> Engage your team to help
                                         </p>
                                         <p>
-                                            b. Select Clergy & ceremony location
+                                            <span class="list_left">b.</span> Select Clergy & ceremony location
                                         </p>
                                         <p>
-                                            c. Select funeral home.  See How to select a Funeral Home and Director.
+                                            <span class="list_left">c.</span> Select funeral home.  See How to select a Funeral Home and Director.
                                         </p>
                                         <p>
-                                            d. Decide on a date/ time
+                                            <span class="list_left">d.</span> Decide on a date/ time
                                         </p>
                                         <p>
-                                            e. Decide whether there will be a wake, funeral, memorial, repast, family gathering
+                                            <span class="list_left">e.</span> Decide whether there will be a wake, funeral, memorial, repast, family gathering
                                         </p>
                                         <p>
-                                            f. Eulogy- Select one or more people to do the eulogy
+                                            <span class="list_left">f.</span> Eulogy- Select one or more people to do the eulogy
                                         </p>
                                         <p>
-                                            g. Reading- Select Scriptures, Poems or other material to be read at the service and select people to do this
+                                            <span class="list_left">g.</span> Reading- Select Scriptures, Poems or other material to be read at the service and select people to do this
                                         </p>
                                         <p>
-                                            h. Music – Select song & hymns to be used at the service
+                                            <span class="list_left">h.</span> Music – Select song & hymns to be used at the service
                                         </p>
                                         <p>
-                                            i. Plan the attire for the deceased
+                                            <span class="list_left">i.</span> Plan the attire for the deceased
                                         </p>
                                         <p>
-                                            j. Floral arrangements.  You can conveniently shop for flowers here.
+                                            <span class="list_left">j.</span> Floral arrangements.  You can conveniently shop for flowers here.
                                         </p>
                                         <p>
-                                            k. Find pictures and videos for the memorial
+                                            <span class="list_left">k.</span> Find pictures and videos for the memorial
                                         </p>
                                         <p>
-                                            l. Select Pall bearers if there will be a casket
+                                            <span class="list_left">l.</span> Select Pall bearers if there will be a casket
                                         </p>
                                         <p>
-                                            m. Plan for the order of events & create the program
+                                            <span class="list_left">m.</span> Plan for the order of events & create the program
                                         </p>
                                         <p>
-                                            n. Order memorial or obituary cards
+                                            <span class="list_left">n.</span> Order memorial or obituary cards
                                         </p>
                                     </div>
                                 </div>
@@ -125,28 +125,28 @@
                                 <div id="collapse04" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-04">
                                     <div class="panel-body">
                                         <p> 
-                                            a. Memorial Register
+                                            <span class="list_left">a.</span> Memorial Register
                                         </p>
                                         <p>
-                                            b. Memorial/ Obituary Cards
+                                            <span class="list_left">b.</span> Memorial/ Obituary Cards
                                         </p>
                                         <p>
-                                            c. Funeral Program
+                                            <span class="list_left">c.</span> Funeral Program
                                         </p>
                                         <p>
-                                            d. Casket 
+                                            <span class="list_left">d.</span> Casket 
                                         </p>
                                         <p>
-                                            e. Grave Marker
+                                            <span class="list_left">e.</span> Grave Marker
                                         </p>
                                         <p>
-                                            f. Urn
+                                            <span class="list_left">f.</span> Urn
                                         </p>
                                         <p>
-                                            g. Burial Plot
+                                            <span class="list_left">g.</span> Burial Plot
                                         </p>
                                         <p>
-                                            h. Tombstone
+                                            <span class="list_left">h.</span> Tombstone
                                         </p>
                                         <!--                                        <div class="inr-points">
                                                                                     <h4>The things you need to determine when interviewing funeral homes are:</h4>
@@ -174,16 +174,16 @@
                                 <div id="collapse05" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-05">
                                     <div class="panel-body">
                                         <p> 
-                                            a. Select venue: family home, funeral home, restaurant, reception hall
+                                            <span class="list_left">a.</span> Select venue: family home, funeral home, restaurant, reception hall
                                         </p>
                                         <p>
-                                            b. Determine who will be invited to get preliminary number of attendees
+                                            <span class="list_left">b.</span> Determine who will be invited to get preliminary number of attendees
                                         </p>
                                         <p>
-                                            c. Determine food selection & Order food
+                                            <span class="list_left">c.</span> Determine food selection & Order food
                                         </p>
                                         <p>
-                                            d. Send out invitations (use Remember Always profile, email, or text to notify family and friends)
+                                            <span class="list_left">d.</span> Send out invitations (use Remember Always profile, email, or text to notify family and friends)
                                         </p>
                                     </div>
                                 </div>
@@ -197,10 +197,10 @@
                                 <div id="collapse06" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-06">
                                     <div class="panel-body">
                                         <p>
-                                            a. Create online memorial with all key information & distribute via email or social websites. See How to create a Life Profile (online memorial)
+                                            <span class="list_left">a.</span> Create online memorial with all key information & distribute via email or social websites. See How to create a Life Profile (online memorial)
                                         </p>
                                         <p>
-                                            b. Send Obituary information to the newspaper for publishing (optional)</p>
+                                            <span class="list_left">b.</span> Send Obituary information to the newspaper for publishing (optional)</p>
                                     </div>
                                 </div>
                             </div>
@@ -213,10 +213,10 @@
                                 <div id="collapse07" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-07">
                                     <div class="panel-body">
                                         <p>
-                                            a. Create a Tribute Fundraiser to support funeral costs, if needed. See How to create a Tribute Fundraiser.
+                                            <span class="list_left">a.</span> Create a Tribute Fundraiser to support funeral costs, if needed. See How to create a Tribute Fundraiser.
                                         </p>
                                         <p>
-                                            b. Create a Scholarship fund or donation to an affinity group in honor of the deceased </p>
+                                            <span class="list_left">b.</span> Create a Scholarship fund or donation to an affinity group in honor of the deceased </p>
                                     </div>
                                 </div>
                             </div>
@@ -229,40 +229,40 @@
                                 <div id="collapse08" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-08">
                                     <div class="panel-body">
                                         <p>
-                                            a. Obtain Death certificates
+                                            <span class="list_left">a.</span> Obtain Death certificates
                                         </p>
                                         <p>
-                                            b. Life insurance
+                                            <span class="list_left">b.</span> Life insurance
                                         </p>
                                         <p>
-                                            c. Mortgage insurance
+                                            <span class="list_left">c.</span> Mortgage insurance
                                         </p>
                                         <p>
-                                            d. Pension
+                                            <span class="list_left">d.</span> Pension
                                         </p>
                                         <p>
-                                            e. Retirement Benefits
+                                            <span class="list_left">e.</span> Retirement Benefits
                                         </p>
                                         <p>
-                                            f. Transfer possessions, auto, boat, camper
+                                            <span class="list_left">f.</span> Transfer possessions, auto, boat, camper
                                         </p>
                                         <p>
-                                            g. Probate court
+                                            <span class="list_left">g.</span> Probate court
                                         </p>
                                         <p>
-                                            h. Bank account
+                                            <span class="list_left">h.</span> Bank account
                                         </p>
                                         <p>
-                                            i. Credit cards
+                                            <span class="list_left">i.</span> Credit cards
                                         </p>
                                         <p>
-                                            j. Filing federal, state or city income taxes
+                                            <span class="list_left">j.</span> Filing federal, state or city income taxes
                                         </p>
                                         <p>
-                                            k. Insured loans and credit card claims
+                                            <span class="list_left">k.</span> Insured loans and credit card claims
                                         </p>
                                         <p>
-                                            l. Bereavement leave
+                                            <span class="list_left">l.</span> Bereavement leave
                                         </p>
 
                                     </div>
@@ -302,7 +302,7 @@
                     <h2>Service Providers Doirectory</h2>
                     <div class="profile-box-body">
                         <p>Find service providers in your area, such as, funeral homes, crematories, florists, caterers, attorneys, tax advisors, and more.</p>
-                        <a href="<?php echo site_url('service_provider') ?>" class="btn-link">Find Service Providers.</a>
+                        <a href="<?php echo site_url('service_provider') ?>" class="btn-link plannig-service-btn">Find Service Providers</a>
                     </div>
                 </div>
                 <div class="profile-box fun-facts">
@@ -310,7 +310,7 @@
                     <div class="profile-box-body">
                         <p>A Life Profile can help you to communicate Funeral Services information and help you to centralize pictures and videos in one place.</p>
                         <?php if ($this->is_user_loggedin) { ?>
-                            <a href="<?php echo site_url('profile/create') ?>" class="btn-link">Create a Life Profile</a> 
+                            <a href="<?php echo site_url('profile/create') ?>" class="btn-link plannig-create-btn">Create a Life Profile</a> 
                         <?php } else { ?>
                             <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create'); ?>" class="btn-link">Create a Life Profile</a>
                         <?php } ?>

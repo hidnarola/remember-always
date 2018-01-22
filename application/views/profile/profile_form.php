@@ -5,6 +5,15 @@
 <link href="assets/css/bootstrap-datetimepicker.min.css" rel="stylesheet"/>
 <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 <!-- /theme JS files -->
+<!-- Select2  files -->
+<link href="assets/css/select2/select2.min.css" rel="stylesheet" />
+<link href="assets/css/select2/select2-bootstrap.min.css" rel="stylesheet" />
+<script src="assets/js/select2/select2.full.min.js"></script>
+<!-- Select2  files -->
+<?php
+$month_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+$day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
+?>
 <div class="create-profile create-profile_wrappers"> 
     <div class="create-profile-top">
         <div class="container">
@@ -124,7 +133,7 @@
                                                         $selected = 'selected';
                                                     }
                                                     ?>
-                                                    <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
+                                                    <option value="<?php echo $city['name'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
                                                 <?php }
                                                 ?>
                                             </select>
@@ -415,10 +424,30 @@
                                                             <input type="number" name="year[]" placeholder="Year" class="input-css" value="<?php echo $value['year'] ?>">
                                                         </div>
                                                         <div class="input-three-m">
-                                                            <input type="number" name="month[]" placeholder="Month" class="input-css" value="<?php echo $value['month'] ?>">
+                                                            <select name="month[]" placeholder="Month" class="input-css">
+                                                                <option value="">Select Month</option>
+                                                                <?php
+                                                                foreach ($month_arr as $month) {
+                                                                    $selected = '';
+                                                                    if ($month == $value['month'])
+                                                                        $selected = 'selected';
+                                                                    echo "<option value='" . $month . "' " . $selected . ">" . $month . "</option>";
+                                                                }
+                                                                ?>
+                                                            </select>
                                                         </div>
                                                         <div class="input-three-r">
-                                                            <input type="number" name="day[]" placeholder="Day" class="input-css" value="<?php if ($value['date'] != '') echo date('d', strtotime($value['date'])) ?>">
+                                                            <select name="day[]" placeholder="Day" class="input-css">
+                                                                <?php
+                                                                foreach ($day_arr as $day) {
+                                                                    $time_day = date('d', strtotime($value['date']));
+                                                                    $selected = '';
+                                                                    if ($day ==$time_day)
+                                                                        $selected = 'selected';
+                                                                    echo "<option value='" . $day . "' $selected>" . $day . "</option>";
+                                                                }
+                                                                ?>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="input-wrap">
@@ -469,10 +498,24 @@
                                                         <input type="number" name="year[]" placeholder="Year" class="input-css">
                                                     </div>
                                                     <div class="input-three-m">
-                                                        <input type="number" name="month[]" placeholder="Month" class="input-css">
+                                                        <select name="month[]" placeholder="Month" class="input-css">
+                                                            <option value="">Select Month</option>
+                                                            <?php
+                                                            foreach ($month_arr as $month) {
+                                                                echo "<option value='" . $month . "'>" . $month . "</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
                                                     </div>
                                                     <div class="input-three-r">
-                                                        <input type="number" name="day[]" placeholder="Day" class="input-css">
+                                                        <select name="day[]" placeholder="Day" class="input-css">
+                                                            <option value="">Select Day</option>
+                                                            <?php
+                                                            foreach ($day_arr as $day) {
+                                                                echo "<option value='" . $day . "'>" . $day . "</option>";
+                                                            }
+                                                            ?>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="input-wrap">
@@ -562,7 +605,7 @@
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
-                                                <select name="memorial_city" id="memorial_city" class="input-css" placeholder="State">
+                                                <select name="memorial_city" id="memorial_city" class="input-css service-city" placeholder="State">
                                                     <option value="">Select City</option>
                                                     <?php
                                                     foreach ($memorial_cities as $city) {
@@ -572,7 +615,7 @@
                                                                 $selected = 'selected';
                                                         }
                                                         ?>
-                                                        <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
+                                                        <option value="<?php echo $city['name'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>
@@ -634,7 +677,7 @@
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
-                                                <select name="funeral_city" id="funeral_city" class="input-css" placeholder="City">
+                                                <select name="funeral_city" id="funeral_city" class="input-css service-city" placeholder="City">
                                                     <option value="">Select City</option>
                                                     <?php
                                                     foreach ($funeral_cities as $city) {
@@ -644,7 +687,7 @@
                                                                 $selected = 'selected';
                                                         }
                                                         ?>
-                                                        <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
+                                                        <option value="<?php echo $city['name'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>
@@ -661,11 +704,11 @@
                                                 <input type="text" name="burial_date" id="burial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($burial_service) && !empty($burial_service)) echo date('m/d/Y', strtotime($burial_service['date'])) ?>">
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="burial_time" id="burial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_time'] ?>">
+                                                <input type="text" name="burial_time" id="burial_time" placeholder="Time" class="input-css service-time" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['time'] ?>">
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_place" id="burial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['burial_name'] ?>">
+                                            <input type="text" name="burial_place" id="burial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <input type="text" name="burial_address" id="burial_address" placeholder="Address" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['address'] ?>">
@@ -706,7 +749,7 @@
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
-                                                <select name="burial_city" id="burial_city" class="input-css" placeholder="City">
+                                                <select name="burial_city" id="burial_city" class="input-css service-city" placeholder="City">
                                                     <option value="">Select City</option>
                                                     <?php
                                                     foreach ($burial_cities as $city) {
@@ -716,7 +759,7 @@
                                                                 $selected = 'selected';
                                                         }
                                                         ?>
-                                                        <option value="<?php echo $city['id'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
+                                                        <option value="<?php echo $city['name'] ?>" <?php echo $selected ?>><?php echo $city['name'] ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>

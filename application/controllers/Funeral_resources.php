@@ -21,7 +21,7 @@ class Funeral_resources extends MY_Controller {
         $service_categories = $this->users_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
 
         $data['service_categories'] = $service_categories;
-        $data['breadcrumb'] = ['title' => 'Funeral Planing', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $data['breadcrumb'] = ['title' => 'Funeral Resources', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'resources/funeral_resources', $data);
     }
 
