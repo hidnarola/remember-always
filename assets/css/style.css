@@ -1144,6 +1144,26 @@ form#post_que_form .add_an .input-wrap:nth-child(3) label.error {bottom: auto;to
 form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 100%;text-align: right;bottom: 15px;margin: 0;right: 20px;padding: 0 20px;}
 .add_an .input-wrap {position: relative;}
 
+.main_box_c:after {content: " ";display: block;clear: both;}
+.box_l {padding-left: 15px;padding-right: 15px;width: 33.33%;float: left;}
+.box_m {padding-left: 15px;padding-right: 15px;width: 33.33%;float: left;}
+.box_r {padding-left: 15px;padding-right: 15px;width: 33.33%;float: left;}
+.main_box_c {margin: 0 -15px;}  
+.box_l .profile-box,
+.box_m .profile-box,
+.box_r .profile-box {padding: 0;}
+.main_box_c .profile-box h2 {text-align: center;}
+.main_box_c .profile-box h2.purple_h2 {background: #8f63ca;text-align: center;}
+.main_box_c .profile-box h2.green_h2 {background: #67b794;}
+.profile-box-body.profile-box-body-change p {font-size: 14px;margin-bottom: 0;line-height: 20px;font-weight: 400;}
+.profile-box-body.profile-box-body-change h6 {margin: 0px 0 5px;padding: 0;display: block;font-size: 16px;font-family: 'Roboto';color: #999;line-height: 20px;font-weight: 400;}
+.profile-box-body.profile-box-body-change h6 a {color: #337ab7;}
+.ul_list {list-style: none;padding: 10px 0;margin: 0;}
+.ul_list li:last-child {padding-bottom: 0;}
+.ul_list li:After {content: "\f178";position: absolute;left: 0;top: -1px;width: 100%;height: 100%;font-size: 14px;font-family: fontawesome;color: #975979;}
+.ul_list li {padding: 0 0 15px 30px;position: relative;}
+.main_box_c .profile-box h2.light_grey_h2 {background: #a6a6a6;}
+
 /*** media start here ****/
 
 

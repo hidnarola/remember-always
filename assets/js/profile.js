@@ -1004,7 +1004,7 @@ function delete_media(obj, data) {
 function add_funfact() {
     if (profile_id == 0) {
         $('#funfact-modal').modal('hide');
-        showErrorMSg('Please fill Basic info first!');
+        showErrorMSg('Please fill Basic info first and save!');
         $('.nav-tabs a[href="#first-step"]').tab('show');
     } else {
         if ($('#fun-fact-form').valid()) {

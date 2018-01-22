@@ -1248,7 +1248,7 @@ class Profile extends MY_Controller {
             $valid = 1;
             $not_valid_emails = [];
             foreach ($email_arrs as $arr) {
-                if (!filter_var($arr, FILTER_VALIDATE_EMAIL)) {
+                if (!filter_var(trim($arr), FILTER_VALIDATE_EMAIL)) {
                     $valid = 0;
                     $not_valid_emails[] = $arr;
                 }
@@ -1259,7 +1259,7 @@ class Profile extends MY_Controller {
                     $slug = $this->input->post('profile_slug');
                     $email_data['name'] = $this->session->userdata('remalways_user')['firstname'] . ' ' . $this->session->userdata('remalways_user')['lastname'];
                     $email_data['url'] = site_url('profile/' . $slug);
-                    send_mail($arr, 'share_profile', $email_data);
+                    send_mail(trim($arr), 'share_profile', $email_data);
                 }
                 $data['success'] = true;
             } else {

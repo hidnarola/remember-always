@@ -302,67 +302,39 @@
                     <h2>Service Providers Doirectory</h2>
                     <div class="profile-box-body">
                         <p>Find service providers in your area, such as, funeral homes, crematories, florists, caterers, attorneys, tax advisors, and more.</p>
-                        <a href="<?php echo site_url('service_provider') ?>" class="btn-link">Find Service Providers. <i class="fa fa-plus"></i></a> </a>
+                        <a href="<?php echo site_url('service_provider') ?>" class="btn-link">Find Service Providers.</a>
                     </div>
                 </div>
                 <div class="profile-box fun-facts">
                     <h2>Did you know?</h2>
                     <div class="profile-box-body">
                         <p>A Life Profile can help you to communicate Funeral Services information and help you to centralize pictures and videos in one place.</p>
-                        <a href="<?php echo site_url('profile/create') ?>" class="btn-link">Create a Life Profile <i class="fa fa-plus"></i></a> </a>
+                        <?php if ($this->is_user_loggedin) { ?>
+                            <a href="<?php echo site_url('profile/create') ?>" class="btn-link">Create a Life Profile</a> 
+                        <?php } else { ?>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create'); ?>" class="btn-link">Create a Life Profile</a>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="profile-box fun-facts">
-                    <h2>Grief Support</h2>
+                    <h2>Need help with funeral expenses?</h2>
                     <div class="profile-box-body">
-                        <p>Ask questions or search for answers in our Online Set  Support Community. </p>
-                        <a href="" class="btn-link color-01">Get Support <i class="fa fa-paper-plane"></i></a>
+                        <p>A Life Profile with a Tribute Fundraiser is a great choice for getting the help you need during a difficult time</p>
+                        <?php if ($this->is_user_loggedin) { ?>
+                            <a href="<?php echo site_url('profile/create') ?>" class="btn-link color-01">Create a Life Profile with a Tribute Fundraiser <i class="fa fa-paper-plane"></i></a>
+                        <?php } else { ?>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create'); ?>" class="btn-link color-01">Create a Life Profile with a Tribute Fundraiser <i class="fa fa-paper-plane"></i></a>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="profile-box fun-facts">
-                    <h2>Online Support Community</h2>
+                    <h2>Have questions? Need advice?</h2>
                     <div class="profile-box-body">
-                        <p>Ask questions or search for answers in our Online Set  Support Community. </p>
-                        <a href="" class="btn-link color-02">Visit Community <i class="fa fa-paper-plane"></i></a>
+                        <p>Visit the Remember Always online community and ask any questions you have about funeral planning or other related topics. You can also share your answers to questions from others. </p>
+                        <a href="<?php echo site_url('community') ?>" class="btn-link color-02">Visit the online support community <i class="fa fa-paper-plane"></i></a>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
 </div>
-
-<script type="text/javascript">
-    $('#category').selectpicker({
-        liveSearch: true,
-        size: 5
-    });
-    $(document).on('click', '#resource_srch_btn', function () {
-//        window.location.href = "/";
-        submit_form($('#category').val());
-    });
-    function submit_form(category) {
-        var location = $('#location').val();
-        if (location == '' && category == '') {
-            $('#resource_form').attr('action', site_url + 'service_provider');
-            window.location.href = site_url + 'service_provider';
-        } else if (location == '' && category != '') {
-            window.location.href = site_url + 'service_provider?category=' + category;
-        } else {
-            console.log("snasn");
-            var url = '';
-            if (location != '') {
-                url += '?location=' + location.replace('::', ',');
-            }
-            if (category != '') {
-                if (url != '')
-                    url += '&category=' + category;
-                else
-                    url += '?category=' + category;
-            }
-            window.location.href = site_url + 'service_provider' + url;
-        }
-        return false;
-    }
-</script>

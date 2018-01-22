@@ -27,7 +27,7 @@
                         if ($key == 1) {
                             echo '<a href="' . site_url('profile/create') . '">Create a Life Profile with a Tribute Fundraiser</a>';
                         } else if ($key == 2) {
-                            echo '<a href="' . site_url('profile/create') . '">Access Resources</a>';
+                            echo '<a href="' . site_url('funeral_resources') . '">Access Resources</a>';
                         } else {
                             echo '<a href="' . site_url('profile/create') . '">Create a Life Profile</a>';
                         }
@@ -37,7 +37,7 @@
                         if ($key == 1) {
                             echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Create a Life Profile with a Tribute Fundraiser</a>';
                         } else if ($key == 2) {
-                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Access Resources</a>';
+                            echo '<a href="' . site_url('funeral_resources') . '">Access Resources</a>';
                         } else {
                             echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Create a Life Profile</a>';
                         }

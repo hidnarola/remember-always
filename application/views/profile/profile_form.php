@@ -324,8 +324,12 @@
                             <h2>Add Affilliations <small>(optional)</small> </h2>
                             <p>Add up to 10fun Affiliations about your loved one. <br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
                         </div>
-
-                        <div class="step-form <?php if (!isset($profile_affiliations)) echo "default-fact-empty" ?>">
+                        <?php
+                        $affiliation_class = 'default-fact-empty';
+                        if (isset($profile_affiliations) && !empty($profile_affiliations))
+                            $affiliation_class = '';
+                        ?>
+                        <div class="step-form <?php echo $affiliation_class ?>">
                             <div class="step-03">
                                 <div class="step-03-l">
                                     <div id="selected-affiliation"></div>

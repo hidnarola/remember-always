@@ -538,7 +538,16 @@
                                                     }
                                                     ?>
                                                 </span>
-                                                <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?><small><?php echo format_days($days_diff) ?>  Ago</small></h3>
+                                                <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?>
+                                                    <?php $day_diff_str = format_days($days_diff); ?>
+                                                    <small>
+                                                        <?php
+                                                        echo $day_diff_str;
+                                                        if ($day_diff_str != 'Just Now')
+                                                            echo ' Ago';
+                                                        ?>
+                                                    </small>
+                                                </h3>
                                                 <p><?php echo $val['comment'] ?></p>
                                                 <?php if (isset($val['media'])) { ?>
                                                     <div class="comoon-ul-li list-02">
@@ -564,7 +573,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                                        ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                                                ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
