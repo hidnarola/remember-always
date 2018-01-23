@@ -1,126 +1,133 @@
+<style type="text/css">
+    #map_wrapper {height: 400px;}
+    #map_canvas {width: 100%;height: 100%;}
+</style>
 <div class="common-page">
     <div class="container">
-        <div class="common-head">
-            <h2 class="h2title">Services Provider Directory</h2>
-            <a href="<?php echo site_url('service_provider/add') ?>" class="pspl">Post a Services Provider Listing</a>
-        </div>
-        <div class="common-body">
-            <div class="services-form">
-                <form method="get" name="provider_form" id="provider_form">
+        <div class="service_provder_form">
+            <div class="services-form services_custom_frm">
+                <form method="get" name="provider_form" id="provider_form" action="<?php echo site_url('service_provider') ?>">
                     <div class="srvs-form-div">
-                        <select name="category" id="category" class="selectpicker">
-                            <option value="">-- Select Category --</option>
-                            <option value="yelp" <?php if ($this->input->get('category') == 'yelp') echo 'selected' ?>>Yelp</option>
-                            <?php
-                            foreach ($service_categories as $key => $value) {
-                                $selected = '';
-                                if (urldecode($this->input->get('category')) == $value['name']) {
-                                    $selected = 'selected';
-                                }
-                                ?>
-                                <option value="<?php echo $value['name'] ?>" <?php echo $selected; ?> ><?php echo $value['name']; ?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                    </div>
-                    <div class="srvs-form-div">
-                        <input type="text" name="keyword" id="keyword" placeholder="Enter Keyword" class="input-css" value="<?php echo (isset($_GET['keyword'])) ? $_GET['keyword'] : set_value('keyword') ?>"/>
+                        <input type="text" name="keyword" id="keyword" placeholder="Enter Keyword" class="input-css global_search" value="<?php echo (isset($_GET['keyword'])) ? $_GET['keyword'] : set_value('keyword') ?>"/>
                     </div>
                     <div class="srvs-form-div">	
-                        <input type="text" name="location" id="location" placeholder="Location" class="input-css" value="<?php echo ($this->input->get('location') != '') ? $this->input->get('location') : set_value('location'); ?>"/>
+                        <input type="text" name="location" id="location" placeholder="Location" class="input-css global_search" value="<?php echo ($this->input->get('location') != '') ? $this->input->get('location') : set_value('location'); ?>"/>
                     </div>
                     <input type="hidden" name="lat" id="input-latitude" value="<?php echo ($this->input->get('lat') != '') ? $this->input->get('lat') : set_value('lat'); ?>">
                     <input type="hidden" name="long" id="input-longitude" value="<?php echo ($this->input->get('long') != '') ? $this->input->get('long') : set_value('long'); ?>">
 
-                    <div class="srvs-form-div">	
-                        <button type="button"  id="provider_srch_btn" class="next" disabled>Search</button>
+                    <div class="srvs-form-div srvs_search">	
+                        <button type="button" id="provider_srch_btn" class="next" disabled><i class="fa fa-search" aria-hidden="true"></i></button>
                     </div>	
                 </form>
             </div>
-            <div class="services-pro-l">
-                <div class="profile-box services-listings" >
-                    <h2>Services Listing</h2>
-                    <div id="service_ul_data">
-                        <ul class="srvs-list-ul service_content" >
-                            <?php
-                            if (isset($services) && !empty($services)) {
-                                if ($this->input->get('category') == 'yelp') {
-                                    foreach ($services as $key => $value) {
-                                        ?>
-                                        <li>
-                                            <span> 
-                                                <?php if ($value['image_url'] != '') { ?>
-                                                    <img src="<?php echo $value['image_url'] ?>" width="100%" height="100%"/>
-                                                <?php } else { ?>
-                                                    <img src="assets/images/no_image.png" width="100%" height="100%"/>
-                                                <?php } ?>
-                                            </span>
-                                            <h3><a href="<?php echo $value['url'] ?>"><?php echo $value['name'] ?></a></h3>
-                                            <p><?php echo $value['location']['address1'] . ',' . $value['location']['city'] . ',' . $value['location']['zip_code'] . ',' . $value['location']['country']; ?></p>
-                                            <p><?php echo 'Phone: ' . $value['phone']; ?></p>
-                                        </li>
-                                        <?php
-                                    }
-                                } else {
-                                    foreach ($services as $key => $value) {
-                                        ?>
-                                        <li>
-                                            <span> 
-                                                <?php
-                                                if (isset($value['image']) && !is_null($value['image'])) {
-                                                    ?>
-                                                    <img src="<?php echo PROVIDER_IMAGES . $value['image'] ?>" width="100%" height="100%"/>
-                                                <?php } else { ?>
-                                                    <img src="assets/images/no_image.png" width="100%" height="100%"/>
-                                                <?php } ?>
-                                            </span>
-                                            <h3><a href="<?php echo site_url('service_provider/view/' . $value['slug']) ?>"><?php echo $value['name'] ?></a></h3>
-                                            <p><?php
-                                                $text = $value['description'];
-                                                if (strlen($value['description']) > 500) {
-                                                    $text = preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...', $value['description']);
-                                                    echo $text;
-                                                } else {
-                                                    echo $text;
-                                                }
-                                                ?></p>
-                                        </li>
-                                        <?php
-                                    }
-                                }
-                            } else {
-                                ?>
-                                <p class="no-data">No Services available</p>
-                            <?php } ?>
-                        </ul>
-                    </div>
-                </div>
+            <div class="result_show">
+                <p><?php echo $display_msg ?></p>
             </div>
-            <div class="services-pro-r">
-                <div class="profile-box services-ctgr affiliations">
-                    <h2>Services Categories</h2>
-                    <div class="profile-box-body">
-                        <ul>
-                            <li><a href="javascript:void(0)" class="category_click <?php if ($this->input->get('category') == 'yelp') echo 'active'; ?>">Yelp</a></li>
-                            <?php if (isset($service_categories) && !empty($service_categories)) { ?>
-                                <?php foreach ($service_categories as $key => $value) {
-                                    ?>
-                                    <li><a href="javascript:void(0)" data-value="<?php echo $value['name'] ?>"class="category_click <?php echo isset($_GET['category']) && $_GET['category'] == $value['name'] ? 'active' : '' ?>"><?php echo $value['name'] ?></a></li>
-                                    <?php
-                                }
+            <div class="row_directory">
+                <div class="col_d_left">
+                    <ul class="ul_directory">
+                        <?php
+                        $lat_arr = $info_content = [];
+                        $start = ($this->uri->segment(2) != '') ? $this->uri->segment(2) : 0;
+                        $sr = $start + 1;
+                        foreach ($services as $key => $service) {
+                            $lat_arr[] = [$service['name'], $service['coordinates']['latitude'], $service['coordinates']['longitude']];
+                            $info_content[] = ['<div class="info_content"><h3>' . $service['name'] . '</h3><p>' . @$service['location']['display_address'][0] . '<br/>' . @$service['location']['display_address'][1] . '</p></div>'];
+                            ?>
+                            <li>
+                                <div class="inner_d">
+                                    <div class="img_profile_d">
+                                        <!--<a href="#">-->
+                                        <?php if ($service['image_url'] != '') { ?>
+                                            <img src="<?php echo $service['image_url'] ?>"/>
+                                        <?php } else { ?>
+                                            <img src="assets/images/no_image.png"/>
+                                        <?php } ?>
+                                        <!--</a>-->
+                                    </div>
+                                    <div class="data_directory">
+                                        <div class="data_head">
+                                            <h2><a href="<?php echo $service['url'] ?>" target="_blank"><span><?php echo $sr; ?>.</span> <?php echo $service['name'] ?></a></h2>
+                                            <div class="rating_span">
+                                                <span class="span_ic">
+                                                    <?php
+                                                    $star_module = floor($service['rating']);
+                                                    $half_rating = $service['rating'] - $star_module;
+                                                    $star_count = 0;
+                                                    while ($star_count < 5) {
+                                                        for ($i = 1; $i <= $star_module; $i++) {
+                                                            echo '<i class="fa fa-star" aria-hidden="true"></i>';
+                                                            $star_count++;
+                                                        }
+                                                        $star_module = 0;
+                                                        if ($star_count < 5) {
+                                                            if ($half_rating != 0) {
+                                                                echo '<i class="fa fa-star-half-o" aria-hidden="true"></i>';
+                                                                $star_count++;
+                                                                $half_rating = 0;
+                                                            } else {
+                                                                echo '<i class="fa fa-star-o" aria-hidden="true"></i>';
+                                                                $star_count++;
+                                                            }
+                                                        }
+                                                    }
+                                                    ?>
+                                                </span>
+                                                <span class="rating_count"><?php echo $service['review_count'] ?> review<?php if ($service['review_count'] > 0) echo 's' ?></span>
+                                            </div>
+                                            <div class="price-category">
+                                                <!--<a href="">-->
+                                                <?php
+                                                $categories = array_column($service['categories'], 'title');
+                                                echo implode(',', $categories);
+                                                ?>
+                                                <!--</a>-->
+                                            </div>
+                                        </div>
+                                        <div class="data_add">
+                                            <!--<span class="neighborhood-str-list">North Beach/Telegraph Hill, Russian Hill</span>-->
+                                            <?php
+                                            $address = implode("<br>", $service['location']['display_address'])
+                                            ?>
+                                            <address><?php echo $address; ?></address>
+                                            <span class="biz-phone"><?php echo $service['display_phone'] ?></span>
+                                        </div>
+                                    </div>
+                                    <!--                                    <div class="reply_data">
+                                                                            <div class="img_photo_box"><img src="https://s3-media4.fl.yelpcdn.com/photo/2KcVU8a-k1A6q4ZhTEXj8w/60s.jpg"/></div>
+                                                                            <p class="snippet">Picking a headstone is an arduous responsibility, given the difficult situation. Thankfully, Henry and Joe were very kind and understanding of what…<a href="" class="">read more</a></p>
+                                                                        </div>-->
+                                </div>
+                            </li>
+                            <?php
+                            $sr++;
+                        }
+                        ?>
+                    </ul>
+                    <div class="paggination-wrap">
+                        <?php
+                        if ($total > 0) {
+                            $end = $start + 10;
+                            if ($end > $total) {
+                                $end = $total;
                             }
                             ?>
-                        </ul>
+                            <div class="text-right">
+                                <span class="records_info">Showing <?php echo $start + 1; ?>-<?php echo $end; ?> of <?php echo ($total > 10) ? $total : count($services); ?> Records</span>
+                                <?php echo $links ?>
+                            </div>
+                        <?php } ?>
                     </div>
                 </div>
-            </div>
-            <div class="services-pro-m">
-                <div class="profile-box ad">
-                    <a href=""><img src="assets/images/ad.jpg" alt=""></a>
-                </div>
-                <div class="profile-box ad">
-                    <a href=""><img src="assets/images/ad.jpg" alt=""></a>
+                <div class="col_d_right">
+                    <div class="map_img">
+                        <div id="map_wrapper">
+                            <div id="map_canvas" class="mapping"></div>
+                        </div>
+                    </div>
+                    <div class="adv_div"><img src="assets/images/blue_adv.png"></div>
+                    <div class="adv_div"><img src="assets/images/add_blue.png"></div>
                 </div>
             </div>
         </div>
@@ -128,48 +135,14 @@
 </div>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
-    $('.loader').hide();
     var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
-    var provider_image = '<?php echo PROVIDER_IMAGES ?>';
-    var provider_url = '<?php echo site_url('service_provider/view/') ?>';
-    $('#category').selectpicker({
-        liveSearch: true,
-        size: 7
-    });
-    $("#service_ul_data").mCustomScrollbar({
-        axis: "y",
-        scrollButtons: {enable: true},
-        theme: "3d",
-        callbacks: {
-            onScroll: function () {
-                console.log("on scroll");
 
-            }, /*user custom callback function on scroll event*/
-            onTotalScroll: function () {
-                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-                    var limitStart = $(".service_content li").length;
-//                     $(".loader").show();
-                    loadResults(limitStart);
-                }
-            },
-        },
-        advanced: {
-
-            updateOnBrowserResize: true, /*update scrollbars on browser resize (for layouts based on percentages): boolean*/
-
-            updateOnContentResize: true, /*auto-update scrollbars on content resize (for dynamic content): boolean*/
-
-            autoExpandHorizontalScroll: true, /*auto-expand width for horizontal scrolling: boolean*/
-
-            autoScrollOnFocus: true /*auto-scroll on focused elements: boolean*/
-
-        },
-    });
     var input = (document.getElementById('location'));
     var options = {
         componentRestrictions: {country: "us"}
     };
-    var autocomplete = new google.maps.places.Autocomplete(input, options);
+//    var autocomplete = new google.maps.places.Autocomplete(input, options);
+    var autocomplete = new google.maps.places.Autocomplete(input);
     var infowindow = new google.maps.InfoWindow();
     google.maps.event.addListener(autocomplete, 'place_changed', function () {
         infowindow.close();
@@ -179,19 +152,66 @@
         }
         $('#input-latitude').val(place.geometry.location.lat());
         $('#input-longitude').val(place.geometry.location.lng());
-        var address = '';
-        if (place.address_components) {
-            address = [
-                (place.address_components[0] && place.address_components[0].short_name || ''),
-                (place.address_components[1] && place.address_components[1].short_name || ''),
-                (place.address_components[2] && place.address_components[2].short_name || '')
-            ].join(' ');
+    });
+
+    jQuery(function ($) {
+        /*
+         var script = document.createElement('script');
+         script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+         document.body.appendChild(script);*/
+        initialize();
+    });
+
+    function initialize() {
+        var map;
+        var bounds = new google.maps.LatLngBounds();
+        var mapOptions = {
+            mapTypeId: 'roadmap',
+        };
+
+        // Display a map on the page
+        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        map.setTilt(45);
+
+        // Multiple Markers
+        var markers = <?php echo json_encode($lat_arr) ?>;
+
+        // Info Window Content
+        var infoWindowContent = <?php echo json_encode($info_content) ?>;
+
+        // Display multiple markers on a map
+        var infoWindow = new google.maps.InfoWindow(), marker, i;
+
+        // Loop through our array of markers & place each one on the map  
+        for (i = 0; i < markers.length; i++) {
+            var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+            bounds.extend(position);
+            marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: markers[i][0]
+            });
+
+            // Allow each marker to have an info window    
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infoWindow.setContent(infoWindowContent[i][0]);
+                    infoWindow.open(map, marker);
+                }
+            })(marker, i));
+
+            // Automatically center the map fitting all markers on the screen
+            map.fitBounds(bounds);
         }
-//            infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-    });
-    $(document).on('click', '.category_click', function () {
-        submit_form($(this).data('value'));
-    });
+
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+            this.setZoom(10);
+            google.maps.event.removeListener(boundsListener);
+        });
+
+    }
+
     $(document).on('keyup paste', 'input[type="text"]', function () {
         if ($(this).val() != '') {
             $('#provider_srch_btn').removeAttr('disabled');
@@ -203,26 +223,18 @@
         }
     });
     $(document).on('click', '#provider_srch_btn', function () {
-        submit_form($('#category').val());
+        $('#provider_form').submit();
+//        submit_form();
     });
-    function submit_form(category) {
+    function submit_form() {
         var location = $('#location').val();
         var keyword = $('#keyword').val();
-//        var category = $('#category').val();
-        if (location == '' && keyword == '' && category == '') {
+        if (location == '' && keyword == '') {
             window.location.href = site_url + 'service_provider';
-        } else if (location == '' && keyword == '' && category != '') {
-            window.location.href = site_url + 'service_provider?category=' + category;
         } else {
             var url = '';
             if (location != '') {
                 url += '?location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
-            }
-            if (category != '') {
-                if (url != '')
-                    url += '&category=' + category;
-                else
-                    url += '?category=' + category;
             }
             if (keyword != '') {
                 if (url != '')
@@ -235,53 +247,4 @@
         return false;
     }
 
-    function loadResults(limitStart) {
-        $.ajax({
-            url: site_url + 'service_provider/load_providers/' + limitStart + srch_data,
-            type: "post",
-            dataType: "json",
-            success: function (data) {
-                var string = '';
-                category = $('#category').val();
-                $.each(data, function (index, value) {
-                    if (category == 'yelp') {
-                        string += '<li>';
-                        string += '<span>';
-                        if (value['image_url'] != '') {
-                            string += '<img src="' + value['image_url'] + '" width="100%" height="100%" />';
-                        } else {
-                            string += '<img src="assets/images/no_image.png" width="100%" height="100%"/>';
-                        }
-                        string += '</span>';
-                        string += '<h3><a href="' + value['url'] + '">' + value['name'] + '</a></h3>';
-                        string += '<p>';
-                        string += value['location']['address1'] + ',' + value['location']['city'] + ',' + value['location']['zip_code'] + ',' + value['location']['country'];
-                        string += '</p>';
-                        string += '<p>Phone: ' + value['phone'] + '</p>';
-                        string += '</li>';
-                    } else {
-                        string += '<li>';
-                        string += '<span>';
-                        if (typeof value['image'] != 'undefined' && value['image'] != null) {
-                            string += '<img src="' + provider_image + value['image'] + '" width="100%" height="100%" />';
-                        }
-                        string += '</span>';
-                        string += '<h3><a href="' + provider_url + value['slug'] + '">' + value['name'] + '</a></h3>';
-                        string += '<p>';
-                        text = value['description'];
-                        if (value['description'].length > 500) {
-//                        text = value['description'].preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...');
-                            text = value['description'].substring(0, 500);
-                            text += '...';
-                        }
-                        string += text;
-                        string += '</p>';
-                        string += '</li>';
-                    }
-                });
-                $(".service_content").append(string);
-//                $(".loader").hide();
-            }
-        });
-    }
 </script>

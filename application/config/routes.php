@@ -137,6 +137,18 @@ $route['community/(:any)'] = 'community/index/$1';
 /* Funeral Planning routes */
 $route['funeral_planing'] = 'funeral_resources/planing';
 
+/* Service Provider listing page */
+$route['service_provider/get_yelp_businesses'] = 'service_provider/get_yelp_businesses';
+$route['service_provider/get_yelp_businesses/(:any)'] = 'service_provider/get_yelp_businesses/$1';
+$route['service_provider/index_old'] = 'service_provider/index_old';
+$route['service_provider/load_providers'] = 'service_provider/load_providers';
+$route['service_provider/load_providers/(:any)'] = 'service_provider/load_providers/$1';
+$route['service_provider/load_providers/(:any)/(:any)'] = 'service_provider/load_providers/$1/$2';
+$route['service_provider/view/(:any)'] = 'service_provider/view/$1';
+$route['service_provider/add/(:any)'] = 'service_provider/add/$1';
+$route['service_provider/(:any)'] = 'service_provider/index/$1';
+
+
 $route['contact'] = 'cms/contact';
 $route['pages/(:any)'] = 'cms/index/$1';
 

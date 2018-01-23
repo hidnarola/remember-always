@@ -231,17 +231,32 @@ class Search_model extends MY_Model {
      * @return arr
      */
     function find($search_text) {
+        /* $sql = 'SELECT s.* FROM (SELECT CONCAT(firstname," ",lastname) as name,slug,profile_image as image,"profile" as type '
+          . 'FROM ' . TBL_PROFILES . ' p '
+          . 'WHERE p.is_delete=0 AND p.is_published=1 AND (p.firstname LIKE ' . $this->db->escape('%' . $search_text . '%') .
+          ' OR p.lastname LIKE ' . $this->db->escape('%' . $search_text . '%') .
+          ' OR CONCAT(p.firstname," ",p.lastname) LIKE ' . $this->db->escape('%' . $search_text . '%') .
+          ')'
+          . ' UNION ALL '
+          . 'SELECT sp.name,sp.slug,sp.image,"service_provider" as type '
+          . 'FROM ' . TBL_SERVICE_PROVIDERS . ' sp '
+          . 'WHERE sp.is_delete=0 AND sp.is_active=1 AND sp.name LIKE ' . $this->db->escape('%' . $search_text . '%') .
+          ' UNION ALL ' .
+          'SELECT a.name,a.slug,a.image,"affiliation" as type '
+          . 'FROM ' . TBL_AFFILIATIONS . ' a'
+          . ' WHERE a.is_delete=0 AND a.is_approved=1 AND a.name LIKE ' . $this->db->escape('%' . $search_text . '%') .
+          ' UNION ALL ' .
+          'SELECT b.title as name,b.slug,b.image,"blog" as type '
+          . 'FROM ' . TBL_BLOG_POST . ' b '
+          . ' WHERE b.is_delete=0 AND b.is_active=1 AND b.title LIKE ' . $this->db->escape('%' . $search_text . '%') .
+          ') s ORDER BY name ASC'; */
         $sql = 'SELECT s.* FROM (SELECT CONCAT(firstname," ",lastname) as name,slug,profile_image as image,"profile" as type '
                 . 'FROM ' . TBL_PROFILES . ' p '
                 . 'WHERE p.is_delete=0 AND p.is_published=1 AND (p.firstname LIKE ' . $this->db->escape('%' . $search_text . '%') .
                 ' OR p.lastname LIKE ' . $this->db->escape('%' . $search_text . '%') .
                 ' OR CONCAT(p.firstname," ",p.lastname) LIKE ' . $this->db->escape('%' . $search_text . '%') .
                 ')'
-                . ' UNION ALL '
-                . 'SELECT sp.name,sp.slug,sp.image,"service_provider" as type '
-                . 'FROM ' . TBL_SERVICE_PROVIDERS . ' sp '
-                . 'WHERE sp.is_delete=0 AND sp.is_active=1 AND sp.name LIKE ' . $this->db->escape('%' . $search_text . '%') .
-                ' UNION ALL ' .
+                . ' UNION ALL ' .
                 'SELECT a.name,a.slug,a.image,"affiliation" as type '
                 . 'FROM ' . TBL_AFFILIATIONS . ' a'
                 . ' WHERE a.is_delete=0 AND a.is_approved=1 AND a.name LIKE ' . $this->db->escape('%' . $search_text . '%') .

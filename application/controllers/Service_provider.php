@@ -17,14 +17,106 @@ class Service_provider extends MY_Controller {
     /**
      * Display listing of all service providers
      */
-    public function index() {
+    public function index($start = 0) {
+        $page_config = front_pagination();
+        $page_config['per_page'] = 10;
+        $page_config['base_url'] = site_url('service_provider');
+        $display_msg = '';
+        $display_msg_first = '';
+        if ($this->input->get('keyword') != '') {
+            $display_msg_first = 'Showing results';
+
+            $display_msg = ' for <b>' . $this->input->get('keyword') . '</b>';
+            $page_config['suffix'] = 'keyword=' . $this->input->get('keyword') . '&location=' . $this->input->get('location');
+
+            if ($this->input->get('location') != '') {
+                $display_msg .= ' near <span>' . $this->input->get('location') . '</span>';
+                $page_config['suffix'] .= '&location=' . $this->input->get('location') . '&lat=' . $this->input->get('lat') . '&long=' . $this->input->get('long');
+            }
+
+            $page_config['first_url'] = site_url('search') . '?type=' . $this->input->get('type') . '&keyword=' . $this->input->get('keyword') . '&location=' . $this->input->get('location');
+        } elseif ($this->input->get('location') != '') {
+            $display_msg_first = 'Showing results';
+
+            $page_config['suffix'] = '?location=' . $this->input->get('location') . '&lat=' . $this->input->get('lat') . '&long=' . $this->input->get('long');
+            $display_msg .= ' near <span>' . $this->input->get('location') . '</span>';
+            $page_config['first_url'] = site_url('service_provider') . '?location=' . $this->input->get('location') . '&lat=' . $this->input->get('lat') . '&long=' . $this->input->get('long');
+        }
+
+        $services = $this->get_yelp_businesses($start);
+        if (!empty($services)) {
+            $page_config['total_rows'] = $services['total'];
+        } else {
+            $page_config['total_rows'] = 0;
+        }
+        $this->pagination->initialize($page_config);
+
+        $data['links'] = $this->pagination->create_links();
+        $data['services'] = $services['businesses'];
+        $data['total'] = $services['total'];
+        if ($services['total'] == 0) {
+            $final_msg = 'No Results' . $display_msg;
+        } else {
+            $final_msg = $display_msg_first . $display_msg;
+        }
+        $data['display_msg'] = $final_msg;
+        $data['title'] = 'Remember Always | Services Provider Directory';
+        $data['breadcrumb'] = ['title' => 'Services Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $this->template->load('default', 'service_provider/index', $data);
+    }
+
+    /**
+     * Get yelp businesses
+     * @param int $start
+     * @athur KU
+     */
+    public function get_yelp_businesses($start) {
+        $this->config->load('yelp');
+
+        $apiKey = $this->config->item('yelp_api');
+        $api_host = $this->config->item('api_host');
+        $search_path = $this->config->item('search_path');
+        $business_path = $this->config->item('business_path');
+//        $url_params = ['limit' => 10, 'offset' => $start, 'categories' => 'funeralservices'];
+        $url_params = ['limit' => 10, 'offset' => $start];
+        $url_params['categories'] = 'funeralservices,synagogues,churches,cremationservices,florists,flowers,catering,eventservices,religiousitems,officiants,organic_stores,mosques,religiousorgs';
+
+        $url = $api_host . $search_path;
+        if ($this->input->get('keyword') != '') {
+            $url_params['term'] = $this->input->get('keyword');
+        }
+        if ($this->input->get('lat') != '' && $this->input->get('long') != '') {
+            $url_params['latitude'] = $this->input->get('lat');
+            $url_params['longitude'] = $this->input->get('long');
+        } else {
+            $url_params['location'] = 'US';
+        }
+        $url .= "?" . http_build_query($url_params);
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization:Bearer ' . $apiKey]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        $arr = json_decode($result, true);
+        if (!empty($arr)) {
+            return $arr;
+        } else {
+            return [];
+        }
+//        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//        curl_close($ch);
+    }
+
+    /**
+     * Display listing of all service providers
+     */
+    public function index_old() {
         $service_categories = $this->providers_model->sql_select(TBL_SERVICE_CATEGORIES, '*', ['where' => ['is_delete' => 0]]);
         $data['service_categories'] = $service_categories;
         $data['services'] = $this->load_providers(0, true);
 
         $data['title'] = 'Remember Always | Services Provider Directory';
         $data['breadcrumb'] = ['title' => 'Services Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
-        $this->template->load('default', 'service_provider/index', $data);
+        $this->template->load('default', 'service_provider/index_old', $data);
     }
 
     /**
@@ -190,50 +282,6 @@ class Service_provider extends MY_Controller {
         $data['breadcrumb'] = ['title' => 'Post Service Provider Listing', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('service_provider'), 'title' => 'Service Provider Listing']]];
 
         $this->template->load('default', 'service_provider/manage', $data);
-    }
-
-    /**
-     * Get yelp businesses 
-     * @author KU
-     */
-
-    /**
-     * Get yelp businesses
-     * @param int $start
-     * @athur KU
-     */
-    public function get_yelp_businesses($start) {
-        $this->config->load('yelp');
-
-        $apiKey = $this->config->item('yelp_api');
-        $api_host = $this->config->item('api_host');
-        $search_path = $this->config->item('search_path');
-        $business_path = $this->config->item('business_path');
-        $url_params = ['limit' => 10, 'offset' => $start, 'categories' => 'funeralservices'];
-
-        $url = $api_host . $search_path;
-        if ($this->input->get('keyword') != '') {
-            $url_params['term'] = $this->input->get('keyword');
-        }
-        if ($this->input->get('lat') != '' && $this->input->get('long') != '') {
-            $url_params['latitude'] = $this->input->get('lat');
-            $url_params['longitude'] = $this->input->get('long');
-        } else {
-            $url_params['location'] = 'US';
-        }
-        $url .= "?" . http_build_query($url_params);
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization:Bearer ' . $apiKey]);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $result = curl_exec($ch);
-        $arr = json_decode($result, true);
-        if (!empty($arr) && isset($arr['businesses'])) {
-            return $arr['businesses'];
-        } else {
-            return [];
-        }
-//        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//        curl_close($ch);
     }
 
 }

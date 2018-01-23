@@ -35,7 +35,6 @@ $(function () {
             buttons: {
                 sticker: false
             },
-            //            styling:'bootstrap3',
             type: 'error'
         });
     }
@@ -43,6 +42,7 @@ $(function () {
         $('#resetpwd-modal').modal();
     }
     $("#owl-demo").owlCarousel({
+        autoPlay: 3000, // Added to autoplay slides
         navigation: true, // Show next and prev buttons
         slideSpeed: 300,
         paginationSpeed: 400,
