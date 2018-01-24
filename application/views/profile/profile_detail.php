@@ -177,8 +177,7 @@
                                 <g>
                                 </g>
                             </svg></a>
-                        <a href="javascript:void(0)"  onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                                                                                                                                                      viewBox="0 0 112.196 112.196" style="enable-background:new 0 0 112.196 112.196;" xml:space="preserve">
+                        <a href="javascript:void(0)"  onclick="javascript:genericSocialShare('https://plus.google.com/share?url=<?php echo $url; ?>')" title="Google Plus Share"><svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 112.196 112.196" style="enable-background:new 0 0 112.196 112.196;" xml:space="preserve">
                                 <g>
                                     <g>
                                         <circle id="XMLID_30_" style="fill:#DC4E41;" cx="56.098" cy="56.097" r="56.098"/>
@@ -237,7 +236,8 @@
                                 </g>
                                 <g>
                                 </g>
-                            </svg></a>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -258,13 +258,24 @@
                                             <div class="panel-body">
                                                 <?php if (isset($funnel_services['Memorial']) && !empty($funnel_services['Memorial'])) { ?>
                                                     <h5><?php echo $funnel_services['Memorial']['place_name'] ?></h5>
-                                                    <p><strong>Time:</strong> <?php echo isset($funnel_services['Memorial']['time']) && !is_null($funnel_services['Memorial']['time']) ? date('h:i A', strtotime($funnel_services['Memorial']['time'])) : '00:00 AM' ?></p>
-                                                    <p><strong>Date:</strong> (<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('M d, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                    <p><strong>Address:</strong> <?php echo $funnel_services['Memorial']['address'] ?></p>
-                                                    <p><strong>City:</strong> <?php echo $funnel_services['Memorial']['city_name'] ?></p>
-                                                    <p><strong>State:</strong> <?php echo $funnel_services['Memorial']['state_name'] ?></p>
-                                                    <p><strong>Zipcode:</strong> <?php echo $funnel_services['Memorial']['zip'] ?></p>
-                                                <?php } else { ?>
+                                                    <p>
+                                                        <span class="list_content"><strong>Time: </strong><?php echo isset($funnel_services['Memorial']['time']) && !is_null($funnel_services['Memorial']['time']) ? date('h:i A', strtotime($funnel_services['Memorial']['time'])) : '00:00 AM' ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Date: </strong>(<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('M d, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Address: </strong><?php echo $funnel_services['Memorial']['address'] ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>City: </strong><?php echo $funnel_services['Memorial']['city_name'] ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>State: </strong><?php echo $funnel_services['Memorial']['state_name'] ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Zipcode: </strong><?php echo $funnel_services['Memorial']['zip'] ?></span>
+                                                    </p>                                                <?php } else { ?>
                                                     <p class="general-text">Memorial service not available.</p>
                                                 <?php } ?>
                                             </div>
@@ -280,12 +291,24 @@
                                             <div class="panel-body">
                                                 <?php if (isset($funnel_services['Funeral']) && !empty($funnel_services['Funeral'])) { ?>
                                                     <h5><?php echo $funnel_services['Funeral']['place_name'] ?></h5>
-                                                    <p><strong>Time:</strong> <?php echo isset($funnel_services['Funeral']['time']) && !is_null($funnel_services['Funeral']['time']) ? date('h:i A', strtotime($funnel_services['Funeral']['time'])) : '00:00 AM' ?></p>
-                                                    <p><strong>Date: </strong> (<?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('M d, Y', strtotime($funnel_services['Funeral']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                    <p><strong>Address: </strong> <?php echo $funnel_services['Funeral']['address'] ?></p>
-                                                    <p><strong>City: </strong> <?php echo $funnel_services['Funeral']['city_name'] ?></p>
-                                                    <p><strong>State: </strong> <?php echo $funnel_services['Funeral']['state_name'] ?></p>
-                                                    <p><strong>Zipcode: </strong> <?php echo $funnel_services['Funeral']['zip'] ?></p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Time: </strong><?php echo isset($funnel_services['Funeral']['time']) && !is_null($funnel_services['Funeral']['time']) ? date('h:i A', strtotime($funnel_services['Funeral']['time'])) : '' ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Date: </strong><?php echo isset($funnel_services['Funeral']['date']) && !is_null($funnel_services['Funeral']['date']) ? date('M d, Y', strtotime($funnel_services['Funeral']['date'])) : '' ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Address: </strong><?php echo $funnel_services['Funeral']['address'] ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>City: </strong><?php echo $funnel_services['Funeral']['city_name'] ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>State: </strong><?php echo $funnel_services['Funeral']['state_name'] ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Zipcode: </strong><?php echo $funnel_services['Funeral']['zip'] ?></span>
+                                                    </p>
                                                 <?php } else { ?>
                                                     <p class="general-text">Funeral service not available.</p>
                                                 <?php } ?>
@@ -302,12 +325,18 @@
                                             <div class="panel-body">
                                                 <?php if (isset($funnel_services['Burial']) && !empty($funnel_services['Burial'])) { ?>
                                                     <h5><?php echo $funnel_services['Burial']['place_name'] ?></h5>
-                                                    <p><strong>Time:</strong> <?php echo isset($funnel_services['Burial']['time']) && !is_null($funnel_services['Burial']['time']) ? date('h:i A', strtotime($funnel_services['Burial']['time'])) : '00:00 AM' ?></p>
-                                                    <p><strong>Date:</strong> (<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('M d, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</p>
-                                                    <p><strong>Address: </strong> <?php echo $funnel_services['Burial']['address'] ?></p>
-                                                    <p><strong>City:</strong> <?php echo $funnel_services['Burial']['city_name'] ?></p>
-                                                    <p><strong>State:</strong> <?php echo $funnel_services['Burial']['state_name'] ?></p>
-                                                    <p><strong>Zipcode: </strong> <?php echo $funnel_services['Burial']['zip'] ?></p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Time: </strong><?php echo isset($funnel_services['Burial']['time']) && !is_null($funnel_services['Burial']['time']) ? date('h:i A', strtotime($funnel_services['Burial']['time'])) : '00:00 AM' ?></span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Date: </strong>(<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('M d, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</span>
+                                                    </p>
+                                                    <p>
+                                                        <span class="list_content"><strong>Address: </strong><?php echo $funnel_services['Burial']['address'] ?></span>
+                                                    </p>
+                                                    <p><span class="list_content"><strong>City: </strong> <?php echo $funnel_services['Burial']['city_name'] ?></span></p>
+                                                    <p><span class="list_content"><strong>State: </strong><?php echo $funnel_services['Burial']['state_name'] ?></span></p>
+                                                    <p><span class="list_content"><strong>Zipcode:</strong> <?php echo $funnel_services['Burial']['zip'] ?></span></p>
                                                 <?php } else { ?>
                                                     <p class="general-text">Burial service not available.</p>
                                                 <?php } ?>
@@ -573,7 +602,7 @@
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
                                                                                 <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                                                ?>" type="video/mp4">
+                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                                                    ?>" type="video/mp4">
                                                                                                                                                                 </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>

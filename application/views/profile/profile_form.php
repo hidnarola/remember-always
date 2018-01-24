@@ -1,4 +1,7 @@
-<style type="text/css">.input-css.error{border:1px solid red;}</style>
+<style type="text/css">
+    .input-css.error{border:1px solid red !important;}
+    .select2.error{border:1px solid red !important;}
+</style>
 <link href="assets/css/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet"/>
 <script src="assets/js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 <script src="assets/js/moment.min.js"></script>
@@ -442,7 +445,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                                 foreach ($day_arr as $day) {
                                                                     $time_day = date('d', strtotime($value['date']));
                                                                     $selected = '';
-                                                                    if ($day ==$time_day)
+                                                                    if ($day == $time_day)
                                                                         $selected = 'selected';
                                                                     echo "<option value='" . $day . "' $selected>" . $day . "</option>";
                                                                 }

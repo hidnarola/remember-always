@@ -162,3 +162,11 @@ if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
  */
 define('TEST_API_KEY', '724510');
 define('TEST_PASSWORD', 'K8Ew8o');
+
+/*Support email*/
+define('SUPPORT_EMAIL', 'support@rememberalways.com');
+
+/*Constants for captcha validations*/
+define('GOOGLE_SECRET_KEY', '6LfQPEIUAAAAAPnx8oNpNc1Vpz40c_auELJ-N6Q4');
+
+

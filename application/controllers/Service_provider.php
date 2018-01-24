@@ -79,7 +79,8 @@ class Service_provider extends MY_Controller {
         $business_path = $this->config->item('business_path');
 //        $url_params = ['limit' => 10, 'offset' => $start, 'categories' => 'funeralservices'];
         $url_params = ['limit' => 10, 'offset' => $start];
-        $url_params['categories'] = 'funeralservices,synagogues,churches,cremationservices,florists,flowers,catering,eventservices,religiousitems,officiants,organic_stores,mosques,religiousorgs';
+        $url_params['categories'] = 'funeralservices,cremationservices,mortuaryservices,flowers,florists,synagogues,'
+                . 'churches,catering,eventservices,religiousitems,officiants,organic_stores,organdonorservices,donationcenter,religiousorgs,mosques,buddhist_temples,hindu_temples,taoisttemples';
 
         $url = $api_host . $search_path;
         if ($this->input->get('keyword') != '') {

@@ -83,6 +83,19 @@ $(function () {
                 required: true
             }
         },
+        errorPlacement: function (error, element) {
+            if (element.attr("name") == "country") {
+                element.siblings('.select2').addClass('error');
+                error.appendTo(element.parent('.input-wrap'));
+            } else if (element.attr("name") == "state") {
+                element.siblings('.select2').addClass('error');
+                error.appendTo(element.parent('.input-l'));
+            } else if (element.attr("name") == "city") {
+                element.siblings('.select2').addClass('error');
+                error.appendTo(element.parent('.input-r'));
+            } else
+                error.insertAfter(element);
+        }
 
     });
 
@@ -101,6 +114,7 @@ $(function () {
     //-- Validate country,state and city dropdown on change event
     $(".service-city").change(function () {
         $(this).valid();
+        $(this).siblings('.select2').removeClass('error');
     });
 
     $("#fun-fact-form").validate({
@@ -382,6 +396,7 @@ function proceed_step() {
     if (currentTab != 'first-step' && profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
         $('#create_profile_form').valid();
+        showErrorMSg('Please save Basic Info first!');
     } else {
         var profile_process = $('#profile_process').val();
         if (currentTab == 'first-step') {
@@ -558,15 +573,15 @@ function proceed_step() {
                     service_valid = 0;
                 }
                 if ($('#memorial_country').val() == '') {
-                    $('#memorial_country').addClass('error');
+                    $('#memorial_country').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#memorial_state').val() == '') {
-                    $('#memorial_state').addClass('error');
+                    $('#memorial_state').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#memorial_city').val() == '') {
-                    $('#memorial_city').addClass('error');
+                    $('#memorial_city').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#memorial_zip').val() == '') {
@@ -574,7 +589,6 @@ function proceed_step() {
                     service_valid = 0;
                 }
             }
-
             if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_country').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
                 if ($('#funeral_date').val() == '') {
                     $('#funeral_date').addClass('error');
@@ -593,15 +607,15 @@ function proceed_step() {
                     service_valid = 0;
                 }
                 if ($('#funeral_country').val() == '') {
-                    $('#funeral_country').addClass('error');
+                    $('#funeral_country').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#funeral_state').val() == '') {
-                    $('#funeral_state').addClass('error');
+                    $('#funeral_state').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#funeral_city').val() == '') {
-                    $('#funeral_city').addClass('error');
+                    $('#funeral_city').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#funeral_zip').val() == '') {
@@ -628,15 +642,15 @@ function proceed_step() {
                     service_valid = 0;
                 }
                 if ($('#burial_country').val() == '') {
-                    $('#burial_country').addClass('error');
+                    $('#burial_country').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#burial_state').val() == '') {
-                    $('#burial_state').addClass('error');
+                    $('#burial_state').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#burial_city').val() == '') {
-                    $('#burial_city').addClass('error');
+                    $('#burial_city').siblings('.select2').addClass('error');
                     service_valid = 0;
                 }
                 if ($('#burial_zip').val() == '') {
@@ -644,6 +658,7 @@ function proceed_step() {
                     service_valid = 0;
                 }
             }
+
             if (service_valid == 1) {
                 $('.loader').show();
                 $.ajax({
@@ -756,6 +771,8 @@ function preview_profile() {
     if (profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
         $('#create_profile_form').valid();
+        showErrorMSg('Please save Basic Info first!');
+
     } else {
         window.location.href = site_url + 'profile/' + profile_slug;
     }
@@ -770,6 +787,8 @@ function save_finish() {
     if (currentTab != 'first-step' && profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
         $('#create_profile_form').valid();
+        showErrorMSg('Please save Basic Info first!');
+
     } else {
         if ($('#create_profile_form').valid()) {
             $('#profile_process').val(1);
@@ -862,6 +881,8 @@ function publish_profile() {
     if (profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
         $('#create_profile_form').valid();
+        showErrorMSg('Please save Basic Info first!');
+
     } else {
         swal({
             title: "Are you sure?",
@@ -891,105 +912,111 @@ var image_count = 0, video_count = 0;
 $("#gallery").change(function () {
     var dvPreview = $("#selected-preview");
     if (typeof (FileReader) != "undefined") {
-        $($(this)[0].files).each(function (index) {
-            var file = $(this);
-            str = '';
-            if (regex_img.test(file[0].name.toLowerCase())) {
-                //-- check image and video count
-                if (image_count <= max_images_count) {
+        if (profile_id == 0) {
+            $('.nav-tabs a[href="#first-step"]').tab('show');
+            $('#create_profile_form').valid();
+            showErrorMSg('Please save Basic Info first!');
+        } else {
+            $($(this)[0].files).each(function (index) {
+                var file = $(this);
+                str = '';
+                if (regex_img.test(file[0].name.toLowerCase())) {
+                    //-- check image and video count
+                    if (image_count <= max_images_count) {
 
-                    // upload image
-                    var formData = new FormData();
-                    formData.append('profile_id', profile_id);
-                    formData.append('type', 'image');
-                    formData.append('gallery', file[0], file[0].name);
-                    $('.loader').show();
-                    $.ajax({
-                        url: site_url + "profile/upload_gallery",
-                        type: "POST",
-                        data: formData,
-                        dataType: "json",
-                        processData: false, // tell jQuery not to process the data
-                        contentType: false, // tell jQuery not to set contentType
-                        success: function (data) {
-                            $('.loader').hide();
-                            if (data.success == true) {
-                                //-- Remove default preview div
-                                $('#default-preview').remove();
-                                var reader = new FileReader();
+                        // upload image
+                        var formData = new FormData();
+                        formData.append('profile_id', profile_id);
+                        formData.append('type', 'image');
+                        formData.append('gallery', file[0], file[0].name);
+                        $('.loader').show();
+                        $.ajax({
+                            url: site_url + "profile/upload_gallery",
+                            type: "POST",
+                            data: formData,
+                            dataType: "json",
+                            processData: false, // tell jQuery not to process the data
+                            contentType: false, // tell jQuery not to set contentType
+                            success: function (data) {
+                                $('.loader').hide();
+                                if (data.success == true) {
+                                    //-- Remove default preview div
+                                    $('#default-preview').remove();
+                                    var reader = new FileReader();
 
-                                reader.onload = function (e) {
-                                    str = '<li><div class="upload-wrap"><span>';
-                                    str += '<a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="image"><img src="' + e.target.result + '"></a>';
-                                    str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
+                                    reader.onload = function (e) {
+                                        str = '<li><div class="upload-wrap"><span>';
+                                        str += '<a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="image"><img src="' + e.target.result + '"></a>';
+                                        str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
+                                        str += delete_str;
+                                        str += '</a></div></li>';
+                                        dvPreview.append(str);
+                                    }
+                                    reader.readAsDataURL(file[0]);
+                                } else {
+                                    showErrorMSg(data.error);
+                                }
+                            }
+                        });
+                    } else {
+                        showErrorMSg("Limit is exceeded to upload images");
+                    }
+                    image_count++;
+
+                } else if (regex_video.test(file[0].name.toLowerCase())) {
+                    if (video_count <= max_videos_count) {
+                        // upload video
+                        var videoData = new FormData();
+                        videoData.append('profile_id', profile_id);
+                        videoData.append('type', 'video');
+                        videoData.append('gallery', file[0], file[0].name);
+                        $('.loader').show();
+                        $.ajax({
+                            url: site_url + "profile/upload_gallery",
+                            type: "POST",
+                            data: videoData,
+                            dataType: "json",
+                            processData: false, // tell jQuery not to process the data
+                            contentType: false, // tell jQuery not to set contentType
+                            success: function (data) {
+                                $('.loader').hide();
+                                if (data.success == true) {
+                                    $('#default-preview').remove();
+                                    str = '<li><div class="upload-wrap"><span id="upload_gallery_' + index + '">';
+                                    str += '<video id="video_' + index + '" style="width:100%;height:100%;visibility:hidden;" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
+                                    str += '</span>';
+                                    str += '<span class="gallery-play-btn"><a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="iframe"><img src="assets/images/play.png" alt=""></a></span>';
+                                    str += '<a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
                                     str += delete_str;
                                     str += '</a></div></li>';
                                     dvPreview.append(str);
+                                    var video = document.querySelector('#video_' + index);
+                                    video.addEventListener('loadeddata', function () {
+                                        var canvas = document.createElement("canvas");
+                                        canvas.width = video.videoWidth;
+                                        canvas.height = video.videoHeight;
+                                        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                                        var img = document.createElement("img");
+                                        img.src = canvas.toDataURL();
+                                        $('#upload_gallery_' + index).prepend(img);
+                                    }, false);
+                                } else {
+                                    showErrorMSg(data.error);
                                 }
-                                reader.readAsDataURL(file[0]);
-                            } else {
-                                showErrorMSg(data.error);
                             }
-                        }
-                    });
-                } else {
-                    showErrorMSg("Limit is exceeded to upload images");
-                }
-                image_count++;
+                        });
 
-            } else if (regex_video.test(file[0].name.toLowerCase())) {
-                if (video_count <= max_videos_count) {
-                    // upload video
-                    var videoData = new FormData();
-                    videoData.append('profile_id', profile_id);
-                    videoData.append('type', 'video');
-                    videoData.append('gallery', file[0], file[0].name);
-                    $('.loader').show();
-                    $.ajax({
-                        url: site_url + "profile/upload_gallery",
-                        type: "POST",
-                        data: videoData,
-                        dataType: "json",
-                        processData: false, // tell jQuery not to process the data
-                        contentType: false, // tell jQuery not to set contentType
-                        success: function (data) {
-                            $('.loader').hide();
-                            if (data.success == true) {
-                                $('#default-preview').remove();
-                                str = '<li><div class="upload-wrap"><span id="upload_gallery_' + index + '">';
-                                str += '<video id="video_' + index + '" style="width:100%;height:100%;visibility:hidden;" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
-                                str += '</span>';
-                                str += '<span class="gallery-play-btn"><a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="iframe"><img src="assets/images/play.png" alt=""></a></span>';
-                                str += '<a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
-                                str += delete_str;
-                                str += '</a></div></li>';
-                                dvPreview.append(str);
-                                var video = document.querySelector('#video_' + index);
-                                video.addEventListener('loadeddata', function () {
-                                    var canvas = document.createElement("canvas");
-                                    canvas.width = video.videoWidth;
-                                    canvas.height = video.videoHeight;
-                                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                                    var img = document.createElement("img");
-                                    img.src = canvas.toDataURL();
-                                    $('#upload_gallery_' + index).prepend(img);
-                                }, false);
-                            } else {
-                                showErrorMSg(data.error);
-                            }
-                        }
-                    });
+                    } else {
+                        showErrorMSg("Limit is exceeded to upload videos");
+                    }
+                    video_count++;
 
                 } else {
-                    showErrorMSg("Limit is exceeded to upload videos");
+                    showErrorMSg(file[0].name + " is not a valid image/video file.");
                 }
-                video_count++;
-
-            } else {
-                showErrorMSg(file[0].name + " is not a valid image/video file.");
-            }
-        });
+            });
+        }
     } else {
         showErrorMSg("This browser does not support HTML5 FileReader.");
     }
@@ -1022,7 +1049,7 @@ function delete_media(obj, data) {
 function add_funfact() {
     if (profile_id == 0) {
         $('#funfact-modal').modal('hide');
-        showErrorMSg('Please fill Basic info first and save!');
+        showErrorMSg('Please save Basic Info first!');
         $('.nav-tabs a[href="#first-step"]').tab('show');
     } else {
         if ($('#fun-fact-form').valid()) {
@@ -1284,7 +1311,6 @@ function delete_facts(obj, data) {
             if (data.success == true) {
                 $(obj).parent('.input-wrap-div').remove();
                 facts_count--;
-                console.log('facts count is', facts_count);
                 if (facts_count == 0) {
                     $('#third-step').find('.step-form').addClass('default-fact-empty');
                 }
@@ -1308,7 +1334,7 @@ function findProperty(obj, key) {
 function add_affiliation() {
     if (profile_id == 0) {
         $('#affiliation-modal').modal('hide');
-        showErrorMSg('Please fill Basic info first!');
+        showErrorMSg('Please save Basic info first!');
         $('.nav-tabs a[href="#first-step"]').tab('show');
     } else {
         if ($('#affiliation-form').valid()) {
@@ -1383,27 +1409,33 @@ function delete_affiliation(obj, data, type) {
 //-- Forth Timeline step
 // Add timeline button
 $(document).on('click', '.add_timeline_btn', function () {
-    if ($('#timeline-form').valid()) {
-        if (validate_timeline_date()) {
-            timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
-            timeline_div.find('input[name="timelineid[]"]').val('');
-            timeline_div.find('input[name="title[]"]').val('');
-            timeline_div.find('input[name="day[]"]').val('');
-            timeline_div.find('input[name="month[]"]').val('');
-            timeline_div.find('input[name="year[]"]').val('');
-            timeline_div.find('textarea[name="details[]"]').val('');
-            timeline_div.find('input[name="life_pic[]"]').val('');
-            timeline_div.find('.select-file_up_btn').html("Upload Picture or Video? <span>Select</span>");
-            $('.timeline-div').append(timeline_div);
-            $(this).html('<i class="fa fa-trash"></i> Remove');
-            $(this).removeClass('add_timeline_btn');
-            $(this).addClass('remove_timeline_btn text-danger mb-20');
-            //-- Initialize datepicker
-            $('.date-picker').datepicker({
-                format: "mm/dd/yyyy",
-                endDate: "date()",
-                autoclose: true,
-            });
+    if (profile_id == 0) {
+        $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('#create_profile_form').valid();
+        showErrorMSg('Please save Basic Info first!');
+    } else {
+        if ($('#timeline-form').valid()) {
+            if (validate_timeline_date()) {
+                timeline_div = $(this).parent('.step-06-l').parent('.step-06').clone();
+                timeline_div.find('input[name="timelineid[]"]').val('');
+                timeline_div.find('input[name="title[]"]').val('');
+                timeline_div.find('input[name="day[]"]').val('');
+                timeline_div.find('input[name="month[]"]').val('');
+                timeline_div.find('input[name="year[]"]').val('');
+                timeline_div.find('textarea[name="details[]"]').val('');
+                timeline_div.find('input[name="life_pic[]"]').val('');
+                timeline_div.find('.select-file_up_btn').html("Upload Picture or Video? <span>Select</span>");
+                $('.timeline-div').append(timeline_div);
+                $(this).html('<i class="fa fa-trash"></i> Remove');
+                $(this).removeClass('add_timeline_btn');
+                $(this).addClass('remove_timeline_btn text-danger mb-20');
+                //-- Initialize datepicker
+                $('.date-picker').datepicker({
+                    format: "mm/dd/yyyy",
+                    endDate: "date()",
+                    autoclose: true,
+                });
+            }
         }
     }
 });
@@ -1507,6 +1539,8 @@ $(document).on('change', 'input[name="year[]"],input[name="month[]"],input[name=
 // country dropdown change event
 $(document).on('change', '.service-country', function () {
     $(this).valid();
+    $(this).siblings('.select2').removeClass('error');
+
     country_val = $(this).val();
     country_id = $(this).attr('id');
     state_id = city_id = '';
@@ -1546,6 +1580,8 @@ $(document).on('change', '.service-country', function () {
 // state dropdown change event
 $(document).on('change', '.service-state', function () {
     $(this).valid();
+    $(this).siblings('.select2').removeClass('error');
+
     state_val = $(this).val();
     state_id = $(this).attr('id');
     city_id = '';
@@ -1580,6 +1616,15 @@ $(document).on('change', '.service-state', function () {
 //Textbox change event remove error class
 $(document).on('change', '#memorial_date,#memorial_time,#funeral_date,#funeral_time,#burial_date,#burial_time,#memorial_place,#funeral_place,#burial_place,#burial_address,#funeral_address,#memorial_address,#memorial_country,#memorial_state,#memorial_city,#memorial_zip,#funeral_country,#funeral_state,#funeral_city,#funeral_zip,#burial_country,#burial_state,#burial_city,#burial_zip,#fundraiser_title,#fundraiser_details', function () {
     $(this).removeClass('error');
+    if ($(this).hasClass('service-country')) {
+        $(this).siblings('select2').removeClass('error');
+    }
+    if ($(this).hasClass('service-state')) {
+        $(this).siblings('select2').removeClass('error');
+    }
+    if ($(this).hasClass('service-city')) {
+        $(this).siblings('select2').removeClass('error');
+    }
 });
 
 //Tribute Fund Raiser Profile
@@ -1700,8 +1745,6 @@ $('#fundraiser_goal').change(function () {
     }
 });
 function isValidDate(day, month, year) {
-    console.log('year is ', year);
-    console.log('year lenght is ', year.length);
     var monthLength = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 // Adjust for leap years

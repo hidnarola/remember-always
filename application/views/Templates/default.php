@@ -69,7 +69,7 @@
         <script src="assets/js/jquery.creditCardValidator.js"></script> 
         <script src="assets/js/responsive-tabs.js"></script>  
         <script src="assets/js/custom.js"></script> 
-
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <?php
     $body_class = '';

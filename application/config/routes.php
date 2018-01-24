@@ -144,8 +144,9 @@ $route['service_provider/index_old'] = 'service_provider/index_old';
 $route['service_provider/load_providers'] = 'service_provider/load_providers';
 $route['service_provider/load_providers/(:any)'] = 'service_provider/load_providers/$1';
 $route['service_provider/load_providers/(:any)/(:any)'] = 'service_provider/load_providers/$1/$2';
-$route['service_provider/view/(:any)'] = 'service_provider/view/$1';
+$route['service_provider/add'] = 'service_provider/add';
 $route['service_provider/add/(:any)'] = 'service_provider/add/$1';
+$route['service_provider/view/(:any)'] = 'service_provider/view/$1';
 $route['service_provider/(:any)'] = 'service_provider/index/$1';
 
 
