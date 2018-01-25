@@ -155,7 +155,7 @@
     function initialize() {
         geocoder = new google.maps.Geocoder();
     }
-    getLocation();
+//    getLocation();
 
     var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
     var empty = <?php echo $empty ?>;
