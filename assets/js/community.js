@@ -114,7 +114,19 @@ $(function () {
             }
         });
     });
+//-- On answer box click event
+    $(document).on('click', '.question_answers', function () {
+        obj = $(this);
+        question = obj.attr('data-question');
+        if (!$(this).hasClass('clicked')) {
+            obj.addClass('clicked');
+//            show_answers(question, obj);
+        } else {
+            $('#comment_' + question).hide();
+            obj.removeClass('clicked');
+        }
 
+    });
 
     /** Question detail page **/
     $(document).on('click', '#answer', function () {
@@ -160,6 +172,7 @@ $(function () {
         }
 
     });
+
     //-- Post comment to particular answers
     $(document).on('click', '.post_comment', function () {
         if (logged_in == 1) {
@@ -233,7 +246,7 @@ function show_comments(answer, obj) {
                     str += '<div class="comments-div-wrap">';
                     str += '<span class="commmnet-postted-img">';
                     if (value.profile_image != null) {
-                        if (value.facebook_id != '' || value.google_id != '') {
+                        if (value.facebook_id != null || value.google_id != null) {
                             str += '<a class="fancybox" href="' + value.profile_image + '" data-fancybox-group="gallery" ><img src="' + value.profile_image + '" class="img-responsive content-group" alt=""></a>';
                         } else {
                             str += '<a class="fancybox" href="' + user_image + value.profile_image + '" data-fancybox-group="gallery" ><img src="' + user_image + value.profile_image + '" class="img-responsive content-group" alt=""></a>';
@@ -255,6 +268,59 @@ function show_comments(answer, obj) {
                 $('#comment_' + answer).show();
                 $('#comment_' + answer).html(str);
 
+            } else {
+                showErrorMSg(data.error);
+            }
+        }
+    });
+}
+function show_answers(question, obj) {
+    $('.loader').show();
+    $.ajax({
+        url: site_url + "community/get_answers",
+        type: "POST",
+        data: {question: question},
+        dataType: "json",
+        async: false,
+        success: function (data) {
+            $('.loader').hide();
+            if (data.success == true) {
+                total_answers = data.answers.length;
+                comment_label = '<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_answers + ' Comment';
+                if (total_answers > 1) {
+                    comment_label = '<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_answers + ' Comments';
+                }
+                obj.html(comment_label);
+                if (data.answers.length > 0) {
+                    str = '';
+                    str += '<div class="comments-div">';
+                    str += '<ul>';
+                    $.each(data.answers, function (index, value) {
+                        str += '<li>';
+                        str += '<div class="comments-div-wrap">';
+                        str += '<span class="commmnet-postted-img">';
+                        if (value.profile_image != null) {
+                            if (value.facebook_id != null || value.google_id != null) {
+                                str += '<a class="fancybox" href="' + value.profile_image + '" data-fancybox-group="gallery" ><img src="' + value.profile_image + '" class="img-responsive content-group" alt=""></a>';
+                            } else {
+                                str += '<a class="fancybox" href="' + user_image + value.profile_image + '" data-fancybox-group="gallery" ><img src="' + user_image + value.profile_image + '" class="img-responsive content-group" alt=""></a>';
+                            }
+                        }
+                        str += '</span>';
+                        split_date = value.created_at.split(' ');
+                        splited_date = split_date[0].split('-');
+                        splited_time = split_date[1].split(':');
+                        posted_time = timeDifference(new Date(cur_year, cur_month, cur_day, cur_hour, cur_min, cur_s), new Date(splited_date[0], splited_date[1], splited_date[2], splited_time[0], splited_time[1], splited_time[2]));
+                        str += '<h3>' + value.firstname + ' ' + value.lastname + '<small>' + posted_time + '</small></h3>';
+                        str += '<p>' + value.answer + '</p>'
+                        str += '</div>';
+                        str += '</li>';
+                    });
+                    str += '</ul>';
+                    str += '</div>';
+                    $('#comment_' + question).show();
+                    $('#comment_' + question).html(str);
+                }
             } else {
                 showErrorMSg(data.error);
             }

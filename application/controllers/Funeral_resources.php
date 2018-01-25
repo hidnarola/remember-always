@@ -28,10 +28,10 @@ class Funeral_resources extends MY_Controller {
     /**
      * Display funeral resource page
      */
-    public function planing() {
-        $data['title'] = 'Remember Always | Funeral Planing';
-        $data['breadcrumb'] = ['title' => 'Funeral Planing', 'links' => [['link' => site_url(), 'title' => 'Home']]];
-        $this->template->load('default', 'resources/funeral_planing', $data);
+    public function planning() {
+        $data['title'] = 'Remember Always | Funeral Planning';
+        $data['breadcrumb'] = ['title' => 'Funeral Planning', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $this->template->load('default', 'resources/funeral_planning', $data);
     }
 
 }

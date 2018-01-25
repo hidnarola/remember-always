@@ -1,13 +1,13 @@
 <div class="common-page">
     <div class="container">
         <div class="common-head">
-            <h2 class="h2title">Funeral Planing</h2>
+            <h2 class="h2title">Funeral Planning</h2>
         </div>
         <div class="common-body">
             <div class="funeral-l">
                 <div class="profile-box">
-                    <h2>Funeral Planing Checklist</h2>
-                    <p>Planing a Funeral can be overwhelming. The Below information will guide you through the process, and provide access to resources at each step.</p>
+                    <h2>Funeral Planning Checklist</h2>
+                    <p>Planning a Funeral can be overwhelming. The Below information will guide you through the process, and provide access to resources at each step.</p>
 
                     <div class="according-tab">
                         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -300,7 +300,7 @@
             </div>
             <div class="funeral-r">
                 <div class="profile-box fun-facts">
-                    <h2>Service Providers Doirectory</h2>
+                    <h2>Service Providers Directory</h2>
                     <div class="profile-box-body">
                         <p>Find service providers in your area, such as, funeral homes, crematories, florists, caterers, attorneys, tax advisors, and more.</p>
                         <a href="<?php echo site_url('service_provider') ?>" class="btn-link plannig-service-btn">Find Service Providers</a>

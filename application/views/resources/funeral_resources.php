@@ -10,7 +10,7 @@
                     <div class="profile-box-body profile-box-body-change">
                         <ul class="ul_list">
                             <li>
-                                <h6><a href="<?php echo site_url('funeral_planing') ?>">Funeral Planning Checklist</a></h6>	
+                                <h6><a href="<?php echo site_url('funeral_planning') ?>">Funeral Planning Checklist</a></h6>	
                                 <p>Step by step guide to help you through the process.</p>
                             </li>
                             <li><h6><a href="">Tips for paying a funeral</a></h6></li>

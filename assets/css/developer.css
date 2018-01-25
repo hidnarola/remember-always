@@ -76,3 +76,6 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .helpful-l ul li:nth-child(2) svg {fill: rgba(255,255,255,.1);}
 .records_info{float: left;padding: 10px;color: #975979;font-weight: bold;}
 .data_head a {color: #975979}
+/*25-1-2018 added cursor pointer to comment section*/
+.spn_comment{cursor: pointer;}
+.community_pagination{float: right;}

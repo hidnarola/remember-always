@@ -92,7 +92,9 @@
                                                 </small>
                                             </h3>
                                             <p><?php echo $answer['answer'] ?></p>
-                                            <div class="comment_tag answer_comments cl_black" data-answer="<?php echo $answer['id'] ?>"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $answer['comments'] ?> Comment<?php if ($answer['comments'] > 1) echo 's' ?></div>
+                                            <div class="comment_tag cl_black">
+                                                <span class="answer_comments spn_comment" data-answer="<?php echo $answer['id'] ?>"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $answer['comments'] ?> Comment<?php if ($answer['comments'] > 1) echo 's' ?></span>
+                                            </div>
                                             <div class="inner_cooment_div" id="comment_<?php echo $answer['id'] ?>" style="display: none">
                                                 <div class="comments-div">
                                                     <ul>
@@ -143,8 +145,6 @@
             </div>
         </div>
     </div>
-    <li class="right_msg" data-index="1">121</li>
-    <li class="right_msg" data-index="2">1324</li>
 </div>
 
 <?php
@@ -153,7 +153,7 @@ if ($this->is_user_loggedin) {
     $loggend_in = 1;
 }
 ?>
-<script>
+<script type="text/javascript">
     var current_url = '<?php echo isset($url) ? $url : '' ?>';
     var user_image = '<?php echo base_url(USER_IMAGES) ?>';
     var logged_in = <?php echo $loggend_in ?>;

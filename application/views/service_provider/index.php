@@ -108,10 +108,7 @@
                     <div class="paggination-wrap">
                         <?php
                         if ($total > 0) {
-                            $end = $start + 10;
-                            if ($end > $total) {
-                                $end = $total;
-                            }
+                            $end = $start + count($services);
                             ?>
                             <div class="text-right">
                                 <span class="records_info">Showing <?php echo $start + 1; ?>-<?php echo $end; ?> of <?php echo ($total > 10) ? $total : count($services); ?> Records</span>
@@ -121,11 +118,13 @@
                     </div>
                 </div>
                 <div class="col_d_right">
-                    <div class="map_img">
-                        <div id="map_wrapper">
-                            <div id="map_canvas" class="mapping"></div>
+                    <?php if ($total > 0) { ?>
+                        <div class="map_img">
+                            <div id="map_wrapper">
+                                <div id="map_canvas" class="mapping"></div>
+                            </div>
                         </div>
-                    </div>
+                    <?php } ?>
                     <div class="adv_div"><img src="assets/images/blue_adv.png"></div>
                     <div class="adv_div"><img src="assets/images/add_blue.png"></div>
                 </div>
@@ -133,10 +132,33 @@
         </div>
     </div>
 </div>
+<div id="demo"></div>
+<?php $empty = count($services); ?>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
-    var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+    function geoSuccess(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
+        alert("lat:" + lat + " lng:" + lng);
+    }
+    function geoError() {
+        alert("Geocoder failed.");
+    }
+    var geocoder;
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+    }
+    getLocation();
 
+    var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
+    var empty = <?php echo $empty ?>;
     var input = (document.getElementById('location'));
     var options = {
         componentRestrictions: {country: "us"}
@@ -149,6 +171,8 @@
         var place = autocomplete.getPlace();
         if (!place.geometry) {
             return;
+            $('#input-latitude').val('');
+            $('#input-latitude').val('');
         }
         $('#input-latitude').val(place.geometry.location.lat());
         $('#input-longitude').val(place.geometry.location.lng());
@@ -159,7 +183,9 @@
          var script = document.createElement('script');
          script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
          document.body.appendChild(script);*/
-        initialize();
+        if (empty != 0) {
+            initialize();
+        }
     });
 
     function initialize() {
@@ -223,28 +249,23 @@
         }
     });
     $(document).on('click', '#provider_srch_btn', function () {
-        $('#provider_form').submit();
-//        submit_form();
+//        $('#provider_form').submit();
+        submit_form();
     });
     function submit_form() {
         var location = $('#location').val();
         var keyword = $('#keyword').val();
         if (location == '' && keyword == '') {
             window.location.href = site_url + 'service_provider';
-        } else {
-            var url = '';
-            if (location != '') {
-                url += '?location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
-            }
-            if (keyword != '') {
-                if (url != '')
-                    url += '&keyword=' + keyword;
-                else
-                    url += '?keyword=' + keyword;
-            }
-            window.location.href = site_url + 'service_provider' + url;
+        } else if (location != '' && keyword != '') {
+            window.location.href = site_url + 'service_provider?keyword=' + keyword + '&location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
+        } else if (location != '') {
+            window.location.href = site_url + 'service_provider?location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
+        } else if (keyword != '') {
+            window.location.href = site_url + 'service_provider?keyword=' + keyword;
         }
         return false;
     }
+
 
 </script>

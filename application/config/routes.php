@@ -130,12 +130,13 @@ $route['community/get_question'] = 'community/get_question';
 $route['community/check_question'] = 'community/check_question';
 $route['community/check_question/(:any)'] = 'community/check_question/$1';
 $route['community/add_answers'] = 'community/add_answers';
+$route['community/get_answers'] = 'community/get_answers';
 $route['community/get_comments'] = 'community/get_comments';
 $route['community/post_comment'] = 'community/post_comment';
 $route['community/(:any)'] = 'community/index/$1';
 
 /* Funeral Planning routes */
-$route['funeral_planing'] = 'funeral_resources/planing';
+$route['funeral_planning'] = 'funeral_resources/planning';
 
 /* Service Provider listing page */
 $route['service_provider/get_yelp_businesses'] = 'service_provider/get_yelp_businesses';
@@ -147,6 +148,7 @@ $route['service_provider/load_providers/(:any)/(:any)'] = 'service_provider/load
 $route['service_provider/add'] = 'service_provider/add';
 $route['service_provider/add/(:any)'] = 'service_provider/add/$1';
 $route['service_provider/view/(:any)'] = 'service_provider/view/$1';
+$route['service_provider/test'] = 'service_provider/test';
 $route['service_provider/(:any)'] = 'service_provider/index/$1';
 
 

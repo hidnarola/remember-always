@@ -87,7 +87,9 @@
 
                             <div class="comment_tag cl_black">
                                 <span class="que_author"><?php echo "By : " . $question['firstname'] . ' ' . $question['lastname'] ?></span>
-                                <i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $question['answers'] ?> Answer<?php if ($question['answers'] > 1) echo "s"; ?>
+                                <span class="spn_comment question_answers" data-question="<?php echo $question['id'] ?>"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $question['answers'] ?> Answer<?php if ($question['answers'] > 1) echo "s"; ?></span>
+                            </div>
+                            <div class="inner_cooment_div" id="comment_<?php echo $question['id'] ?>" style="display: none">
                             </div>
                             <?php if ($question['user_id'] == $this->user_id && $question['answers'] == 0) { ?>
                                 <div class="user-update community-action-btn">
@@ -103,8 +105,10 @@
                 }
                 ?>
                 <?php if (!empty($links)) { ?>
-                    <div class="paggination-wrap">
-                        <?php echo $links ?>
+                    <div class="community_pagination">
+                        <div class="paggination-wrap">
+                            <?php echo $links ?>
+                        </div>
                     </div>
                 <?php } ?>
             </div>
@@ -119,4 +123,22 @@
         </div>
     </div>
 </div>
+
+<?php
+$loggend_in = 0;
+if ($this->is_user_loggedin) {
+    $loggend_in = 1;
+}
+?>
+<script type="text/javascript">
+    var current_url = '<?php echo isset($url) ? $url : '' ?>';
+    var user_image = '<?php echo base_url(USER_IMAGES) ?>';
+    var logged_in = <?php echo $loggend_in ?>;
+    var cur_year = '<?php echo date('Y') ?>';
+    var cur_month = '<?php echo date('m') ?>';
+    var cur_day = '<?php echo date('d') ?>';
+    var cur_hour = '<?php echo date('H') ?>';
+    var cur_min = '<?php echo date('i') ?>';
+    var cur_s = '<?php echo date('s') ?>';
+</script>
 <script src="assets/js/community.js"></script>

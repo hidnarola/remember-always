@@ -18,7 +18,7 @@ class Community_model extends MY_Model {
      * @author : AKK
      */
     public function get_results($type = 'result', $start = 0, $offset = 5) {
-        $this->db->select('q.title,q.user_id,q.slug,q.description,u.firstname,u.lastname,u.facebook_id,u.google_id,u.profile_image,IF(ans.answers IS NULL,0,ans.answers) answers,q.created_at');
+        $this->db->select('q.id,q.title,q.user_id,q.slug,q.description,u.firstname,u.lastname,u.facebook_id,u.google_id,u.profile_image,IF(ans.answers IS NULL,0,ans.answers) answers,q.created_at');
         $this->db->join('(SELECT count(id) as answers,question_id FROM ' . TBL_ANSWERS . ' WHERE is_delete=0 GROUP BY question_id) ans', 'q.id=ans.question_id', 'left');
         $this->db->join(TBL_USERS . ' u', 'q.user_id=u.id', 'left');
 

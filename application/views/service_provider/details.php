@@ -67,7 +67,7 @@
                     <h6 class="srvs-contact"><strong>City :</strong> <a><?php echo isset($provider_data['city_name']) ? $provider_data['city_name'] : '' ?></a></h6>
                     <h6 class="srvs-contact"><strong>Zip Code :</strong> <a><?php echo isset($provider_data['zipcode']) ? $provider_data['zipcode'] : '' ?></a></h6>
                     <h6 class="srvs-contact"><strong>Contact :</strong> <a><?php echo isset($provider_data['phone_number']) ? $provider_data['phone_number'] : '' ?></a></h6>
-                    <h6 ><strong>Site :</strong> <a href="<?php echo isset($provider_data['website_url']) ? $provider_data['website_url'] : '' ?>"><?php echo isset($provider_data['website_url']) ? $provider_data['website_url'] : '' ?></a></h6>
+                    <h6><strong>Site :</strong> <a href="<?php echo isset($provider_data['website_url']) ? $provider_data['website_url'] : '' ?>"><?php echo isset($provider_data['website_url']) ? $provider_data['website_url'] : '' ?></a></h6>
                 </div>
             </div>
         </div>

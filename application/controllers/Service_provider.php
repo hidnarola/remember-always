@@ -27,7 +27,7 @@ class Service_provider extends MY_Controller {
             $display_msg_first = 'Showing results';
 
             $display_msg = ' for <b>' . $this->input->get('keyword') . '</b>';
-            $page_config['suffix'] = 'keyword=' . $this->input->get('keyword') . '&location=' . $this->input->get('location');
+            $page_config['suffix'] = '?keyword=' . $this->input->get('keyword') . '&location=' . $this->input->get('location') . '&lat=' . $this->input->get('lat') . '&long=' . $this->input->get('long');
 
             if ($this->input->get('location') != '') {
                 $display_msg .= ' near <span>' . $this->input->get('location') . '</span>';
@@ -44,25 +44,63 @@ class Service_provider extends MY_Controller {
         }
 
         $services = $this->get_yelp_businesses($start);
-        if (!empty($services)) {
-            $page_config['total_rows'] = $services['total'];
+        $data['services'] = [];
+        if (!empty($services) && !isset($services['error'])) {
+            $total_count = ($services['total'] > 1000) ? 1000 : $services['total'];
+            $page_config['total_rows'] = $total_count;
+            $data['services'] = $services['businesses'];
         } else {
             $page_config['total_rows'] = 0;
         }
         $this->pagination->initialize($page_config);
 
         $data['links'] = $this->pagination->create_links();
-        $data['services'] = $services['businesses'];
-        $data['total'] = $services['total'];
-        if ($services['total'] == 0) {
+        $data['total'] = $total_count;
+        if ($total_count == 0) {
             $final_msg = 'No Results' . $display_msg;
         } else {
             $final_msg = $display_msg_first . $display_msg;
         }
         $data['display_msg'] = $final_msg;
-        $data['title'] = 'Remember Always | Services Provider Directory';
-        $data['breadcrumb'] = ['title' => 'Services Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $data['title'] = 'Remember Always | Service Providers Directory';
+        $data['breadcrumb'] = ['title' => 'Service Providers Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'service_provider/index', $data);
+    }
+
+    public function test() {
+        $this->config->load('yelp');
+
+        $apiKey = $this->config->item('yelp_api');
+        $api_host = $this->config->item('api_host');
+        $search_path = $this->config->item('search_path');
+        $business_path = $this->config->item('business_path');
+//        $url_params = ['limit' => 10, 'offset' => $start, 'categories' => 'funeralservices'];
+        $url_params = ['limit' => 10];
+        $url_params['categories'] = 'funeralservices,cremationservices,mortuaryservices,flowers,florists,synagogues,'
+                . 'churches,catering,eventservices,religiousitems,officiants,organic_stores,organdonorservices,donationcenter,religiousorgs,mosques,buddhist_temples,hindu_temples,taoisttemples';
+
+        $url = $api_host . $search_path;
+        if ($this->input->get('keyword') != '') {
+            $url_params['term'] = $this->input->get('keyword');
+        }
+        if ($this->input->get('lat') != '' && $this->input->get('long') != '') {
+            $url_params['latitude'] = $this->input->get('lat');
+            $url_params['longitude'] = $this->input->get('long');
+        } else {
+            $url_params['location'] = 'US';
+        }
+        $url .= "?" . http_build_query($url_params);
+        echo $url;
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization:Bearer ' . $apiKey]);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $result = curl_exec($ch);
+        $arr = json_decode($result, true);
+        if (!empty($arr)) {
+            p($arr, 1);
+        } else {
+            return [];
+        }
     }
 
     /**
@@ -93,6 +131,7 @@ class Service_provider extends MY_Controller {
             $url_params['location'] = 'US';
         }
         $url .= "?" . http_build_query($url_params);
+//        echo $url; 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization:Bearer ' . $apiKey]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -115,8 +154,8 @@ class Service_provider extends MY_Controller {
         $data['service_categories'] = $service_categories;
         $data['services'] = $this->load_providers(0, true);
 
-        $data['title'] = 'Remember Always | Services Provider Directory';
-        $data['breadcrumb'] = ['title' => 'Services Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $data['title'] = 'Remember Always | Service Providers Directory';
+        $data['breadcrumb'] = ['title' => 'Service Providers Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'service_provider/index_old', $data);
     }
 
@@ -158,7 +197,7 @@ class Service_provider extends MY_Controller {
             } else {
                 custom_show_404();
             }
-            $data['title'] = 'Services Provider Directory';
+            $data['title'] = 'Service Providers Directory';
             $data['breadcrumb'] = ['title' => 'Post Service Provider Listing', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('service_provider'), 'title' => 'Service Provider Listing']]];
             $this->template->load('default', 'service_provider/details', $data);
         } else {

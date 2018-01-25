@@ -248,6 +248,25 @@ class Community extends MY_Controller {
         echo json_encode($data);
         exit;
     }
+    /**
+     * Ajax call to this function get answers of particular question
+     * @author KU
+     */
+    public function get_answers() {
+        $id = $this->input->post('question');
+        $question = $this->community_model->sql_select(TBL_QUESTIONS, 'id,title,created_at', ['where' => array('id' => $id, 'is_delete' => 0)], ['single' => true]);
+        if (!empty($question)) {
+            $answers = $this->community_model->sql_select(TBL_ANSWERS . ' a', 'a.answer,a.created_at,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id', ['where' => array('a.question_id' => $id, 'a.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=a.user_id')], 'order_by' => 'a.created_at DESC']);
+            $data['answers'] = $answers;
+            $data['question'] = $question;
+            $data['success'] = true;
+        } else {
+            $data['success'] = false;
+            $data['error'] = 'something went wrong pelase try again!';
+        }
+        echo json_encode($data);
+        exit;
+    }
 
     /**
      * Post comment functionality

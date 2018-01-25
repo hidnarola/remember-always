@@ -42,11 +42,13 @@ $(function () {
         $('#resetpwd-modal').modal();
     }
     $("#owl-demo").owlCarousel({
-        autoPlay: 3000, // Added to autoplay slides
+        autoPlay: 6000, // Added to autoplay slides
         navigation: true, // Show next and prev buttons
         slideSpeed: 300,
         paginationSpeed: 400,
-        singleItem: true
+        singleItem: true,
+        rewindNav: true,
+        rewindSpeed: 0
     });
     $("#testimonial").owlCarousel({
         autoPlay: 3000,

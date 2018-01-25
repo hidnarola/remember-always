@@ -192,35 +192,96 @@ class Search_model extends MY_Model {
                 }
             }
         } else {
-            $this->db->select('slug,CONCAT(firstname," ",lastname) as name,profile_image as image,life_bio as description,"profile" as type,cn.name as country,st.name as state,c.name as city');
-            $this->db->where(['is_delete' => 0, 'is_published' => 1]);
+            $where_profile = $where_provider = $where_affiliation = $where_blog = '';
+            $location_profile = $location_provider = $location_affiliation = '';
             if ($keyword != '') {
-                $this->db->where('(firstname LIKE ' . $this->db->escape('%' . $keyword . '%') .
-                        ' OR lastname LIKE ' . $this->db->escape('%' . $keyword . '%') .
-                        ' OR CONCAT(firstname," ",lastname) LIKE ' . $this->db->escape('%' . $keyword . '%') .
-                        ' OR life_bio LIKE ' . $this->db->escape('%' . $keyword . '%') .
-                        ')');
+                $where_profile = ' AND (p.firstname LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ' OR p.lastname LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ' OR CONCAT(p.firstname," ",p.lastname) LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ' OR p.life_bio LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ')';
+                $where_provider = ' AND (sp.name LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ' OR sp.description LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ')';
+                $where_affiliation = ' AND (a.name LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ' OR a.description LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ')';
+                $where_blog = ' AND (b.title LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ' OR b.description LIKE ' . $this->db->escape('%' . $keyword . '%') .
+                        ')';
             }
-            $this->db->join(TBL_COUNTRY . ' as cn', 'p.country=cn.id', 'left');
-            $this->db->join(TBL_STATE . ' as st', 'p.state=st.id', 'left');
-            $this->db->join(TBL_CITY . ' as c', 'p.city=c.id', 'left');
-
             if ($location != '') {
-                $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                $location_profile = ' AND (pc.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ' OR ps.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ' OR pci.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ')';
+                $location_provider = ' AND (c.name LIKE ' . $this->db->escape('%' . $location . '%') .
                         ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                        ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                        ')');
+                        ' OR sc.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ')';
+                $location_affiliation = ' AND (cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ' OR sts.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ' OR ci.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                        ')';
             }
-            $this->db->order_by('name');
-            if ($type == 'result') {
 
-                $this->db->limit($offset, $start);
-                $query = $this->db->get(TBL_PROFILES . ' p');
+            $sql = 'SELECT s.* FROM (SELECT p.id,CONCAT(firstname," ",lastname) as name,slug,profile_image as image,life_bio as description,"profile" as type,pc.name as country,ps.name as state,pci.name as city '
+                    . 'FROM ' . TBL_PROFILES . ' p '
+                    . ' LEFT JOIN ' . TBL_COUNTRY . ' pc ON p.country=pc.id LEFT JOIN ' . TBL_STATE . ' ps ON p.state = ps.id LEFT JOIN ' . TBL_CITY . ' pci ON p.city=pci.id '
+                    . 'WHERE p.is_delete=0 AND p.is_published=1' . $where_profile . $location_profile
+                    . ' UNION ALL '
+                    . 'SELECT sp.id,sp.name,sp.slug,sp.image,sp.description,"service_provider" as type,c.name as country,st.name as state,sc.name as city  '
+                    . 'FROM ' . TBL_SERVICE_PROVIDERS . ' sp LEFT JOIN ' . TBL_COUNTRY . ' c ON sp.country=c.id LEFT JOIN ' . TBL_STATE . ' st ON sp.state = st.id LEFT JOIN ' . TBL_CITY . ' sc ON sp.city=sc.id '
+                    . 'WHERE sp.is_delete=0 AND sp.is_active=1 ' . $where_provider . $location_provider .
+                    ' UNION ALL ' .
+                    'SELECT a.id,a.name,a.slug,a.image,a.description,"affiliation" as type,cn.name as country,sts.name as state,ci.name as city '
+                    . 'FROM ' . TBL_AFFILIATIONS . ' a LEFT JOIN ' . TBL_COUNTRY . ' cn ON a.country=cn.id LEFT JOIN ' . TBL_STATE . ' sts ON a.state=sts.id LEFT JOIN ' . TBL_CITY . ' ci ON a.city=ci.id '
+                    . 'WHERE a.is_delete=0 AND a.is_approved=1 ' . $where_affiliation . $location_affiliation .
+                    ' UNION ALL ' .
+                    'SELECT b.id,b.title as name,b.slug,b.image,b.description,"blog" as type,"" as country,"" as state,"" as city '
+                    . 'FROM ' . TBL_BLOG_POST . ' b '
+                    . 'WHERE b.is_delete=0 AND b.is_active=1' . $where_blog . ') as s';
+
+
+            $sql .= ' ORDER BY s.name';
+            if ($type == 'result') {
+                $sql .= ' LIMIT ' . $start . ',' . $offset;
+                $query = $this->db->query($sql);
                 $result = $query->result_array();
             } else {
-                $query = $this->db->get(TBL_PROFILES . ' p');
+                $query = $this->db->query($sql);
                 $result = $query->num_rows();
             }
+            /*
+              $this->db->select('slug,CONCAT(firstname," ",lastname) as name,profile_image as image,life_bio as description,"profile" as type,cn.name as country,st.name as state,c.name as city');
+              $this->db->where(['is_delete' => 0, 'is_published' => 1]);
+              if ($keyword != '') {
+              $this->db->where('(firstname LIKE ' . $this->db->escape('%' . $keyword . '%') .
+              ' OR lastname LIKE ' . $this->db->escape('%' . $keyword . '%') .
+              ' OR CONCAT(firstname," ",lastname) LIKE ' . $this->db->escape('%' . $keyword . '%') .
+              ' OR life_bio LIKE ' . $this->db->escape('%' . $keyword . '%') .
+              ')');
+              }
+              $this->db->join(TBL_COUNTRY . ' as cn', 'p.country=cn.id', 'left');
+              $this->db->join(TBL_STATE . ' as st', 'p.state=st.id', 'left');
+              $this->db->join(TBL_CITY . ' as c', 'p.city=c.id', 'left');
+
+              if ($location != '') {
+              $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+              ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
+              ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
+              ')');
+              }
+              $this->db->order_by('name');
+              if ($type == 'result') {
+
+              $this->db->limit($offset, $start);
+              $query = $this->db->get(TBL_PROFILES . ' p');
+              $result = $query->result_array();
+              } else {
+              $query = $this->db->get(TBL_PROFILES . ' p');
+              $result = $query->num_rows();
+              } */
         }
         return $result;
     }
