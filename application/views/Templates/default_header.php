@@ -85,9 +85,9 @@
                             }
                         }
                         ?>
-                        <!--                        <li><a href="#">About</a></li>
-                                                <li><a href="#">Features</a></li>
-                                                <li><a href="#">FAQ</a></li>-->
+                        <!--                                                <li><a href="#">About</a></li>
+                                                                        <li><a href="#">Features</a></li>-->
+                        <li><a href="<?php echo site_url('faqs') ?>">FAQs</a></li>
                         <li><a href="<?php echo site_url('contact') ?>">Contact</a></li>
                     </ul>
                 </div><!-- /.navbar-collapse -->

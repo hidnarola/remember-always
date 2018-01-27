@@ -45,6 +45,7 @@ class Service_provider extends MY_Controller {
 
         $services = $this->get_yelp_businesses($start);
         $data['services'] = [];
+        $total_count = 0;
         if (!empty($services) && !isset($services['error'])) {
             $total_count = ($services['total'] > 1000) ? 1000 : $services['total'];
             $page_config['total_rows'] = $total_count;

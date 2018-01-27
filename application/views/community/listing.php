@@ -47,7 +47,7 @@
                 <?php if ($this->input->get('keyword') != '') echo '<h3>Search result for "' . $this->input->get('keyword') . '"</h3>'; ?>
                 <?php foreach ($questions as $question) { ?>
                     <div class="white_bg question_section">
-                        <div class="comments-div first_q">
+                        <div class="comments-div first_q best_q other_q">
                             <ul>
                                 <li>
                                     <div class="comments-div-wrap">
@@ -81,24 +81,24 @@
                                             </small>
                                         </h3>
                                         <p><?php echo $question['description'] ?></p>
+                                        <div class="comment_tag cl_black">
+                                            <span class="que_author"><?php echo "By : " . $question['firstname'] . ' ' . $question['lastname'] ?></span>
+                                            <span class="spn_comment question_answers" data-question="<?php echo $question['id'] ?>"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $question['answers'] ?> Answer<?php if ($question['answers'] > 1) echo "s"; ?></span>
+                                        </div>
+                                        <div class="inner_cooment_div" id="comment_<?php echo $question['id'] ?>" style="display: none"></div>
+                                        <?php if ($question['user_id'] == $this->user_id && $question['answers'] == 0) { ?>
+                                            <div class="user-update community-action-btn">
+                                                <a class="edit edit_que_btn" data-slug="<?php echo $question['slug'] ?>" href="javascript:void(0)">Edit</a>
+                                                <a class="delete delete_que_btn" data-slug="<?php echo $question['slug'] ?>" href="javascript:void(0)">Delete</a>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
                                     </div>
                                 </li>
                             </ul>
 
-                            <div class="comment_tag cl_black">
-                                <span class="que_author"><?php echo "By : " . $question['firstname'] . ' ' . $question['lastname'] ?></span>
-                                <span class="spn_comment question_answers" data-question="<?php echo $question['id'] ?>"><i class="fa fa-comment-o" aria-hidden="true"></i><?php echo $question['answers'] ?> Answer<?php if ($question['answers'] > 1) echo "s"; ?></span>
-                            </div>
-                            <div class="inner_cooment_div" id="comment_<?php echo $question['id'] ?>" style="display: none">
-                            </div>
-                            <?php if ($question['user_id'] == $this->user_id && $question['answers'] == 0) { ?>
-                                <div class="user-update community-action-btn">
-                                    <a class="edit edit_que_btn" data-slug="<?php echo $question['slug'] ?>" href="javascript:void(0)">Edit</a>
-                                    <a class="delete delete_que_btn" data-slug="<?php echo $question['slug'] ?>" href="javascript:void(0)">Delete</a>
-                                </div>
-                                <?php
-                            }
-                            ?>
+
                         </div>
                     </div>
                     <?php

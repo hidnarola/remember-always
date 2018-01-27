@@ -30,6 +30,15 @@ class Cms extends MY_Controller {
     }
 
     /**
+     * Display FAQs page
+     */
+    public function faqs() {
+        $data['title'] = 'Remember Always | FAQs';
+        $data['breadcrumb'] = ['title' => 'FAQs', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $this->template->load('default', 'cms/faqs', $data);
+    }
+
+    /**
      * Display contact us page
      */
     public function contact() {

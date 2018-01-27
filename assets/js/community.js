@@ -120,7 +120,7 @@ $(function () {
         question = obj.attr('data-question');
         if (!$(this).hasClass('clicked')) {
             obj.addClass('clicked');
-//            show_answers(question, obj);
+            show_answers(question, obj);
         } else {
             $('#comment_' + question).hide();
             obj.removeClass('clicked');
@@ -286,9 +286,9 @@ function show_answers(question, obj) {
             $('.loader').hide();
             if (data.success == true) {
                 total_answers = data.answers.length;
-                comment_label = '<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_answers + ' Comment';
+                comment_label = '<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_answers + ' Answer';
                 if (total_answers > 1) {
-                    comment_label = '<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_answers + ' Comments';
+                    comment_label = '<i class="fa fa-comment-o" aria-hidden="true"></i>' + total_answers + ' Answers';
                 }
                 obj.html(comment_label);
                 if (data.answers.length > 0) {

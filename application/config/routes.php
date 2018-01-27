@@ -136,7 +136,7 @@ $route['community/post_comment'] = 'community/post_comment';
 $route['community/(:any)'] = 'community/index/$1';
 
 /* Funeral Planning routes */
-$route['funeral_planning'] = 'funeral_resources/planning';
+$route['funeral_planning'] = 'helpful_resources/planning';
 
 /* Service Provider listing page */
 $route['service_provider/get_yelp_businesses'] = 'service_provider/get_yelp_businesses';
@@ -153,6 +153,7 @@ $route['service_provider/(:any)'] = 'service_provider/index/$1';
 
 
 $route['contact'] = 'cms/contact';
+$route['faqs'] = 'cms/faqs';
 $route['pages/(:any)'] = 'cms/index/$1';
 
 $route['404_override'] = 'pagenotfound';
