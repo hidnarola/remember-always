@@ -14,11 +14,11 @@
                             if (isset($affiliation_categories) && !empty($affiliation_categories)) {
                                 foreach ($affiliation_categories as $key => $value) {
                                     $selected = '';
-                                    if (isset($_GET['category']) && $_GET['category'] == $value['name']) {
+                                    if (isset($_GET['category']) && $_GET['category'] == $value['slug']) {
                                         $selected = 'selected';
                                     }
                                     ?>
-                                    <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>"><?php echo $value['name']; ?></option>
+                                    <option <?php echo $selected; ?> value="<?php echo $value['slug'] ?>"><?php echo $value['name']; ?></option>
                                     <?php
                                 }
                             }
@@ -48,7 +48,7 @@
                                             if (isset($value['image']) && !is_null($value['image'])) {
                                                 ?>
                                                 <img src="<?php echo AFFILIATION_IMAGE . $value['image'] ?>" width="100%" height="100%"/>
-                                            <?php }else{ ?>
+                                            <?php } else { ?>
                                                 <img src="assets/images/no_image.png" width="100%" height="100%"/>
                                             <?php } ?>
                                         </span>
@@ -82,7 +82,7 @@
                                 <li><a href="<?php echo site_url('affiliation') ?>" class="<?php echo!isset($_GET['category']) ? 'active' : '' ?>">All Affiliations</a></li>
                                 <?php foreach ($affiliation_categories as $key => $value) {
                                     ?>
-                                    <li><a href="javascript:void(0)" data-value="<?php echo $value['name'] ?>"class="category_click <?php echo isset($_GET['category']) && $_GET['category'] == $value['name'] ? 'active' : '' ?>"><?php echo $value['name'] ?></a></li>
+                                    <li><a href="javascript:void(0)" data-value="<?php echo $value['slug'] ?>"class="category_click <?php echo isset($_GET['category']) && $_GET['category'] == $value['slug'] ? 'active' : '' ?>"><?php echo $value['name'] ?></a></li>
                                     <?php
                                 }
                             } else {

@@ -71,16 +71,21 @@ $(function () {
                             }
                         }
                         string += '</span>' +
-                                '<h3>' + value['firstname'] + ' ' + value['lastname'] + '<small>' + value['interval'] + '  Ago</small></h3>' +
-                                '<p>';
-                        text = value['comment'];
-                        if (value['comment'].length > 200) {
-//                        text = value['description'].preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...');
-                            text = value['comment'].substring(0, 200);
-                            text += '...';
+                                '<h3>' + value['firstname'] + ' ' + value['lastname'] + '<small>' + value['interval'] + '  Ago</small>';
+                        if (user_logged_in != 'not' && (loggedin_userid == value['user_id'] || loggedin_userid == profile_user_id)) {
+                            string += '<a class="btn-xs btn-danger delete_post pull-right" href="javascript:void(0)" data-id="' + value['id'] + '" title="Delete Post"><i class="fa fa-trash"></i></a>';
                         }
-                        string += text;
-                        string += '</p>';
+                        string += '</h3>';
+                        text = value['comment'];
+                        if (text != null) {
+                            string += '<p>';
+                            if (value['comment'].length > 200) {
+                                text = value['comment'].substring(0, 200);
+                                text += '...';
+                            }
+                            string += text;
+                            string += '</p>';
+                        }
                         if (typeof value['media'] != 'undefined') {
                             string += '<div class="comoon-ul-li list-02">' +
                                     '<ul>';
@@ -119,29 +124,16 @@ $(function () {
             comment: {
                 atleast_one_for_post: true,
             },
-//            "image_post[]": {
-//                atleast_one_for_post: true,
-//            },
-//            "video_post[]": {
-//                atleast_one_for_post: true,
-//            },
         },
         highlight: function (element, errorClass) {
             if ($(element).attr('name') === 'comment') {
                 $('#post-modal').modal();
-//                console.log(post_data);
             }
         },
         messages: {
             comment: {
                 atleast_one_for_post: ''
             },
-//            "image_post[]": {
-//                atleast_one_for_post: '',
-//            },
-//            "video_post[]": {
-//                atleast_one_for_post: '',
-//            },
         },
         submitHandler: function (form) {
             var postformData = new FormData();
@@ -162,20 +154,16 @@ $(function () {
                 processData: false, // tell jQuery not to process the data
                 contentType: false, // tell jQuery not to set contentType
                 success: function (data) {
-//                    console.log("sdfksjf");
                     if (data.success == true) {
                         //-- Remove default preview div
                         window.location.href = site_url + 'profile/' + slug;
-//                        showSuccessMSg(data.data);
 
                     } else {
-                        console.log("sdkndff");
                         showErrorMSg(data.error);
                     }
                 }
             });
             return false;
-//            form.submit();
         },
     });
     $(document).on('click', "#post_btn", function (e) {
@@ -278,22 +266,18 @@ function readcoverURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-//                console.log("gdfkgdf", e);
             var _URL = window.URL || window.webkitURL;
             var valid_extensions = /(\.jpg|\.jpeg|\.png)$/i;
             if (typeof (input.files[0]) != 'undefined') {
                 if (valid_extensions.test(input.files[0].name)) {
                     img = new Image();
                     img.onload = function () {
-//                        console.log("width", this.width);
-//                        console.log("height", this.height);
                         if (this.width < width || this.height < height) {
                             showErrorMSg('Photo should be ' + width + ' X ' + height + ' or more dimensions');
                         } else {
                             var formData = new FormData();
                             formData.append('profile_id', profile_id);
                             formData.append('cover_image', input.files[0], input.files[0].name);
-//                                console.log(formData.get('cover_image'));
                             $.ajax({
                                 url: site_url + "profile/upload_cover_image",
                                 type: "POST",
@@ -507,3 +491,42 @@ function share_email() {
 
     }
 }
+//-- Delete added post
+$(document).on('click', '.delete_post', function () {
+    post = $(this).attr('data-id');
+    console.log(post);
+    obj = $(this);
+    swal({
+        title: "Are you sure?",
+        text: "You want to delete this post",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#FF7043",
+        confirmButtonText: "Yes!",
+        cancelButtonText: "No!",
+        focusCancel: true,
+    }).then(function (isConfirm) {
+        if (isConfirm) {
+            $('.loader').show();
+            $.ajax({
+                url: site_url + "profile/delete_post",
+                type: "POST",
+                data: {post: post},
+                dataType: "json",
+                success: function (data) {
+                    $('.loader').hide();
+                    if (data.success == true) {
+                        obj.parent().parent('.comments-div-wrap').parent('li').remove();
+                    } else {
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+            return true;
+        }
+    }, function (dismiss) {
+//        if (dismiss === 'cancel') {
+//            swal("Cancelled", "Your profile is not published. :(", "error");
+//        }
+    });
+});

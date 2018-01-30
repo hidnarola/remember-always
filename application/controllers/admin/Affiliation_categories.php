@@ -69,11 +69,15 @@ class Affiliation_categories extends MY_Controller {
         } else {
             $dataArr = ['name' => trim(htmlentities($this->input->post('name')))];
             if (is_numeric($id)) {
+                $dataArr['slug'] = slug(trim($this->input->post('name')), TBL_AFFILIATIONS_CATEGORY, $id);
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
+                
                 $this->category_model->common_insert_update('update', TBL_AFFILIATIONS_CATEGORY, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Affiliation Categorty details has been updated successfully.');
             } else {
+                $dataArr['slug'] = slug(trim($this->input->post('name')), TBL_AFFILIATIONS_CATEGORY);
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
+                
                 $id = $this->category_model->common_insert_update('insert', TBL_AFFILIATIONS_CATEGORY, $dataArr);
                 $this->session->set_flashdata('success', 'Affiliation Categorty has been inserted successfully.');
             }
@@ -100,8 +104,8 @@ class Affiliation_categories extends MY_Controller {
             $category = $this->category_model->sql_select(TBL_AFFILIATIONS_CATEGORY, null, ['where' => array('id' => trim($id), 'is_delete' => 0)], ['single' => true]);
             if (!empty($category)) {
                 $update_array = array(
-                'is_delete' => 1,
-                'updated_at' => date('Y-m-d H:i:s')
+                    'is_delete' => 1,
+                    'updated_at' => date('Y-m-d H:i:s')
                 );
                 $this->category_model->common_insert_update('update', TBL_AFFILIATIONS_CATEGORY, $update_array, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Affiliation categories has been deleted successfully!');

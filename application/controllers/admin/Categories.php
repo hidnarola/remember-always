@@ -67,17 +67,23 @@ class Categories extends MY_Controller {
                 $uniqe_category_str = '|callback_catgeory_exists';
             }
         }
+
         $this->form_validation->set_rules('name', 'Name', 'trim|required' . $uniqe_category_str);
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
             $dataArr = ['name' => trim(htmlentities($this->input->post('name')))];
             if (is_numeric($id)) {
+
+                $dataArr['slug'] = slug(trim($this->input->post('name')), TBL_SERVICE_CATEGORIES, $id);
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
+
                 $this->category_model->common_insert_update('update', TBL_SERVICE_CATEGORIES, $dataArr, ['id' => $id]);
                 $this->session->set_flashdata('success', 'Service Categirty details has been updated successfully.');
             } else {
+                $dataArr['slug'] = slug(trim($this->input->post('name')), TBL_SERVICE_CATEGORIES);
                 $dataArr['created_at'] = date('Y-m-d H:i:s');
+                
                 $id = $this->category_model->common_insert_update('insert', TBL_SERVICE_CATEGORIES, $dataArr);
                 $this->session->set_flashdata('success', 'Service Categirty has been inserted successfully.');
             }

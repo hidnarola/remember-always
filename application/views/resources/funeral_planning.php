@@ -14,7 +14,7 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading" role="tab" id="collapse-01">
                                     <h4 class="panel-title">
-                                        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse01" aria-expanded="true" aria-controls="collapse01">1. Pre- Planning</a>
+                                        <a class="change_ic" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse01" aria-expanded="true" aria-controls="collapse01">1. Pre- Planning</a>
                                     </h4>
                                 </div>
                                 <div id="collapse01" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="collapse-01">
@@ -217,7 +217,7 @@
                                         </p>
                                         <p>
                                             <span class="list_left">b.</span> <span class="list_content">Create a Scholarship fund or donation to an affinity group in honor of the deceased </span>
-                                        .</p>
+                                            .</p>
                                     </div>
                                 </div>
                             </div>
@@ -339,3 +339,16 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('.according-tab .panel-title a').on('click', function () {
+        jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
+        var classes = jQuery(this).prop('class');
+        var clasArray = classes.split(' ')
+        if (clasArray.includes('change_ic')) {
+            jQuery(this).removeClass('change_ic')
+        } else {
+            jQuery(this).addClass('change_ic')
+        }
+    });
+</script>

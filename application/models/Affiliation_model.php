@@ -25,7 +25,8 @@ class Affiliation_model extends MY_Model {
         $this->db->join(TBL_CITY . ' c', 'c.id=a.city', 'left');
         if (isset($data) && !empty($data)) {
             if (isset($data['category'])) {
-                $this->db->where('ac.name LIKE ' . $this->db->escape('%' . $data['category'] . '%' . ''));
+//                $this->db->where('ac.name LIKE ' . $this->db->escape('%' . $data['category'] . '%' . ''));
+                $this->db->where('ac.slug LIKE ' . $this->db->escape('%' . $data['category'] . '%' . ''));
             }
             if (isset($data['keyword'])) {
                 $this->db->having('a.name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR a.description LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR con_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR s_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR c_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . ''));

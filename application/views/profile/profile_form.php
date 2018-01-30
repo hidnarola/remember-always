@@ -120,8 +120,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                     if (isset($profile) && $profile['state'] == $state['id']) {
                                                         $selected = 'selected';
                                                     }
+                                                    $code = '';
+                                                    if ($state['shortcode'] != '') {
+                                                        $codes = explode('-', $state['shortcode']);
+                                                        $code = $codes[1];
+                                                    }
                                                     ?>
-                                                    <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
+                                                    <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?> <?php if ($code != '') echo ' (' . $code . ')' ?></option>
                                                 <?php }
                                                 ?>
                                             </select>
@@ -599,8 +604,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                             if ($state['id'] == $memorial_service['state'])
                                                                 $selected = 'selected';
                                                         }
+                                                        $code = '';
+                                                        if ($state['shortcode'] != '') {
+                                                            $codes = explode('-', $state['shortcode']);
+                                                            $code = $codes[1];
+                                                        }
                                                         ?>
-                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
+                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?><?php if ($code != '') echo ' (' . $code . ')'; ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>
@@ -671,8 +681,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                             if ($state['id'] == $funeral_service['state'])
                                                                 $selected = 'selected';
                                                         }
+                                                        $code = '';
+                                                        if ($state['shortcode'] != '') {
+                                                            $codes = explode('-', $state['shortcode']);
+                                                            $code = $codes[1];
+                                                        }
                                                         ?>
-                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
+                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?><?php if ($code != '') echo ' (' . $code . ')' ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>
@@ -728,7 +743,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                                 $selected = 'selected';
                                                         }
                                                         ?>
-                                                        <option value="<?php echo $country['id'] ?>" <?php echo $selected ?>><?php echo $country['name'] ?></option>
+                                                        <option value="<?php echo $country['id'] ?>" <?php echo $selected ?>><?php echo $country['name'] ?><?php if ($code != '') echo ' (' . $code . ')' ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>
@@ -743,8 +758,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                             if ($state['id'] == $burial_service['state'])
                                                                 $selected = 'selected';
                                                         }
+                                                        $code = '';
+                                                        if ($state['shortcode'] != '') {
+                                                            $codes = explode('-', $state['shortcode']);
+                                                            $code = $codes[1];
+                                                        }
                                                         ?>
-                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?></option>
+                                                        <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?><?php if ($code != '') echo ' (' . $code . ')' ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>

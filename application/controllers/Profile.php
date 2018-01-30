@@ -321,7 +321,7 @@ class Profile extends MY_Controller {
 
         if (!empty($profile)) {
             $data['profile'] = $profile;
-            $data['profile_states'] = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => $profile['country']]]);
+            $data['profile_states'] = $this->users_model->sql_select(TBL_STATE, 'id,name,shortcode', ['where' => ['country_id' => $profile['country']]]);
             $data['profile_cities'] = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $profile['state']]]);
 
             $data['profile_gallery'] = $this->users_model->sql_select(TBL_GALLERY, '*', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]], ['order_by' => 'id DESC']);
@@ -984,7 +984,7 @@ class Profile extends MY_Controller {
      */
     public function get_states() {
         $country_id = $this->input->post('country');
-        $states = $this->users_model->sql_select(TBL_STATE, 'id,name', ['where' => ['country_id' => $country_id]]);
+        $states = $this->users_model->sql_select(TBL_STATE, 'id,name,shortcode', ['where' => ['country_id' => $country_id]]);
         echo json_encode($states);
         exit;
     }
@@ -1291,7 +1291,7 @@ class Profile extends MY_Controller {
             $data['success'] = false;
             $data['error'] = "Invalid data!";
         }
-        p($data);
+//        p($data);
         echo json_encode($data);
         exit;
     }
@@ -1301,15 +1301,30 @@ class Profile extends MY_Controller {
      * @author AKK
      */
     public function delete_post() {
-        $gallery = base64_decode($this->input->post('post'));
-        $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
-        if (!empty($gallery_media)) {
-            $this->users_model->common_delete(TBL_GALLERY, ['id' => $gallery]);
-            unlink(PROFILE_IMAGES . $gallery_media['media']);
-            $data['success'] = true;
+        if ($this->is_user_loggedin) {
+            $post_id = $this->input->post('post');
+            //-- check if post is added by logged in user
+            $post_data = $this->users_model->sql_select(TBL_POSTS, 'id', ['where' => ['id' => $post_id, 'is_delete' => 0, 'user_id' => $this->user_id]], ['single' => true]);
+            if (!empty($post_data)) {
+                $this->users_model->common_insert_update('update', TBL_POSTS, ['is_delete' => 1], ['id' => $post_id]);
+                $data['success'] = true;
+            } else {
+                //-- If not check logged in user is creator of profile
+                $post_detail = $this->users_model->sql_select(TBL_POSTS . ' p', 'p.id', ['where' => ['p.id' => $post_id, 'p.is_delete' => 0, 'pr.user_id' => $this->user_id]], ['single' => true,
+                    'join' => [
+                        array('table' => TBL_PROFILES . ' pr', 'condition' => 'p.profile_id=pr.id'),
+                ]]);
+                if (!empty($post_detail)) {
+                    $this->users_model->common_insert_update('update', TBL_POSTS, ['is_delete' => 1], ['id' => $post_id]);
+                    $data['success'] = true;
+                } else {
+                    $data['success'] = false;
+                    $data['error'] = "Invalid request!";
+                }
+            }
         } else {
             $data['success'] = false;
-            $data['error'] = "Invalid request!";
+            $data['error'] = "Please login first!";
         }
         echo json_encode($data);
         exit;

@@ -251,7 +251,7 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading" role="tab" id="headingOne">
                                             <h4 class="panel-title">
-                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Memorial Service & Viewing Section</a>
+                                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="change_ic">Memorial Service Section</a>
                                             </h4>
                                         </div>
                                         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
@@ -550,7 +550,6 @@
                                         $from_date = date_create($val['created_at']);
                                         $to_date = date_create(date('Y-m-d H:i:s'));
                                         $days_diff = date_diff($from_date, $to_date);
-//                                        $equal = (date('Y-m-d'strtotime($val['created_at']) != strtotime(date('Y-m-d H:i:s'))) ? true: false;
                                         ?>
                                         <li>
                                             <div class="comments-div-wrap">
@@ -567,7 +566,8 @@
                                                     }
                                                     ?>
                                                 </span>
-                                                <h3><?php echo $val['firstname'] . ' ' . $val['lastname'] ?>
+                                                <h3>
+                                                    <?php echo $val['firstname'] . ' ' . $val['lastname'] ?>
                                                     <?php $day_diff_str = format_days($days_diff); ?>
                                                     <small>
                                                         <?php
@@ -576,8 +576,13 @@
                                                             echo ' Ago';
                                                         ?>
                                                     </small>
+                                                    <?php if ($this->is_user_loggedin && ($this->user_id == $val['user_id'] || $this->user_id == $profile['user_id'])) { ?>
+                                                        <a class="btn-xs btn-danger delete_post pull-right" href="javascript:void(0)" data-id="<?php echo $val['id'] ?>" title="Delete Post"><i class="fa fa-trash"></i></a>
+                                                    <?php } ?>
                                                 </h3>
-                                                <p><?php echo $val['comment'] ?></p>
+                                                <?php if ($val['comment'] != '') { ?>
+                                                    <p><?php echo $val['comment'] ?></p>
+                                                <?php } ?>
                                                 <?php if (isset($val['media'])) { ?>
                                                     <div class="comoon-ul-li list-02">
                                                         <ul>
@@ -601,9 +606,6 @@
                                                                     <li>
                                                                         <div class="gallery-wrap">
                                                                             <span class="gallery-video-img">
-                                                                                <!--                                                                                <video  width="100%" height="150px" controls="">
-                                                                                                                                                                    <source src="<?php // echo base_url(POST_IMAGES . $v)                                                                    ?>" type="video/mp4">
-                                                                                                                                                                </video>-->
                                                                                 <img src="<?php echo base_url(POST_IMAGES . str_replace('mp4', 'jpg', $v)) ?>">
                                                                             </span>
                                                                             <span class="gallery-play-btn"><a href="<?php echo base_url(POST_IMAGES . $v) ?>" class="fancybox" data-fancybox-type="iframe" rel="post_group_<?php echo $val['id'] ?>"><img src="assets/images/play.png" alt=""></a></span>
@@ -621,8 +623,6 @@
                                 <p class="no-data">No post comments available for this profile.</p>
                             <?php } ?>
                         </div>
-
-
                     </div>
                 </div>
                 <div class="profile-body-r">
@@ -1005,6 +1005,7 @@ else
     $('#timeline_details .timeline_media').parent().parent().hide();
     $('#timeline_details .timeline_details').parent().parent().hide();
     var user_logged_in = '<?php echo $user_logged_in ?>';
+    var loggedin_userid = <?php echo $this->user_id ?>;
     var profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';
     var slug = '<?php echo isset($profile['slug']) ? $profile['slug'] : '' ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
@@ -1012,5 +1013,18 @@ else
     delete_str = '<?php $this->load->view('delete_svg', true); ?>';
     user_image = '<?php echo USER_IMAGES ?>';
     post_image = '<?php echo POST_IMAGES ?>';
+    profile_user_id = <?php echo $profile['user_id'] ?>;
 </script>
 <script src="assets/js/profile_detail.js"></script>
+<script type="text/javascript">
+    $('.according-tab .panel-title a').on('click', function () {
+        jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
+        var classes = jQuery(this).prop('class');
+        var clasArray = classes.split(' ')
+        if (clasArray.includes('change_ic')) {
+            jQuery(this).removeClass('change_ic')
+        } else {
+            jQuery(this).addClass('change_ic')
+        }
+    });
+</script>

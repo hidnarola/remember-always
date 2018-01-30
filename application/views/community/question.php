@@ -130,7 +130,7 @@
                             ?>
                             <li>
                                 <div class="related_q">
-                                    <h6><a href="<?php echo site_url('community/view/' . $que['slug']) ?>"><?php echo $que['title'] ?>?</a></h6>
+                                    <h6><a href="<?php echo site_url('community/view/' . $que['slug']) ?>"><?php echo $que['title'] ?></a></h6>
                                     <p>Asked by: <span><?php echo $que['firstname'] . ' ' . $que['lastname'] ?></span></p>
                                 </div>
                             </li>

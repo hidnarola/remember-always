@@ -104,7 +104,7 @@ $(function () {
         theme: "bootstrap"
     });
     $(".service-state").select2({
-        theme: "bootstrap"
+        theme: "bootstrap",
     });
     $(".service-city").select2({
         tags: true,
@@ -240,6 +240,7 @@ function submit_form() {
                 success: function (data) {
                     $('.loader').hide();
                     if (data.success == true) {
+                        create_profile_url = site_url + "profile/edit/" + data.data.slug;
                         profile_id = btoa(data.data.id);
                         // add validation of unique fun fact rule
                         var rules = $('#fun_fact').rules();
@@ -414,6 +415,7 @@ function proceed_step() {
                     success: function (data) {
                         $('.loader').hide();
                         if (data.success == true) {
+                            create_profile_url = site_url + "profile/edit/" + data.data.slug;
                             profile_id = btoa(data.data.id);
                             // add validation of unique fun fact rule
                             var rules = $('#fun_fact').rules();
@@ -804,6 +806,7 @@ function save_finish() {
                 contentType: false, // tell jQuery not to set contentType
                 success: function (data) {
                     if (data.success == true) {
+                        create_profile_url = site_url + "profile/edit/" + data.data.slug;
                         profile_id = btoa(data.data.id);
                         // add validation of unique fun fact rule
                         var rules = $('#fun_fact').rules();
@@ -1570,7 +1573,16 @@ $(document).on('change', '.service-country', function () {
                 $('.loader').hide();
                 var options = "<option value=''>Select state</option>";
                 for (var i = 0; i < data.length; i++) {
-                    options += '<option value=' + data[i].id + '>' + data[i].name + '</option>';
+                    code = data[i].shortcode;
+                    if (code != '') {
+                        codes = code.split('-');
+                        code = codes[1];
+                    }
+                    options += '<option value=' + data[i].id + '>' + data[i].name;
+                    if (code != '') {
+                        options += ' (' + code + ')';
+                    }
+                    options += '</option>';
                 }
                 $('#' + state_id).empty().append(options);
             }

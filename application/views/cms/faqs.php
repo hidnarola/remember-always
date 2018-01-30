@@ -162,7 +162,7 @@
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
-                                       Making changes to an existing profile or fundraiser is easy. Edit the profile, and ….
+                                        Making changes to an existing profile or fundraiser is easy. Edit the profile, and ….
                                     </span>
                                 </p>
                             </div>
@@ -178,7 +178,7 @@
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
-                                       From the home page, click on the “Forgot my username/password” link that is below the Sign In button. Enter the email address associated with your account, and click request password reset.
+                                        From the home page, click on the “Forgot my username/password” link that is below the Sign In button. Enter the email address associated with your account, and click request password reset.
                                     </span>
                                 </p>
                             </div>
@@ -194,7 +194,7 @@
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
-                                       Yes. Each profile can have one or more editors. The creating editor can add other editor(s), and then those editor(s) can add other editor(s).
+                                        Yes. Each profile can have one or more editors. The creating editor can add other editor(s), and then those editor(s) can add other editor(s).
                                     </span>
                                 </p>
                             </div>
@@ -210,7 +210,7 @@
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
-                                       No. You will need an account to be able to post messages, photos or videos.
+                                        No. You will need an account to be able to post messages, photos or videos.
                                     </span>
                                 </p>
                             </div>
@@ -226,7 +226,7 @@
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
-                                       From the global toolbar click the search icon, and enter the name of the person and click Search. Or click on “Find a Life Profile” on the Home Page.
+                                        From the global toolbar click the search icon, and enter the name of the person and click Search. Or click on “Find a Life Profile” on the Home Page.
                                     </span>
                                 </p>
                             </div>
@@ -242,7 +242,7 @@
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
-                                       The main purpose of the website is to serve as a forever lasting memorial for our loved ones that have passed away. We want current and future generations to be able to remember, honor and celebrate the life of those loved ones.
+                                        The main purpose of the website is to serve as a forever lasting memorial for our loved ones that have passed away. We want current and future generations to be able to remember, honor and celebrate the life of those loved ones.
                                     </span>
                                 </p>
                             </div>
@@ -258,7 +258,7 @@
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
-                                       A living profile is one that someone can create before death, in order to be in full control and agreement of what their profile will look like upon their passing. This is a great feature to allow people to decide on what their everlasting legacy will be for their children and grandchildren, and great grandchildren, and so on to see for many years to come.
+                                        A living profile is one that someone can create before death, in order to be in full control and agreement of what their profile will look like upon their passing. This is a great feature to allow people to decide on what their everlasting legacy will be for their children and grandchildren, and great grandchildren, and so on to see for many years to come.
                                     </span>
                                 </p>
                             </div>
@@ -282,3 +282,15 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $('.according-tab .panel-title a').on('click', function () {
+        jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
+        var classes = jQuery(this).prop('class');
+        var clasArray = classes.split(' ')
+        if (clasArray.includes('change_ic')) {
+            jQuery(this).removeClass('change_ic')
+        } else {
+            jQuery(this).addClass('change_ic')
+        }
+    });
+</script>
