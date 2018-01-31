@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title><?php echo $title; ?></title>
 
@@ -24,6 +25,8 @@
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" />
         <link href="assets/css/jquery.fancybox.css" rel="stylesheet" />
+        <link href="assets/css/magnific-popup.css" rel="stylesheet" />
+
         <script type="text/javascript">
             //Set common javascript variable
             var site_url = "<?php echo site_url() ?>";
@@ -68,12 +71,13 @@
         <script src="assets/js/typeahead.bundle.js"></script>
         <script src="assets/js/jquery.creditCardValidator.js"></script> 
         <script src="assets/js/responsive-tabs.js"></script>  
+        <script src="assets/js/jquery.magnific-popup.min.js"></script>  
         <script src="assets/js/custom.js"></script> 
         <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <?php
     $body_class = '';
-    if ($this->controller != 'home') {
+    if ($this->controller != 'home' && $this->controller != 'login') {
         $body_class = 'inr-pages';
     }
     ?>
@@ -103,8 +107,88 @@
         echo $body;
         $this->load->view('Templates/default_footer');
         ?>
+        <div class="custom_pop mfp-hide white-popup-block" id="login">
+            <div class="login-signup">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#log-in" aria-controls="home" role="tab" data-toggle="tab">Log IN</a></li>
+                    <li role="presentation"><a href="#sign-up" aria-controls="profile" role="tab" data-toggle="tab">Sign up</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="log-in">
+                        <form method="post" id="login-form" action="<?php echo site_url('login') ?>">
+                            <div class="popup-input">
+                                <label>Email</label>
+                                <input type="text" name="email" placeholder="support@gmail.com" />
+                            </div>
+                            <div class="popup-input">
+                                <label>Password</label>
+                                <input type="password" name="password" placeholder="password" />
+                            </div>
+                            <div class="keep-me">
+                                <label class="custom-checkbox">keep me signed in
+                                    <input type="checkbox" name="remember_me" value="1">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <a href="javascript:void(0)" onclick="showForgotModal()">Forget your password?</a>
+                            </div>
+                            <div class="pup-btn">
+                                <button type="submit" id="login_form_btn">LOG IN</button>
+                            </div>
+                            <div class="popup-or">
+                                <span>OR</span>
+                            </div>
+                            <div class="login-options">
+                                <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+                                <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
+                            </div>
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="sign-up">
+                        <form method="post" id="signup-form" action="<?php echo site_url('signup') ?>">
+                            <div class="popup-input">
+                                <label>Email</label>
+                                <input type="text" name="email" placeholder="support@gmail.com" />
+                            </div>
+                            <div class="popup-input">
+                                <label>Password</label>
+                                <input type="password" name="password" id="password" placeholder="Password" />
+                            </div>
+                            <div class="popup-input">
+                                <label>Confirm Password</label>
+                                <input type="password" name="con_password" placeholder="Confirm password" />
+                            </div>
+                            <div class="popup-input name-input">
+                                <label>Name</label>
+                                <div class="first-last">
+                                    <input type="text" name="firstname" placeholder="First Name" />
+                                </div>
+                                <div class="last-first">
+                                    <input type="text" name="lastname" placeholder="Last Name" />
+                                </div>
+                            </div>
+                            <div class="keep-me">
+                                <label class="custom-checkbox">Terms & condition
+                                    <input type="checkbox" name="terms_condition" value="1">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="pup-btn">
+                                <button type="submit" id="signup_form_btn">Sign UP</button>
+                            </div>
+                            <div class="popup-or">
+                                <span>OR</span>
+                            </div>
+                            <div class="login-options">
+                                <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+                                <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <!--<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="login-signup">
                     <ul class="nav nav-tabs" role="tablist">
@@ -113,7 +197,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="log-in">
-                            <form method="post" id="login-form" action="<?php echo site_url('login') ?>">
+                            <form method="post" id="login-form" action="<?php //echo site_url('login')    ?>">
                                 <div class="popup-input">
                                     <label>Email</label>
                                     <input type="text" name="email" placeholder="support@gmail.com" />
@@ -127,67 +211,67 @@
                                         <input type="checkbox" name="remember_me" value="1">
                                         <span class="checkmark"></span>
                                     </label>
-                                    <!--<a data-target="#forgot-pwdmodal" data-toggle="modal">Forget your password?</a>-->
-                                    <a href="javascript:void(0)" onclick="showForgotModal()">Forget your password?</a>
-                                </div>
-                                <div class="pup-btn">
-                                    <button type="submit" id="login_form_btn">LOG IN</button>
-                                </div>
-                                <div class="popup-or">
-                                    <span>OR</span>
-                                </div>
-                                <div class="login-options">
-                                    <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-                                    <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
-                                </div>
-                            </form>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="sign-up">
-                            <form method="post" id="signup-form" action="<?php echo site_url('signup') ?>">
-                                <div class="popup-input">
-                                    <label>Email</label>
-                                    <input type="text" name="email" placeholder="support@gmail.com" />
-                                </div>
-                                <div class="popup-input">
-                                    <label>Password</label>
-                                    <input type="password" name="password" id="password" placeholder="Password" />
-                                </div>
-                                <div class="popup-input">
-                                    <label>Confirm Password</label>
-                                    <input type="password" name="con_password" placeholder="Confirm password" />
-                                </div>
-                                <div class="popup-input name-input">
-                                    <label>Name</label>
-                                    <div class="first-last">
-                                        <input type="text" name="firstname" placeholder="First Name" />
-                                    </div>
-                                    <div class="last-first">
-                                        <input type="text" name="lastname" placeholder="Last Name" />
-                                    </div>
-                                </div>
+        <!--<a data-target="#forgot-pwdmodal" data-toggle="modal">Forget your password?</a>-->
+        <!-- <a href="javascript:void(0)" onclick="showForgotModal()">Forget your password?</a>
+     </div>
+     <div class="pup-btn">
+         <button type="submit" id="login_form_btn">LOG IN</button>
+     </div>
+     <div class="popup-or">
+         <span>OR</span>
+     </div>
+     <div class="login-options">
+         <a href="<?php //echo site_url('facebook')    ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')    ?>"><img src="assets/images/google-login.png" alt="" /></a>
+     </div>
+ </form>
+</div>
+<div role="tabpanel" class="tab-pane" id="sign-up">
+ <form method="post" id="signup-form" action="<?php //echo site_url('signup')    ?>">
+     <div class="popup-input">
+         <label>Email</label>
+         <input type="text" name="email" placeholder="support@gmail.com" />
+     </div>
+     <div class="popup-input">
+         <label>Password</label>
+         <input type="password" name="password" id="password" placeholder="Password" />
+     </div>
+     <div class="popup-input">
+         <label>Confirm Password</label>
+         <input type="password" name="con_password" placeholder="Confirm password" />
+     </div>
+     <div class="popup-input name-input">
+         <label>Name</label>
+         <div class="first-last">
+             <input type="text" name="firstname" placeholder="First Name" />
+         </div>
+         <div class="last-first">
+             <input type="text" name="lastname" placeholder="Last Name" />
+         </div>
+     </div>
 
-                                <div class="keep-me">
-                                    <label class="custom-checkbox">Terms & condition
-                                        <input type="checkbox" name="terms_condition" value="1">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="pup-btn">
-                                    <button type="submit" id="signup_form_btn">Sign UP</button>
-                                </div>
-                                <div class="popup-or">
-                                    <span>OR</span>
-                                </div>
-                                <div class="login-options">
-                                    <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-                                    <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+     <div class="keep-me">
+         <label class="custom-checkbox">Terms & condition
+             <input type="checkbox" name="terms_condition" value="1">
+             <span class="checkmark"></span>
+         </label>
+     </div>
+     <div class="pup-btn">
+         <button type="submit" id="signup_form_btn">Sign UP</button>
+     </div>
+     <div class="popup-or">
+         <span>OR</span>
+     </div>
+     <div class="login-options">
+         <a href="<?php //echo site_url('facebook')    ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')    ?>"><img src="assets/images/google-login.png" alt="" /></a>
+     </div>
+ </form>
+</div>
+</div>
+</div>
+</div>
+</div>-->
         <div class="modal fade" id="forgot-pwdmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="login-signup">
@@ -248,7 +332,7 @@
             <div class="modal-dialog" role="document">
                 <div class="login-signup">
                     <div class="mpopup-body">
-                        <p>Post is Empty. Please enter post comment or slect image or video file for post.</p>
+                        <p>Post is Empty. Please enter post comment or select image or video file for post.</p>
                         <button type="button" onclick="$('#post-modal').modal('toggle')" class="fa fa-close"></button>
                     </div>
                 </div>

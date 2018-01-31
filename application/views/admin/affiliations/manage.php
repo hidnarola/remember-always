@@ -48,7 +48,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <!-- Basic layout-->
-                <form  method="post" id="page_info" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
+                <form method="post" id="page_info" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
                     <div class="panel panel-flat">
                         <div class="panel-body">
                             <div class="form-group">
@@ -130,7 +130,7 @@
                                                         $selected = 'selected';
                                                     }
                                                     ?>
-                                                    <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                    <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>" <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                                     <?php
                                                 }
                                             }
@@ -153,7 +153,7 @@
                                             <?php } else { ?>
                                                 <a class="fancybox" target="_blank" href="<?php echo AFFILIATION_IMAGE . $affiliation['image']; ?>" data-fancybox-group="gallery" ><img src="assets/admin/images/placeholder.jpg" height="90px" width="110px" alt="" class="img-circle"/></a>
                                             <?php } ?>
-    <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id'])                 ?>')"><i class="icon-trash"></i> Remove</button>-->
+    <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id'])                  ?>')"><i class="icon-trash"></i> Remove</button>-->
                                         <?php } else {
                                             ?>
                                             <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt="">
@@ -187,22 +187,15 @@
         is_valid = false;
 <?php } ?>
     $('.fancybox').fancybox();
-    $('#category_id').selectpicker({
+    $('#category_id,#country,#state').selectpicker({
         liveSearch: true,
         size: 5
     });
-    $('#country').selectpicker({
-        liveSearch: true,
-        size: 5
+    $("#city").select2({
+        tags: true,
+        theme: "bootstrap"
     });
-    $('#city').selectpicker({
-        liveSearch: true,
-        size: 5
-    });
-    $('#state').selectpicker({
-        liveSearch: true,
-        size: 5
-    });
+
     $('document').ready(function () {
         $("#page_info").validate({
             ignore: [],

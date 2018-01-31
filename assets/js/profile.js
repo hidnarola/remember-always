@@ -1574,12 +1574,12 @@ $(document).on('change', '.service-country', function () {
                 var options = "<option value=''>Select state</option>";
                 for (var i = 0; i < data.length; i++) {
                     code = data[i].shortcode;
-                    if (code != '') {
+                    if (code != null) {
                         codes = code.split('-');
                         code = codes[1];
                     }
                     options += '<option value=' + data[i].id + '>' + data[i].name;
-                    if (code != '') {
+                    if (code != null) {
                         options += ' (' + code + ')';
                     }
                     options += '</option>';

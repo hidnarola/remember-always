@@ -21,8 +21,8 @@ class Search_model extends MY_Model {
      */
     public function get_results($type = 'result', $start = 0, $offset = 12) {
         $search_type = $this->input->get('type');
-        $keyword = $this->input->get('keyword');
-        $location = $this->input->get('location');
+        $keyword = trim($this->input->get('keyword'));
+        $location = trim($this->input->get('location'));
         $result = [];
         if ($search_type != '') {
             if ($search_type == 'profile') {
@@ -36,10 +36,23 @@ class Search_model extends MY_Model {
                             ')');
                 }
                 if ($location != '') {
-                    $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ')');
+                    $location_arr = explode(',', $location);
+                    $loc_count = count($location_arr);
+                    if ($loc_count > 1) {
+                        $new_arr = [];
+                        foreach ($location_arr as $arr) {
+                            $new_arr[] = 'cn.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $new_arr[] = 'st.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $new_arr[] = 'c.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                        }
+                        $new_string = '(' . implode(' OR ', $new_arr) . ')';
+                        $this->db->where($new_string);
+                    } else {
+                        $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ')');
+                    }
                 }
                 $this->db->order_by('name');
                 $this->db->join(TBL_COUNTRY . ' as cn', 'p.country=cn.id', 'left');
@@ -65,11 +78,26 @@ class Search_model extends MY_Model {
                 }
                 // if location is not empty
                 if ($location != '') {
-                    $this->db->where('(s.location LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ')');
+
+                    $location_arr = explode(',', $location);
+                    $loc_count = count($location_arr);
+                    if ($loc_count > 1) {
+                        $new_arr = [];
+                        foreach ($location_arr as $arr) {
+                            $new_arr[] = 's.location LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $new_arr[] = 'cn.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $new_arr[] = 'st.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $new_arr[] = 'c.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                        }
+                        $new_string = '(' . implode(' OR ', $new_arr) . ')';
+                        $this->db->where($new_string);
+                    } else {
+                        $this->db->where('(s.location LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ')');
+                    }
                 }
                 $this->db->order_by('s.name');
                 $this->db->join(TBL_COUNTRY . ' as cn', 's.country=cn.id', 'left');
@@ -95,10 +123,23 @@ class Search_model extends MY_Model {
                 }
                 // if location is not empty
                 if ($location != '') {
-                    $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ')');
+                    $location_arr = explode(',', $location);
+                    $loc_count = count($location_arr);
+                    if ($loc_count > 1) {
+                        $new_arr = [];
+                        foreach ($location_arr as $arr) {
+                            $new_arr[] = 'cn.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $new_arr[] = 'st.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $new_arr[] = 'c.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                        }
+                        $new_string = '(' . implode(' OR ', $new_arr) . ')';
+                        $this->db->where($new_string);
+                    } else {
+                        $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ')');
+                    }
                 }
                 $this->db->join(TBL_COUNTRY . ' as cn', 'a.country=cn.id', 'left');
                 $this->db->join(TBL_STATE . ' as st', 'a.state=st.id', 'left');
@@ -149,18 +190,41 @@ class Search_model extends MY_Model {
                             ')';
                 }
                 if ($location != '') {
-                    $location_profile = ' AND (pc.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR ps.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR pci.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ')';
-                    $location_provider = ' AND (c.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR sc.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ')';
-                    $location_affiliation = ' AND (cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR sts.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ' OR ci.name LIKE ' . $this->db->escape('%' . $location . '%') .
-                            ')';
+
+                    $location_arr = explode(',', $location);
+                    $loc_count = count($location_arr);
+                    if ($loc_count > 1) {
+                        $profile_arr = $provider_arr = $affiliation_arr = [];
+                        foreach ($location_arr as $arr) {
+                            $profile_arr[] = 'pc.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $profile_arr[] = 'ps.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $profile_arr[] = 'pci.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            
+                            $provider_arr[] = 'c.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $provider_arr[] = 'st.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $provider_arr[] = 'sc.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            
+                            $affiliation_arr[] = 'cn.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $affiliation_arr[] = 'sts.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                            $affiliation_arr[] = 'ci.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
+                        }
+                        $location_profile = ' AND (' . implode(' OR ', $profile_arr) . ')';
+                        $location_provider = ' AND (' . implode(' OR ', $provider_arr) . ')';
+                        $location_affiliation = ' AND (' . implode(' OR ', $affiliation_arr) . ')';
+                    } else {
+                        $location_profile = ' AND (pc.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR ps.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR pci.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ')';
+                        $location_provider = ' AND (c.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR sc.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ')';
+                        $location_affiliation = ' AND (cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR sts.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ' OR ci.name LIKE ' . $this->db->escape('%' . $location . '%') .
+                                ')';
+                    }
                 }
 
                 $sql = 'SELECT s.* FROM (SELECT p.id,CONCAT(firstname," ",lastname) as name,slug,profile_image as image,life_bio as description,"profile" as type,pc.name as country,ps.name as state,pci.name as city '
@@ -252,36 +316,6 @@ class Search_model extends MY_Model {
                 $query = $this->db->query($sql);
                 $result = $query->num_rows();
             }
-            /*
-              $this->db->select('slug,CONCAT(firstname," ",lastname) as name,profile_image as image,life_bio as description,"profile" as type,cn.name as country,st.name as state,c.name as city');
-              $this->db->where(['is_delete' => 0, 'is_published' => 1]);
-              if ($keyword != '') {
-              $this->db->where('(firstname LIKE ' . $this->db->escape('%' . $keyword . '%') .
-              ' OR lastname LIKE ' . $this->db->escape('%' . $keyword . '%') .
-              ' OR CONCAT(firstname," ",lastname) LIKE ' . $this->db->escape('%' . $keyword . '%') .
-              ' OR life_bio LIKE ' . $this->db->escape('%' . $keyword . '%') .
-              ')');
-              }
-              $this->db->join(TBL_COUNTRY . ' as cn', 'p.country=cn.id', 'left');
-              $this->db->join(TBL_STATE . ' as st', 'p.state=st.id', 'left');
-              $this->db->join(TBL_CITY . ' as c', 'p.city=c.id', 'left');
-
-              if ($location != '') {
-              $this->db->where('(cn.name LIKE ' . $this->db->escape('%' . $location . '%') .
-              ' OR st.name LIKE ' . $this->db->escape('%' . $location . '%') .
-              ' OR c.name LIKE ' . $this->db->escape('%' . $location . '%') .
-              ')');
-              }
-              $this->db->order_by('name');
-              if ($type == 'result') {
-
-              $this->db->limit($offset, $start);
-              $query = $this->db->get(TBL_PROFILES . ' p');
-              $result = $query->result_array();
-              } else {
-              $query = $this->db->get(TBL_PROFILES . ' p');
-              $result = $query->num_rows();
-              } */
         }
         return $result;
     }

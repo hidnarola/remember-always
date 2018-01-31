@@ -26,8 +26,8 @@
         <?php } else {
             ?>
             <div class="login-register">
-                <a href="javascript:void(0)" onclick="showModal('log-in')">LOG IN</a>
-                <a href="javascript:void(0)" onclick="showModal('sign-up')">SIGN UP</a>
+                <a class="popup-with-form login-pop" href="#login">LOG IN</a>
+                <a class="popup-with-form sign-up-pop"  href="#login" data-action="sign-up">SIGN UP</a>
             </div>
         <?php } ?>
         <div class="search header_search_div">

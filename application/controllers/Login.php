@@ -133,6 +133,7 @@ class Login extends CI_Controller {
      * Reset password page
      */
     public function reset_password() {
+        $this->controller = strtolower($this->router->fetch_class());
         $data['title'] = 'Remember Always | Reset Password';
         $org_code = $verification_code = $this->input->get('code');
 //        $verification_code = $this->encrypt->decode($verification_code);
@@ -171,6 +172,5 @@ class Login extends CI_Controller {
             redirect('/');
         }
     }
-
 
 }

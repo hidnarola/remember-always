@@ -126,7 +126,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                         $code = $codes[1];
                                                     }
                                                     ?>
-                                                    <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?> <?php if ($code != '') echo ' (' . $code . ')' ?></option>
+                                                    <option value="<?php echo $state['id'] ?>" <?php echo $selected ?>><?php echo $state['name'] ?><?php if ($code != '') echo ' (' . $code . ')' ?></option>
                                                 <?php }
                                                 ?>
                                             </select>
@@ -743,7 +743,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                                 $selected = 'selected';
                                                         }
                                                         ?>
-                                                        <option value="<?php echo $country['id'] ?>" <?php echo $selected ?>><?php echo $country['name'] ?><?php if ($code != '') echo ' (' . $code . ')' ?></option>
+                                                        <option value="<?php echo $country['id'] ?>" <?php echo $selected ?>><?php echo $country['name'] ?></option>
                                                     <?php }
                                                     ?>
                                                 </select>

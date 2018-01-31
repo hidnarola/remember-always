@@ -1,8 +1,20 @@
+<!-- Select2  files -->
+<link href="assets/css/select2/select2.min.css" rel="stylesheet" />
+<link href="assets/css/select2/select2-bootstrap.min.css" rel="stylesheet" />
+<script src="assets/js/select2/select2.full.min.js"></script>
+<!-- Select2  files -->
 <!-- /theme JS files -->
 <div class="create-profile">
     <div class="create-profile-top">
         <div class="container">
-            <h2>Add Affiliation</h2>
+            <h2>
+                <?php
+                if (isset($affiliation))
+                    echo "Edit Affiliation";
+                else
+                    echo "Add Affiliation";
+                ?>
+            </h2>
         </div>
     </div>
     <div class="create-profile-body main-steps">
@@ -87,18 +99,19 @@
                                                             if (isset($affiliation) && $affiliation['state'] == $value['id']) {
                                                                 $selected = 'selected';
                                                             }
+                                                            $code = '';
+                                                            if ($value['shortcode'] != '') {
+                                                                $codes = explode('-', $value['shortcode']);
+                                                                $code = $codes[1];
+                                                            }
                                                             ?>
-                                                            <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                            <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>" <?php echo $this->input->method() == 'post' ? set_select('state', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?><?php if ($code != '') echo ' (' . $code . ')' ?></option>
                                                             <?php
                                                         }
                                                     }
                                                     ?>
                                                 </select>
-                                                <input type="hidden" name="state_hidden" id="state_hidden" class="form-control" value="<?php echo isset($affiliation['state']) ? base64_encode($affiliation['state']) : set_value('state_hidden'); ?>" >
-                                                <?php
-                                                echo '<label id="state_hidden-error" class="error" for="state_hidden">' . form_error('state_hidden') . '</label>';
-                                                ?>
-
+                                                <label id="state-error" class="error" for="state"></label>
                                             </div>
                                             <div class="input-three-r">
                                                 <select name="city" id="city" class="selectpicker">
@@ -111,7 +124,7 @@
                                                                 $selected = 'selected';
                                                             }
                                                             ?>
-                                                            <option <?php echo $selected; ?> value="<?php echo base64_encode($value['id']) ?>"  <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
+                                                            <option <?php echo $selected; ?> value="<?php echo $value['name'] ?>"  <?php echo $this->input->method() == 'post' ? set_select('city', base64_encode($value['id']), TRUE) : '' ?> ><?php echo $value['name']; ?></option>
                                                             <?php
                                                         }
                                                     }
@@ -128,7 +141,7 @@
                                             <div class="select-file-upload">
                                                 <span class="select-file_up_btn up_btn">
                                                     <?php
-                                                    $required='required="required"';
+                                                    $required = 'required="required"';
                                                     if (isset($affiliation) && $affiliation['image'] != '') {
                                                         $required = '';
                                                         echo "<img src='" . AFFILIATION_IMAGE . $affiliation['image'] . "' style='width:170px;'>";
@@ -150,30 +163,38 @@
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>	
-
 </div>
 <script type="text/javascript">
     $(function () {
-        $('#category').selectpicker({
-            liveSearch: true,
-            size: 5
+        /*$('#category').selectpicker({
+         liveSearch: true,
+         size: 5
+         });
+         $('#country').selectpicker({
+         liveSearch: true,
+         size: 5
+         });
+         $('#state').selectpicker({
+         liveSearch: true,
+         size: 5
+         })*/
+        $("#category,#country,#state").select2({
+            theme: "bootstrap"
         });
-        $('#country').selectpicker({
-            liveSearch: true,
-            size: 5
+        $("#city").select2({
+            tags: true,
+            theme: "bootstrap"
         });
-        $('#city').selectpicker({
-            liveSearch: true,
-            size: 5
-        });
-        $('#state').selectpicker({
-            liveSearch: true,
-            size: 5
-        });
+
+        /*
+         $('#city').selectpicker({
+         liveSearch: true,
+         size: 5
+         });*/
+        ;
         // Setup validation
         $("#affiliation_form").validate({
             ignore: ['select:hidden'],
@@ -270,6 +291,5 @@
         }
     }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAylcYpcGylc8GTu_PYJI7sqPVn6ITrVnM&libraries=places&callback=initAutocomplete" async defer></script>
-<script type="text/javascript" src="<?php echo base_url('assets/admin/js/googleAutoComplete.js') ?>"></script>
-<style>
+<!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAylcYpcGylc8GTu_PYJI7sqPVn6ITrVnM&libraries=places&callback=initAutocomplete" async defer></script>
+<script type="text/javascript" src="assets/admin/js/googleAutoComplete.js"></script>-->

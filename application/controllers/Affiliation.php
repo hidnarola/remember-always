@@ -58,6 +58,7 @@ class Affiliation extends MY_Controller {
             redirect('/');
         }
 
+        $data['breadcrumb'] = ['title' => 'Add Affiliation', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         if (!empty($slug)) {
             $affiliation = $this->affiliation_model->sql_select(TBL_AFFILIATIONS, null, ['where' => array('slug' => trim($slug), 'is_delete' => 0)], ['single' => true]);
             if (!empty($affiliation)) {
@@ -70,12 +71,12 @@ class Affiliation extends MY_Controller {
                 if (!empty($cities)) {
                     $data['cities'] = $cities;
                 }
+                $data['breadcrumb'] = ['title' => 'Edit Affiliation', 'links' => [['link' => site_url(), 'title' => 'Home']]];
             } else {
                 custom_show_404();
             }
         }
-        $countries = $this->affiliation_model->sql_select(TBL_COUNTRY . ' c');
-        $data['countries'] = $countries;
+        $data['countries'] = $this->users_model->customQuery('SELECT id,name FROM ' . TBL_COUNTRY . ' order by id=231 DESC');
         $categories = $this->affiliation_model->sql_select(TBL_AFFILIATIONS_CATEGORY, null, ['where' => array('is_delete' => 0)]);
         $data['categories'] = $categories;
         if ($this->input->method() == 'post') {
@@ -105,6 +106,18 @@ class Affiliation extends MY_Controller {
             } else {
                 $slug = slug($slug, TBL_AFFILIATIONS);
             }
+
+            $city = $this->input->post('city');
+            $state = base64_decode($this->input->post('state'));
+            //-- Check city is available in db if not then insert with new record
+            $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
+            if (empty($city_data)) {
+                $city_arr = ['name' => $city, 'state_id' => $state];
+                $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
+            } else {
+                $city_id = $city_data['id'];
+            }
+
             $dataArr = ['user_id' => $this->user_id,
                 'slug' => $slug,
                 'category_id' => base64_decode(trim($this->input->post('category'))),
@@ -112,7 +125,8 @@ class Affiliation extends MY_Controller {
                 'description' => $this->input->post('description'),
                 'country' => base64_decode(trim($this->input->post('country'))),
                 'state' => base64_decode(trim($this->input->post('state'))),
-                'city' => base64_decode(trim($this->input->post('city')))];
+                'city' => $city_id];
+
             if ($_FILES['image']['name'] != '') {
                 $image_data = upload_image('image', AFFILIATION_IMAGE);
                 if (is_array($image_data)) {
@@ -148,7 +162,6 @@ class Affiliation extends MY_Controller {
             redirect('dashboard/affiliations');
         }
         $data['title'] = 'Affiliation';
-        $data['breadcrumb'] = ['title' => 'Add Affiliation', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'affiliation/manage', $data);
     }
 
@@ -173,7 +186,7 @@ class Affiliation extends MY_Controller {
                 $data = $this->affiliation_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
                 if (!empty($data)) {
                     foreach ($data as $row) {
-                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                        $options .= "<option value = '" . $row['name'] . "'>" . $row['name'] . "</option>";
                     }
                 }
             }
@@ -183,7 +196,12 @@ class Affiliation extends MY_Controller {
                 $data = $this->affiliation_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => trim($id))]);
                 if (!empty($data)) {
                     foreach ($data as $row) {
-                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . "</option>";
+                        $code = '';
+                        if ($row['shortcode'] != '') {
+                            $codes = explode('-', $row['shortcode']);
+                            $code = ' (' . $codes[1] . ')';
+                        }
+                        $options .= "<option value = '" . base64_encode($row['id']) . "'>" . $row['name'] . $code . "</option>";
                     }
                 }
             }

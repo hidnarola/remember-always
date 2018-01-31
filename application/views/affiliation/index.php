@@ -2,7 +2,9 @@
     <div class="container">
         <div class="common-head">
             <h2 class="h2title"><?php echo isset($title) ? $title : 'Affiliation' ?></h2>
-            <a href="<?php echo site_url('affiliation/add') ?>" class="pspl">Add Affiliation</a>
+            <?php if ($this->is_user_loggedin) { ?>
+                <a href="<?php echo site_url('affiliation/add') ?>" class="pspl">Add Affiliation</a>
+            <?php } ?>
         </div>
         <div class="common-body">
             <div class="services-form funeral-srh">

@@ -3,6 +3,34 @@
  * @author KU 
  */
 $(function () {
+
+    $('.sign-up-pop').on('click', function () {
+        jQuery('[href="#sign-up"]').trigger('click')
+    });
+
+    $('.login-pop').on('click', function () {
+        jQuery('[href="#log-in"]').trigger('click')
+    });
+
+    $('.popup-with-form').magnificPopup({
+        type: 'inline',
+        preloader: false,
+        focus: '#name',
+
+        // When elemened is focused, some mobile browsers in some cases zoom in
+        // It looks not nice, so we disable it:
+        callbacks: {
+            beforeOpen: function () {
+                t = jQuery(this);
+                if ($(window).width() < 700) {
+                    this.st.focus = false;
+                } else {
+                    this.st.focus = '#name';
+                }
+            }
+        }
+    });
+
     //Prevent form submition by pressing enter key
     $(document).on('keypress', 'input', function (event) {
         text_class = $(this).attr('class');
@@ -84,6 +112,14 @@ $(function () {
         },
         submitHandler: function (form) {
             $('#login_form_btn').attr('disabled', true);
+            var login_url = $('#login-form').attr('action');
+            var check_redirect = "?redirect";
+
+            if (login_url.indexOf(check_redirect) == -1) {
+                url = window.location.href;
+                login_url = site_url + 'login?redirect=' + btoa(url);
+                $('#login-form').attr('action', login_url);
+            }
             form.submit();
         }
     });
@@ -299,15 +335,18 @@ $(function () {
  * @param string modalType
  */
 function showModal(modalType) {
-    $('#login').modal();
-    $('.nav-tabs a[href="#' + modalType + '"]').tab('show');
+    $('.' + modalType + '-pop').trigger('click');
+    /*
+     $('#login').modal();
+     $('.nav-tabs a[href="#' + modalType + '"]').tab('show'); */
 }
 /**
  * Display Forgot password modal
  * @param string modalType
  */
 function showForgotModal() {
-    $('#login').modal('hide');
+//    $('#login').modal('hide');
+    $.magnificPopup.close();
     $('#forgot-pwdmodal').modal();
 }
 /**
@@ -315,14 +354,16 @@ function showForgotModal() {
  */
 function loginforgetModal() {
     $('#forgot-pwdmodal').modal('hide');
-    $('#login').modal();
+    $('.login-pop').trigger('click');
+//    $('#login').modal();
 }
 /**
  * Hide reset password modal and display login modal
  */
 function loginrestModal() {
     $('#resetpwd-modal').modal('hide');
-    $('#login').modal();
+    $('.login-pop').trigger('click');
+//    $('#login').modal();
 }
 /**
  * Display login popup when authorized access is needed
@@ -330,17 +371,11 @@ function loginrestModal() {
 function loginModal(obj) {
     var redirect_url = $(obj).attr('data-redirect');
     $('#login-form').attr('action', site_url + 'login?redirect=' + btoa(redirect_url));
-    /* new PNotify({
-     title: 'Error!',
-     text: 'Please login first!',
-     buttons: {
-     sticker: false
-     },
-     //styling:'bootstrap3',
-     type: 'error'
-     }); */
-    $('#login').modal();
-    $('.nav-tabs a[href="#log-in"]').tab('show');
+    $('.login-pop').trigger('click');
+    /*
+     showErrorMSg('Please login first!');
+     $('#login').modal();
+     $('.nav-tabs a[href="#log-in"]').tab('show');*/
 }
 function showSuccessMSg(msg) {
     new PNotify({
@@ -474,3 +509,6 @@ function genericSocialShare(url) {
     window.open(url, 'sharer', 'toolbar=0,status=0,width=648,height=395');
     return true;
 }
+
+
+
