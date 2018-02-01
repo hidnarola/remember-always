@@ -47,7 +47,7 @@ class Blog extends MY_Controller {
      */
     public function details($slug) {
         if (isset($slug) && !empty($slug)) {
-            $blogs = $this->blogs_model->sql_select(TBL_BLOG_POST, '*', ['where' => ['is_delete' => 0, 'is_active' => 1]], ['order_by' => 'id DESC', 'limit' => 5]);
+            $blogs = $this->blogs_model->sql_select(TBL_BLOG_POST, '*', ['where' => ['is_delete' => 0, 'is_active' => 1, 'slug!=' => $slug]], ['order_by' => 'id DESC', 'limit' => 5]);
             $data['blogs'] = $blogs;
             $blog_data = $this->users_model->sql_select(TBL_BLOG_POST . ' b', 'title,image,description,b.slug,u.firstname,u.lastname,b.created_at', ['where' => ['b.is_delete' => 0, 'b.is_active' => 1, 'slug' => $slug]], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=b.user_id')], 'single' => true]);
             if (!empty($blog_data)) {

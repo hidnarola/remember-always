@@ -259,10 +259,10 @@
                                                 <?php if (isset($funnel_services['Memorial']) && !empty($funnel_services['Memorial'])) { ?>
                                                     <h5><?php echo $funnel_services['Memorial']['place_name'] ?></h5>
                                                     <p>
-                                                        <span class="list_content"><strong>Time: </strong><?php echo isset($funnel_services['Memorial']['time']) && !is_null($funnel_services['Memorial']['time']) ? date('h:i A', strtotime($funnel_services['Memorial']['time'])) : '00:00 AM' ?></span>
+                                                        <span class="list_content"><strong>Time: </strong><?php echo isset($funnel_services['Memorial']['time']) && !is_null($funnel_services['Memorial']['time']) ? date('h:i A', strtotime($funnel_services['Memorial']['time'])) : '' ?></span>
                                                     </p>
                                                     <p>
-                                                        <span class="list_content"><strong>Date: </strong>(<?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('M d, Y', strtotime($funnel_services['Memorial']['date'])) : '3 Nov, 1988' ?>)</span>
+                                                        <span class="list_content"><strong>Date: </strong><?php echo isset($funnel_services['Memorial']['date']) && !is_null($funnel_services['Memorial']['date']) ? date('M d, Y', strtotime($funnel_services['Memorial']['date'])) : '' ?></span>
                                                     </p>
                                                     <p>
                                                         <span class="list_content"><strong>Address: </strong><?php echo $funnel_services['Memorial']['address'] ?></span>
@@ -276,7 +276,7 @@
                                                     <p>
                                                         <span class="list_content"><strong>Zipcode: </strong><?php echo $funnel_services['Memorial']['zip'] ?></span>
                                                     </p>                                                <?php } else { ?>
-                                                    <p class="general-text">Memorial service not available.</p>
+                                                    <p class="general-text"><span class="list_content">Memorial service not available.</span></p>
                                                 <?php } ?>
                                             </div>
                                         </div>
@@ -310,7 +310,7 @@
                                                         <span class="list_content"><strong>Zipcode: </strong><?php echo $funnel_services['Funeral']['zip'] ?></span>
                                                     </p>
                                                 <?php } else { ?>
-                                                    <p class="general-text">Funeral service not available.</p>
+                                                    <p class="general-text"><span class="list_content">Funeral service not available.</span></p>
                                                 <?php } ?>
                                             </div>
                                         </div>
@@ -326,10 +326,10 @@
                                                 <?php if (isset($funnel_services['Burial']) && !empty($funnel_services['Burial'])) { ?>
                                                     <h5><?php echo $funnel_services['Burial']['place_name'] ?></h5>
                                                     <p>
-                                                        <span class="list_content"><strong>Time: </strong><?php echo isset($funnel_services['Burial']['time']) && !is_null($funnel_services['Burial']['time']) ? date('h:i A', strtotime($funnel_services['Burial']['time'])) : '00:00 AM' ?></span>
+                                                        <span class="list_content"><strong>Time: </strong><?php echo isset($funnel_services['Burial']['time']) && !is_null($funnel_services['Burial']['time']) ? date('h:i A', strtotime($funnel_services['Burial']['time'])) : '' ?></span>
                                                     </p>
                                                     <p>
-                                                        <span class="list_content"><strong>Date: </strong>(<?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('M d, Y', strtotime($funnel_services['Burial']['date'])) : '3 Nov, 1988' ?>)</span>
+                                                        <span class="list_content"><strong>Date: </strong><?php echo isset($funnel_services['Burial']['date']) && !is_null($funnel_services['Burial']['date']) ? date('M d, Y', strtotime($funnel_services['Burial']['date'])) : '' ?></span>
                                                     </p>
                                                     <p>
                                                         <span class="list_content"><strong>Address: </strong><?php echo $funnel_services['Burial']['address'] ?></span>
@@ -338,7 +338,7 @@
                                                     <p><span class="list_content"><strong>State: </strong><?php echo $funnel_services['Burial']['state_name'] ?></span></p>
                                                     <p><span class="list_content"><strong>Zipcode:</strong> <?php echo $funnel_services['Burial']['zip'] ?></span></p>
                                                 <?php } else { ?>
-                                                    <p class="general-text">Burial service not available.</p>
+                                                    <p class="general-text"><span class="list_content">Burial service not available.</span></p>
                                                 <?php } ?>
                                             </div>
                                         </div>
@@ -741,12 +741,12 @@
                             <td><span class="timeline_date"></span></td>
                         </tr>
                         <tr class="popup-input">
-                            <td><label>Media</label></td>
-                            <td><span class="timeline_media"></span></td>
-                        </tr>
-                        <tr class="popup-input">
                             <td><label>Details</label></td>
                             <td><span class="timeline_details"></span></td>
+                        </tr>
+                        <tr class="popup-input">
+                            <td><label>Media</label></td>
+                            <td><span class="timeline_media"></span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1002,8 +1002,8 @@ else
     $user_logged_in = $this->is_user_loggedin;
 ?>
 <script type="text/javascript">
-    $('#timeline_details .timeline_media').parent().parent().hide();
-    $('#timeline_details .timeline_details').parent().parent().hide();
+//    $('#timeline_details .timeline_media').parent().parent().hide();
+//    $('#timeline_details .timeline_details').parent().parent().hide();
     var user_logged_in = '<?php echo $user_logged_in ?>';
     var loggedin_userid = <?php echo $this->user_id ?>;
     var profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';

@@ -4,6 +4,7 @@ fundraiser_media = [];
 fundraiser_types = [];
 currentTab = 'first-step';
 $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
     //-- Tab Concepts for profile
     $('ul.nav.nav-tabs  a').click(function (e) {
         e.preventDefault();
@@ -208,7 +209,7 @@ $(function () {
     $('.service-time').datetimepicker({
         format: 'LT'
     });
-    $('#fundraiser_enddate').datepicker({format: "mm/dd/yyyy", startDate: "date()", autoclose: true});
+//    $('#fundraiser_enddate').datepicker({format: "mm/dd/yyyy", startDate: "date()", autoclose: true});
 });
 // Display the preview of image on image upload
 function readURL(input) {
@@ -683,7 +684,7 @@ function proceed_step() {
         } else if (currentTab == 'sixth-step') {
             if ($('#fundraiser_profile-form').valid()) {
                 fundraiser_valid = 1, entered_detail = 0;
-                if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_enddate').val() != '' || $('#fundraiser_details').val() != '') {
+                if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_details').val() != '') {
                     if ($('#fundraiser_title').val() == '') {
                         $('#fundraiser_title').addClass('error');
                         fundraiser_valid = 0;
@@ -744,8 +745,6 @@ function proceed_step() {
                             type: "POST",
                             data: {profile_process: 6, profile_id: profile_id},
                             dataType: "json",
-                            processData: false, // tell jQuery not to process the data
-                            contentType: false, // tell jQuery not to set contentType
                             success: function (data) {
                                 $('.loader').hide();
                                 if (data.success == true) {
@@ -1216,7 +1215,7 @@ function save_funeral_tribute() {
 
                     if ($('#fundraiser_profile-form').valid()) {
                         fundraiser_valid = 1, entered_detail = 0;
-                        if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_enddate').val() != '' || $('#fundraiser_details').val() != '') {
+                        if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_details').val() != '') {
                             if ($('#fundraiser_title').val() == '') {
                                 $('#fundraiser_title').addClass('error');
                                 fundraiser_valid = 0;
@@ -1490,12 +1489,13 @@ $(document).on('change', '.timeline-media', function () {
 //Validates date,month and year
 function validate_timeline_date() {
     valid = 1;
-    $('input[name="day[]"]').each(function () {
+    $('select[name="day[]"]').each(function () {
         day = $(this);
-        month = $(this).parent('.input-three-r').siblings('.input-three-m').find('input[name="month[]"]');
+        month = $(this).parent('.input-three-r').siblings('.input-three-m').find('select[name="month[]"]');
         year = $(this).parent('.input-three-r').siblings('.input-three-l').find('input[name="year[]"]');
         if (day.val() != '' && month.val() == '') {
             month.addClass('error');
+            month.focus();
             valid = 0;
         } else {
             month.removeClass('error');
@@ -1618,7 +1618,7 @@ $(document).on('change', '.service-state', function () {
                 $('.loader').hide();
                 var options = "<option value=''>Select City</option>";
                 for (var i = 0; i < data.length; i++) {
-                    options += '<option value=' + data[i].name + '>' + data[i].name + '</option>';
+                    options += '<option value="' + data[i].name + '">' + data[i].name + '</option>';
                 }
                 $('#' + city_id).empty().append(options);
             }

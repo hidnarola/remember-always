@@ -152,7 +152,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                     <div class="input-wrap">
                                         <label class="label-css">Create Life Bio</label>
                                         <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Write about Bio... "><?php echo (isset($profile)) ? $profile['life_bio'] : set_value('life_bio') ?></textarea>
-                                        <label class="label-css">Tips for writing a Life Bio</label>
+                                        <label class="label-css"><a title="Introduce your loved one like a real person and Watch your word count" href="#" data-toggle="tooltip" class="bio-tips">Tips for writing a Life Bio</a></label>
                                     </div>
                                 </div>
                             </div>	
@@ -822,10 +822,10 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>>
                                                 <p>Minimum goal is $250.</p>
                                             </div>
-                                            <div class="input-r">
+<!--                                            <div class="input-r">
                                                 <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
                                                 <p>Leave empty ongoing fundraising campaigns.</p>
-                                            </div>
+                                            </div>-->
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Description</label>

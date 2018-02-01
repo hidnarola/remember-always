@@ -201,7 +201,7 @@ class Profile extends MY_Controller {
         }
         $final_post_data = [];
         $total_records = $this->users_model->sql_select(TBL_LIFE_TIMELINE, 'id', ['where' => ['is_delete' => 0, 'profile_id' => trim($profile_id)]], ['count' => TRUE]);
-        $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*,(SELECT COUNT(*) FROM ' . TBL_LIFE_TIMELINE . ' l' . ' WHERE l.is_delete=0) as total_count', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.date,lt.month,lt.year', 'limit' => $offset, 'offset' => $start]);
+        $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*,(SELECT COUNT(*) FROM ' . TBL_LIFE_TIMELINE . ' l' . ' WHERE l.is_delete=0) as total_count', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.year,lt.month,lt.date', 'limit' => $offset, 'offset' => $start]);
         if ($static === true) {
             $final = ['timeline_data' => $timeline_data, 'total_count' => $total_records];
             return $final;
@@ -527,7 +527,7 @@ class Profile extends MY_Controller {
 
                     $image_data = upload_image('gallery', PROFILE_IMAGES . $directory . '/' . $sub_directory);
                     if (is_array($image_data)) {
-                        $data['error'] = $image_data['errors'];
+                        $data['error'] = "Error in " . $_FILES['gallery']['name'] . " name." . $image_data['errors'];
                         $data['success'] = false;
                     } else {
                         $id = $this->users_model->common_insert_update('insert', TBL_GALLERY, ['profile_id' => $profile_id, 'user_id' => $this->user_id, 'media' => $directory . '/' . $sub_directory . '/' . $image_data, 'type' => 1, 'created_at' => date('Y-m-d H:i:s')]);
@@ -738,7 +738,7 @@ class Profile extends MY_Controller {
     public function add_timeline() {
         $post_arr = $this->input->post();
         $profile_id = base64_decode($this->input->post('profile_id'));
-        $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
+        $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'user_id' => $this->user_id, 'is_delete' => 0]], ['single' => true]);
         $flag = 0;
         if (!empty($profile)) {
             $life_timeline = [];
@@ -814,19 +814,19 @@ class Profile extends MY_Controller {
                     }
                     $life_timeline[] = $lif_arr;
                 }
-                if ($flag == 0) {
-                    foreach ($life_timeline as $key => $arr) {
-                        if (isset($this->input->post('timelineid')[$key])) {
-                            $arr['updated_at'] = date('Y-m-d H:i:s');
-                            $this->users_model->common_insert_update('update', TBL_LIFE_TIMELINE, $arr, ['id' => base64_decode($this->input->post('timelineid')[$key])]);
-                        } else {
-                            $arr['created_at'] = date('Y-m-d H:i:s');
-                            $this->users_model->common_insert_update('insert', TBL_LIFE_TIMELINE, $arr);
-                        }
+            }
+            if ($flag == 0) {
+                foreach ($life_timeline as $key => $arr) {
+                    if (isset($this->input->post('timelineid')[$key])) {
+                        $arr['updated_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('update', TBL_LIFE_TIMELINE, $arr, ['id' => base64_decode($this->input->post('timelineid')[$key])]);
+                    } else {
+                        $arr['created_at'] = date('Y-m-d H:i:s');
+                        $this->users_model->common_insert_update('insert', TBL_LIFE_TIMELINE, $arr);
                     }
-                    $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 4], ['id' => $profile_id]);
-                    $data['success'] = true;
                 }
+                $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_process' => 4], ['id' => $profile_id]);
+                $data['success'] = true;
             }
         }
         echo json_encode($data);
@@ -855,7 +855,7 @@ class Profile extends MY_Controller {
      */
     public function lifetimeline() {
         $id = base64_decode($this->input->post('profile_id'));
-        $timeline = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $id, 'is_delete' => 0]]);
+        $timeline = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $id, 'is_delete' => 0]], ['order_by' => 'year,month,date']);
         $month_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
         $str = '';
@@ -1139,9 +1139,9 @@ class Profile extends MY_Controller {
                     $end_date = null;
                     $goal = $this->input->post('fundraiser_goal');
 
-                    if (!empty($this->input->post('fundraiser_enddate'))) {
-                        $end_date = date('Y-m-d', strtotime($this->input->post('fundraiser_enddate')));
-                    }
+//                    if (!empty($this->input->post('fundraiser_enddate'))) {
+//                        $end_date = date('Y-m-d', strtotime($this->input->post('fundraiser_enddate')));
+//                    }
                     $data_array = [
                         'profile_id' => $profile_id,
                         'title' => trim($this->input->post('fundraiser_title')),

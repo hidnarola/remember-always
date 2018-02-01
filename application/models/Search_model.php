@@ -245,7 +245,7 @@ class Search_model extends MY_Model {
                         . 'WHERE b.is_delete=0 AND b.is_active=1' . $where_blog . ') as s';
 
 
-                $sql .= ' ORDER BY s.name';
+                $sql .= ' ORDER BY FIELD(type, "profile") DESC,s.name';
                 if ($type == 'result') {
                     $sql .= ' LIMIT ' . $start . ',' . $offset;
                     $query = $this->db->query($sql);
@@ -307,7 +307,7 @@ class Search_model extends MY_Model {
                     . 'WHERE b.is_delete=0 AND b.is_active=1' . $where_blog . ') as s';
 
 
-            $sql .= ' ORDER BY s.name';
+            $sql .= ' ORDER BY FIELD(s.type, "profile") DESC,s.name';
             if ($type == 'result') {
                 $sql .= ' LIMIT ' . $start . ',' . $offset;
                 $query = $this->db->query($sql);
@@ -359,7 +359,7 @@ class Search_model extends MY_Model {
                 'SELECT b.title as name,b.slug,b.image,"blog" as type '
                 . 'FROM ' . TBL_BLOG_POST . ' b '
                 . ' WHERE b.is_delete=0 AND b.is_active=1 AND b.title LIKE ' . $this->db->escape('%' . $search_text . '%') .
-                ') s ORDER BY name ASC';
+                ') s ORDER BY FIELD(type, "profile") DESC,name ASC';
         $data = $this->db->query($sql);
         return $data->result_array();
     }

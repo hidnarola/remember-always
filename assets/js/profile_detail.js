@@ -187,7 +187,7 @@ $(function () {
             success: function (data) {
                 if (data.success == true) {
                     //-- Empty previous divs 
-                    $('#timeline_details .timeline_title,#timeline_details .timeline_date,#timeline_details .timeline_media,#timeline_details .timeline_details').html('');
+                    $('#timeline_details .timeline_title,#timeline_details .timeline_date,#timeline_details .timeline_media,#timeline_details .timeline_details').html('-');
                     //-- Remove default preview div
                     var timeline_data = JSON.parse(data.data);
                     $('#timeline_details .timeline_title').html(timeline_data.title);
