@@ -13,6 +13,9 @@
 <link href="assets/css/select2/select2-bootstrap.min.css" rel="stylesheet" />
 <script src="assets/js/select2/select2.full.min.js"></script>
 <!-- Select2  files -->
+<!-- WePay js file -->
+<script src="https://static.wepay.com/min/js/wepay.v2.js" type="text/javascript"></script>
+<!-- /WePay js file -->
 <?php
 $month_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
@@ -822,14 +825,31 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>>
                                                 <p>Minimum goal is $250.</p>
                                             </div>
-<!--                                            <div class="input-r">
-                                                <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
-                                                <p>Leave empty ongoing fundraising campaigns.</p>
-                                            </div>-->
+                                            <!--                                            <div class="input-r">
+                                                                                            <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
+                                                                                            <p>Leave empty ongoing fundraising campaigns.</p>
+                                                                                        </div>-->
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Description</label>
                                             <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed." <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
+                                        </div>
+                                        <div class="input-wrap">
+                                            <label class="label-css">You need to create your Wepay account for collecting funds. Please click on below button to start</label>
+                                            <?php
+                                            $auth_btn_style = '';
+                                            $success_msg_style = 'style="display:none"';
+                                            if (isset($fundraiser) && !empty($fundraiser) && $fundraiser['wepay_account_id'] != '' && $fundraiser['wepay_access_token'] != '') {
+                                                $auth_btn_style = 'style="display:none"';
+                                                $success_msg_style = '';
+                                            }
+                                            ?>
+                                            <div class="wepay_auth_btn" <?php echo $auth_btn_style ?>>
+                                                <a id="start_oauth2">Click here to create your WePay account</a>
+                                            </div>
+                                            <div class="wepay_success_msg alert alert-success" <?php echo $success_msg_style ?>>
+                                                You have successfully created WePay account for this profile. 
+                                            </div>
                                         </div>
                                     </div> 
                                     <div class="step-06-r">
@@ -959,8 +979,11 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
         </div>
     </div>
 </div>
-
+<?php $wepay_endpoint = WEPAY_ENDPOINT ?>
 <script type="text/javascript">
+    var user_firstname = '<?php echo $this->session->userdata('remalways_user')['firstname'] ?>'
+    var user_lastname = '<?php echo $this->session->userdata('remalways_user')['lastname'] ?>'
+    var user_email = '<?php echo $this->session->userdata('remalways_user')['email'] ?>'
     var profile_id = '<?php echo (isset($profile)) ? base64_encode($profile['id']) : 0 ?>';
     var profile_slug = '<?php echo (isset($profile)) ? $profile['slug'] : "" ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT - $image_count ?>;
@@ -977,5 +1000,17 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
     }
     profile_images = '<?php echo PROFILE_IMAGES ?>';
     var bottom = $('#selected-preview').position().top + $('#selected-preview').outerHeight(true);
+    currentTab = 'first-step';
+    tributeClass = '<?php echo $tribute_class ?>';
+    if (tributeClass != '') {
+        currentTab = 'sixth-step';
+    }
+    curr_url = window.location.href;
+
+    //-- wepay credentials initialize
+    wepay_client_id = '<?php echo $wepay_client_id ?>';
+    wepay_endpoint = '<?php echo $wepay_endpoint ?>';
+
 </script>
 <script src="assets/js/profile.js"></script>
+

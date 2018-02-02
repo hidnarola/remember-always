@@ -2,7 +2,6 @@ var regex_img = /^([a-zA-Z0-9\s_\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
 var regex_video = /^([a-zA-Z0-9\s_\\.\-:])+(.mp4)$/;
 fundraiser_media = [];
 fundraiser_types = [];
-currentTab = 'first-step';
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
     //-- Tab Concepts for profile
@@ -1780,4 +1779,43 @@ function isValidDate(day, month, year) {
 }
 $('#firstname,#lastname').change(function () {
     $('#profile_name').html($('#firstname').val() + ' ' + $('#lastname').val());
+});
+//-- wepay code starts here..
+WePay.set_endpoint(wepay_endpoint); // stage or production
+WePay.OAuth2.button_init(document.getElementById('start_oauth2'), {
+    "client_id": wepay_client_id,
+    "scope": ["manage_accounts", "collect_payments", "view_user", "send_money", "preapprove_payments"],
+    "user_name": user_firstname + " " + user_lastname,
+    "user_email": user_email,
+    "redirect_uri": curr_url,
+    "top": 100, // control the positioning of the popup with the top and left params
+    "left": 100,
+    "state": "robot", // this is an optional parameter that lets you persist some state value through the flow
+    "callback": function (data) {
+        /** This callback gets fired after the user clicks "grant access" in the popup and the popup closes. The data object will include the code which you can pass to your server to make the /oauth2/token call **/
+        if (data.code.length !== 0) {
+            // send the data to the server
+            $('.loader').show();
+            data['redirect_uri'] = curr_url;
+            $.ajax({
+                url: site_url + 'fundraiser/index/' + profile_slug,
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                    $('.loader').hide();
+                    if (data.success == true) {
+                        $('.wepay_auth_btn').hide();
+                        $('.wepay_success_msg').show();
+                        showSuccessMSg('You have successfully created your wepay account');
+                    } else {
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        } else {
+            console.log('Popup is closed');
+            // an error has occurred and will be in data.error
+//            showErrorMSg(data.error);
+        }
+    }
 });

@@ -150,11 +150,17 @@ define('MAX_VIDEO_SIZE', 200);
 define('MAX_IMAGES_COUNT', 500);
 define('MAX_VIDEOS_COUNT', 50);
 
-/* to set ffmpeg exe file path*/
-if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
-  define('FFMPEG_PATH', 'D:/wamp64/www/HD/ffmpeg/bin/ffmpeg.exe');
-}else{
-  define('FFMPEG_PATH', 'C:\wamp64\www\remember-always\ffmpeg.exe');
+/* to set ffmpeg exe file path */
+if ($_SERVER['HTTP_HOST'] == 'clientapp.narola.online') {
+    define('FFMPEG_PATH', 'D:/wamp64/www/HD/ffmpeg/bin/ffmpeg.exe');
+    /* Constants for wepay payment payment */
+    define('WEPAY_ENVIRONMENT', 'Staging'); // Use "Staging" for development and "Production" for "Production"
+    define('WEPAY_ENDPOINT', 'stage'); // Use "stage" for development and "production" for "Production"
+} else {
+    define('FFMPEG_PATH', 'C:\wamp64\www\remember-always\ffmpeg.exe');
+    /* Constants for wepay payment payment */
+    define('WEPAY_ENVIRONMENT', 'Production'); // Use "Staging" for development and "Production" for "Production"
+    define('WEPAY_ENDPOINT', 'production'); // Use "stage" for development and "production" for "Production"
 }
 
 /**
@@ -163,10 +169,11 @@ if($_SERVER['HTTP_HOST'] == 'clientapp.narola.online'){
 define('TEST_API_KEY', '724510');
 define('TEST_PASSWORD', 'K8Ew8o');
 
-/*Support email*/
+/* Support email */
 define('SUPPORT_EMAIL', 'support@rememberalways.com');
 
-/*Constants for captcha validations*/
+/* Constants for captcha validations */
 define('GOOGLE_SECRET_KEY', '6LfQPEIUAAAAAPnx8oNpNc1Vpz40c_auELJ-N6Q4');
+
 
 

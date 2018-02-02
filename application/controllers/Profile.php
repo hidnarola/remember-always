@@ -300,6 +300,8 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function create($slug = null) {
+        $this->config->load('wepay');
+
         if (!$this->is_user_loggedin) {
             $this->session->set_flashdata('error', 'You must login to access this page');
             redirect('/');
@@ -318,6 +320,7 @@ class Profile extends MY_Controller {
         $data['countries'] = $this->users_model->customQuery('SELECT id,name FROM ' . TBL_COUNTRY . ' order by id=231 DESC');
         $data['profile_states'] = $data['memorial_states'] = $data['funeral_states'] = $data['burial_states'] = [];
         $data['profile_cities'] = $data['memorial_cities'] = $data['funeral_cities'] = $data['burial_cities'] = [];
+        $data['wepay_client_id'] = $this->config->item('client_id');
 
         if (!empty($profile)) {
             $data['profile'] = $profile;
@@ -1136,27 +1139,14 @@ class Profile extends MY_Controller {
                     $profile_id = base64_decode($this->input->post('profile_id'));
                     //Get fund raiser profile 
                     $fund_profile = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
-                    $end_date = null;
-                    $goal = $this->input->post('fundraiser_goal');
 
-//                    if (!empty($this->input->post('fundraiser_enddate'))) {
-//                        $end_date = date('Y-m-d', strtotime($this->input->post('fundraiser_enddate')));
-//                    }
                     $data_array = [
                         'profile_id' => $profile_id,
                         'title' => trim($this->input->post('fundraiser_title')),
-                        'goal' => $goal,
-                        'end_date' => $end_date,
+                        'goal' => $this->input->post('fundraiser_goal'),
                         'details' => trim($this->input->post('fundraiser_details'))
                     ];
-                    if (!empty($fund_profile)) {
-                        $data_array['updated_at'] = date('Y-m-d H:i:s');
-                        $fundraiser_id = $fund_profile['id'];
-                        $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $data_array, ['id' => $fund_profile['id']]);
-                    } else {
-                        $data_array['created_at'] = date('Y-m-d H:i:s');
-                        $fundraiser_id = $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_PROFILES, $data_array);
-                    }
+                    
                     $directory = 'profile_' . $profile_id;
                     if (!file_exists(FUNDRAISER_IMAGES . $directory)) {
                         mkdir(FUNDRAISER_IMAGES . $directory);
