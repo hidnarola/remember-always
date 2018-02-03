@@ -47,6 +47,7 @@ a:hover{text-decoration:none;}
 .carousel .owl-page{display:inline-block;vertical-align:top;}
 .carousel .owl-page span{width:11px;height:11px;background:#fff;border-radius:80px;border:2px solid #fff;display:block;margin:0 5px;}
 .carousel .owl-page.active span{background:#975979;}
+.carousel .item img {width: 100%;}
 
 .memorialize:after,
 .memorialize ul:after{content:'';clear:both;display:block;}

@@ -154,13 +154,13 @@ define('MAX_VIDEOS_COUNT', 50);
 if ($_SERVER['HTTP_HOST'] == 'clientapp.narola.online') {
     define('FFMPEG_PATH', 'D:/wamp64/www/HD/ffmpeg/bin/ffmpeg.exe');
     /* Constants for wepay payment payment */
-    define('WEPAY_ENVIRONMENT', 'Staging'); // Use "Staging" for development and "Production" for "Production"
     define('WEPAY_ENDPOINT', 'stage'); // Use "stage" for development and "production" for "Production"
+    define('WEPAY_ENVIRONMENT', 'Staging'); // Use "Staging" for development and "Production" for "Production"
 } else {
     define('FFMPEG_PATH', 'C:\wamp64\www\remember-always\ffmpeg.exe');
     /* Constants for wepay payment payment */
-    define('WEPAY_ENVIRONMENT', 'Production'); // Use "Staging" for development and "Production" for "Production"
-    define('WEPAY_ENDPOINT', 'production'); // Use "stage" for development and "production" for "Production"
+    define('WEPAY_ENDPOINT', 'production'); 
+    define('WEPAY_ENVIRONMENT', 'Production'); 
 }
 
 /**

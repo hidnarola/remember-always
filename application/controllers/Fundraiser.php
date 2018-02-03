@@ -43,7 +43,11 @@ class Fundraiser extends MY_Controller {
                 }
 
                 require_once(APPPATH . 'libraries/Wepay.php');
-
+                echo 'client id is '.$this->client_id;
+                echo '<br/>';
+                echo 'client secret is '.$this->client_secret;
+                exit;
+                
                 // oauth2 parameters
                 $code = $this->input->post('code'); // the code parameter from step 2
                 $redirect_uri = $this->input->post('redirect_uri'); // this is the redirect_uri you used in step 1
