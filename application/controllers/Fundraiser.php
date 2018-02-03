@@ -43,16 +43,12 @@ class Fundraiser extends MY_Controller {
                 }
 
                 require_once(APPPATH . 'libraries/Wepay.php');
-                echo 'client id is '.$this->client_id;
-                echo '<br/>';
-                echo 'client secret is '.$this->client_secret;
-                exit;
-                
+
                 // oauth2 parameters
                 $code = $this->input->post('code'); // the code parameter from step 2
                 $redirect_uri = $this->input->post('redirect_uri'); // this is the redirect_uri you used in step 1
                 // application settings
-                if (WEPAY_ENDPOINT == 'stag') {
+                if (WEPAY_ENDPOINT == 'stage') {
                     Wepay::useStaging($this->client_id, $this->client_secret);
                 } else {
                     Wepay::useProduction($this->client_id, $this->client_secret);
@@ -76,7 +72,7 @@ class Fundraiser extends MY_Controller {
                         $encrypted_access_token = $this->encrypt->encode($access_token);
                         $wepay_arr = ['wepay_account_id' => $encrypted_account_id, 'wepay_access_token' => $encrypted_access_token];
 
-                        $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $wepay_arr, ['id' => $fundraiser['fundraiser_id']]);
+                        $this->users_model->common_insert_update('update', TBL_FUNDRAISER_PROFILES, $wepay_arr, ['id' => $fundraiser_id]);
                         $data['success'] = true;
                     } else {
                         $data['error'] = 'Something went wrong!Please try again';
@@ -94,6 +90,8 @@ class Fundraiser extends MY_Controller {
             $data['error'] = 'Invalid Request!';
             $data['success'] = false;
         }
+        echo json_encode($data);
+        exit;
     }
 
 }

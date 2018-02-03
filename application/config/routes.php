@@ -119,8 +119,8 @@ $route['search/(:any)'] = 'search/index/$1';
 //$route['dashboard/(:any)/profile_publish/(:any)'] = 'dashboard/profile_publish/$2';
 
 /* Donation page routes */
-$route['donate/first'] = 'donate/first';
-$route['donate/second'] = 'donate/second';
+$route['donate/next/(:any)'] = 'donate/next/$1';
+$route['donate/payment/(:any)'] = 'donate/payment/$1';
 $route['donate/third'] = 'donate/third';
 $route['donate/(:any)'] = 'donate/index/$1';
 

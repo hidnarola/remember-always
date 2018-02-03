@@ -1146,7 +1146,7 @@ class Profile extends MY_Controller {
                         'goal' => $this->input->post('fundraiser_goal'),
                         'details' => trim($this->input->post('fundraiser_details'))
                     ];
-                    
+
                     $directory = 'profile_' . $profile_id;
                     if (!file_exists(FUNDRAISER_IMAGES . $directory)) {
                         mkdir(FUNDRAISER_IMAGES . $directory);
@@ -1193,7 +1193,11 @@ class Profile extends MY_Controller {
                             $media['fundraiser_profile_id'] = $fundraiser_id;
                             $this->users_model->common_insert_update('insert', TBL_FUNDRAISER_MEDIA, $media);
                         }
-                        $this->users_model->common_insert_update('update', TBL_PROFILES, ['type' => 2, 'profile_process' => 6], ['id' => $profile_id]);
+                        //-- get fundraising details
+                        $fund_profile = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, 'wepay_account_id,wepay_access_token', ['where' => ['id' => $fundraiser_id, 'is_delete' => 0]], ['single' => true]);
+                        if ($fund_profile['wepay_account_id'] != '' && $fund_profile['wepay_access_token'] != '') {
+                            $this->users_model->common_insert_update('update', TBL_PROFILES, ['type' => 2, 'profile_process' => 6], ['id' => $profile_id]);
+                        }
                         $data['success'] = true;
                     }
                 } else {

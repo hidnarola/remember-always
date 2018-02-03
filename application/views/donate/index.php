@@ -14,7 +14,7 @@
                                 <div class="rang_fill" style="width: <?php echo round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']) . '%' ?>"></div>
                             </div>
                         </div>
-                        <div class="pro_btn"><a href="javascript:void(0)">Donate</a></div>
+                        <div class="pro_btn"><a href="<?php echo site_url('donate/next/' . $fundraiser['slug']) ?>">Donate</a></div>
                     </div>
                     <div class="donate_detail">
                         <h2>Donations</h2>	
@@ -64,7 +64,7 @@
                                             <span class="gallery-play-btn">
                                                 <a href="<?php echo base_url(FUNDRAISER_IMAGES . $media['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="gallery"><img src="assets/images/play.png" alt=""></a>
                                             </span>
-                                                <?php } ?>
+                                        <?php } ?>
                                     </div>
                                 </li>
                                 <?php

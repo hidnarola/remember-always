@@ -155,7 +155,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                     <div class="input-wrap">
                                         <label class="label-css">Create Life Bio</label>
                                         <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Write about Bio... "><?php echo (isset($profile)) ? $profile['life_bio'] : set_value('life_bio') ?></textarea>
-                                        <label class="label-css"><a title="Introduce your loved one like a real person and Watch your word count" href="#" data-toggle="tooltip" class="bio-tips">Tips for writing a Life Bio</a></label>
+                                        <label class="label-css"><a title="Introduce your loved one like a real person and Watch your word count" href="javascript:void(0)" data-toggle="tooltip" class="bio-tips">Tips for writing a Life Bio</a></label>
                                     </div>
                                 </div>
                             </div>	
@@ -839,9 +839,11 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                             <?php
                                             $auth_btn_style = '';
                                             $success_msg_style = 'style="display:none"';
+                                            $wepay_connected = 0;
                                             if (isset($fundraiser) && !empty($fundraiser) && $fundraiser['wepay_account_id'] != '' && $fundraiser['wepay_access_token'] != '') {
                                                 $auth_btn_style = 'style="display:none"';
                                                 $success_msg_style = '';
+                                                $wepay_connected = 1;
                                             }
                                             ?>
                                             <div class="wepay_auth_btn" <?php echo $auth_btn_style ?>>
@@ -1010,6 +1012,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
     //-- wepay credentials initialize
     wepay_client_id = '<?php echo $wepay_client_id ?>';
     wepay_endpoint = '<?php echo $wepay_endpoint ?>';
+    wepay_connected = <?php echo $wepay_connected ?>;
 
 </script>
 <script src="assets/js/profile.js"></script>

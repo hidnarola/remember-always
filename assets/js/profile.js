@@ -688,12 +688,12 @@ function proceed_step() {
                         $('#fundraiser_title').addClass('error');
                         fundraiser_valid = 0;
                     }
-
-                    if ($('#fundraiser_goal').val() != '' && $('#fundraiser_goal').val() < 250) {
+                    if ($('#fundraiser_goal').val() == '') {
                         $('#fundraiser_goal').addClass('error');
                         fundraiser_valid = 0;
-                    } else {
-                        $('#fundraiser_goal').removeClass('error');
+                    } else if ($('#fundraiser_goal').val() < 250) {
+                        $('#fundraiser_goal').addClass('error');
+                        fundraiser_valid = 0;
                     }
                     /*
                      if ($('#fundraiser_enddate').val() == '') {
@@ -703,6 +703,12 @@ function proceed_step() {
                     if ($('#fundraiser_details').val() == '') {
                         $('#fundraiser_details').addClass('error');
                         fundraiser_valid = 0;
+                    }
+                    if (fundraiser_valid == 1) {
+                        if (wepay_connected == 0) {
+                            fundraiser_valid = 0;
+                            showErrorMSg('You have not connected your wepay account, Please connect to accept payment!');
+                        }
                     }
                     entered_detail = 1;
                 }
@@ -1220,11 +1226,12 @@ function save_funeral_tribute() {
                                 fundraiser_valid = 0;
                             }
 
-                            if ($('#fundraiser_goal').val() != '' && $('#fundraiser_goal').val() < 250) {
+                            if ($('#fundraiser_goal').val() == '') {
                                 $('#fundraiser_goal').addClass('error');
                                 fundraiser_valid = 0;
-                            } else {
-                                $('#fundraiser_goal').removeClass('error');
+                            } else if ($('#fundraiser_goal').val() < 250) {
+                                $('#fundraiser_goal').addClass('error');
+                                fundraiser_valid = 0;
                             }
                             /*
                              if ($('#fundraiser_enddate').val() == '') {
@@ -1234,6 +1241,12 @@ function save_funeral_tribute() {
                             if ($('#fundraiser_details').val() == '') {
                                 $('#fundraiser_details').addClass('error');
                                 fundraiser_valid = 0;
+                            }
+                            if (fundraiser_valid == 1) {
+                                if (wepay_connected == 0) {
+                                    fundraiser_valid = 0;
+                                    showErrorMSg('You have not connected your wepay account, Please connect to accept payment!');
+                                }
                             }
                             entered_detail = 1;
                         }
@@ -1801,9 +1814,11 @@ WePay.OAuth2.button_init(document.getElementById('start_oauth2'), {
                 url: site_url + 'fundraiser/index/' + profile_slug,
                 type: 'POST',
                 data: data,
+                dataType: "json",
                 success: function (data) {
                     $('.loader').hide();
                     if (data.success == true) {
+                        wepay_connected = 1;
                         $('.wepay_auth_btn').hide();
                         $('.wepay_success_msg').show();
                         showSuccessMSg('You have successfully created your wepay account');
@@ -1813,8 +1828,7 @@ WePay.OAuth2.button_init(document.getElementById('start_oauth2'), {
                 }
             });
         } else {
-            console.log('Popup is closed');
-            // an error has occurred and will be in data.error
+            console.log('Popup is closed');  // an error has occurred and will be in data.error
 //            showErrorMSg(data.error);
         }
     }

@@ -649,7 +649,9 @@
                                             <li>
                                                 <div class="gallery-wrap">
                                                     <span class="gallery-video-img">
-                                                        <a class="fancybox" href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" data-fancybox-type="image" rel="gallery"><img src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" width="100%" height="100%"></a>
+                                                        <a class="fancybox" href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" data-fancybox-type="image" rel="gallery">
+                                                            <img src="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" height="100%">
+                                                        </a>
                                                     </span>
                                                 </div>
                                             </li>
@@ -658,9 +660,13 @@
                                             <li>
                                                 <div class="gallery-wrap">
                                                     <span class="gallery-video-img">
-                                                        <img src="<?php echo base_url(PROFILE_IMAGES . str_replace('mp4', 'jpg', $val['media'])) ?>" width="100%" height="100%">
+                                                        <img src="<?php echo base_url(PROFILE_IMAGES . str_replace('mp4', 'jpg', $val['media'])) ?>" height="100%">
                                                     </span>
-                                                    <span class="gallery-play-btn"><a href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="gallery"><img src="assets/images/play.png" alt=""></a></span>
+                                                    <span class="gallery-play-btn">
+                                                        <a href="<?php echo base_url(PROFILE_IMAGES . $val['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="gallery">
+                                                            <img src="assets/images/play.png" alt="">
+                                                        </a>
+                                                    </span>
                                                 </div>
                                             </li>
                                             <?php
