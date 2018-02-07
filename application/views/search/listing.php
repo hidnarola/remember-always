@@ -131,10 +131,12 @@
                     <ul class="srvs-list-ul srvs_profile srvs_right">
                         <li>
                             <span><img src="assets/images/flowers.jpg"></span>
-                            <p>Find service providers such as funrtal homes, charuches , florists,caters and more..</p>
+                            <p>Find service providers such as funeral homes, churches, florists, caterers and more..</p>
                         </li>
                     </ul>
-                    <div class="btn_pr"><a href="<?php echo site_url('service_provider') ?>">Search Now</a></div>
+                    <div class="btn_pr">
+                        <a href="<?php echo site_url('service_provider') ?>" class="btn-link plannig-service-btn">Search Now</a>
+                    </div>
                 </div>
                 <div class="profile-box fun-facts">
                     <h2>Create a Life Profile</h2>
@@ -146,16 +148,16 @@
                     </ul>
                     <div class="btn_pr">
                         <?php if ($this->is_user_loggedin) { ?>
-                            <a href="<?php echo site_url('profile/create') ?>">Create a life profile</a>
+                        <a href="<?php echo site_url('profile/create') ?>" class="btn-link">Create a life profile</a>
                         <?php } else { ?>
-                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="http://clientapp.narola.online/HD/remember-always/profile/create">Create <br/> a Life Profile</a>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="http://clientapp.narola.online/HD/remember-always/profile/create"  class="btn-link">Create a life profile</a>
                         <?php } ?>
                     </div>
                 </div>
                 <div class="section_blog_post">
                     <h2>Life Profile Blog Posts</h2>
                     <p>Benefits of Life Profile</p>
-                    <div class="btn_pr"><a href="<?php echo site_url('blog') ?>" class="p_life">Read More</a></div>
+                    <div class="btn_pr"><a href="<?php echo site_url('blog') ?>" class="btn-link color-01">Read More</a></div>
                 </div>
                 <div class="profile-box ad pro_ad_custom">
                     <a href=""><img src="assets/images/ad-ap.png" alt=""></a>

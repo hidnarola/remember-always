@@ -15,7 +15,7 @@
                             </li>
                             <li><h6><a href="">Tips for paying a funeral</a></h6></li>
                             <li><h6><a href="">Sharing funeral services information</a></h6></li>
-                            <li><h6><a href="">Tips on how to Select a Funeral Home</a></h6></li>
+                            <li><h6><a href="<?php echo site_url('blog/details/how-to-select-a-funeral-home-director')?>">Tips on how to Select a Funeral Home</a></h6></li>
                             <li>
                                 <h6><a href="<?php echo site_url('service_provider') ?>">Service Providers Directory</a></h6>	
                                 <p>Find service providers such as funeral homes, caterers, florists, and more.</p>
@@ -32,8 +32,8 @@
                     <div class="profile-box-body profile-box-body-change">
                         <ul class="ul_list">
                             <li><h6><a href="">Advice for dealing with grief</a></h6>	</li>
-                            <li><h6><a href="">Recommended Books</a></h6><p>Recommended books for dealing with grief</p></li>
-                            <li><h6><a href="">Service Providers Directory</a></h6>	
+                            <li><h6><a href="https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=dealing+with+grief&rh=i%3Aaps%2Ck%3Adealing+with+grief" target="_blank">Recommended Books</a></h6><p>Recommended books for dealing with grief</p></li>
+                            <li><h6><a href="<?php echo site_url('service_provider') ?>">Service Providers Directory</a></h6>	
                                 <p>Find grief counselors.</p></li>
                             <li><h6><a href="<?php echo site_url('community') ?>">Online Support Community</a></h6>	
                                 <p>Ask for advice and get support from others for handling grief. Or help others with your</p></li>
@@ -100,7 +100,7 @@
                                         <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create'); ?>" >Create a Life Profile</a>
                                     <?php } ?>
                                 </h6>
-                                <p>Create a vivid, timeless memorial in honor of your loved one. <br>For more, see, <a href="#">Benefits of creating a Life profile.</a></p></li>
+                                <p>Create a vivid, timeless memorial in honor of your loved one. <br>For more, see, <a href="<?php echo site_url('blog/details/why-create-a-life-profile-the-benefits-of-creating-an-online-memorial-on-remember-always') ?>">Benefits of creating a Life profile.</a></p></li>
                         </ul>
                     </div>
                 </div>
@@ -108,8 +108,26 @@
                     <h2 class="light_grey_h2">Get the help you need</h2>
                     <div class="profile-box-body profile-box-body-change">
                         <ul class="ul_list">
-                            <li><h6><a href="">Create a Tribute Fundraiser</a></h6>
-                                <p>Get help to cover funeral expenses and other unplanned expenses. <br> For more, see <a href="#">Top 5 reasons for creating a Tribute Fundraiser.</a></p></li>
+                            <li>
+                                <h6>
+                                    <?php
+                                    if ($this->is_user_loggedin) {
+                                        if ($this->tribute_profile_count == 0) {
+                                            ?>
+                                            <a href="<?php echo site_url('profile/create') ?>">Create a Tribute Fundraiser</a>
+                                        <?php } else if ($this->tribute_profile_count == 1) {
+                                            ?>
+                                            <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Create a Tribute Fundraiser</a>
+                                        <?php } else { ?>
+                                            <a href="<?php echo site_url('dashboard/profiles') ?>">Create a Tribute Fundraiser</a>
+                                        <?php } ?>
+                                    <?php } else { ?>
+                                        <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Create a Tribute Fundraiser</a>
+                                    <?php } ?>
+                                </h6>
+                                <p>Get help to cover funeral expenses and other unplanned expenses. 
+                                    <br> For more, see 
+                                    <a href="<?php echo site_url('blog/details/top-5-reasons-for-creating-a-tribute-fundraiser-memorial-fundraiser-in-honor-of-a-loved-one') ?>">Top 5 reasons for creating a Tribute Fundraiser.</a></p></li>
                         </ul>
                     </div>
                 </div>

@@ -27,36 +27,7 @@ class Profile extends MY_Controller {
                     array('table' => TBL_CITY . ' ci', 'condition' => 'p.city=ci.id'),
             ]]);
             if (!empty($profile)) {
-                $funnel_services_data = [];
-                $post_id = 0;
-                if ($profile['type'] == 2) {
-                    $fundraiser = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, null, ['where' => ['is_delete' => 0, 'profile_id' => $profile['id']]], ['single' => true]);
-                    $data['fundraiser'] = $fundraiser;
-                }
-                $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($profile['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
-                $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($profile['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
-                $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($profile['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
-                $life_timeline = $this->load_timeline(0, $profile['id'], true);
-                $sql = "SELECT * FROM ("
-                        . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $profile['id'] . "
-                       UNION ALL
-                       SELECT p.id,a.name,'0' as free_text,slug,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $profile['id'] . " AND a.is_delete=0 
-                    ) a order by created_at";
-                $data['affiliations'] = $this->users_model->customQuery($sql);
-                $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
-                if (!empty($funnel_services)) {
-                    foreach ($funnel_services as $key => $value) {
-                        if ($value['service_type'] == 'Burial') {
-                            $funnel_services_data['Burial'] = $value;
-                        } else if ($value['service_type'] == 'Memorial') {
-                            $funnel_services_data['Memorial'] = $value;
-                        } else if ($value['service_type'] == 'Funeral') {
-                            $funnel_services_data['Funeral'] = $value;
-                        }
-                    }
-                }
-                $posts = $this->load_posts(0, $profile['id'], true);
-                if ($_POST) {
+                if ($this->input->post()) {
                     if (!$this->is_user_loggedin) {
                         $data['success'] = false;
                         $data['error'] = 'You must login to add post for this profile.';
@@ -123,6 +94,37 @@ class Profile extends MY_Controller {
                     echo json_encode($data);
                     exit;
                 }
+
+                $funnel_services_data = [];
+                $post_id = 0;
+                if ($profile['type'] == 2) {
+                    $fundraiser = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, null, ['where' => ['is_delete' => 0, 'profile_id' => $profile['id']]], ['single' => true]);
+                    $data['fundraiser'] = $fundraiser;
+                }
+                $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($profile['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
+                $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($profile['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
+                $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($profile['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
+                $life_timeline = $this->load_timeline(0, $profile['id'], true);
+                $sql = "SELECT * FROM ("
+                        . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $profile['id'] . "
+                       UNION ALL
+                       SELECT p.id,a.name,'0' as free_text,slug,p.created_at FROM " . TBL_PROFILE_AFFILIATION . " p JOIN " . TBL_AFFILIATIONS . " a on p.affiliation_id=a.id WHERE p.profile_id=" . $profile['id'] . " AND a.is_delete=0 
+                    ) a order by created_at";
+                $data['affiliations'] = $this->users_model->customQuery($sql);
+                $funnel_services_data = ['Burial' => [], 'Funeral' => [], 'Memorial' => []];
+                if (!empty($funnel_services)) {
+                    foreach ($funnel_services as $key => $value) {
+                        if ($value['service_type'] == 'Burial') {
+                            $funnel_services_data['Burial'] = $value;
+                        } else if ($value['service_type'] == 'Memorial') {
+                            $funnel_services_data['Memorial'] = $value;
+                        } else if ($value['service_type'] == 'Funeral') {
+                            $funnel_services_data['Funeral'] = $value;
+                        }
+                    }
+                }
+                $posts = $this->load_posts(0, $profile['id'], true);
+
                 $data['url'] = current_url();
                 $data['profile'] = $profile;
                 $data['fun_facts'] = $fun_facts;

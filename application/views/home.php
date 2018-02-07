@@ -49,7 +49,7 @@
                     } else if ($key == 2) {
                         
                     } else {
-                        echo '<a href="' . site_url('search') . '">Find a Life Profile</a>';
+                        echo '<a href="' . site_url('search?type=profile') . '">Find a Life Profile</a>';
                     }
                     ?>
                 </div>
@@ -351,7 +351,7 @@
                         if ($this->is_user_loggedin) {
                             if ($this->tribute_profile_count == 0) {
                                 ?>
-                                <a href="<?php echo site_url('search') ?>">Share with <br/>family & friends</a>
+                                <a href="<?php echo site_url('search?type=profile') ?>">Share with <br/>family & friends</a>
                             <?php } else if ($this->tribute_profile_count == 1) {
                                 ?>
                                 <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Share with <br/>family & friends</a>
@@ -359,7 +359,7 @@
                                 <a href="<?php echo site_url('dashboard/profiles') ?>">Share with <br/>family & friends</a>
                             <?php } ?>
                         <?php } else { ?>
-                            <a href="<?php echo site_url('search') ?>">Share with <br/>family & friends</a>
+                            <a href="<?php echo site_url('search?type=profile') ?>">Share with <br/>family & friends</a>
                         <?php } ?>
                     </h3>
                     <p>Easily share with  <br/>as many or as few as you desire.</p>
@@ -425,7 +425,7 @@
                         if ($this->is_user_loggedin) {
                             if ($this->tribute_profile_count == 0) {
                                 ?>
-                                <a href="<?php echo site_url('search') ?>">Remember, <br/> Honor & Celebrate</a>
+                                <a href="<?php echo site_url('search?type=profile') ?>">Remember, <br/> Honor & Celebrate</a>
                             <?php } else if ($this->tribute_profile_count == 1) {
                                 ?>
                                 <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Remember, <br/> Honor & Celebrate</a>
@@ -433,7 +433,7 @@
                                 <a href="<?php echo site_url('dashboard/profiles') ?>">Remember, <br/> Honor & Celebrate</a>
                             <?php } ?>
                         <?php } else { ?>
-                            <a href="<?php echo site_url('search') ?>">Remember, <br/> Honor & Celebrate</a>
+                            <a href="<?php echo site_url('search?type=profile') ?>">Remember, <br/> Honor & Celebrate</a>
                         <?php } ?>
                     </h3>
                     <p>Together share condolences, support, <br/> memories, photos, videos & more.</p>

@@ -1011,7 +1011,7 @@ else
 //    $('#timeline_details .timeline_media').parent().parent().hide();
 //    $('#timeline_details .timeline_details').parent().parent().hide();
     var user_logged_in = '<?php echo $user_logged_in ?>';
-    var loggedin_userid = <?php echo $this->user_id ?>;
+    var loggedin_userid = <?php echo ($this->user_id != '') ? $this->user_id : 0 ?>;
     var profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';
     var slug = '<?php echo isset($profile['slug']) ? $profile['slug'] : '' ?>';
     max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
