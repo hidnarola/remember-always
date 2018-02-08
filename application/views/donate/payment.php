@@ -1,69 +1,69 @@
+<script type="text/javascript" src="https://www.wepay.com/min/js/iframe.wepay.js"></script>
 <div class="common-page">
     <div class="container">
-        <div id="wepay_checkout"></div>
-        <script type="text/javascript" src="https://www.wepay.com/min/js/iframe.wepay.js">
-        </script>
-
-        <script type="text/javascript">
-            WePay.iframe_checkout("wepay_checkout", "<?php echo $checkout_uri?>");
-        </script>
-        <!--        <div class="common-body common-body_donation">
-                    <div class="full_div_d">
-                        <div class="dontaion_l">
-                            <div class="input-wrap">
-                                <label class="label-css label_big">here Tribute Fundraiser Title goes here</label>
-                                <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Fundraiser description goes here "></textarea>
-                            </div>
-                            <div class="progress_wrapper">
-                                <div class="progress_bar_custom">
-                                    <p class="goal_text">$350 of $500 Goal<span>Goal $500</span></p>	
-                                    <div class="range_slider_custom">
-                                        <div class="rang_fill"></div>
-                                    </div>
-                                </div>
-                                <div class="pro_btn"><a href="#">Donate</a></div>
-                            </div>
-                            <div class="delivery_r">
-                                <div class="input-wrap input_enter_dn">
-                                    <span class="donation_enter">Total amount to charge:</span><input type="number" name="" placeholder="$50" class="input-css input-css_center">
-                                </div>
-                                <div class="input-wrap code">
-                                    <input type="text" name="" placeholder="Name" class="input-css">
-                                </div>
-                                <div class="input-wrap">
-                                    <input type="text" name="" placeholder="xxxx-xxxx-xxxx-2563" class="input-css">
-                                </div>
-        
-                            </div>
-                        </div>
-                        <div class="dontaion_r">
-                            <div class="comoon-ul-li list-02">
-                                <ul>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt="" class="mCS_img_loaded"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt="" class="mCS_img_loaded"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt="" class="mCS_img_loaded"></span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="gallery-wrap">
-                                            <span class="gallery-video-img"><img src="assets/images/helpful-img.jpg" alt="" class="mCS_img_loaded"></span>
-                                        </div>
-                                    </li>
-                                </ul>	
-                            </div>
-                        </div>
-                        <div class="next_step_dontaion"><a href="#">Confirm</a></div>
+        <div class="common-body common-body_donation">
+            <div class="full_div_d">
+                <div class="dontaion_l">
+                    <div class="input-wrap">
+                        <label class="label-css label_big"><?php echo $fundraiser['title'] ?></label>
+                        <?php echo $fundraiser['details']; ?>
                     </div>
-                </div>-->
+                    <div class="progress_wrapper">
+                        <div class="progress_bar_custom">
+                            <p class="goal_text">$<?php echo $fundraiser['total_donation'] ?> of $<?php echo $fundraiser['goal'] ?> Goal<span>Goal $<?php echo $fundraiser['goal'] ?></span></p>	
+                            <div class="range_slider_custom">
+                                <div class="rang_fill" style="width: <?php echo round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']) . '%' ?>"></div>
+                            </div>
+                        </div>
+                        <!--<div class="pro_btn"><a href="#">Donate</a></div>-->
+                    </div>
+                    <div class="delivery_r">
+                        <div id="wepay_checkout"></div>
+                        <!--                        <div class="input-wrap input_enter_dn">
+                                                    <span class="donation_enter">Total amount to charge:</span><input type="number" name="" placeholder="$50" class="input-css input-css_center">
+                                                </div>
+                                                <div class="input-wrap code">
+                                                    <input type="text" name="" placeholder="Name" class="input-css">
+                                                </div>
+                                                <div class="input-wrap">
+                                                    <input type="text" name="" placeholder="xxxx-xxxx-xxxx-2563" class="input-css">
+                                                </div>-->
+
+                    </div>
+                </div>
+                <div class="dontaion_r">
+                    <div class="comoon-ul-li list-02">
+                        <ul>
+                            <?php foreach ($fundraiser_media as $media) { ?>
+                                <li>
+                                    <div class="gallery-wrap">
+                                        <?php if ($media['type'] == 1) { ?>
+                                            <span class="gallery-video-img">
+                                                <a href="<?php echo base_url(FUNDRAISER_IMAGES . $media['media']) ?>" class="fancybox" data-fancybox-type="image"  rel="gallery">
+                                                    <img src="<?php echo base_url(FUNDRAISER_IMAGES . $media['media']) ?>" alt="" class="mCS_img_loaded">
+                                                </a>
+                                            </span>
+                                        <?php } else if ($media['type'] == 2) { ?>
+                                            <span class="gallery-video-img">
+                                                <img src="<?php echo base_url(FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $media['media'])) ?>" alt="">
+                                            </span>
+                                            <span class="gallery-play-btn">
+                                                <a href="<?php echo base_url(FUNDRAISER_IMAGES . $media['media']) ?>" class="fancybox" data-fancybox-type="iframe" rel="gallery"><img src="assets/images/play.png" alt=""></a>
+                                            </span>
+                                        <?php } ?>
+                                    </div>
+                                </li>
+                                <?php
+                            }
+                            ?>
+                        </ul>	
+                    </div>
+                </div>
+                <!--<div class="next_step_dontaion"><a href="#">Confirm</a></div>-->
+            </div>
+        </div>
     </div>
 </div>
+<script type="text/javascript">
+    WePay.iframe_checkout("wepay_checkout", "<?php echo $checkout_uri ?>");
+</script>

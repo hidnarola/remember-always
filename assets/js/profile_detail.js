@@ -169,7 +169,9 @@ $(function () {
     $(document).on('click', "#post_btn", function (e) {
         if (user_logged_in != true) {
             e.preventDefault();
-            showErrorMSg('You must login to add post for this profile.');
+            $('.login-pop').trigger('click');
+
+//            showErrorMSg('You must login to add post for this profile.');
         }
     });
     /* For changing background or cover image */

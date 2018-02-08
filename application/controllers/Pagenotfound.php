@@ -16,9 +16,11 @@ class Pagenotfound extends CI_Controller {
 
     public function index() {
         $directory = $this->router->fetch_directory();
+        $segments = $this->router->uri->segments;
+
         //check if directory is admin or not
         $this->output->set_status_header('404'); // setting header to 404
-        if ($directory == 'admin/') {
+        if ($directory == 'admin/' || in_array('admin', $segments)) {
             $this->load->view('Templates/show_404');
         } else {
             $this->load->view('Templates/Front_show_404');

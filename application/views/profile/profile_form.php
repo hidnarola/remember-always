@@ -16,6 +16,9 @@
 <!-- WePay js file -->
 <script src="https://static.wepay.com/min/js/wepay.v2.js" type="text/javascript"></script>
 <!-- /WePay js file -->
+<!-- Jquery mask js file -->
+<script src="assets/js/jquery.mask.min.js" type="text/javascript"></script>
+<!-- /Jquery mask js file -->
 <?php
 $month_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
@@ -92,10 +95,10 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                     </div>
                                     <div class="input-wrap">
                                         <div class="input-l">
-                                            <input type="text" name="date_of_birth" placeholder="Date of Birth" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_birth'])) : set_value('date_of_birth') ?>"/>
+                                            <input type="text" name="date_of_birth" placeholder="Date of Birth (mm/dd/yy)" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_birth'])) : set_value('date_of_birth') ?>"/>
                                         </div>
                                         <div class="input-r">
-                                            <input type="text" name="date_of_death" placeholder="Date of Death" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
+                                            <input type="text" name="date_of_death" placeholder="Date of Death (mm/dd/yy)" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
                                         </div>
                                     </div>
                                     <div class="input-wrap">
@@ -161,7 +164,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>	
                         </form>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
                             <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
                                 <button class="back" onclick="return publish_profile()">Publish</button>
                             <?php } ?>
@@ -260,7 +263,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             <div id="dvPreview"></div>
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
                             <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
                                 <button class="back" onclick="return publish_profile()">Publish</button>
                             <?php } ?>
@@ -331,7 +334,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>	
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
                             <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
                                 <button class="back" onclick="return publish_profile()">Publish</button>
                             <?php } ?>
@@ -402,7 +405,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>	
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
                             <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
                                 <button class="back" onclick="return publish_profile()">Publish</button>
                             <?php } ?>
@@ -548,7 +551,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </form>
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
                             <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
                                 <button class="back" onclick="return publish_profile()">Publish</button>
                             <?php } ?>
@@ -799,7 +802,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>
                         </form>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
                             <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
                                 <button class="back" onclick="return publish_profile()">Publish</button>
                             <?php } ?>
@@ -900,7 +903,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Update</button>
+                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
                             <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
                                 <button class="back" onclick="return publish_profile()">Publish</button>
                             <?php } ?>
@@ -1013,7 +1016,9 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
     wepay_client_id = '<?php echo $wepay_client_id ?>';
     wepay_endpoint = '<?php echo $wepay_endpoint ?>';
     wepay_connected = <?php echo $wepay_connected ?>;
-
+    $(".date-picker").mask("99/99/9999");
+    $(".service-datepicker").mask("99/99/9999");
+    
 </script>
 <script src="assets/js/profile.js"></script>
 

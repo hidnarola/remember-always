@@ -26,7 +26,8 @@ class Fundraiser extends MY_Controller {
             $profile = $this->users_model->sql_select(TBL_PROFILES, 'id,firstname,lastname', ['where' => ['slug' => $slug, 'is_delete' => 0, 'user_id' => $this->user_id]], ['single' => true]);
             if (!empty($profile)) {
                 $fundraiser = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, 'id,title,details,wepay_account_id,wepay_access_token', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]], ['single' => true]);
-                $fundraiser_title = $profile['firstname'] . ' ' . $profile['lastname'] . '\'s Fundraiser -' . base64_encode($profile['id']);
+                $fundraiser_title = $profile['firstname'] . ' ' . $profile['lastname'] . '\'s Fundraiser';
+//                $fundraiser_title = $profile['firstname'] . ' ' . $profile['lastname'] . '\'s Fundraiser -' . base64_encode($profile['id']);
                 $fundraiser_decription = '';
 
                 if (empty($fundraiser)) {

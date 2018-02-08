@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Remember Always - 404</title>
         <base href="<?php echo base_url() ?>">
-        
+
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
         <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
@@ -46,7 +46,7 @@
                         <li class="dropdown dropdown-user">
                             <a class="dropdown-toggle" data-toggle="dropdown">
                                 <?php if ($this->session->userdata('remalways_admin')['profile_image'] != '') { ?>
-                                        <!--<img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remalways_admin')['profile_image']) ?>" alt="">-->
+                                            <!--<img src="<?php echo base_url(USER_IMAGES . $this->session->userdata('remalways_admin')['profile_image']) ?>" alt="">-->
                                 <?php } else { ?>
                                     <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" alt="">
                                 <?php } ?>
@@ -83,7 +83,7 @@
                                 <form action="#" class="main-search">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <a href="<?php echo site_url('home') ?>" class="btn btn-primary btn-block content-group"><i class="icon-circle-left2 position-left"></i> Go to dashboard</a>
+                                            <a href="<?php echo site_url('admin/dashboard') ?>" class="btn btn-primary btn-block content-group"><i class="icon-circle-left2 position-left"></i> Go to dashboard</a>
                                         </div>
                                     </div>
                                 </form>
@@ -92,7 +92,7 @@
                         <!-- /error wrapper -->
                         <!-- Footer -->
                         <div class="footer text-muted text-center">
-                            &copy; 2017. <a href="<?php echo site_url()?>">Remember Always</a>, All Rights Reserved
+                            &copy; 2017. <a href="<?php echo site_url() ?>">Remember Always</a>, All Rights Reserved
                         </div>
                         <!-- /footer -->
                     </div>

@@ -17,35 +17,35 @@
                 <form method="post" id="contact_us_form">
                     <div class="input-wrap">
                         <label class="label-css">Name</label>
-                        <input type="text" name="name" placeholder="Enter Your Name" class="input-css" value="<?php echo set_value('name')?>"/>
+                        <input type="text" name="name" placeholder="Enter Your Name" class="input-css" value="<?php echo set_value('name') ?>"/>
                         <?php
                         echo '<label id="name-error" class="error" for="name">' . form_error('name') . '</label>';
                         ?>
                     </div>
                     <div class="input-wrap">
                         <label class="label-css">E-mail</label>
-                        <input type="text" name="email" placeholder="Enter Your Email" class="input-css" value="<?php echo set_value('email')?>">
+                        <input type="text" name="email" placeholder="Enter Your Email" class="input-css" value="<?php echo set_value('email') ?>">
                         <?php
                         echo '<label id="email-error" class="error" for="email">' . form_error('email') . '</label>';
                         ?>
                     </div>
                     <div class="input-wrap">
                         <label class="label-css">Phone</label>
-                        <input type="number" name="phone" placeholder="Enter Your Phone" class="input-css" value="<?php echo set_value('phone')?>">
+                        <input type="text" name="phone" id="phone" placeholder="Enter Your Phone" class="input-css" value="<?php echo set_value('phone') ?>">
                         <?php
                         echo '<label id="phone-error" class="error" for="phone">' . form_error('phone') . '</label>';
                         ?>
                     </div>
                     <div class="input-wrap">
                         <label class="label-css">Subject</label>
-                        <input type="text" name="subject" placeholder="Enter Subject" class="input-css" value="<?php echo set_value('subject')?>">
+                        <input type="text" name="subject" placeholder="Enter Subject" class="input-css" value="<?php echo set_value('subject') ?>">
                         <?php
                         echo '<label id="subject-error" class="error" for="subject">' . form_error('subject') . '</label>';
                         ?>
                     </div>
                     <div class="input-wrap">
                         <label class="label-css">Message</label>
-                        <textarea name="message" placeholder="Enter Message" class="input-css" rows="5"><?php echo set_value('message')?></textarea>
+                        <textarea name="message" placeholder="Enter Message" class="input-css" rows="5"><?php echo set_value('message') ?></textarea>
                         <?php
                         echo '<label id="message-error" class="error" for="message">' . form_error('message') . '</label>';
                         ?>
@@ -63,7 +63,11 @@
     </div>
 </div>
 <script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI&callback=initMap" async defer></script>
+<!-- Jquery mask js file -->
+<script src="assets/js/jquery.mask.min.js" type="text/javascript"></script>
+<!-- /Jquery mask js file -->
 <script>
+    $('#phone').mask("999-999-9999");
     function initMap() {
 
         var myLatlng = new google.maps.LatLng(28.7554428, -81.3406926);
@@ -108,8 +112,9 @@
             },
             phone: {
                 required: true,
-                minlength: 8,
-                maxlength: 15,
+                phoneUS: true,
+//                minlength: 8,
+//                maxlength: 15,
             },
             subject: {
                 required: true,

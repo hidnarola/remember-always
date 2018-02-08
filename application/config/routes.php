@@ -121,7 +121,7 @@ $route['search/(:any)'] = 'search/index/$1';
 /* Donation page routes */
 $route['donate/next/(:any)'] = 'donate/next/$1';
 $route['donate/payment/(:any)'] = 'donate/payment/$1';
-$route['donate/third'] = 'donate/third';
+$route['donate/thank_you/(:any)'] = 'donate/thank_you/$1';
 $route['donate/(:any)'] = 'donate/index/$1';
 
 /* Community page routes */

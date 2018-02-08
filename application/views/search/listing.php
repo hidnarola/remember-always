@@ -143,7 +143,7 @@
                     <ul class="srvs-list-ul srvs_profile srvs_right">
                         <li>
                             <span><img src="assets/images/oldladi.png"></span>
-                            <p>Memorialize your loved  one’s life story words, pictures, video, timeline and more.</p>
+                            <p>Memorialize your loved  one’s life story with words, pictures, video, timeline and more.</p>
                         </li>
                     </ul>
                     <div class="btn_pr">

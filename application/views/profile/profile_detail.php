@@ -35,7 +35,7 @@
                         </small>
                         <small><i class="fa fa-map-marker"></i><?php echo $profile['country'] . ', ' . $profile['state'] . ', ' . $profile['city'] ?></small>
                         <small>Created with love by: <?php echo isset($profile['u_fname']) ? $profile['u_fname'] . ' ' . $profile['u_lname'] : '-' ?></small> </h4>
-                    <?php if (isset($profile['type']) && $profile['type'] == 2 && !empty($fundraiser)) { ?>
+                    <?php if ($profile['type'] == 2 && $profile['is_published'] == 1 && !empty($fundraiser) && $fundraiser['wepay_account_id'] != '' && $fundraiser['wepay_access_token'] != '') { ?>
                         <a href="<?php echo site_url('donate/' . $profile['slug']) ?>" class="donate-btn">Donate</a>
                     <?php } ?>
                     <a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>
@@ -544,7 +544,7 @@
                         </div>
                         <div class="comments-div"  id="content-8">
                             <?php if (isset($posts) && !empty($posts)) { ?>
-                                <ul class="post_ul post_ul_responsive_view">
+                                <ul class="post_ul post_ul_responsive_view post_ul_profile_detail">
                                     <?php
                                     foreach ($posts as $key => $val) {
                                         $from_date = date_create($val['created_at']);
@@ -626,7 +626,7 @@
                     </div>
                 </div>
                 <div class="profile-body-r">
-                    <?php if ($profile['type'] == 2 && $profile['is_published'] == 1 && !empty($fundraiser)) { ?>
+                    <?php if ($profile['type'] == 2 && $profile['is_published'] == 1 && !empty($fundraiser) && $fundraiser['wepay_account_id'] != '' && $fundraiser['wepay_access_token'] != '') { ?>
                         <div class="profile-box fundraiser">
                             <h2>Tribute Fundraiser</h2>
                             <div class="profile-box-body">

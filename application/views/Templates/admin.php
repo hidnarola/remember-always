@@ -104,7 +104,7 @@ $Path = $_SERVER['PATH_INFO'];
                                     <li <?php echo strtolower($this->controller) == 'providers' ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/providers') ?>"><i class="icon-hammer-wrench"></i><span>Service Providers <?php echo isset($this->un_approved['un_approved_count']) && $this->un_approved['un_approved_count'] != 0 ? '<span class="label bg-warning-400">' . $this->un_approved['un_approved_count'] . '</span>' : '' ?></span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'posts' && !preg_match("/\/users\//i", $Path) ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/posts') ?>"><i class="icon-comment"></i><span>Posts</span></a></li>
                                     <li <?php echo strtolower($this->controller) == 'users' || preg_match("/\/users\//i", $Path) ? 'class="active"' : '' ?>><a href="<?php echo site_url('admin/users') ?>"><i class="icon-users2"></i><span>Users</span></a></li>
-                                    <li class=""><a href="<?php echo site_url('logout') ?>"><i class="icon-switch2"></i> <span>Logout</span></a></li>
+                                    <li><a href="<?php echo site_url('admin/logout') ?>"><i class="icon-switch2"></i> <span>Logout</span></a></li>
                                 </ul>
                             </div>
                         </div>

@@ -47,7 +47,7 @@ a:hover{text-decoration:none;}
 .carousel .owl-page{display:inline-block;vertical-align:top;}
 .carousel .owl-page span{width:11px;height:11px;background:#fff;border-radius:80px;border:2px solid #fff;display:block;margin:0 5px;}
 .carousel .owl-page.active span{background:#975979;}
-.carousel .item img {width: 100%;}
+
 
 .memorialize:after,
 .memorialize ul:after{content:'';clear:both;display:block;}
@@ -468,9 +468,9 @@ a.remove-video:hover{opacity:.7;}
 .comments-div{display:block;width:100%;padding:0;max-height:600px;}
 .comments-div ul{ margin:0;padding:0;list-style:none;}
 .comments-div ul li{width:100%;padding:0 0 17px;margin:0 0 20px;border-bottom:1px solid #efefef;}
-.comments-div-wrap{padding:0 0 0 100px;min-height:100px;position:relative;}
-span.commmnet-postted-img{width:80px;height:80px;background: #efefef;display: block;position:absolute;top:0;left:0;}
-span.commmnet-postted-img img{width:100%;min-height:80px;}
+.comments-div-wrap{padding:0 0 0 80px;min-height:100px;position:relative;}
+span.commmnet-postted-img{width:60px;height:60px;background: #efefef;display: block;position:absolute;top:0;left:0;}
+span.commmnet-postted-img img{width:100%;min-height:60px;}
 .comments-div-wrap h3{margin:0 0 15px;padding:0;font-size:18px;font-weight:400;color:#333;line-height:normal;font-family:'Rubik';}
 .comments-div-wrap h3 small{display:block;font-size:13px;color:#999;}
 .comments-div-wrap p{padding:0 0 15px;}
@@ -661,7 +661,7 @@ ul.blog-list-ul li  .blog-box span{margin-bottom:10px;}
 .comoon-ul-li .gallery-play-btn a img {width:28px;height:28px;}
 
 .comoon-ul-li.list-04 ul li{widtH:25%;height:100px;padding:0 8px 10px;}
-.comoon-ul-li.list-02 ul li{width:50%;height:140px;}
+.comoon-ul-li.list-02 ul li {width: 33%;height: 90px;}
 .comments-div .mCSB_scrollTools a+.mCSB_draggerContainer {margin:0;}
 .comments-div .mCS-3d-dark.mCSB_scrollTools .mCSB_draggerRail, .mCS-3d.mCSB_scrollTools .mCSB_draggerRail{box-shadow:none;}
 .mCS-3d-dark.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-3d-dark.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar, .mCS-3d-dark.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCS-3d-dark.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar, .mCS-3d.mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar, .mCS-3d.mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar, .mCS-3d.mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar, .mCS-3d.mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{background-color:#57585a;}
@@ -1247,6 +1247,7 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
 @media (min-width:1200px){
     .search.open form {right: 0;}
     .search form {right: 50px;}
+    .carousel .item img {width: 100%;}
 }
 
 @media(max-width:1139px){
@@ -1672,7 +1673,7 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .user_right_q {width: 100%;margin-top: 20px;float: none;}
     .user_left_q {width: 100%;float: none;}
     .comments-div-wrap h3.main_q {font-size: 18px;}
-    span.commmnet-postted-img {width: 60px;height: 60px;}
+    span.commmnet-postted-img {width: 50px;height: 50px;}
     .comments-div.first_q .comments-div-wrap {min-height: 60px;padding: 0 0 0 70px;}
     .comments-div.first_q {padding: 20px 15px 0px 15px;}
     .related_q h6 {font-size: 14px;line-height: 18px;}
@@ -1685,7 +1686,8 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .question_section .comments-div.first_q .comments-div-wrap h3.main_q {font-size: 16px;line-height: 18px;}
     .comment_tag i {margin-right: 5px;}
     .main_post_question .search form {top: 20px;right: 0;}
-    span.commmnet-postted-img img {min-height: auto;}
+    span.commmnet-postted-img img {min-height: 100%;}
+    .comoon-ul-li .gallery-play-btn a img {width: 18px;height: 18px;}
     .inner_cooment_div .comments-div {max-height: 100%;}
     .comments-div.first_q.best_q {max-height: 100%;}
     .inner_cooment_div {margin-left: -70px;}
@@ -1699,6 +1701,24 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .funeral-srh .srvs-form-div {margin-bottom: 10px;}
     .funeral-srh .srvs-form-div:last-child button {width: auto;}
     .services-form.funeral-srh {margin-bottom: 20px;}
+    .comments-div ul.post_ul_profile_detail li .comments-div-wrap p {
+    font-size: 14px;
+    line-height: 16px !important;
+}
+.comments-div ul.post_ul_profile_detail li .comments-div-wrap h3 {
+    font-size: 15px;
+}
+.comments-div ul.post_ul_profile_detail li span.commmnet-postted-img {
+    position: absolute !important;
+    left: 0;
+    top: 0;
+}
+.comments-div ul.post_ul_profile_detail li .comments-div-wrap {
+    padding: 0 0 0 60px !important;
+}
+.comments-div .post_ul.post_ul_responsive_view li .comments-div-wrap ul li {
+    width: 50%;
+}
 }
 
 

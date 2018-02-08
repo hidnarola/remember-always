@@ -7,6 +7,7 @@
             <div class="funeral-l blog-dtl">
                 <div class="profile-box">
                     <div class="blog-box">
+                        <!--<span><a class="fancybox" href="<?php echo base_url(BLOG_POST_IMAGES . $blog_data['image']) ?>" data-fancybox-type="image"><img src="<?php echo BLOG_POST_IMAGES . $blog_data['image'] ?>" alt="" /></a></span>-->
                         <span><img src="<?php echo BLOG_POST_IMAGES . $blog_data['image'] ?>" alt="" /></span>
                         <div class="blog-content">
                             <h3><?php echo $blog_data['title'] ?></h3>
@@ -37,3 +38,15 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        $(".fancybox")
+                .fancybox({
+                    openEffect: 'none',
+                    closeEffect: 'none',
+                    nextEffect: 'none',
+                    prevEffect: 'none',
+                    padding: 0,
+                });
+    });
+</script>

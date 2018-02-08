@@ -31,6 +31,7 @@ $(function () {
                         format: "mm/dd/yyyy",
                         endDate: "date()",
                         autoclose: true,
+                        mask: true
                     });
                 }
             });
@@ -204,7 +205,10 @@ $(function () {
             }
         }
     });
-    $('.service-datepicker').datepicker({format: "mm/dd/yyyy", startDate: "date()", autoclose: true});
+    $('.service-datepicker').datepicker({
+        format: "mm/dd/yyyy", 
+//        startDate: "date()", 
+        autoclose: true});
     $('.service-time').datetimepicker({
         format: 'LT'
     });
