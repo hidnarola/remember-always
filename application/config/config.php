@@ -24,9 +24,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   | a PHP script and you can easily do that on your own.
   |
  */
-$base_url = 'http://clientapp.narola.online/HD/remember-always/';
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $base_url = 'http://localhost/remember-always/';
+} else if ($_SERVER['HTTP_HOST'] == 'clientapp.narola.online') {
+    $base_url = 'http://clientapp.narola.online/HD/remember-always/';
+} else {
+    $base_url = '';
 }
 $config['base_url'] = $base_url;
 
