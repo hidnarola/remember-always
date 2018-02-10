@@ -1,7 +1,7 @@
 <?php
 
 if (WEPAY_ENDPOINT == 'production') {
-    //-- Live Credentials
+    //-- Live Credentials for production environment
     $config['client_id'] = 15140;
     $config['client_secret'] = "44c05bb748";
     $config['access_token'] = "PRODUCTION_6eb3aafabc0e4832b694f781bfbf28b3ea08e0544520f682eecf5f77d777ee5d";

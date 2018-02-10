@@ -79,5 +79,5 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 /*25-1-2018 added cursor pointer to comment section*/
 .spn_comment{cursor: pointer;}
 /*1-2-18 set background image*/
-.profile-head > span.profile-img > img {height: 400px;}
+.profile-head > span.profile-img > img {height: 330px;}
 .bio-tips{color:#999;}

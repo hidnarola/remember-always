@@ -16,26 +16,32 @@ $(function () {
     $('ul.nav.nav-tabs  a').on('shown.bs.tab', function (e) {
         current_tab = $(e.target).attr('href'); // get current tab
         currentTab = current_tab.substr(1);
-        if (currentTab == 'forth-step') {
-            //-- Display timeline data
-            $('.loader').show();
-            $.ajax({
-                url: site_url + "profile/lifetimeline",
-                type: "POST",
-                data: {profile_id: profile_id},
-                success: function (data) {
-                    $('.loader').hide();
-                    $('.timeline-div').html(data);
+        if (currentTab != 'first-step') {
+            if (profile_process == 0) {
 
-                    $('.date-picker').datepicker({
-                        format: "mm/dd/yyyy",
-                        endDate: "date()",
-                        autoclose: true,
-                        mask: true
-                    });
-                }
-            });
+            }
+            if (currentTab == 'forth-step') {
+                //-- Display timeline data
+                $('.loader').show();
+                $.ajax({
+                    url: site_url + "profile/lifetimeline",
+                    type: "POST",
+                    data: {profile_id: profile_id},
+                    success: function (data) {
+                        $('.loader').hide();
+                        $('.timeline-div').html(data);
+
+                        $('.date-picker').datepicker({
+                            format: "mm/dd/yyyy",
+                            endDate: "date()",
+                            autoclose: true,
+                            mask: true
+                        });
+                    }
+                });
+            }
         }
+
     });
 
     //-- Initialize datepicker
@@ -206,7 +212,7 @@ $(function () {
         }
     });
     $('.service-datepicker').datepicker({
-        format: "mm/dd/yyyy", 
+        format: "mm/dd/yyyy",
 //        startDate: "date()", 
         autoclose: true});
     $('.service-time').datetimepicker({

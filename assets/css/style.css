@@ -14,6 +14,7 @@ a:hover{text-decoration:none;}
 .logo{float:left;}
 .logo a{display:block;}
 
+
 .login-register{float:right;background:#e7e2e4;border-radius:4px;margin-left:10px;padding:0 10px;position:relative;margin:16px 0;    z-index: 9;}
 .login-register a:first-child:after{content:'-';line-height:42px;position:absolute;right:-5px;color:#58595b;font-size:18px;top:0;font-weight:500;}
 .login-register a{line-height:22px;padding:10px;color:#58595b;font-size:15px;text-transform:uppercase;display:inline-block;vertical-align:top;position:relative;text-decoration:none;}
@@ -222,7 +223,8 @@ a.helpful-btn:hover{text-decoration:none;opacity:.9;}
 .last-first{width:48%;float:right;}
 
 /***** Inner pages *****/
-.inr-pages .header{background:url(../images/carousel-img.jpg) no-repeat center 0;position:relative;border-bottom:4px solid #975979;}
+.inr-pages .header {background: url(../images/carousel-img.jpg) no-repeat center 0;position: relative;border-bottom: 4px solid #975979;background-size: cover;background-position: center center;position: relative;}
+.inr-pages .header:before {position: absolute;left: 0;top: 0;content: " ";background: rgba(0, 0, 0, 0.51);width: 100%;height: 100%;}
 .breadcrumb{display:inline-block;width:100%;vertical-align:top;border-top:1px solid #5d484d;padding:20px 0; background:transparent;text-align:center;margin:25px 0 0;}
 .breadcrumb ul{list-style:none;margin:0;padding:0;}
 .breadcrumb  ul li{display:inline-block;vertical-align:top;margin:0 5px;padding:0 5px;font-size:15px;line-height:26px;font-weight:400;font-family:'Roboto';color:#aeaeae;}
