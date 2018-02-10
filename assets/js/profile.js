@@ -17,8 +17,8 @@ $(function () {
         current_tab = $(e.target).attr('href'); // get current tab
         currentTab = current_tab.substr(1);
         if (currentTab != 'first-step') {
-            if (profile_process == 0) {
-
+            if (profile_id == 0) {
+                $('#firststep-proceed-btn').trigger('click');
             }
             if (currentTab == 'forth-step') {
                 //-- Display timeline data
@@ -41,7 +41,6 @@ $(function () {
                 });
             }
         }
-
     });
 
     //-- Initialize datepicker

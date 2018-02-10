@@ -164,7 +164,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>	
                         </form>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
+                            <button class="next" id="firststep-proceed-btn" onclick="return proceed_step();">Save/Proceed</button>
                             <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
                                 <button class="back" onclick="return publish_profile()">Publish</button>
                             <?php } ?>
