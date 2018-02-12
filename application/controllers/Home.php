@@ -23,7 +23,7 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-        $this->load->library('email');
+//        $this->load->library('email');
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'ssl://smtp.gmail.com';
         $config['smtp_port'] = '465';
