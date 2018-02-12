@@ -40,6 +40,7 @@ function send_mail($to = '', $template = '', $data = []) {
     $view = $ci->load->view('email_templates/' . $template, $data, TRUE);
     $ci->email->message($view);
     $ci->email->send();
+    echo $ci->email->print_debugger();
 }
 
 /**
