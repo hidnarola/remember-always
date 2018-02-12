@@ -23,12 +23,29 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-        $email_data = [];
-        $email_data['url'] = site_url() . 'reset_password?code=123';
-        $email_data['name'] = 'Ku narola';
-        $email_data['email'] = 'ku@narola.email';
-        $email_data['subject'] = 'Reset Password - Remember Always';
-        send_mail('ku@narola.email', 'forgot_password', $email_data);
+        $configs = $configs = array(
+            'protocol' => 'smtp',
+            'smtp_host' => 'ssl://smtp.gmail.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'demo.narola@gmail.com',
+            'smtp_pass' => 'Narola@21',
+            'transport' => 'Smtp',
+            'charset' => 'utf-8',
+            'newline' => "\r\n",
+            'headerCharset' => 'iso-8859-1',
+            'mailtype' => 'html'
+        );
+        $this->load->library('email', $configs);
+//                $this->email->initialize($configs);
+        $this->email->from('anp@narola.email', 'EMAIL_FROM_NAME');
+        $this->email->to('ku@narola.email');
+
+        $msg = 'test email';
+        $this->email->subject('Email Verification - Remember Always');
+        $this->email->message(stripslashes($msg));
+        $this->email->set_mailtype("html");
+        $this->email->send();
+        echo $this->email->print_debugger();
     }
 
 }
