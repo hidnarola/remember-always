@@ -23,17 +23,33 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-        $config['protocol'] = 'smtp';
-        $config['smtp_host'] = 'ssl://smtp.gmail.com';
-        $config['smtp_port'] = '465';
-        $config['smtp_user'] = 'demo.narola@gmail.com';
-        $config['smtp_pass'] = 'Narola@21';
-        $config['charset'] = 'utf-8';
-        $config['newline'] = "\r\n";
-        $config['mailtype'] = 'html';
-        $config['starttls'] = true;
-        $config['validation'] = TRUE;
-        $this->load->library('email', $config);
+        
+        $email_config = Array(
+            'protocol'  => 'smtp',
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => '465',
+            'smtp_user' => 'demo.narola@gmail.com',
+            'smtp_pass' => 'Narola@21',
+            'mailtype'  => 'html',
+            'starttls'  => true,
+            'newline'   => "\r\n"
+        );
+
+        $this->load->library('email', $email_config);
+        
+        
+        
+//        $config['protocol'] = 'smtp';
+//        $config['smtp_host'] = 'ssl://smtp.gmail.com';
+//        $config['smtp_port'] = '465';
+//        $config['smtp_user'] = 'demo.narola@gmail.com';
+//        $config['smtp_pass'] = 'Narola@21';
+//        $config['charset'] = 'utf-8';
+//        $config['newline'] = "\r\n";
+//        $config['mailtype'] = 'html';
+//        $config['starttls'] = true;
+//        $config['validation'] = TRUE;
+//        $this->load->library('email', $config);
         $this->email->from('demo.narola@gmail.com', 'Narola');
         $this->email->to('ku@narola.email');
         $msg = 'test email';
