@@ -31,6 +31,7 @@ class Home extends MY_Controller {
         $config['charset'] = 'utf-8';
         $config['newline'] = "\r\n";
         $config['mailtype'] = 'html';
+        $config['starttls'] = true;
         $config['validation'] = TRUE;
         $this->load->library('email', $config);
         $this->email->from('demo.narola@gmail.com', 'Narola');
