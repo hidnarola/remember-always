@@ -23,7 +23,7 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-        send_mail('ku@narola.email','test','test');
+        mail("ku@narola.email", "My subject", 'test ');
         $configs = array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
