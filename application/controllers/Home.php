@@ -26,11 +26,11 @@ class Home extends MY_Controller {
         mail("ku@narola.email", "My subject", 'test ');
         $configs = array(
             'protocol' => 'smtp',
-            'smtp_host' => 'smtp.gmail.com',
+            'smtp_host' => 'tls://smtp.gmail.com',
             'smtp_port' => 587,
             'smtp_user' => 'demo.narola@gmail.com',
             'smtp_pass' => 'Narola@21',
-            'transport' => 'Smtp',
+//            'transport' => 'Smtp',
             'charset' => 'utf-8',
             'newline' => "\r\n",
             'headerCharset' => 'iso-8859-1',
