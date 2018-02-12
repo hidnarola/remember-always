@@ -23,26 +23,29 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-        $configs = array(
-            'protocol' => 'smtp',
-            'smtp_host' => 'smtp.gmail.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'pav.narola@gmail.com',
-            'smtp_pass' => 'narola21',
-            'mailtype' => 'html',
-            'charset' => 'iso-8859-1'
-        );
-        $this->load->library('email', $configs);
-        $this->email->set_newline("\r\n");
-//                $this->email->initialize($configs);
-        $this->email->from('anp@narola.email', 'EMAIL_FROM_NAME');
+        $this->load->library('email');
+        $config['protocol'] = 'smtp';
+        $config['smtp_host'] = 'ssl://smtp.gmail.com';
+        $config['smtp_port'] = '465';
+        $config['smtp_user'] = 'demo.narola@gmail.com';
+        $config['smtp_pass'] = 'Narola@21';
+        $config['charset'] = 'utf-8';
+        $config['newline'] = "\r\n";
+        $config['mailtype'] = 'html';
+        $config['validation'] = TRUE;
+        $this->email->initialize($config);
+        $this->email->from('demo.narola@gmail.com', 'Narola');
         $this->email->to('ku@narola.email');
-
         $msg = 'test email';
         $this->email->subject('Email Verification - Remember Always');
-        $this->email->message(stripslashes($msg));
-        $this->email->send();
-        echo $this->email->print_debugger();
+        $this->email->message($msg);
+        //$this->email->send();
+        if($this->email->send()){
+          echo 'Success'; die;  
+        }else{
+            print_r($this->email->print_debugger());
+            die;
+        }
     }
 
 }
