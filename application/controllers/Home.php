@@ -25,10 +25,10 @@ class Home extends MY_Controller {
     public function test() {
         $configs = array(
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_host' => 'smtp.gmail.com',
             'smtp_port' => 465,
-            'smtp_user' => 'demo.narola@gmail.com',
-            'smtp_pass' => 'Narola@21',
+            'smtp_user' => 'pav.narola@gmail.com',
+            'smtp_pass' => 'narola21',
             'mailtype' => 'html',
             'charset' => 'iso-8859-1'
         );
