@@ -26,8 +26,8 @@ class Home extends MY_Controller {
         mail("ku@narola.email", "My subject", 'test ');
         $configs = array(
             'protocol' => 'smtp',
-            'smtp_host' => 'ssl://smtp.gmail.com',
-            'smtp_port' => 465,
+            'smtp_host' => 'smtp.gmail.com',
+            'smtp_port' => 587,
             'smtp_user' => 'demo.narola@gmail.com',
             'smtp_pass' => 'Narola@21',
             'transport' => 'Smtp',
