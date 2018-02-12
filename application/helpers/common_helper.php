@@ -20,7 +20,6 @@ function send_mail($to = '', $template = '', $data = []) {
         return false;
     }
     $ci = &get_instance();
-    $ci->load->library('email');
 
     $config['protocol'] = 'smtp';
     $config['smtp_host'] = 'ssl://smtp.gmail.com';
@@ -32,7 +31,8 @@ function send_mail($to = '', $template = '', $data = []) {
     $config['mailtype'] = 'html';
     $config['validation'] = TRUE;
 
-    $ci->email->initialize($config);
+    $ci->load->library('email',$config);
+//    $ci->email->initialize($config);
 
     $ci->email->to($to);
     $ci->email->from('no-reply@rememberalways.com');
