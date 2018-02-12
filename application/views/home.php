@@ -25,7 +25,7 @@
                     <?php
                     if ($this->is_user_loggedin) {
                         if ($key == 1) {
-                            echo '<a href="' . site_url('profile/create') . '">Create a Tribute Fundraiser<p>(with a Life Profile)</p></a>';
+                            echo '<a href="' . site_url('profile/create') . '">Create a Tribute Fundraiser<p class="text_p">(with a Life Profile)</p></a>';
                         } else if ($key == 2) {
                             echo '<a href="' . site_url('helpful_resources') . '">Access Resources</a>';
                         } else {
@@ -35,7 +35,7 @@
                         <?php
                     } else {
                         if ($key == 1) {
-                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Create a Tribute Fundraiser<p>(with a Life Profile)</p></a>';
+                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Create a Tribute Fundraiser<p class="text_p">(with a Life Profile)</p></a>';
                         } else if ($key == 2) {
                             echo '<a href="' . site_url('helpful_resources') . '">Access Resources</a>';
                         } else {
@@ -45,7 +45,7 @@
                         <?php
                     }
                     if ($key == 1) {
-                        echo '<a href="' . site_url('search') . '">Add a Tribute Fundraiser<p>(to an existing Life Profile)</p></a>';
+                        echo '<a href="' . site_url('search') . '">Add a Tribute Fundraiser<p class="text_p">(to an existing Life Profile)</p></a>';
                     } else if ($key == 2) {
                         
                     } else {

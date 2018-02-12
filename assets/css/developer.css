@@ -81,3 +81,5 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 /*1-2-18 set background image*/
 .profile-head > span.profile-img > img {height: 330px;}
 .bio-tips{color:#999;}
+/*12-2-18 set line height normal*/
+.home-caption .text_p {line-height: normal;}
