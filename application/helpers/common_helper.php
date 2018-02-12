@@ -28,10 +28,12 @@ function send_mail($to = '', $template = '', $data = []) {
     $config['smtp_pass'] = 'Narola@21';
     $config['charset'] = 'utf-8';
     $config['newline'] = "\r\n";
-    $config['mailtype'] = 'html';
+//    $config['mailtype'] = 'html';
     $config['validation'] = TRUE;
 
-    $ci->load->library('email',$config);
+    $ci->load->library('email', $config);
+    $ci->email->set_mailtype("html");
+
 //    $ci->email->initialize($config);
 
     $ci->email->to($to);
