@@ -29,11 +29,11 @@ class Home extends MY_Controller {
             'smtp_port' => 465,
             'smtp_user' => 'pav.narola@gmail.com',
             'smtp_pass' => 'narola21',
-            'transport' => 'Smtp',
-            'charset' => 'utf-8',
-            'newline' => "\r\n",
-            'headerCharset' => 'iso-8859-1',
-            'mailtype' => 'html'
+//            'transport' => 'Smtp',
+//            'charset' => 'utf-8',
+//            'newline' => "\r\n",
+//            'headerCharset' => 'iso-8859-1',
+//            'mailtype' => 'html'
         );
         $this->load->library('email', $configs);
 //                $this->email->initialize($configs);
@@ -43,7 +43,7 @@ class Home extends MY_Controller {
         $msg = 'test email';
         $this->email->subject('Email Verification - Remember Always');
         $this->email->message(stripslashes($msg));
-        $this->email->set_mailtype("html");
+//        $this->email->set_mailtype("html");
         $this->email->send();
         echo $this->email->print_debugger();
     }
