@@ -24,23 +24,27 @@ function send_mail($to = '', $template = '', $data = []) {
     $config['protocol'] = 'smtp';
     $config['smtp_host'] = 'ssl://smtp.gmail.com';
     $config['smtp_port'] = 465;
+    $config['transport'] = 'Smtp';
+
     $config['smtp_user'] = 'demo.narola@gmail.com';
     $config['smtp_pass'] = 'Narola@21';
     $config['charset'] = 'utf-8';
     $config['newline'] = "\r\n";
-//    $config['mailtype'] = 'html';
-    $config['validation'] = TRUE;
+    $config['headerCharset'] = 'iso-8859-1';
+
+    $config['mailtype'] = 'html';
+//    $config['validation'] = TRUE;
 
     $ci->load->library('email', $config);
-    $ci->email->set_mailtype("html");
 
 //    $ci->email->initialize($config);
 
-    $ci->email->to($to);
     $ci->email->from('no-reply@rememberalways.com');
+    $ci->email->to($to);
     $ci->email->subject($data['subject']);
     $view = $ci->load->view('email_templates/' . $template, $data, TRUE);
     $ci->email->message($view);
+    $ci->email->set_mailtype("html");
     $ci->email->send();
     echo $ci->email->print_debugger();
 }
