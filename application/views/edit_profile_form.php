@@ -12,15 +12,21 @@
                     <span class="edit-l-pic">
                         <?php
                         if (isset($user_data) && $user_data['profile_image'] != '') {
-                            echo "<img src='" . USER_IMAGES . $user_data['profile_image'] . "'>";
+                            $img_url = USER_IMAGES . $user_data['profile_image'];
+                            if ($user_data['facebook_id'] != '' || $user_data['google_id'] != '') {
+                                $img_url = $user_data['profile_image'];
+                            }
+                            echo "<img src='" . $img_url . "'>";
                         } else
                             echo 'Upload Picture';
                         ?>
                     </span>
-                    <div class="upload-btn"> 
-                        <span class="up_btn">Edit Picture</span>
-                        <input type="file" name="profile_image" id="profile_image" multiple="false" onchange="readURL(this);">
-                    </div>
+                    <?php if ($user_data['facebook_id'] == '' && $user_data['google_id'] == '') { ?>
+                        <div class="upload-btn"> 
+                            <span class="up_btn">Edit Picture</span>
+                            <input type="file" name="profile_image" id="profile_image" multiple="false" onchange="readURL(this);">
+                        </div>
+                    <?php } ?>
 
                 </div>
                 <div class="edit-r">
@@ -232,7 +238,7 @@
                 },
                 zipcode: {
                     required: true,
-                    custom_zipcode:true
+                    custom_zipcode: true
                 },
                 new_password: {
                     minlength: 5
