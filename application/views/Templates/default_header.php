@@ -7,8 +7,14 @@
             <div class="login-user dropdown">
                 <a href="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                     <span class="user-name">
-                        <?php if ($this->session->userdata('remalways_user')['profile_image'] != '') { ?>
-                            <img src="<?php echo USER_IMAGES . $this->session->userdata('remalways_user')['profile_image']; ?>" alt="<?php echo $this->session->userdata('remalways_user')['firstname'] ?>"/>
+                        <?php
+                        if ($this->session->userdata('remalways_user')['profile_image'] != '') {
+                            $img_url = USER_IMAGES . $this->session->userdata('remalways_user')['profile_image'];
+                            if ($this->session->userdata('remalways_user')['facebook_id'] != '' || $this->session->userdata('remalways_user')['google_id'] != '') {
+                                $img_url = $this->session->userdata('remalways_user')['profile_image'];
+                            }
+                            ?>
+                            <img src="<?php echo $img_url; ?>" alt="<?php echo $this->session->userdata('remalways_user')['firstname'] ?>"/>
                         <?php } else { ?>
                             <img src="assets/images/profile-icon.png" alt="<?php echo $this->session->userdata('remalways_user')['firstname'] ?>"/>
                         <?php } ?>

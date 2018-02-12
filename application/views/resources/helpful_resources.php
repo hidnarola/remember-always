@@ -13,8 +13,8 @@
                                 <h6><a href="<?php echo site_url('funeral_planning') ?>">Funeral Planning Checklist</a></h6>	
                                 <p>Step by step guide to help you through the process.</p>
                             </li>
-                            <li><h6><a href="">Tips for paying a funeral</a></h6></li>
-                            <li><h6><a href="">Sharing funeral services information</a></h6></li>
+                            <li><h6><a href="<?php echo site_url('blog/details/paying-for-a-funeral-and-other-unexpected-expenses')?>">Tips for paying for a funeral</a></h6></li>
+                            <li><h6><a href="<?php echo site_url('blog/details/how-to-easily-share-funeral-services-information')?>">Sharing funeral services information</a></h6></li>
                             <li><h6><a href="<?php echo site_url('blog/details/how-to-select-a-funeral-home-director')?>">Tips on how to Select a Funeral Home</a></h6></li>
                             <li>
                                 <h6><a href="<?php echo site_url('service_provider') ?>">Service Providers Directory</a></h6>	
