@@ -25,13 +25,13 @@ class Home extends MY_Controller {
     public function test() {
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'ssl://smtp.gmail.com';
-        $config['smtp_port'] = 465;
+        $config['smtp_port'] = '465';
         $config['smtp_user'] = 'demo.narola@gmail.com';
         $config['smtp_pass'] = 'Narola@21';
         $config['charset'] = 'utf-8';
-//        $config['newline'] = "\r\n";
+        $config['newline'] = "\r\n";
 //        $config['mailtype'] = 'html';
-//        $config['validation'] = TRUE;
+        $config['validation'] = TRUE;
         $this->load->library('email', $config);
         $this->email->from('demo.narola@gmail.com', 'Narola');
         $this->email->to('ku@narola.email');
