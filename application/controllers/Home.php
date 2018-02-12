@@ -24,18 +24,19 @@ class Home extends MY_Controller {
 
     public function test() {
         
+        $this->load->library('email');
         $email_config = Array(
             'protocol'  => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => '465',
             'smtp_user' => 'demo.narola@gmail.com',
             'smtp_pass' => 'Narola@21',
-            'mailtype'  => 'html',
-            'starttls'  => true,
-            'newline'   => "\r\n"
+            'charset'   => 'utf-8'
         );
 
-        $this->load->library('email', $email_config);
+        $this->email->initialize($email_config);
+        $this->email->set_mailtype("html");
+        $this->email->set_newline("\r\n");
         
         
         
