@@ -23,7 +23,6 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-//        $this->load->library('email');
         $config['protocol'] = 'smtp';
         $config['smtp_host'] = 'ssl://smtp.gmail.com';
         $config['smtp_port'] = '465';
@@ -33,16 +32,17 @@ class Home extends MY_Controller {
         $config['newline'] = "\r\n";
         $config['mailtype'] = 'html';
         $config['validation'] = TRUE;
-        $this->email->initialize($config);
+        $this->load->library('email', $config);
         $this->email->from('demo.narola@gmail.com', 'Narola');
         $this->email->to('ku@narola.email');
         $msg = 'test email';
         $this->email->subject('Email Verification - Remember Always');
         $this->email->message($msg);
         //$this->email->send();
-        if($this->email->send()){
-          echo 'Success'; die;  
-        }else{
+        if ($this->email->send()) {
+            echo 'Success';
+            die;
+        } else {
             print_r($this->email->print_debugger());
             die;
         }
