@@ -23,20 +23,17 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-        mail("ku@narola.email", "My subject", 'test ');
         $configs = array(
             'protocol' => 'smtp',
-            'smtp_host' => 'tls://smtp.gmail.com',
-            'smtp_port' => 587,
+            'smtp_host' => 'ssl://smtp.googlemail.com',
+            'smtp_port' => 465,
             'smtp_user' => 'demo.narola@gmail.com',
             'smtp_pass' => 'Narola@21',
-//            'transport' => 'Smtp',
-            'charset' => 'utf-8',
-            'newline' => "\r\n",
-            'headerCharset' => 'iso-8859-1',
-            'mailtype' => 'html'
+            'mailtype' => 'html',
+            'charset' => 'iso-8859-1'
         );
         $this->load->library('email', $configs);
+        $this->email->set_newline("\r\n");
 //                $this->email->initialize($configs);
         $this->email->from('anp@narola.email', 'EMAIL_FROM_NAME');
         $this->email->to('ku@narola.email');
@@ -44,7 +41,6 @@ class Home extends MY_Controller {
         $msg = 'test email';
         $this->email->subject('Email Verification - Remember Always');
         $this->email->message(stripslashes($msg));
-        $this->email->set_mailtype("html");
         $this->email->send();
         echo $this->email->print_debugger();
     }
