@@ -28,7 +28,7 @@ class Home extends MY_Controller {
         $email_data['name'] = 'Ku narola';
         $email_data['email'] = 'ku@narola.email';
         $email_data['subject'] = 'Reset Password - Remember Always';
-        send_mail('ku@narola.email', 'forgot_password', $email_data);
+        send_mail('pav.narola@gmail.com', 'forgot_password', $email_data);
     }
 
 }
