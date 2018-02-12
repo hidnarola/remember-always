@@ -23,7 +23,7 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-        $configs = $configs = array(
+        $configs = array(
             'protocol' => 'smtp',
             'smtp_host' => 'ssl://smtp.gmail.com',
             'smtp_port' => 465,
@@ -35,8 +35,8 @@ class Home extends MY_Controller {
 //            'headerCharset' => 'iso-8859-1',
 //            'mailtype' => 'html'
         );
-        $this->load->library('email', $configs);
-//                $this->email->initialize($configs);
+        $this->load->library('email');
+                $this->email->initialize($configs);
         $this->email->from('anp@narola.email', 'EMAIL_FROM_NAME');
         $this->email->to('ku@narola.email');
 
