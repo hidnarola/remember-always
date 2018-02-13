@@ -74,7 +74,7 @@
     </div>
 </div>
 
-<script src="http://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI&callback=initMap" async defer></script>
 <script>
     function initMap() {
         var prop_lat = '<?php
