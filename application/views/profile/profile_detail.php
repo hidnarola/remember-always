@@ -5,7 +5,7 @@
                 <span class="profile-img">
                     <?php
                     if (isset($profile['cover_image']) && $profile['cover_image'] != '') {
-                        echo "<img class='cover_img' src='" . PROFILE_IMAGES . $profile['cover_image'] . "' style='width:1120px;height:330px;'>";
+                        echo "<img class='cover_img profile-exif-img' src='" . PROFILE_IMAGES . $profile['cover_image'] . "' style='width:1120px;height:330px;'>";
                     } else {
                         echo "<img class='cover_img' src='assets/images/profile-pic.jpg' alt='' />";
                     }
@@ -23,13 +23,22 @@
                     <div class="profile-title-img">
                         <?php
                         if (isset($profile['profile_image']) && $profile['profile_image'] != '') {
-                            echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "' style='width:170px;height:176px;'>";
+                            $img_url = PROFILE_IMAGES . $profile['profile_image'];
+                            $img_class = 'profile-exif-img';
                         } else {
-                            echo "<img src='assets/images/profile-pic-01.jpg' alt='' />";
+                            $img_url = 'assets/images/profile-pic-01.jpg';
+                            $img_class = '';
                         }
                         ?>
+                        <img class='<?php echo $img_class ?>' src="<?php echo $img_url ?>" style='width:170px;height:176px;'>;
                     </div>
-                    <h4><?php echo isset($profile['firstname']) && !is_null($profile['firstname']) ? $profile['firstname'] . ' ' . $profile['lastname'] : 'Popularised in the the release of' ?> 
+                    <h4>
+                        <?php
+                        echo $profile['firstname'] . ' ' . $profile['lastname'];
+                        if ($profile['nickname'] != '') {
+                            echo ' (' . $profile['nickname'] . ')';
+                        }
+                        ?> 
                         <small> 
                             <?php echo isset($profile['date_of_birth']) && !is_null($profile['date_of_birth']) ? date('M d, Y', strtotime($profile['date_of_birth'])) : '3 Nov, 1988' ?> - <?php echo isset($profile['date_of_death']) && !is_null($profile['date_of_death']) ? date('M d, Y', strtotime($profile['date_of_death'])) : '3 Nov, 1989' ?>
                         </small>
@@ -358,7 +367,7 @@
                                 <span>
                                     <?php
                                     if (isset($profile['profile_image']) && $profile['profile_image'] != '') {
-                                        echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "''>";
+                                        echo "<img class='profile-exif-img' id='img-1' src='" . PROFILE_IMAGES . $profile['profile_image'] . "''>";
                                     } else {
                                         echo "<img src='assets/images/profile-pic-01.jpg' alt='' />";
                                     }
@@ -1020,6 +1029,7 @@ else
     user_image = '<?php echo USER_IMAGES ?>';
     post_image = '<?php echo POST_IMAGES ?>';
     profile_user_id = <?php echo $profile['user_id'] ?>;
+
 </script>
 <script src="assets/js/profile_detail.js"></script>
 <script type="text/javascript">

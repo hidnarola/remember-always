@@ -28,7 +28,7 @@
                                     <span>
                                         <?php
                                         if (isset($val['profile_image']) && $val['profile_image'] != '') {
-                                            echo "<img src='" . PROFILE_IMAGES . $val['profile_image'] . "' width='100%' height='100%' class='mCS_img_loaded'>";
+                                            echo "<img src='" . PROFILE_IMAGES . $val['profile_image'] . "' width='100%' height='100%' class='mCS_img_loaded profile-exif-img'>";
                                         }
                                         ?>
                                     </span>

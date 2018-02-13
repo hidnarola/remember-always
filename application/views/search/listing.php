@@ -41,7 +41,7 @@
                                                     if ($result['type'] == 'profile') {
                                                         $tag_class = 'tag-profile';
                                                         if ($result['image'] != '') {
-                                                            echo "<img src='" . PROFILE_IMAGES . $result['image'] . "' alt=''>";
+                                                            echo "<img src='" . PROFILE_IMAGES . $result['image'] . "' alt='' class='profile-exif-img'>";
                                                         } else {
                                                             echo "<img src='assets/images/no_image.png' alt='' width='100%'>";
                                                         }

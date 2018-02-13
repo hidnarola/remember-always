@@ -71,7 +71,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                             $profile_required = 'required';
                                             if (isset($profile) && $profile['profile_image'] != '') {
                                                 $profile_required = '';
-                                                echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "' style='width: 170px;'>";
+                                                echo "<img src='" . PROFILE_IMAGES . $profile['profile_image'] . "' style='width: 170px;' class='profile-exif-img'>";
                                             } else
                                                 echo "Upload Profile Picture";
                                             ?>

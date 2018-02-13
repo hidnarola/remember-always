@@ -226,6 +226,13 @@ $(function () {
             form.submit();
         }
     });
+
+    //-- Set the image orientation for mobile images
+    $('.profile-exif-img').each(function () {
+        var img = $(this);
+        img.attr('src', $(this).attr('src'));
+        fixExifOrientation(img);
+    });
 });
 
 
@@ -422,6 +429,39 @@ function viewCommunitySearch() {
     if (!$('.community_search_div').hasClass('open')) {
         $('.community_search_div').addClass('open');
     }
+}
+/**
+ * Check exif of image
+ * @param {object} $img
+ */
+function fixExifOrientation($img) {
+    $img.on('load', function () {
+        EXIF.getData($img[0], function () {
+            switch (parseInt(EXIF.getTag(this, "Orientation"))) {
+                case 2:
+                    $img.addClass('flip');
+                    break;
+                case 3:
+                    $img.addClass('rotate-180');
+                    break;
+                case 4:
+                    $img.addClass('flip-and-rotate-180');
+                    break;
+                case 5:
+                    $img.addClass('flip-and-rotate-270');
+                    break;
+                case 6:
+                    $img.addClass('rotate-90');
+                    break;
+                case 7:
+                    $img.addClass('flip-and-rotate-90');
+                    break;
+                case 8:
+                    $img.addClass('rotate-270');
+                    break;
+            }
+        });
+    });
 }
 /**
  * Custom validator method for max file size

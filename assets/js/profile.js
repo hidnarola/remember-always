@@ -893,13 +893,16 @@ function save_finish() {
 }
 
 function publish_profile() {
+    console.log('here');
 //-- check profile is valid for publish
     if (profile_id == 0) {
+        console.log('profile id is 0');
         $('.nav-tabs a[href="#first-step"]').tab('show');
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
 
     } else {
+        console.log('profile id not zero');
         swal({
             title: "Are you sure?",
             text: "You want to publish this profile",
@@ -922,6 +925,8 @@ function publish_profile() {
             }
         });
     }
+    return false;
+
 }
 //-- Gallery step
 var image_count = 0, video_count = 0;
