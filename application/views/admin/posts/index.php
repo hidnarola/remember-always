@@ -126,7 +126,7 @@
                         action += '<li>';
                         action += '<a href="' + editurl + '" title="Edit"><i class="icon-pencil3"></i> Edit Post</a>'
                         action += '<a href="' + viewurl + '" title="View Post"><i class="icon-book"></i> View Post</a>'
-                        action += '<a href="' + deleteurl + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete page</a>'
+                        action += '<a href="' + deleteurl + '" onclick="return confirm_alert(this)" title="Delete"><i class="icon-trash"></i> Delete Post</a>'
                         action += '</li>';
                         action += '</ul>';
                         action += '</li>';
