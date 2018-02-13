@@ -30,7 +30,7 @@
                     }
                 }
                 ?>
-                <li><a href="<?php echo site_url('fqs') ?>">FAQs</a></li>
+                <li><a href="<?php echo site_url('faqs') ?>">FAQs</a></li>
                 <li><a href="<?php echo site_url('contact') ?>">Contact</a></li>
             </ul>
         </div>
