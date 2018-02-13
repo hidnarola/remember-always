@@ -29,9 +29,9 @@ if ($_SERVER['HTTP_HOST'] == 'localhost') {
 } else if ($_SERVER['HTTP_HOST'] == 'clientapp.narola.online') {
     $base_url = 'http://clientapp.narola.online/HD/remember-always/';
 } else if ($_SERVER['HTTP_HOST'] == 'rememberalways.com') {
-    $base_url = 'http://rememberalways.com/';
+    $base_url = 'https://rememberalways.com/';
 } else {
-    $base_url = 'http://www.rememberalways.com/';
+    $base_url = 'https://www.rememberalways.com/';
 }
 $config['base_url'] = $base_url;
 
