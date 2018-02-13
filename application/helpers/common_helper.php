@@ -35,7 +35,8 @@ function send_mail($to = '', $template = '', $data = []) {
     $ci->email->initialize($config);
 
     $ci->email->to($to);
-    $ci->email->from('no-reply@rememberalways.com');
+    $ci->email->from('support@rememberAlways.com', 'Remember Always');
+//    $ci->email->from('no-reply@rememberalways.com');
     $ci->email->subject($data['subject']);
     $view = $ci->load->view('email_templates/' . $template, $data, TRUE);
     $ci->email->message($view);
