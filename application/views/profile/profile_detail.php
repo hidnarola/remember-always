@@ -30,7 +30,7 @@
                             $img_class = '';
                         }
                         ?>
-                        <img class='<?php echo $img_class ?>' src="<?php echo $img_url ?>" style='width:170px;height:176px;'>;
+                        <img class='<?php echo $img_class ?>' src="<?php echo $img_url ?>" style='width:170px;height:176px;'>
                     </div>
                     <h4>
                         <?php
