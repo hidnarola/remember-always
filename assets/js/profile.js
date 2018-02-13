@@ -16,31 +16,38 @@ $(function () {
     $('ul.nav.nav-tabs  a').on('shown.bs.tab', function (e) {
         current_tab = $(e.target).attr('href'); // get current tab
         currentTab = current_tab.substr(1);
-        if (currentTab != 'first-step') {
-            if (profile_id == 0) {
-                $('#firststep-proceed-btn').trigger('click');
-            }
-            if (currentTab == 'forth-step') {
-                //-- Display timeline data
-                $('.loader').show();
-                $.ajax({
-                    url: site_url + "profile/lifetimeline",
-                    type: "POST",
-                    data: {profile_id: profile_id},
-                    success: function (data) {
-                        $('.loader').hide();
-                        $('.timeline-div').html(data);
 
-                        $('.date-picker').datepicker({
-                            format: "mm/dd/yyyy",
-                            endDate: "date()",
-                            autoclose: true,
-                            mask: true
-                        });
-                    }
-                });
+        if ($('#create_profile_form').valid()) {
+            //-- Save first tab data if form is valid
+            save_profile_data(0);
+        } else {
+            if (currentTab != 'first-step') {
+                $('.nav-tabs a[href="#first-step"]').tab('show');
             }
         }
+
+        if (currentTab == 'forth-step') {
+            //-- Display timeline data
+            $('.loader').show();
+            $.ajax({
+                url: site_url + "profile/lifetimeline",
+                type: "POST",
+                data: {profile_id: profile_id},
+                success: function (data) {
+                    $('.loader').hide();
+                    $('.timeline-div').html(data);
+
+                    $('.date-picker').datepicker({
+                        format: "mm/dd/yyyy",
+                        endDate: "date()",
+                        autoclose: true,
+                        mask: true
+                    });
+                }
+            });
+        }
+
+
     });
 
     //-- Initialize datepicker
@@ -59,6 +66,7 @@ $(function () {
             });
     // Setup validation
     $("#create_profile_form").validate({
+        ignore: [],
         rules: {
             profile_image: {
                 extension: "jpg|png|jpeg",
@@ -230,174 +238,6 @@ function readURL(input) {
         }
         reader.readAsDataURL(input.files[0]);
     }
-}
-// Validate form and submit data
-function submit_form() {
-    var profile_process = $('#profile_process').val();
-    if (profile_process == 0) {
-        if ($('#create_profile_form').valid()) {
-            $('#profile_process').val(1);
-            fd = new FormData(document.getElementById("create_profile_form"));
-            $('.loader').show();
-            $.ajax({
-                url: create_profile_url,
-                type: "POST",
-                data: fd,
-                dataType: "json",
-                processData: false, // tell jQuery not to process the data
-                contentType: false, // tell jQuery not to set contentType
-                success: function (data) {
-                    $('.loader').hide();
-                    if (data.success == true) {
-                        create_profile_url = site_url + "profile/edit/" + data.data.slug;
-                        profile_id = btoa(data.data.id);
-                        // add validation of unique fun fact rule
-                        var rules = $('#fun_fact').rules();
-                        if (!findProperty(rules, 'remote')) {
-                            $('#fun_fact').rules('add', {
-                                remote: site_url + 'profile/check_facts/' + profile_id,
-                                messages: {
-                                    remote: "This fun fact is already added",
-                                }
-                            });
-                        }
-                        $('#affiliation_text').rules('add', {
-                            remote: site_url + 'profile/check_affiliation/' + profile_id,
-                            messages: {
-                                remote: "This affiliation is already added",
-                            }
-                        });
-                        $('#profile_name').html(data.firstname + ' ' + data.lastname);
-                        $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
-                        profile_slug = data.slug;
-                        $('.nav-tabs a[href="#second-step"]').tab('show');
-
-                    } else {
-                        $('#profile_process').val(0);
-                        showErrorMSg(data.error);
-                    }
-                }
-            });
-        }
-    }
-    return false;
-}
-//-- Hide show steps based on step id
-function profile_steps(obj) {
-    $('.profile-steps').addClass('hide');
-    $('.steps-li').removeClass('active');
-    $('.steps-li').removeClass('process-done');
-    $('#' + obj + '-li').addClass('active');
-
-    if (obj == 'first-step') {
-        $('#' + obj).removeClass('hide');
-    } else if (obj == 'second-step') {
-        $('#' + obj).removeClass('hide');
-        $('#first-step-li').addClass('process-done');
-    } else if (obj == 'third1-step') {
-        $('#' + obj).removeClass('hide');
-        $('#first-step-li,#second-step-li').addClass('process-done');
-    } else if (obj == 'third-step') {
-        $('#' + obj).removeClass('hide');
-        $('#first-step-li,#second-step-li').addClass('process-done');
-    } else if (obj == 'forth-step') {
-        //-- Display timeline data
-        $('.loader').show();
-        $.ajax({
-            url: site_url + "profile/lifetimeline",
-            type: "POST",
-            data: {profile_id: profile_id},
-            success: function (data) {
-                $('.loader').hide();
-                $('.timeline-div').html(data);
-
-                $('.date-picker').datepicker({
-                    format: "mm/dd/yyyy",
-                    endDate: "date()",
-                    autoclose: true,
-                });
-            }
-        });
-
-
-        $('#' + obj).removeClass('hide');
-        $('#first-step-li,#second-step-li,#third-step-li').addClass('process-done');
-    } else if (obj == 'fifth-step') {
-        $('#' + obj).removeClass('hide');
-        $('#first-step-li,#second-step-li,#third-step-li,#forth-step-li').addClass('process-done');
-    } else if (obj == 'sixth-step') {
-        $('#' + obj).removeClass('hide');
-        $('#first-step-li,#second-step-li,#third-step-li,#forth-step-li').addClass('process-done');
-    } else if (obj == 'seventh-step') {
-        $('#' + obj).removeClass('hide');
-        $('#first-step-li,#second-step-li,#third-step-li,#forth-step-li').addClass('process-done');
-    }
-    //-- Scroll to top of profile div section 
-    $('html, body').animate({
-        'scrollTop': $(".create-profile").position().top
-    }, 1000);
-}
-//-- Back step
-function back_step() {
-    var profile_process = $('#profile_process').val();
-    if (profile_process == 1) {
-        $('#profile_process').val(0);
-        profile_steps('first-step');
-    } else if (profile_process == 2) {
-        $('#profile_process').val(1);
-        profile_steps('second-step');
-    } else if (profile_process == 3) {
-        if (!$('#third1-step').hasClass('hide')) {
-            $('#profile_process').val(3);
-            profile_steps('third-step');
-        } else if (!$('#forth-step').hasClass('hide')) {
-            $('#profile_process').val(3);
-            profile_steps('third1-step');
-        } else {
-            $('#profile_process').val(2);
-            profile_steps('second-step');
-        }
-    } else if (profile_process == 4) {
-        $('#profile_process').val(3);
-        profile_steps('forth-step');
-    } else if (profile_process == 5) {
-        $('#profile_process').val(4);
-        profile_steps('fifth-step');
-    } else if (profile_process == 6) {
-        $('#profile_process').val(5);
-        profile_steps('sixth-step');
-    }
-    return false;
-}
-function skip_step() {
-    var profile_process = $('#profile_process').val();
-    if (profile_process == 1) {
-        $('#profile_process').val(2);
-        profile_steps('third-step');
-    } else if (profile_process == 2) {
-        $('#profile_process').val(3);
-        if ($('#third-step').hasClass('hide')) {
-            profile_steps('third-step');
-        } else {
-            profile_steps('third1-step');
-        }
-    } else if (profile_process == 3) {
-        if (!$('#third-step').hasClass('hide')) {
-            profile_steps('third1-step');
-        } else if (!$('#third1-step').hasClass('hide')) {
-            profile_steps('forth-step');
-        } else {
-            $('#profile_process').val(4);
-            profile_steps('fifth-step');
-        }
-    } else if (profile_process == 4) {
-        $('#profile_process').val(5);
-        profile_steps('sixth-step');
-    } else if (profile_process == 5) {
-        $('#profile_process').val(6);
-        profile_steps('seventh-step');
-    }
-    return false;
 }
 
 // Proceeds steps
@@ -806,103 +646,417 @@ function save_finish() {
 
     } else {
         if ($('#create_profile_form').valid()) {
-            $('#profile_process').val(1);
-            fd = new FormData(document.getElementById("create_profile_form"));
-            $('.loader').show();
-            $.ajax({
-                url: create_profile_url,
-                type: "POST",
-                data: fd,
-                async: false,
-                dataType: "json",
-                processData: false, // tell jQuery not to process the data
-                contentType: false, // tell jQuery not to set contentType
-                success: function (data) {
-                    if (data.success == true) {
-                        create_profile_url = site_url + "profile/edit/" + data.data.slug;
-                        profile_id = btoa(data.data.id);
-                        // add validation of unique fun fact rule
-                        var rules = $('#fun_fact').rules();
-                        if (!findProperty(rules, 'remote')) {
-                            $('#fun_fact').rules('add', {
-                                remote: site_url + 'profile/check_facts/' + profile_id,
-                                messages: {
-                                    remote: "This fun fact is already added",
-                                }
-                            });
-                        }
-                        $('#affiliation_text').rules('add', {
-                            remote: site_url + 'profile/check_affiliation/' + profile_id,
-                            messages: {
-                                remote: "This affiliation is already added",
-                            }
-                        });
-                        $('#profile_name').html(data.firstname + ' ' + data.lastname);
-                        $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
-                        profile_slug = data.slug;
-
-                        //-- Save timeline data
-                        // check if title is not empty
-                        title_empty = 1;
-                        $('input[name="title[]"]').each(function () {
-                            if ($(this).val() != '') {
-                                title_empty = 0;
-                            }
-                        });
-                        if (title_empty == 0) {
-                            if ($('#timeline-form').valid() && validate_timeline_date()) {
-                                fd = new FormData(document.getElementById("timeline-form"));
-                                fd.append('profile_id', profile_id);
-                                $.ajax({
-                                    url: site_url + "profile/add_timeline",
-                                    type: "POST",
-                                    data: fd,
-                                    dataType: "json",
-                                    async: false,
-                                    processData: false, // tell jQuery not to process the data 
-                                    contentType: false, // tell jQuery not to set contentType
-                                    success: function (data) {
-                                        if (data.success == true) {
-                                            $('#profile_process').val(4);
-                                            save_funeral_tribute();
-                                        } else {
-                                            $('.loader').hide();
-                                            $('#profile_process').val(3);
-                                            $('.nav-tabs a[href="#forth-step"]').tab('show');
-                                            showErrorMSg(data.error);
-                                        }
-                                    }
-                                });
-                            }
-                        } else {
-                            save_funeral_tribute();
-                        }
-                    } else {
-                        $('.loader').hide();
-                        $('.nav-tabs a[href="#first-step"]').tab('show');
-                        $('#profile_process').val(0);
-                        showErrorMSg(data.error);
-                    }
-                }
-            });
+            save_profile_data(1);
         } else {
             $('.nav-tabs a[href="#first-step"]').tab('show');
         }
     }
     return false;
 }
+function save_profile_data(redirect_user) {
+    $('#profile_process').val(1);
+    fd = new FormData(document.getElementById("create_profile_form"));
+    $('.loader').show();
+    $.ajax({
+        url: create_profile_url,
+        type: "POST",
+        data: fd,
+        async: false,
+        dataType: "json",
+        processData: false, // tell jQuery not to process the data
+        contentType: false, // tell jQuery not to set contentType
+        success: function (data) {
+            if (data.success == true) {
+                create_profile_url = site_url + "profile/edit/" + data.data.slug;
+                profile_id = btoa(data.data.id);
+                // add validation of unique fun fact rule
+                var rules = $('#fun_fact').rules();
+                if (!findProperty(rules, 'remote')) {
+                    $('#fun_fact').rules('add', {
+                        remote: site_url + 'profile/check_facts/' + profile_id,
+                        messages: {
+                            remote: "This fun fact is already added",
+                        }
+                    });
+                }
+                $('#affiliation_text').rules('add', {
+                    remote: site_url + 'profile/check_affiliation/' + profile_id,
+                    messages: {
+                        remote: "This affiliation is already added",
+                    }
+                });
+                $('#profile_name').html(data.firstname + ' ' + data.lastname);
+                $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
+                profile_slug = data.slug;
+
+                //-- Save timeline data
+                // check if title is not empty
+                title_empty = 1;
+                $('input[name="title[]"]').each(function () {
+                    if ($(this).val() != '') {
+                        title_empty = 0;
+                    }
+                });
+                if (title_empty == 0) {
+                    if ($('#timeline-form').valid() && validate_timeline_date()) {
+                        fd = new FormData(document.getElementById("timeline-form"));
+                        fd.append('profile_id', profile_id);
+                        $.ajax({
+                            url: site_url + "profile/add_timeline",
+                            type: "POST",
+                            data: fd,
+                            dataType: "json",
+                            async: false,
+                            processData: false, // tell jQuery not to process the data 
+                            contentType: false, // tell jQuery not to set contentType
+                            success: function (data) {
+                                if (data.success == true) {
+                                    $('#profile_process').val(4);
+                                    save_funeral_tribute(redirect_user);
+                                } else {
+                                    $('.loader').hide();
+                                    $('#profile_process').val(3);
+                                    $('.nav-tabs a[href="#forth-step"]').tab('show');
+                                    showErrorMSg(data.error);
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    save_funeral_tribute(redirect_user);
+                }
+            } else {
+                $('.loader').hide();
+                $('.nav-tabs a[href="#first-step"]').tab('show');
+                $('#profile_process').val(0);
+                showErrorMSg(data.error);
+            }
+        }
+    });
+}
+function save_funeral_tribute(redirect_user) {
+    // Save funeral services data
+    service_valid = 1;
+    enter_services = 0;
+    if ($('#memorial_date').val() != '' || $('#memorial_time').val() != '' || $('#memorial_place').val() != '' || $('#memorial_address').val() != '' || $('#memorial_country').val() != '' || $('#memorial_state').val() != '' || $('#memorial_city').val() != '' || $('#memorial_zip').val() != '') {
+        enter_services = 1;
+
+        if ($('#memorial_date').val() == '') {
+            $('#memorial_date').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#memorial_time').val() == '') {
+            $('#memorial_time').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#memorial_place').val() == '') {
+            $('#memorial_place').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#memorial_address').val() == '') {
+            $('#memorial_address').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#memorial_country').val() == '') {
+            $('#memorial_country').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#memorial_state').val() == '') {
+            $('#memorial_state').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#memorial_city').val() == '') {
+            $('#memorial_city').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#memorial_zip').val() == '') {
+            $('#memorial_zip').addClass('error');
+            service_valid = 0;
+        }
+    }
+
+    if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_country').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
+        enter_services = 1;
+
+        if ($('#funeral_date').val() == '') {
+            $('#funeral_date').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#funeral_time').val() == '') {
+            $('#funeral_time').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#funeral_place').val() == '') {
+            $('#funeral_place').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#funeral_address').val() == '') {
+            $('#funeral_address').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#funeral_country').val() == '') {
+            $('#funeral_country').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#funeral_state').val() == '') {
+            $('#funeral_state').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#funeral_city').val() == '') {
+            $('#funeral_city').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#funeral_zip').val() == '') {
+            $('#funeral_zip').addClass('error');
+            service_valid = 0;
+        }
+    }
+
+    if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_country').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
+        enter_services = 1;
+
+        if ($('#burial_date').val() == '') {
+            $('#burial_date').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#burial_time').val() == '') {
+            $('#burial_time').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#burial_place').val() == '') {
+            $('#burial_place').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#burial_address').val() == '') {
+            $('#burial_address').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#burial_country').val() == '') {
+            $('#burial_country').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#burial_state').val() == '') {
+            $('#burial_state').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#burial_city').val() == '') {
+            $('#burial_city').siblings('.select2').addClass('error');
+            service_valid = 0;
+        }
+        if ($('#burial_zip').val() == '') {
+            $('#burial_zip').addClass('error');
+            service_valid = 0;
+        }
+    }
+    if (service_valid == 1) {
+        if (enter_services == 1) {
+            $.ajax({
+                url: site_url + "profile/add_services",
+                type: "POST",
+                async: false,
+                data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id,
+                dataType: "json",
+                success: function (data) {
+                    if (data.success == true) {
+                        $('#profile_process').val(5);
+
+                        if ($('#fundraiser_profile-form').valid()) {
+                            fundraiser_valid = 1, entered_detail = 0;
+                            if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_details').val() != '') {
+                                if ($('#fundraiser_title').val() == '') {
+                                    $('#fundraiser_title').addClass('error');
+                                    fundraiser_valid = 0;
+                                }
+
+                                if ($('#fundraiser_goal').val() == '') {
+                                    $('#fundraiser_goal').addClass('error');
+                                    fundraiser_valid = 0;
+                                } else if ($('#fundraiser_goal').val() < 250) {
+                                    $('#fundraiser_goal').addClass('error');
+                                    fundraiser_valid = 0;
+                                }
+                                /*
+                                 if ($('#fundraiser_enddate').val() == '') {
+                                 $('#fundraiser_enddate').addClass('error');
+                                 fundraiser_valid = 0;
+                                 }*/
+                                if ($('#fundraiser_details').val() == '') {
+                                    $('#fundraiser_details').addClass('error');
+                                    fundraiser_valid = 0;
+                                }
+                                if (fundraiser_valid == 1) {
+                                    if (wepay_connected == 0) {
+                                        fundraiser_valid = 0;
+                                        showErrorMSg('You have not connected your wepay account, Please connect to accept payment!');
+                                    }
+                                }
+                                entered_detail = 1;
+                            }
+                            if (fundraiser_valid == 1) {
+                                if (entered_detail == 1) {
+                                    var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
+                                    postformData.append('profile_id', profile_id);
+                                    $(fundraiser_media).each(function (key) {
+                                        if (fundraiser_media[key] != null) {
+                                            fundraiser_types[key] = [];
+                                            fundraiser_types[key] = fundraiser_media[key]['media_type'];
+                                            postformData.append('fundraiser_append_media[]', fundraiser_media[key], fundraiser_media[key].name);
+                                            postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
+                                        }
+                                    });
+                                    $.ajax({
+                                        url: site_url + "profile/add_fundraiser",
+                                        type: "POST",
+                                        data: postformData,
+                                        async: false,
+                                        dataType: "json",
+                                        processData: false, // tell jQuery not to process the data
+                                        contentType: false, // tell jQuery not to set contentType
+                                        success: function (data) {
+                                            if (data.success == true) {
+                                                $('#profile_process').val(6);
+                                                $('.loader').hide();
+                                                //-- Redirect to user dashboard page
+                                                if (redirect_user == 1) {
+                                                    window.location.href = site_url + 'dashboard/profiles';
+                                                }
+                                            } else {
+                                                $('.loader').hide();
+                                                $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                                                showErrorMSg(data.error);
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    $('.loader').hide();
+                                    //-- Redirect to user dashboard page
+                                    if (redirect_user == 1) {
+                                        window.location.href = site_url + 'dashboard/profiles';
+                                    }
+                                }
+                            } else {
+                                $('.loader').hide();
+                                //--display tribute fundraiser step
+                                $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                            }
+                        } else {
+                            $('.loader').hide();
+                            //--display tribute fundraiser step
+                            $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                        }
+
+                    } else {
+                        $('.loader').hide();
+                        //--display funeral service step
+                        $('.nav-tabs a[href="#fifth-step"]').tab('show');
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        } else {
+            $('#profile_process').val(5);
+            if ($('#fundraiser_profile-form').valid()) {
+                fundraiser_valid = 1, entered_detail = 0;
+                if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_details').val() != '') {
+                    if ($('#fundraiser_title').val() == '') {
+                        $('#fundraiser_title').addClass('error');
+                        fundraiser_valid = 0;
+                    }
+
+                    if ($('#fundraiser_goal').val() == '') {
+                        $('#fundraiser_goal').addClass('error');
+                        fundraiser_valid = 0;
+                    } else if ($('#fundraiser_goal').val() < 250) {
+                        $('#fundraiser_goal').addClass('error');
+                        fundraiser_valid = 0;
+                    }
+                    /*
+                     if ($('#fundraiser_enddate').val() == '') {
+                     $('#fundraiser_enddate').addClass('error');
+                     fundraiser_valid = 0;
+                     }*/
+                    if ($('#fundraiser_details').val() == '') {
+                        $('#fundraiser_details').addClass('error');
+                        fundraiser_valid = 0;
+                    }
+                    if (fundraiser_valid == 1) {
+                        if (wepay_connected == 0) {
+                            fundraiser_valid = 0;
+                            showErrorMSg('You have not connected your wepay account, Please connect to accept payment!');
+                        }
+                    }
+                    entered_detail = 1;
+                }
+                if (fundraiser_valid == 1) {
+                    if (entered_detail == 1) {
+                        var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
+                        postformData.append('profile_id', profile_id);
+                        $(fundraiser_media).each(function (key) {
+                            if (fundraiser_media[key] != null) {
+                                fundraiser_types[key] = [];
+                                fundraiser_types[key] = fundraiser_media[key]['media_type'];
+                                postformData.append('fundraiser_append_media[]', fundraiser_media[key], fundraiser_media[key].name);
+                                postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
+                            }
+                        });
+                        $.ajax({
+                            url: site_url + "profile/add_fundraiser",
+                            type: "POST",
+                            data: postformData,
+                            async: false,
+                            dataType: "json",
+                            processData: false, // tell jQuery not to process the data
+                            contentType: false, // tell jQuery not to set contentType
+                            success: function (data) {
+                                if (data.success == true) {
+                                    $('#profile_process').val(6);
+                                    $('.loader').hide();
+                                    //-- Redirect to user dashboard page
+                                    if (redirect_user == 1) {
+                                        window.location.href = site_url + 'dashboard/profiles';
+                                    }
+                                } else {
+                                    $('.loader').hide();
+                                    $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                                    showErrorMSg(data.error);
+                                }
+                            }
+                        });
+                    } else {
+                        $('.loader').hide();
+                        //-- Redirect to user dashboard page
+                        if (redirect_user == 1) {
+                            window.location.href = site_url + 'dashboard/profiles';
+                        }
+                    }
+                } else {
+                    $('.loader').hide();
+                    //--display tribute fundraiser step
+                    $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                }
+            } else {
+                $('.loader').hide();
+                //--display tribute fundraiser step
+                $('.nav-tabs a[href="#sixth-step"]').tab('show');
+            }
+        }
+
+    } else {
+        $('.loader').hide();
+        //--display funeral service step
+        $('.nav-tabs a[href="#fifth-step"]').tab('show');
+    }
+    return false;
+}
 
 function publish_profile() {
-    console.log('here');
 //-- check profile is valid for publish
     if (profile_id == 0) {
-        console.log('profile id is 0');
         $('.nav-tabs a[href="#first-step"]').tab('show');
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
 
     } else {
-        console.log('profile id not zero');
         swal({
             title: "Are you sure?",
             text: "You want to publish this profile",
@@ -926,7 +1080,6 @@ function publish_profile() {
         });
     }
     return false;
-
 }
 //-- Gallery step
 var image_count = 0, video_count = 0;
@@ -1114,219 +1267,7 @@ function add_funfact() {
     }
     return false;
 }
-function save_funeral_tribute() {
-    // Save funeral services data
-    service_valid = 1;
-    if ($('#memorial_date').val() != '' || $('#memorial_time').val() != '' || $('#memorial_place').val() != '' || $('#memorial_address').val() != '' || $('#memorial_country').val() != '' || $('#memorial_state').val() != '' || $('#memorial_city').val() != '' || $('#memorial_zip').val() != '') {
-        if ($('#memorial_date').val() == '') {
-            $('#memorial_date').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_time').val() == '') {
-            $('#memorial_time').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_place').val() == '') {
-            $('#memorial_place').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_address').val() == '') {
-            $('#memorial_address').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_country').val() == '') {
-            $('#memorial_country').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_state').val() == '') {
-            $('#memorial_state').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_city').val() == '') {
-            $('#memorial_city').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_zip').val() == '') {
-            $('#memorial_zip').addClass('error');
-            service_valid = 0;
-        }
-    }
 
-    if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_country').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
-        if ($('#funeral_date').val() == '') {
-            $('#funeral_date').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_time').val() == '') {
-            $('#funeral_time').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_place').val() == '') {
-            $('#funeral_place').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_address').val() == '') {
-            $('#funeral_address').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_country').val() == '') {
-            $('#funeral_country').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_state').val() == '') {
-            $('#funeral_state').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_city').val() == '') {
-            $('#funeral_city').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_zip').val() == '') {
-            $('#funeral_zip').addClass('error');
-            service_valid = 0;
-        }
-    }
-
-    if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_country').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
-        if ($('#burial_date').val() == '') {
-            $('#burial_date').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_time').val() == '') {
-            $('#burial_time').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_place').val() == '') {
-            $('#burial_place').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_address').val() == '') {
-            $('#burial_address').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_country').val() == '') {
-            $('#burial_country').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_state').val() == '') {
-            $('#burial_state').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_city').val() == '') {
-            $('#burial_city').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_zip').val() == '') {
-            $('#burial_zip').addClass('error');
-            service_valid = 0;
-        }
-    }
-    if (service_valid == 1) {
-        $.ajax({
-            url: site_url + "profile/add_services",
-            type: "POST",
-            async: false,
-            data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id,
-            dataType: "json",
-            success: function (data) {
-                if (data.success == true) {
-                    $('#profile_process').val(5);
-
-                    if ($('#fundraiser_profile-form').valid()) {
-                        fundraiser_valid = 1, entered_detail = 0;
-                        if ($('#fundraiser_title').val() != '' || $('#fundraiser_goal').val() != '' || $('#fundraiser_details').val() != '') {
-                            if ($('#fundraiser_title').val() == '') {
-                                $('#fundraiser_title').addClass('error');
-                                fundraiser_valid = 0;
-                            }
-
-                            if ($('#fundraiser_goal').val() == '') {
-                                $('#fundraiser_goal').addClass('error');
-                                fundraiser_valid = 0;
-                            } else if ($('#fundraiser_goal').val() < 250) {
-                                $('#fundraiser_goal').addClass('error');
-                                fundraiser_valid = 0;
-                            }
-                            /*
-                             if ($('#fundraiser_enddate').val() == '') {
-                             $('#fundraiser_enddate').addClass('error');
-                             fundraiser_valid = 0;
-                             }*/
-                            if ($('#fundraiser_details').val() == '') {
-                                $('#fundraiser_details').addClass('error');
-                                fundraiser_valid = 0;
-                            }
-                            if (fundraiser_valid == 1) {
-                                if (wepay_connected == 0) {
-                                    fundraiser_valid = 0;
-                                    showErrorMSg('You have not connected your wepay account, Please connect to accept payment!');
-                                }
-                            }
-                            entered_detail = 1;
-                        }
-                        if (fundraiser_valid == 1) {
-                            if (entered_detail == 1) {
-                                var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
-                                postformData.append('profile_id', profile_id);
-                                $(fundraiser_media).each(function (key) {
-                                    if (fundraiser_media[key] != null) {
-                                        fundraiser_types[key] = [];
-                                        fundraiser_types[key] = fundraiser_media[key]['media_type'];
-                                        postformData.append('fundraiser_append_media[]', fundraiser_media[key], fundraiser_media[key].name);
-                                        postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
-                                    }
-                                });
-                                $.ajax({
-                                    url: site_url + "profile/add_fundraiser",
-                                    type: "POST",
-                                    data: postformData,
-                                    async: false,
-                                    dataType: "json",
-                                    processData: false, // tell jQuery not to process the data
-                                    contentType: false, // tell jQuery not to set contentType
-                                    success: function (data) {
-                                        if (data.success == true) {
-                                            $('#profile_process').val(6);
-                                            //-- Redirect to user dashboard page
-                                            window.location.href = site_url + 'dashboard/profiles';
-                                        } else {
-                                            $('.loader').hide();
-                                            $('.nav-tabs a[href="#sixth-step"]').tab('show');
-                                            showErrorMSg(data.error);
-                                        }
-                                    }
-                                });
-                            } else {
-
-                                //-- Redirect to user dashboard page
-                                window.location.href = site_url + 'dashboard/profiles';
-                            }
-                        } else {
-                            $('.loader').hide();
-                            //--display tribute fundraiser step
-                            $('.nav-tabs a[href="#sixth-step"]').tab('show');
-                        }
-                    } else {
-                        $('.loader').hide();
-                        //--display tribute fundraiser step
-                        $('.nav-tabs a[href="#sixth-step"]').tab('show');
-                    }
-
-                } else {
-                    $('.loader').hide();
-                    //--display funeral service step
-                    $('.nav-tabs a[href="#fifth-step"]').tab('show');
-                    showErrorMSg(data.error);
-                }
-            }
-        });
-    } else {
-        $('.loader').hide();
-        //--display funeral service step
-        $('.nav-tabs a[href="#fifth-step"]').tab('show');
-    }
-    return false;
-}
 function delete_facts(obj, data) {
     $('.loader').show();
     $.ajax({
@@ -1847,3 +1788,171 @@ WePay.OAuth2.button_init(document.getElementById('start_oauth2'), {
         }
     }
 });
+// Validate form and submit data
+function submit_form() {
+    var profile_process = $('#profile_process').val();
+    if (profile_process == 0) {
+        if ($('#create_profile_form').valid()) {
+            $('#profile_process').val(1);
+            fd = new FormData(document.getElementById("create_profile_form"));
+            $('.loader').show();
+            $.ajax({
+                url: create_profile_url,
+                type: "POST",
+                data: fd,
+                dataType: "json",
+                processData: false, // tell jQuery not to process the data
+                contentType: false, // tell jQuery not to set contentType
+                success: function (data) {
+                    $('.loader').hide();
+                    if (data.success == true) {
+                        create_profile_url = site_url + "profile/edit/" + data.data.slug;
+                        profile_id = btoa(data.data.id);
+                        // add validation of unique fun fact rule
+                        var rules = $('#fun_fact').rules();
+                        if (!findProperty(rules, 'remote')) {
+                            $('#fun_fact').rules('add', {
+                                remote: site_url + 'profile/check_facts/' + profile_id,
+                                messages: {
+                                    remote: "This fun fact is already added",
+                                }
+                            });
+                        }
+                        $('#affiliation_text').rules('add', {
+                            remote: site_url + 'profile/check_affiliation/' + profile_id,
+                            messages: {
+                                remote: "This affiliation is already added",
+                            }
+                        });
+                        $('#profile_name').html(data.firstname + ' ' + data.lastname);
+                        $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
+                        profile_slug = data.slug;
+                        $('.nav-tabs a[href="#second-step"]').tab('show');
+
+                    } else {
+                        $('#profile_process').val(0);
+                        showErrorMSg(data.error);
+                    }
+                }
+            });
+        }
+    }
+    return false;
+}
+//-- Hide show steps based on step id
+function profile_steps(obj) {
+    $('.profile-steps').addClass('hide');
+    $('.steps-li').removeClass('active');
+    $('.steps-li').removeClass('process-done');
+    $('#' + obj + '-li').addClass('active');
+
+    if (obj == 'first-step') {
+        $('#' + obj).removeClass('hide');
+    } else if (obj == 'second-step') {
+        $('#' + obj).removeClass('hide');
+        $('#first-step-li').addClass('process-done');
+    } else if (obj == 'third1-step') {
+        $('#' + obj).removeClass('hide');
+        $('#first-step-li,#second-step-li').addClass('process-done');
+    } else if (obj == 'third-step') {
+        $('#' + obj).removeClass('hide');
+        $('#first-step-li,#second-step-li').addClass('process-done');
+    } else if (obj == 'forth-step') {
+        //-- Display timeline data
+        $('.loader').show();
+        $.ajax({
+            url: site_url + "profile/lifetimeline",
+            type: "POST",
+            data: {profile_id: profile_id},
+            success: function (data) {
+                $('.loader').hide();
+                $('.timeline-div').html(data);
+
+                $('.date-picker').datepicker({
+                    format: "mm/dd/yyyy",
+                    endDate: "date()",
+                    autoclose: true,
+                });
+            }
+        });
+
+
+        $('#' + obj).removeClass('hide');
+        $('#first-step-li,#second-step-li,#third-step-li').addClass('process-done');
+    } else if (obj == 'fifth-step') {
+        $('#' + obj).removeClass('hide');
+        $('#first-step-li,#second-step-li,#third-step-li,#forth-step-li').addClass('process-done');
+    } else if (obj == 'sixth-step') {
+        $('#' + obj).removeClass('hide');
+        $('#first-step-li,#second-step-li,#third-step-li,#forth-step-li').addClass('process-done');
+    } else if (obj == 'seventh-step') {
+        $('#' + obj).removeClass('hide');
+        $('#first-step-li,#second-step-li,#third-step-li,#forth-step-li').addClass('process-done');
+    }
+    //-- Scroll to top of profile div section 
+    $('html, body').animate({
+        'scrollTop': $(".create-profile").position().top
+    }, 1000);
+}
+//-- Back step
+function back_step() {
+    var profile_process = $('#profile_process').val();
+    if (profile_process == 1) {
+        $('#profile_process').val(0);
+        profile_steps('first-step');
+    } else if (profile_process == 2) {
+        $('#profile_process').val(1);
+        profile_steps('second-step');
+    } else if (profile_process == 3) {
+        if (!$('#third1-step').hasClass('hide')) {
+            $('#profile_process').val(3);
+            profile_steps('third-step');
+        } else if (!$('#forth-step').hasClass('hide')) {
+            $('#profile_process').val(3);
+            profile_steps('third1-step');
+        } else {
+            $('#profile_process').val(2);
+            profile_steps('second-step');
+        }
+    } else if (profile_process == 4) {
+        $('#profile_process').val(3);
+        profile_steps('forth-step');
+    } else if (profile_process == 5) {
+        $('#profile_process').val(4);
+        profile_steps('fifth-step');
+    } else if (profile_process == 6) {
+        $('#profile_process').val(5);
+        profile_steps('sixth-step');
+    }
+    return false;
+}
+function skip_step() {
+    var profile_process = $('#profile_process').val();
+    if (profile_process == 1) {
+        $('#profile_process').val(2);
+        profile_steps('third-step');
+    } else if (profile_process == 2) {
+        $('#profile_process').val(3);
+        if ($('#third-step').hasClass('hide')) {
+            profile_steps('third-step');
+        } else {
+            profile_steps('third1-step');
+        }
+    } else if (profile_process == 3) {
+        if (!$('#third-step').hasClass('hide')) {
+            profile_steps('third1-step');
+        } else if (!$('#third1-step').hasClass('hide')) {
+            profile_steps('forth-step');
+        } else {
+            $('#profile_process').val(4);
+            profile_steps('fifth-step');
+        }
+    } else if (profile_process == 4) {
+        $('#profile_process').val(5);
+        profile_steps('sixth-step');
+    } else if (profile_process == 5) {
+        $('#profile_process').val(6);
+        profile_steps('seventh-step');
+    }
+    return false;
+}
