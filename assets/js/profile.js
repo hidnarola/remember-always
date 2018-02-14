@@ -35,6 +35,8 @@ $(function () {
         } else {
             if (currentTab != 'first-step') {
                 $('.nav-tabs a[href="#first-step"]').tab('show');
+                $('.panel-collapse.collapse').collapse('hide');
+                $('#collapse-first-step.collapse').collapse('show');
             }
         }
 
@@ -278,6 +280,10 @@ function proceed_step() {
     //-- check if required field is fill up by user
     if (currentTab != 'first-step' && profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
+        
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-first-step.collapse').collapse('show');
+        
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
     } else {

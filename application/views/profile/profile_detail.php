@@ -547,6 +547,7 @@
                                         </div>
                                     </div>
                                     <!--<input type="hidden" name="post_data" id="post_data"/>-->
+                                    <!--<i class="fa fa-info-circle" aria-hidden="true" data-placement="left" title="Enter memories or Sympathy messages here"></i>-->
                                     <button type="submit" name="post_btn" id="post_btn" class="purple_btn">Post</button>
                                 </div>
                             </form>
@@ -1033,6 +1034,8 @@ else
 </script>
 <script src="assets/js/profile_detail.js"></script>
 <script type="text/javascript">
+        $("i").tooltip();
+
     $('.according-tab .panel-title a').on('click', function () {
         jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
         var classes = jQuery(this).prop('class');
