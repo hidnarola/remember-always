@@ -111,8 +111,8 @@ $(function () {
             },
             r_phone: {
                 required: true,
-                number: true,
-                maxlength: 10,
+//                number: true,
+                maxlength: 13,
                 minlength: 10,
             },
             r_d_date: {
