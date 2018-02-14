@@ -683,7 +683,7 @@
                                     }
                                 } else {
                                     ?>
-                                    <p class="no-data">Profile not having life gallery.</p>
+                                    <p class="no-data">Pictures/ videos not loaded yet</p>
                                 <?php } ?>
                             </ul>
                         </div>
