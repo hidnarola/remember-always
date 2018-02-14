@@ -152,13 +152,13 @@
                             <div class="input-wrap second">
                                 <label class="label-css">Flower Card Message <span class="text-danger">*</span>
                                     <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" title="Card message. 200 characters maximum."></i></label>
-                                <textarea name="r_card_msg"  class="input-css textarea-css" id="card_msg" placeholder="Quod omittam vulputate quo ex." maxlength="200"></textarea>
+                                <textarea name="r_card_msg"  class="input-css textarea-css" id="card_msg" placeholder="Enter your personal message here" maxlength="200"></textarea>
                                 <big id="card_msg_count">(200 characters remaining)</big>
                             </div>
                             <div class="input-wrap third">
                                 <label class="label-css">Special Delivery Instructions</label>
                                 <label class="label_info">Please enter anything important. For example, colors or types flowers in arrangement that are important to you or important delivery information.</a></label>
-                                <textarea name="r_instruct" class="input-css textarea-css" name="instruct" id="instruct" placeholder="Quod omittam vulputate quo ex." maxlength="100"></textarea>
+                                <textarea name="r_instruct" class="input-css textarea-css" name="instruct" id="instruct" placeholder="Enter Special Delivery info here" maxlength="100"></textarea>
                                 <big id="instruct_count">(100 characters remaining)</big>
                             </div>
                         </div>

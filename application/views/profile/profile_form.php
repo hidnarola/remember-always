@@ -91,14 +91,14 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                         </div>
                                     </div>
                                     <div class="input-wrap">
-                                        <input type="text" name="nickname" placeholder="Nick Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['nickname'] : set_value('nickname') ?>"/>
+                                        <input type="text" name="nickname" id="nickname" placeholder="Nick Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['nickname'] : set_value('nickname') ?>"/>
                                     </div>
                                     <div class="input-wrap">
                                         <div class="input-l">
-                                            <input type="text" name="date_of_birth" placeholder="Date of Birth (mm/dd/yy)" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_birth'])) : set_value('date_of_birth') ?>"/>
+                                            <input type="text" name="date_of_birth" id="date_of_birth" placeholder="Date of Birth (mm/dd/yy)" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_birth'])) : set_value('date_of_birth') ?>"/>
                                         </div>
                                         <div class="input-r">
-                                            <input type="text" name="date_of_death" placeholder="Date of Death (mm/dd/yy)" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
+                                            <input type="text" name="date_of_death" id="date_of_death" placeholder="Date of Death (mm/dd/yy)" class="input-css date-picker" value="<?php echo (isset($profile)) ? date('m/d/Y', strtotime($profile['date_of_death'])) : set_value('date_of_death') ?>"/>
                                         </div>
                                     </div>
                                     <div class="input-wrap">
@@ -578,10 +578,10 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="memorial_place" id="memorial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['place_name'] ?>">
+                                            <input type="text" name="memorial_place" id="memorial_place" placeholder="Name of place" class="input-css services-places" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="memorial_address" id="memorial_address" placeholder="Address" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['address'] ?>">
+                                            <input type="text" name="memorial_address" id="memorial_address" placeholder="Address" class="input-css services-addresses" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['address'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
@@ -640,7 +640,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 </select>
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="memorial_zip" id="memorial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['zip'] ?>">
+                                                <input type="text" name="memorial_zip" id="memorial_zip" placeholder="Zip" class="input-css services-zip" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -655,10 +655,10 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="funeral_place" id="funeral_place" placeholder="Name of place" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['place_name'] ?>">
+                                            <input type="text" name="funeral_place" id="funeral_place" placeholder="Name of place" class="input-css services-places" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="funeral_address" id="funeral_address" placeholder="Address" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['address'] ?>">
+                                            <input type="text" name="funeral_address" id="funeral_address" placeholder="Address" class="input-css services-addresses" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['address'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
@@ -717,7 +717,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 </select>
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="funeral_zip" id="funeral_zip" placeholder="Zip" class="input-css" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['zip'] ?>">
+                                                <input type="text" name="funeral_zip" id="funeral_zip" placeholder="Zip" class="input-css services-zip" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>
@@ -732,10 +732,10 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                             </div>
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_place" id="burial_place" placeholder="Name of place" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['place_name'] ?>">
+                                            <input type="text" name="burial_place" id="burial_place" placeholder="Name of place" class="input-css services-places" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['place_name'] ?>">
                                         </div>
                                         <div class="input-wrap">
-                                            <input type="text" name="burial_address" id="burial_address" placeholder="Address" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['address'] ?>">
+                                            <input type="text" name="burial_address" id="burial_address" placeholder="Address" class="input-css services-addresses" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['address'] ?>">
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
@@ -794,7 +794,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 </select>
                                             </div>
                                             <div class="input-r">
-                                                <input type="text" name="burial_zip" id="burial_zip" placeholder="Zip" class="input-css" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['zip'] ?>">
+                                                <input type="text" name="burial_zip" id="burial_zip" placeholder="Zip" class="input-css services-zip" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['zip'] ?>">
                                             </div>
                                         </div>
                                     </div>

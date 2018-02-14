@@ -26,7 +26,7 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
                                 </ul>
                             </li>
                             <li role="tab" id="funeralprize_specific" >
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#funeralprize_specific_ul" aria-expanded="<?php echo key_exists($category, $prize_categories) ? 'true' : 'false' ?>" aria-controls="funeralprize_specific" class="<?php echo key_exists($category, $prize_categories) ? 'active collapsed' : '' ?>">Funeral Flowers By Prize</a>
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#funeralprize_specific_ul" aria-expanded="<?php echo key_exists($category, $prize_categories) ? 'true' : 'false' ?>" aria-controls="funeralprize_specific" class="<?php echo key_exists($category, $prize_categories) ? 'active collapsed' : '' ?>">Funeral Flowers By Price</a>
                                 <ul id="funeralprize_specific_ul" class="sub_ul_custom panel-collapse collapse <?php echo key_exists($category, $prize_categories) ? 'in' : '' ?>" role="tabpanel" aria-labelledby="funeralprize_specific">
                                     <?php foreach ($prize_categories as $key => $val) { ?>
                                         <li><a href="<?php echo $url . '?category=' . $key ?>" class="<?php echo $category == $key ? 'active' : '' ?>"><?php echo $val ?></a></li>
