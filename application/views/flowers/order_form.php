@@ -59,11 +59,11 @@
                             <h2>Deliver To</h2>
                             <div class="input-wrap">
                                 <input type="text" name="r_name" placeholder="Name *" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="Name of person receiving flowers. If this is for a funeral home, please put the name of the deceased here."></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="top" title="Name of person receiving flowers. If this is for a funeral home, please put the name of the deceased here."></i>
                             </div>
                             <div class="input-wrap">
                                 <input type="text" name="r_institute" placeholder="Institution" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="If these flowers are going to an institution, such as a business or a funeral home, please put the name of that institution here."></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="top" title="If these flowers are going to an institution, such as a business or a funeral home, please put the name of that institution here."></i>
                             </div>
                             <div class="input-wrap">
                                 <input type="text" name="r_address1" placeholder="Address1 *" class="input-css">
@@ -132,11 +132,11 @@
                             </div>
                             <div class="input-wrap">
                                 <input type="text" name="r_zipcode" id="r_zipcode" placeholder="Zip Code *" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="5 digit Zip Code for United States, example: 10118 | 7 character Postal Code for Canada, example: M5V 2T6"></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="top" title="5 digit Zip Code for United States, example: 10118 | 7 character Postal Code for Canada, example: M5V 2T6"></i>
                             </div>
                             <div class="input-wrap input-wrap_small">
                                 <input type="text" name="r_phone" placeholder="Phone *" class="input-css">
-                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="right" title="Recipient's Phone Number. 10 digits. Acceptable formats: xxx-xxx-xxxx, (xxx) xxx-xxxx, xxxxxxxxxx"></i>
+                                <i class="fa fa-info-circle" aria-hidden="true" data-placement="top" title="Recipient's Phone Number. 10 digits. Acceptable formats: xxx-xxx-xxxx, (xxx) xxx-xxxx, xxxxxxxxxx"></i>
                                 <small>xxx-xxx-xxxx</small>
                             </div>
                         </div>						
