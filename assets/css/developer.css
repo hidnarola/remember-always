@@ -83,6 +83,8 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .bio-tips{color:#999;}
 /*12-2-18 set line height normal*/
 .home-caption .text_p {line-height: normal;}
+
+
 /*13-2-18 set image rotation classes */
 
 .rotate-90 {
@@ -133,3 +135,8 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
     -o-transform: rotate(270deg) scaleX(-1);
     transform: rotate(270deg) scaleX(-1);
 }
+
+/*15-2-18 post message and about us content*/
+.cms-banner-img {display: inline-block;float: right;}
+/*.post-comment .comment-btm {position: relative;padding-bottom: 15px;}
+.post-comment .comment-btm p {position: absolute;right: 0;bottom: -10px;font-size: 12px;color: #888;}*/

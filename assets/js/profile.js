@@ -279,11 +279,11 @@ function readURL(input) {
 function proceed_step() {
     //-- check if required field is fill up by user
     if (currentTab != 'first-step' && profile_id == 0) {
+
         $('.nav-tabs a[href="#first-step"]').tab('show');
-        
         $('.panel-collapse.collapse').collapse('hide');
         $('#collapse-first-step.collapse').collapse('show');
-        
+
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
     } else {
@@ -325,7 +325,10 @@ function proceed_step() {
                             $('#profile_name').html(data.firstname + ' ' + data.lastname);
                             $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
                             profile_slug = data.slug;
+
                             $('.nav-tabs a[href="#second-step"]').tab('show');
+                            $('.panel-collapse.collapse').collapse('hide');
+                            $('#collapse-second-step.collapse').collapse('show');
 
                         } else {
                             $('#profile_process').val(0);
@@ -347,6 +350,8 @@ function proceed_step() {
                         $('#profile_process').val(2);
                         //--display fun facts step
                         $('.nav-tabs a[href="#third-step"]').tab('show');
+                        $('.panel-collapse.collapse').collapse('hide');
+                        $('#collapse-third-step.collapse').collapse('show');
                     } else {
                         $('#profile_process').val(1);
                         showErrorMSg(data.error);
@@ -366,6 +371,8 @@ function proceed_step() {
                         $('#profile_process').val(3);
                         //--display add affiliation step
                         $('.nav-tabs a[href="#third1-step"]').tab('show');
+                        $('.panel-collapse.collapse').collapse('hide');
+                        $('#collapse-third1-step.collapse').collapse('show');
                     } else {
                         $('#profile_process').val(2);
                         showErrorMSg(data.error);
@@ -385,6 +392,8 @@ function proceed_step() {
                         $('#profile_process').val(3);
                         //--display life timeline step
                         $('.nav-tabs a[href="#forth-step"]').tab('show');
+                        $('.panel-collapse.collapse').collapse('hide');
+                        $('#collapse-forth-step.collapse').collapse('show');
                     } else {
                         showErrorMSg(data.error);
                     }
@@ -418,6 +427,8 @@ function proceed_step() {
                                 $('#profile_process').val(4);
                                 //--display funeral services tab
                                 $('.nav-tabs a[href="#fifth-step"]').tab('show');
+                                $('.panel-collapse.collapse').collapse('hide');
+                                $('#collapse-fifth-step.collapse').collapse('show');
                             } else {
                                 $('#profile_process').val(3);
                                 showErrorMSg(data.error);
@@ -438,6 +449,8 @@ function proceed_step() {
                             $('#profile_process').val(4);
                             //--display funeral services tab
                             $('.nav-tabs a[href="#fifth-step"]').tab('show');
+                            $('.panel-collapse.collapse').collapse('hide');
+                            $('#collapse-fifth-step.collapse').collapse('show');
                         } else {
                             $('#profile_process').val(3);
                             showErrorMSg(data.error);
@@ -565,6 +578,8 @@ function proceed_step() {
                             $('#profile_process').val(5);
                             //--display add affiliation step
                             $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                            $('.panel-collapse.collapse').collapse('hide');
+                            $('#collapse-sixth-step.collapse').collapse('show');
                         } else {
                             showErrorMSg(data.error);
                         }
@@ -629,6 +644,8 @@ function proceed_step() {
                                 if (data.success == true) {
                                     $('#profile_process').val(6);
                                     $('.nav-tabs a[href="#seventh-step"]').tab('show');
+                                    $('.panel-collapse.collapse').collapse('hide');
+                                    $('#collapse-seventh-step.collapse').collapse('show');
                                 } else {
                                     showErrorMSg(data.error);
                                 }
@@ -647,6 +664,8 @@ function proceed_step() {
                                 if (data.success == true) {
                                     $('#profile_process').val(6);
                                     $('.nav-tabs a[href="#seventh-step"]').tab('show');
+                                    $('.panel-collapse.collapse').collapse('hide');
+                                    $('#collapse-seventh-step.collapse').collapse('show');
                                 } else {
                                     showErrorMSg(data.error);
                                 }
@@ -668,6 +687,9 @@ function preview_profile() {
     //-- check profile is valid for preview
     if (profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-first-step.collapse').collapse('show');
+        
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
 
@@ -684,6 +706,9 @@ function save_finish() {
     //-- check if required field is fill up by user
     if (currentTab != 'first-step' && profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-first-step.collapse').collapse('show');
+
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
 
@@ -692,6 +717,8 @@ function save_finish() {
             save_profile_data(1);
         } else {
             $('.nav-tabs a[href="#first-step"]').tab('show');
+            $('.panel-collapse.collapse').collapse('hide');
+            $('#collapse-first-step.collapse').collapse('show');
         }
     }
     return false;
@@ -737,6 +764,9 @@ function save_profile_data(redirect_user) {
             } else {
                 $('.loader').hide();
                 $('.nav-tabs a[href="#first-step"]').tab('show');
+                $('.panel-collapse.collapse').collapse('hide');
+                $('#collapse-first-step.collapse').collapse('show');
+                
                 $('#profile_process').val(0);
                 showErrorMSg(data.error);
             }
@@ -772,6 +802,9 @@ function save_lifetimeline(redirect_user) {
                         $('.loader').hide();
                         $('#profile_process').val(3);
                         $('.nav-tabs a[href="#forth-step"]').tab('show');
+                        $('.panel-collapse.collapse').collapse('hide');
+                        $('#collapse-forth-step.collapse').collapse('show');
+                        
                         showErrorMSg(data.error);
                     }
                 }
@@ -912,6 +945,9 @@ function save_funeral_tribute(redirect_user) {
                         $('.loader').hide();
                         //--display funeral service step
                         $('.nav-tabs a[href="#fifth-step"]').tab('show');
+                        $('.panel-collapse.collapse').collapse('hide');
+                        $('#collapse-fifth-step.collapse').collapse('show');
+                        
                         showErrorMSg(data.error);
                     }
                 }
@@ -923,6 +959,8 @@ function save_funeral_tribute(redirect_user) {
         $('.loader').hide();
         //--display funeral service step
         $('.nav-tabs a[href="#fifth-step"]').tab('show');
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-fifth-step.collapse').collapse('show');
     }
     return false;
 }
@@ -992,6 +1030,9 @@ function save_tribute(redirect_user) {
                         } else {
                             $('.loader').hide();
                             $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                            $('.panel-collapse.collapse').collapse('hide');
+                            $('#collapse-sixth-step.collapse').collapse('show');
+
                             showErrorMSg(data.error);
                         }
                     }
@@ -1007,11 +1048,15 @@ function save_tribute(redirect_user) {
             $('.loader').hide();
             //--display tribute fundraiser step
             $('.nav-tabs a[href="#sixth-step"]').tab('show');
+            $('.panel-collapse.collapse').collapse('hide');
+            $('#collapse-sixth-step.collapse').collapse('show');
         }
     } else {
         $('.loader').hide();
         //--display tribute fundraiser step
         $('.nav-tabs a[href="#sixth-step"]').tab('show');
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-sixth-step.collapse').collapse('show');
     }
 
 
@@ -1023,6 +1068,9 @@ function publish_profile() {
 //-- check profile is valid for publish
     if (profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-first-step.collapse').collapse('show');
+
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
 
@@ -1058,6 +1106,9 @@ $("#gallery").change(function () {
     if (typeof (FileReader) != "undefined") {
         if (profile_id == 0) {
             $('.nav-tabs a[href="#first-step"]').tab('show');
+            $('.panel-collapse.collapse').collapse('hide');
+            $('#collapse-first-step.collapse').collapse('show');
+
             $('#create_profile_form').valid();
             showErrorMSg('Please save Basic Info first!');
         } else {
@@ -1195,6 +1246,8 @@ function add_funfact() {
         $('#funfact-modal').modal('hide');
         showErrorMSg('Please save Basic Info first!');
         $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-first-step.collapse').collapse('show');
     } else {
         if ($('#fun-fact-form').valid()) {
             if (facts_count < max_facts_count) {
@@ -1275,6 +1328,8 @@ function add_affiliation() {
         $('#affiliation-modal').modal('hide');
         showErrorMSg('Please save Basic info first!');
         $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-first-step.collapse').collapse('show');
     } else {
         if ($('#affiliation-form').valid()) {
             if (affiliation_count < max_affiliation_count) {
@@ -1350,6 +1405,9 @@ function delete_affiliation(obj, data, type) {
 $(document).on('click', '.add_timeline_btn', function () {
     if (profile_id == 0) {
         $('.nav-tabs a[href="#first-step"]').tab('show');
+        $('.panel-collapse.collapse').collapse('hide');
+        $('#collapse-first-step.collapse').collapse('show');
+
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
     } else {
@@ -1831,7 +1889,8 @@ function submit_form() {
                         $('#profile_slug').attr('data-href', site_url + 'profile/' + data.slug);
                         profile_slug = data.slug;
                         $('.nav-tabs a[href="#second-step"]').tab('show');
-
+                        $('.panel-collapse.collapse').collapse('hide');
+                        $('#collapse-second-step.collapse').collapse('show');
                     } else {
                         $('#profile_process').val(0);
                         showErrorMSg(data.error);
