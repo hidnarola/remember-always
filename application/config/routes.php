@@ -69,6 +69,7 @@ $route['verify'] = 'signup/verify';
 /* Profile Routes */
 
 $route['profile/load_posts/(:any)/(:any)/(:any)'] = 'profile/load_posts/$1/$2/$3';
+$route['profile/load_gallery/(:any)/(:any)/(:any)'] = 'profile/load_gallery/$1/$2/$3';
 $route['profile/load_timeline/(:any)/(:any)'] = 'profile/load_timeline/$1/$2';
 $route['profile/view_timeline/(:any)'] = 'profile/view_timeline/$1';
 $route['profile/upload_cover_image'] = 'profile/upload_cover_image';

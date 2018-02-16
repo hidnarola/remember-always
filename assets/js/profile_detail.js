@@ -9,6 +9,7 @@ var http_regex = /^(https:\/\/)/i;
 post_data = [];
 post_types = [];
 start = 0;
+gallery_start = 0;
 total_timeline_count = 0;
 $(function () {
     $(".fancybox")
@@ -34,6 +35,32 @@ $(function () {
                     var limitStart = $(".post_ul > li").length;
 //                     $(".loader").show();
                     loadResults(limitStart);
+                }
+            }, /*user custom callback function on scroll event*/
+
+        },
+        advanced: {
+
+            updateOnBrowserResize: true, /*update scrollbars on browser resize (for layouts based on percentages): boolean*/
+
+            updateOnContentResize: true, /*auto-update scrollbars on content resize (for dynamic content): boolean*/
+
+            autoExpandHorizontalScroll: true, /*auto-expand width for horizontal scrolling: boolean*/
+
+            autoScrollOnFocus: false /*auto-scroll on focused elements: boolean*/
+
+        },
+    });
+
+    $("#gallery-div").mCustomScrollbar({
+        axis: "y",
+        scrollButtons: {enable: true},
+        theme: "3d",
+        callbacks: {
+            onTotalScroll: function () {
+                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                    var limitStart = $(".gallery_div_ul ul > li").length;
+                    loadGallery(limitStart);
                 }
             }, /*user custom callback function on scroll event*/
 
@@ -111,6 +138,39 @@ $(function () {
                     });
                     $(".post_ul").append(string);
 //                $(".loader").hide();
+                }
+            });
+        }
+    }
+
+    /* For loading more images/videos on scroll event for gallery div*/
+    function loadGallery(limitStart) {
+        if (gallery_start != limitStart) {
+            gallery_start = limitStart;
+            $.ajax({
+                url: site_url + 'profile/load_gallery/' + limitStart + '/' + profile_id,
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    var string = '';
+                    $.each(data, function (index, value) {
+                        if (value['type'] == 1) {
+                            string += '<li><div class="gallery-wrap"><span class="gallery-video-img">'
+                                    + '<a class="fancybox" href="' + gallery_image + value['media'] + '" data-fancybox-type="image" rel="gallery"><img src="' + gallery_image + value['media'] + '" height="100%"></a>'
+                                    + '</span></div></li>'
+                        }
+                        if (value['type'] == 2) {
+                            string += '<li><div class="gallery-wrap">';
+                            string += '<span class="gallery-video-img">'
+                                    + '<img src="' + gallery_image + value['media'].replace('mp4', 'jpg') + '">'
+                                    + '</span>'
+                                    + '<span class="gallery-play-btn">'
+                                    + '<a href="' + gallery_image + value['media'] + '" class="fancybox" data-fancybox-type="iframe" rel="gallery">'
+                                    + '<img src="assets/images/play.png" alt=""></a></span>'
+                                    + '</div></li>'
+                        }
+                    });
+                    $("#gallery-div ul").append(string);
                 }
             });
         }

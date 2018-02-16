@@ -120,7 +120,7 @@ function slug($text, $table, $id = NULL) {
     $text = strtolower($text);
 
     $used_actions = ['create', 'edit', 'index', 'publish',
-        'load_posts', 'load_timeline', 'view_timeline', 'upload_cover_image', 'upload_gallery', 'delete_gallery', 'proceed_steps',
+        'load_gallery', 'load_posts', 'load_timeline', 'view_timeline', 'upload_cover_image', 'upload_gallery', 'delete_gallery', 'proceed_steps',
         'add_facts', 'check_facts', 'delete_facts', 'add_affiliation', 'check_affiliation', 'delete_affiliation', 'add_timeline', 'delete_timeline',
         'lifetimeline', 'get_states', 'get_cities', 'add_services', 'add_fundraiser', 'delete_fundmedia', 'upload_post', 'delete_post', 'send_profile_email'];
     if (empty($text)) {

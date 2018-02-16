@@ -47,7 +47,7 @@
                     <?php if ($profile['type'] == 2 && $profile['is_published'] == 1 && !empty($fundraiser) && $fundraiser['wepay_account_id'] != '' && $fundraiser['wepay_access_token'] != '') { ?>
                         <a href="<?php echo site_url('donate/' . $profile['slug']) ?>" class="donate-btn">Donate</a>
                     <?php } ?>
-                    <a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>
+                    <!--<a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>-->
                     <!-- Edit profile and publish profile buttons if created profile is of logged in user-->
                     <?php if ($profile['user_id'] == $this->user_id) { ?>
                         <a href="<?php echo site_url('profile/edit/' . $profile['slug']) ?>" class="edit-profile-btn">Edit</a>
@@ -648,10 +648,10 @@
                     <?php } ?>
                     <div class="profile-box life-gallery">
                         <h2>Life Gallery</h2>
-                        <div class="profile-box-body">
+                        <div class="profile-box-body gallery_div_ul" id="gallery-div">
                             <ul>
                                 <?php
-                                if (isset($life_gallery) && !empty($life_gallery)) {
+                                if (!empty($life_gallery)) {
                                     foreach ($life_gallery as $key => $val) {
                                         if ($val['type'] == 1) {
                                             ?>
@@ -1028,6 +1028,7 @@ else
     delete_str = '<?php $this->load->view('delete_svg', true); ?>';
     user_image = '<?php echo USER_IMAGES ?>';
     post_image = '<?php echo POST_IMAGES ?>';
+    gallery_image = '<?php echo PROFILE_IMAGES ?>';
     profile_user_id = <?php echo $profile['user_id'] ?>;
 
 </script>

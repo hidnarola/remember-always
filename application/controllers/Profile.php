@@ -103,7 +103,9 @@ class Profile extends MY_Controller {
                 }
                 $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($profile['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
                 $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($profile['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
-                $life_gallery = $this->users_model->sql_select(TBL_GALLERY . ' pg', 'pg.*', ['where' => array('pg.profile_id' => trim($profile['id']), 'pg.is_delete' => 0)], ['join' => [array('table' => TBL_PROFILES . ' p', 'condition' => 'p.id=pg.profile_id')], 'order_by' => 'pg.id DESC']);
+                
+                $life_gallery = $this->load_gallery(0, $profile['id'], true);;
+                
                 $life_timeline = $this->load_timeline(0, $profile['id'], true);
                 $sql = "SELECT * FROM ("
                         . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $profile['id'] . "
@@ -562,6 +564,23 @@ class Profile extends MY_Controller {
         }
         echo json_encode($data);
         exit;
+    }
+
+    /**
+     * Display gallery(images/videos) on page load and called on scroll event.
+     * @author KU
+     */
+    public function load_gallery($start, $profile_id, $static = false) {
+        $offset = 15;
+        if ($static === false) {
+            $profile_id = base64_decode($profile_id);
+        }
+        $final_gallery_data = $this->users_model->sql_select(TBL_GALLERY, 'media,type', ['where' => array('profile_id' => trim($profile_id), 'is_delete' => 0)], ['limit' => $offset, 'offset' => $start]);
+        if ($static === true) {
+            return $final_gallery_data;
+        } else {
+            echo json_encode($final_gallery_data);
+        }
     }
 
     /**

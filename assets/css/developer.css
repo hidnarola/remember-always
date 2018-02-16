@@ -140,3 +140,6 @@ label.error,label.error p  {color: red;margin: 5px 0px 0px 5px;font-size: 14px;f
 .cms-banner-img {display: inline-block;float: right;}
 /*.post-comment .comment-btm {position: relative;padding-bottom: 15px;}
 .post-comment .comment-btm p {position: absolute;right: 0;bottom: -10px;font-size: 12px;color: #888;}*/
+
+/*16-2-18 set height of gallery div*/
+#gallery-div{max-height:370px}
