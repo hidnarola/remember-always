@@ -1439,7 +1439,7 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .home-caption h2 span {font-size:30px;margin:15px 0;}
     .logo {float: none;width: 100%;}
     .search {float: right;margin: 16px 0;}
-    .home-caption a + a{margin-top:20px;}
+    /*.home-caption a + a{margin-top:20px;}*/
     .login-user {float: left;}
     .memorialize {padding:40px 0 20px;}
     .memorialize h2 {margin:0 0 5px;}
