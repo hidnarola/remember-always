@@ -158,7 +158,9 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                     <div class="input-wrap">
                                         <label class="label-css">Create Life Bio</label>
                                         <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Write about Bio... "><?php echo (isset($profile)) ? $profile['life_bio'] : set_value('life_bio') ?></textarea>
-                                        <label class="label-css"><a title="Introduce your loved one like a real person and Watch your word count" href="javascript:void(0)" data-toggle="tooltip" class="bio-tips">Tips for writing a Life Bio</a></label>
+                                        <label class="label-css"><a title="This is much like an obituary. Include in here a couple sentences that create a picture of your loved one.  Make sure to list immediate family members of your loved one and you may state how much they loved and will miss him/her. 
+Mention things such as, what he/she was known for, nick names, who he/she loved or admired, what he/she liked to do and where he/she liked to go.  You may also include what you and others loved most about him/her, and how he/she be remembered.
+You may also include personal and professional accomplishments" href="javascript:void(0)" data-toggle="tooltip" class="bio-tips">Tips for writing a Life Bio</a></label>
                                     </div>
                                 </div>
                             </div>	
