@@ -11,7 +11,13 @@
                         <div class="progress_bar_custom">
                             <p class="goal_text">$<?php echo $fundraiser['total_donation'] ?> of $<?php echo $fundraiser['goal'] ?> Goal<span>Goal $<?php echo $fundraiser['goal'] ?></span></p>	
                             <div class="range_slider_custom">
-                                <div class="rang_fill" style="width: <?php echo round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']) . '%' ?>"></div>
+                                <?php
+                                $progress_width = round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']);
+                                if ($progress_width > 100) {
+                                    $progress_width = 100;
+                                }
+                                ?>
+                                <div class="rang_fill" style="width: <?php echo $progress_width . '%' ?>"></div>
                             </div>
                         </div>
                         <!--<div class="pro_btn"><a href="#">Donate</a></div>-->
@@ -23,6 +29,15 @@
                                 <input type="number" name="donate_amount" id="donate_amount" placeholder="Donation Amount" class="input-css">
                                 <span class="donation_enter_span">Minimum donation is $5</span>
                             </div>
+                            <div class="input-wrap textarea_small">
+                                <textarea name="donation_message" id="donation_message" class="input-css textarea-css" placeholder="Enter message here for donation"></textarea>
+                            </div>
+<!--                            <div class="keep-me">
+                                <label class="custom-checkbox">Do you want to display your name?
+                                    <input type="checkbox" name="display_name" value="1">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>-->
                         </form>
                         <!--                        <div class="input-wrap code">
                                                     <input type="text" name="" placeholder="Name" class="input-css">
@@ -144,7 +159,7 @@
     });
     function makeDonation(slug) {
         if ($('#donate_form').valid()) {
-           $('#donate_form').submit();
+            $('#donate_form').submit();
         }
     }
 </script>

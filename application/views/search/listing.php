@@ -7,10 +7,10 @@
             <form action="<?php echo site_url('search') ?>" id="search_form">
                 <div class="services-form funeral-srh search_new_design">
                     <div class="srvs-form-div">
-                        <input type="text" name="keyword" placeholder="Enter Keyword" class="input-css" value="<?php echo $this->input->get('keyword') ?>"/>
+                        <input type="text" name="keyword" id="general-search-keyword" placeholder="Enter Keyword" class="input-css" value="<?php echo $this->input->get('keyword') ?>"/>
                     </div>
                     <div class="srvs-form-div">	
-                        <input type="text" name="location" placeholder="Location" class="input-css" value="<?php echo $this->input->get('location') ?>"/>
+                        <input type="text" name="location" id="general-search-location" placeholder="Location" class="input-css" value="<?php echo $this->input->get('location') ?>"/>
                     </div>
                     <div class="srvs-form-div">	
                         <button type="submit" class="global_search">Search</button>
@@ -148,7 +148,7 @@
                     </ul>
                     <div class="btn_pr">
                         <?php if ($this->is_user_loggedin) { ?>
-                        <a href="<?php echo site_url('profile/create') ?>" class="btn-link">Create a life profile</a>
+                            <a href="<?php echo site_url('profile/create') ?>" class="btn-link">Create a life profile</a>
                         <?php } else { ?>
                             <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="http://clientapp.narola.online/HD/remember-always/profile/create"  class="btn-link">Create a life profile</a>
                         <?php } ?>
@@ -175,5 +175,11 @@
     });
     $('#search_type').change(function () {
         $('#search_form').submit();
+    });
+    $("#general-search-keyword,#general-search-location").keydown(function (e) {
+        var value = e.keyCode;
+        if (value == 13) {
+            $('#search_form').submit();
+        }
     });
 </script>

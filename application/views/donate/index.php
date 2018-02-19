@@ -11,7 +11,13 @@
                         <div class="progress_bar_custom">
                             <p class="goal_text">$<?php echo $fundraiser['total_donation'] ?> of $<?php echo $fundraiser['goal'] ?> Goal<span>Goal $<?php echo $fundraiser['goal'] ?></span></p>	
                             <div class="range_slider_custom">
-                                <div class="rang_fill" style="width: <?php echo round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']) . '%' ?>"></div>
+                                <?php
+                                $progress_width = round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']);
+                                if ($progress_width > 100) {
+                                    $progress_width = 100;
+                                }
+                                ?>
+                                <div class="rang_fill" style="width: <?php echo $progress_width . '%' ?>"></div>
                             </div>
                         </div>
                         <div class="pro_btn"><a href="<?php echo site_url('donate/next/' . $fundraiser['slug']) ?>">Donate</a></div>
@@ -32,7 +38,18 @@
                                             <?php }
                                             ?>
                                         </div>
-                                        <h6><?php echo $donation['firstname'] . ' ' . $donation['lastname'] ?><span class="span_rs">$ <?php echo $donation['amount'] ?></span></h6>
+                                        <h6>
+                                            <?php
+                                            if ($donation['user_id'] != '') {
+                                                echo $donation['firstname'] . ' ' . $donation['lastname'];
+                                            } else if ($donation['payer_name'] != '') {
+                                                echo $donation['payer_name'];
+                                            } else {
+                                                echo 'Guest';
+                                            }
+                                            ?>
+                                            <span class="span_rs">$ <?php echo $donation['amount'] ?></span>
+                                        </h6>
                                         <p class="p_date"><?php echo date('M d, Y', strtotime($donation['created_at'])) ?></p>
                                         <p><?php echo $donation['details'] ?></p>
                                     </li>
@@ -79,14 +96,12 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $(".fancybox").fancybox(
-                {
-                    openEffect: 'none',
-                    closeEffect: 'none',
-                    nextEffect: 'none',
-                    prevEffect: 'none',
-                    padding: 0,
-                }
-        );
+        $(".fancybox").fancybox({
+            openEffect: 'none',
+            closeEffect: 'none',
+            nextEffect: 'none',
+            prevEffect: 'none',
+            padding: 0,
+        });
     });
 </script>

@@ -30,7 +30,7 @@ class Donate extends MY_Controller {
             ]]);
             if (!empty($fundraiser)) {
                 $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, 'media,type', ['where' => ['fundraiser_profile_id' => $fundraiser['fundraiser_id']]]);
-                $data['donations'] = $this->users_model->sql_select(TBL_DONATIONS . ' d', 'u.firstname,u.lastname,u.profile_image,d.details,d.amount,d.created_at', ['where' => ['d.is_delete' => 0, 'd.state' => 'authorized', 'p.slug' => $slug]], [
+                $data['donations'] = $this->users_model->sql_select(TBL_DONATIONS . ' d', 'u.firstname,u.lastname,u.profile_image,d.payer_name,d.payer_email,d.user_id,d.details,d.amount,d.created_at', ['where' => ['d.is_delete' => 0, 'd.state' => 'authorized', 'p.slug' => $slug]], [
                     'join' => [
                         array('table' => TBL_PROFILES . ' p', 'condition' => 'd.profile_id=p.id'),
                         array('table' => TBL_USERS . ' u', 'condition' => 'd.user_id=u.id'),
@@ -94,7 +94,7 @@ class Donate extends MY_Controller {
                     $response = $wepay->request('checkout/create', array(
                         'account_id' => $account_id,
                         'amount' => $amount,
-                        'short_description' => 'Donation',
+                        'short_description' => $this->input->post('donation_message'),
                         'type' => 'donation',
                         'currency' => 'USD',
                         'hosted_checkout' => ['mode' => 'iframe', 'redirect_uri' => $redirect_uri],
@@ -166,6 +166,9 @@ class Donate extends MY_Controller {
                         'amount' => $response->amount,
                         'gross' => $response->gross,
                         'state' => $response->state,
+                        'details' => $response->short_description,
+                        'payer_name' => $response->payer->name,
+                        'payer_email' => $response->payer->email,
                         'ip_address' => $ip,
                         'created_at' => date('Y-m-d H:i:s')
                     ];

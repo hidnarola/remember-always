@@ -636,7 +636,7 @@ function proceed_step() {
                             type: "POST",
                             data: postformData,
                             dataType: "json",
-                            processData: false, // tell jQuery not to process the data
+                            proscessData: false, // tell jQuery not to process the data
                             contentType: false, // tell jQuery not to set contentType
                             success: function (data) {
                                 tribute_change = 0;
@@ -689,7 +689,7 @@ function preview_profile() {
         $('.nav-tabs a[href="#first-step"]').tab('show');
         $('.panel-collapse.collapse').collapse('hide');
         $('#collapse-first-step.collapse').collapse('show');
-        
+
         $('#create_profile_form').valid();
         showErrorMSg('Please save Basic Info first!');
 
@@ -766,7 +766,7 @@ function save_profile_data(redirect_user) {
                 $('.nav-tabs a[href="#first-step"]').tab('show');
                 $('.panel-collapse.collapse').collapse('hide');
                 $('#collapse-first-step.collapse').collapse('show');
-                
+
                 $('#profile_process').val(0);
                 showErrorMSg(data.error);
             }
@@ -804,7 +804,7 @@ function save_lifetimeline(redirect_user) {
                         $('.nav-tabs a[href="#forth-step"]').tab('show');
                         $('.panel-collapse.collapse').collapse('hide');
                         $('#collapse-forth-step.collapse').collapse('show');
-                        
+
                         showErrorMSg(data.error);
                     }
                 }
@@ -947,7 +947,7 @@ function save_funeral_tribute(redirect_user) {
                         $('.nav-tabs a[href="#fifth-step"]').tab('show');
                         $('.panel-collapse.collapse').collapse('hide');
                         $('#collapse-fifth-step.collapse').collapse('show');
-                        
+
                         showErrorMSg(data.error);
                     }
                 }
@@ -1047,9 +1047,11 @@ function save_tribute(redirect_user) {
         } else {
             $('.loader').hide();
             //--display tribute fundraiser step
-            $('.nav-tabs a[href="#sixth-step"]').tab('show');
-            $('.panel-collapse.collapse').collapse('hide');
-            $('#collapse-sixth-step.collapse').collapse('show');
+            if (currentTab != 'sixth-step') {
+                $('.nav-tabs a[href="#sixth-step"]').tab('show');
+                $('.panel-collapse.collapse').collapse('hide');
+                $('#collapse-sixth-step.collapse').collapse('show');
+            }
         }
     } else {
         $('.loader').hide();

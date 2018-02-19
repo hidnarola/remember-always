@@ -8,7 +8,7 @@
             <div class="services-form services_custom_frm">
                 <form method="get" name="provider_form" id="provider_form" action="<?php echo site_url('service_provider') ?>">
                     <div class="srvs-form-div">
-                        <input type="text" name="keyword" id="keyword" placeholder="Enter Keyword" class="input-css global_search" value="<?php echo (isset($_GET['keyword'])) ? $_GET['keyword'] : set_value('keyword') ?>"/>
+                        <input type="text" name="keyword" id="keyword" placeholder="Enter Keyword" class="input-css global_search" value="<?php echo ($this->input->get('keyword') != '') ? $this->input->get('keyword') : set_value('keyword') ?>"/>
                     </div>
                     <div class="srvs-form-div">	
                         <input type="text" name="location" id="location" placeholder="Location" class="input-css global_search" value="<?php echo ($this->input->get('location') != '') ? $this->input->get('location') : set_value('location'); ?>"/>
@@ -170,9 +170,9 @@
         infowindow.close();
         var place = autocomplete.getPlace();
         if (!place.geometry) {
+            $('#input-latitude').val('');
+            $('#input-latitude').val('');
             return;
-            $('#input-latitude').val('');
-            $('#input-latitude').val('');
         }
         $('#input-latitude').val(place.geometry.location.lat());
         $('#input-longitude').val(place.geometry.location.lng());
@@ -266,6 +266,20 @@
         }
         return false;
     }
-
-
+    $("#keyword").keydown(function (e) {
+        var value = e.keyCode;
+        if (value == 13) {
+            $('.loader').show();
+            submit_form();
+        }
+    });
+    $("#location").keydown(function (e) {
+        var value = e.keyCode;
+        if (value == 13) {
+            $('.loader').show();
+            setTimeout(function () {
+                submit_form();
+            }, 1000);
+        }
+    });
 </script>

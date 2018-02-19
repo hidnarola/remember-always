@@ -47,7 +47,7 @@
                     <?php if ($profile['type'] == 2 && $profile['is_published'] == 1 && !empty($fundraiser) && $fundraiser['wepay_account_id'] != '' && $fundraiser['wepay_access_token'] != '') { ?>
                         <a href="<?php echo site_url('donate/' . $profile['slug']) ?>" class="donate-btn">Donate</a>
                     <?php } ?>
-                    <!--<a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>-->
+    <!--<a href="<?php echo site_url('flowers') ?>" class="flowers-btn">Send Flowers</a>-->
                     <!-- Edit profile and publish profile buttons if created profile is of logged in user-->
                     <?php if ($profile['user_id'] == $this->user_id) { ?>
                         <a href="<?php echo site_url('profile/edit/' . $profile['slug']) ?>" class="edit-profile-btn">Edit</a>
@@ -422,12 +422,40 @@
                             <?php } ?>
                         </div>
                     </div>
+                    <div class="profile-box affiliations">
+                        <h2>Affiliations</h2>
+                        <div class="profile-box-body">
+                            <ul>
+                                <?php if (isset($affiliations) && !empty($affiliations)) { ?>
+                                    <?php
+                                    foreach ($affiliations as $key => $value) {
+                                        if ($value['free_text'] == 1) {
+                                            ?>
+                                            <li><a><?php echo $value['name'] ?></a></li>
+                                        <?php } else { ?>
+                                            <li><a href="<?php echo site_url('affiliation/view/') . $value['slug'] ?>" class="official_affiliation"><?php echo $value['name'] ?></a></li>
+                                            <?php
+                                        }
+                                    }
+                                } else {
+                                    ?>
+                                    <li><p class="no-data">No Affiliations available.</p></li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="profile-body-m">
                     <div class="profile-box life-bio">
                         <h2>Life Bio</h2>
                         <div class="profile-box-body">
-                            <p><?php echo isset($profile['life_bio']) && !is_null($profile['life_bio']) ? $profile['life_bio'] : 'Life bio not available for this profile.' ?></p>
+                            <p>
+                                <?php
+                                $life_bio = explode("\n", $profile['life_bio']);
+                                $life_bio = implode("<br>", $life_bio);
+                                echo $life_bio;
+                                ?>
+                            </p>
                         </div>
 
                         <div class="post-comment">
@@ -704,34 +732,9 @@
                             <?php } ?>
                         </div>
                     </div>
-
-                    <div class="profile-box affiliations">
-                        <h2>Affiliations</h2>
-                        <div class="profile-box-body">
-                            <ul>
-                                <?php if (isset($affiliations) && !empty($affiliations)) { ?>
-                                    <?php
-                                    foreach ($affiliations as $key => $value) {
-                                        if ($value['free_text'] == 1) {
-                                            ?>
-                                            <li><a><?php echo $value['name'] ?></a></li>
-                                        <?php } else { ?>
-                                            <li><a href="<?php echo site_url('affiliation/view/') . $value['slug'] ?>" class="official_affiliation"><?php echo $value['name'] ?></a></li>
-                                            <?php
-                                        }
-                                    }
-                                } else {
-                                    ?>
-                                    <li><p class="no-data">No Affiliations available.</p></li>
-                                <?php } ?>
-                            </ul>
-                        </div>
-                    </div>
-
                     <div class="profile-box ad">
                         <a href=""><img src="assets/images/ad.jpg" alt="" /></a>
                     </div>
-
                 </div>
             </div>
         </div>

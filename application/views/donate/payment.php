@@ -12,7 +12,13 @@
                         <div class="progress_bar_custom">
                             <p class="goal_text">$<?php echo $fundraiser['total_donation'] ?> of $<?php echo $fundraiser['goal'] ?> Goal<span>Goal $<?php echo $fundraiser['goal'] ?></span></p>	
                             <div class="range_slider_custom">
-                                <div class="rang_fill" style="width: <?php echo round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']) . '%' ?>"></div>
+                                <?php
+                                $progress_width = round(($fundraiser['total_donation'] * 100) / $fundraiser['goal']);
+                                if ($progress_width > 100) {
+                                    $progress_width = 100;
+                                }
+                                ?>
+                                <div class="rang_fill" style="width: <?php echo $progress_width . '%' ?>"></div>
                             </div>
                         </div>
                         <!--<div class="pro_btn"><a href="#">Donate</a></div>-->
