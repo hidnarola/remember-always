@@ -31,12 +31,10 @@
                                     <h6 class="srvs-contact"><strong>State :</strong> <a><?php echo isset($affiliation['state_name']) ? $affiliation['state_name'] : '' ?></a></h6>
                                     <h6 class="srvs-contact"><strong>City :</strong> <a><?php echo isset($affiliation['city_name']) ? $affiliation['city_name'] : '' ?></a></h6>
                                 </div>-->
-
-                <div class="srvs-personal-dtl profile-css-div">
-                    <h6 class="srvs-contact"><strong>Profiles:</strong>
-                    </h6>
-                </div>
                 <?php if (isset($profiles) && !empty($profiles)) { ?>
+                    <div class="srvs-personal-dtl profile-css-div">
+                        <h6 class="srvs-contact"><strong>Profiles:</strong></h6>
+                    </div>
                     <ul class="srvs-personal-point">
                         <?php foreach ($profiles as $key => $value) {
                             ?>

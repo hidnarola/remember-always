@@ -109,4 +109,24 @@ class Signup extends MY_Controller {
         redirect('/');
     }
 
+    public function resend_verification() {
+        $uid = base64_decode($this->input->get('uid'));
+        $user = $this->users_model->get_user_detail(['id' => $uid, 'is_delete' => 0, 'role' => 'user']);
+        if (!empty($user) && $user['verification_code'] != '') {
+            $verification_code = base64_encode($user['verification_code']);
+            $encoded_verification_code = urlencode($verification_code);
+
+            $email_data = [];
+            $email_data['url'] = site_url() . 'verify?code=' . $encoded_verification_code;
+            $email_data['name'] = $user['firstname'] . ' ' . $user['lastname'];
+            $email_data['email'] = $user['email'];
+            $email_data['subject'] = 'Verify Email | Remember Always';
+            send_mail($user['email'], 'verify_email', $email_data);
+            $this->session->set_flashdata('success', 'Verification email sent successfully');
+        } else {
+            $this->session->set_flashdata('error', 'Invalid request or already verified your email');
+        }
+        redirect('/');
+    }
+
 }

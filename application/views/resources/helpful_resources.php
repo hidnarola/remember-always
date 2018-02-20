@@ -17,7 +17,7 @@
                             <li><h6><a href="<?php echo site_url('blog/details/how-to-easily-share-funeral-services-information')?>">Sharing funeral services information</a></h6></li>
                             <li><h6><a href="<?php echo site_url('blog/details/how-to-select-a-funeral-home-director')?>">Tips on how to Select a Funeral Home</a></h6></li>
                             <li>
-                                <h6><a href="<?php echo site_url('service_provider') ?>">Service Providers Directory</a></h6>	
+                                <h6><a href="<?php echo site_url('service_provider') ?>">Service Provider Directory</a></h6>	
                                 <p>Find service providers such as funeral homes, caterers, florists, and more.</p>
                             </li>
                             <li>
@@ -33,7 +33,7 @@
                         <ul class="ul_list">
                             <li><h6><a href="">Advice for dealing with grief</a></h6>	</li>
                             <li><h6><a href="https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=dealing+with+grief&rh=i%3Aaps%2Ck%3Adealing+with+grief" target="_blank">Recommended Books</a></h6><p>Recommended books for dealing with grief</p></li>
-                            <li><h6><a href="<?php echo site_url('service_provider') ?>">Service Providers Directory</a></h6>	
+                            <li><h6><a href="<?php echo site_url('service_provider') ?>">Service Provider Directory</a></h6>	
                                 <p>Find grief counselors.</p></li>
                             <li><h6><a href="<?php echo site_url('community') ?>">Online Support Community</a></h6>	
                                 <p>Ask for advice and get support from others for handling grief. Or help others with your</p></li>
@@ -43,11 +43,11 @@
             </div>
             <div class="box_m">
                 <div class="profile-box fun-facts">
-                    <h2>Service Providers Directory</h2>
+                    <h2>Service Provider Directory</h2>
                     <div class="profile-box-body profile-box-body-change">
                         <ul class="ul_list">
                             <li>
-                                <h6><a href="<?php echo site_url('service_provider') ?>">Service Providers Directory</a></h6>
+                                <h6><a href="<?php echo site_url('service_provider') ?>">Service Provider Directory</a></h6>
                                 <p>Find service providers in your area, such as, funeral homes, crematories, florists, caterers,
                                     attorneys, tax advisors, and more. <a href="<?php echo site_url('service_provider') ?>">Find Service Provider.</a></p></li>
                         </ul>

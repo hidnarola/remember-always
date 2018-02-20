@@ -300,7 +300,7 @@
             </div>
             <div class="funeral-r">
                 <div class="profile-box fun-facts">
-                    <h2>Service Providers Directory</h2>
+                    <h2>Service Provider Directory</h2>
                     <div class="profile-box-body">
                         <p>Find service providers in your area, such as, funeral homes, crematories, florists, caterers, attorneys, tax advisors, and more.</p>
                         <a href="<?php echo site_url('service_provider') ?>" class="btn-link plannig-service-btn">Find Service Providers</a>

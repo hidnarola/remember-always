@@ -79,7 +79,7 @@ class Donate extends MY_Controller {
                 $data['fundraiser'] = $fundraiser;
                 $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, 'media,type', ['where' => ['fundraiser_profile_id' => $fundraiser['fundraiser_id']]]);
 
-                if ($this->input->post('donate_amount') >= 5) {
+                if ($this->input->post('donate_amount') >= 10) {
                     $amount = $this->input->post('donate_amount');
                     require_once(APPPATH . 'libraries/Wepay.php');
                     // application settings
@@ -91,6 +91,9 @@ class Donate extends MY_Controller {
                     $wepay = new WePay($access_token);
                     $redirect_uri = site_url('donate/thank_you/' . $slug);
                     // create the checkout
+                    $app_fee = ($amount * 7.9) / 100;
+                    $app_fee = round($app_fee, 2);
+
                     $response = $wepay->request('checkout/create', array(
                         'account_id' => $account_id,
                         'amount' => $amount,
@@ -98,6 +101,7 @@ class Donate extends MY_Controller {
                         'type' => 'donation',
                         'currency' => 'USD',
                         'hosted_checkout' => ['mode' => 'iframe', 'redirect_uri' => $redirect_uri],
+                        'fee' => ['fee_payer' => 'payee', 'app_fee' => $app_fee],
                     ));
                     if (!empty($response)) {
                         $data['title'] = 'Remember Always | Donation';

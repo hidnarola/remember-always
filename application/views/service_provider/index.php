@@ -4,129 +4,134 @@
 </style>
 <div class="common-page">
     <div class="container">
-        <div class="service_provder_form">
-            <div class="services-form services_custom_frm">
-                <form method="get" name="provider_form" id="provider_form" action="<?php echo site_url('service_provider') ?>">
-                    <div class="srvs-form-div">
-                        <input type="text" name="keyword" id="keyword" placeholder="Enter Keyword" class="input-css global_search" value="<?php echo ($this->input->get('keyword') != '') ? $this->input->get('keyword') : set_value('keyword') ?>"/>
-                    </div>
-                    <div class="srvs-form-div">	
-                        <input type="text" name="location" id="location" placeholder="Location" class="input-css global_search" value="<?php echo ($this->input->get('location') != '') ? $this->input->get('location') : set_value('location'); ?>"/>
-                    </div>
-                    <input type="hidden" name="lat" id="input-latitude" value="<?php echo ($this->input->get('lat') != '') ? $this->input->get('lat') : set_value('lat'); ?>">
-                    <input type="hidden" name="long" id="input-longitude" value="<?php echo ($this->input->get('long') != '') ? $this->input->get('long') : set_value('long'); ?>">
+        <div class="common-head">
+            <h2 class="h2title">Service Provider Directory</h2>
+        </div>
+        <div class="common-body">
+            <div class="service_provder_form">
+                <div class="services-form services_custom_frm">
+                    <form method="get" name="provider_form" id="provider_form" action="<?php echo site_url('service_provider') ?>">
+                        <div class="srvs-form-div">
+                            <input type="text" name="keyword" id="keyword" placeholder="Enter Keyword" class="input-css global_search" value="<?php echo ($this->input->get('keyword') != '') ? $this->input->get('keyword') : set_value('keyword') ?>"/>
+                        </div>
+                        <div class="srvs-form-div">	
+                            <input type="text" name="location" id="location" placeholder="Location" class="input-css global_search" value="<?php echo ($this->input->get('location') != '') ? $this->input->get('location') : set_value('location'); ?>"/>
+                        </div>
+                        <input type="hidden" name="lat" id="input-latitude" value="<?php echo ($this->input->get('lat') != '') ? $this->input->get('lat') : set_value('lat'); ?>">
+                        <input type="hidden" name="long" id="input-longitude" value="<?php echo ($this->input->get('long') != '') ? $this->input->get('long') : set_value('long'); ?>">
 
-                    <div class="srvs-form-div srvs_search">	
-                        <button type="button" id="provider_srch_btn" class="next" disabled><i class="fa fa-search" aria-hidden="true"></i></button>
-                    </div>	
-                </form>
-            </div>
-            <div class="result_show">
-                <p><?php echo $display_msg ?></p>
-            </div>
-            <div class="row_directory">
-                <div class="col_d_left">
-                    <ul class="ul_directory">
-                        <?php
-                        $lat_arr = $info_content = [];
-                        $start = ($this->uri->segment(2) != '') ? $this->uri->segment(2) : 0;
-                        $sr = $start + 1;
-                        foreach ($services as $key => $service) {
-                            $lat_arr[] = [$service['name'], $service['coordinates']['latitude'], $service['coordinates']['longitude']];
-                            $info_content[] = ['<div class="info_content"><h3>' . $service['name'] . '</h3><p>' . @$service['location']['display_address'][0] . '<br/>' . @$service['location']['display_address'][1] . '</p></div>'];
-                            ?>
-                            <li>
-                                <div class="inner_d">
-                                    <div class="img_profile_d">
-                                        <!--<a href="#">-->
-                                        <?php if ($service['image_url'] != '') { ?>
-                                            <img src="<?php echo $service['image_url'] ?>"/>
-                                        <?php } else { ?>
-                                            <img src="assets/images/no_image.png"/>
-                                        <?php } ?>
-                                        <!--</a>-->
-                                    </div>
-                                    <div class="data_directory">
-                                        <div class="data_head">
-                                            <h2><a href="<?php echo $service['url'] ?>" target="_blank"><span><?php echo $sr; ?>.</span> <?php echo $service['name'] ?></a></h2>
-                                            <div class="rating_span">
-                                                <span class="span_ic">
-                                                    <?php
-                                                    $star_module = floor($service['rating']);
-                                                    $half_rating = $service['rating'] - $star_module;
-                                                    $star_count = 0;
-                                                    while ($star_count < 5) {
-                                                        for ($i = 1; $i <= $star_module; $i++) {
-                                                            echo '<i class="fa fa-star" aria-hidden="true"></i>';
-                                                            $star_count++;
-                                                        }
-                                                        $star_module = 0;
-                                                        if ($star_count < 5) {
-                                                            if ($half_rating != 0) {
-                                                                echo '<i class="fa fa-star-half-o" aria-hidden="true"></i>';
-                                                                $star_count++;
-                                                                $half_rating = 0;
-                                                            } else {
-                                                                echo '<i class="fa fa-star-o" aria-hidden="true"></i>';
+                        <div class="srvs-form-div srvs_search">	
+                            <button type="button" id="provider_srch_btn" class="next" disabled><i class="fa fa-search" aria-hidden="true"></i></button>
+                        </div>	
+                    </form>
+                </div>
+                <div class="result_show">
+                    <p><?php echo $display_msg ?></p>
+                </div>
+                <div class="row_directory">
+                    <div class="col_d_left">
+                        <ul class="ul_directory">
+                            <?php
+                            $lat_arr = $info_content = [];
+                            $start = ($this->uri->segment(2) != '') ? $this->uri->segment(2) : 0;
+                            $sr = $start + 1;
+                            foreach ($services as $key => $service) {
+                                $lat_arr[] = [$service['name'], $service['coordinates']['latitude'], $service['coordinates']['longitude']];
+                                $info_content[] = ['<div class="info_content"><h3>' . $service['name'] . '</h3><p>' . @$service['location']['display_address'][0] . '<br/>' . @$service['location']['display_address'][1] . '</p></div>'];
+                                ?>
+                                <li>
+                                    <div class="inner_d">
+                                        <div class="img_profile_d">
+                                            <!--<a href="#">-->
+                                            <?php if ($service['image_url'] != '') { ?>
+                                                <img src="<?php echo $service['image_url'] ?>"/>
+                                            <?php } else { ?>
+                                                <img src="assets/images/no_image.png"/>
+                                            <?php } ?>
+                                            <!--</a>-->
+                                        </div>
+                                        <div class="data_directory">
+                                            <div class="data_head">
+                                                <h2><a href="<?php echo $service['url'] ?>" target="_blank"><span><?php echo $sr; ?>.</span> <?php echo $service['name'] ?></a></h2>
+                                                <div class="rating_span">
+                                                    <span class="span_ic">
+                                                        <?php
+                                                        $star_module = floor($service['rating']);
+                                                        $half_rating = $service['rating'] - $star_module;
+                                                        $star_count = 0;
+                                                        while ($star_count < 5) {
+                                                            for ($i = 1; $i <= $star_module; $i++) {
+                                                                echo '<i class="fa fa-star" aria-hidden="true"></i>';
                                                                 $star_count++;
                                                             }
+                                                            $star_module = 0;
+                                                            if ($star_count < 5) {
+                                                                if ($half_rating != 0) {
+                                                                    echo '<i class="fa fa-star-half-o" aria-hidden="true"></i>';
+                                                                    $star_count++;
+                                                                    $half_rating = 0;
+                                                                } else {
+                                                                    echo '<i class="fa fa-star-o" aria-hidden="true"></i>';
+                                                                    $star_count++;
+                                                                }
+                                                            }
                                                         }
-                                                    }
+                                                        ?>
+                                                    </span>
+                                                    <span class="rating_count"><?php echo $service['review_count'] ?> review<?php if ($service['review_count'] > 0) echo 's' ?></span>
+                                                </div>
+                                                <div class="price-category">
+                                                    <!--<a href="">-->
+                                                    <?php
+                                                    $categories = array_column($service['categories'], 'title');
+                                                    echo implode(',', $categories);
                                                     ?>
-                                                </span>
-                                                <span class="rating_count"><?php echo $service['review_count'] ?> review<?php if ($service['review_count'] > 0) echo 's' ?></span>
+                                                    <!--</a>-->
+                                                </div>
                                             </div>
-                                            <div class="price-category">
-                                                <!--<a href="">-->
+                                            <div class="data_add">
+                                                <!--<span class="neighborhood-str-list">North Beach/Telegraph Hill, Russian Hill</span>-->
                                                 <?php
-                                                $categories = array_column($service['categories'], 'title');
-                                                echo implode(',', $categories);
+                                                $address = implode("<br>", $service['location']['display_address'])
                                                 ?>
-                                                <!--</a>-->
+                                                <address><?php echo $address; ?></address>
+                                                <span class="biz-phone"><?php echo $service['display_phone'] ?></span>
                                             </div>
                                         </div>
-                                        <div class="data_add">
-                                            <!--<span class="neighborhood-str-list">North Beach/Telegraph Hill, Russian Hill</span>-->
-                                            <?php
-                                            $address = implode("<br>", $service['location']['display_address'])
-                                            ?>
-                                            <address><?php echo $address; ?></address>
-                                            <span class="biz-phone"><?php echo $service['display_phone'] ?></span>
-                                        </div>
+                                        <!--                                    <div class="reply_data">
+                                                                                <div class="img_photo_box"><img src="https://s3-media4.fl.yelpcdn.com/photo/2KcVU8a-k1A6q4ZhTEXj8w/60s.jpg"/></div>
+                                                                                <p class="snippet">Picking a headstone is an arduous responsibility, given the difficult situation. Thankfully, Henry and Joe were very kind and understanding of what…<a href="" class="">read more</a></p>
+                                                                            </div>-->
                                     </div>
-                                    <!--                                    <div class="reply_data">
-                                                                            <div class="img_photo_box"><img src="https://s3-media4.fl.yelpcdn.com/photo/2KcVU8a-k1A6q4ZhTEXj8w/60s.jpg"/></div>
-                                                                            <p class="snippet">Picking a headstone is an arduous responsibility, given the difficult situation. Thankfully, Henry and Joe were very kind and understanding of what…<a href="" class="">read more</a></p>
-                                                                        </div>-->
-                                </div>
-                            </li>
-                            <?php
-                            $sr++;
-                        }
-                        ?>
-                    </ul>
-                    <div class="paggination-wrap">
-                        <?php
-                        if ($total > 0) {
-                            $end = $start + count($services);
+                                </li>
+                                <?php
+                                $sr++;
+                            }
                             ?>
-                            <div class="text-right">
-                                <span class="records_info">Showing <?php echo $start + 1; ?>-<?php echo $end; ?> of <?php echo ($total > 10) ? $total : count($services); ?> Records</span>
-                                <?php echo $links ?>
+                        </ul>
+                        <div class="paggination-wrap">
+                            <?php
+                            if ($total > 0) {
+                                $end = $start + count($services);
+                                ?>
+                                <div class="text-right">
+                                    <span class="records_info">Showing <?php echo $start + 1; ?>-<?php echo $end; ?> of <?php echo ($total > 10) ? $total : count($services); ?> Records</span>
+                                    <?php echo $links ?>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="col_d_right">
+                        <?php if ($total > 0) { ?>
+                            <div class="map_img">
+                                <div id="map_wrapper">
+                                    <div id="map_canvas" class="mapping"></div>
+                                </div>
                             </div>
                         <?php } ?>
+                        <div class="adv_div"><img src="assets/images/blue_adv.png"></div>
+                        <div class="adv_div"><img src="assets/images/add_blue.png"></div>
                     </div>
-                </div>
-                <div class="col_d_right">
-                    <?php if ($total > 0) { ?>
-                        <div class="map_img">
-                            <div id="map_wrapper">
-                                <div id="map_canvas" class="mapping"></div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                    <div class="adv_div"><img src="assets/images/blue_adv.png"></div>
-                    <div class="adv_div"><img src="assets/images/add_blue.png"></div>
                 </div>
             </div>
         </div>

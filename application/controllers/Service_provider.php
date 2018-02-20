@@ -63,8 +63,8 @@ class Service_provider extends MY_Controller {
             $final_msg = $display_msg_first . $display_msg;
         }
         $data['display_msg'] = $final_msg;
-        $data['title'] = 'Remember Always | Service Providers Directory';
-        $data['breadcrumb'] = ['title' => 'Service Providers Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $data['title'] = 'Remember Always | Service Provider Directory';
+        $data['breadcrumb'] = ['title' => 'Service Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'service_provider/index', $data);
     }
 
@@ -155,8 +155,8 @@ class Service_provider extends MY_Controller {
         $data['service_categories'] = $service_categories;
         $data['services'] = $this->load_providers(0, true);
 
-        $data['title'] = 'Remember Always | Service Providers Directory';
-        $data['breadcrumb'] = ['title' => 'Service Providers Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+        $data['title'] = 'Remember Always | Service Provider Directory';
+        $data['breadcrumb'] = ['title' => 'Service Provider Directory', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         $this->template->load('default', 'service_provider/index_old', $data);
     }
 
@@ -198,7 +198,7 @@ class Service_provider extends MY_Controller {
             } else {
                 custom_show_404();
             }
-            $data['title'] = 'Service Providers Directory';
+            $data['title'] = 'Service Provider Directory';
             $data['breadcrumb'] = ['title' => 'Post Service Provider Listing', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('service_provider'), 'title' => 'Service Provider Listing']]];
             $this->template->load('default', 'service_provider/details', $data);
         } else {

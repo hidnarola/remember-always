@@ -70,7 +70,7 @@ class Users extends MY_Controller {
             $this->data['title'] = 'Remember Always Admin | Users';
             $this->data['heading'] = 'Add User';
         }
-        
+
         $countries = $this->users_model->sql_select(TBL_COUNTRY . ' c');
         $this->data['countries'] = $countries;
         if (strtolower($this->input->method()) == 'post') {
@@ -104,6 +104,7 @@ class Users extends MY_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {
+            //-- check if profile image is there in $_FILES array
 //            p($this->input->post(), 1);
             $verification_code = verification_code();
             $password = randomPassword();
@@ -123,9 +124,29 @@ class Users extends MY_Controller {
                 $dataArr['address2'] = trim($this->input->post('address2'));
             }
             if (is_numeric($id)) {
-                $dataArr['updated_at'] = date('Y-m-d H:i:s');
-                $this->users_model->common_insert_update('update', TBL_USERS, $dataArr, ['id' => $id]);
-                $this->session->set_flashdata('success', 'Uesr details has been updated successfully.');
+                $flag = 0;
+                $profile_image = $user_data['profile_image'];
+                if ($_FILES['profile_image']['name'] != '') {
+                    $directory = 'user_' . $id;
+                    if (!file_exists(USER_IMAGES . $directory)) {
+                        mkdir(USER_IMAGES . $directory);
+                    }
+                    $image_data = upload_image('profile_image', USER_IMAGES . $directory);
+                    if (is_array($image_data)) {
+                        $flag = 1;
+                        $this->session->set_flashdata('error', $image_data['errors']);
+                    } else {
+                        $profile_image = $directory . '/' . $image_data;
+                    }
+                }
+                if ($flag == 0) {
+                    if ($user_data['facebook_id'] == '' && $user_data['google_id'] == '') {
+                        $dataArr['profile_image'] = $profile_image;
+                    }
+                    $dataArr['updated_at'] = date('Y-m-d H:i:s');
+                    $this->users_model->common_insert_update('update', TBL_USERS, $dataArr, ['id' => $id]);
+                    $this->session->set_flashdata('success', 'Uesr details has been updated successfully.');
+                }
             } else {
                 $dataArr['password'] = password_hash($password, PASSWORD_BCRYPT);
                 $dataArr['is_verify'] = 0;
@@ -169,7 +190,7 @@ class Users extends MY_Controller {
         if (is_numeric($id)) {
             $this->data['title'] = 'Remember Always Admin | Users';
             $this->data['heading'] = 'View Uesr Details';
-            $user_data = $this->users_model->sql_select(TBL_USERS . ' u', 'u.*,con.name as country_name,st.name as state_name,c.name as city_name', ['where' => array('u.id' => trim($id), 'is_delete' => 0)], ['join'=>[array('table' => TBL_COUNTRY . ' con', 'condition' => 'con.id=u.country'),array('table' => TBL_STATE . ' st', 'condition' => 'st.id=u.state'),array('table' => TBL_CITY . ' c', 'condition' => 'c.id=u.city')],'single' => true]);
+            $user_data = $this->users_model->sql_select(TBL_USERS . ' u', 'u.*,con.name as country_name,st.name as state_name,c.name as city_name', ['where' => array('u.id' => trim($id), 'is_delete' => 0)], ['join' => [array('table' => TBL_COUNTRY . ' con', 'condition' => 'con.id=u.country'), array('table' => TBL_STATE . ' st', 'condition' => 'st.id=u.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=u.city')], 'single' => true]);
             if (!empty($user_data)) {
                 $this->data['user_data'] = $user_data;
             } else {
@@ -204,7 +225,7 @@ class Users extends MY_Controller {
         }
         redirect('admin/users');
     }
-    
+
     /**
      * Get cities  or state based on type passed as data.
      * */
@@ -235,7 +256,7 @@ class Users extends MY_Controller {
         }
         echo $options;
     }
-    
+
     /**
      * Callback Validate function to check unique email validation
      * @return boolean

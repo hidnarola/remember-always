@@ -27,7 +27,7 @@
                             <div class="input-wrap input_enter_dn">
                                 <span class="donation_enter">Enter your donation:</span>
                                 <input type="number" name="donate_amount" id="donate_amount" placeholder="Donation Amount" class="input-css">
-                                <span class="donation_enter_span">Minimum donation is $5</span>
+                                <span class="donation_enter_span">Minimum donation is $10</span>
                             </div>
                             <div class="input-wrap textarea_small">
                                 <textarea name="donation_message" id="donation_message" class="input-css textarea-css" placeholder="Enter message here for donation"></textarea>
@@ -153,7 +153,7 @@
         rules: {
             donate_amount: {
                 required: true,
-                min: 5,
+                min: 10,
             },
         }
     });
