@@ -135,7 +135,9 @@ $(function () {
         } else {
             // if not logged in then display login modal
             $('#login-form').attr('action', site_url + 'login?redirect=' + btoa(current_url));
-            $('#login').modal();
+            $('.login-pop').trigger('click');
+
+//            $('#login').modal();
             $('.nav-tabs a[href="#log-in"]').tab('show');
         }
     });
@@ -199,7 +201,9 @@ $(function () {
         } else {
             // if not logged in then display login modal
             $('#login-form').attr('action', site_url + 'login?redirect=' + btoa(current_url));
-            $('#login').modal();
+            $('.login-pop').trigger('click');
+
+//            $('#login').modal();
             $('.nav-tabs a[href="#log-in"]').tab('show');
         }
     });
