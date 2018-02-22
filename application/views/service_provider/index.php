@@ -129,162 +129,247 @@
                                 </div>
                             </div>
                         <?php } ?>
-                        <div class="adv_div"><img src="assets/images/blue_adv.png"></div>
-                        <div class="adv_div"><img src="assets/images/add_blue.png"></div>
+                        <div class="adv_div">
+                            <script type="text/javascript">
+                                clicksor_mobile_redirect = false;
+                                //default banner house ad url 
+                                clicksor_default_url = '';
+                                clicksor_banner_border = '#805066';
+                                clicksor_banner_ad_bg = '#FFFFFF';
+                                clicksor_banner_link_color = '#000000';
+                                clicksor_banner_text_color = '#666666';
+                                clicksor_banner_image_banner = true;
+                                clicksor_banner_text_banner = true;
+                                clicksor_layer_border_color = '#805066';
+                                clicksor_layer_ad_bg = '#FFFFFF';
+                                clicksor_layer_ad_link_color = '#000000';
+                                clicksor_layer_ad_text_color = '#666666';
+                                clicksor_text_link_bg = '';
+                                clicksor_text_link_color = '';
+                                clicksor_enable_text_link = false;
+                                clicksor_layer_banner = false;
+                            </script>
+                            <script type="text/javascript" src="http://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=10&amp;sid=652028"></script>
+                        </div>
+                        <div class="adv_div">
+                            <script type="text/javascript">
+                                clicksor_mobile_redirect = false;
+                                //default banner house ad url 
+                                clicksor_default_url = '';
+                                clicksor_banner_border = '#805066';
+                                clicksor_banner_ad_bg = '#FFFFFF';
+                                clicksor_banner_link_color = '#000000';
+                                clicksor_banner_text_color = '#666666';
+                                clicksor_banner_image_banner = true;
+                                clicksor_banner_text_banner = true;
+                                clicksor_layer_border_color = '#805066';
+                                clicksor_layer_ad_bg = '#FFFFFF';
+                                clicksor_layer_ad_link_color = '#000000';
+                                clicksor_layer_ad_text_color = '#666666';
+                                clicksor_text_link_bg = '';
+                                clicksor_text_link_color = '';
+                                clicksor_enable_text_link = false;
+                                clicksor_layer_banner = false;
+                            </script>
+                            <script type="text/javascript" src="http://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=10&amp;sid=652028"></script>
+                        </div>
+                        <div class="adv_div">
+                            <script type="text/javascript">
+                                clicksor_mobile_redirect = false;
+                                //default banner house ad url 
+                                clicksor_default_url = '';
+                                clicksor_banner_border = '#805066';
+                                clicksor_banner_ad_bg = '#FFFFFF';
+                                clicksor_banner_link_color = '#000000';
+                                clicksor_banner_text_color = '#666666';
+                                clicksor_banner_image_banner = true;
+                                clicksor_banner_text_banner = true;
+                                clicksor_layer_border_color = '#805066';
+                                clicksor_layer_ad_bg = '#FFFFFF';
+                                clicksor_layer_ad_link_color = '#000000';
+                                clicksor_layer_ad_text_color = '#666666';
+                                clicksor_text_link_bg = '';
+                                clicksor_text_link_color = '';
+                                clicksor_enable_text_link = false;
+                                clicksor_layer_banner = false;
+                            </script>
+                            <script type="text/javascript" src="http://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=10&amp;sid=652028"></script>
+                        </div>
+                        <div class="adv_div">
+                            <script type="text/javascript">
+                                clicksor_mobile_redirect = false;
+                                //default banner house ad url 
+                                clicksor_default_url = '';
+                                clicksor_banner_border = '#805066';
+                                clicksor_banner_ad_bg = '#FFFFFF';
+                                clicksor_banner_link_color = '#000000';
+                                clicksor_banner_text_color = '#666666';
+                                clicksor_banner_image_banner = true;
+                                clicksor_banner_text_banner = true;
+                                clicksor_layer_border_color = '#805066';
+                                clicksor_layer_ad_bg = '#FFFFFF';
+                                clicksor_layer_ad_link_color = '#000000';
+                                clicksor_layer_ad_text_color = '#666666';
+                                clicksor_text_link_bg = '';
+                                clicksor_text_link_color = '';
+                                clicksor_enable_text_link = false;
+                                clicksor_layer_banner = false;
+                            </script>
+                            <script type="text/javascript" src="http://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=10&amp;sid=652028"></script>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div id="demo"></div>
 <?php $empty = count($services); ?>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
-    function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-        } else {
-            alert("Geolocation is not supported by this browser.");
-        }
-    }
-    function geoSuccess(position) {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        alert("lat:" + lat + " lng:" + lng);
-    }
-    function geoError() {
-        alert("Geocoder failed.");
-    }
-    var geocoder;
-    function initialize() {
-        geocoder = new google.maps.Geocoder();
-    }
+                                function getLocation() {
+                                    if (navigator.geolocation) {
+                                        navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+                                    } else {
+                                        alert("Geolocation is not supported by this browser.");
+                                    }
+                                }
+                                function geoSuccess(position) {
+                                    var lat = position.coords.latitude;
+                                    var lng = position.coords.longitude;
+                                    alert("lat:" + lat + " lng:" + lng);
+                                }
+                                function geoError() {
+                                    alert("Geocoder failed.");
+                                }
+                                var geocoder;
+                                function initialize() {
+                                    geocoder = new google.maps.Geocoder();
+                                }
 //    getLocation();
 
-    var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
-    var empty = <?php echo $empty ?>;
-    var input = (document.getElementById('location'));
-    var options = {
-        componentRestrictions: {country: "us"}
-    };
+                                var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
+                                var empty = <?php echo $empty ?>;
+                                var input = (document.getElementById('location'));
+                                var options = {
+                                    componentRestrictions: {country: "us"}
+                                };
 //    var autocomplete = new google.maps.places.Autocomplete(input, options);
-    var autocomplete = new google.maps.places.Autocomplete(input);
-    var infowindow = new google.maps.InfoWindow();
-    google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        infowindow.close();
-        var place = autocomplete.getPlace();
-        if (!place.geometry) {
-            $('#input-latitude').val('');
-            $('#input-latitude').val('');
-            return;
-        }
-        $('#input-latitude').val(place.geometry.location.lat());
-        $('#input-longitude').val(place.geometry.location.lng());
-    });
+                                var autocomplete = new google.maps.places.Autocomplete(input);
+                                var infowindow = new google.maps.InfoWindow();
+                                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                                    infowindow.close();
+                                    var place = autocomplete.getPlace();
+                                    if (!place.geometry) {
+                                        $('#input-latitude').val('');
+                                        $('#input-latitude').val('');
+                                        return;
+                                    }
+                                    $('#input-latitude').val(place.geometry.location.lat());
+                                    $('#input-longitude').val(place.geometry.location.lng());
+                                });
 
-    jQuery(function ($) {
-        /*
-         var script = document.createElement('script');
-         script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
-         document.body.appendChild(script);*/
-        if (empty != 0) {
-            initialize();
-        }
-    });
+                                jQuery(function ($) {
+                                    /*
+                                     var script = document.createElement('script');
+                                     script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+                                     document.body.appendChild(script);*/
+                                    if (empty != 0) {
+                                        initialize();
+                                    }
+                                });
 
-    function initialize() {
-        var map;
-        var bounds = new google.maps.LatLngBounds();
-        var mapOptions = {
-            mapTypeId: 'roadmap',
-        };
+                                function initialize() {
+                                    var map;
+                                    var bounds = new google.maps.LatLngBounds();
+                                    var mapOptions = {
+                                        mapTypeId: 'roadmap',
+                                    };
 
-        // Display a map on the page
-        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-        map.setTilt(45);
+                                    // Display a map on the page
+                                    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                                    map.setTilt(45);
 
-        // Multiple Markers
-        var markers = <?php echo json_encode($lat_arr) ?>;
+                                    // Multiple Markers
+                                    var markers = <?php echo json_encode($lat_arr) ?>;
 
-        // Info Window Content
-        var infoWindowContent = <?php echo json_encode($info_content) ?>;
+                                    // Info Window Content
+                                    var infoWindowContent = <?php echo json_encode($info_content) ?>;
 
-        // Display multiple markers on a map
-        var infoWindow = new google.maps.InfoWindow(), marker, i;
+                                    // Display multiple markers on a map
+                                    var infoWindow = new google.maps.InfoWindow(), marker, i;
 
-        // Loop through our array of markers & place each one on the map  
-        for (i = 0; i < markers.length; i++) {
-            var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-            bounds.extend(position);
-            marker = new google.maps.Marker({
-                position: position,
-                map: map,
-                title: markers[i][0]
-            });
+                                    // Loop through our array of markers & place each one on the map  
+                                    for (i = 0; i < markers.length; i++) {
+                                        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+                                        bounds.extend(position);
+                                        marker = new google.maps.Marker({
+                                            position: position,
+                                            map: map,
+                                            title: markers[i][0]
+                                        });
 
-            // Allow each marker to have an info window    
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    infoWindow.setContent(infoWindowContent[i][0]);
-                    infoWindow.open(map, marker);
-                }
-            })(marker, i));
+                                        // Allow each marker to have an info window    
+                                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                                            return function () {
+                                                infoWindow.setContent(infoWindowContent[i][0]);
+                                                infoWindow.open(map, marker);
+                                            }
+                                        })(marker, i));
 
-            // Automatically center the map fitting all markers on the screen
-            map.fitBounds(bounds);
-        }
+                                        // Automatically center the map fitting all markers on the screen
+                                        map.fitBounds(bounds);
+                                    }
 
-        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
-            this.setZoom(10);
-            google.maps.event.removeListener(boundsListener);
-        });
+                                    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+                                    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+                                        this.setZoom(10);
+                                        google.maps.event.removeListener(boundsListener);
+                                    });
 
-    }
+                                }
 
-    $(document).on('keyup paste', 'input[type="text"]', function () {
-        if ($(this).val() != '') {
-            $('#provider_srch_btn').removeAttr('disabled');
-        }
-    });
-    $(document).on('change', 'select', function () {
-        if ($(this).val() != '') {
-            $('#provider_srch_btn').removeAttr('disabled');
-        }
-    });
-    $(document).on('click', '#provider_srch_btn', function () {
+                                $(document).on('keyup paste', 'input[type="text"]', function () {
+                                    if ($(this).val() != '') {
+                                        $('#provider_srch_btn').removeAttr('disabled');
+                                    }
+                                });
+                                $(document).on('change', 'select', function () {
+                                    if ($(this).val() != '') {
+                                        $('#provider_srch_btn').removeAttr('disabled');
+                                    }
+                                });
+                                $(document).on('click', '#provider_srch_btn', function () {
 //        $('#provider_form').submit();
-        submit_form();
-    });
-    function submit_form() {
-        var location = $('#location').val();
-        var keyword = $('#keyword').val();
-        if (location == '' && keyword == '') {
-            window.location.href = site_url + 'service_provider';
-        } else if (location != '' && keyword != '') {
-            window.location.href = site_url + 'service_provider?keyword=' + keyword + '&location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
-        } else if (location != '') {
-            window.location.href = site_url + 'service_provider?location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
-        } else if (keyword != '') {
-            window.location.href = site_url + 'service_provider?keyword=' + keyword;
-        }
-        return false;
-    }
-    $("#keyword").keydown(function (e) {
-        var value = e.keyCode;
-        if (value == 13) {
-            $('.loader').show();
-            submit_form();
-        }
-    });
-    $("#location").keydown(function (e) {
-        var value = e.keyCode;
-        if (value == 13) {
-            $('.loader').show();
-            setTimeout(function () {
-                submit_form();
-            }, 1000);
-        }
-    });
+                                    submit_form();
+                                });
+                                function submit_form() {
+                                    var location = $('#location').val();
+                                    var keyword = $('#keyword').val();
+                                    if (location == '' && keyword == '') {
+                                        window.location.href = site_url + 'service_provider';
+                                    } else if (location != '' && keyword != '') {
+                                        window.location.href = site_url + 'service_provider?keyword=' + keyword + '&location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
+                                    } else if (location != '') {
+                                        window.location.href = site_url + 'service_provider?location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
+                                    } else if (keyword != '') {
+                                        window.location.href = site_url + 'service_provider?keyword=' + keyword;
+                                    }
+                                    return false;
+                                }
+                                $("#keyword").keydown(function (e) {
+                                    var value = e.keyCode;
+                                    if (value == 13) {
+                                        $('.loader').show();
+                                        submit_form();
+                                    }
+                                });
+                                $("#location").keydown(function (e) {
+                                    var value = e.keyCode;
+                                    if (value == 13) {
+                                        $('.loader').show();
+                                        setTimeout(function () {
+                                            submit_form();
+                                        }, 1000);
+                                    }
+                                });
 </script>

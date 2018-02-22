@@ -13,9 +13,9 @@
                                 <h6><a href="<?php echo site_url('funeral_planning') ?>">Funeral Planning Checklist</a></h6>	
                                 <p>Step by step guide to help you through the process.</p>
                             </li>
-                            <li><h6><a href="<?php echo site_url('blog/details/paying-for-a-funeral-and-other-unexpected-expenses')?>">Tips for paying for a funeral</a></h6></li>
-                            <li><h6><a href="<?php echo site_url('blog/details/how-to-easily-share-funeral-services-information')?>">Sharing funeral services information</a></h6></li>
-                            <li><h6><a href="<?php echo site_url('blog/details/how-to-select-a-funeral-home-director')?>">Tips on how to Select a Funeral Home</a></h6></li>
+                            <li><h6><a href="<?php echo site_url('blog/details/paying-for-a-funeral-and-other-unexpected-expenses') ?>">Tips for paying for a funeral</a></h6></li>
+                            <li><h6><a href="<?php echo site_url('blog/details/how-to-easily-share-funeral-services-information') ?>">Sharing funeral services information</a></h6></li>
+                            <li><h6><a href="<?php echo site_url('blog/details/how-to-select-a-funeral-home-director') ?>">Tips on how to Select a Funeral Home</a></h6></li>
                             <li>
                                 <h6><a href="<?php echo site_url('service_provider') ?>">Service Provider Directory</a></h6>	
                                 <p>Find service providers such as funeral homes, caterers, florists, and more.</p>
@@ -131,12 +131,50 @@
                         </ul>
                     </div>
                 </div>
-                <div class="profile-box fun-facts img_ad_custom">
-                    <div class="adv_div"><img src="assets/images/blue_adv.png"></div>
-                </div>
-                <div class="profile-box fun-facts img_ad_custom">
-                    <div class="adv_div"><img src="assets/images/add_blue.png"></div>
-                </div>
+                <script type="text/javascript">
+                    clicksor_mobile_redirect = false;
+                    //default banner house ad url 
+                    clicksor_default_url = '';
+                    clicksor_banner_border = '#805066';
+                    clicksor_banner_ad_bg = '#FFFFFF';
+                    clicksor_banner_link_color = '#000000';
+                    clicksor_banner_text_color = '#666666';
+                    clicksor_banner_image_banner = true;
+                    clicksor_banner_text_banner = true;
+                    clicksor_layer_border_color = '#805066';
+                    clicksor_layer_ad_bg = '#FFFFFF';
+                    clicksor_layer_ad_link_color = '#000000';
+                    clicksor_layer_ad_text_color = '#666666';
+                    clicksor_text_link_bg = '';
+                    clicksor_text_link_color = '';
+                    clicksor_enable_text_link = false;
+                    clicksor_layer_banner = false;
+                </script>
+                <script type="text/javascript" src="http://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=5&amp;sid=652028"></script>
+<!--                <div class="profile-box fun-facts img_ad_custom">
+                    <div class="adv_div">
+                        <script type="text/javascript">
+                    clicksor_mobile_redirect = false;
+                    //default banner house ad url 
+                    clicksor_default_url = '';
+                    clicksor_banner_border = '#805066';
+                    clicksor_banner_ad_bg = '#FFFFFF';
+                    clicksor_banner_link_color = '#000000';
+                    clicksor_banner_text_color = '#666666';
+                    clicksor_banner_image_banner = true;
+                    clicksor_banner_text_banner = true;
+                    clicksor_layer_border_color = '#805066';
+                    clicksor_layer_ad_bg = '#FFFFFF';
+                    clicksor_layer_ad_link_color = '#000000';
+                    clicksor_layer_ad_text_color = '#666666';
+                    clicksor_text_link_bg = '';
+                    clicksor_text_link_color = '';
+                    clicksor_enable_text_link = false;
+                    clicksor_layer_banner = false;
+                        </script>
+                        <script type="text/javascript" src="http://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=5&amp;sid=652028"></script>
+                    </div>
+                </div>-->
             </div>
         </div>
     </div>
