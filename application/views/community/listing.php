@@ -134,7 +134,7 @@
                         clicksor_enable_text_link = false;
                         clicksor_layer_banner = false;
                     </script>
-                    <script type="text/javascript" src="http://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=7&amp;sid=652028"></script>
+                    <script type="text/javascript" src="https://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=7&amp;sid=652028"></script>
                     <!--<div class="profile-box ad"></div>-->
                     <br/><br/>
                     <script type="text/javascript">
@@ -156,7 +156,7 @@
                         clicksor_enable_text_link = false;
                         clicksor_layer_banner = false;
                     </script>
-                    <script type="text/javascript" src="http://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=7&amp;sid=652028"></script>
+                    <script type="text/javascript" src="https://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=7&amp;sid=652028"></script>
                 </div>
             </div>
         </div>
