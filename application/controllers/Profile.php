@@ -103,9 +103,10 @@ class Profile extends MY_Controller {
                 }
                 $fun_facts = $this->users_model->sql_select(TBL_FUN_FACTS . ' f', 'f.*', ['where' => array('f.profile_id' => trim($profile['id']), 'f.is_delete' => 0)], ['order_by' => 'f.id DESC']);
                 $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($profile['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
-                
-                $life_gallery = $this->load_gallery(0, $profile['id'], true);;
-                
+
+                $life_gallery = $this->load_gallery(0, $profile['id'], true);
+                ;
+
                 $life_timeline = $this->load_timeline(0, $profile['id'], true);
                 $sql = "SELECT * FROM ("
                         . "SELECT id,affiliation_text as name,'1' as free_text,'null' as slug,created_at FROM " . TBL_PROFILE_AFFILIATIONTEXTS . " WHERE profile_id=" . $profile['id'] . "
@@ -205,7 +206,11 @@ class Profile extends MY_Controller {
         }
         $final_post_data = [];
         $total_records = $this->users_model->sql_select(TBL_LIFE_TIMELINE, 'id', ['where' => ['is_delete' => 0, 'profile_id' => trim($profile_id)]], ['count' => TRUE]);
-        $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*,(SELECT COUNT(*) FROM ' . TBL_LIFE_TIMELINE . ' l' . ' WHERE l.is_delete=0) as total_count', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.year,lt.month,lt.date', 'limit' => $offset, 'offset' => $start]);
+        if ($start == 0) {
+            $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.year,lt.month,lt.date', 'limit' => $offset, 'offset' => $start]);
+        } else {
+            $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.year,lt.month,lt.date', 'limit' => $total_records,'offset' => $start]);
+        }
         if ($static === true) {
             $final = ['timeline_data' => $timeline_data, 'total_count' => $total_records];
             return $final;
