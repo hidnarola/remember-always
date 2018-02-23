@@ -230,22 +230,22 @@
                                     if (navigator.geolocation) {
                                         navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
                                     } else {
-                                        alert("Geolocation is not supported by this browser.");
+                                        console.log("Geolocation is not supported by this browser.");
                                     }
                                 }
                                 function geoSuccess(position) {
                                     var lat = position.coords.latitude;
                                     var lng = position.coords.longitude;
-                                    alert("lat:" + lat + " lng:" + lng);
+                                    console.log("lat:" + lat + " lng:" + lng);
                                 }
                                 function geoError() {
-                                    alert("Geocoder failed.");
+                                    console.log("Geocoder failed.");
                                 }
                                 var geocoder;
                                 function initialize() {
                                     geocoder = new google.maps.Geocoder();
                                 }
-//    getLocation();
+                                getLocation();
 
                                 var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
                                 var empty = <?php echo $empty ?>;
