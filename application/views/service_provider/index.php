@@ -248,6 +248,24 @@
                                     geocoder = new google.maps.Geocoder();
                                 }
                                 getLocation();
+                                
+                                function codeLatLng(lat, lng) {
+                                    var latlng = new google.maps.LatLng(lat, lng);
+                                    geocoder.geocode({'latLng': latlng}, function (results, status) {
+                                        if (status == google.maps.GeocoderStatus.OK) {
+                                            console.log(results)
+                                            if (results[1]) {
+                                                //formatted address
+                                                var address = results[0].formatted_address;
+                                                console.log("address = " + address);
+                                            } else {
+                                                console.log("No results found");
+                                            }
+                                        } else {
+                                            console.log("Geocoder failed due to: " + status);
+                                        }
+                                    });
+                                }
 
                                 var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
                                 var empty = <?php echo $empty ?>;
@@ -373,21 +391,5 @@
                                         }, 1000);
                                     }
                                 });
-                                function codeLatLng(lat, lng) {
-                                    var latlng = new google.maps.LatLng(lat, lng);
-                                    geocoder.geocode({'latLng': latlng}, function (results, status) {
-                                        if (status == google.maps.GeocoderStatus.OK) {
-                                            console.log(results)
-                                            if (results[1]) {
-                                                //formatted address
-                                                var address = results[0].formatted_address;
-                                                console.log("address = " + address);
-                                            } else {
-                                                console.log("No results found");
-                                            }
-                                        } else {
-                                            console.log("Geocoder failed due to: " + status);
-                                        }
-                                    });
-                                }
+                                
 </script>
