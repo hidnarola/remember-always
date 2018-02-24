@@ -226,7 +226,7 @@
 <?php $empty = count($services); ?>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
-                                user_latitud = getCookie('user_latitud');
+                                user_latitud = getCookie('user_latitude');
                                 console.log('user_latitude', user_latitud);
                                 
                                 function getLocation() {
@@ -240,7 +240,7 @@
                                     var lat = position.coords.latitude;
                                     var lng = position.coords.longitude;
                                     console.log("lat:" + lat + " lng:" + lng);
-                                    setCookie('user_latittude', lat, 365);
+                                    setCookie('user_latitude', lat, 365);
                                     setCookie('user_longitude', lng, 365);
                                     codeLatLng(lat, lng);
                                 }
