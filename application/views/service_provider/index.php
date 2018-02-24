@@ -226,6 +226,9 @@
 <?php $empty = count($services); ?>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
+                                user_latitud = getCookie('user_latitud');
+                                console.log('user_latitude', user_latitud);
+                                
                                 function getLocation() {
                                     if (navigator.geolocation) {
                                         navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
@@ -236,7 +239,6 @@
                                 function geoSuccess(position) {
                                     var lat = position.coords.latitude;
                                     var lng = position.coords.longitude;
-                                    console.log("position:" + position);
                                     console.log("lat:" + lat + " lng:" + lng);
                                     setCookie('user_latittude', lat, 365);
                                     setCookie('user_longitude', lng, 365);

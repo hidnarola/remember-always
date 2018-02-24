@@ -118,21 +118,32 @@ class Service_provider extends MY_Controller {
         $business_path = $this->config->item('business_path');
 //        $url_params = ['limit' => 10, 'offset' => $start, 'categories' => 'funeralservices'];
         $url_params = ['limit' => 10, 'offset' => $start];
-        $url_params['categories'] = 'funeralservices,cremationservices,mortuaryservices,flowers,florists,synagogues,'
-                . 'churches,catering,eventservices,religiousitems,officiants,organic_stores,organdonorservices,donationcenter,religiousorgs,mosques,buddhist_temples,hindu_temples,taoisttemples';
+        $url_params['categories'] = 'funeralservices';
 
         $url = $api_host . $search_path;
         if ($this->input->get('keyword') != '') {
             $url_params['term'] = $this->input->get('keyword');
+            $url_params['categories'] = 'funeralservices,cremationservices,mortuaryservices,flowers,florists,synagogues,'
+                    . 'churches,catering,eventservices,religiousitems,officiants,organic_stores,organdonorservices,donationcenter,religiousorgs,mosques,buddhist_temples,hindu_temples,taoisttemples';
         }
         if ($this->input->get('lat') != '' && $this->input->get('long') != '') {
             $url_params['latitude'] = $this->input->get('lat');
             $url_params['longitude'] = $this->input->get('long');
+            $url_params['categories'] = 'funeralservices,cremationservices,mortuaryservices,flowers,florists,synagogues,'
+                    . 'churches,catering,eventservices,religiousitems,officiants,organic_stores,organdonorservices,donationcenter,religiousorgs,mosques,buddhist_temples,hindu_temples,taoisttemples';
         } else {
-            $url_params['location'] = 'US';
+            //--check if user has allowed his/her location
+            $user_latitude = $this->input->cookie('user_latitude', TRUE);
+            $user_longitude = $this->input->cookie('user_longitude', TRUE);
+
+            if ($user_latitude != '' && $user_longitude != '') {
+                $url_params['latitude'] = $user_latitude;
+                $url_params['longitude'] = $user_longitude;
+            } else {
+                $url_params['location'] = 'US';
+            }
         }
         $url .= "?" . http_build_query($url_params);
-//        echo $url; 
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ['Authorization:Bearer ' . $apiKey]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
