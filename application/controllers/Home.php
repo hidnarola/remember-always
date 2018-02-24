@@ -23,8 +23,9 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-        $ip = $this->input->ip_address();
-        echo $ip;
+        echo 'latitude ' . $this->input->cookie('user_latitude', TRUE);
+        echo 'longitude ' . $this->input->cookie('user_longitude', TRUE);
+        exit;
     }
 
 }
