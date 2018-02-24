@@ -236,6 +236,7 @@
                                 function geoSuccess(position) {
                                     var lat = position.coords.latitude;
                                     var lng = position.coords.longitude;
+                                    console.log("position:" + position);
                                     console.log("lat:" + lat + " lng:" + lng);
                                 }
                                 function geoError() {
@@ -245,7 +246,7 @@
                                 function initialize() {
                                     geocoder = new google.maps.Geocoder();
                                 }
-//                                getLocation();
+                                getLocation();
 
                                 var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
                                 var empty = <?php echo $empty ?>;
@@ -253,7 +254,6 @@
                                 var options = {
                                     componentRestrictions: {country: "us"}
                                 };
-//    var autocomplete = new google.maps.places.Autocomplete(input, options);
                                 var autocomplete = new google.maps.places.Autocomplete(input);
                                 var infowindow = new google.maps.InfoWindow();
                                 google.maps.event.addListener(autocomplete, 'place_changed', function () {
