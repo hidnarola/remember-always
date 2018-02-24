@@ -226,9 +226,8 @@
 <?php $empty = count($services); ?>
 <script src="https://maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&key=AIzaSyBR_zVH9ks9bWwA-8AzQQyD6mkawsfF9AI" type="text/javascript"></script>
 <script>
-                                user_latitud = getCookie('user_latitude');
-                                console.log('user_latitude', user_latitud);
-                                
+
+
                                 function getLocation() {
                                     if (navigator.geolocation) {
                                         navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
@@ -239,9 +238,21 @@
                                 function geoSuccess(position) {
                                     var lat = position.coords.latitude;
                                     var lng = position.coords.longitude;
-                                    console.log("lat:" + lat + " lng:" + lng);
+
+                                    user_latitude = getCookie('user_latitude');
+                                    user_longitude = getCookie('user_longitude');
+
                                     setCookie('user_latitude', lat, 365);
                                     setCookie('user_longitude', lng, 365);
+
+                                    if (user_latitude == '' && user_longitude == '') {
+                                        $('.loader').show();
+                                        location.reload();
+                                    } else if (user_latitude != lat || user_longitude != lng) {
+                                        $('.loader').show();
+                                        location.reload();
+                                    }
+
                                     codeLatLng(lat, lng);
                                 }
                                 function geoError() {
@@ -257,16 +268,42 @@
                                     var latlng = new google.maps.LatLng(lat, lng);
                                     geocoder.geocode({'latLng': latlng}, function (results, status) {
                                         if (status == google.maps.GeocoderStatus.OK) {
-                                            console.log(results)
                                             if (results[1]) {
-                                                //formatted address
-                                                var address = results[0].formatted_address;
-                                                console.log("address = " + address);
+                                                var indice = 0;
+                                                for (var j = 0; j < results.length; j++)
+                                                {
+                                                    if (results[j].types[0] == 'locality')
+                                                    {
+                                                        indice = j;
+                                                        break;
+                                                    }
+                                                }
+                                                for (var i = 0; i < results[j].address_components.length; i++)
+                                                {
+                                                    if (results[j].address_components[i].types[0] == "locality") {
+                                                        //this is the object you are looking for
+                                                        city = results[j].address_components[i];
+                                                    }
+                                                    if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
+                                                        //this is the object you are looking for
+                                                        region = results[j].address_components[i];
+                                                    }
+                                                    if (results[j].address_components[i].types[0] == "country") {
+                                                        //this is the object you are looking for
+                                                        country = results[j].address_components[i];
+
+                                                    } else {
+//                                                        console.log("No results found");
+                                                    }
+                                                }
+                                                //set user's location in cookie 
+                                                user_geolocation = city.long_name + ', ' + region.long_name + ', ' + country.short_name;
+                                                setCookie('user_geolocation', user_geolocation, 365);
                                             } else {
-                                                console.log("No results found");
+//                                                console.log("No results found");
                                             }
                                         } else {
-                                            console.log("Geocoder failed due to: " + status);
+//                                            console.log("Geocoder failed due to: " + status);
                                         }
                                     });
                                 }
