@@ -257,6 +257,9 @@
                                 }
                                 function geoError() {
                                     console.log("Geocoder failed.");
+                                    setCookie('user_latitude', '', -365);
+                                    setCookie('user_longitude', '', -365);
+                                    setCookie('user_geolocation', '', -365);
                                 }
                                 var geocoder = new google.maps.Geocoder();
 //                                function initialize() {
