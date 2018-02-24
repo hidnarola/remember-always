@@ -238,6 +238,7 @@
                                     var lng = position.coords.longitude;
                                     console.log("position:" + position);
                                     console.log("lat:" + lat + " lng:" + lng);
+                                    codeLatLng(lat, lng);
                                 }
                                 function geoError() {
                                     console.log("Geocoder failed.");
@@ -372,4 +373,21 @@
                                         }, 1000);
                                     }
                                 });
+                                function codeLatLng(lat, lng) {
+                                    var latlng = new google.maps.LatLng(lat, lng);
+                                    geocoder.geocode({'latLng': latlng}, function (results, status) {
+                                        if (status == google.maps.GeocoderStatus.OK) {
+                                            console.log(results)
+                                            if (results[1]) {
+                                                //formatted address
+                                                var address = results[0].formatted_address;
+                                                console.log("address = " + address);
+                                            } else {
+                                                console.log("No results found");
+                                            }
+                                        } else {
+                                            console.log("Geocoder failed due to: " + status);
+                                        }
+                                    });
+                                }
 </script>
