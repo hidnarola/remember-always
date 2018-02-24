@@ -238,6 +238,8 @@
                                     var lng = position.coords.longitude;
                                     console.log("position:" + position);
                                     console.log("lat:" + lat + " lng:" + lng);
+                                    setCookie('user_latittude', lat, 365);
+                                    setCookie('user_longitude', lng, 365);
                                     codeLatLng(lat, lng);
                                 }
                                 function geoError() {
@@ -248,7 +250,7 @@
 //                                    geocoder = new google.maps.Geocoder();
 //                                }
                                 getLocation();
-                                
+
                                 function codeLatLng(lat, lng) {
                                     var latlng = new google.maps.LatLng(lat, lng);
                                     geocoder.geocode({'latLng': latlng}, function (results, status) {
@@ -391,5 +393,4 @@
                                         }, 1000);
                                     }
                                 });
-                                
 </script>
