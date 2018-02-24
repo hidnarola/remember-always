@@ -243,10 +243,10 @@
                                 function geoError() {
                                     console.log("Geocoder failed.");
                                 }
-                                var geocoder;
-                                function initialize() {
-                                    geocoder = new google.maps.Geocoder();
-                                }
+                                var geocoder = new google.maps.Geocoder();
+//                                function initialize() {
+//                                    geocoder = new google.maps.Geocoder();
+//                                }
                                 getLocation();
                                 
                                 function codeLatLng(lat, lng) {
