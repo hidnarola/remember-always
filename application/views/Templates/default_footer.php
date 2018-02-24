@@ -23,7 +23,7 @@
                         } else {
                             ?>
                             <li class="">
-                                <a href="<?php echo site_url('pages/' . $value['slug']); ?>"><?php echo $value['navigation_name']; ?></a>
+                                <a href="<?php echo site_url('pages/' . $value['slug']); ?>"><?php echo $value['navigation_name']; ?><?php if ($key/2 != 0) echo '&nbsp;&nbsp;' ?></a>
                             </li>
                             <?php
                         }

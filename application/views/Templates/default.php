@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                             <div class="keep-me">
-                                <label class="custom-checkbox">Terms & condition
+                                <label class="custom-checkbox"><a href="<?php echo site_url('pages/terms-of-service') ?>">I agree to Terms of Service</a>
                                     <input type="checkbox" name="terms_condition" value="1">
                                     <span class="checkmark"></span>
                                 </label>
