@@ -23,6 +23,7 @@ class Service_provider extends MY_Controller {
         $page_config['base_url'] = site_url('service_provider');
         $display_msg = '';
         $display_msg_first = '';
+        $user_geolocation = $this->input->cookie('user_geolocation', TRUE);
         if ($this->input->get('keyword') != '') {
             $display_msg_first = 'Showing results';
 
@@ -41,6 +42,9 @@ class Service_provider extends MY_Controller {
             $page_config['suffix'] = '?location=' . $this->input->get('location') . '&lat=' . $this->input->get('lat') . '&long=' . $this->input->get('long');
             $display_msg .= ' near <span>' . $this->input->get('location') . '</span>';
             $page_config['first_url'] = site_url('service_provider') . '?location=' . $this->input->get('location') . '&lat=' . $this->input->get('lat') . '&long=' . $this->input->get('long');
+        } else if ($user_geolocation != '') {
+            $display_msg_first = 'Showing results';
+            $display_msg .= ' near <span>' . $user_geolocation . '</span>';
         }
 
         $services = $this->get_yelp_businesses($start);

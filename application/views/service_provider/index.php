@@ -26,16 +26,7 @@
                     </form>
                 </div>
                 <div class="result_show">
-                    <?php $user_geolocation = $this->input->cookie('user_geolocation', TRUE); ?>
-                    <p>
-                        <?php
-                        if ($display_msg != '') {
-                            echo $display_msg;
-                        } else if ($user_geolocation != '') {
-                            echo 'Showing results near <span>' . $user_geolocation . '</span>';
-                        }
-                        ?>
-                    </p>
+                    <p><?php echo $display_msg ?></p>
                 </div>
                 <div class="row_directory">
                     <div class="col_d_left">
@@ -306,7 +297,16 @@
                                                     }
                                                 }
                                                 //set user's location in cookie 
-                                                user_geolocation = city.long_name + ', ' + region.long_name + ', ' + country.long_name;
+                                                if (city.long_name != '' && city.long_name != undefined) {
+                                                    user_geolocation = city.long_name + ', ' + region.long_name + ', ' + country.long_name;
+                                                } else {
+                                                    if (region.long_name != '' && region.long_name != undefined) {
+                                                        user_geolocation = region.long_name + ', ' + country.long_name;
+                                                    } else {
+                                                        user_geolocation = country.long_name;
+                                                    }
+
+                                                }
                                                 setCookie('user_geolocation', user_geolocation, 365);
                                             } else {
 //                                                console.log("No results found");
