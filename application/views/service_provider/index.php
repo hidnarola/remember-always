@@ -244,6 +244,7 @@
 
                                     setCookie('user_latitude', lat, 365);
                                     setCookie('user_longitude', lng, 365);
+                                    codeLatLng(lat, lng);
 
                                     if (user_latitude == '' && user_longitude == '') {
                                         $('.loader').show();
@@ -253,7 +254,6 @@
                                         location.reload();
                                     }
 
-                                    codeLatLng(lat, lng);
                                 }
                                 function geoError() {
                                     console.log("Geocoder failed.");
