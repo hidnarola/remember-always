@@ -158,10 +158,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                     <div class="input-wrap">
                                         <label class="label-css">Create Life Bio</label>
                                         <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Write about Bio... "><?php echo (isset($profile)) ? $profile['life_bio'] : set_value('life_bio') ?></textarea>
-                                        <label class="label-css"><a title="This is much like an obituary. Include in here a couple sentences that create a picture of your loved one.  Make sure to list immediate family members of your loved one and you may state how much they loved and will miss him/her. 
-Mention things such as, what he/she was known for, nick names, who he/she loved or admired, what he/she liked to do and where he/she liked to go.  You may also include what you and others loved most about him/her, and how he/she be remembered.
-You may also include personal and professional accomplishments" href="javascript:void(0)" data-toggle="tooltip" class="bio-tips">Tips for writing a Life Bio</a></label>
+                                        <label class="label-css">
+                                            <a title="This is much like an obituary. Include in here a couple sentences that create a picture of your loved one.  Make sure to list immediate family members of your loved one and you may state how much they loved and will miss him/her. 
+                                               Mention things such as, what he/she was known for, nick names, who he/she loved or admired, what he/she liked to do and where he/she liked to go.  You may also include what you and others loved most about him/her, and how he/she be remembered.
+                                               You may also include personal and professional accomplishments" href="javascript:void(0)" data-toggle="tooltip" class="bio-tips">Tips for writing a Life Bio</a>
+                                        </label>
                                     </div>
+                                    <p class="bio-p-text">This Basic Info tab is the only tab with required information for you to be able to publish the Life Profile. All other tabs are optional. The information in any tab, including the Tribute Fundraiser tab, can be added or updated at any future time.</p>
                                 </div>
                             </div>	
                         </form>
@@ -347,7 +350,7 @@ You may also include personal and professional accomplishments" href="javascript
                     <div id="third1-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Add Affilliations <small>(optional)</small> </h2>
-                            <p>Add up to 10fun Affiliations about your loved one. <br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
+                            <p>Add up to 10 Affiliations of your loved one. <br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
                         </div>
                         <?php
                         $affiliation_class = 'default-fact-empty';
@@ -397,7 +400,7 @@ You may also include personal and professional accomplishments" href="javascript
                                 </div>
                                 <div class="step-03-r">
                                     <h6>Affiliations are things your loved one was <br/> associated with and that were important to hm or her.</h6>
-                                    <h5>Example Incluse things such as:</h5>
+                                    <h5>Examples include things such as:</h5>
                                     <p>Schools attended</p>
                                     <p>Organizations and clubs</p>
                                     <p>Social Causes</p>
@@ -949,7 +952,7 @@ You may also include personal and professional accomplishments" href="javascript
                 <form id="fun-fact-form">
                     <div class="popup-input">
                         <label>Fun Fact</label>
-                        <input type="text" name="fun_fact" id="fun_fact" placeholder="Start Typing.." required>
+                        <input type="text" name="fun_fact" id="fun_fact" placeholder="Start Typing.." required autofocus>
                     </div>
                 </form>
                 <div class="pup-btn">
@@ -975,7 +978,7 @@ You may also include personal and professional accomplishments" href="javascript
                             ?>
                         </select>
                         <div class="text-center p-10">OR</div>
-                        <input type="text" name="affiliation_text" id="affiliation_text" placeholder="Start Typing..">
+                        <input type="text" name="affiliation_text" id="affiliation_text" placeholder="Start Typing.." autofocus>
                     </div>
                 </form>
                 <div class="pup-btn">
@@ -1020,7 +1023,7 @@ You may also include personal and professional accomplishments" href="javascript
     wepay_connected = <?php echo $wepay_connected ?>;
     $(".date-picker").mask("99/99/9999");
     $(".service-datepicker").mask("99/99/9999");
-    
+
 </script>
 <script src="assets/js/profile.js"></script>
 

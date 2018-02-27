@@ -209,7 +209,7 @@ class Profile extends MY_Controller {
         if ($start == 0) {
             $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.year,lt.month,lt.date', 'limit' => $offset, 'offset' => $start]);
         } else {
-            $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.year,lt.month,lt.date', 'limit' => $total_records,'offset' => $start]);
+            $timeline_data = $this->users_model->sql_select(TBL_LIFE_TIMELINE . ' lt', '*', ['where' => array('lt.profile_id' => trim($profile_id), 'lt.is_delete' => 0)], ['order_by' => 'lt.year,lt.month,lt.date', 'limit' => $total_records, 'offset' => $start]);
         }
         if ($static === true) {
             $final = ['timeline_data' => $timeline_data, 'total_count' => $total_records];
@@ -704,8 +704,8 @@ class Profile extends MY_Controller {
                 }
             }
             if (trim($this->input->post('affiliation_text')) != '') {
-                $sql = 'INSERT IGNORE INTO ' . TBL_PROFILE_AFFILIATIONTEXTS . ' (profile_id,affiliation_text,created_at) VALUES (' . $profile_id . ',\'' . trim($this->input->post('affiliation_text')) . '\',\'' . date('Y-m-d H:i:s') . '\')';
-                $this->db->query($sql);
+                $sql = 'INSERT IGNORE INTO ' . TBL_PROFILE_AFFILIATIONTEXTS . ' (profile_id,affiliation_text,created_at) VALUES (?,?,?)';
+                $this->db->query($sql, array($profile_id, trim($this->input->post('affiliation_text')), date('Y-m-d H:i:s')));
                 $id = $this->db->insert_id();
                 if ($id != 0) {
                     $id_arr[] = ['id' => base64_encode($id), 'type' => 1, 'name' => trim($this->input->post('affiliation_text'))];

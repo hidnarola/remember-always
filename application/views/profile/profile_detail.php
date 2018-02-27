@@ -1037,32 +1037,34 @@ if (!$this->is_user_loggedin)
 else
     $user_logged_in = $this->is_user_loggedin;
 ?>
+<script src="assets/js/readmore.min.js"></script>
 <script type="text/javascript">
+                        $('.profile-box-body p').readmore({moreLink: '<a href="#">Show more</a>', lessLink: '<a href="#">Show less</a>'});
 //    $('#timeline_details .timeline_media').parent().parent().hide();
 //    $('#timeline_details .timeline_details').parent().parent().hide();
-    var user_logged_in = '<?php echo $user_logged_in ?>';
-    var loggedin_userid = <?php echo ($this->user_id != '') ? $this->user_id : 0 ?>;
-    var profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';
-    var slug = '<?php echo isset($profile['slug']) ? $profile['slug'] : '' ?>';
-    max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
-    max_videos_count = <?php echo MAX_VIDEOS_COUNT ?>;
-    delete_str = '<?php $this->load->view('delete_svg', true); ?>';
-    user_image = '<?php echo USER_IMAGES ?>';
-    post_image = '<?php echo POST_IMAGES ?>';
-    gallery_image = '<?php echo PROFILE_IMAGES ?>';
-    profile_user_id = <?php echo $profile['user_id'] ?>;
+                        var user_logged_in = '<?php echo $user_logged_in ?>';
+                        var loggedin_userid = <?php echo ($this->user_id != '') ? $this->user_id : 0 ?>;
+                        var profile_id = '<?php echo isset($profile['id']) ? base64_encode($profile['id']) : '' ?>';
+                        var slug = '<?php echo isset($profile['slug']) ? $profile['slug'] : '' ?>';
+                        max_images_count = <?php echo MAX_IMAGES_COUNT ?>;
+                        max_videos_count = <?php echo MAX_VIDEOS_COUNT ?>;
+                        delete_str = '<?php $this->load->view('delete_svg', true); ?>';
+                        user_image = '<?php echo USER_IMAGES ?>';
+                        post_image = '<?php echo POST_IMAGES ?>';
+                        gallery_image = '<?php echo PROFILE_IMAGES ?>';
+                        profile_user_id = <?php echo $profile['user_id'] ?>;
 
 </script>
 <script src="assets/js/profile_detail.js"></script>
 <script type="text/javascript">
-    $('.according-tab .panel-title a').on('click', function () {
-        jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
-        var classes = jQuery(this).prop('class');
-        var clasArray = classes.split(' ')
-        if (clasArray.includes('change_ic')) {
-            jQuery(this).removeClass('change_ic')
-        } else {
-            jQuery(this).addClass('change_ic')
-        }
-    });
+                        $('.according-tab .panel-title a').on('click', function () {
+                            jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
+                            var classes = jQuery(this).prop('class');
+                            var clasArray = classes.split(' ')
+                            if (clasArray.includes('change_ic')) {
+                                jQuery(this).removeClass('change_ic')
+                            } else {
+                                jQuery(this).addClass('change_ic')
+                            }
+                        });
 </script>

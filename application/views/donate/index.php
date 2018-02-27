@@ -31,7 +31,9 @@
                                     ?>
                                     <li>
                                         <div class="listing_img">
-                                            <?php if ($donation['profile_image'] != '') { ?>
+                                            <?php if ($donation['facebook_id'] != '' || $donation['google_id'] != '') { ?>
+                                                <img src="<?php echo $donation['profile_image'] ?>" alt="" class="">
+                                            <?php } else if ($donation['profile_image'] != '') { ?>
                                                 <img src="<?php echo USER_IMAGES . $donation['profile_image'] ?>" alt="" class="">
                                             <?php } else { ?>
                                                 <img src="assets/images/no_image.png" alt="no image" class="">

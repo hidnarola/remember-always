@@ -7,6 +7,12 @@ timeline_change = 0;
 services_change = 0;
 tribute_change = 0;
 $(function () {
+
+    //Focus text box on modal show
+    $('.modal').on('shown.bs.modal', function () {
+        $(this).find('[autofocus]').focus();
+    });
+
     $('[data-toggle="tooltip"]').tooltip();
     //-- Tab Concepts for profile
     $('ul.nav.nav-tabs  a').click(function (e) {
