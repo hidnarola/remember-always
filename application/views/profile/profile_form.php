@@ -164,7 +164,8 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                You may also include personal and professional accomplishments" href="javascript:void(0)" data-toggle="tooltip" class="bio-tips">Tips for writing a Life Bio</a>
                                         </label>
                                     </div>
-                                    <p class="bio-p-text">This Basic Info tab is the only tab with required information for you to be able to publish the Life Profile. All other tabs are optional. The information in any tab, including the Tribute Fundraiser tab, can be added or updated at any future time.</p>
+                                    <p class="bio-p-text">Tip:  This Basic Info tab is the only tab with required information.  All other tabs are optional.
+               If you want to have a fundraiser, you will need to enter details in the Tribute Fundraiser tab.</p>
                                 </div>
                             </div>	
                         </form>
