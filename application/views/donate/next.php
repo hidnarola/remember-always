@@ -29,15 +29,38 @@
                                 <input type="number" name="donate_amount" id="donate_amount" placeholder="Donation Amount" class="input-css">
                                 <span class="donation_enter_span">Minimum donation is $10</span>
                             </div>
+                            <div class="input-wrap">
+                                <span class="donation_enter">Show Donor as:</span>
+                                <?php
+                                $donor_name = 'Guest';
+                                if ($this->is_user_loggedin) {
+                                    $donor_name = $this->session->userdata('remalways_user')['firstname'] . ' ' . $this->session->userdata('remalways_user')['lastname'];
+                                }
+                                ?>
+                                <div class="radiobox">
+                                    <div class="radiobox-inr">
+                                        <input type="radio" name="donor_name" id="donor_name_1" value="<?php echo $donor_name ?>" checked>
+                                        <label for="donor_name_1"><?php echo $donor_name ?></label>
+                                    </div>
+                                    <div class="radiobox-inr">
+                                        <input type="radio" name="donor_name" id="donor_name_2" value="1">
+                                        <label for="donor_name_2"><input type="text" name="donor_customname" id="donor_customname" placeholder="Enter name if different from user" class="input-css"></label>
+                                    </div>
+                                    <div class="radiobox-inr">
+                                        <input type="radio" name="donor_name"  id="donor_name_3" value="Anonymous">
+                                        <label for="donor_name_3">Anonymous</label>
+                                    </div>
+                                </div>    
+                            </div>
                             <div class="input-wrap textarea_small">
                                 <textarea name="donation_message" id="donation_message" class="input-css textarea-css" placeholder="Enter message here for donation"></textarea>
                             </div>
-<!--                            <div class="keep-me">
-                                <label class="custom-checkbox">Do you want to display your name?
-                                    <input type="checkbox" name="display_name" value="1">
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>-->
+                            <!--                            <div class="keep-me">
+                                                            <label class="custom-checkbox">Do you want to display your name?
+                                                                <input type="checkbox" name="display_name" value="1">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>-->
                         </form>
                         <!--                        <div class="input-wrap code">
                                                     <input type="text" name="" placeholder="Name" class="input-css">

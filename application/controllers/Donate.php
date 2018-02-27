@@ -80,6 +80,14 @@ class Donate extends MY_Controller {
                 $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, 'media,type', ['where' => ['fundraiser_profile_id' => $fundraiser['fundraiser_id']]]);
 
                 if ($this->input->post('donate_amount') >= 10) {
+                    $donor_name = trim($this->input->post('donor_name'));
+                    if ($donor_name == 1) {
+                        $donor_name = trim($this->input->post('donor_customname'));
+                        if (empty($donor_name)) {
+                            $this->session->set_flashdata('error', 'You haven\'t entered Donor name! Please enter donor name and try again');
+                            redirect('donate/next/' . $slug);
+                        }
+                    }
                     $amount = $this->input->post('donate_amount');
                     require_once(APPPATH . 'libraries/Wepay.php');
                     // application settings
@@ -89,7 +97,7 @@ class Donate extends MY_Controller {
                         Wepay::useProduction($this->client_id, $this->client_secret);
                     }
                     $wepay = new WePay($access_token);
-                    $redirect_uri = site_url('donate/thank_you/' . $slug);
+                    $redirect_uri = site_url('donate/thank_you/' . $slug . '?payer_name=' . urlencode($donor_name));
                     // create the checkout
                     $app_fee = ($amount * 7.9) / 100;
                     $app_fee = round($app_fee, 2);
@@ -101,7 +109,7 @@ class Donate extends MY_Controller {
                         'type' => 'donation',
                         'currency' => 'USD',
                         'hosted_checkout' => ['mode' => 'iframe', 'redirect_uri' => $redirect_uri],
-                        'fee' => ['fee_payer' => 'payee', 'app_fee' => $app_fee],
+                        'fee' => ['fee_payer' => 'payee_from_app', 'app_fee' => $app_fee],
                     ));
                     if (!empty($response)) {
                         $data['title'] = 'Remember Always | Donation';
@@ -171,7 +179,8 @@ class Donate extends MY_Controller {
                         'gross' => $response->gross,
                         'state' => $response->state,
                         'details' => $response->short_description,
-                        'payer_name' => $response->payer->name,
+//                        'payer_name' => $response->payer->name,
+                        'payer_name' => urldecode($this->input->get('payer_name')),
                         'payer_email' => $response->payer->email,
                         'ip_address' => $ip,
                         'created_at' => date('Y-m-d H:i:s')
