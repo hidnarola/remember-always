@@ -19,6 +19,9 @@ class Home extends MY_Controller {
         $data['title'] = 'Remember Always';
         $data['slider_images'] = $this->users_model->sql_select(TBL_SLIDER, 'image,description', ['where' => ['is_delete' => 0, 'is_active' => 1]]);
         $data['blogs'] = $this->users_model->sql_select(TBL_BLOG_POST . ' b', 'title,image,description,b.slug,u.firstname,u.lastname,b.created_at', ['where' => ['b.is_delete' => 0, 'b.is_active' => 1, 'b.is_view' => 1]], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=b.user_id')]]);
+        $data['recent_profiles'] = $this->users_model->sql_select(TBL_PROFILES, 'profile_image,firstname,lastname,nickname,date_of_birth,date_of_death,life_bio', ['where' => ['is_delete' => 0, 'is_published' => 1]], ['order_by' => 'created_at DESC', 'limit' => 5]);
+        $data['most_visited_profiles'] = $this->users_model->sql_select(TBL_PROFILES, 'profile_image,firstname,lastname,nickname,date_of_birth,date_of_death,life_bio', ['where' => ['is_delete' => 0, 'is_published' => 1, 'most_visited' => 1]], ['order_by' => 'created_at DESC', 'limit' => 5]);
+        $data['notable_profiles'] = $this->users_model->sql_select(TBL_PROFILES, 'profile_image,firstname,lastname,nickname,date_of_birth,date_of_death,life_bio', ['where' => ['is_delete' => 0, 'is_published' => 1, 'notable' => 1]], ['order_by' => 'created_at DESC', 'limit' => 5]);
         $this->template->load('default', 'home', $data);
     }
 
