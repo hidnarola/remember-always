@@ -25,9 +25,13 @@
                         <div class="upload-btn"> 
                             <span class="up_btn">Edit Picture</span>
                             <input type="file" name="profile_image" id="profile_image" multiple="false" onchange="readURL(this);">
+                            <?php
+                            if (isset($image_error) && !empty($image_error)) {
+                                echo '<label id="profile_image-error" class="error" for="profile_image">' . $image_error . '</label>';
+                            }
+                            ?>
                         </div>
                     <?php } ?>
-
                 </div>
                 <div class="edit-r">
                     <div class="input-wrap">
@@ -35,13 +39,15 @@
                         <div class="input-l">
                             <input type="text" name="firstname" placeholder="First Name" class="input-css" value="<?php echo (isset($user_data)) ? $user_data['firstname'] : set_value('firstname') ?>" />
                             <?php
-                            echo '<label id="firstname-error" class="error" for="firstname">' . form_error('firstname') . '</label>';
+                            if (form_error('firstname') != '')
+                                echo '<label id="firstname-error" class="error" for="firstname">' . form_error('firstname') . '</label>';
                             ?>
                         </div>
                         <div class="input-r">
                             <input type="text" name="lastname" placeholder="Last Name" class="input-css" value="<?php echo (isset($user_data)) ? $user_data['lastname'] : set_value('lastname') ?>"/>
                             <?php
-                            echo '<label id="lastname-error" class="error" for="lastname">' . form_error('lastname') . '</label>';
+                            if (form_error('lastname') != '')
+                                echo '<label id="lastname-error" class="error" for="lastname">' . form_error('lastname') . '</label>';
                             ?>
                         </div>
                     </div>
@@ -52,9 +58,10 @@
                         </div>
                         <div class="input-r">
                             <label class="label-css">Phone Number</label>
-                            <input type="text" name="phone" placeholder="phone" class="input-css" value="<?php echo (isset($user_data['phone'])) ? $user_data['phone'] : set_value('phone') ?>">
+                            <input type="text" name="phone" placeholder="phone (000) 000-0000" class="input-css" value="<?php echo (isset($user_data['phone'])) ? $user_data['phone'] : set_value('phone') ?>">
                             <?php
-                            echo '<label id="phone-error" class="error" for="phone">' . form_error('phone') . '</label>';
+                            if (form_error('phone') != '')
+                                echo '<label id="phone-error" class="error" for="phone">' . form_error('phone') . '</label>';
                             ?>
                         </div>
                     </div>
@@ -63,14 +70,16 @@
                             <label class="label-css">Address 1</label>
                             <input type="text" name="address1" placeholder="address1" class="input-css" value="<?php echo (isset($user_data['address1'])) ? $user_data['address1'] : set_value('address1') ?>">
                             <?php
-                            echo '<label id="address1-error" class="error" for="address1">' . form_error('address1') . '</label>';
+                            if (form_error('address1') != '')
+                                echo '<label id="address1-error" class="error" for="address1">' . form_error('address1') . '</label>';
                             ?>
                         </div>
                         <div class="input-r">
                             <label class="label-css">Address 2</label>
                             <input type="text" name="address2" placeholder="address2" class="input-css" value="<?php echo (isset($user_data['address2'])) ? $user_data['address2'] : set_value('address2') ?>">
                             <?php
-                            echo '<label id="address2-error" class="error" for="address2">' . form_error('address2') . '</label>';
+                            if (form_error('address2') != '')
+                                echo '<label id="address2-error" class="error" for="address2">' . form_error('address2') . '</label>';
                             ?>
                         </div>
                     </div>
@@ -94,7 +103,8 @@
                                 ?>
                             </select>
                             <?php
-                            echo '<label id="country-error" class="error" for="country">' . form_error('country') . '</label>';
+                            if (form_error('country') != '')
+                                echo '<label id="country-error" class="error" for="country">' . form_error('country') . '</label>';
                             ?>
                         </div>
                         <div class="input-r">
@@ -117,7 +127,8 @@
                                 ?>
                             </select>
                             <?php
-                            echo '<label id="state-error" class="error" for="state">' . form_error('state') . '</label>';
+                            if (form_error('state') != '')
+                                echo '<label id="state-error" class="error" for="state">' . form_error('state') . '</label>';
                             ?>
                         </div>
                     </div>
@@ -141,14 +152,16 @@
                                 ?>
                             </select>
                             <?php
-                            echo '<label id="city-error" class="error" for="city">' . form_error('city') . '</label>';
+                            if (form_error('city') != '')
+                                echo '<label id="city-error" class="error" for="city">' . form_error('city') . '</label>';
                             ?>
                         </div>
                         <div class="input-r">
                             <label class="label-css">Zipcode</label>
                             <input type="text" name="zipcode" placeholder="zipcode" class="input-css" value="<?php echo (isset($user_data['zipcode'])) ? $user_data['zipcode'] : set_value('zipcode') ?>">
                             <?php
-                            echo '<label id="zipcode-error" class="error" for="zipcode">' . form_error('zipcode') . '</label>';
+                            if (form_error('zipcode') != '')
+                                echo '<label id="zipcode-error" class="error" for="zipcode">' . form_error('zipcode') . '</label>';
                             ?>
                         </div>
                     </div>
@@ -157,7 +170,8 @@
                             <label class="label-css">Current Password</label>
                             <input type="password" name="old_password" id="old_password" placeholder="Current Password" class="input-css">
                             <?php
-                            echo '<label id="old_password-error" class="error" for="old_password">' . form_error('old_password') . '</label>';
+                            if (form_error('old_password') != '')
+                                echo '<label id="old_password-error" class="error" for="old_password">' . form_error('old_password') . '</label>';
                             ?>
                         </div>
                     </div>
@@ -166,29 +180,28 @@
                             <label class="label-css">New Password</label>
                             <input type="password" name="new_password" id="new_password" placeholder="New Password" class="input-css">
                             <?php
-                            echo '<label id="password-error" class="error" for="password">' . form_error('password') . '</label>';
+                            if (form_error('new_password') != '')
+                                echo '<label id="new_password-error" class="error" for="new_password">' . form_error('new_password') . '</label>';
                             ?>
                         </div>
                         <div class="input-r">
                             <label class="label-css">ReType Password</label>
                             <input type="password" name="confirm_password" id="confirm_password" placeholder="Re-Type Password" class="input-css">
                             <?php
-                            echo '<label id="confirm_password-error" class="error" for="confirm_password">' . form_error('confirm_password') . '</label>';
+                            if (form_error('confirm_password') != '')
+                                echo '<label id="confirm_password-error" class="error" for="confirm_password">' . form_error('confirm_password') . '</label>';
                             ?>
                         </div>
                     </div>
-
                     <div class="edit-update step-btm-btn">
                         <button type="submit" class="next">Save</button>
                         <button type="reset" class="skip">Cancel</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>
 </div>	
-
 <script type="text/javascript">
     $(function () {
         $('#country').selectpicker({
@@ -221,23 +234,23 @@
                     required: true
                 },
                 phone: {
-                    required: true,
+//                    required: true,
                     phoneUS: true
                 },
                 address1: {
-                    required: true,
+//                    required: true,
                 },
                 country: {
-                    required: true,
+//                    required: true,
                 },
                 state: {
-                    required: true,
+//                    required: true,
                 },
                 city: {
-                    required: true,
+//                    required: true,
                 },
                 zipcode: {
-                    required: true,
+//                    required: true,
                     custom_zipcode: true
                 },
                 new_password: {
