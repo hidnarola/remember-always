@@ -78,6 +78,18 @@ $(function () {
         rewindNav: true,
         rewindSpeed: 0
     });
+    $("#recently-added-div").owlCarousel({
+        autoplay:false,
+        singleItem: true,
+    });
+    $("#most-visited-div").owlCarousel({
+        autoplay:false,
+        singleItem: true,
+    });
+    $("#notable-div").owlCarousel({
+        autoplay:false,
+        singleItem: true,
+    });
     $("#testimonial").owlCarousel({
         autoPlay: 3000,
         items: 3,

@@ -626,7 +626,9 @@ function proceed_step() {
                 }
                 if (fundraiser_valid == 1) {
                     if (entered_detail == 1) {
+
                         var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
+                        
                         postformData.append('profile_id', profile_id);
                         $(fundraiser_media).each(function (key) {
                             if (fundraiser_media[key] != null) {
@@ -641,9 +643,9 @@ function proceed_step() {
                             url: site_url + "profile/add_fundraiser",
                             type: "POST",
                             data: postformData,
-                            dataType: "json",
                             proscessData: false, // tell jQuery not to process the data
                             contentType: false, // tell jQuery not to set contentType
+                            dataType: "json",
                             success: function (data) {
                                 tribute_change = 0;
                                 $('.loader').hide();

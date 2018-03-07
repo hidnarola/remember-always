@@ -1251,12 +1251,20 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
 .radiobox-inr:nth-child(2) .input-css{padding:10px 15px; }
 .radiobox .radiobox-inr:nth-child(2) label:before{    top: 11px;}
 
+.select_arrow i {position: absolute;right: 6px;font-size: 14px;top: 10px;}
+.profile-box h2 .select_arrow select {-webkit-appearance: none;appearance: none;-moz-appearance: none;}
+.select_arrow {float: right;position: relative;}
+
 /*** media start here ****/
 
 @media (min-width:1200px){
     .search.open form {right: 0;}
     .search form {right: 50px;}
     .carousel .item img {width: 100%;}
+}
+
+@media(min-width:768px){
+    .navbar-header{display:none;}
 }
 
 @media(max-width:1139px){
@@ -1430,14 +1438,12 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .ul_list li:after {top: 2px;font-size: 12px;}
 }
 
-@media(min-width:768px){
-    .navbar-header{display:none;}
-}
+
 
 @media(max-width:767px){
     .logo img{max-width:200px;}
     .navbar-default .navbar-brand{font-size:0;}
-    .navbar.nav-menu {position:absolute;right:20px;top:40px;margin:0;}
+    .navbar.nav-menu {position:absolute;right:20px;top:40px;margin:0;z-index: 99;}
     .navbar-toggle{margin:0;border:0;padding:0; border-radius:0;}
     .navbar-default .navbar-brand{display:none;}
     .navbar-toggle .icon-bar + .icon-bar {margin-top: 6px;}
@@ -1677,7 +1683,7 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .services-form.funeral-srh.funeral_responsive .srvs-form-div {margin-right: 0;width: 100% !important;margin-bottom: 10px;}
     .lifetime-line ul li:nth-child(2n+2) h6 {right: -23px;}
     .lifetime-line ul {max-width: 250px;width: 250px;margin: 0 auto;}
-    .according-tab .panel-title {font-size: 14px;}
+    .according-tab .panel-title {font-size: 14px;padding-right: 25px;}
     .funeral-r .profile-box-body a.btn-link {max-width: 100%;margin: 0 auto;font-size: 13px;}
     .user_right_q {width: 100%;margin-top: 20px;float: none;}
     .user_left_q {width: 100%;float: none;}
@@ -1710,24 +1716,15 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .funeral-srh .srvs-form-div {margin-bottom: 10px;}
     .funeral-srh .srvs-form-div:last-child button {width: auto;}
     .services-form.funeral-srh {margin-bottom: 20px;}
-    .comments-div ul.post_ul_profile_detail li .comments-div-wrap p {
-        font-size: 14px;
-        line-height: 16px !important;
-    }
-    .comments-div ul.post_ul_profile_detail li .comments-div-wrap h3 {
-        font-size: 15px;
-    }
-    .comments-div ul.post_ul_profile_detail li span.commmnet-postted-img {
-        position: absolute !important;
-        left: 0;
-        top: 0;
-    }
-    .comments-div ul.post_ul_profile_detail li .comments-div-wrap {
-        padding: 0 0 0 60px !important;
-    }
-    .comments-div .post_ul.post_ul_responsive_view li .comments-div-wrap ul li {
-        width: 50%;
-    }
+    .comments-div ul.post_ul_profile_detail li .comments-div-wrap p {font-size: 14px;line-height: 16px !important;}
+    .comments-div ul.post_ul_profile_detail li .comments-div-wrap h3 {font-size: 15px;}
+    .comments-div ul.post_ul_profile_detail li span.commmnet-postted-img {position: absolute !important;left: 0;top: 0;}
+    .comments-div ul.post_ul_profile_detail li .comments-div-wrap {padding: 0 0 0 60px !important;}
+    .comments-div .post_ul.post_ul_responsive_view li .comments-div-wrap ul li {width: 50%;}
+    ul.blog-list-ul li {width: 100%;float: none;}
+    .select_arrow {float: none;}
+    .according-tab .panel-heading a:after {width: 11px;right: -25px;}
+        
 }
 
 

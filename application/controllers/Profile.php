@@ -330,6 +330,7 @@ class Profile extends MY_Controller {
         $data['profile_states'] = $data['memorial_states'] = $data['funeral_states'] = $data['burial_states'] = [];
         $data['profile_cities'] = $data['memorial_cities'] = $data['funeral_cities'] = $data['burial_cities'] = [];
         $data['wepay_client_id'] = $this->config->item('client_id');
+        $data['fundraiser_allow_edits'] = 1;
 
         if (!empty($profile)) {
             $data['profile'] = $profile;
@@ -365,6 +366,10 @@ class Profile extends MY_Controller {
             }
             $data['fundraiser'] = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]], ['single' => true]);
             if (!empty($data['fundraiser'])) {
+                $donations = $this->users_model->sql_select(TBL_DONATIONS, 'id', ['where' => ['profile_id' => $profile['id'], 'is_delete' => 0]], ['single' => true]);
+                if (!empty($donations)) {
+                    $data['fundraiser_allow_edits'] = 0;
+                }
                 $data['fundraiser_media'] = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, '*', ['where' => ['fundraiser_profile_id' => $data['fundraiser']['id'], 'is_delete' => 0]]);
             }
             $data['breadcrumb'] = ['title' => 'Edit a Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];

@@ -165,7 +165,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                         </label>
                                     </div>
                                     <p class="bio-p-text">Tip:  This Basic Info tab is the only tab with required information.  All other tabs are optional.
-               If you want to have a fundraiser, you will need to enter details in the Tribute Fundraiser tab.</p>
+                                        If you want to have a fundraiser, you will need to enter details in the Tribute Fundraiser tab.</p>
                                 </div>
                             </div>	
                         </form>
@@ -827,7 +827,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                     <div class="step-06-l">
                                         <div class="input-wrap">
                                             <label class="label-css">Tribute Fundraiser Title.</label>
-                                            <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>>
+                                            <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?> <?php if ($fundraiser_allow_edits == 0) echo "readonly"; ?>>
                                         </div>
                                         <div class="input-wrap">
                                             <div class="input-l">
@@ -841,7 +841,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">Description</label>
-                                            <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed." <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
+                                            <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed." <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?> <?php if ($fundraiser_allow_edits == 0) echo "readonly"; ?>><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
                                         </div>
                                         <div class="input-wrap">
                                             <label class="label-css">You need to create your Wepay account for collecting funds. Please click on below button to start</label>

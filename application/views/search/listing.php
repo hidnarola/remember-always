@@ -19,13 +19,14 @@
                 <div class="funeral-l">
                     <div class="profile-box">
                         <h2>Search Results / Life Profile Search Results
-                            <select name="type" id="search_type" class="input-css">
+                            <div class="select_arrow"><select name="type" id="search_type" class="input-css">
                                 <option value="profile" <?php if ($this->input->get('type') == 'profile') echo 'selected'; ?>>Profile</option>
                                 <option value="service_provider" <?php if ($this->input->get('type') == 'service_provider') echo 'selected'; ?>>Service Provider</option>
                                 <option value="affiliation" <?php if ($this->input->get('type') == 'affiliation') echo 'selected'; ?>>Affiliations</option>
                                 <option value="blog" <?php if ($this->input->get('type') == 'blog') echo 'selected'; ?>>Blog</option>
                                 <option value="all" <?php if ($this->input->get('type') == 'all' || $this->input->get('type') == '') echo 'selected'; ?>>All</option>
                             </select>
+                            <i class="fa fa-caret-down"></i></div>
                         </h2>
                         <div class="comments-div comments_div_profile" id="content-8">
                             <ul class="srvs-list-ul srvs_profile">
