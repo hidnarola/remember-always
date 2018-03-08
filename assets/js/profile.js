@@ -628,9 +628,11 @@ function proceed_step() {
                     if (entered_detail == 1) {
 
                         var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
-                        
-                        postformData.append('profile_id', profile_id);
+
+//                        postformData.append('profile_id', profile_id);
+                        console.log('media', fundraiser_media);
                         $(fundraiser_media).each(function (key) {
+                            console.log('in');
                             if (fundraiser_media[key] != null) {
                                 fundraiser_types[key] = [];
                                 fundraiser_types[key] = fundraiser_media[key]['media_type'];
@@ -638,14 +640,15 @@ function proceed_step() {
                                 postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
                             }
                         });
+                        console.log('formdata', postformData);
                         $('.loader').show();
                         $.ajax({
                             url: site_url + "profile/add_fundraiser",
                             type: "POST",
-                            data: postformData,
-                            proscessData: false, // tell jQuery not to process the data
-                            contentType: false, // tell jQuery not to set contentType
+                            data: {profile_id: profile_id, fundraiser_title: $('#fundraiser_title').val(), fundraiser_goal: $('#fundraiser_goal').val(), fundraiser_details: $('#fundraiser_details').val()},
                             dataType: "json",
+//                            proscessData: false, // tell jQuery not to process the data
+//                            contentType: false, // tell jQuery not to set contentType
                             success: function (data) {
                                 tribute_change = 0;
                                 $('.loader').hide();

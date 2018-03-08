@@ -408,7 +408,8 @@ a.remove-video:hover{opacity:.7;}
 .according-tab .panel.panel-default{border:0;background:#fff;border-radius:0;margin:0;position:relative; box-shadow:none;}
 .according-tab .panel-default > .panel-heading{padding:15px 5px 15px 12px;line-height:18px;border:0;background:#fff;border-radius:0;font-size:16px;font-weight:400;color:#999;font-family:'Rubik'; border:0;border-bottom:1px solid #efefef;}
 .according-tab .panel-title{margin:0;padding:0;font-size:16px;font-family:'Rubik';color:#999;line-height:20px;display:block;text-overflow:ellipsis;font-weight:400;overflow:hidden;white-space:nowrap;}
-.according-tab .panel-title a {display: inline-block;width: 100%;position: relative;z-index: 1;    transition: ease-in-out .5s;}
+.according-tab .panel-title a {display: inline-block;width: 100%;position: relative;z-index: 1;    transition: ease-in-out .5s;text-overflow: ellipsis;overflow: hidden !important;padding-right: 25px;}
+
 .according-tab .panel-heading:hover:after,
 .according-tab .panel-heading:hover .panel-title a:hover{color:#975979;text-decoration:none;}
 .according-tab .panel-heading a:after{content:'\f067';font-family:'FontAwesome'; width:23px;height:23px; display:block;position:absolute;top:1px;right:3px;z-index: 0;    transition: ease-in-out .5s;}
@@ -1254,9 +1255,20 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
 .select_arrow i {position: absolute;right: 6px;font-size: 14px;top: 10px;}
 .profile-box h2 .select_arrow select {-webkit-appearance: none;appearance: none;-moz-appearance: none;}
 .select_arrow {float: right;position: relative;}
-
+section.home-profiles {padding: 70px;text-align: center;}
+section.home-profiles h2 {margin: 0 0 30px;padding: 0;display: block;text-align: center;font-size: 38px;color: #57585a;line-height: normal;font-family: 'Rubik';font-weight: 700;line-height: 100%;}
+.home-profile-img {height: 100px;width: 100px;border: 4px solid #975979;border-radius: 100px;margin: 0 auto;overflow: hidden;}
+.home-profile-img img {height: 100%;width: 100%; }
+section.home-profiles h4 {font-size: 16px;font-weight: 500;color: #a36c88;text-decoration: none;font-family: 'Rubik';line-height: normal;margin: 15px 0;}
+section.home-profiles p {font-family: 'Roboto';font-weight: 400;font-size: 15px;display: block;line-height: 22px;margin: 0;padding: 0;color: #909090;}
+section.home-profiles .item{padding:10px;}
+section.home-profiles .profile-wrapp {padding: 15px;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);display: inline-block;width: 100%;}
+section.home-profiles .profile-wrapp a.btn {display: inline-block;margin-top: 15px;background: #57585a;border-color: #57585a;padding: 8px 22px;font-size: 15px;}
+section.home-profiles h3 {font-family: 'Rubik';font-size: 18px;color: #38383a;}
 /*** media start here ****/
-
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+.upload-btn input[type=file]{min-height:70px;font-size: 0;}
+ }
 @media (min-width:1200px){
     .search.open form {right: 0;}
     .search form {right: 50px;}
@@ -1683,7 +1695,7 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .services-form.funeral-srh.funeral_responsive .srvs-form-div {margin-right: 0;width: 100% !important;margin-bottom: 10px;}
     .lifetime-line ul li:nth-child(2n+2) h6 {right: -23px;}
     .lifetime-line ul {max-width: 250px;width: 250px;margin: 0 auto;}
-    .according-tab .panel-title {font-size: 14px;padding-right: 25px;}
+    .according-tab .panel-title {font-size: 14px;padding-right: 0px;}
     .funeral-r .profile-box-body a.btn-link {max-width: 100%;margin: 0 auto;font-size: 13px;}
     .user_right_q {width: 100%;margin-top: 20px;float: none;}
     .user_left_q {width: 100%;float: none;}
@@ -1723,7 +1735,7 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
     .comments-div .post_ul.post_ul_responsive_view li .comments-div-wrap ul li {width: 50%;}
     ul.blog-list-ul li {width: 100%;float: none;}
     .select_arrow {float: none;}
-    .according-tab .panel-heading a:after {width: 11px;right: -25px;}
+    .according-tab .panel-heading a:after {width: 11px;right: 5px;}
         
 }
 

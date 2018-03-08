@@ -81,14 +81,23 @@ $(function () {
     $("#recently-added-div").owlCarousel({
         autoplay:false,
         singleItem: true,
+        navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+        dots: false,
+        nav : true
     });
     $("#most-visited-div").owlCarousel({
         autoplay:false,
         singleItem: true,
+        navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+        dots: false,
+        nav : true
     });
     $("#notable-div").owlCarousel({
         autoplay:false,
         singleItem: true,
+        navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
+        dots: false,
+        nav : true
     });
     $("#testimonial").owlCarousel({
         autoPlay: 3000,
