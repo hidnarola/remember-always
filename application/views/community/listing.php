@@ -117,8 +117,8 @@
                 <div class="user_right_q">
                     <script id="mNCC" language="javascript">
                         medianet_width = "300";
-                        medianet_height = "600";
-                        medianet_crid = "603212962";
+                        medianet_height = "250";
+                        medianet_crid = "404298848";
                         medianet_versionId = "3111299";
                     </script>
                     <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
