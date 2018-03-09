@@ -162,29 +162,31 @@
                 </div>
                 <!--<div class="profile-box ad pro_ad_custom"></div>-->
             </div>
-            <script id="mNCC" language="javascript">
-                medianet_width = "728";
-                medianet_height = "90";
-                medianet_crid = "252046787";
-                medianet_versionId = "3111299";
-            </script>
-            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
+            <div class="mt-20 profile-box" style="width: auto;">
+                <script id="mNCC" language="javascript">
+                    medianet_width = "728";
+                    medianet_height = "90";
+                    medianet_crid = "252046787";
+                    medianet_versionId = "3111299";
+                </script>
+                <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
+            </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-                $("#content-8").mCustomScrollbar({
-                    axis: "y",
-                    scrollButtons: {enable: true},
-                    theme: "3d"
-                });
-                $('#search_type').change(function () {
-                    $('#search_form').submit();
-                });
-                $("#general-search-keyword,#general-search-location").keydown(function (e) {
-                    var value = e.keyCode;
-                    if (value == 13) {
+                    $("#content-8").mCustomScrollbar({
+                        axis: "y",
+                        scrollButtons: {enable: true},
+                        theme: "3d"
+                    });
+                    $('#search_type').change(function () {
                         $('#search_form').submit();
-                    }
-                });
+                    });
+                    $("#general-search-keyword,#general-search-location").keydown(function (e) {
+                        var value = e.keyCode;
+                        if (value == 13) {
+                            $('#search_form').submit();
+                        }
+                    });
 </script>
