@@ -322,7 +322,7 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-20 profile-box">
+            <div class="mt-20 profile-box" style="width: auto;">
                 <script id="mNCC" language="javascript">
                     medianet_width = "728";
                     medianet_height = "90";
