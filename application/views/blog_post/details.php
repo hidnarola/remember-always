@@ -42,7 +42,7 @@
                 </script>
                 <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
             </div>
-            <div class="profile-box ad pro_ad_custom">
+            <div class="mt-20">
                 <script id="mNCC" language="javascript">
                     medianet_width = "728";
                     medianet_height = "90";
