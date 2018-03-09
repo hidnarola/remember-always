@@ -20,13 +20,13 @@
                     <div class="profile-box">
                         <h2>Search Results / Life Profile Search Results
                             <div class="select_arrow"><select name="type" id="search_type" class="input-css">
-                                <option value="profile" <?php if ($this->input->get('type') == 'profile') echo 'selected'; ?>>Profile</option>
-                                <option value="service_provider" <?php if ($this->input->get('type') == 'service_provider') echo 'selected'; ?>>Service Provider</option>
-                                <option value="affiliation" <?php if ($this->input->get('type') == 'affiliation') echo 'selected'; ?>>Affiliations</option>
-                                <option value="blog" <?php if ($this->input->get('type') == 'blog') echo 'selected'; ?>>Blog</option>
-                                <option value="all" <?php if ($this->input->get('type') == 'all' || $this->input->get('type') == '') echo 'selected'; ?>>All</option>
-                            </select>
-                            <i class="fa fa-caret-down"></i></div>
+                                    <option value="profile" <?php if ($this->input->get('type') == 'profile') echo 'selected'; ?>>Profile</option>
+                                    <option value="service_provider" <?php if ($this->input->get('type') == 'service_provider') echo 'selected'; ?>>Service Provider</option>
+                                    <option value="affiliation" <?php if ($this->input->get('type') == 'affiliation') echo 'selected'; ?>>Affiliations</option>
+                                    <option value="blog" <?php if ($this->input->get('type') == 'blog') echo 'selected'; ?>>Blog</option>
+                                    <option value="all" <?php if ($this->input->get('type') == 'all' || $this->input->get('type') == '') echo 'selected'; ?>>All</option>
+                                </select>
+                                <i class="fa fa-caret-down"></i></div>
                         </h2>
                         <div class="comments-div comments_div_profile" id="content-8">
                             <ul class="srvs-list-ul srvs_profile">
@@ -160,44 +160,31 @@
                     <p>Benefits of Life Profile</p>
                     <div class="btn_pr"><a href="<?php echo site_url('blog') ?>" class="btn-link color-01">Read More</a></div>
                 </div>
-                <script type="text/javascript">
-                    clicksor_mobile_redirect = false;
-                    //default banner house ad url 
-                    clicksor_default_url = '';
-                    clicksor_banner_border = '#805066';
-                    clicksor_banner_ad_bg = '#FFFFFF';
-                    clicksor_banner_link_color = '#000000';
-                    clicksor_banner_text_color = '#666666';
-                    clicksor_banner_image_banner = true;
-                    clicksor_banner_text_banner = true;
-                    clicksor_layer_border_color = '#805066';
-                    clicksor_layer_ad_bg = '#FFFFFF';
-                    clicksor_layer_ad_link_color = '#000000';
-                    clicksor_layer_ad_text_color = '#666666';
-                    clicksor_text_link_bg = '';
-                    clicksor_text_link_color = '';
-                    clicksor_enable_text_link = false;
-                    clicksor_layer_banner = false;
-                </script>
-                <script type="text/javascript" src="https://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=7&amp;sid=652028"></script>
                 <!--<div class="profile-box ad pro_ad_custom"></div>-->
             </div>
+            <script id="mNCC" language="javascript">
+                medianet_width = "728";
+                medianet_height = "90";
+                medianet_crid = "252046787";
+                medianet_versionId = "3111299";
+            </script>
+            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-                    $("#content-8").mCustomScrollbar({
-                        axis: "y",
-                        scrollButtons: {enable: true},
-                        theme: "3d"
-                    });
-                    $('#search_type').change(function () {
+                $("#content-8").mCustomScrollbar({
+                    axis: "y",
+                    scrollButtons: {enable: true},
+                    theme: "3d"
+                });
+                $('#search_type').change(function () {
+                    $('#search_form').submit();
+                });
+                $("#general-search-keyword,#general-search-location").keydown(function (e) {
+                    var value = e.keyCode;
+                    if (value == 13) {
                         $('#search_form').submit();
-                    });
-                    $("#general-search-keyword,#general-search-location").keydown(function (e) {
-                        var value = e.keyCode;
-                        if (value == 13) {
-                            $('#search_form').submit();
-                        }
-                    });
+                    }
+                });
 </script>

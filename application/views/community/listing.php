@@ -115,48 +115,13 @@
                     <?php } ?>
                 </div>
                 <div class="user_right_q">
-                    <script type="text/javascript">
-                        clicksor_mobile_redirect = false;
-//default banner house ad url 
-                        clicksor_default_url = '';
-                        clicksor_banner_border = '#805066';
-                        clicksor_banner_ad_bg = '#FFFFFF';
-                        clicksor_banner_link_color = '#000000';
-                        clicksor_banner_text_color = '#666666';
-                        clicksor_banner_image_banner = true;
-                        clicksor_banner_text_banner = true;
-                        clicksor_layer_border_color = '#805066';
-                        clicksor_layer_ad_bg = '#FFFFFF';
-                        clicksor_layer_ad_link_color = '#000000';
-                        clicksor_layer_ad_text_color = '#666666';
-                        clicksor_text_link_bg = '';
-                        clicksor_text_link_color = '';
-                        clicksor_enable_text_link = false;
-                        clicksor_layer_banner = false;
+                    <script id="mNCC" language="javascript">
+                        medianet_width = "300";
+                        medianet_height = "600";
+                        medianet_crid = "603212962";
+                        medianet_versionId = "3111299";
                     </script>
-                    <script type="text/javascript" src="https://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=7&amp;sid=652028"></script>
-                    <!--<div class="profile-box ad"></div>-->
-                    <br/><br/>
-                    <script type="text/javascript">
-                        clicksor_mobile_redirect = false;
-//default banner house ad url 
-                        clicksor_default_url = '';
-                        clicksor_banner_border = '#805066';
-                        clicksor_banner_ad_bg = '#FFFFFF';
-                        clicksor_banner_link_color = '#000000';
-                        clicksor_banner_text_color = '#666666';
-                        clicksor_banner_image_banner = true;
-                        clicksor_banner_text_banner = true;
-                        clicksor_layer_border_color = '#805066';
-                        clicksor_layer_ad_bg = '#FFFFFF';
-                        clicksor_layer_ad_link_color = '#000000';
-                        clicksor_layer_ad_text_color = '#666666';
-                        clicksor_text_link_bg = '';
-                        clicksor_text_link_color = '';
-                        clicksor_enable_text_link = false;
-                        clicksor_layer_banner = false;
-                    </script>
-                    <script type="text/javascript" src="https://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=7&amp;sid=652028"></script>
+                    <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
                 </div>
             </div>
         </div>

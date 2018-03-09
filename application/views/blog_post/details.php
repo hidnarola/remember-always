@@ -34,19 +34,33 @@
                         <?php } ?>
                     </div>
                 </div>
+                <script id="mNCC" language="javascript">
+                    medianet_width = "300";
+                    medianet_height = "600";
+                    medianet_crid = "603212962";
+                    medianet_versionId = "3111299";
+                </script>
+                <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
             </div>
+            <script id="mNCC" language="javascript">
+                    medianet_width = "728";
+                    medianet_height = "90";
+                    medianet_crid = "252046787";
+                    medianet_versionId = "3111299";
+            </script>
+            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
         </div>
     </div>
 </div>
 <script type="text/javascript">
-    $(function () {
-        $(".fancybox")
-                .fancybox({
-                    openEffect: 'none',
-                    closeEffect: 'none',
-                    nextEffect: 'none',
-                    prevEffect: 'none',
-                    padding: 0,
-                });
-    });
+                    $(function () {
+                        $(".fancybox")
+                                .fancybox({
+                                    openEffect: 'none',
+                                    closeEffect: 'none',
+                                    nextEffect: 'none',
+                                    prevEffect: 'none',
+                                    padding: 0,
+                                });
+                    });
 </script>

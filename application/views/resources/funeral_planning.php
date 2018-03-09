@@ -148,20 +148,6 @@
                                         <p>
                                             <span class="list_left">h.</span> <span class="list_content">Tombstone</span>
                                         </p>
-                                        <!--                                        <div class="inr-points">
-                                                                                    <h4>The things you need to determine when interviewing funeral homes are:</h4>
-                                                                                    <ul>	
-                                                                                        <li>Does the funeral home offer what you need?</li>
-                                                                                        <li>Are the funeral home prices competitive?  The only way to know this is to speak with more than one funeral home.</li>
-                                                                                        <li>Is the funeral home able to meet your religious and cultural needs?</li>
-                                                                                        <li>Does the funeral home have the type of staff, facility and amenities that you need?  Will the location be the most convenient for you and others?</li>
-                                                                                        <li>Are the funeral director and other staff members warm and friendly?</li>
-                                                                                        <li>Do the funeral director and other staff members operate in a non-pressuring manner?</li>
-                                                                                        <li>Check the reviews for the funeral homes you are considering.</li>
-                                                                                        <li>If possible, ask your network for feedback on the funeral homes you are considering. </li>
-                                                                                    </ul>	
-                                                                                </div>-->
-
                                     </div>
                                 </div>
                             </div>
@@ -336,19 +322,26 @@
                     </div>
                 </div>
             </div>
+            <script id="mNCC" language="javascript">
+                medianet_width = "728";
+                medianet_height = "90";
+                medianet_crid = "252046787";
+                medianet_versionId = "3111299";
+            </script>
+            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-    $('.according-tab .panel-title a').on('click', function () {
-        jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
-        var classes = jQuery(this).prop('class');
-        var clasArray = classes.split(' ')
-        if (clasArray.includes('change_ic')) {
-            jQuery(this).removeClass('change_ic')
-        } else {
-            jQuery(this).addClass('change_ic')
-        }
-    });
+                $('.according-tab .panel-title a').on('click', function () {
+                    jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
+                    var classes = jQuery(this).prop('class');
+                    var clasArray = classes.split(' ')
+                    if (clasArray.includes('change_ic')) {
+                        jQuery(this).removeClass('change_ic')
+                    } else {
+                        jQuery(this).addClass('change_ic')
+                    }
+                });
 </script>
