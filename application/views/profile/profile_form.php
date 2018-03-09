@@ -823,7 +823,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                         </div>
                         <div class="step-form">
                             <div class="step-06">
-                                <form method="post" id="fundraiser_profile-form">
+                                <form method="post" id="fundraiser_profile-form" enctype="multipart/form-data">
                                     <div class="step-06-l">
                                         <div class="input-wrap">
                                             <label class="label-css">Tribute Fundraiser Title.</label>
@@ -867,7 +867,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                         <div class="select-file">
                                             <div class="select-file-upload"> 
                                                 <span class="select-file_up_btn">Upload images, Or Videos to fundraiser page <span>Select Files</span></span>
-                                                <input type="file" name="fundraiser_media[]" id="fundraiser_media" multiple> 
+                                                <!--<input type="file" name="fundraiser_media[]" id="fundraiser_media" multiple>--> 
                                             </div>
                                         </div>
                                         <ul class="select-gallery">

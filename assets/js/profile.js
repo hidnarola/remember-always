@@ -629,8 +629,7 @@ function proceed_step() {
 
                         var postformData = new FormData(document.getElementById('fundraiser_profile-form'));
 
-//                        postformData.append('profile_id', profile_id);
-                        console.log('media', fundraiser_media);
+                        postformData.append('profile_id', profile_id);
                         $(fundraiser_media).each(function (key) {
                             console.log('in');
                             if (fundraiser_media[key] != null) {
@@ -640,12 +639,12 @@ function proceed_step() {
                                 postformData.append('fundraiser_append_types[]', fundraiser_types[key]);
                             }
                         });
-                        console.log('formdata', postformData);
                         $('.loader').show();
                         $.ajax({
                             url: site_url + "profile/add_fundraiser",
                             type: "POST",
                             data: {profile_id: profile_id, fundraiser_title: $('#fundraiser_title').val(), fundraiser_goal: $('#fundraiser_goal').val(), fundraiser_details: $('#fundraiser_details').val()},
+//                            data: postformData,
                             dataType: "json",
 //                            proscessData: false, // tell jQuery not to process the data
 //                            contentType: false, // tell jQuery not to set contentType

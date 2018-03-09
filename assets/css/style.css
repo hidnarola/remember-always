@@ -1257,25 +1257,25 @@ form#post_que_form .add_an .input-wrap label.error {position: absolute;width: 10
 .select_arrow {float: right;position: relative;}
 section.home-profiles {padding: 70px;text-align: center;}
 section.home-profiles h2 {margin: 0 0 30px;padding: 0;display: block;text-align: center;font-size: 38px;color: #57585a;line-height: normal;font-family: 'Rubik';font-weight: 700;line-height: 100%;}
-.home-profile-img {height: 100px;width: 100px;border: 4px solid #975979;border-radius: 100px;margin: 0 auto;overflow: hidden;}
-.home-profile-img img {height: 100%;width: 100%; }
-section.home-profiles h4 {font-size: 16px;font-weight: 500;color: #a36c88;text-decoration: none;font-family: 'Rubik';line-height: normal;margin: 15px 0;}
-section.home-profiles p {font-family: 'Roboto';font-weight: 400;font-size: 15px;display: block;line-height: 22px;margin: 0;padding: 0;color: #909090;}
+.home-profile-img {margin-top: 0;position: absolute;top: -40px;left: 0;width: 100%;}
+.home-profile-img img {height: 100px;width: 100px;border-radius: 50%;box-shadow: 0 4px 10px 0 rgba(0,0,0,0.2), 0 4px 20px 0 rgba(0,0,0,0.19);}
+section.home-profiles h4 {font-size: 16px;font-weight: 500;color: #a36c88;text-decoration: none;font-family: 'Rubik';line-height: normal;margin: 15px 0 0px 0;}
+section.home-profiles p {font-family: 'Roboto';font-weight: 400;font-size: 15px;display: block;line-height: 22px;margin: 0;padding: 0;color: #666;}
+section.home-profiles h4 + p {font-size: 12px;font-weight: 500;color: #c7c7c7;margin-bottom: 10px;}
 section.home-profiles .item{padding:10px;}
-section.home-profiles .profile-wrapp {padding: 15px;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);display: inline-block;width: 100%;}
+section.home-profiles .profile-wrapp {padding: 60px 15px 15px 15px;box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);width: 100%;min-height: 281px;margin-top: 40px;position: relative;}
 section.home-profiles .profile-wrapp a.btn {display: inline-block;margin-top: 15px;background: #57585a;border-color: #57585a;padding: 8px 22px;font-size: 15px;}
 section.home-profiles h3 {font-family: 'Rubik';font-size: 18px;color: #38383a;}
+.home-profiles .owl-controls span {width: 11px;height: 11px;background: #ddd;border-radius: 80px;border: 2px solid #ddd;display: block;margin: 0 5px;}
+.home-profiles .owl-controls .active span {background: #975979;border: 2px solid #975979;}
+.home-profiles .owl-page {display: inline-block;}
+.input-css[readonly] {background: #eee;pointer-events: none;}
 
-/*.home-profiles-div .owl-controls{position:absolute;left:0;text-align:center;width:100%;bottom:-40px;}
-.home-profiles-div .owl-buttons{display:none;}
-.home-profiles-div .owl-page{display:inline-block;vertical-align:top;}
-.home-profiles-div .owl-page span{width:11px;height:11px;background:#c1c1c1;border-radius:80px;display:block;margin:0 5px;}
-.home-profiles-div .owl-page.active span{background:#975979;}*/
 
 /*** media start here ****/
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-.upload-btn input[type=file]{min-height:70px;font-size: 0;}
- }
+    .upload-btn input[type=file]{min-height:70px;font-size: 0;}
+}
 @media (min-width:1200px){
     .search.open form {right: 0;}
     .search form {right: 50px;}
@@ -1743,7 +1743,10 @@ section.home-profiles h3 {font-family: 'Rubik';font-size: 18px;color: #38383a;}
     ul.blog-list-ul li {width: 100%;float: none;}
     .select_arrow {float: none;}
     .according-tab .panel-heading a:after {width: 11px;right: 5px;}
-        
+    section.home-profiles {padding: 30px 15px;text-align: center;}
+    .container.home-profiles-div .col-lg-4 {padding-left: 0;padding-right: 0;}
+    .container.home-profiles-div {padding-left: 0;padding-right: 0;}
+    section.home-profiles h2 {font-size: 24px;}
 }
 
 

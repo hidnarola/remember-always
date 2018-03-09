@@ -79,16 +79,13 @@ $(function () {
         rewindSpeed: 0
     });
     $("#recently-added-div").owlCarousel({
-        autoplay: false,
+        autoPlay: 6000,
         singleItem: true,
-        autoPlay: 6000, // Added to autoplay slides
-
 //        navText : ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"],
 //        dots: false,
 //        nav : true
     });
     $("#most-visited-div").owlCarousel({
-        autoplay: false,
         singleItem: true,
         autoPlay: 6000, // Added to autoplay slides
 
@@ -97,7 +94,6 @@ $(function () {
 //        nav : true
     });
     $("#notable-div").owlCarousel({
-        autoplay: false,
         singleItem: true,
         autoPlay: 6000, // Added to autoplay slides
 
