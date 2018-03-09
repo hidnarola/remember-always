@@ -447,9 +447,9 @@
         <?php } ?>
     </div>
 </section>
-<!--<section class="home-profiles">
+<section class="home-profiles">
     <div class="container home-profiles-div">
-        <h2>Featured Life Profiles... remember always...</h2>
+        <h2>Featured Life Profiles</h2>
         <div class="col-lg-4">
             <h3>Recently Added</h3>
             <div id="recently-added-div" class="owl-carousel owl-theme">
@@ -519,7 +519,7 @@
             </div>
         </div>
     </div>
-</section>-->
+</section>
 <section class="helpful-resources">
     <div class="container">
         <div class="helpful-l">
