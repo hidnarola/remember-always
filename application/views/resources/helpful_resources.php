@@ -31,7 +31,7 @@
                     <h2 class="green_h2">Grief Support</h2>
                     <div class="profile-box-body profile-box-body-change">
                         <ul class="ul_list">
-                            <li><h6><a href="">Advice for dealing with grief</a></h6>	</li>
+                            <li><h6><a href="<?php echo site_url('blog/details/advice-for-dealing-with-grief')?>">Advice for dealing with grief</a></h6></li>
                             <li><h6><a href="https://www.amazon.com/s/ref=nb_sb_noss_1?url=search-alias%3Daps&field-keywords=dealing+with+grief&rh=i%3Aaps%2Ck%3Adealing+with+grief" target="_blank">Recommended Books</a></h6><p>Recommended books for dealing with grief</p></li>
                             <li><h6><a href="<?php echo site_url('service_provider') ?>">Service Provider Directory</a></h6>	
                                 <p>Find grief counselors.</p></li>
@@ -80,7 +80,7 @@
                             <li><h6><a href="">How to create a Life Profile</a></h6></li>
                             <li><h6><a href="">How to create a Tribute Fundraiser</a></h6></li>
                             <li><h6><a href="">How to edit a Life Profile and Tribute Fundraiser</a></h6></li>
-                            <li><h6><a href="">How to share funeral services information</a></h6></li>
+                            <li><h6><a href="<?php echo site_url('blog/details/how-to-easily-share-funeral-services-information')?>">How to share funeral services information</a></h6></li>
                             <li><h6><a href="<?php echo site_url('pages/faqs') ?>">FAQs</a></h6></li>
                             <li><h6><a href="<?php echo site_url('pages/features') ?>">Site Features</a></h6></li>
                         </ul>
@@ -134,7 +134,7 @@
                 <!--                <div class="profile-box fun-facts img_ad_custom">
                                     <div class="adv_div"></div>
                                 </div>-->
-                <script type="text/javascript">
+<!--                <script type="text/javascript">
                     clicksor_mobile_redirect = false;
                     //default banner house ad url 
                     clicksor_default_url = '';
@@ -153,7 +153,7 @@
                     clicksor_enable_text_link = false;
                     clicksor_layer_banner = false;
                 </script>
-                <script type="text/javascript" src="https://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=5&amp;sid=652028"></script>
+                <script type="text/javascript" src="https://b.clicksor.net/show.php?nid=1&amp;pid=389555&amp;adtype=5&amp;sid=652028"></script>-->
             </div>
         </div>
     </div>

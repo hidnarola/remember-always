@@ -47,7 +47,7 @@
                     if ($key == 1) {
                         echo '<a href="' . site_url('search') . '">Add a Tribute Fundraiser</a>';
                     } else if ($key == 2) {
-                        
+                        echo '<a href="' . site_url('community') . '">Support Community</a>';
                     } else {
                         echo '<a href="' . site_url('search?type=profile') . '">Find a Life Profile</a>';
                     }
@@ -448,49 +448,75 @@
     </div>
 </section>
 <!--<section class="home-profiles">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Recently Added</h2>
+    <div class="container home-profiles-div">
+        <h2>Featured Life Profiles... remember always...</h2>
+        <div class="col-lg-4">
+            <h3>Recently Added</h3>
+            <div id="recently-added-div" class="owl-carousel owl-theme">
                 <?php foreach ($recent_profiles as $r_profile) { ?>
                     <div class="item">
-                        <div class="member-box">
-                            <h3><span><img src="<?php echo base_url() . PROFILE_IMAGES . $r_profile['profile_image'] ?>" alt="" /></span> <?php echo $r_profile['firstname'] . ' ' . $r_profile['lastname'] ?> <small><?php if ($r_profile['nickname'] != '') echo $r_profile['nickname'] ?></small></h3>
+                        <div class="profile-wrapp">
+                            <div class="home-profile-img">
+                                <img src="<?php echo base_url() . PROFILE_IMAGES . $r_profile['profile_image'] ?>" alt=""/> 
+                            </div>
+                            <h4><?php echo $r_profile['firstname'] . ' ' . $r_profile['lastname'] ?> <?php if ($r_profile['nickname'] != '') echo '(' . $r_profile['nickname'] . ')'; ?></h4>
                             <p><?php echo date('Y', strtotime($r_profile['date_of_birth'])) . ' - ' . date('Y', strtotime($r_profile['date_of_death'])) ?></p>
-                            <p><?php echo substr($r_profile['life_bio'], 0, 100) . (strlen($r_profile['life_bio']) > 100) ? '...' : '' ?></p>
+                            <p><?php
+                                echo substr($r_profile['life_bio'], 0, 100);
+                                echo (strlen($r_profile['life_bio']) > 100) ? '...' : ''
+                                ?>
+                            </p>
                             <a href="<?php echo site_url('profile/' . $r_profile['slug']) ?>" class="btn btn-success"><?php echo 'Visit ' . $r_profile['firstname'] ?></a>
                         </div>
                     </div>
-                <?php }
-                ?>
+                <?php } ?>
             </div>
-            <div class="col-lg-4">
-                <h2>Most Visited</h2>
+        </div>
+        <div class="col-lg-4">
+            <h3>Most Visited</h3>
+            <div id="most-visited-div" class="owl-carousel owl-theme">
                 <?php foreach ($most_visited_profiles as $m_profile) { ?>
                     <div class="item">
-                        <div class="member-box">
-                            <h3><span><img src="<?php echo base_url() . PROFILE_IMAGES . $m_profile['profile_image'] ?>" alt="" /></span> <?php echo $m_profile['firstname'] . ' ' . $m_profile['lastname'] ?> <small><?php if ($m_profile['nickname'] != '') echo $m_profile['nickname'] ?></small></h3>
+                        <div class="profile-wrapp">
+                            <div class="home-profile-img">
+                                <img src="<?php echo base_url() . PROFILE_IMAGES . $m_profile['profile_image'] ?>" alt=""/>
+                            </div>
+                            <h4><?php echo $m_profile['firstname'] . ' ' . $m_profile['lastname'] ?> <?php if ($m_profile['nickname'] != '') echo '(' . $m_profile['nickname'] . ')'; ?></h4>
                             <p><?php echo date('Y', strtotime($m_profile['date_of_birth'])) . ' - ' . date('Y', strtotime($m_profile['date_of_death'])) ?></p>
-                            <p><?php echo substr($m_profile['life_bio'], 0, 100) . (strlen($m_profile['life_bio']) > 100) ? '...' : '' ?></p>
+                            <p><?php
+                                echo substr($m_profile['life_bio'], 0, 100);
+                                echo (strlen($m_profile['life_bio']) > 100) ? '...' : ''
+                                ?>
+                            </p>
                             <a href="<?php echo site_url('profile/' . $m_profile['slug']) ?>" class="btn btn-success"><?php echo 'Visit ' . $m_profile['firstname'] ?></a>
                         </div>
                     </div>
                 <?php }
                 ?>
             </div>
-            <div class="col-lg-4">
-                <h2>Notable</h2>
+        </div>
+        <div class="col-lg-4">
+            <h3>Notable</h3>
+            <div id="notable-div" class="owl-carousel owl-theme">
                 <?php foreach ($notable_profiles as $n_profile) { ?>
                     <div class="item">
-                        <div class="member-box">
-                            <h3><span><img src="<?php echo base_url() . PROFILE_IMAGES . $n_profile['profile_image'] ?>" alt="" /></span> <?php echo $n_profile['firstname'] . ' ' . $n_profile['lastname'] ?> <small><?php if ($n_profile['nickname'] != '') echo $n_profile['nickname'] ?></small></h3>
+                        <div class="profile-wrapp">
+                            <div class="home-profile-img">
+                                <img src="<?php echo base_url() . PROFILE_IMAGES . $n_profile['profile_image'] ?>" alt=""/>
+                            </div>
+                            <h4><?php echo $n_profile['firstname'] . ' ' . $n_profile['lastname'] ?><?php if ($n_profile['nickname'] != '') echo '(' . $n_profile['nickname'] . ')'; ?></h4>
                             <p><?php echo date('Y', strtotime($n_profile['date_of_birth'])) . ' - ' . date('Y', strtotime($n_profile['date_of_death'])) ?></p>
-                            <p><?php echo substr($n_profile['life_bio'], 0, 100) . (strlen($n_profile['life_bio']) > 100) ? '...' : '' ?></p>
+                            <p><?php
+                                echo substr($n_profile['life_bio'], 0, 100);
+                                echo (strlen($n_profile['life_bio']) > 100) ? '...' : ''
+                                ?>
+                            </p>
                             <a href="<?php echo site_url('profile/' . $n_profile['slug']) ?>" class="btn btn-success"><?php echo 'Visit ' . $n_profile['firstname'] ?></a>
                         </div>
                     </div>
                 <?php }
-                ?></div>
+                ?>
+            </div>
         </div>
     </div>
 </section>-->
@@ -874,7 +900,7 @@
 <section class="what-member">
     <div class="container">
         <h2>What Members Say About Us</h2>
-        <div id="testimonial" class="owl-carousel  owl-theme">
+        <div id="testimonial" class="owl-carousel owl-theme">
             <div class="item">
                 <div class="member-box">
                     <h3><span><img src="assets/images/RA_NB.jpg" alt="" /></span> Exactly what I needed <small>NB, Orlando, Florida</small></h3>

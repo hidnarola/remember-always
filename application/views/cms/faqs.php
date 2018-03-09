@@ -155,7 +155,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="collapse-11">
                             <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse11" aria-expanded="true" aria-controls="collapse10">11. How do I edit (make changes to) a memorial profile or memorial fundraiser? </a>
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse11" aria-expanded="true" aria-controls="collapse11">11. How do I edit (make changes to) a memorial profile or memorial fundraiser? </a>
                             </h4>
                         </div>
                         <div id="collapse11" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-11">
@@ -171,7 +171,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="collapse-12">
                             <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse12" aria-expanded="true" aria-controls="collapse10">12. I forgot my username and/or password, what do I do? </a>
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse12" aria-expanded="true" aria-controls="collapse12">12. I forgot my username and/or password, what do I do? </a>
                             </h4>
                         </div>
                         <div id="collapse12" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-12">
@@ -187,26 +187,10 @@
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="collapse-13">
                             <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse13" aria-expanded="true" aria-controls="collapse10">13. Can there be multiple editors of a profile? </a>
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse13" aria-expanded="true" aria-controls="collapse13">13. Can I comment on a profile without signing in? </a>
                             </h4>
                         </div>
                         <div id="collapse13" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-13">
-                            <div class="panel-body">
-                                <p>
-                                    <span class="list_content">
-                                        Yes. Each profile can have one or more editors. The creating editor can add other editor(s), and then those editor(s) can add other editor(s).
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="collapse-14">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse14s" aria-expanded="true" aria-controls="collapse10">14. Can I comment on a profile without signing in? </a>
-                            </h4>
-                        </div>
-                        <div id="collapse14" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-14">
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
@@ -217,12 +201,12 @@
                         </div>
                     </div>
                     <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="collapse-15">
+                        <div class="panel-heading" role="tab" id="collapse-14">
                             <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse15" aria-expanded="true" aria-controls="collapse10">15. How can I find a memorial profile? </a>
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse14" aria-expanded="true" aria-controls="collapse14">14. How can I find a memorial profile? </a>
                             </h4>
                         </div>
-                        <div id="collapse15" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-15">
+                        <div id="collapse14" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-14">
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
@@ -233,12 +217,12 @@
                         </div>
                     </div>
                     <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="collapse-16">
+                        <div class="panel-heading" role="tab" id="collapse-15">
                             <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse16" aria-expanded="true" aria-controls="collapse10">16. Why is the website called Remember Always? </a>
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse15" aria-expanded="true" aria-controls="collapse15">15. Why is the website called Remember Always? </a>
                             </h4>
                         </div>
-                        <div id="collapse16" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-16">
+                        <div id="collapse15" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-15">
                             <div class="panel-body">
                                 <p>
                                     <span class="list_content">
@@ -249,28 +233,12 @@
                         </div>
                     </div>
                     <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="collapse-17">
+                        <div class="panel-heading" role="tab" id="collapse-16">
                             <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse17" aria-expanded="true" aria-controls="collapse10">17. What is a "living profile"? </a>
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse16" aria-expanded="true" aria-controls="collapse16">16. More to come as we find out what you are asking. </a>
                             </h4>
                         </div>
-                        <div id="collapse17" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-17">
-                            <div class="panel-body">
-                                <p>
-                                    <span class="list_content">
-                                        A living profile is one that someone can create before death, in order to be in full control and agreement of what their profile will look like upon their passing. This is a great feature to allow people to decide on what their everlasting legacy will be for their children and grandchildren, and great grandchildren, and so on to see for many years to come.
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="collapse-18">
-                            <h4 class="panel-title">
-                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse18" aria-expanded="true" aria-controls="collapse10">18. More to come as we find out what you are asking. </a>
-                            </h4>
-                        </div>
-                        <div id="collapse18" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-18">
+                        <div id="collapse16" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-16">
                             <div class="panel-body">
                                 <p></p>
                             </div>

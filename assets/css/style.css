@@ -1265,6 +1265,13 @@ section.home-profiles .item{padding:10px;}
 section.home-profiles .profile-wrapp {padding: 15px;box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);display: inline-block;width: 100%;}
 section.home-profiles .profile-wrapp a.btn {display: inline-block;margin-top: 15px;background: #57585a;border-color: #57585a;padding: 8px 22px;font-size: 15px;}
 section.home-profiles h3 {font-family: 'Rubik';font-size: 18px;color: #38383a;}
+
+/*.home-profiles-div .owl-controls{position:absolute;left:0;text-align:center;width:100%;bottom:-40px;}
+.home-profiles-div .owl-buttons{display:none;}
+.home-profiles-div .owl-page{display:inline-block;vertical-align:top;}
+.home-profiles-div .owl-page span{width:11px;height:11px;background:#c1c1c1;border-radius:80px;display:block;margin:0 5px;}
+.home-profiles-div .owl-page.active span{background:#975979;}*/
+
 /*** media start here ****/
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
 .upload-btn input[type=file]{min-height:70px;font-size: 0;}
