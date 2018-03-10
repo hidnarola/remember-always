@@ -57,11 +57,12 @@ class Affiliation extends MY_Controller {
             $this->session->set_flashdata('error', 'You must login to access this page');
             redirect('/');
         }
-
+        $affiliation_id = null;
         $data['breadcrumb'] = ['title' => 'Add Affiliation', 'links' => [['link' => site_url(), 'title' => 'Home']]];
         if (!empty($slug)) {
             $affiliation = $this->affiliation_model->sql_select(TBL_AFFILIATIONS, null, ['where' => array('slug' => trim($slug), 'is_delete' => 0)], ['single' => true]);
             if (!empty($affiliation)) {
+                $affiliation_id = $affiliation['id'];
                 $data['affiliation'] = $affiliation;
                 $states = $this->affiliation_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => $affiliation['country'])]);
                 if (!empty($states)) {
@@ -149,7 +150,7 @@ class Affiliation extends MY_Controller {
                     }
                 }
             }
-            if (!empty($slug)) {
+            if (!empty($affiliation_id)) {
                 $dataArr['updated_at'] = date('Y-m-d H:i:s');
                 $this->affiliation_model->common_insert_update('update', TBL_AFFILIATIONS, $dataArr, ['id' => $affiliation['id']]);
                 $this->session->set_flashdata('success', 'Affiliation details has been updated successfully.');
