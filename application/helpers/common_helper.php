@@ -265,7 +265,6 @@ function upload_multiple_image($image_name, $extension, $image_path, $type = 'im
     $CI->upload->initialize($config);
     if ($CI->upload->do_upload($image_name)) {
         $img_data = $CI->upload->data();
-        p($img_data,1);
         if ($type == 'video') {
             $randname = uniqid() . time();
             $file_name = $randname . $img_data['file_ext'];

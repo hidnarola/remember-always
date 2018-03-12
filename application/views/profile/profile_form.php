@@ -862,6 +862,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 You have successfully created WePay account for this profile. 
                                             </div>
                                         </div>
+                                        <div class="input-wrap"><p>Note: The Tribute Fundraiser is free to create. If there are no donations to your fundraiser, then there is no cost to you. There is a flat 7.9% service fee that will be deducted from donations received, which includes WePay's service fee and transaction fee.</p></div>
                                     </div> 
                                     <div class="step-06-r">
                                         <div class="select-file">
