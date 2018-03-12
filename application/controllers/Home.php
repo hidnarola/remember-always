@@ -38,7 +38,7 @@ class Home extends MY_Controller {
         $locale = 'en_IN.UTF-8';
         setlocale(LC_ALL, $locale);
         putenv('LC_ALL=' . $locale);
-        echo exec($cmd);
+        echo shell_exec($cmd);
 //        echo shell_exec('/home/ec2-user/bin/ffmpeg -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png');
     }
 
