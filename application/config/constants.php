@@ -157,7 +157,7 @@ if ($_SERVER['HTTP_HOST'] == 'clientapp.narola.online') {
     define('WEPAY_ENDPOINT', 'stage'); // Use "stage" for development and "production" for "Production"
     define('WEPAY_ENVIRONMENT', 'Staging'); // Use "Staging" for development and "Production" for "Production"
 } else {
-    define('FFMPEG_PATH', FCPATH.'/ffmp/ffmpeg.exe');
+    define('FFMPEG_PATH', FCPATH.'ffmp/ffmpeg.exe');
     /* Constants for wepay payment payment */
     define('WEPAY_ENDPOINT', 'production'); 
     define('WEPAY_ENVIRONMENT', 'Production'); 
