@@ -1301,6 +1301,7 @@ class Profile extends MY_Controller {
                 }
                 if ($this->input->post('type') == 'image') {
                     $image_data = upload_image('post_upload', POST_IMAGES . $directory);
+                    p($image_data, 1);
                     if (is_array($image_data)) {
                         $data['error'] = $image_data['errors'];
                         $data['success'] = false;
