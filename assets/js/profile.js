@@ -479,26 +479,28 @@ function proceed_step() {
                     $('#memorial_place').addClass('error');
                     service_valid = 0;
                 }
-                if ($('#memorial_address').val() == '') {
-                    $('#memorial_address').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#memorial_country').val() == '') {
-                    $('#memorial_country').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#memorial_state').val() == '') {
-                    $('#memorial_state').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#memorial_city').val() == '') {
-                    $('#memorial_city').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#memorial_zip').val() == '') {
-                    $('#memorial_zip').addClass('error');
-                    service_valid = 0;
-                }
+                /*
+                 if ($('#memorial_address').val() == '') {
+                 $('#memorial_address').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#memorial_country').val() == '') {
+                 $('#memorial_country').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#memorial_state').val() == '') {
+                 $('#memorial_state').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#memorial_city').val() == '') {
+                 $('#memorial_city').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#memorial_zip').val() == '') {
+                 $('#memorial_zip').addClass('error');
+                 service_valid = 0;
+                 }
+                 */
             }
             if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_country').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
                 if ($('#funeral_date').val() == '') {
@@ -517,22 +519,24 @@ function proceed_step() {
                     $('#funeral_address').addClass('error');
                     service_valid = 0;
                 }
-                if ($('#funeral_country').val() == '') {
-                    $('#funeral_country').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#funeral_state').val() == '') {
-                    $('#funeral_state').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#funeral_city').val() == '') {
-                    $('#funeral_city').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#funeral_zip').val() == '') {
-                    $('#funeral_zip').addClass('error');
-                    service_valid = 0;
-                }
+                /*
+                 if ($('#funeral_country').val() == '') {
+                 $('#funeral_country').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#funeral_state').val() == '') {
+                 $('#funeral_state').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#funeral_city').val() == '') {
+                 $('#funeral_city').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#funeral_zip').val() == '') {
+                 $('#funeral_zip').addClass('error');
+                 service_valid = 0;
+                 }
+                 */
             }
 
             if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_country').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
@@ -552,22 +556,24 @@ function proceed_step() {
                     $('#burial_address').addClass('error');
                     service_valid = 0;
                 }
-                if ($('#burial_country').val() == '') {
-                    $('#burial_country').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#burial_state').val() == '') {
-                    $('#burial_state').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#burial_city').val() == '') {
-                    $('#burial_city').siblings('.select2').addClass('error');
-                    service_valid = 0;
-                }
-                if ($('#burial_zip').val() == '') {
-                    $('#burial_zip').addClass('error');
-                    service_valid = 0;
-                }
+                /*
+                 if ($('#burial_country').val() == '') {
+                 $('#burial_country').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#burial_state').val() == '') {
+                 $('#burial_state').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#burial_city').val() == '') {
+                 $('#burial_city').siblings('.select2').addClass('error');
+                 service_valid = 0;
+                 }
+                 if ($('#burial_zip').val() == '') {
+                 $('#burial_zip').addClass('error');
+                 service_valid = 0;
+                 }
+                 */
             }
 
             if (service_valid == 1) {
@@ -843,26 +849,27 @@ function save_funeral_tribute(redirect_user) {
             $('#memorial_place').addClass('error');
             service_valid = 0;
         }
-        if ($('#memorial_address').val() == '') {
-            $('#memorial_address').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_country').val() == '') {
-            $('#memorial_country').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_state').val() == '') {
-            $('#memorial_state').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_city').val() == '') {
-            $('#memorial_city').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#memorial_zip').val() == '') {
-            $('#memorial_zip').addClass('error');
-            service_valid = 0;
-        }
+        /*
+         if ($('#memorial_address').val() == '') {
+         $('#memorial_address').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#memorial_country').val() == '') {
+         $('#memorial_country').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#memorial_state').val() == '') {
+         $('#memorial_state').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#memorial_city').val() == '') {
+         $('#memorial_city').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#memorial_zip').val() == '') {
+         $('#memorial_zip').addClass('error');
+         service_valid = 0;
+         }*/
     }
 
     if ($('#funeral_date').val() != '' || $('#funeral_time').val() != '' || $('#funeral_place').val() != '' || $('#funeral_address').val() != '' || $('#funeral_country').val() != '' || $('#funeral_state').val() != '' || $('#funeral_city').val() != '' || $('#funeral_zip').val() != '') {
@@ -880,26 +887,28 @@ function save_funeral_tribute(redirect_user) {
             $('#funeral_place').addClass('error');
             service_valid = 0;
         }
-        if ($('#funeral_address').val() == '') {
-            $('#funeral_address').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_country').val() == '') {
-            $('#funeral_country').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_state').val() == '') {
-            $('#funeral_state').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_city').val() == '') {
-            $('#funeral_city').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#funeral_zip').val() == '') {
-            $('#funeral_zip').addClass('error');
-            service_valid = 0;
-        }
+        /*
+         if ($('#funeral_address').val() == '') {
+         $('#funeral_address').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#funeral_country').val() == '') {
+         $('#funeral_country').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#funeral_state').val() == '') {
+         $('#funeral_state').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#funeral_city').val() == '') {
+         $('#funeral_city').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#funeral_zip').val() == '') {
+         $('#funeral_zip').addClass('error');
+         service_valid = 0;
+         }
+         */
     }
 
     if ($('#burial_date').val() != '' || $('#burial_time').val() != '' || $('#burial_place').val() != '' || $('#burial_address').val() != '' || $('#burial_country').val() != '' || $('#burial_state').val() != '' || $('#burial_city').val() != '' || $('#burial_zip').val() != '') {
@@ -917,26 +926,27 @@ function save_funeral_tribute(redirect_user) {
             $('#burial_place').addClass('error');
             service_valid = 0;
         }
-        if ($('#burial_address').val() == '') {
-            $('#burial_address').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_country').val() == '') {
-            $('#burial_country').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_state').val() == '') {
-            $('#burial_state').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_city').val() == '') {
-            $('#burial_city').siblings('.select2').addClass('error');
-            service_valid = 0;
-        }
-        if ($('#burial_zip').val() == '') {
-            $('#burial_zip').addClass('error');
-            service_valid = 0;
-        }
+        /*
+         if ($('#burial_address').val() == '') {
+         $('#burial_address').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#burial_country').val() == '') {
+         $('#burial_country').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#burial_state').val() == '') {
+         $('#burial_state').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#burial_city').val() == '') {
+         $('#burial_city').siblings('.select2').addClass('error');
+         service_valid = 0;
+         }
+         if ($('#burial_zip').val() == '') {
+         $('#burial_zip').addClass('error');
+         service_valid = 0;
+         }*/
     }
     if (service_valid == 1) {
         if (enter_services == 1) {
