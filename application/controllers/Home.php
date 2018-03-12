@@ -28,7 +28,7 @@ class Home extends MY_Controller {
     public function test() {
 //        echo FCPATH;
         echo FFMPEG_PATH;
-        exec('/usr/local/bin/ffmpeg -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png');
+        exec('/home/ec2-user/ffmpeg_build/bin/ffmpeg -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png');
     }
 
 }
