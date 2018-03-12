@@ -43,6 +43,7 @@ class Profile extends MY_Controller {
                                 $directory = 'profile_' . $profile['id'];
                                 if (!file_exists(POST_IMAGES . $directory)) {
                                     mkdir(POST_IMAGES . $directory);
+                                    chmod(POST_IMAGES . $directory, 0777);
                                 }
                                 foreach ($_FILES['post_upload']['name'] as $key => $value) {
                                     $extension = explode('/', $_FILES['post_upload']['type'][$key]);
@@ -277,10 +278,12 @@ class Profile extends MY_Controller {
                 $directory = 'user_' . $profile['user_id'];
                 if (!file_exists(PROFILE_IMAGES . $directory)) {
                     mkdir(PROFILE_IMAGES . $directory);
+                    chmod(PROFILE_IMAGES . $directory, 0777);
                 }
                 $sub_directory = 'profile_' . $profile_id;
                 if (!file_exists(PROFILE_IMAGES . $directory . '/' . $sub_directory)) {
                     mkdir(PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                    chmod(PROFILE_IMAGES . $directory . '/' . $sub_directory, 0777);
                 }
                 $image_data = upload_image('cover_image', PROFILE_IMAGES . $directory . '/' . $sub_directory);
                 if (is_array($image_data)) {
@@ -423,6 +426,7 @@ class Profile extends MY_Controller {
                         $directory = 'user_' . $this->user_id;
                         if (!file_exists(PROFILE_IMAGES . $directory)) {
                             mkdir(PROFILE_IMAGES . $directory);
+                            chmod(PROFILE_IMAGES . $directory, 0777);
                         }
 
                         $image_data = upload_image('profile_image', PROFILE_IMAGES . $directory);
@@ -465,6 +469,8 @@ class Profile extends MY_Controller {
                         }
                         if (!file_exists(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id)) {
                             mkdir(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id);
+                            chmod(PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id, 0777);
+
                             if ($_FILES['profile_image']['name'] != '') {
                                 rename(PROFILE_IMAGES . $profile_image, PROFILE_IMAGES . 'user_' . $this->user_id . '/profile_' . $profile_id . '/' . $image_data);
                                 $this->users_model->common_insert_update('update', TBL_PROFILES, ['profile_image' => 'user_' . $this->user_id . '/profile_' . $profile_id . '/' . $image_data], ['id' => $profile_id]);
@@ -535,10 +541,12 @@ class Profile extends MY_Controller {
                 $directory = 'user_' . $profile['user_id'];
                 if (!file_exists(PROFILE_IMAGES . $directory)) {
                     mkdir(PROFILE_IMAGES . $directory);
+                    chmod(PROFILE_IMAGES . $directory, 0777);
                 }
                 $sub_directory = 'profile_' . $profile_id;
                 if (!file_exists(PROFILE_IMAGES . $directory . '/' . $sub_directory)) {
                     mkdir(PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                    chmod(PROFILE_IMAGES . $directory . '/' . $sub_directory, 0777);
                 }
                 if ($this->input->post('type') == 'image') {
 
@@ -798,10 +806,12 @@ class Profile extends MY_Controller {
                         $directory = 'user_' . $profile['user_id'];
                         if (!file_exists(PROFILE_IMAGES . $directory)) {
                             mkdir(PROFILE_IMAGES . $directory);
+                            chmod(PROFILE_IMAGES . $directory, 0777);
                         }
                         $sub_directory = 'profile_' . $profile_id;
                         if (!file_exists(PROFILE_IMAGES . $directory . '/' . $sub_directory)) {
                             mkdir(PROFILE_IMAGES . $directory . '/' . $sub_directory);
+                            chmod(PROFILE_IMAGES . $directory . '/' . $sub_directory, 0777);
                         }
 
                         $extension = explode('/', $_FILES['life_pic']['type'][$key]);
@@ -1181,6 +1191,7 @@ class Profile extends MY_Controller {
                     $directory = 'profile_' . $profile_id;
                     if (!file_exists(FUNDRAISER_IMAGES . $directory)) {
                         mkdir(FUNDRAISER_IMAGES . $directory);
+                        chmod(FUNDRAISER_IMAGES . $directory, 0777);
                     }
                     $flag = 0;
                     $dataArr_media = [];
@@ -1286,6 +1297,7 @@ class Profile extends MY_Controller {
                 $directory = 'profile_' . $profile_id;
                 if (!file_exists(POST_IMAGES . $directory)) {
                     mkdir(POST_IMAGES . $directory);
+                    chmod(POST_IMAGES . $directory, 0777);
                 }
                 if ($this->input->post('type') == 'image') {
                     $image_data = upload_image('post_upload', POST_IMAGES . $directory);
