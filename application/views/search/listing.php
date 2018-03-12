@@ -41,6 +41,9 @@
                                                     $tag_class = '';
                                                     if ($result['type'] == 'profile') {
                                                         $tag_class = 'tag-profile';
+                                                        if ($this->input->get('type') == 'profile') {
+                                                            $tag_class = '';
+                                                        }
                                                         if ($result['image'] != '') {
                                                             echo "<img src='" . PROFILE_IMAGES . $result['image'] . "' alt='' class='profile-exif-img'>";
                                                         } else {

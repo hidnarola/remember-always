@@ -45,6 +45,7 @@
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/pnotify.custom.min.css" rel="stylesheet" />
         <link href="assets/css/jquery.fancybox.css" rel="stylesheet" />
+        <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />-->
         <link href="assets/css/magnific-popup.css" rel="stylesheet" />
 
         <script type="text/javascript">
@@ -86,6 +87,8 @@
         <script src="assets/js/pnotify.custom.min.js"></script> 
         <script src="assets/js/jquery.fancybox.js"></script>
         <script src="assets/js/jquery.fancybox.pack.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>-->
+
         <script src="assets/js/sweetalert2.all.min.js"></script>
         <script src="assets/js/jquery.mCustomScrollbar.js"></script>
         <script src="assets/js/typeahead.bundle.js"></script>
@@ -124,13 +127,13 @@
             </circle><animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;0 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s"></animateTransform></g></svg>
         </div>
         <?php if ($body_class == '') { ?>
-<!--            <script id="mNCC" language="javascript">
-                medianet_width = "728";
-                medianet_height = "90";
-                medianet_crid = "252046787";
-                medianet_versionId = "3111299";
-            </script>
-            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>-->
+        <!--            <script id="mNCC" language="javascript">
+                        medianet_width = "728";
+                        medianet_height = "90";
+                        medianet_crid = "252046787";
+                        medianet_versionId = "3111299";
+                    </script>
+                    <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>-->
         <?php }
         ?>
         <?php
@@ -228,7 +231,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="log-in">
-                            <form method="post" id="login-form" action="<?php //echo site_url('login')                    ?>">
+                            <form method="post" id="login-form" action="<?php //echo site_url('login')                      ?>">
                                 <div class="popup-input">
                                     <label>Email</label>
                                     <input type="text" name="email" placeholder="support@gmail.com" />
@@ -252,13 +255,13 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                    ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                    ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                      ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                      ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>
 <div role="tabpanel" class="tab-pane" id="sign-up">
- <form method="post" id="signup-form" action="<?php //echo site_url('signup')                    ?>">
+ <form method="post" id="signup-form" action="<?php //echo site_url('signup')                      ?>">
      <div class="popup-input">
          <label>Email</label>
          <input type="text" name="email" placeholder="support@gmail.com" />
@@ -294,8 +297,8 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                    ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                    ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                      ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                      ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>
