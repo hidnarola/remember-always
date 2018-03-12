@@ -32,6 +32,7 @@ class Affiliation_model extends MY_Model {
                 $this->db->having('a.name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR a.description LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR con_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR s_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . '') . ' OR c_name LIKE ' . $this->db->escape('%' . $data['keyword'] . '%' . ''));
             }
         }
+        $this->db->order_by('a.name');
         if ($type == 'count') {
             $res_data = $this->db->get(TBL_AFFILIATIONS . ' a')->num_rows();
         } else {
