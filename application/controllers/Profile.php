@@ -91,6 +91,7 @@ class Profile extends MY_Controller {
                             $data['success'] = true;
                             $data['data'] = 'Post details has been inserted successfully.';
                         }
+                        exit;
                     }
                     echo json_encode($data);
                     exit;
