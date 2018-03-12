@@ -26,10 +26,10 @@ class Home extends MY_Controller {
     }
 
     public function test() {
-
+        echo shell_exec('whoami');
         $output1 = shell_exec('ffmpeg 2>&1');
         echo "<pre>$output1</pre>";
-        
+
         $output = shell_exec('/home/ec2-user/bin/ffmpeg 2>&1');
         echo "<pre>$output</pre>";
         exit;
