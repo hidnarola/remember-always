@@ -25,4 +25,8 @@ class Home extends MY_Controller {
         $this->template->load('default', 'home', $data);
     }
 
+    public function test() {
+        exec(FFMPEG_PATH . ' -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png');
+    }
+
 }
