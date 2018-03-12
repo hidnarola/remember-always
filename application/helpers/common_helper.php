@@ -265,7 +265,6 @@ function upload_multiple_image($image_name, $extension, $image_path, $type = 'im
     $CI->upload->initialize($config);
     if ($CI->upload->do_upload($image_name)) {
         $img_data = $CI->upload->data();
-        p($img_data);
         if ($type == 'video') {
             $randname = uniqid() . time();
             $file_name = $randname . $img_data['file_ext'];
@@ -280,7 +279,7 @@ function upload_multiple_image($image_name, $extension, $image_path, $type = 'im
             $old_path = $img_data['full_path'];
             $new_path = $img_data['file_path'] . $file_name;
             exec(FFMPEG_PATH . ' -i ' . $old_path . ' -vf scale=500:-1 ' . $new_path);
-//            unlink($img_data['full_path']);
+            unlink($img_data['full_path']);
             $imgname = $file_name;
         }
     } else {

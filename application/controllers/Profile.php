@@ -57,7 +57,6 @@ class Profile extends MY_Controller {
                                     } else {
                                         $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
                                     }
-                                    
                                     if (is_array($image_data)) {
                                         $flag = 1;
                                         $data['success'] = false;
@@ -92,7 +91,6 @@ class Profile extends MY_Controller {
                             $data['success'] = true;
                             $data['data'] = 'Post details has been inserted successfully.';
                         }
-                        exit;
                     }
                     echo json_encode($data);
                     exit;
