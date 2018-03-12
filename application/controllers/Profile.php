@@ -39,7 +39,6 @@ class Profile extends MY_Controller {
                             $data['success'] = false;
                             $data['error'] = 'Post not added.';
                         } else {
-                            p($_FILES,1);
                             if (isset($_FILES['post_upload']) && !empty($_FILES['post_upload']['name'][0])) {
                                 $directory = 'profile_' . $profile['id'];
                                 if (!file_exists(POST_IMAGES . $directory)) {
@@ -58,6 +57,8 @@ class Profile extends MY_Controller {
                                     } else {
                                         $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
                                     }
+                                    p($image_data, 1);
+
                                     if (is_array($image_data)) {
                                         $flag = 1;
                                         $data['success'] = false;
