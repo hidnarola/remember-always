@@ -461,7 +461,7 @@
                         <div class="post-comment">
                             <form method="post" enctype="multipart/form-data" name="post_form" id="post_form">
                                 <textarea name="comment" id="comment" placeholder="Enter memories or Sympathy messages here"></textarea>
-                                <div class="comoon-ul-li list-04">
+                                <div class="comoon-ul-li list-04" id="post-media-div">
                                     <ul>
                                     </ul>
                                 </div>

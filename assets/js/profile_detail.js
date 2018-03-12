@@ -387,7 +387,7 @@ function readURL(input) {
 //-- Gallery step
 var image_count = 0, video_count = 0;
 $(".post_gallery_upload").change(function () {
-    var dvPreview = $(".comoon-ul-li ul");
+    var dvPreview = $("#post-media-div ul");
     var selected_type = $(this).data('type');
     if (typeof (FileReader) != "undefined") {
         $($(this)[0].files).each(function (index) {
