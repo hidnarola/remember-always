@@ -39,6 +39,7 @@ class Profile extends MY_Controller {
                             $data['success'] = false;
                             $data['error'] = 'Post not added.';
                         } else {
+                            p($_FILES,1);
                             if (isset($_FILES['post_upload']) && !empty($_FILES['post_upload']['name'][0])) {
                                 $directory = 'profile_' . $profile['id'];
                                 if (!file_exists(POST_IMAGES . $directory)) {
@@ -1301,7 +1302,6 @@ class Profile extends MY_Controller {
                 }
                 if ($this->input->post('type') == 'image') {
                     $image_data = upload_image('post_upload', POST_IMAGES . $directory);
-                    p($image_data, 1);
                     if (is_array($image_data)) {
                         $data['error'] = $image_data['errors'];
                         $data['success'] = false;
