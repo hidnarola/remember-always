@@ -27,7 +27,10 @@ class Home extends MY_Controller {
 
     public function test() {
 
-        $output = shell_exec('sudo /home/ec2-user/bin/ffmpeg 2>&1');
+        $output1 = shell_exec('ffmpeg 2>&1');
+        echo "<pre>$output1</pre>";
+        
+        $output = shell_exec('/home/ec2-user/bin/ffmpeg 2>&1');
         echo "<pre>$output</pre>";
         exit;
 
