@@ -98,117 +98,129 @@
             </div>
             <div class="services-pro-m">
                 <div class="profile-box ad">
-                    <a href=""><img src="assets/images/ad.jpg" alt=""></a>
+                    <script id="mNCC" language="javascript">
+                        medianet_width = "300";
+                        medianet_height = "250";
+                        medianet_crid = "404298848";
+                        medianet_versionId = "3111299";
+                    </script>
+                    <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
                 </div>
                 <div class="profile-box ad">
-                    <a href=""><img src="assets/images/ad.jpg" alt=""></a>
+                    <script id="mNCC" language="javascript">
+                        medianet_width = "300";
+                        medianet_height = "250";
+                        medianet_crid = "404298848";
+                        medianet_versionId = "3111299";
+                    </script>
+                    <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script>
-    var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
-    $('.loader').hide();
-    var affiliation_image = '<?php echo AFFILIATION_IMAGE ?>';
-    var affiliation_url = '<?php echo site_url('affiliation/view/') ?>';
-    $('#category').selectpicker({
-        liveSearch: true,
-        size: 5
-    });
-    $("#affiliation_ul_data").mCustomScrollbar({
-        axis: "y",
-        scrollButtons: {enable: true},
-        theme: "3d",
-        callbacks: {
-            onTotalScroll: function () {
-                if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
-                    var limitStart = $(".affiliation_content li").length;
+                        var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
+                        $('.loader').hide();
+                        var affiliation_image = '<?php echo AFFILIATION_IMAGE ?>';
+                        var affiliation_url = '<?php echo site_url('affiliation/view/') ?>';
+                        $('#category').selectpicker({
+                            liveSearch: true,
+                            size: 5
+                        });
+                        $("#affiliation_ul_data").mCustomScrollbar({
+                            axis: "y",
+                            scrollButtons: {enable: true},
+                            theme: "3d",
+                            callbacks: {
+                                onTotalScroll: function () {
+                                    if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                                        var limitStart = $(".affiliation_content li").length;
 //                     $(".loader").show();
-                    loadResults(limitStart);
-                }
-            },
-        },
-        advanced: {
+                                        loadResults(limitStart);
+                                    }
+                                },
+                            },
+                            advanced: {
 
-            updateOnBrowserResize: true, /*update scrollbars on browser resize (for layouts based on percentages): boolean*/
+                                updateOnBrowserResize: true, /*update scrollbars on browser resize (for layouts based on percentages): boolean*/
 
-            updateOnContentResize: true, /*auto-update scrollbars on content resize (for dynamic content): boolean*/
+                                updateOnContentResize: true, /*auto-update scrollbars on content resize (for dynamic content): boolean*/
 
-            autoExpandHorizontalScroll: true, /*auto-expand width for horizontal scrolling: boolean*/
+                                autoExpandHorizontalScroll: true, /*auto-expand width for horizontal scrolling: boolean*/
 
-            autoScrollOnFocus: true /*auto-scroll on focused elements: boolean*/
+                                autoScrollOnFocus: true /*auto-scroll on focused elements: boolean*/
 
-        },
-    });
-    $(document).on('click', '.category_click', function () {
-        submit_form($(this).data('value'));
-    });
-    $(document).on('keyup paste', 'input[type="text"]', function () {
-        if ($(this).val() != '') {
-            $('#provider_srch_btn').removeAttr('disabled');
-        }
-    });
-    $(document).on('change', 'select', function () {
-        if ($(this).val() != '') {
-            $('#provider_srch_btn').removeAttr('disabled');
-        }
-    });
-    $(document).on('click', '#provider_srch_btn', function () {
-        submit_form($('#category').val());
-    });
-    function submit_form(category) {
-        var keyword = $('#keyword').val();
-        if (location == '' && keyword == '' && category == '') {
-            window.location.href = site_url + 'affiliation';
-        } else if (location == '' && keyword == '' && category != '') {
-            window.location.href = site_url + 'affiliation?category=' + category;
-        } else {
-            var url = '';
-            if (category != '') {
-                if (url != '')
-                    url += '&category=' + category;
-                else
-                    url += '?category=' + category;
-            }
-            if (keyword != '') {
-                if (url != '')
-                    url += '&keyword=' + keyword;
-                else
-                    url += '?keyword=' + keyword;
-            }
-            window.location.href = site_url + 'affiliation' + url;
-        }
-        return false;
-    }
+                            },
+                        });
+                        $(document).on('click', '.category_click', function () {
+                            submit_form($(this).data('value'));
+                        });
+                        $(document).on('keyup paste', 'input[type="text"]', function () {
+                            if ($(this).val() != '') {
+                                $('#provider_srch_btn').removeAttr('disabled');
+                            }
+                        });
+                        $(document).on('change', 'select', function () {
+                            if ($(this).val() != '') {
+                                $('#provider_srch_btn').removeAttr('disabled');
+                            }
+                        });
+                        $(document).on('click', '#provider_srch_btn', function () {
+                            submit_form($('#category').val());
+                        });
+                        function submit_form(category) {
+                            var keyword = $('#keyword').val();
+                            if (location == '' && keyword == '' && category == '') {
+                                window.location.href = site_url + 'affiliation';
+                            } else if (location == '' && keyword == '' && category != '') {
+                                window.location.href = site_url + 'affiliation?category=' + category;
+                            } else {
+                                var url = '';
+                                if (category != '') {
+                                    if (url != '')
+                                        url += '&category=' + category;
+                                    else
+                                        url += '?category=' + category;
+                                }
+                                if (keyword != '') {
+                                    if (url != '')
+                                        url += '&keyword=' + keyword;
+                                    else
+                                        url += '?keyword=' + keyword;
+                                }
+                                window.location.href = site_url + 'affiliation' + url;
+                            }
+                            return false;
+                        }
 
-    function loadResults(limitStart) {
-        $.ajax({
-            url: '<?php echo site_url() ?>' + 'affiliation/load_affiliations/' + limitStart + srch_data,
-            type: "get",
-            dataType: "json",
-            success: function (data) {
-                var string = '';
-                $.each(data, function (index, value) {
-                    string += '<li>' +
-                            '<span>';
-                    if (typeof value['image'] != 'undefined' && value['image'] != null) {
-                        string += '<img src="' + affiliation_image + value['image'] + '" width="100%" height="100%" />';
-                    }
-                    string += '</span>' +
-                            '<h3><a href="' + affiliation_url + value['slug'] + '">' + value['name'] + '</a></h3>' +
-                            '<p>';
-                    text = value['description'];
-                    if (value['description'].length > 500) {
+                        function loadResults(limitStart) {
+                            $.ajax({
+                                url: '<?php echo site_url() ?>' + 'affiliation/load_affiliations/' + limitStart + srch_data,
+                                type: "get",
+                                dataType: "json",
+                                success: function (data) {
+                                    var string = '';
+                                    $.each(data, function (index, value) {
+                                        string += '<li>' +
+                                                '<span>';
+                                        if (typeof value['image'] != 'undefined' && value['image'] != null) {
+                                            string += '<img src="' + affiliation_image + value['image'] + '" width="100%" height="100%" />';
+                                        }
+                                        string += '</span>' +
+                                                '<h3><a href="' + affiliation_url + value['slug'] + '">' + value['name'] + '</a></h3>' +
+                                                '<p>';
+                                        text = value['description'];
+                                        if (value['description'].length > 500) {
 //                        text = value['description'].preg_replace("/^(.{1,500})(\s.*|$)/s", '\\1...');
-                        text = value['description'].substring(0, 500);
-                        text += '...';
-                    }
-                    string += text;
-                    string += '</p>';
-                });
-                $(".affiliation_content").append(string);
-            }
-        });
-    }
+                                            text = value['description'].substring(0, 500);
+                                            text += '...';
+                                        }
+                                        string += text;
+                                        string += '</p>';
+                                    });
+                                    $(".affiliation_content").append(string);
+                                }
+                            });
+                        }
 </script>
