@@ -23,7 +23,7 @@ class Blog_post_model extends MY_Model {
         $this->db->select('p.id,p.title,p.description,p.image,p.created_at,u.firstname,u.lastname,p.is_active,p.is_view,(SELECT COUNT(*) FROM ' . TBL_BLOG_POST . ' WHERE is_delete=0 AND is_view=1) AS sub_count');
         $this->db->join(TBL_USERS . ' u', 'u.id=p.user_id AND u.is_delete=0', 'left');
         if (!empty($keyword['value'])) {
-            $this->db->where('(p.comment LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
+            $this->db->where('(p.title LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
                     ' OR firstname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
                     ' OR lastname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
                     ' OR CONCAT(firstname , " " ,lastname) LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')');

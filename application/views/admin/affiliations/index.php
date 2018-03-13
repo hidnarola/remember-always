@@ -72,12 +72,13 @@
                 paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
             },
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-            order: [[5, "desc"]],
+            order: [[3, "desc"]],
             ajax: site_url + 'admin/affiliations/get_affiliation',
             columns: [
                 {
                     data: "sr_no",
                     visible: true,
+                    sortable: false
                 },
                 {
                     data: "category_name",

@@ -109,6 +109,7 @@
                 {
                     data: "sr_no",
                     visible: true,
+                    sortable: false
                 },
                 {
                     data: "profile_image",

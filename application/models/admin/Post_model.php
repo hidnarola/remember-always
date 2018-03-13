@@ -25,12 +25,12 @@ class Post_model extends MY_Model {
         $this->db->join(TBL_PROFILES . ' pf', 'pf.id=p.profile_id AND pf.is_delete=0', 'left');
         if (!empty($keyword['value'])) {
             $this->db->where('(p.comment LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
-                    ' OR firstname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
-                    ' OR lastname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
-                    ' OR CONCAT(firstname , " " ,lastname) LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')');
+                    ' OR u.firstname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
+                    ' OR u.lastname LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') .
+                    ' OR CONCAT(u.firstname , " " ,u.lastname) LIKE ' . $this->db->escape('%' . $keyword['value'] . '%') . ')');
         }
         $this->db->where(['p.is_delete' => 0]);
-        if($user_id != null && is_numeric($user_id)){
+        if ($user_id != null && is_numeric($user_id)) {
             $this->db->where(['pf.user_id' => $user_id]);
         }
         $this->db->order_by($columns[$this->input->get('order')[0]['column']], $this->input->get('order')[0]['dir']);

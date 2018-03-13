@@ -50,7 +50,7 @@ class Users_model extends MY_Model {
      * @return array for result or int for count
      */
     public function get_users($type = 'result') {
-        $columns = ['id', 'profile_image', 'firstname', 'lastname', 'email', 'created_at', 'is_active'];
+        $columns = ['id', 'profile_image', 'firstname', 'lastname', 'facebook_id,google_id', 'is_active', 'is_verify', 'created_at', 'is_active'];
         $keyword = $this->input->get('search');
 
         if (!empty($keyword['value'])) {

@@ -18,10 +18,10 @@ class Affiliation_model extends MY_Model {
      * @author : AKK
      */
     public function get_all_affiliation($count = '') {
+        $columns = ['a.id', 'a.name', 'a.created_at', 'ac.name', 'a.is_approved', 'a.is_delete'];
         $start = $this->input->get('start');
         $length = $this->input->get('length');
         $keyword = $this->input->get('search');
-        $columns = ['a.id', 'a.name', 'a.created_at', 'ac.name as category_name', 'is_approved', 'is_delete'];
         $this->db->select('a.id,a.name,a.created_at,ac.name as category_name,is_approved,a.is_delete', false);
         $this->db->join(TBL_AFFILIATIONS_CATEGORY . ' ac', 'ac.id=a.category_id AND ac.is_delete=0', 'left');
 //        $sql = "SELECT * FROM ("

@@ -75,13 +75,14 @@
                 paginate: {'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;'}
             },
             dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
-            order: [[5, "desc"]],
+            order: [[7, "desc"]],
             ajax: site_url + 'admin/users/get_users',
             columns: [
                 {
                     data: "sr_no",
                     width: '9%',
                     visible: true,
+                    sortable: false
                 },
                 {
                     data: "profile_image",
