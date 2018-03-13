@@ -27,7 +27,7 @@ class Home extends MY_Controller {
 
     public function test() {
         echo shell_exec('whoami');
-        $output = shell_exec('/home/ec2-user/bin/ffmpeg 2>&1');
+        $output = shell_exec('/usr/local/bin/ffmpeg 2>&1');
         echo "<pre>$output</pre>";
 
         echo shell_exec('ffmpeg -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png 2>&1');
