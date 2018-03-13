@@ -27,9 +27,9 @@ class Home extends MY_Controller {
 
     public function test() {
         echo shell_exec('whoami');
-        $output = shell_exec('sudo /home/ec2-user/bin/ffmpeg 2>&1');
+        $output = shell_exec('/home/ec2-user/bin/ffmpeg 2>&1');
         echo "<pre>$output</pre>";
-        $output1 = shell_exec('sudo '.FFMPEG_PATH.' 2>&1');
+        $output1 = shell_exec(FFMPEG_PATH.' 2>&1');
         echo "<pre>$output1</pre>";
         exit;
         /*
