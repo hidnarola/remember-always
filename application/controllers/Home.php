@@ -30,7 +30,7 @@ class Home extends MY_Controller {
         $output = shell_exec('/home/ec2-user/bin/ffmpeg 2>&1');
         echo "<pre>$output</pre>";
 
-        echo shell_exec('/home/ec2-user/bin/ffmpeg -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png 2>&1');
+        echo shell_exec('ffmpeg -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png 2>&1');
         exit;
         /*
           echo shell_exec('whoami');
