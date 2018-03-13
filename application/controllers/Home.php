@@ -29,6 +29,9 @@ class Home extends MY_Controller {
         echo shell_exec('whoami');
         $output = shell_exec('/home/ec2-user/bin/ffmpeg 2>&1');
         echo "<pre>$output</pre>";
+
+        echo shell_exec('/home/ec2-user/bin/ffmpeg -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png 2>&1');
+        exit;
         /*
           echo shell_exec('whoami');
           $output1 = shell_exec('ffmpeg 2>&1');
@@ -43,8 +46,6 @@ class Home extends MY_Controller {
         putenv('LC_ALL=' . $locale);
         echo shell_exec($cmd);
         exit;
-
-//        echo shell_exec('/home/ec2-user/bin/ffmpeg -i /var/www/html/uploads/post-images/5a27691f2dc501512532255.png -vf scale=500:-1 /var/www/html/uploads/post-images/new_1.png');
     }
 
 }
