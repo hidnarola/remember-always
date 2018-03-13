@@ -206,7 +206,7 @@ $(function () {
                     postformData.append('post_types[]', post_types[key]);
                 }
             });
-            $('.loading').show();
+            $('.loader').show();
             $.ajax({
                 url: site_url + "profile/" + slug,
                 type: "POST",
