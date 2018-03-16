@@ -24,10 +24,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   | a PHP script and you can easily do that on your own.
   |
  */
-echo $_SERVER['HTTP_HOST'];
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $base_url = 'http://localhost/remember-always/';
 } else if ($_SERVER['HTTP_HOST'] == '34.226.237.128') {
+    echo 'in';
     $base_url = '34.226.237.128/';
 } else if ($_SERVER['HTTP_HOST'] == 'rememberalways.com') {
     $base_url = 'https://rememberalways.com/';
