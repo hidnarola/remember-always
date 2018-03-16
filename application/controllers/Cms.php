@@ -19,9 +19,9 @@ class Cms extends MY_Controller {
             $data['title'] = 'Remember Always';
             $data['page_title'] = $get_result['title'];
             $data['page_data'] = $get_result;
-            $data['meta_description'] = $get_result['meta_description'];
-            $data['meta_title'] = $get_result['meta_title'];
-            $data['meta_keyword'] = $get_result['meta_keyword'];
+            $this->meta_description = $get_result['meta_description'];
+            $this->meta_title = $get_result['meta_title'];
+            $this->meta_keyword = $get_result['meta_keyword'];
             $data['breadcrumb'] = ['title' => $get_result['title'], 'links' => [['link' => site_url(), 'title' => 'Home']]];
             $this->template->load('default', 'cms/index', $data);
         } else {

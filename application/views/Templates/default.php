@@ -5,6 +5,23 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+        <?php
+        $description = $this->meta_description;
+        $keyword = $this->meta_keyword;
+        $meta_title = $this->meta_title;
+        $og_title = $this->meta_title;
+        $og_image = (isset($og_image)) ? $og_image : '';
+        $og_description = $this->meta_description;
+        ?>
+        <meta name="title" content="<?php echo $meta_title ?>">
+        <meta name="keyword" content="<?php echo $keyword ?>">
+        <meta name="description" content="<?php echo $description ?>">
+        <meta property="og:url" content="<?php echo site_url(uri_string()); ?>"/>
+        <meta property="og:title" content="Remember Always | <?php echo $og_title; ?>"/>
+        <!--<meta property="og:image" content="<?php echo $og_image ?>"/>-->
+        <meta property="og:description" content="<?php echo $og_description ?>"/>
+        <meta property="og:type" content="website"/>
+
         <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
         <title><?php echo $title; ?></title>
 
@@ -127,13 +144,13 @@
             </circle><animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;0 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s"></animateTransform></g></svg>
         </div>
         <?php if ($body_class == '') { ?>
-        <!--            <script id="mNCC" language="javascript">
-                        medianet_width = "728";
-                        medianet_height = "90";
-                        medianet_crid = "252046787";
-                        medianet_versionId = "3111299";
-                    </script>
-                    <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>-->
+                <!--            <script id="mNCC" language="javascript">
+                                medianet_width = "728";
+                                medianet_height = "90";
+                                medianet_crid = "252046787";
+                                medianet_versionId = "3111299";
+                            </script>
+                            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>-->
         <?php }
         ?>
         <?php
@@ -231,7 +248,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="log-in">
-                            <form method="post" id="login-form" action="<?php //echo site_url('login')                      ?>">
+                            <form method="post" id="login-form" action="<?php //echo site_url('login')                        ?>">
                                 <div class="popup-input">
                                     <label>Email</label>
                                     <input type="text" name="email" placeholder="support@gmail.com" />
@@ -255,13 +272,13 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                      ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                      ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                        ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                        ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>
 <div role="tabpanel" class="tab-pane" id="sign-up">
- <form method="post" id="signup-form" action="<?php //echo site_url('signup')                      ?>">
+ <form method="post" id="signup-form" action="<?php //echo site_url('signup')                        ?>">
      <div class="popup-input">
          <label>Email</label>
          <input type="text" name="email" placeholder="support@gmail.com" />
@@ -297,8 +314,8 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                      ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                      ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                        ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                        ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>
