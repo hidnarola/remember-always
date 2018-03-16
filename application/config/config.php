@@ -27,8 +27,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if ($_SERVER['HTTP_HOST'] == 'localhost') {
     $base_url = 'http://localhost/remember-always/';
 } else if ($_SERVER['HTTP_HOST'] == '34.226.237.128') {
-    echo 'in';
-    $base_url = '34.226.237.128/';
+    $base_url = '';
 } else if ($_SERVER['HTTP_HOST'] == 'rememberalways.com') {
     $base_url = 'https://rememberalways.com/';
 } else if ($_SERVER['HTTP_HOST'] == 'rememberalways.com') {
