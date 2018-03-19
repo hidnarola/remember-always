@@ -34,15 +34,15 @@
                         <?php } ?>
                     </div>
                 </div>
-                <script id="mNCC" language="javascript">
+<!--                <script id="mNCC" language="javascript">
                     medianet_width = "300";
                     medianet_height = "250";
                     medianet_crid = "404298848";
                     medianet_versionId = "3111299";
                 </script>
-                <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
+                <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>-->
             </div>
-            <div class="mt-20 profile-box">
+<!--            <div class="mt-20 profile-box">
                 <script id="mNCC" language="javascript">
                     medianet_width = "728";
                     medianet_height = "90";
@@ -50,7 +50,7 @@
                     medianet_versionId = "3111299";
                 </script>
                 <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

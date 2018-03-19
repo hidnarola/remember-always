@@ -165,7 +165,7 @@
                 </div>
                 <!--<div class="profile-box ad pro_ad_custom"></div>-->
             </div>
-            <div class="mt-20 profile-box" style="width: auto;">
+<!--            <div class="mt-20 profile-box" style="width: auto;">
                 <script id="mNCC" language="javascript">
                     medianet_width = "728";
                     medianet_height = "90";
@@ -173,7 +173,7 @@
                     medianet_versionId = "3111299";
                 </script>
                 <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
-            </div>
+            </div>-->
         </div>
     </div>
 </div>

@@ -97,7 +97,7 @@
                 </div>
             </div>
             <div class="services-pro-m">
-                <div class="profile-box ad">
+<!--                <div class="profile-box ad">
                     <script id="mNCC" language="javascript">
                         medianet_width = "300";
                         medianet_height = "250";
@@ -114,7 +114,7 @@
                         medianet_versionId = "3111299";
                     </script>
                     <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

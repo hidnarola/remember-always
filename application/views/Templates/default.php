@@ -40,13 +40,6 @@
             gtag('js', new Date());
             gtag('config', 'UA-114429616-1');
         </script>
-        <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-        <script>
-            (adsbygoogle = window.adsbygoogle || []).push({
-                google_ad_client: "ca-pub-4275464434525729",
-                enable_page_level_ads: true
-            });
-        </script>
 
         <base href="<?php echo base_url(); ?>">
 
@@ -143,16 +136,6 @@
             <animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;360 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s" begin="-0.437s"></animateTransform>
             </circle><animateTransform attributeName="transform" type="rotate" calcMode="spline" values="0 50 50;0 50 50" times="0;1" keySplines="0.5 0 0.5 1" repeatCount="indefinite" dur="1.5s"></animateTransform></g></svg>
         </div>
-        <?php if ($body_class == '') { ?>
-                <!--            <script id="mNCC" language="javascript">
-                                medianet_width = "728";
-                                medianet_height = "90";
-                                medianet_crid = "252046787";
-                                medianet_versionId = "3111299";
-                            </script>
-                            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>-->
-        <?php }
-        ?>
         <?php
         $this->load->view('Templates/default_header');
         echo $body;
