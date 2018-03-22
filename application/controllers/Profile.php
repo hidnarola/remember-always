@@ -137,6 +137,9 @@ class Profile extends MY_Controller {
                 $data['life_gallery'] = $life_gallery;
                 $data['life_timeline'] = $life_timeline;
                 $data['title'] = $profile['firstname'] . ' ' . $profile['lastname'] . ' | Profile';
+                $this->meta_title = $profile['firstname'] . ' ' . $profile['lastname'] . ' | Remember Always Profile';
+                $this->meta_description = $profile['life_bio'];
+                $data['og_image'] = base_url() . PROFILE_IMAGES . $profile['profile_image'];
                 $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('search'), 'title' => 'Profiles']]];
                 $this->template->load('default', 'profile/profile_detail', $data);
             } else {
