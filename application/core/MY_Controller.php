@@ -15,8 +15,8 @@ class MY_Controller extends CI_Controller {
 
         //-- Meta keywords and description
         $this->meta_description = 'Free Online Memorial Website profile for your loved ones. Remember Always is the source for online funerals, grief resources.  Use online memorials to pay tribute to those who should be remembered always.';
-        $this->meta_keyword = 'Free Online Memorials, Memorial Online, Virtual Funerals, Funeral Home Arrangements Online';
-        $this->meta_title = 'Free Online Memorials, Memorial Online, Virtual Funerals, Funeral Home Arrangements Online';
+        $this->meta_keyword = 'Free Online Memorials, Memorials Online, Memorial Fundraisers, Funeral Fundraisers, Funeral Planning Information';
+        $this->meta_title = 'Free Online Memorials, Memorials Online, Memorial Fundraisers, Funeral Fundraisers, Funeral Planning Information';
 
         $this->controller = strtolower($this->router->fetch_class());
         $this->action = $this->router->fetch_method();
