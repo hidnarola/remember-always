@@ -141,7 +141,7 @@ class Profile extends MY_Controller {
 
                 $og_image = base_url() . PROFILE_IMAGES . $profile['profile_image'];
                 $image_size = getimagesize($og_image);
-                if ($image_size[0] < 200 || $image_size[1] < 200) {
+                if ($image_size[0] < 200) {
                     $og_image = base_url() . 'assets/timthumb.php?src=' . $og_image . '&zc=3&w=300&h=300&q=100';
                 }
                 $data['og_image'] = $og_image;
