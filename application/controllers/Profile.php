@@ -106,7 +106,6 @@ class Profile extends MY_Controller {
                 $funnel_services = $this->users_model->sql_select(TBL_FUNERAL_SERVICES . ' fs', 'fs.*,c.name as city_name,s.name as state_name', ['where' => array('fs.profile_id' => trim($profile['id']), 'fs.is_delete' => 0)], ['join' => [array('table' => TBL_STATE . ' s', 'condition' => 's.id=fs.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=fs.city')], 'order_by' => 'fs.id DESC']);
 
                 $life_gallery = $this->load_gallery(0, $profile['id'], true);
-                ;
 
                 $life_timeline = $this->load_timeline(0, $profile['id'], true);
                 $sql = "SELECT * FROM ("
@@ -137,7 +136,7 @@ class Profile extends MY_Controller {
                 $data['life_gallery'] = $life_gallery;
                 $data['life_timeline'] = $life_timeline;
                 $data['title'] = $profile['firstname'] . ' ' . $profile['lastname'] . ' | Profile';
-                $this->meta_title = $profile['firstname'] . ' ' . $profile['lastname'] . ' | Remember Always Profile';
+                $this->meta_title = $profile['firstname'] . ' ' . $profile['lastname'];
                 $this->meta_description = $profile['life_bio'];
                 $data['og_image'] = base_url() . PROFILE_IMAGES . $profile['profile_image'];
                 $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('search'), 'title' => 'Profiles']]];
