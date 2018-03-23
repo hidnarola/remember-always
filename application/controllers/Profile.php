@@ -138,7 +138,13 @@ class Profile extends MY_Controller {
                 $data['title'] = $profile['firstname'] . ' ' . $profile['lastname'] . ' | Profile';
                 $this->meta_title = $profile['firstname'] . ' ' . $profile['lastname'];
                 $this->meta_description = $profile['life_bio'];
-                $data['og_image'] = base_url() . PROFILE_IMAGES . $profile['profile_image'];
+
+                $og_image = base_url() . PROFILE_IMAGES . $profile['profile_image'];
+                $image_size = getimagesize($og_image);
+                if ($image_size[0] < 200 || $image_size[1] < 200) {
+                    $og_image = base_url() . '?src=' . $og_image . '&zc=3&w=200&h=200&q=100';
+                }
+                $data['og_image'] = $og_image;
                 $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('search'), 'title' => 'Profiles']]];
                 $this->template->load('default', 'profile/profile_detail', $data);
             } else {
