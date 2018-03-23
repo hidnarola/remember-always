@@ -87,8 +87,6 @@ class Affiliations extends MY_Controller {
         $this->form_validation->set_rules('name', 'Name', 'trim|required');
         $this->form_validation->set_rules('description', 'Description', 'trim|required');
         $this->form_validation->set_rules('country', 'Country', 'trim|required');
-        $this->form_validation->set_rules('state', 'State', 'trim|required');
-        $this->form_validation->set_rules('city', 'City', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();
         } else {

@@ -18,7 +18,7 @@ class Affiliation_model extends MY_Model {
      * @author : AKK
      */
     public function get_all_affiliation($count = '') {
-        $columns = ['a.id', 'a.name', 'a.created_at', 'ac.name', 'a.is_approved', 'a.is_delete'];
+        $columns = ['a.id', 'ac.name', 'a.name', 'a.created_at', 'a.is_approved', 'a.is_delete'];
         $start = $this->input->get('start');
         $length = $this->input->get('length');
         $keyword = $this->input->get('search');
