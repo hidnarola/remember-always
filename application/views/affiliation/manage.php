@@ -169,18 +169,6 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        /*$('#category').selectpicker({
-         liveSearch: true,
-         size: 5
-         });
-         $('#country').selectpicker({
-         liveSearch: true,
-         size: 5
-         });
-         $('#state').selectpicker({
-         liveSearch: true,
-         size: 5
-         })*/
         $("#category,#country,#state").select2({
             theme: "bootstrap"
         });
@@ -189,12 +177,6 @@
             theme: "bootstrap"
         });
 
-        /*
-         $('#city').selectpicker({
-         liveSearch: true,
-         size: 5
-         });*/
-        ;
         // Setup validation
         $("#affiliation_form").validate({
             ignore: ['select:hidden'],
@@ -209,12 +191,6 @@
                     required: true,
                 },
                 country: {
-                    required: true,
-                },
-                state: {
-                    required: true,
-                },
-                city: {
                     required: true,
                 },
                 image: {
