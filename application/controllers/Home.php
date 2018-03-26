@@ -16,7 +16,7 @@ class Home extends MY_Controller {
      * Landing page
      */
     public function index() {
-        $data['title'] = 'Remember Always';
+        $data['title'] = 'Remember Always | Free Online Memorials | Memorials Online | Memorial Fundraisers | Funeral Fundraisers | Funeral Planning Information';
         $data['slider_images'] = $this->users_model->sql_select(TBL_SLIDER, 'image,description', ['where' => ['is_delete' => 0, 'is_active' => 1]]);
         $data['blogs'] = $this->users_model->sql_select(TBL_BLOG_POST . ' b', 'title,image,description,b.slug,u.firstname,u.lastname,b.created_at', ['where' => ['b.is_delete' => 0, 'b.is_active' => 1, 'b.is_view' => 1]], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=b.user_id')]]);
         $data['recent_profiles'] = $this->users_model->sql_select(TBL_PROFILES, 'slug,profile_image,firstname,lastname,nickname,date_of_birth,date_of_death,life_bio', ['where' => ['is_delete' => 0, 'is_published' => 1]], ['order_by' => 'created_at DESC', 'limit' => 5]);
