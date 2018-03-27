@@ -45,7 +45,7 @@
 
         <base href="<?php echo base_url(); ?>">
 
-        <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico" >
+        <link rel="icon" type="image/x-icon" href="<?php echo base_url('assets/images/favicon.ico'); ?>" >
         <link href="assets/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/css/bootstrap-select.min.css" rel="stylesheet">
         <link href="assets/css/owl.carousel.css" rel="stylesheet" />
