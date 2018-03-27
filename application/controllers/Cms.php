@@ -16,7 +16,7 @@ class Cms extends MY_Controller {
     public function index($page_slug) {
         $get_result = $this->users_model->sql_select(TBL_PAGES, null, ['where' => ['slug' => urldecode($page_slug)]], ['single' => true]);
         if ($get_result) {
-            $data['title'] = 'Remember Always';
+            $data['title'] = $get_result['meta_title'];
             $data['page_title'] = $get_result['title'];
             $data['page_data'] = $get_result;
             $this->meta_description = $get_result['meta_description'];
