@@ -156,6 +156,7 @@ $route['service_provider/(:any)'] = 'service_provider/index/$1';
 $route['contact'] = 'cms/contact';
 $route['faqs'] = 'cms/faqs';
 $route['pages/(:any)'] = 'cms/index/$1';
+$route['sitemap'] = 'cms/index/sitemap'; //-- Custom route for sitemap
 
 $route['404_override'] = 'pagenotfound';
 $route['translate_uri_dashes'] = FALSE;
