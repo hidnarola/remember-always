@@ -23,7 +23,12 @@
                         } else {
                             ?>
                             <li class="">
-                                <a href="<?php echo site_url('pages/' . $value['slug']); ?>"><?php echo $value['navigation_name']; ?><?php if ($key/2 != 0) echo '&nbsp;&nbsp;' ?></a>
+                                <?php if ($value['slug'] == 'sitemap') { ?>
+                                    <a href="<?php echo site_url('sitemap'); ?>"><?php echo $value['navigation_name']; ?><?php if ($key / 2 != 0) echo '&nbsp;&nbsp;' ?></a>
+                                <?php }else {
+                                    ?>
+                                    <a href="<?php echo site_url('pages/' . $value['slug']); ?>"><?php echo $value['navigation_name']; ?><?php if ($key / 2 != 0) echo '&nbsp;&nbsp;' ?></a>
+                                <?php } ?>
                             </li>
                             <?php
                         }
