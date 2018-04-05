@@ -4,3 +4,4 @@ User-agent: *
 Disallow: /profile/ #disallow all profile specific routes
 Disallow: /donate/  #disallow all fundraiser profile specific routes
 Disallow: /uploads/
+Sitemap: https://www.rememberalways.com/sitemap.xml
