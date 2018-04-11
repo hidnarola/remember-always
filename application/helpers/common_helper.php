@@ -119,7 +119,7 @@ function slug($text, $table, $id = NULL) {
     // lowercase
     $text = strtolower($text);
 
-    $used_actions = ['create', 'edit', 'index', 'publish',
+    $used_actions = ['create', 'edit', 'index', 'publish', 'share', 'create_profile', 'profile_landing', 'fundraiser_landing',
         'load_gallery', 'load_posts', 'load_timeline', 'view_timeline', 'upload_cover_image', 'upload_gallery', 'delete_gallery', 'proceed_steps',
         'add_facts', 'check_facts', 'delete_facts', 'add_affiliation', 'check_affiliation', 'delete_affiliation', 'add_timeline', 'delete_timeline',
         'lifetimeline', 'get_states', 'get_cities', 'add_services', 'add_fundraiser', 'delete_fundmedia', 'upload_post', 'delete_post', 'send_profile_email'];
@@ -194,6 +194,39 @@ function upload_image($image_name, $image_path) {
 
 //        $new_line = exec(FFMPEG_PATH . ' -i ' . $filepath . ' -vf "scale=min\'(4032,iw)\':-2" ' . $filepath_new);
         $imgname = $img_data['file_name'];
+
+        //-- Rotate Image
+
+        $filePath = $image_path . '/' . $imgname;
+        $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+        if ($extension == 'jpg' || $extension == 'jpeg') {
+            $exif = exif_read_data($filePath);
+
+            if (!empty($exif['Orientation'])) {
+
+                $config['image_library'] = 'gd2';
+                $config['source_image'] = $image_path . '/' . $imgname;
+                $config['maintain_ratio'] = TRUE;
+
+                switch ($exif['Orientation']) {
+                    case 3:
+                        $config['rotation_angle'] = 180;
+                        $CI->load->library('image_lib', $config);
+                        $CI->image_lib->rotate();
+                        break;
+                    case 6:
+                        $config['rotation_angle'] = 270;
+                        $CI->load->library('image_lib', $config);
+                        $CI->image_lib->rotate();
+                        break;
+                    case 8:
+                        $config['rotation_angle'] = 90;
+                        $CI->load->library('image_lib', $config);
+                        $CI->image_lib->rotate();
+                        break;
+                }
+            }
+        }
     } else {
         $imgname = array('errors' => $CI->upload->display_errors());
     }
