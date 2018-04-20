@@ -51,7 +51,7 @@
         <link href="assets/css/owl.carousel.css" rel="stylesheet" />
         <link href="assets/css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
         <link href="assets/css/sweetalert2.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/style.css" rel="stylesheet" />
+        <link href="assets/css/style.css?t=123" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/developer.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
