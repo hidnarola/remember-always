@@ -60,11 +60,11 @@
                                     </div>
                                     <div class="input-wrap">
                                         <div class="input-l">
-                                            <input type="text" name="date_of_birth" id="date_of_birth" placeholder="Date of Birth (mm/dd/yy)" class="input-css date-picker" value="<?php echo set_value('date_of_birth') ?>" required/>
+                                            <input type="text" name="date_of_birth" id="date_of_birth" placeholder="Date of Birth (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo set_value('date_of_birth') ?>" required/>
                                             <label id="date_of_birth-error" class="error" for="date_of_birth"><?php echo (isset($date_error)) ? $date_error : form_error('date_of_birth') ?></label>
                                         </div>
                                         <div class="input-r">
-                                            <input type="text" name="date_of_death" id="date_of_death" placeholder="Date of Death (mm/dd/yy)" class="input-css date-picker" value="<?php echo set_value('date_of_death') ?>" required/>
+                                            <input type="text" name="date_of_death" id="date_of_death" placeholder="Date of Death (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo set_value('date_of_death') ?>" required/>
                                             <label id="date_of_death-error" class="error" for="date_of_death"><?php echo form_error('date_of_death') ?></label>
                                         </div>
                                     </div>
