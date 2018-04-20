@@ -1394,7 +1394,7 @@ select:-webkit-autofill {background-color:#fff !important;box-shadow: 4px 4px 4p
 .btn-wrap-div{display:-webbox-flex; display:-webkit-flex; display:-ms-flex; display:flex; width: 100%; flex-direction: row; margin:20px 0 0;    align-items: center;}
 .btn-wrap-div a{ border-radius:4px; background:#666; border:2px solid #666; width:152px; line-height:20px; padding:8px 10px; font-family:'Rubik'; font-size:15px; font-weight:500; text-transform:uppercase; text-align:center; color:#fff; margin:0 13px 0 0;}
 .btn-wrap-div a:hover{background:transparent; color:#666;}
-.btn-wrap-div span{ font-size:12px; color:#666; line-height:15px;margin-left: 10px;}
+.btn-wrap-div span{ font-size:12px; color:#666; line-height:15px;}
 .rtl-bg .btn-wrap-div a{background:#975979 ; border:2px solid #975979;}
 .rtl-bg .btn-wrap-div a:hover{background:transparent; color:#975979;}
 
@@ -1444,7 +1444,7 @@ select:-webkit-autofill {background-color:#fff !important;box-shadow: 4px 4px 4p
 
 .top-section .img-wrap-div {margin-bottom: 100px !important;}
 .top-section .btn-wrap-div {bottom:0;}
-.top-section .btn-wrap-div a{ margin:0 0 15px;}
+.top-section .btn-wrap-div a{ margin:0 13px 15px 0px;}
 
 
 /*** media start here ****/
