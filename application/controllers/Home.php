@@ -26,6 +26,13 @@ class Home extends MY_Controller {
     }
 
     public function test() {
+        $email_data = [];
+        $email_data['url'] = site_url() . 'verify?code=123';
+        $email_data['name'] = 'Kirti';
+        $email_data['email'] = "ku@narola.email";
+        $email_data['subject'] = 'Verify Email | Remember Always';
+        send_mail('ku@narola.email', 'verify_email', $email_data);
+        exit;
         echo shell_exec('whoami');
         $output = shell_exec('/usr/local/bin/ffmpeg 2>&1');
         echo "<pre>$output</pre>";
