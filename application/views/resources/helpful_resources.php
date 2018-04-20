@@ -95,9 +95,9 @@
                             <li>
                                 <h6>
                                     <?php if ($this->is_user_loggedin) { ?>
-                                        <a href="<?php echo site_url('profile/create') ?>">Create a Life Profile</a>
+                                        <a href="<?php echo site_url('profile/create_profile') ?>">Create a Life Profile</a>
                                     <?php } else { ?>
-                                        <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create'); ?>" >Create a Life Profile</a>
+                                        <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile'); ?>" >Create a Life Profile</a>
                                     <?php } ?>
                                 </h6>
                                 <p>Create a vivid, timeless memorial in honor of your loved one. <br>For more, see, <a href="<?php echo site_url('blog/details/why-create-a-life-profile-the-benefits-of-creating-an-online-memorial-on-remember-always') ?>">Benefits of creating a Life profile.</a></p></li>
@@ -114,7 +114,7 @@
                                     if ($this->is_user_loggedin) {
                                         if ($this->tribute_profile_count == 0) {
                                             ?>
-                                            <a href="<?php echo site_url('profile/create') ?>">Create a Tribute Fundraiser</a>
+                                            <a href="<?php echo site_url('profile/create_profile') ?>">Create a Tribute Fundraiser</a>
                                         <?php } else if ($this->tribute_profile_count == 1) {
                                             ?>
                                             <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Create a Tribute Fundraiser</a>
@@ -122,7 +122,7 @@
                                             <a href="<?php echo site_url('dashboard/profiles') ?>">Create a Tribute Fundraiser</a>
                                         <?php } ?>
                                     <?php } else { ?>
-                                        <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Create a Tribute Fundraiser</a>
+                                        <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile') ?>">Create a Tribute Fundraiser</a>
                                     <?php } ?>
                                 </h6>
                                 <p>Get help to cover funeral expenses and other unplanned expenses. 

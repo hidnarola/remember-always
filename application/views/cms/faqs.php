@@ -29,7 +29,7 @@
                         <div id="collapse02" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapse-02">
                             <div class="panel-body">
                                 <p> 
-                                    <span class="list_content">Creating a memorial profile is easy. From the <a href="<?php echo site_url('/') ?>">home page</a>, click on “Create a Life Profile” and the screens will guide you through the process. You will be able to save and return to your profile creation at any time. You also may click <a href="<?php echo site_url('profile/create') ?>">here</a> to get started.</span>
+                                    <span class="list_content">Creating a memorial profile is easy. From the <a href="<?php echo site_url('/') ?>">home page</a>, click on “Create a Life Profile” and the screens will guide you through the process. You will be able to save and return to your profile creation at any time. You also may click <a href="<?php echo site_url('profile/create_profile') ?>">here</a> to get started.</span>
                                 </p>
                             </div>
                         </div>
@@ -46,7 +46,7 @@
                                     <span class="list_content">Creating a memorial fundraiser is easy. If you have already created the profile to which the fundraiser will be connected, then open the profile for editing, and add the fundraiser details.</span>
                                 </p>
                                 <p>
-                                    <span class="list_content">If you have not yet created the Life Profile, then from the home page click on “Create a Life Profile”, and the screens will guide you through the process, including the tab for the fundraiser. You will be able to save and return to your profile/fundraiser creation at any time. You may also click <a href="<?php echo site_url('profile/create') ?>">here</a> to get started.</span>
+                                    <span class="list_content">If you have not yet created the Life Profile, then from the home page click on “Create a Life Profile”, and the screens will guide you through the process, including the tab for the fundraiser. You will be able to save and return to your profile/fundraiser creation at any time. You may also click <a href="<?php echo site_url('profile/create_profile') ?>">here</a> to get started.</span>
                                 </p>
                             </div>
                         </div>

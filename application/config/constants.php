@@ -131,6 +131,7 @@ define('BLOG_POST_IMAGES', 'uploads/blog-post-images/');
 define('PAGE_BANNER', 'uploads/banners/');
 define('AFFILIATION_IMAGE', 'uploads/affiliation-images/');
 define('FUNDRAISER_IMAGES', 'uploads/fundraiser-images/');
+define('TEMP_IMAGES', 'uploads/temp-images/');
 
 /**
  * Constants for Cookie
@@ -159,8 +160,8 @@ if ($_SERVER['HTTP_HOST'] == 'clientapp.narola.online') {
 } else {
     define('FFMPEG_PATH', '/usr/local/bin/ffmpeg');
     /* Constants for wepay payment payment */
-    define('WEPAY_ENDPOINT', 'production'); 
-    define('WEPAY_ENVIRONMENT', 'Production'); 
+    define('WEPAY_ENDPOINT', 'production');
+    define('WEPAY_ENVIRONMENT', 'Production');
 }
 
 /**

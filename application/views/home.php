@@ -25,21 +25,23 @@
                     <?php
                     if ($this->is_user_loggedin) {
                         if ($key == 1) {
-                            echo '<a href="' . site_url('profile/create') . '">Create a Tribute Fundraiser</a>';
+                            echo '<a href="' . site_url('profile/create_profile') . '">Create a Tribute Fundraiser</a>';
                         } else if ($key == 2) {
                             echo '<a href="' . site_url('helpful_resources') . '">Access Resources</a>';
                         } else {
-                            echo '<a href="' . site_url('profile/create') . '">Create a Life Profile</a>';
+                            echo '<a href="' . site_url('profile/create_profile') . '">Create a Life Profile</a>';
                         }
                         ?>
                         <?php
                     } else {
                         if ($key == 1) {
-                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Create a Tribute Fundraiser</a>';
+//                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create_profile') . '">Create a Tribute Fundraiser</a>';
+                            echo '<a href="' . site_url('profile/create_profile') . '">Create a Tribute Fundraiser</a>';
                         } else if ($key == 2) {
                             echo '<a href="' . site_url('helpful_resources') . '">Access Resources</a>';
                         } else {
-                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create') . '">Create a Life Profile</a>';
+//                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create_profile') . '">Create a Life Profile</a>';
+                            echo '<a href="' . site_url('profile/create_profile') . '">Create a Life Profile</a>';
                         }
                         ?>
                         <?php
@@ -159,42 +161,12 @@
                                           C351.806,400.212,348.448,396.853,344.306,396.853z"/>
                                 </g>
                             </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
                         </svg></span>
                     <h3>
                         <?php if ($this->is_user_loggedin) { ?>
-                            <a href="<?php echo site_url('profile/create') ?>">Create <br/> a Life Profile</a>
+                            <a href="<?php echo site_url('profile/create_profile') ?>">Create <br/> a Life Profile</a>
                         <?php } else { ?>
-                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="http://clientapp.narola.online/HD/remember-always/profile/create">Create <br/> a Life Profile</a>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile') ?>">Create <br/> a Life Profile</a>
                         <?php } ?>
                     </h3>
                     <p>Share your loved one’s life story <br/> vividly; add funeral details if necessary.</p>
@@ -238,43 +210,13 @@
                                     </g>
                                 </g>
                             </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
                         </svg></span>
                     <h3>
                         <?php
                         if ($this->is_user_loggedin) {
                             if ($this->tribute_profile_count == 0) {
                                 ?>
-                                <a href="<?php echo site_url('profile/create') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
+                                <a href="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
                             <?php } else if ($this->tribute_profile_count == 1) {
                                 ?>
                                 <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
@@ -282,7 +224,7 @@
                                 <a href="<?php echo site_url('dashboard/profiles') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
                             <?php } ?>
                         <?php } else { ?>
-                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
                         <?php } ?>
                     </h3>
                     <p>Get support for your loved <br/> one’s charity, foundation, or expenses.</p>
@@ -313,36 +255,6 @@
                                     <path d="M107.011,220.606c-19.516,0-35.394,15.877-35.394,35.394c0,6.573,5.329,11.904,11.904,11.904s11.904-5.331,11.904-11.904
                                           c0-6.389,5.197-11.586,11.586-11.586c6.574,0,11.904-5.331,11.904-11.904C118.915,225.936,113.585,220.606,107.011,220.606z"/>
                                 </g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
                             </g>
                         </svg>
                     </span>
@@ -389,37 +301,8 @@
                                           c15.68,0,28.445,12.758,28.445,28.445C245.336,165.238,242.016,174.996,235.477,185.434z"/>
                                 </g>
                             </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                            <g>
-                            </g>
-                        </svg></span>
+                        </svg>
+                    </span>
                     <h3>
                         <?php
                         if ($this->is_user_loggedin) {
@@ -441,9 +324,9 @@
             </li>
         </ul>
         <?php if ($this->is_user_loggedin) { ?>
-            <a class="memorialize-btn" href="<?php echo site_url('profile/create') ?>">Create a Life Profile</a>
+            <a class="memorialize-btn" href="<?php echo site_url('profile/create_profile') ?>">Create a Life Profile</a>
         <?php } else { ?>
-            <a class="memorialize-btn" href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create') ?>">Create a Life Profile</a>
+            <a class="memorialize-btn" href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile') ?>">Create a Life Profile</a>
         <?php } ?>
     </div>
 </section>
@@ -457,9 +340,11 @@
                     <div class="item">
                         <div class="profile-wrapp">
                             <div class="home-profile-img">
-                                <img src="<?php echo base_url() . PROFILE_IMAGES . $r_profile['profile_image'] ?>" alt=""/> 
+                                <a href="<?php echo site_url('profile/' . $r_profile['slug']) ?>">
+                                    <img src="<?php echo base_url() . PROFILE_IMAGES . $r_profile['profile_image'] ?>" alt="<?php echo $r_profile['firstname'] . ' ' . $r_profile['lastname'] . ' Online Memorial Remember Always' ?>"/>
+                                </a>
                             </div>
-                            <h4><?php echo $r_profile['firstname'] . ' ' . $r_profile['lastname'] ?> <?php if ($r_profile['nickname'] != '') echo '(' . $r_profile['nickname'] . ')'; ?></h4>
+                            <h4><a href="<?php echo site_url('profile/' . $r_profile['slug']) ?>"><?php echo $r_profile['firstname'] . ' ' . $r_profile['lastname'] ?> <?php if ($r_profile['nickname'] != '') echo '(' . $r_profile['nickname'] . ')'; ?></a></h4>
                             <p><?php echo date('Y', strtotime($r_profile['date_of_birth'])) . ' - ' . date('Y', strtotime($r_profile['date_of_death'])) ?></p>
                             <p><?php
                                 echo substr($r_profile['life_bio'], 0, 100);
@@ -479,9 +364,9 @@
                     <div class="item">
                         <div class="profile-wrapp">
                             <div class="home-profile-img">
-                                <img src="<?php echo base_url() . PROFILE_IMAGES . $m_profile['profile_image'] ?>" alt=""/>
+                                <a href="<?php echo site_url('profile/' . $m_profile['slug']) ?>"><img src="<?php echo base_url() . PROFILE_IMAGES . $m_profile['profile_image'] ?>" alt="<?php echo $m_profile['firstname'] . ' ' . $m_profile['lastname'] . ' Online Memorial Remember Always' ?>"/></a>
                             </div>
-                            <h4><?php echo $m_profile['firstname'] . ' ' . $m_profile['lastname'] ?> <?php if ($m_profile['nickname'] != '') echo '(' . $m_profile['nickname'] . ')'; ?></h4>
+                            <h4><a href="<?php echo site_url('profile/' . $m_profile['slug']) ?>"><?php echo $m_profile['firstname'] . ' ' . $m_profile['lastname'] ?> <?php if ($m_profile['nickname'] != '') echo '(' . $m_profile['nickname'] . ')'; ?></a></h4>
                             <p><?php echo date('Y', strtotime($m_profile['date_of_birth'])) . ' - ' . date('Y', strtotime($m_profile['date_of_death'])) ?></p>
                             <p><?php
                                 echo substr($m_profile['life_bio'], 0, 100);
@@ -502,9 +387,9 @@
                     <div class="item">
                         <div class="profile-wrapp">
                             <div class="home-profile-img">
-                                <img src="<?php echo base_url() . PROFILE_IMAGES . $n_profile['profile_image'] ?>" alt=""/>
+                                <a href="<?php echo site_url('profile/' . $n_profile['slug']) ?>"><img src="<?php echo base_url() . PROFILE_IMAGES . $n_profile['profile_image'] ?>" alt="<?php echo $n_profile['firstname'] . ' ' . $n_profile['lastname'] . ' Online Memorial Remember Always' ?>"/></a>
                             </div>
-                            <h4><?php echo $n_profile['firstname'] . ' ' . $n_profile['lastname'] ?><?php if ($n_profile['nickname'] != '') echo '(' . $n_profile['nickname'] . ')'; ?></h4>
+                            <h4><a href="<?php echo site_url('profile/' . $n_profile['slug']) ?>"><?php echo $n_profile['firstname'] . ' ' . $n_profile['lastname'] ?><?php if ($n_profile['nickname'] != '') echo '(' . $n_profile['nickname'] . ')'; ?></a></h4>
                             <p><?php echo date('Y', strtotime($n_profile['date_of_birth'])) . ' - ' . date('Y', strtotime($n_profile['date_of_death'])) ?></p>
                             <p><?php
                                 echo substr($n_profile['life_bio'], 0, 100);
@@ -555,37 +440,8 @@
                                               v14.286h9.524v-14.286h9.524v19.048h9.524v-19.048h9.524V171.505z"/>
                                     </g>
                                 </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                            </svg></span>
+                            </svg>
+                        </span>
                     </div>
                 </li>
                 <li>
@@ -594,116 +450,6 @@
                         <p>Get and give support, advice and information from and to other community member. Join in.</p>
                         <span>
                             <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" 	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve"> <g> 	<g> 		<path d="M507.448,108.594c-2.844-2-6.49-2.49-9.76-1.281l-86.958,31.625c-10.781,3.917-19.365,11.813-24.167,22.229 			c-0.9,1.953-1.491,3.982-2.083,6.008c-14.932-4.245-42.682-13.111-70.26-27.32c-41.673-21.473-73.51-10.867-100.816,9.961 			c-13.836,0.272-32.906,1.908-51.652,3.56c-11.958,1.055-23.259,2.026-32.423,2.585c-0.225-5.504-1.513-10.966-3.889-16.126 			c-4.802-10.417-13.385-18.313-24.167-22.229L14.313,85.979c-3.26-1.198-6.927-0.708-9.76,1.281C1.698,89.261,0,92.521,0,96 			v213.333C0,315.229,4.771,320,10.667,320h31.156c13.251,0,25.579-6.25,33.548-16.342c4.245,3.228,9.273,7.008,14.546,10.967 			c12.448,9.365,26.073,19.583,32.052,24.594c39.719,33.25,87.469,69.156,96.979,75.406c8.885,5.833,24.885,12.042,37.052,12.042 			c4.76,0,16.75,0,25.167-7.115c8.677,3.406,18.031,3.24,26.729-0.594c8.677-3.823,15.698-11.031,19.781-19.792 			c8.333,1.708,17.906,0.458,26.583-3.896c8.135-4.073,14.125-10.24,17.333-17.448c7.708,0.708,15.938-1.802,23.302-7.438 			c10.522-8.043,15.34-19.921,13.977-31.639l27.057-14.969c7.924,10.741,20.518,17.556,34.247,17.556h31.156 			c5.896,0,10.667-4.771,10.667-10.667V117.334C512,113.854,510.302,110.594,507.448,108.594z M61.802,284.823 			c-3.104,8.281-11.135,13.844-19.979,13.844h-20.49V111.229l72.646,26.417c5.396,1.969,9.688,5.917,12.083,11.125 			c2.406,5.208,2.615,11.042,0.604,16.406L61.802,284.823z M381.948,353.438c-3.615,2.771-8.677,4.313-10.927,2.063 			c-0.115-0.115-0.293-0.104-0.411-0.214c-0.204-0.189-0.305-0.444-0.526-0.62c-7.625-6.021-41.792-40.979-62.906-63 			c-4.073-4.26-10.833-4.417-15.073-0.323c-4.26,4.073-4.406,10.823-0.323,15.073c4.956,5.173,44.74,46.608,60.663,61.099 			c-1.189,4.684-5.531,7.576-7.736,8.682c-6.833,3.427-13.958,2.854-16.625,0.375c-0.079-0.074-0.197-0.07-0.279-0.142 			c-0.13-0.116-0.188-0.279-0.326-0.389c-12.792-10.219-44.885-44.323-52.146-52.219c-3.99-4.344-10.729-4.615-15.073-0.635 			c-4.333,3.99-4.625,10.74-0.635,15.073c0.35,0.379,31.802,34.306,49.467,50.065c-1.736,4.988-5.273,9.119-9.811,11.122 			c-3.349,1.488-8.587,2.251-14.572-2.172c-15.318-12.988-46.059-45.711-52.105-52.182c-4.01-4.313-10.781-4.531-15.073-0.51 			c-4.302,4.021-4.531,10.771-0.51,15.073c7.168,7.672,28.355,30.128,44.461,45.333c-1.799,0.219-3.688,0.344-5.482,0.344 			c-7.063,0-19.198-4.51-25.333-8.542c-7.479-4.917-54.438-39.958-94.99-73.917c-6.135-5.146-20.135-15.677-32.948-25.302 			c-6.867-5.155-13.194-9.908-17.857-13.495l39.938-106.516c10.367-0.453,24.188-1.648,38.815-2.938 			c8.273-0.729,16.555-1.44,24.469-2.056c-12.164,12.487-30.249,34.852-27.865,55.816c1.094,9.542,6.313,17.49,15.115,22.99 			c17.427,10.906,49.688,1.76,65.229-17.354c10.031-1.448,16.813-4.01,24.208-7.677c12.5,11.75,29.26,25.563,46.865,40.073 			c30.646,25.25,65.385,53.875,74.573,69.927C391.333,345.271,384.24,351.688,381.948,353.438z M400.247,319.134 			c-14.212-19.012-45.02-44.449-75.039-69.186c-20.01-16.49-38.906-32.063-51-44.156c-3.333-3.313-8.448-4.063-12.573-1.865 			c-10.865,5.823-15.76,8.229-28.031,9.458c-3.271,0.333-6.208,2.146-7.958,4.927c-8.365,13.271-31.615,19.583-38.99,14.979 			c-4.188-2.625-5-5.292-5.229-7.323c-1.031-9.073,8.156-24.781,23.396-40.031c37.74-37.74,64.719-45.125,99.625-27.125 			c33.164,17.099,65.895,26.767,79.635,30.419c0.397,1.598,0.685,3.212,1.271,4.779l41.417,110.451L400.247,319.134z M490.667,320 			h-20.49c-8.844,0-16.875-5.563-19.979-13.844l-44.865-119.635c-2.01-5.375-1.802-11.208,0.604-16.417 			c2.396-5.208,6.688-9.156,12.083-11.125l72.646-26.417V320z"/> 	</g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
-
-<!--                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                   viewBox="0 0 480 480" style="enable-background:new 0 0 480 480;" xml:space="preserve">
-                                <g>
-                                    <g>
-                                        <path d="M208,152c-13.232,0-24,10.768-24,24h16c0-4.408,3.584-8,8-8s8,3.592,8,8h16C232,162.768,221.232,152,208,152z"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M272,152c-13.232,0-24,10.768-24,24h16c0-4.408,3.584-8,8-8c4.416,0,8,3.592,8,8h16C296,162.768,285.232,152,272,152z"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M240,368c-17.648,0-32,14.352-32,32s14.352,32,32,32s32-14.352,32-32S257.648,368,240,368z M240,416
-                                              c-8.824,0-16-7.176-16-16c0-8.824,7.176-16,16-16c8.824,0,16,7.176,16,16C256,408.824,248.824,416,240,416z"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M432,464V360c0-66.168-53.832-120-120-120h-8.712c2.848-2.504,5.528-5.176,8.064-8H320c22.056,0,40-17.944,40-40v-14.096
-                                              c9.64-6.464,16-17.456,16-29.904c0-12.496-6.408-23.504-16.096-29.96C358.84,52.784,305.512,0,240,0S121.16,52.784,120.096,118.04
-                                              C110.408,124.496,104,135.504,104,148c0,19.848,16.152,36,36,36h5.448c3.744,22.168,15.072,41.744,31.272,56H168
-                                              c-66.168,0-120,53.832-120,120v104H0v16h56h40h288h40h56v-16H432z M344,192c0,12.136-9.088,22.088-20.792,23.672
-                                              c5.544-9.64,9.432-20.32,11.344-31.672H340c1.368,0,2.672-0.256,4-0.408V192z M360,148c0,11.024-8.968,20-20,20h-4v-40h4
-                                              C351.032,128,360,136.976,360,148z M144,168h-4c-11.032,0-20-8.976-20-20s8.968-20,20-20h4V168z M140,112
-                                              c-1.24,0-2.408,0.24-3.616,0.368C140.32,58.584,185.232,16,240,16s99.68,42.584,103.616,96.368C342.408,112.24,341.24,112,340,112
-                                              h-5.448c-7.648-45.328-47.08-80-94.552-80s-86.904,34.672-94.552,80H140z M319.992,127.8C262.256,125.768,224,102.16,224,80
-                                              c0-4.416-3.576-8-8-8s-8,3.584-8,8c0,19.992-20.672,36.56-47.536,39.496C164.728,79.368,198.768,48,240,48
-                                              C284.04,48,319.88,83.784,319.992,127.8z M160,168v-32.448c24.984-2.168,46.184-14.216,56.768-31.088
-                                              C233.504,126.64,272.616,142.248,320,143.84V168c0,18.024-6.064,34.608-16.152,48H240v16h47.792c-4.592,3.44-9.544,6.4-14.824,8.8
-                                              c-20.992,9.536-44.952,9.536-65.952,0C179.336,228.208,160,200.352,160,168z M215.272,260.656C223.176,262.768,231.44,264,240,264
-                                              s16.824-1.232,24.728-3.344L240,310.112L215.272,260.656z M227.056,320h-14.112l-32-64h14.112L227.056,320z M284.944,256h14.112
-                                              l-32,64h-14.112L284.944,256z M88,360v104H64V360c0-55.72,44.08-101.208,99.176-103.752L195.056,320H128
-                                              C105.944,320,88,337.944,88,360z M376,464H104V360c0-13.232,10.768-24,24-24h80h32h32h80c13.232,0,24,10.768,24,24V464z M416,464
-                                              h-24V360c0-22.056-17.944-40-40-40h-67.056l31.88-63.752C371.92,258.792,416,304.28,416,360V464z"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <rect x="344" y="392" width="16" height="56"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <rect x="344" y="360" width="16" height="16"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <rect x="416" y="72" width="16" height="16"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <rect x="416" y="104" width="16" height="16"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <rect x="416" y="136" width="16" height="16"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <rect x="48" y="168" width="16" height="16"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <rect x="48" y="200" width="16" height="16"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <rect x="48" y="232" width="16" height="16"/>
-                                    </g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                            </svg>-->
                         </span>
                     </div>
                 </li>
@@ -774,37 +520,8 @@
                                         </g>
                                     </g>
                                 </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                            </svg></span>
+                            </svg>
+                        </span>
                     </div>
                 </li>
                 <li>
@@ -813,81 +530,6 @@
                         <p>Tips and resources for handling grief and getting financial support during a difficult time.</p>
                         <span>
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" 	 viewBox="0 0 484.88 484.88" style="enable-background:new 0 0 484.88 484.88;" xml:space="preserve"> <g> 	<g> 		<path d="M405.52,344.525l-27.12-27.6c-2.772-2.826-7.193-3.2-10.4-0.88l-118.16,87.04L208,383.405l36.72-4.08 			c4.04-0.488,7.069-3.931,7.04-8v-34.56c0-4.418-3.582-8-8-8h-40l-67.36-6.88c-1.366-0.133-2.744,0.087-4,0.64l-45.92,19.68H0v16 			h88.16c1.099,0.009,2.189-0.209,3.2-0.64l45.52-19.92l65.68,6.72h33.52v19.84l-29.6,3.68l-42.96-4.56 			c-3.87-0.373-7.448,2.091-8.48,5.84c-1.042,3.735,0.745,7.68,4.24,9.36l88.72,40.8c2.617,1.19,5.671,0.885,8-0.8l116.32-85.44 			l16,16.64l-133.68,116.8H218.4l-127.6-47.44c-0.892-0.353-1.841-0.543-2.8-0.56H0v16h86.64l127.52,47.52 			c0.897,0.326,1.845,0.488,2.8,0.48h40.64c1.945-0.003,3.822-0.714,5.28-2l142.24-124.32c0.135-0.118,0.266-0.24,0.392-0.366 			C408.639,352.717,408.642,347.651,405.52,344.525z"/> 	</g> </g> <g> 	<g> 		<path d="M426.8,202.525l-42.24-43.92c-1.345-1.426-3.167-2.309-5.12-2.48l-86.4-8h-32.96l1.6-24l31.28-6.32l43.68,9.76 			c0.9,0.155,1.82,0.155,2.72,0l42.48-5.04l-1.92-16l-41.12,4.4l-44-9.76c-1.076-0.278-2.204-0.278-3.28,0l-38.96,8 			c-3.587,0.687-6.253,3.715-6.48,7.36l-2.56,38.96c-0.01,0.165-0.015,0.329-0.014,0.494c0.008,4.418,3.596,7.994,8.014,7.986h40.8 			l82.72,7.52l42.56,44.56c1.503,1.576,3.583,2.472,5.76,2.48H480v-16H426.8z"/> 	</g> </g> <g> 	<g> 		<path d="M412.88,35.965c-0.884-0.716-1.926-1.21-3.04-1.44l-136-32c-2.304-0.483-4.703,0.073-6.56,1.52l-88,64l9.44,12.96 			l85.04-61.84l130.72,30.72l70.64,54.96l9.76-12.88L412.88,35.965z"/> 	</g> </g> <g> 	<g> 		<path d="M282.96,51.405c-2.086-0.938-4.474-0.938-6.56,0l-48,24l7.2,14.24l44.8-22.32l36.64,14.96l5.92-14.88L282.96,51.405z"/> 	</g> </g> <g> 	<g> 		<path d="M200.24,140.045l-14.08-2.08c-6.4-0.96-10.16-3.44-10.16-7.44s5.6-8,13.12-7.6h5.76c7.52,0,13.12,4,13.12,7.6v2.16h16 			v-2.16c0-13.6-12.8-24-29.12-24h-5.76c-16.32,0-29.12,10.4-29.12,24c1.313,12.477,11.474,22.165,24,22.88l13.84,2.08 			c6.4,0.96,10.16,3.84,10.16,7.44c0,3.6-5.6,7.6-13.12,7.6h-5.76c-7.52,0-13.12-4-13.12-7.6v-2.16h-16v2.16 			c0,13.2,13.12,23.6,29.12,23.6h5.76c16.32,0,29.12-10.4,29.36-23.2C223.112,150.691,212.903,140.788,200.24,140.045z"/> 	</g> </g> <g> 	<g> 		<path d="M255.44,154.925c-2.909,21.76-16.768,40.51-36.716,49.675c-32.118,14.757-70.118,0.682-84.875-31.436 			s-0.682-70.118,31.436-84.875c32.118-14.757,70.118-0.682,84.875,31.436l14.48-6.72c-13.075-28.334-41.432-46.48-72.638-46.48 			c-44.183-0.001-80.001,35.816-80.001,79.999c-0.001,44.183,35.816,80,79.999,80.001c40.154,0.07,74.14-29.637,79.44-69.44 			L255.44,154.925z"/> 	</g> </g> <g> 	<g> 		<rect x="184" y="98.53" width="16" height="16"/> 	</g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> <g> </g> </svg>
-<!--                            <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                 viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512.001 512.001;" xml:space="preserve">
-                                <g>
-                                    <g>
-                                        <path d="M502,492.001h-8v-292c0-5.523-4.477-10-10-10h-80c-5.523,0-10,4.477-10,10v107c0,5.523,4.477,10,10,10s10-4.477,10-10v-97
-                                              h60v282h-60v-87.015c0-5.523-4.477-10-10-10s-10,4.477-10,10v87.015h-24v-226c0-5.523-4.477-10-10-10h-80c-5.523,0-10,4.477-10,10
-                                              v226h-28v-164c0-5.523-4.477-10-10-10h-80c-5.523,0-10,4.477-10,10v164h-24v-100c0-5.523-4.477-10-10-10H28
-                                              c-5.523,0-10,4.477-10,10v100h-8c-5.523,0-10,4.477-10,10s4.477,10,10,10h492c5.523,0,10-4.477,10-10S507.523,492.001,502,492.001
-                                              z M98,492.001H38v-90h60V492.001z M222,492.001h-60v-154h60V492.001z M350,492.001h-60v-216h60V492.001z"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M411.07,346.821c-1.86-1.86-4.44-2.92-7.07-2.92s-5.21,1.06-7.07,2.92c-1.86,1.86-2.93,4.44-2.93,7.08
-                                              c0,2.63,1.07,5.2,2.93,7.07c1.86,1.861,4.44,2.93,7.07,2.93s5.21-1.07,7.07-2.93c1.86-1.87,2.93-4.44,2.93-7.07
-                                              C414,351.261,412.93,348.681,411.07,346.821z"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M436.001,0c-41.907,0-76,34.093-76,76s34.094,76,76,76c41.907,0,76-34.093,76-76S477.908,0,436.001,0z M436.001,105.093
-                                              c-6.254,0-11.341-4.203-11.341-9.368c0-5.523-4.477-10-10-10s-10,4.477-10,10c0,12.917,8.95,23.905,21.341,27.826v7.537
-                                              c-26.121-4.731-46-27.624-46-55.088s19.879-50.357,46-55.088v8.251c-12.391,3.921-21.341,14.909-21.341,27.826
-                                              c0,16.194,14.06,29.368,31.341,29.368c6.253,0,11.341,4.202,11.341,9.368C447.342,100.891,442.255,105.093,436.001,105.093z
-                                              M446.001,131.088v-7.537c12.391-3.921,21.341-14.909,21.341-27.826c0-16.193-14.06-29.368-31.341-29.368
-                                              c-6.253,0-11.341-4.203-11.341-9.368c0-5.165,5.087-9.368,11.341-9.368c6.254,0,11.341,4.203,11.341,9.368c0,5.523,4.477,10,10,10
-                                              s10-4.477,10-10c0-12.917-8.95-23.905-21.341-27.826v-8.251c26.122,4.731,46,27.624,46,55.088S472.122,126.357,446.001,131.088z"
-                                              />
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M355.998,129.367h-39.15c-5.523,0-10,4.477-10,10s4.477,10,10,10h15.007l-106.919,106.92l-54.321-54.321
-                                              c-3.905-3.904-10.237-3.904-14.143,0L47.718,310.719c-3.905,3.905-3.905,10.237,0,14.142c1.952,1.953,4.512,2.93,7.071,2.93
-                                              s5.119-0.977,7.071-2.929l101.683-101.683l54.321,54.321c3.905,3.905,10.237,3.905,14.143,0l113.991-113.991v15.008
-                                              c0,5.523,4.477,10,10,10s10-4.477,10-10v-39.15C365.998,133.844,361.521,129.367,355.998,129.367z"/>
-                                    </g>
-                                </g>
-                                <g>
-                                    <g>
-                                        <path d="M35.86,336.722c-1.86-1.86-4.44-2.93-7.07-2.93s-5.21,1.07-7.07,2.93c-1.86,1.86-2.93,4.44-2.93,7.07s1.07,5.21,2.93,7.07
-                                              c1.86,1.859,4.44,2.93,7.07,2.93s5.21-1.07,7.07-2.93c1.86-1.86,2.93-4.44,2.93-7.07S37.72,338.582,35.86,336.722z"/>
-                                    </g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                                <g>
-                                </g>
-                            </svg>-->
                         </span>
                     </div>
                 </li>

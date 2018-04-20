@@ -635,6 +635,20 @@ class Users extends MY_Controller {
                         'updated_at' => date('Y-m-d H:i:s'),
                     );
                     $this->session->set_flashdata('success', 'Profile has been unblocked successfully!');
+                } else if ($action == 'publish') {
+                    if ($profile_data['is_published'] == 0) {
+                        $update_array = array(
+                            'is_published' => 1,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        );
+                        $this->session->set_flashdata('success', 'Profile has been published successfully!');
+                    } else {
+                        $update_array = array(
+                            'is_published' => 0,
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        );
+                        $this->session->set_flashdata('success', 'Profile has been unpublished successfully!');
+                    }
                 }
                 $this->users_model->common_insert_update('update', TBL_PROFILES, $update_array, ['id' => $id]);
             } else {

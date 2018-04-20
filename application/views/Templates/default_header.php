@@ -1,7 +1,7 @@
 <header class="header">
     <div class="container">
         <div class="logo">
-            <a href=""><img src="assets/images/logo.png" alt="" /></a>
+            <a href=""><img src="assets/images/Remember_Always_Logo.png" alt="Remember Always Logo" /></a>
         </div>
         <?php if ($this->is_user_loggedin) { ?>
             <div class="login-user dropdown">

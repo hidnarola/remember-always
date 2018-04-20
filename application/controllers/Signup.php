@@ -82,6 +82,19 @@ class Signup extends MY_Controller {
         }
         exit;
     }
+     /**
+     * Check email exist or not for user SignUp functionality
+     */
+    public function check_signemail() {
+        $requested_email = trim($this->input->get('sign_email'));
+        $user = $this->users_model->get_user_detail(['email' => $requested_email, 'is_delete' => 0, 'role' => 'user']);
+        if (!empty($user)) {
+            echo "false";
+        } else {
+            echo "true";
+        }
+        exit;
+    }
 
     public function verify() {
         $verification_code = $this->input->get('code');

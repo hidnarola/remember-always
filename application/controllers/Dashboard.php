@@ -20,6 +20,9 @@ class Dashboard extends MY_Controller {
             $this->session->set_flashdata('error', 'You must login to access this page');
             redirect('/');
         }
+        //-- Get logged in user check user has verified his/her email or not
+        $data['user'] = $this->users_model->sql_select(TBL_USERS, 'is_verify', ['where' => ['id' => $this->user_id]], ['single' => true]);
+
         if ($slug == '') {
             $profiles = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'user_id' => $this->user_id]], ['order_by' => 'firstname']);
             $data['profiles'] = $profiles;
@@ -42,22 +45,34 @@ class Dashboard extends MY_Controller {
      */
     public function profile_publish($slug) {
         $data = [];
-        if (!empty($slug)) {
-            $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'slug' => $slug]], ['single' => true]);
-            if (!empty($is_left)) {
-                $this->users_model->common_insert_update('update', TBL_PROFILES, ['is_published' => 1, 'updated_at' => date('Y-m-d H:i:s')], ['id' => $is_left['id']]);
-                $this->session->set_flashdata('success', 'Profile has been published successfully!');
-                $data['success'] = true;
-                $data['data'] = 'Profile has been published successfully!';
+        if ($this->is_user_loggedin) {
+            //-- Get logged in user check user has verified his/her email or not
+            $user = $this->users_model->sql_select(TBL_USERS, 'is_verify', ['where' => ['id' => $this->user_id]], ['single' => true]);
+            if ($user['is_verify'] == 1) {
+                if (!empty($slug)) {
+                    $is_left = $this->users_model->sql_select(TBL_PROFILES, '*', ['where' => ['is_delete' => 0, 'slug' => $slug]], ['single' => true]);
+                    if (!empty($is_left)) {
+                        $this->users_model->common_insert_update('update', TBL_PROFILES, ['is_published' => 1, 'updated_at' => date('Y-m-d H:i:s')], ['id' => $is_left['id']]);
+                        $this->session->set_flashdata('success', 'Profile has been published successfully!');
+                        $data['success'] = true;
+                        $data['data'] = 'Profile has been published successfully!';
+                    } else {
+                        $this->session->set_flashdata('error', 'Invalid request profile not found.');
+                        $data['success'] = false;
+                        $data['error'] = 'Invalid request profile not found.';
+                    }
+                } else {
+                    $this->session->set_flashdata('error', 'Invalid request. Please try again!');
+                    $data['success'] = false;
+                    $data['error'] = 'Invalid request. Please try again!';
+                }
             } else {
-                $this->session->set_flashdata('error', 'Invalid request profile not found.');
                 $data['success'] = false;
-                $data['error'] = 'Invalid request profile not found.';
+                $data['error'] = 'You have not verified your emial, Please verify your email first to publish profile!';
             }
         } else {
-            $this->session->set_flashdata('error', 'Invalid request. Please try again!');
             $data['success'] = false;
-            $data['error'] = 'Invalid request. Please try again!';
+            $data['error'] = 'You need to login first!';
         }
         echo json_encode($data);
     }

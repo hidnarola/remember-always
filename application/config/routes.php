@@ -75,6 +75,7 @@ $route['profile/view_timeline/(:any)'] = 'profile/view_timeline/$1';
 $route['profile/upload_cover_image'] = 'profile/upload_cover_image';
 
 $route['profile/create'] = 'profile/create';
+$route['profile/create_profile'] = 'profile/create_profile';
 $route['profile/edit/(:any)'] = 'profile/edit/$1';
 $route['profile/publish/(:any)'] = 'profile/publish/$1';
 
@@ -98,6 +99,13 @@ $route['profile/delete_fundmedia'] = 'profile/delete_fundmedia';
 $route['profile/upload_post'] = 'profile/upload_post';
 $route['profile/delete_post'] = 'profile/delete_post';
 $route['profile/send_profile_email'] = 'profile/send_profile_email';
+$route['profile/share/(:any)'] = 'profile/share/$1';
+
+$route['profile/create_online_memorial_life_profile'] = 'profile/create_online_memorial_life_profile';
+$route['profile/create_tribute_fundraiser'] = 'profile/create_tribute_fundraiser';
+$route['profile/sociallogin'] = 'profile/sociallogin';
+$route['profile/socialprofile'] = 'profile/socialprofile';
+
 $route['profile/(:any)'] = 'profile/index/$1';
 
 $route['flowers/view'] = 'flowers/view';

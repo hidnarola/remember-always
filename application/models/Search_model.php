@@ -26,7 +26,7 @@ class Search_model extends MY_Model {
         $result = [];
         if ($search_type != '') {
             if ($search_type == 'profile') {
-                $this->db->select('slug,CONCAT(firstname," ",lastname) as name,profile_image as image,life_bio as description,"profile" as type,cn.name as country,st.name as state,c.name as city');
+                $this->db->select('slug,CONCAT(firstname," ",lastname) as name,profile_image as image,life_bio as description,"profile" as type,cn.name as country,st.name as state,c.name as city,p.date_of_birth,p.date_of_death');
                 $this->db->where(['is_delete' => 0, 'is_published' => 1]);
                 if ($keyword != '') {
                     $this->db->where('(firstname LIKE ' . $this->db->escape('%' . $keyword . '%') .
@@ -68,7 +68,7 @@ class Search_model extends MY_Model {
                     $result = $query->num_rows();
                 }
             } elseif ($search_type == 'service_provider') {
-                $this->db->select('s.slug,s.name,s.image,s.description,"service_provider" as type,cn.name as country,st.name as state,c.name as city');
+                $this->db->select('s.slug,s.name,s.image,s.description,"service_provider" as type,cn.name as country,st.name as state,c.name as city,"" date_of_birth,"" date_of_death');
                 $this->db->where(['s.is_delete' => 0, 's.is_active' => 1]);
                 // if keyword is not empty
                 if ($keyword != '') {
@@ -114,7 +114,7 @@ class Search_model extends MY_Model {
                     $result = $query->num_rows();
                 }
             } elseif ($search_type == 'affiliation') {
-                $this->db->select('a.slug,a.name,a.image,a.description,"affiliation" as type,cn.name as country,st.name as state,c.name as city');
+                $this->db->select('a.slug,a.name,a.image,a.description,"affiliation" as type,cn.name as country,st.name as state,c.name as city,"" date_of_birth,"" date_of_death');
                 $this->db->where(['a.is_delete' => 0, 'a.is_approved' => 1]);
                 if ($keyword != '') {
                     $this->db->where('(a.name LIKE ' . $this->db->escape('%' . $keyword . '%') .
@@ -154,7 +154,7 @@ class Search_model extends MY_Model {
                     $result = $query->num_rows();
                 }
             } elseif ($search_type == 'blog') {
-                $this->db->select('slug,title as name,image,description,"blog" as type,"" as counry,"" as state,"" as city');
+                $this->db->select('slug,title as name,image,description,"blog" as type,"" as counry,"" as state,"" as city,"" date_of_birth,"" date_of_death');
                 $this->db->where(['is_delete' => 0, 'is_active' => 1]);
                 if ($keyword != '') {
                     $this->db->where('(title LIKE ' . $this->db->escape('%' . $keyword . '%') .
@@ -199,11 +199,11 @@ class Search_model extends MY_Model {
                             $profile_arr[] = 'pc.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
                             $profile_arr[] = 'ps.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
                             $profile_arr[] = 'pci.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
-                            
+
                             $provider_arr[] = 'c.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
                             $provider_arr[] = 'st.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
                             $provider_arr[] = 'sc.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
-                            
+
                             $affiliation_arr[] = 'cn.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
                             $affiliation_arr[] = 'sts.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
                             $affiliation_arr[] = 'ci.name LIKE ' . $this->db->escape('%' . trim($arr) . '%');
@@ -227,20 +227,20 @@ class Search_model extends MY_Model {
                     }
                 }
 
-                $sql = 'SELECT s.* FROM (SELECT p.id,CONCAT(firstname," ",lastname) as name,slug,profile_image as image,life_bio as description,"profile" as type,pc.name as country,ps.name as state,pci.name as city '
+                $sql = 'SELECT s.* FROM (SELECT p.id,CONCAT(firstname," ",lastname) as name,slug,profile_image as image,life_bio as description,"profile" as type,pc.name as country,ps.name as state,pci.name as city,p.date_of_birth,p.date_of_death '
                         . 'FROM ' . TBL_PROFILES . ' p '
                         . ' LEFT JOIN ' . TBL_COUNTRY . ' pc ON p.country=pc.id LEFT JOIN ' . TBL_STATE . ' ps ON p.state = ps.id LEFT JOIN ' . TBL_CITY . ' pci ON p.city=pci.id '
                         . 'WHERE p.is_delete=0 AND p.is_published=1' . $where_profile . $location_profile
                         . ' UNION ALL '
-                        . 'SELECT sp.id,sp.name,sp.slug,sp.image,sp.description,"service_provider" as type,c.name as country,st.name as state,sc.name as city  '
+                        . 'SELECT sp.id,sp.name,sp.slug,sp.image,sp.description,"service_provider" as type,c.name as country,st.name as state,sc.name as city,"" date_of_birth,"" date_of_death  '
                         . 'FROM ' . TBL_SERVICE_PROVIDERS . ' sp LEFT JOIN ' . TBL_COUNTRY . ' c ON sp.country=c.id LEFT JOIN ' . TBL_STATE . ' st ON sp.state = st.id LEFT JOIN ' . TBL_CITY . ' sc ON sp.city=sc.id '
                         . 'WHERE sp.is_delete=0 AND sp.is_active=1 ' . $where_provider . $location_provider .
                         ' UNION ALL ' .
-                        'SELECT a.id,a.name,a.slug,a.image,a.description,"affiliation" as type,cn.name as country,sts.name as state,ci.name as city '
+                        'SELECT a.id,a.name,a.slug,a.image,a.description,"affiliation" as type,cn.name as country,sts.name as state,ci.name as city,"" date_of_birth,"" date_of_death '
                         . 'FROM ' . TBL_AFFILIATIONS . ' a LEFT JOIN ' . TBL_COUNTRY . ' cn ON a.country=cn.id LEFT JOIN ' . TBL_STATE . ' sts ON a.state=sts.id LEFT JOIN ' . TBL_CITY . ' ci ON a.city=ci.id '
                         . 'WHERE a.is_delete=0 AND a.is_approved=1 ' . $where_affiliation . $location_affiliation .
                         ' UNION ALL ' .
-                        'SELECT b.id,b.title as name,b.slug,b.image,b.description,"blog" as type,"" as country,"" as state,"" as city '
+                        'SELECT b.id,b.title as name,b.slug,b.image,b.description,"blog" as type,"" as country,"" as state,"" as city,"" date_of_birth,"" date_of_death '
                         . 'FROM ' . TBL_BLOG_POST . ' b '
                         . 'WHERE b.is_delete=0 AND b.is_active=1' . $where_blog . ') as s';
 
@@ -289,20 +289,20 @@ class Search_model extends MY_Model {
                         ')';
             }
 
-            $sql = 'SELECT s.* FROM (SELECT p.id,CONCAT(firstname," ",lastname) as name,slug,profile_image as image,life_bio as description,"profile" as type,pc.name as country,ps.name as state,pci.name as city '
+            $sql = 'SELECT s.* FROM (SELECT p.id,CONCAT(firstname," ",lastname) as name,slug,profile_image as image,life_bio as description,"profile" as type,pc.name as country,ps.name as state,pci.name as city,p.date_of_birth,p.date_of_death '
                     . 'FROM ' . TBL_PROFILES . ' p '
                     . ' LEFT JOIN ' . TBL_COUNTRY . ' pc ON p.country=pc.id LEFT JOIN ' . TBL_STATE . ' ps ON p.state = ps.id LEFT JOIN ' . TBL_CITY . ' pci ON p.city=pci.id '
                     . 'WHERE p.is_delete=0 AND p.is_published=1' . $where_profile . $location_profile
                     . ' UNION ALL '
-                    . 'SELECT sp.id,sp.name,sp.slug,sp.image,sp.description,"service_provider" as type,c.name as country,st.name as state,sc.name as city  '
+                    . 'SELECT sp.id,sp.name,sp.slug,sp.image,sp.description,"service_provider" as type,c.name as country,st.name as state,sc.name as city,"" date_of_birth,"" date_of_death  '
                     . 'FROM ' . TBL_SERVICE_PROVIDERS . ' sp LEFT JOIN ' . TBL_COUNTRY . ' c ON sp.country=c.id LEFT JOIN ' . TBL_STATE . ' st ON sp.state = st.id LEFT JOIN ' . TBL_CITY . ' sc ON sp.city=sc.id '
                     . 'WHERE sp.is_delete=0 AND sp.is_active=1 ' . $where_provider . $location_provider .
                     ' UNION ALL ' .
-                    'SELECT a.id,a.name,a.slug,a.image,a.description,"affiliation" as type,cn.name as country,sts.name as state,ci.name as city '
+                    'SELECT a.id,a.name,a.slug,a.image,a.description,"affiliation" as type,cn.name as country,sts.name as state,ci.name as city,"" date_of_birth,"" date_of_death '
                     . 'FROM ' . TBL_AFFILIATIONS . ' a LEFT JOIN ' . TBL_COUNTRY . ' cn ON a.country=cn.id LEFT JOIN ' . TBL_STATE . ' sts ON a.state=sts.id LEFT JOIN ' . TBL_CITY . ' ci ON a.city=ci.id '
                     . 'WHERE a.is_delete=0 AND a.is_approved=1 ' . $where_affiliation . $location_affiliation .
                     ' UNION ALL ' .
-                    'SELECT b.id,b.title as name,b.slug,b.image,b.description,"blog" as type,"" as country,"" as state,"" as city '
+                    'SELECT b.id,b.title as name,b.slug,b.image,b.description,"blog" as type,"" as country,"" as state,"" as city,"" date_of_birth,"" date_of_death '
                     . 'FROM ' . TBL_BLOG_POST . ' b '
                     . 'WHERE b.is_delete=0 AND b.is_active=1' . $where_blog . ') as s';
 

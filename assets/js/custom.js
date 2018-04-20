@@ -408,6 +408,7 @@ function loginModal(obj) {
      $('.nav-tabs a[href="#log-in"]').tab('show');*/
 }
 function showSuccessMSg(msg) {
+    PNotify.removeAll();
     new PNotify({
         title: 'Success!',
         text: msg,
@@ -419,6 +420,7 @@ function showSuccessMSg(msg) {
     });
 }
 function showErrorMSg(msg) {
+    PNotify.removeAll();
     new PNotify({
         title: 'Error!',
         text: msg,

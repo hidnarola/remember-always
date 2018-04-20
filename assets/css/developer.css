@@ -155,6 +155,13 @@ label.error,label.error p  {
 .bio-p-text{margin: 0;padding: 0;font-size: 15px;color: #999;line-height: 24px;display: block;font-family: 'Roboto';}
 
 .profile-box-body p{max-height: 16em; /* (4 * 1.5 = 6) */}
+section.home-profiles h4 a{color: #a36c88}
+.profile-share-icons a {line-height: 28px;margin: 0 0 0 5px;display: inline-block;vertical-align: top;}
+.profile-share-icons a svg {width: 40px;height: 40px;vertical-align: middle;}
+.done-share {border: 2px solid #8f63ca;background: #fff !important;color: #8f63ca;padding: 10px;text-align: center;border-radius: 4px;max-width: 152px;width: 100%;font-family: 'Rubik';font-size: 14px;font-weight: 500;}
+.done-share:hover {background: #8f63ca!important;color: #fff !important;}
+.done-share-later {border: 2px solid #57585a;background: #fff !important;color: #57585a;padding: 10px;text-align: center;border-radius: 4px;max-width: 152px;width: 100%;font-family: 'Rubik';font-size: 14px;font-weight: 500;}
+.done-share-later:hover{background: #57585a!important;color: #fff !important;}
 /* Show 8 lines on larger screens */
 @media screen and (min-width: 640px) {
     .profile-box-body p {max-height: 20em;}

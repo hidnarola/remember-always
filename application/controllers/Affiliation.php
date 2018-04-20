@@ -165,7 +165,7 @@ class Affiliation extends MY_Controller {
     }
 
     /**
-     * Edit a allifiation.
+     * Edit a affiliation.
      *
      */
     public function edit($slug) {

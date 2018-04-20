@@ -183,6 +183,11 @@
                         action += '</a>';
                         action += '<ul class="dropdown-menu dropdown-menu-right">';
                         action += '<li>';
+                        if (full.is_published == 1) {
+                            action += '<a href="' + site_url + 'admin/users/profile_action/publish/' + btoa(full.id) + '/' + user_id + '" title="Unpublish Profile" onclick="return confirm_palert(this)" ><i class="icon-cross3"></i> Unpublish Profile</a>';
+                        } else {
+                            action += '<a href="' + site_url + 'admin/users/profile_action/publish/' + btoa(full.id) + '/' + user_id + '" title="Publish Profile" onclick="return confirm_palert(this)" ><i class="icon-checkmark3"></i> Publish Profile</a>';
+                        }
                         if (full.is_blocked == 1) {
                             action += '<a href="' + site_url + 'admin/users/profile_action/unblock/' + btoa(full.id) + '/' + user_id + '" title="Unblock Profile"><i class="icon-user-check"></i> Unblock Profile</a>';
                         } else {
@@ -226,6 +231,24 @@
             // dismiss can be 'overlay', 'cancel', 'close', 'esc', 'timer'
             if (dismiss === 'cancel') {
                 swal("Cancelled", "Your profile is safe :)", "error");
+            }
+        });
+        return false;
+    }
+    function confirm_palert(e) {
+        text_title = $(e).attr('title');
+        swal({
+            title: "Are you sure?",
+            text: "You want to " + text_title + "!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#FF7043",
+            confirmButtonText: "Yes, " + text_title + "!",
+            cancelButtonText: "No, cancel plz!"
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                window.location.href = $(e).attr('href');
+                return true;
             }
         });
         return false;

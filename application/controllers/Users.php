@@ -29,7 +29,7 @@ class Users extends MY_Controller {
             $this->session->set_flashdata('error', 'You must login to access this page');
             redirect('/');
         }
-        $is_left = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['id' => $this->user_id, 'is_delete' => 0,]], ['single' => true]);
+        $is_left = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['id' => $this->user_id, 'is_delete' => 0]], ['single' => true]);
         if (!empty($is_left)) {
             $data['user_data'] = $is_left;
             if ($is_left['country'] != '') {
@@ -44,6 +44,9 @@ class Users extends MY_Controller {
                     $data['cities'] = $cities;
                 }
             }
+        } else {
+            $this->session->set_flashdata('error', 'Something went wrong! Please try again later.');
+            redirect('home');
         }
         $countries = $this->users_model->customQuery('SELECT id,name FROM ' . TBL_COUNTRY . ' order by id=231 DESC');
         $data['countries'] = $countries;

@@ -26,6 +26,9 @@ class Profile extends MY_Controller {
                     array('table' => TBL_STATE . ' s', 'condition' => 'p.state=s.id'),
                     array('table' => TBL_CITY . ' ci', 'condition' => 'p.city=ci.id'),
             ]]);
+            if ($this->is_user_loggedin) {
+                $data['user'] = $this->users_model->sql_select(TBL_USERS, 'is_verify', ['where' => ['id' => $this->user_id]], ['single' => true]);
+            }
             if (!empty($profile)) {
                 if ($this->input->post()) {
                     if (!$this->is_user_loggedin) {
@@ -145,7 +148,7 @@ class Profile extends MY_Controller {
                     $og_image = base_url() . 'assets/timthumb.php?src=' . $og_image . '&zc=3&w=300&h=300&q=100';
                 }
                 $data['og_image'] = $og_image;
-                $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('search'), 'title' => 'Profiles']]];
+                $data['breadcrumb'] = ['title' => 'Life Profile', 'links' => [['link' => site_url(), 'title' => 'Home'], ['link' => site_url('search?type=profile'), 'title' => 'Profiles']]];
                 $this->template->load('default', 'profile/profile_detail', $data);
             } else {
                 custom_show_404();
@@ -342,7 +345,8 @@ class Profile extends MY_Controller {
         $data['profile_cities'] = $data['memorial_cities'] = $data['funeral_cities'] = $data['burial_cities'] = [];
         $data['wepay_client_id'] = $this->config->item('client_id');
         $data['fundraiser_allow_edits'] = 1;
-
+        //-- Check logged in user has verified his email or not
+        $data['user'] = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['id' => $this->user_id]], ['single' => true]);
         if (!empty($profile)) {
             $data['profile'] = $profile;
             $data['profile_states'] = $this->users_model->sql_select(TBL_STATE, 'id,name,shortcode', ['where' => ['country_id' => $profile['country']]]);
@@ -392,8 +396,6 @@ class Profile extends MY_Controller {
             $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'trim|required');
             $this->form_validation->set_rules('date_of_death', 'Date of Death', 'trim|required');
             $this->form_validation->set_rules('country', 'Country', 'trim|required');
-            $this->form_validation->set_rules('state', 'State', 'trim|required');
-            $this->form_validation->set_rules('city', 'City', 'trim|required');
 
             if ($this->form_validation->run() == FALSE) {
                 $data['error'] = validation_errors();
@@ -401,15 +403,20 @@ class Profile extends MY_Controller {
             } else {
                 if (strtotime($this->input->post('date_of_birth')) < strtotime($this->input->post('date_of_death'))) {
 
+                    $city_id = null;
+
                     $city = $this->input->post('city');
                     $state = $this->input->post('state');
-                    //-- Check city is available in db if not then insert with new record
-                    $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
-                    if (empty($city_data)) {
-                        $city_arr = ['name' => $city, 'state_id' => $state];
-                        $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
-                    } else {
-                        $city_id = $city_data['id'];
+
+                    if (!empty($state) && !empty($city)) {
+                        //-- Check city is available in db if not then insert with new record
+                        $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
+                        if (empty($city_data)) {
+                            $city_arr = ['name' => $city, 'state_id' => $state];
+                            $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
+                        } else {
+                            $city_id = $city_data['id'];
+                        }
                     }
 
                     $profile_process = $this->input->post('profile_process');
@@ -436,8 +443,9 @@ class Profile extends MY_Controller {
                             mkdir(PROFILE_IMAGES . $directory);
                             chmod(PROFILE_IMAGES . $directory, 0777);
                         }
+                        $image_name = trim($this->input->post('firstname')) . '_' . trim($this->input->post('lastname')) . '_Memorial_Remember_Always';
 
-                        $image_data = upload_image('profile_image', PROFILE_IMAGES . $directory);
+                        $image_data = upload_image('profile_image', PROFILE_IMAGES . $directory, $image_name);
                         if (is_array($image_data)) {
                             $flag = 1;
                             $data['error'] = $image_data['errors'];
@@ -450,11 +458,15 @@ class Profile extends MY_Controller {
                         }
                     }
 
+                    $created_by = null;
+                    if ($this->input->post('created_by') != '')
+                        $created_by = $this->input->post('created_by');
                     if ($flag != 1) {
                         $data = array(
                             'user_id' => $this->user_id,
                             'profile_process' => $this->input->post('profile_process'),
                             'firstname' => trim($this->input->post('firstname')),
+                            'middlename' => trim($this->input->post('middlename')),
                             'lastname' => trim($this->input->post('lastname')),
                             'nickname' => trim($this->input->post('nickname')),
                             'slug' => $slug,
@@ -464,7 +476,8 @@ class Profile extends MY_Controller {
                             'date_of_death' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_death'))),
                             'country' => $this->input->post('country'),
                             'state' => $this->input->post('state'),
-                            'city' => $city_id
+                            'city' => $city_id,
+                            'created_by' => $created_by
                         );
                         if (!empty($profile)) {
                             $data['updated_at'] = date('Y-m-d H:i:s');
@@ -500,6 +513,316 @@ class Profile extends MY_Controller {
 
         $data['affiliations'] = $this->users_model->sql_select(TBL_AFFILIATIONS, 'id,name', ['where' => ['is_approved' => 1, 'is_delete' => 0]]);
         $this->template->load('default', 'profile/profile_form', $data);
+    }
+
+    /**
+     * Create profile function with login and signup
+     */
+    public function create_profile() {
+        $data['title'] = 'Remember Always | Create Profile';
+        $data['countries'] = $this->users_model->customQuery('SELECT id,name FROM ' . TBL_COUNTRY . ' order by id=231 DESC');
+
+        $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
+        $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
+        $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'trim|required');
+        $this->form_validation->set_rules('date_of_death', 'Date of Death', 'trim|required');
+        $this->form_validation->set_rules('country', 'Country', 'trim|required');
+        $log_user = $flag = 0;
+        if (!$this->is_user_loggedin) {
+            if ($this->input->post('login_email') != '') {
+                $this->form_validation->set_rules('login_email', 'Email', 'trim|required');
+                $this->form_validation->set_rules('login_password', 'Password', 'trim|required');
+            } else if ($this->input->post('sign_email') != '' || ($this->input->post('login_email') == '' && $this->input->post('sign_email') == '')) {
+                $this->form_validation->set_rules('sign_email', 'Email', 'trim|required|callback_email_validation');
+                $this->form_validation->set_rules('sign_password', 'Password', 'trim|required');
+                $this->form_validation->set_rules('sign_firstname', 'Firstname', 'trim|required');
+                $this->form_validation->set_rules('sign_lastname', 'Lastname', 'trim|required');
+            }
+        } else {
+            $log_user = 1;
+            $user_id = $this->user_id;
+        }
+
+        if ($this->form_validation->run() == TRUE) {
+            if (strtotime($this->input->post('date_of_birth')) < strtotime($this->input->post('date_of_death'))) {
+                if ($this->input->post('login_email') != '') {
+                    $result = $this->users_model->get_user_detail(['email' => trim($this->input->post('login_email')), 'is_delete' => 0, 'role' => 'user']);
+                    if (!empty($result)) {
+                        if (!password_verify($this->input->post('login_password'), $result['password'])) {
+                            $this->session->set_flashdata('error', 'Invalid Email/Password.');
+                            redirect('profile/create_profile');
+                        } elseif ($result['is_verify'] == 0) {
+                            $resend_link = site_url('signup/resend_verification?uid=' . base64_encode($result['id']));
+                            $this->session->set_flashdata('error', 'You have not verified your email yet! Please verify it first. <a href=\'' . $resend_link . '\'>Click here</a> to resend verification email.');
+                            redirect('profile/create_profile');
+                        } elseif ($result['is_active'] == 0) {
+                            $this->session->set_flashdata('error', 'Your account is blocked! Please contact system Administrator.');
+                            redirect('profile/create_profile');
+                        } else {
+                            //-- If input details are valid then store data into session
+                            $this->session->set_userdata('remalways_user', $result);
+                            $user_id = $result['id'];
+                            $log_user = 1;
+                        }
+                    } else {
+                        $this->session->set_flashdata('error', 'Invalid Email/Password');
+                        redirect('profile/create_profile');
+                    }
+                } else if ($this->input->post('sign_email') != '') {
+
+
+                    $verification_code = verification_code();
+                    $data = array(
+                        'role' => 'user',
+                        'firstname' => trim($this->input->post('sign_firstname')),
+                        'lastname' => trim($this->input->post('sign_lastname')),
+                        'email' => trim($this->input->post('sign_email')),
+                        'password' => password_hash($this->input->post('sign_password'), PASSWORD_BCRYPT),
+                        'verification_code' => $verification_code,
+                        'is_verify' => 0,
+                        'is_active' => 0,
+                        'created_at' => date('Y-m-d H:i:s')
+                    );
+                    $user_id = $this->users_model->common_insert_update('insert', TBL_USERS, $data);
+
+                    //-- check if profile image is there in $_FILES array
+                    if ($_FILES['sign_profile_image']['name'] != '') {
+                        $directory = 'user_' . $user_id;
+                        if (!file_exists(USER_IMAGES . $directory)) {
+                            mkdir(USER_IMAGES . $directory);
+                        }
+                        $image_data = upload_image('sign_profile_image', USER_IMAGES . $directory);
+                        if (!is_array($image_data)) {
+                            $this->users_model->common_insert_update('update', TBL_USERS, ['profile_image' => $directory . '/' . $image_data], ['id' => $user_id]);
+                        }
+                    }
+
+//            $verification_code = $this->encrypt->encode($verification_code);
+                    $verification_code = base64_encode($verification_code);
+                    $encoded_verification_code = urlencode($verification_code);
+
+                    $email_data = [];
+                    $email_data['url'] = site_url() . 'verify?code=' . $encoded_verification_code;
+                    $email_data['name'] = trim($this->input->post('sign_firstname')) . ' ' . trim($this->input->post('sign_lastname'));
+                    $email_data['email'] = trim($this->input->post('sign_email'));
+                    $email_data['subject'] = 'Verify Email | Remember Always';
+                    send_mail(trim($this->input->post('sign_email')), 'verify_email', $email_data);
+
+                    $result = $this->users_model->get_user_detail(['id' => $user_id]);
+                    //-- If input details are valid then store data into session
+                    $this->session->set_userdata('remalways_user', $result);
+                }
+
+                $city_id = null;
+                $city = $this->input->post('city');
+                $state = $this->input->post('state');
+
+                if (!empty($state) && !empty($city)) {
+                    //-- Check city is available in db if not then insert with new record
+                    $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
+                    if (empty($city_data)) {
+                        $city_arr = ['name' => $city, 'state_id' => $state];
+                        $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
+                    } else {
+                        $city_id = $city_data['id'];
+                    }
+                }
+
+                $profile_image = '';
+                if (!empty($this->input->post('nickname'))) {
+                    $slug = trim($this->input->post('nickname'));
+                } else {
+                    $slug = trim($this->input->post('firstname')) . '-' . trim($this->input->post('lastname'));
+                }
+                $slug = slug($slug, TBL_PROFILES);
+
+                //-- check if profile image is there in $_FILES array
+                if ($_FILES['profile_image']['name'] != '') {
+                    $directory = 'user_' . $user_id;
+
+                    if (!file_exists(PROFILE_IMAGES . $directory)) {
+                        mkdir(PROFILE_IMAGES . $directory);
+                        chmod(PROFILE_IMAGES . $directory, 0777);
+                    }
+
+                    $image_name = trim($this->input->post('firstname')) . '_' . trim($this->input->post('lastname')) . '_Memorial_Remember_Always';
+                    $image_data = upload_image('profile_image', PROFILE_IMAGES . $directory, $image_name);
+                    if (is_array($image_data)) {
+                        $flag = 1;
+                        $this->session->set_flashdata('error', 'Invalid Email/Password.');
+                        $data['profile_error'] = $image_data['errors'];
+                    } else {
+                        $profile_image = $directory . '/' . $image_data;
+                    }
+                }
+
+                $created_by = null;
+                if ($this->input->post('created_by') != '')
+                    $created_by = $this->input->post('created_by');
+
+                if ($flag != 1) {
+                    $profile_data = array(
+                        'user_id' => $user_id,
+                        'firstname' => trim($this->input->post('firstname')),
+                        'middlename' => trim($this->input->post('middlename')),
+                        'lastname' => trim($this->input->post('lastname')),
+                        'nickname' => trim($this->input->post('nickname')),
+                        'slug' => $slug,
+                        'profile_image' => $profile_image,
+                        'life_bio' => trim($this->input->post('life_bio')),
+                        'date_of_birth' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_birth'))),
+                        'date_of_death' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_death'))),
+                        'country' => $this->input->post('country'),
+                        'state' => $this->input->post('state'),
+                        'city' => $city_id,
+                        'created_by' => $created_by,
+                        'created_at' => date('Y-m-d H:i:s')
+                    );
+
+                    $profile_data['created_at'] = date('Y-m-d H:i:s');
+                    $profile_data['is_published'] = 1;
+//                    if ($log_user == 1) {
+//                        $profile_data['is_published'] = 1;
+//                    }
+                    $profile_id = $this->users_model->common_insert_update('insert', TBL_PROFILES, $profile_data);
+
+                    $profile = $this->users_model->sql_select(TBL_PROFILES, 'slug', ['where' => ['id' => $profile_id]], ['single' => true]);
+                    redirect('profile/edit/' . $profile['slug'] . '?tribute=1');
+                }
+            } else {
+                $data['date_error'] = 'Date of birth must be smaller than Date of death';
+            }
+        }
+        $this->template->load('default', 'profile/create_profile', $data);
+    }
+
+    /**
+     * Save data into session for Face book and Google social login
+     */
+    public function sociallogin() {
+        $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
+        $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
+        $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'trim|required');
+        $this->form_validation->set_rules('date_of_death', 'Date of Death', 'trim|required');
+        $this->form_validation->set_rules('country', 'Country', 'trim|required');
+        if ($this->form_validation->run() == TRUE) {
+            if (strtotime($this->input->post('date_of_birth')) < strtotime($this->input->post('date_of_death'))) {
+                $flag = 0;
+                $profile_image = 1;
+                if ($_FILES['profile_image']['name'] != '') {
+                    $image_name = trim($this->input->post('firstname')) . '_' . trim($this->input->post('lastname')) . '_Memorial_Remember_Always';
+                    $image_data = upload_image('profile_image', TEMP_IMAGES, $image_name);
+                    if (is_array($image_data)) {
+                        $flag = 1;
+                        $data['success'] = false;
+                        $data['error'] = $image_data['errors'];
+                    } else {
+                        $profile_image = $image_data;
+                    }
+                }
+
+                $city_id = null;
+                $city = $this->input->post('city');
+                $state = $this->input->post('state');
+
+                if (!empty($state) && !empty($city)) {
+                    //-- Check city is available in db if not then insert with new record
+                    $city_data = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['name' => $city, 'state_id' => $state]], ['single' => true]);
+                    if (empty($city_data)) {
+                        $city_arr = ['name' => $city, 'state_id' => $state];
+                        $city_id = $this->users_model->common_insert_update('insert', TBL_CITY, $city_arr);
+                    } else {
+                        $city_id = $city_data['id'];
+                    }
+                }
+
+                if ($flag == 0) {
+                    if (!empty($this->input->post('nickname'))) {
+                        $slug = trim($this->input->post('nickname'));
+                    } else {
+                        $slug = trim($this->input->post('firstname')) . '-' . trim($this->input->post('lastname'));
+                    }
+                    $slug = slug($slug, TBL_PROFILES);
+
+                    $profile = [
+                        'firstname' => $this->input->post('firstname'),
+                        'middlename' => $this->input->post('middlename'),
+                        'lastname' => $this->input->post('lastname'),
+                        'nickname' => $this->input->post('nickname'),
+                        'slug' => $slug,
+                        'profile_image' => $profile_image,
+                        'life_bio' => $this->input->post('life_bio'),
+                        'date_of_birth' => $this->input->post('date_of_birth'),
+                        'date_of_death' => $this->input->post('date_of_death'),
+                        'is_published' => 1,
+                        'country' => $this->input->post('country'),
+                        'state' => $state,
+                        'city' => $city
+                    ];
+                    $this->session->set_userdata('profile', $profile);
+                    $this->session->set_userdata('social_profile', 'yes');
+                    $data['success'] = true;
+                }
+            } else {
+                $data['success'] = false;
+                $data['error'] = 'Date of birth must be smaller than Date of death';
+            }
+        } else {
+            $data['error'] = 'Please fill out required fields';
+            $data['success'] = false;
+        }
+        echo json_encode($data);
+        exit;
+    }
+
+    /**
+     * Save profile data from session and redirect user to edit profile page
+     */
+    public function socialprofile() {
+        if ($this->is_user_loggedin) {
+            $profile = $this->session->userdata('profile');
+            if (!empty($profile)) {
+                $user_id = $this->user_id;
+
+                $directory = 'user_' . $user_id;
+
+                if (!file_exists(PROFILE_IMAGES . $directory)) {
+                    mkdir(PROFILE_IMAGES . $directory);
+                    chmod(PROFILE_IMAGES . $directory, 0777);
+                }
+                rename(TEMP_IMAGES . $profile['profile_image'], PROFILE_IMAGES . $directory . '/' . $profile['profile_image']);
+
+                $profile['profile_image'] = $directory . '/' . $profile['profile_image'];
+                $profile['user_id'] = $user_id;
+
+                $profile_id = $this->users_model->common_insert_update('insert', TBL_PROFILES, $profile);
+
+                //-- unset all session variables;
+                $this->session->unset_userdata('profile');
+                $this->session->unset_userdata('social_profile');
+
+                redirect('profile/edit/' . $profile['slug'] . '?tribute=1');
+            } else {
+                redirect('profile/create_profile');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Something went wrong! Please try again later');
+            redirect('profile/create_profile');
+        }
+    }
+
+    /**
+     * Callback Validate function to check unique email validation
+     * @return boolean
+     */
+    public function email_validation() {
+        $result = $this->users_model->get_user_detail(['email' => trim($this->input->post('sign_email')), 'is_delete' => 0, 'role' => 'user']);
+        if (!empty($result)) {
+            $this->form_validation->set_message('email_validation', 'Email Already exist!');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
     }
 
     /**
@@ -1084,6 +1407,7 @@ class Profile extends MY_Controller {
                         'state' => $this->input->post('memorial_state'),
                         'country' => $this->input->post('memorial_country'),
                         'zip' => $this->input->post('memorial_zip'),
+                        'additional_info' => $this->input->post('memorial_additional_info'),
                     ];
                     $m_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Memorial']], ['single' => true]);
                     if (!empty($m_service)) {
@@ -1119,6 +1443,7 @@ class Profile extends MY_Controller {
                         'state' => $this->input->post('funeral_state'),
                         'country' => $this->input->post('funeral_country'),
                         'zip' => $this->input->post('funeral_zip'),
+                        'additional_info' => $this->input->post('funeral_additional_info'),
                     ];
                     $f_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Funeral']], ['single' => true]);
                     if (!empty($f_service)) {
@@ -1154,6 +1479,7 @@ class Profile extends MY_Controller {
                         'state' => $this->input->post('burial_state'),
                         'country' => $this->input->post('burial_country'),
                         'zip' => $this->input->post('burial_zip'),
+                        'additional_info' => $this->input->post('burial_additional_info'),
                     ];
                     $b_service = $this->users_model->sql_select(TBL_FUNERAL_SERVICES, 'id', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0, 'service_type' => 'Burial']], ['single' => true]);
                     if (!empty($b_service)) {
@@ -1414,6 +1740,60 @@ class Profile extends MY_Controller {
         }
         echo json_encode($data);
         exit;
+    }
+
+    /**
+     * Share profile page (Redirect to this page when clicked on share profile)
+     * @param string $slug
+     */
+    public function share($slug = null) {
+        if (!is_null($slug) && $this->is_user_loggedin) {
+            $profile = $this->users_model->sql_select(TBL_PROFILES . ' p', 'p.*,u.firstname as u_fname,u.lastname as u_lname,c.name as country,s.name as state,ci.name as city', ['where' => ['p.is_delete' => 0, 'slug' => $slug]], ['single' => true,
+                'join' => [
+                    array('table' => TBL_USERS . ' u', 'condition' => 'u.id=p.user_id AND u.is_delete=0'),
+                    array('table' => TBL_COUNTRY . ' c', 'condition' => 'p.country=c.id'),
+                    array('table' => TBL_STATE . ' s', 'condition' => 'p.state=s.id'),
+                    array('table' => TBL_CITY . ' ci', 'condition' => 'p.city=ci.id'),
+            ]]);
+            if (!empty($profile) && $profile['user_id'] == $this->user_id) {
+
+                $data['url'] = site_url('profile/' . $profile['slug']);
+                $data['profile'] = $profile;
+
+                $data['title'] = $profile['firstname'] . ' ' . $profile['lastname'] . ' | Profile';
+                $this->meta_title = $profile['firstname'] . ' ' . $profile['lastname'];
+                $this->meta_description = $profile['life_bio'];
+
+                $og_image = base_url() . PROFILE_IMAGES . $profile['profile_image'];
+                $image_size = getimagesize($og_image);
+                if ($image_size[0] < 200) {
+                    $og_image = base_url() . 'assets/timthumb.php?src=' . $og_image . '&zc=3&w=300&h=300&q=100';
+                }
+                $data['og_image'] = $og_image;
+                $data['breadcrumb'] = ['title' => 'Share Your Profile', 'links' => [['link' => site_url(), 'title' => 'Home']]];
+                $this->template->load('default', 'profile/profile_share', $data);
+            } else {
+                custom_show_404();
+            }
+        } else {
+            custom_show_404();
+        }
+    }
+
+    /**
+     * Profile landing page
+     */
+    public function create_online_memorial_life_profile() {
+        $data['title'] = 'Remember Always';
+        $this->template->load('default', 'profile-landing', $data);
+    }
+
+    /**
+     * Tribute landing page
+     */
+    public function create_tribute_fundraiser() {
+        $data['title'] = 'Remember Always';
+        $this->template->load('default', 'fundraiser-landing', $data);
     }
 
 }

@@ -126,6 +126,11 @@ class Facebook extends My_Controller {
 
         $user = $response->getGraphUser();
 
+        $redirect_url = '/';
+        $social_session = $this->session->userdata('social_profile');
+        if ($social_session == 'yes') {
+            $redirect_url = 'profile/socialprofile';
+        }
 
         if (!empty($user)) {
 
@@ -135,11 +140,11 @@ class Facebook extends My_Controller {
             if (!empty($db_user)) {
                 if ($db_user['is_delete'] == 1 || $db_user['is_active'] == 0) {
                     $this->session->set_flashdata('error', 'You account is blocked. Please contact system administrator');
-                    redirect('/');
+                    redirect($redirect_url);
                 } else {
                     $this->session->set_userdata('remalways_user', $db_user);
                     $this->session->set_flashdata('success', 'You are now logged in with Facebook successfully');
-                    redirect('/');
+                    redirect($redirect_url);
                 }
             } else {
                 $data = [
@@ -159,10 +164,11 @@ class Facebook extends My_Controller {
                 $data['id'] = $user_id;
                 $this->session->set_userdata('remalways_user', $data);
                 $this->session->set_flashdata('success', 'You are now logged in with Facebook successfully');
-                redirect('/');
+                redirect($redirect_url);
             }
         } else {
             $this->session->set_flashdata('error', 'Unable to connect with facebook');
+            redirect($redirect_url);
         }
     }
 

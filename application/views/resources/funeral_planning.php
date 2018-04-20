@@ -297,9 +297,9 @@
                     <div class="profile-box-body">
                         <p>A Life Profile can help you to communicate Funeral Services information and help you to centralize pictures and videos in one place.</p>
                         <?php if ($this->is_user_loggedin) { ?>
-                            <a href="<?php echo site_url('profile/create') ?>" class="btn-link plannig-create-btn">Create a Life Profile</a> 
+                            <a href="<?php echo site_url('profile/create_profile') ?>" class="btn-link plannig-create-btn">Create a Life Profile</a> 
                         <?php } else { ?>
-                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create'); ?>" class="btn-link">Create a Life Profile</a>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile'); ?>" class="btn-link">Create a Life Profile</a>
                         <?php } ?>
                     </div>
                 </div>
@@ -308,9 +308,9 @@
                     <div class="profile-box-body">
                         <p>A Life Profile with a Tribute Fundraiser is a great choice for getting the help you need during a difficult time</p>
                         <?php if ($this->is_user_loggedin) { ?>
-                            <a href="<?php echo site_url('profile/create') ?>" class="btn-link color-01">Create a Life Profile with a Tribute Fundraiser <i class="fa fa-paper-plane"></i></a>
+                            <a href="<?php echo site_url('profile/create_profile') ?>" class="btn-link color-01">Create a Life Profile with a Tribute Fundraiser <i class="fa fa-paper-plane"></i></a>
                         <?php } else { ?>
-                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create'); ?>" class="btn-link color-01">Create a Life Profile with a Tribute Fundraiser <i class="fa fa-paper-plane"></i></a>
+                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile'); ?>" class="btn-link color-01">Create a Life Profile with a Tribute Fundraiser <i class="fa fa-paper-plane"></i></a>
                         <?php } ?>
                     </div>
                 </div>

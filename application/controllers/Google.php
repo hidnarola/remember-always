@@ -40,6 +40,11 @@ class Google extends MY_Controller {
             if (!empty($access_token['refresh_token']))
                 $data['refresh_token'] = $access_token['refresh_token'];
 
+            $redirect_url = '/';
+            $social_session = $this->session->userdata('social_profile');
+            if ($social_session == 'yes') {
+                $redirect_url = 'profile/socialprofile';
+            }
 
             if (!empty($me)) {
 
@@ -49,11 +54,11 @@ class Google extends MY_Controller {
                 if (!empty($db_user)) {
                     if ($db_user['is_delete'] == 1 || $db_user['is_active'] == 0) {
                         $this->session->set_flashdata('error', 'You account is blocked. Please contact system administrator');
-                        redirect('/');
+                        redirect($redirect_url);
                     } else {
                         $this->session->set_userdata('remalways_user', $db_user);
                         $this->session->set_flashdata('success', 'You are now logged in with Google successfully');
-                        redirect('/');
+                        redirect($redirect_url);
                     }
                 } else {
 
@@ -74,10 +79,11 @@ class Google extends MY_Controller {
                     $data['id'] = $user_id;
                     $this->session->set_userdata('remalways_user', $data);
                     $this->session->set_flashdata('success', 'You are now logged in with google successfully');
-                    redirect('/');
+                    redirect($redirect_url);
                 }
             } else {
-                $this->session->set_flashdata('error', 'Unable to connect with facebook');
+                $this->session->set_flashdata('error', 'Unable to connect with Google');
+                redirect($redirect_url);
             }
         } catch (Exception $e) {
             header('HTTP/1.0 400 Bad Request');

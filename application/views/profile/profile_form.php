@@ -31,10 +31,15 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                 if (isset($profile))
                     echo "Edit a Life Profile.";
                 else
-                    echo "Create a Life Profile.";
+                    echo "Create a beautiful memorial Life Profile.";
                 ?>
             </h2>
-            <p>A great way to honor your loved one.</p>
+            <p>A great honor and a wonderful way to preserve memories.</p>
+            <?php
+            if ($user['is_verify'] == 0) {
+               echo "<div class='alert alert-danger' style='margin-top:10px;margin-bottom:0px'>You have not verified your email yet! Please verify your email first</div>";
+            }
+            ?>
         </div>
     </div>
     <div class="create-profile-body main-steps">
@@ -50,13 +55,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                 ?>
                 <ul class="ul_tab_custom ul_tab_custom_new nav nav-tabs responsive" id="myTab">
                     <li class="steps-li <?php echo $profile_class ?>" id="first-step-li"><a href="#first-step">Basic Info</a></li>
-                    <li class="steps-li" id="second-step-li"><a href="#second-step">Life Gallery</a></li>
-                    <li class="steps-li" id="third-step-li"><a href="#third-step">Fun Facts</a></li>
-                    <li class="steps-li" id="third1-step-li"><a href="#third1-step">Affiliations</a></li>
-                    <li class="steps-li" id="forth-step-li"><a href="#forth-step">Life Timeline</a></li>
-                    <li class="steps-li" id="fifth-step-li"><a href="#fifth-step">Funeral Services</a></li>
-                    <li class="steps-li <?php echo $tribute_class ?>" id="sixth-step-li"><a href="#sixth-step">Tribute Fundraiser</a></li>
-                    <li class="steps-li" id="seventh-step-li"><a href="#seventh-step">Share</a></li>
+                    <li class="steps-li <?php echo $tribute_class ?>" id="second-step-li"><a href="#second-step">Tribute Fundraiser</a></li>
+                    <li class="steps-li" id="third-step-li"><a href="#third-step">Life Gallery</a></li>
+                    <li class="steps-li" id="third1-step-li"><a href="#third1-step">Fun Facts</a></li>
+                    <li class="steps-li" id="forth-step-li"><a href="#forth-step">Affiliations</a></li>
+                    <li class="steps-li" id="fifth-step-li"><a href="#fifth-step">Life Timeline</a></li>
+                    <li class="steps-li" id="sixth-step-li"><a href="#sixth-step">Funeral Services</a></li>
+                    <!--<li class="steps-li" id="seventh-step-li"><a href="#seventh-step">Share</a></li>-->
                 </ul>
 
                 <div class="step-form tab-content responsive">
@@ -66,7 +71,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             <div class="step-01-l-wrap">
                                 <div class="step-01-l">
                                     <div class="upload-btn"> 
-                                        <span class="up_btn">
+                                        <span class="up_btn" style="overflow: hidden">
                                             <?php
                                             $profile_required = 'required';
                                             if (isset($profile) && $profile['profile_image'] != '') {
@@ -83,10 +88,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                 <div class="step-01-m">
                                     <div class="input-wrap">
                                         <label class="label-css">Add Profile Details</label>
-                                        <div class="input-l">
+                                        <div class="input-wrap">
                                             <input type="text" id="firstname" name="firstname" placeholder="First Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['firstname'] : set_value('firstname') ?>" />
                                         </div>
-                                        <div class="input-r">
+                                        <div class="input-wrap">
+                                            <input type="text" id="middlename" name="middlename" placeholder="Middle Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['middlename'] : set_value('middlename') ?>" />
+                                        </div>
+                                        <div class="input-wrap">
                                             <input type="text" id="lastname" name="lastname" placeholder="Last Name" class="input-css" value="<?php echo (isset($profile)) ? $profile['lastname'] : set_value('lastname') ?>"/>
                                         </div>
                                     </div>
@@ -153,6 +161,10 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="input-wrap">
+                                        <label class="label-css">If you are creating this Life Profile on behalf of a person, family, or group, you may enter that here </label>
+                                        <input type="text" id="created_by" name="created_by" placeholder="(optional) Enter the name of the person, family or group" class="input-css" value="<?php echo (isset($profile)) ? $profile['created_by'] : set_value('created_by') ?>"/>
+                                    </div>
                                 </div>
                                 <div class="step-01-r">
                                     <div class="input-wrap">
@@ -170,15 +182,121 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>	
                         </form>
                         <div class="step-btm-btn">
-                            <button class="next" id="firststep-proceed-btn" onclick="return proceed_step();">Save/Proceed</button>
-                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
-                                <button class="back" onclick="return publish_profile()">Publish</button>
-                            <?php } ?>
-                            <button class="skip" onclick="return preview_profile()">Preview</button>
-                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
+                            <button class="next" id="firststep-proceed-btn" onclick="return proceed_step();">Save & Proceed</button>
+                            <?php /* if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                              <button class="back" onclick="return publish_profile()">Publish</button>
+                              <?php } */ ?>
+                            <!--<button class="skip" onclick="return preview_profile()">Preview</button>-->
+                            <button class="save_update" onclick="return save_finish();">Save & Exit</button>
                         </div>
                     </div>
-                    <div id="second-step" class="profile-steps tab-pane">
+                    <div id="second-step" class="profile-steps tab-pane <?php echo $tribute_class ?>">
+                        <div class="step-title">
+                            <h2>Create a Tribute Fundraiser <small>(optional)</small> </h2>
+                            <p>If desired, create a Tribute Fundraiser in honor of your loved one.</p>
+                        </div>
+                        <div class="step-form">
+                            <div class="step-06">
+                                <form method="post" id="fundraiser_profile-form" enctype="multipart/form-data">
+                                    <div class="step-06-l">
+                                        <div class="input-wrap">
+                                            <label class="label-css">Tribute Fundraiser Title.</label>
+                                            <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?> <?php if ($fundraiser_allow_edits == 0) echo "readonly"; ?>>
+                                        </div>
+                                        <div class="input-wrap">
+                                            <div class="input-l">
+                                                <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>>
+                                                <p>Minimum goal is $250.</p>
+                                            </div>
+                                            <!--                                            <div class="input-r">
+                                                                                            <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
+                                                                                            <p>Leave empty ongoing fundraising campaigns.</p>
+                                                                                        </div>-->
+                                        </div>
+                                        <div class="input-wrap">
+                                            <label class="label-css">Description</label>
+                                            <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you. Explain why you created this fundraiser and how the funds will be used. You may also want to include when the funds are needed." <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?> <?php if ($fundraiser_allow_edits == 0) echo "readonly"; ?>><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
+                                        </div>
+                                        <div class="input-wrap">
+                                            <label class="label-css">You need to create your Wepay account for collecting funds. Please click on below button to start</label>
+                                            <?php
+                                            $auth_btn_style = '';
+                                            $success_msg_style = 'style="display:none"';
+                                            $wepay_connected = 0;
+                                            if (isset($fundraiser) && !empty($fundraiser) && $fundraiser['wepay_account_id'] != '' && $fundraiser['wepay_access_token'] != '') {
+                                                $auth_btn_style = 'style="display:none"';
+                                                $success_msg_style = '';
+                                                $wepay_connected = 1;
+                                            }
+                                            ?>
+                                            <div class="wepay_auth_btn" <?php echo $auth_btn_style ?>>
+                                                <a id="start_oauth2">Click here to create your WePay account</a>
+                                            </div>
+                                            <div class="wepay_success_msg alert alert-success" <?php echo $success_msg_style ?>>
+                                                You have successfully created WePay account for this profile. 
+                                            </div>
+                                        </div>
+                                        <div class="input-wrap"><p>Note: The Tribute Fundraiser is free to create. If there are no donations to your fundraiser, then it’s free to you. There is a flat 7.9% service fee that will be deducted from donations received, which includes WePay's service fee and transaction fee.</p></div>
+                                    </div> 
+                                    <div class="step-06-r">
+                                        <div class="select-file">
+                                            <div class="select-file-upload"> 
+                                                <span class="select-file_up_btn">Upload images, Or Videos to fundraiser page <span>Select Files</span></span>
+                                                <input type="file" name="fundraiser_media[]" id="fundraiser_media" multiple> 
+                                            </div>
+                                        </div>
+                                        <ul class="select-gallery">
+                                            <?php
+                                            $fundimage_count = $fundvideo_count = 0;
+                                            if (isset($fundraiser)) {
+                                                foreach ($fundraiser_media as $key => $value) {
+                                                    if ($value['type'] == 1) {
+                                                        $fundimage_count++;
+                                                        ?>
+                                                        <li>
+                                                            <div class="gallery-wrap">
+                                                                <span>
+                                                                    <a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="image" rel="fundraiser">
+                                                                        <img src="<?php echo base_url() . FUNDRAISER_IMAGES . $value['media']; ?>" alt="" style="width:100%" class="profile-exif-img">
+                                                                    </a>
+                                                                </span>
+                                                                <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
+                                                            </div>
+                                                        </li>
+                                                        <?php
+                                                    } else {
+                                                        $fundvideo_count++;
+                                                        ?>
+                                                        <li>
+                                                            <div class="gallery-wrap">
+                                                                <span>
+                                                                    <img src="<?php echo FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $value['media']) ?>" style="width:100%">
+                                                                    <span class="gallery-play-btn"><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="fundraiser"><img src="assets/images/play.png" alt=""></a></span>
+                                                                </span>
+                                                                <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
+                                                            </div>
+                                                        </li>
+                                                        <?php
+                                                    }
+                                                }
+                                            }
+                                            ?>
+                                            <div id="fundraiser_preview"></div>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="step-btm-btn">
+                            <button class="next" onclick="return proceed_step();">Save & Proceed</button>
+                            <?php /* if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                              <button class="back" onclick="return publish_profile()">Publish</button>
+                              <?php } */ ?>
+                            <!--<button class="skip" onclick="return preview_profile(this)">Preview</button>-->
+                            <button class="save_update" onclick="return save_finish();">Save & Exit</button>
+                        </div>
+                    </div>
+                    <div id="third-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Create Life Gallery <small>(optional)</small> </h2>
                             <p>Add Photo/Video files of your loved one. <br/> You will be able to add more or remove previously uploaded files later.</p>
@@ -208,7 +326,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                             $image_count++;
                                                             ?>
                                                             <a href="<?php echo PROFILE_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="image" rel="upload_gallery">
-                                                                <img src="<?php echo PROFILE_IMAGES . $value['media'] ?>">
+                                                                <img src="<?php echo PROFILE_IMAGES . $value['media'] ?>" class="profile-exif-img">
                                                             </a>
                                                             <?php
                                                         } else {
@@ -269,15 +387,15 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             <div id="dvPreview"></div>
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
-                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
-                                <button class="back" onclick="return publish_profile()">Publish</button>
-                            <?php } ?>
-                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
-                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
+                            <button class="next" onclick="return proceed_step();">Save & Proceed</button>
+                            <?php /* if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                              <button class="back" onclick="return publish_profile()">Publish</button>
+                              <?php } */ ?>
+                            <!--<button class="skip" onclick="return preview_profile(this)">Preview</button>-->
+                            <button class="save_update" onclick="return save_finish();">Save & Exit</button>
                         </div>
                     </div>
-                    <div id="third-step" class="profile-steps tab-pane">
+                    <div id="third1-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Add A Fun Facts <small>(optional)</small> </h2>
                             <p>Add up to 10 fun facts about your loved one.<br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
@@ -340,15 +458,15 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>	
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
-                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
-                                <button class="back" onclick="return publish_profile()">Publish</button>
-                            <?php } ?>
-                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
-                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
+                            <button class="next" onclick="return proceed_step();">Save & Proceed</button>
+                            <?php /* if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                              <button class="back" onclick="return publish_profile()">Publish</button>
+                              <?php } */ ?>
+                            <!--<button class="skip" onclick="return preview_profile(this)">Preview</button>-->
+                            <button class="save_update" onclick="return save_finish();">Save & Exit</button>
                         </div>
                     </div>
-                    <div id="third1-step" class="profile-steps tab-pane">
+                    <div id="forth-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Add Affilliations <small>(optional)</small> </h2>
                             <p>Add up to 10 Affiliations of your loved one. <br/> You will be able to add more (up to 10) or remove previously entered ones later.</p>
@@ -411,15 +529,15 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </div>	
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
-                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
-                                <button class="back" onclick="return publish_profile()">Publish</button>
-                            <?php } ?>
-                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
-                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
+                            <button class="next" onclick="return proceed_step();">Save & Proceed</button>
+                            <?php /* if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                              <button class="back" onclick="return publish_profile()">Publish</button>
+                              <?php } */ ?>
+                            <!--<button class="skip" onclick="return preview_profile(this)">Preview</button>-->
+                            <button class="save_update" onclick="return save_finish();">Save & Exit</button>
                         </div>
                     </div>
-                    <div id="forth-step" class="profile-steps tab-pane">
+                    <div id="fifth-step" class="profile-steps tab-pane">
                         <div class="step-title">
                             <h2>Life Timeline <small>(optional)</small> </h2>
                             <p>Enter information about important milestones in your loved one's life.</p>
@@ -487,7 +605,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                                 if ($value['timeline_media'] != '') {
                                                                     if ($value['media_type'] == 1) {
                                                                         ?>
-                                                                        <img src="<?php echo PROFILE_IMAGES . $value['timeline_media'] ?>" style="width: 170px; border-radius: 2px;" alt="">
+                                                                        <img src="<?php echo PROFILE_IMAGES . $value['timeline_media'] ?>" style="width: 170px; border-radius: 2px;" alt="" class="profile-exif-img">
                                                                     <?php } else if ($value['media_type'] == 2) {
                                                                         ?>
                                                                         <video style="width:100%;" controls><source src="<?php echo PROFILE_IMAGES . $value['timeline_media'] ?>">Your browser does not support HTML5 video.</video>
@@ -557,25 +675,25 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                             </form>
                         </div>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
-                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
-                                <button class="back" onclick="return publish_profile()">Publish</button>
-                            <?php } ?>
-                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
-                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
+                            <button class="next" onclick="return proceed_step();">Save & Proceed</button>
+                            <?php /* if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                              <button class="back" onclick="return publish_profile()">Publish</button>
+                              <?php } */ ?>
+                            <!--<button class="skip" onclick="return preview_profile(this)">Preview</button>-->
+                            <button class="save_update" onclick="return save_finish();">Save & Exit</button>
                         </div>
                     </div>
-                    <div id="fifth-step" class="profile-steps tab-pane">
+                    <div id="sixth-step" class="profile-steps tab-pane">
                         <div class="step-title">
-                            <h2>Add Funeral Services <small>(optional)</small> </h2>
-                            <p>If necessary, enter funeral services information. You will be able to remove this information later.</p>
+                            <h2>Add Memorial Services Information <small>(optional)</small> </h2>
+                            <p>If necessary, enter memorial services information. You will be able to remove this information later.</p>
                         </div>
                         <form id="funeralservice-form" method="post">
                             <div class="step-form">
                                 <div class="step-05">
                                     <div class="step-05-l">
                                         <div class="input-wrap">
-                                            <label class="label-css">Memorial Services & Viewing Section.</label>
+                                            <label class="label-css">Memorial Service & Viewing Info.</label>
                                             <div class="input-l">
                                                 <input type="text" name="memorial_date" id="memorial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo date('m/d/Y', strtotime($memorial_service['date'])) ?>">
                                             </div>
@@ -649,10 +767,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 <input type="text" name="memorial_zip" id="memorial_zip" placeholder="Zip" class="input-css services-zip" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['zip'] ?>">
                                             </div>
                                         </div>
+                                        <div class="input-wrap">
+                                            <input type="text" name="memorial_additional_info" id="memorial_additional_info" placeholder="Any additional information" class="input-css services-zip" value="<?php if (isset($memorial_service) && !empty($memorial_service)) echo $memorial_service['additional_info'] ?>"/>
+                                        </div>
                                     </div>
                                     <div class="step-05-m">
                                         <div class="input-wrap">
-                                            <label class="label-css">Funeral Services section</label>
+                                            <label class="label-css">Funeral Service Info</label>
                                             <div class="input-l">
                                                 <input type="text" name="funeral_date" id="funeral_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo date('m/d/Y', strtotime($funeral_service['date'])) ?>">
                                             </div>
@@ -726,10 +847,13 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 <input type="text" name="funeral_zip" id="funeral_zip" placeholder="Zip" class="input-css services-zip" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['zip'] ?>">
                                             </div>
                                         </div>
+                                        <div class="input-wrap">
+                                            <input type="text" name="funeral_additional_info" id="funeral_additional_info" placeholder="Any additional information" class="input-css services-zip" value="<?php if (isset($funeral_service) && !empty($funeral_service)) echo $funeral_service['additional_info'] ?>"/>
+                                        </div>
                                     </div>
                                     <div class="step-05-r">
                                         <div class="input-wrap">
-                                            <label class="label-css">Burial Section</label>
+                                            <label class="label-css">Burial Service Info</label>
                                             <div class="input-l">
                                                 <input type="text" name="burial_date" id="burial_date" placeholder="Date" class="input-css service-datepicker" value="<?php if (isset($burial_service) && !empty($burial_service)) echo date('m/d/Y', strtotime($burial_service['date'])) ?>">
                                             </div>
@@ -803,119 +927,20 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                                 <input type="text" name="burial_zip" id="burial_zip" placeholder="Zip" class="input-css services-zip" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['zip'] ?>">
                                             </div>
                                         </div>
+                                        <div class="input-wrap">
+                                            <input type="text" name="burial_additional_info" id="burial_additional_info" placeholder="Any additional information" class="input-css services-zip" value="<?php if (isset($burial_service) && !empty($burial_service)) echo $burial_service['additional_info'] ?>"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </form>
                         <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
-                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
-                                <button class="back" onclick="return publish_profile()">Publish</button>
-                            <?php } ?>
-                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
-                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
-                        </div>
-                    </div>
-                    <div id="sixth-step" class="profile-steps tab-pane <?php echo $tribute_class ?>">
-                        <div class="step-title">
-                            <h2>Create a Tribute Fundraiser <small>(optional)</small> </h2>
-                            <p>If desired, create a Tribute Fundraiser in honor of your loved one.</p>
-                        </div>
-                        <div class="step-form">
-                            <div class="step-06">
-                                <form method="post" id="fundraiser_profile-form" enctype="multipart/form-data">
-                                    <div class="step-06-l">
-                                        <div class="input-wrap">
-                                            <label class="label-css">Tribute Fundraiser Title.</label>
-                                            <input type="text" name="fundraiser_title" id="fundraiser_title" placeholder="Provide a short descriptive title for the fundraiser" class="input-css" value="<?php if (isset($fundraiser)) echo $fundraiser['title'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?> <?php if ($fundraiser_allow_edits == 0) echo "readonly"; ?>>
-                                        </div>
-                                        <div class="input-wrap">
-                                            <div class="input-l">
-                                                <input type="number" name="fundraiser_goal" id="fundraiser_goal" placeholder="Fundraising Goal ($)" class="input-css" min="0" value="<?php if (isset($fundraiser)) echo $fundraiser['goal'] ?>" <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?>>
-                                                <p>Minimum goal is $250.</p>
-                                            </div>
-                                            <!--                                            <div class="input-r">
-                                                                                            <input type="text" name="fundraiser_enddate" id="fundraiser_enddate" placeholder="End Date" class="input-css" value="<?php if (isset($fundraiser)) echo date('m/d/Y', strtotime($fundraiser['end_date'])) ?>">
-                                                                                            <p>Leave empty ongoing fundraising campaigns.</p>
-                                                                                        </div>-->
-                                        </div>
-                                        <div class="input-wrap">
-                                            <label class="label-css">Description</label>
-                                            <textarea class="input-css textarea-css" name="fundraiser_details" id="fundraiser_details" placeholder="Describe your loved one and his or her relation to you;explain why you are running this fundraiser, what the funds will be used for, and when the funds are needed." <?php if (isset($fundraiser) && !empty($fundraiser)) echo "required" ?> <?php if ($fundraiser_allow_edits == 0) echo "readonly"; ?>><?php if (isset($fundraiser)) echo $fundraiser['details']; ?></textarea>
-                                        </div>
-                                        <div class="input-wrap">
-                                            <label class="label-css">You need to create your Wepay account for collecting funds. Please click on below button to start</label>
-                                            <?php
-                                            $auth_btn_style = '';
-                                            $success_msg_style = 'style="display:none"';
-                                            $wepay_connected = 0;
-                                            if (isset($fundraiser) && !empty($fundraiser) && $fundraiser['wepay_account_id'] != '' && $fundraiser['wepay_access_token'] != '') {
-                                                $auth_btn_style = 'style="display:none"';
-                                                $success_msg_style = '';
-                                                $wepay_connected = 1;
-                                            }
-                                            ?>
-                                            <div class="wepay_auth_btn" <?php echo $auth_btn_style ?>>
-                                                <a id="start_oauth2">Click here to create your WePay account</a>
-                                            </div>
-                                            <div class="wepay_success_msg alert alert-success" <?php echo $success_msg_style ?>>
-                                                You have successfully created WePay account for this profile. 
-                                            </div>
-                                        </div>
-                                        <div class="input-wrap"><p>Note: The Tribute Fundraiser is free to create. If there are no donations to your fundraiser, then there is no cost to you. There is a flat 7.9% service fee that will be deducted from donations received, which includes WePay's service fee and transaction fee.</p></div>
-                                    </div> 
-                                    <div class="step-06-r">
-                                        <div class="select-file">
-                                            <div class="select-file-upload"> 
-                                                <span class="select-file_up_btn">Upload images, Or Videos to fundraiser page <span>Select Files</span></span>
-                                                <!--<input type="file" name="fundraiser_media[]" id="fundraiser_media" multiple>--> 
-                                            </div>
-                                        </div>
-                                        <ul class="select-gallery">
-                                            <?php
-                                            $fundimage_count = $fundvideo_count = 0;
-                                            if (isset($fundraiser)) {
-                                                foreach ($fundraiser_media as $key => $value) {
-                                                    if ($value['type'] == 1) {
-                                                        $fundimage_count++;
-                                                        ?>
-                                                        <li>
-                                                            <div class="gallery-wrap">
-                                                                <span><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="image" rel="fundraiser"><img src="<?php echo base_url() . FUNDRAISER_IMAGES . $value['media']; ?>" alt="" style="width:100%"></a></span>
-                                                                <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
-                                                            </div>
-                                                        </li>
-                                                        <?php
-                                                    } else {
-                                                        $fundvideo_count++;
-                                                        ?>
-                                                        <li>
-                                                            <div class="gallery-wrap">
-                                                                <span>
-                                                                    <img src="<?php echo FUNDRAISER_IMAGES . str_replace('mp4', 'jpg', $value['media']) ?>" style="width:100%">
-                                                                    <span class="gallery-play-btn"><a href="<?php echo FUNDRAISER_IMAGES . $value['media'] ?>" class="fancybox" data-fancybox-type="iframe" rel="fundraiser"><img src="assets/images/play.png" alt=""></a></span>
-                                                                </span>
-                                                                <a href="javascript:void(0)" class="remove-video" onclick="delete_fundajaxmedia(this, '<?php echo base64_encode($value['id']) ?>')"><?php $this->load->view('delete_svg'); ?></a>
-                                                            </div>
-                                                        </li>
-                                                        <?php
-                                                    }
-                                                }
-                                            }
-                                            ?>
-                                            <div id="fundraiser_preview"></div>
-                                        </ul>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="step-btm-btn">
-                            <button class="next" onclick="return proceed_step();">Save/Proceed</button>
-                            <?php if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
-                                <button class="back" onclick="return publish_profile()">Publish</button>
-                            <?php } ?>
-                            <button class="skip" onclick="return preview_profile(this)">Preview</button>
-                            <button class="save_update" onclick="return save_finish();">Save and Finish Later</button>
+                            <button class="next" onclick="return proceed_step();">Save & Proceed</button>
+                            <?php /* if (!isset($profile) || (isset($profile) && $profile['is_published'] == 0)) { ?>
+                              <button class="back" onclick="return publish_profile()">Publish</button>
+                              <?php } */ ?>
+                            <!--<button class="skip" onclick="return preview_profile(this)">Preview</button>-->
+                            <button class="save_update" onclick="return save_finish();">Save & Exit</button>
                         </div>
                     </div>
                     <div id="seventh-step" class="profile-steps tab-pane">
@@ -1015,7 +1040,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
     currentTab = 'first-step';
     tributeClass = '<?php echo $tribute_class ?>';
     if (tributeClass != '') {
-        currentTab = 'sixth-step';
+        currentTab = 'second-step';
     }
     curr_url = window.location.href;
 
