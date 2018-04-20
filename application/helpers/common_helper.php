@@ -25,8 +25,8 @@ function send_mail($to = '', $template = '', $data = []) {
     $config['protocol'] = 'smtp';
     $config['smtp_host'] = 'ssl://smtp.gmail.com';
     $config['smtp_port'] = '465';
-    $config['smtp_user'] = 'pav.narola@gmail.com';
-    $config['smtp_pass'] = 'narola21';
+    $config['smtp_user'] = 'support@rememberalways.com';
+    $config['smtp_pass'] = 'N0rm11$$';
     $config['charset'] = 'utf-8';
     $config['newline'] = "\r\n";
     $config['mailtype'] = 'html';
@@ -119,7 +119,8 @@ function slug($text, $table, $id = NULL) {
     // lowercase
     $text = strtolower($text);
 
-    $used_actions = ['create', 'edit', 'index', 'publish', 'share', 'create_profile', 'profile_landing', 'fundraiser_landing',
+    $used_actions = ['create', 'edit', 'index', 'publish', 'share', 'create_profile',
+        'create_online_memorial_life_profile', 'create_tribute_fundraiser', 'sociallogin', 'socialprofile',
         'load_gallery', 'load_posts', 'load_timeline', 'view_timeline', 'upload_cover_image', 'upload_gallery', 'delete_gallery', 'proceed_steps',
         'add_facts', 'check_facts', 'delete_facts', 'add_affiliation', 'check_affiliation', 'delete_affiliation', 'add_timeline', 'delete_timeline',
         'lifetimeline', 'get_states', 'get_cities', 'add_services', 'add_fundraiser', 'delete_fundmedia', 'upload_post', 'delete_post', 'send_profile_email'];
@@ -165,11 +166,15 @@ function slug($text, $table, $id = NULL) {
  * @param string $image_path
  * @return array - Either name of the image if uploaded successfully or Array of errors if image is not uploaded successfully
  */
-function upload_image($image_name, $image_path) {
+function upload_image($image_name, $image_path, $given_name = '') {
 
     $CI = & get_instance();
     $extension = explode('/', $_FILES[$image_name]['type']);
-    $randname = uniqid() . time() . '.' . end($extension);
+    if ($given_name != '') {
+        $randname = $given_name . '.' . end($extension);
+    } else {
+        $randname = uniqid() . time() . '.' . end($extension);
+    }
     $config = array(
         'upload_path' => $image_path,
         'allowed_types' => "png|jpg|jpeg|gif",
