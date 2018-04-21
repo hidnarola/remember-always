@@ -21,14 +21,69 @@ class Login extends CI_Controller {
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
             $data['error'] = validation_errors();
+            $data['success'] = false;
         } else {
+            if ($this->input->get('type') == 'ajax') {
+                $profile_id = base64_decode($this->input->post('profile_id'));
+                if (isset($_FILES['post_upload']) && !empty($_FILES['post_upload']['name'][0])) {
+                    $directory = 'profile_' . $profile_id;
+                    if (!file_exists(POST_IMAGES . $directory)) {
+                        mkdir(POST_IMAGES . $directory);
+                        chmod(POST_IMAGES . $directory, 0777);
+                    }
+                    foreach ($_FILES['post_upload']['name'] as $key => $value) {
+                        $extension = explode('/', $_FILES['post_upload']['type'][$key]);
+                        $_FILES['custom_image']['name'] = $_FILES['post_upload']['name'][$key];
+                        $_FILES['custom_image']['type'] = $_FILES['post_upload']['type'][$key];
+                        $_FILES['custom_image']['tmp_name'] = $_FILES['post_upload']['tmp_name'][$key];
+                        $_FILES['custom_image']['error'] = $_FILES['post_upload']['error'][$key];
+                        $_FILES['custom_image']['size'] = $_FILES['post_upload']['size'][$key];
+                        if ($this->input->post('post_types')[$key] == 1) {
+                            $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory);
+                        } else {
+                            $image_data = upload_multiple_image('custom_image', end($extension), POST_IMAGES . $directory, 'video', 'mp4');
+                        }
+                        if (!is_array($image_data)) {
+                            $image = $image_data;
+                            $dataArr_media[] = array(
+                                'media' => $directory . '/' . $image,
+                                'type' => $this->input->post('post_types')[$key],
+                                'created_at' => date('Y-m-d H:i:s'),
+                            );
+                        }
+                    }
+                }
+                if (!empty(trim($this->input->post('comment')))) {
+                    $dataArr = array(
+                        'profile_id' => $profile_id,
+                        'user_id' => $this->session->userdata('remalways_user')['id'],
+                        'created_at' => date('Y-m-d H:i:s'),
+                    );
+
+                    $dataArr['comment'] = trim($this->input->post('comment'));
+
+                    $id = $this->users_model->common_insert_update('insert', TBL_POSTS, $dataArr);
+                    if (isset($dataArr_media) && !empty($dataArr_media)) {
+                        foreach ($dataArr_media as $key => $value) {
+                            $dataArr_media[$key]['post_id'] = $id;
+                        }
+                        $this->users_model->batch_insert_update('insert', TBL_POST_MEDIAS, $dataArr_media);
+                    }
+                    $this->session->set_flashdata('success', 'Post details has been inserted successfully.');
+                }
+
+                $data['success'] = true;
 //            $this->session->set_flashdata('success', 'Logged in successfully!');
-        }
-        //-- If redirect is set in URL then redirect user back to that page
-        if ($this->input->get('redirect')) {
-            redirect(base64_decode($this->input->get('redirect')));
-        } else {
-            redirect('/');
+            }
+            //-- If redirect is set in URL then redirect user back to that page
+            if ($this->input->get('type') == 'ajax') {
+                echo json_encode($data);
+                exit;
+            } else if ($this->input->get('redirect')) {
+                redirect(base64_decode($this->input->get('redirect')));
+            } else {
+                redirect('/');
+            }
         }
     }
 
@@ -40,16 +95,22 @@ class Login extends CI_Controller {
         $result = $this->users_model->get_user_detail(['email' => trim($this->input->post('email')), 'is_delete' => 0, 'role' => 'user']);
         if (!empty($result)) {
             if (!password_verify($this->input->post('password'), $result['password'])) {
-                $this->session->set_flashdata('error', 'Invalid Email/Password.');
+                if ($this->input->get('type') != 'ajax') {
+                    $this->session->set_flashdata('error', 'Invalid Email/Password.');
+                }
                 $this->form_validation->set_message('login_validation', 'Invalid Email/Password.');
                 return FALSE;
             } elseif ($result['is_verify'] == 0) {
                 $resend_link = site_url('signup/resend_verification?uid=' . base64_encode($result['id']));
-                $this->session->set_flashdata('error', 'You have not verified your email yet! Please verify it first. <a href=\'' . $resend_link . '\'>Click here</a> to resend verification email.');
+                if ($this->input->get('type') != 'ajax') {
+                    $this->session->set_flashdata('error', 'You have not verified your email yet! Please verify it first. <a href=\'' . $resend_link . '\'>Click here</a> to resend verification email.');
+                }
                 $this->form_validation->set_message('login_validation', 'You have not verified your email yet! Please verify it first. <a href="' . $resend_link . '">Click here</a> to resend verification email.');
                 return FALSE;
             } elseif ($result['is_active'] == 0) {
-                $this->session->set_flashdata('error', 'Your account is blocked! Please contact system Administrator.');
+                if ($this->input->get('type') != 'ajax') {
+                    $this->session->set_flashdata('error', 'Your account is blocked! Please contact system Administrator.');
+                }
                 $this->form_validation->set_message('login_validation', 'Your account is blocked! Please contact system Administrator.');
                 return FALSE;
             } else {
@@ -61,7 +122,9 @@ class Login extends CI_Controller {
                 return TRUE;
             }
         } else {
-            $this->session->set_flashdata('error', 'Invalid Email/Password');
+            if ($this->input->get('type') != 'ajax') {
+                $this->session->set_flashdata('error', 'Invalid Email/Password');
+            }
             $this->form_validation->set_message('login_validation', 'Invalid Email/Password.');
             return FALSE;
         }

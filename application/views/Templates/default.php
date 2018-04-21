@@ -51,7 +51,7 @@
         <link href="assets/css/owl.carousel.css" rel="stylesheet" />
         <link href="assets/css/jquery.mCustomScrollbar.min.css" rel="stylesheet" />
         <link href="assets/css/sweetalert2.css" rel="stylesheet" type="text/css">
-        <link href="assets/css/style.css?t=123" rel="stylesheet" />
+        <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
         <link href="assets/css/developer.css" rel="stylesheet" />
         <link href="assets/css/responsive.css" rel="stylesheet" />
@@ -154,11 +154,11 @@
                         <form method="post" id="login-form" action="<?php echo site_url('login') ?>">
                             <div class="popup-input">
                                 <label>Email</label>
-                                <input type="text" name="email" placeholder="support@gmail.com" />
+                                <input type="text" name="email" id="loginpop_email" placeholder="support@gmail.com" />
                             </div>
                             <div class="popup-input">
                                 <label>Password</label>
-                                <input type="password" name="password" placeholder="password" />
+                                <input type="password" name="password" id="loginpop_password"  placeholder="password" />
                             </div>
                             <div class="keep-me">
                                 <label class="custom-checkbox">keep me signed in
@@ -233,7 +233,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="log-in">
-                            <form method="post" id="login-form" action="<?php //echo site_url('login')                         ?>">
+                            <form method="post" id="login-form" action="<?php //echo site_url('login')                          ?>">
                                 <div class="popup-input">
                                     <label>Email</label>
                                     <input type="text" name="email" placeholder="support@gmail.com" />
@@ -257,13 +257,13 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                         ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                         ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                          ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                          ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>
 <div role="tabpanel" class="tab-pane" id="sign-up">
- <form method="post" id="signup-form" action="<?php //echo site_url('signup')                         ?>">
+ <form method="post" id="signup-form" action="<?php //echo site_url('signup')                          ?>">
      <div class="popup-input">
          <label>Email</label>
          <input type="text" name="email" placeholder="support@gmail.com" />
@@ -299,8 +299,8 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                         ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                         ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                          ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                          ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>

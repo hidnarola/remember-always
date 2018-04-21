@@ -593,3 +593,43 @@ $(document).on('click', '.delete_post', function () {
 //        }
     });
 });
+$(document).on('click', '#login_form_btn', function (e) {
+    if ($('#login-form').valid()) {
+        e.preventDefault();
+
+        var postformData = new FormData();
+        postformData.append('comment', $('#comment').val());
+        postformData.append('email', $('#loginpop_email').val());
+        postformData.append('password', $('#loginpop_password').val());
+        postformData.append('profile_id', profile_id);
+        $(post_data).each(function (key) {
+            if (post_data[key] != null) {
+                post_types[key] = [];
+                post_types[key] = post_data[key]['media_type'];
+                postformData.append('post_upload[]', post_data[key], post_data[key].name);
+                postformData.append('post_types[]', post_types[key]);
+            }
+        });
+        $('.loader').show();
+        $.ajax({
+            url: site_url + "login?type=ajax",
+            type: "POST",
+            data: postformData,
+            dataType: "json",
+            processData: false, // tell jQuery not to process the data
+            contentType: false, // tell jQuery not to set contentType
+            success: function (data) {
+                $('.loader').hide();
+                if (data.success == true) {
+                    //-- Remove default preview div
+                    window.location.href = site_url + 'profile/' + slug;
+
+                } else {
+                    showErrorMSg(data.error);
+                }
+            }
+        });
+    } else {
+        console.log('not hereee');
+    }
+});
