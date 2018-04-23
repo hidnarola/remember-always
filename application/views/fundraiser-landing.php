@@ -12,7 +12,7 @@
                 </div>	
             </div>
             <div class="img-wrap-div">
-                <img src="assets/images/Remember_Always_platform_profile_image.jpg" alt="Remember Always platform profile image" />
+                <img src="assets/images/Remember_Always_platform_profile_image.jpg" alt="Remember Always platform profile image" title="Remember Always platform profile image"/>
                 <p>Get the support you need.<br/>Others will be honored to help</p>
             </div>
         </div>	
@@ -39,7 +39,7 @@
                 <p>You can easily update it later to make the Life Profile as simple or as robust as you like. </p>
             </div>
             <div class="img-wrap-div">
-                <img src="assets/images/Remember_Always_Tribute_Fundraiser_creation_image.jpg" alt="Remember Always profile Tribute Fundraiser creation image" />
+                <img src="assets/images/Remember_Always_Tribute_Fundraiser_creation_image.jpg" alt="Remember Always profile Tribute Fundraiser creation image" title="Remember Always profile Tribute Fundraiser creation image"/>
                 <p>Easy to create, receive funds quickly.</p>
             </div>
         </div>	
@@ -50,7 +50,7 @@
     <div class="container">
         <div class="column-wrap">
             <div class="img-wrap-div">
-                <img src="assets/images/Remember_Always_Tribute_Fundraiser_image.jpg" alt="Remember Always Tribute Fundraiser screenshot image" />
+                <img src="assets/images/Remember_Always_Tribute_Fundraiser_image.jpg" alt="Remember Always Tribute Fundraiser screenshot image" title="Remember Always Tribute Fundraiser screenshot image"/>
                 <p>Others will be able to  easily donate from near and far.</p>
             </div>
             <div class="text-wrap">

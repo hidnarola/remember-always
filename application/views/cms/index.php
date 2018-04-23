@@ -6,7 +6,7 @@
         <div class="common-body about">
             <?php if (isset($page_data['banner_image']) && !is_null($page_data['banner_image'])) { ?>
                 <div class="cms-banner-img">
-                    <img src="<?php echo PAGE_BANNER . $page_data['banner_image'] ?>" alt="<?php echo ($page_data['slug'] == 'about') ? 'Remember Always family looking at photos on a tablet' : ($page_data['slug'] == 'features') ? 'Remember Always family looking at photo' : '' ?>" />
+                    <img src="<?php echo PAGE_BANNER . $page_data['banner_image'] ?>" alt="<?php echo ($page_data['slug'] == 'about') ? 'Remember Always family looking at photos on a tablet' : ($page_data['slug'] == 'features') ? 'Remember Always family looking at photo' : '' ?>" title="<?php echo ($page_data['slug'] == 'about') ? 'Remember Always family looking at photos on a tablet' : ($page_data['slug'] == 'features') ? 'Remember Always family looking at photo' : '' ?>"/>
                 </div>
             <?php } ?>
             <div class="cms-content">

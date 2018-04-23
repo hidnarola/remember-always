@@ -27,7 +27,7 @@
                 $img_class = '';
             }
             ?>
-            <img class='<?php echo $img_class ?>' src="<?php echo $img_url ?>" alt="<?php echo $profile['firstname'] . ' ' . $profile['lastname'] . ' Online Memorial Remember Always' ?>" style='width:170px;height:176px;'>
+            <img class='<?php echo $img_class ?>' src="<?php echo $img_url ?>" alt="<?php echo $profile['firstname'] . ' ' . $profile['lastname'] . ' Online Memorial Remember Always' ?>" title="<?php echo $profile['firstname'] . ' ' . $profile['lastname'] . ' Online Memorial Remember Always' ?>" style='width:170px;height:176px;'>
         </div>
         <div class="profile-title-body">
             <h4><?php

@@ -46,7 +46,7 @@
                                         }
                                         echo "<a href='" . $visit_url . "'>";
                                         if ($result['image'] != '') {
-                                            echo "<img src='" . PROFILE_IMAGES . $result['image'] . "' alt='" . $result['name'] . " Online Memorial Remember Always' class='profile-exif-img'>";
+                                            echo "<img src='" . PROFILE_IMAGES . $result['image'] . "' alt='" . $result['name'] . " Online Memorial Remember Always' title='" . $result['name'] . " Online Memorial Remember Always' class='profile-exif-img'>";
                                         } else {
                                             echo "<img src='assets/images/no_image.png' alt='' width='100%'>";
                                         }

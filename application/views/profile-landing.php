@@ -11,7 +11,7 @@
                 </div>	
             </div>
             <div class="img-wrap-div">
-                <img src="assets/images/Remember_Always_platform_profile_image.jpg" alt="Remember Always platform profile image" />
+                <img src="assets/images/Remember_Always_platform_profile_image.jpg" alt="Remember Always platform profile image" title="Remember Always platform profile image"/>
                 <p>A great way to honor your loved one’s life.</p>
             </div>
         </div>	
@@ -38,7 +38,7 @@
                 <p>You can make it as simple or as robust as you like, and can easily add and update later.</p>
             </div>
             <div class="img-wrap-div">
-                <img src="assets/images/Remember_Always_memorial_Life_Timeline_image.jpg" alt="Remember Always memorial Life Timeline image" />
+                <img src="assets/images/Remember_Always_memorial_Life_Timeline_image.jpg" alt="Remember Always memorial Life Timeline image" title="Remember Always memorial Life Timeline image"/>
                 <p>Share your loved one’s life story vividly.</p>
             </div>
         </div>	
@@ -49,7 +49,7 @@
     <div class="container">
         <div class="column-wrap">
             <div class="img-wrap-div">
-                <img src="assets/images/Remember_Always_Tribute_Fundraiser_image.jpg" alt="Remember Always Tribute Fundraiser screenshot image" />
+                <img src="assets/images/Remember_Always_Tribute_Fundraiser_image.jpg" alt="Remember Always Tribute Fundraiser screenshot image" title="Remember Always Tribute Fundraiser screenshot image"/>
                 <p>Get the support you need. <br/>Others will be honored to help.</p>
             </div>
             <div class="text-wrap">
@@ -121,7 +121,7 @@
                 <p>Easily share the Life Profile, including the fundraiser, with family and friends, near and far <br/> Allow others to share memories (stories, pictures, and videos), express support  <br/> and sympathy. Remember together and support each other in your loved one’s honor. </p>
             </div>
             <div class="img-wrap-div">
-                <img src="assets/images/Remember_Always_memorial_post_image.jpg" alt="Remember Always memorial post image" />
+                <img src="assets/images/Remember_Always_memorial_post_image.jpg" alt="Remember Always memorial post image" title="Remember Always memorial post image"/>
                 <p>Great memories live on.</p>
             </div>
         </div>	
