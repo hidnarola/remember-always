@@ -308,7 +308,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                                     <li>
                                         <div class="gallery-upload-wrap">
                                             <div class="gallery-upload"> 
-                                                <span class="gallery_up_btn">Upload Life Gallery</span>
+                                                <span class="gallery_up_btn">Click here to Upload Photo</span>
                                                 <input type="file" name="gallery[]" id="gallery" multiple> 
                                             </div>
                                         </div>

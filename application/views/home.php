@@ -224,7 +224,7 @@
                                 <a href="<?php echo site_url('dashboard/profiles') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
                             <?php } ?>
                         <?php } else { ?>
-                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
+                            <a href="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
                         <?php } ?>
                     </h3>
                     <p>Get support for your loved <br/> one’s charity, foundation, or expenses.</p>

@@ -35,9 +35,7 @@
                             <div class="step-01-l-wrap">
                                 <div class="step-01-l">
                                     <div class="upload-btn"> 
-                                        <span class="up_btn" id="profile-img-spn">
-                                            Upload Profile Picture
-                                        </span>
+                                        <span class="up_btn" id="profile-img-spn">Add Your Loved One's Profile Picture</span>
                                         <input type="file" name="profile_image" id="profile_image" multiple="false" onchange="readURL(this);" required> 
                                     </div>
                                     <label id="profile_image-error" class="error" for="profile_image"><?php echo (isset($profile_error)) ? $profile_error : form_error('profile_image') ?></label>
@@ -115,6 +113,10 @@
         <?php if (!$this->is_user_loggedin) { ?>
             <div class="container">
                 <div class="signup-wrap">
+                    <div class="popup-input social-btn">
+                        <a href="javascript:void(0)" class="social-btns" data-type="facebook" data-href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+                        <a href="javascript:void(0)" class="social-btns" data-type="google" data-href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
+                    </div>
                     <div class="sign-up-div">
                         <h2>
                             Create your account
@@ -125,7 +127,7 @@
                     <div class='login-signup-div'>
                         <div class='login-signup-l'>
                             <div class="upload-btn"> 
-                                <span class="up_btn" id="sign-img-spn">Add Your profile photo<br/>(optional)</span>
+                                <span class="up_btn" id="sign-img-spn">Add Your Account Photo<br/>(optional)</span>
                                 <input type="file" name="sign_profile_image" id="sign_profile_image" multiple="false" onchange="readIMG(this);">
                                 <label id="sign_profile_image-error" class="error" for="sign_profile_image"><?php echo form_error('sign_profile_image') ?></label>
                             </div>
@@ -171,10 +173,6 @@
                             <div class="popup-input">
                                 <input type="password" name="login_password" id="login_password" placeholder="Enter Password" />
                                 <label id="login_password-error" class="error" for="login_password"><?php echo form_error('login_password') ?></label>
-                            </div>
-                            <div class="popup-input social-btn">
-                                <a href="javascript:void(0)" class="social-btns" data-type="facebook" data-href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-                                <a href="javascript:void(0)" class="social-btns" data-type="google" data-href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
                             </div>
                         </div> 
                     </div>

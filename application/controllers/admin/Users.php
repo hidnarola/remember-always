@@ -94,12 +94,6 @@ class Users extends MY_Controller {
         $this->form_validation->set_rules('firstname', 'Firstname', 'trim|required');
         $this->form_validation->set_rules('lastname', 'Lastname', 'trim|required');
         $this->form_validation->set_rules('email', 'Email', 'trim|required' . $unique_email);
-        $this->form_validation->set_rules('address1', 'Address 1', 'trim|required');
-        $this->form_validation->set_rules('country', 'Country', 'trim|required');
-        $this->form_validation->set_rules('state', 'State', 'trim|required');
-        $this->form_validation->set_rules('city', 'City', 'trim|required');
-        $this->form_validation->set_rules('phone', 'Phone number', 'trim|required');
-        $this->form_validation->set_rules('zipcode', 'Zipcode', 'trim|required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->data['error'] = validation_errors();

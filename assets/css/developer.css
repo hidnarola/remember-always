@@ -90,6 +90,8 @@ label.error,label.error p  {
 .bio-tips{color:#999;}
 /*12-2-18 set line height normal*/
 .home-caption .text_p {line-height: normal;}
+.new-step .upload-btn .up_btn{text-transform: inherit !important}
+.signup-wrap .upload-btn .up_btn{text-transform: inherit !important}
 
 
 /*13-2-18 set image rotation classes */

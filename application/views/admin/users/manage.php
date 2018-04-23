@@ -45,7 +45,7 @@
         <div class="col-md-12">
             <div class="col-md-12">
                 <!-- Basic layout-->
-                <form  method="post" id="user_form" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
+                <form method="post" id="user_form" class="form-horizontal form-validate-jquery" enctype="multipart/form-data">
                     <div class="panel panel-flat">
                         <div class="panel-body">
                             <div class="form-group">
@@ -67,7 +67,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <label class="label-css">Address 1 <span class="text-danger">*</span></label>
+                                        <label class="label-css">Address 1</label>
                                         <input type="text" name="address1" class="form-control" value="<?php echo (isset($user_data['address1'])) ? $user_data['address1'] : set_value('address1') ?>">
                                     </div>
                                     <div class="col-md-6">
@@ -79,7 +79,7 @@
                             <div class="form-group mt-5">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label>Country: <span class="text-danger">*</span></label>
+                                        <label>Country: </label>
                                         <select name="country" id="country" class="form-control selectpicker">
                                             <option value="">-- Select Country --</option>
                                             <?php
@@ -98,7 +98,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>State: <span class="text-danger">*</span></label>
+                                        <label>State: </label>
                                         <select name="state" id="state" class="form-control selectpicker">
                                             <option value="">-- Select State --</option>
                                             <?php
@@ -117,8 +117,8 @@
                                         </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>City: <span class="text-danger">*</span></label>
-                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($affiliation['city']) ? $affiliation['city'] : set_value('city');                                           ?>">-->
+                                        <label>City: </label>
+                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($affiliation['city']) ? $affiliation['city'] : set_value('city');                                             ?>">-->
                                         <select name="city" id="city" class="form-control selectpicker">
                                             <option value="">-- Select City --</option>
                                             <?php
@@ -139,11 +139,11 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Zipcode: <span class="text-danger">*</span></label>
+                                <label>Zipcode: </label>
                                 <input type="text" name="zipcode" class="form-control" value="<?php echo (isset($user_data['zipcode'])) ? $user_data['zipcode'] : set_value('zipcode') ?>">
                             </div>
                             <div class="form-group">
-                                <label>Phone: <span class="text-danger">*</span></label>
+                                <label>Phone: </label>
                                 <input type="text" name="phone" class="form-control" value="<?php echo (isset($user_data['phone'])) ? $user_data['phone'] : set_value('phone') ?>">
                             </div>
                             <?php if (isset($user_data) && $user_data['facebook_id'] == '' && $user_data['google_id'] == '') { ?>
@@ -236,23 +236,9 @@
                     email: true
                 },
                 phone: {
-                    required: true,
                     phoneUS: true
                 },
-                address1: {
-                    required: true,
-                },
-                country: {
-                    required: true,
-                },
-                state: {
-                    required: true,
-                },
-                city: {
-                    required: true,
-                },
                 zipcode: {
-                    required: true,
                     customzipcode: true
                 },
 

@@ -1439,7 +1439,7 @@ select:-webkit-autofill {background-color:#fff !important;box-shadow: 4px 4px 4p
 
 .multi-btn a.publish-profile-btn{ border:2px solid #915674; color:#915674; padding:11px 10px 9px; text-align: center;  border-radius: 4px; margin: 0 0 0 15px; width: 152px; display: inline-block; vertical-align: top; font-family: 'Rubik'; font-size: 14px; font-weight: 500; text-transform: uppercase}
 .multi-btn a.publish-profile-btn:hover{background:#915674 !important; color:#fff;}
-.popup-input.social-btn {width:100%; margin:15px 0 0;}
+.popup-input.social-btn {width:100%; margin:0 0 15px;}
 .social-btn a{display:inline-block; vertical-align:top;}
 
 .top-section .img-wrap-div {margin-bottom: 100px !important;}
