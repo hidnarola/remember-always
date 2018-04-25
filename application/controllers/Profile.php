@@ -752,13 +752,14 @@ class Profile extends MY_Controller {
                         'slug' => $slug,
                         'profile_image' => $profile_image,
                         'life_bio' => $this->input->post('life_bio'),
-                        'date_of_birth' => $this->input->post('date_of_birth'),
-                        'date_of_death' => $this->input->post('date_of_death'),
+                        'date_of_birth' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_birth'))),
+                        'date_of_death' => date('Y-m-d H:i:s', strtotime($this->input->post('date_of_death'))),
                         'is_published' => 1,
                         'country' => $this->input->post('country'),
                         'state' => $state,
                         'city' => $city
                     ];
+
                     $this->session->set_userdata('profile', $profile);
                     $this->session->set_userdata('social_profile', 'yes');
                     $data['success'] = true;
