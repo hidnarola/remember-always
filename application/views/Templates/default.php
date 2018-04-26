@@ -152,6 +152,13 @@
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="log-in">
                         <form method="post" id="login-form" action="<?php echo site_url('login') ?>">
+                            <div class="login-options">
+                                <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+                                <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
+                            </div>
+                            <div class="popup-or">
+                                <span>OR</span>
+                            </div>
                             <div class="popup-input">
                                 <label>Email</label>
                                 <input type="text" name="email" id="loginpop_email" placeholder="support@gmail.com" />
@@ -170,17 +177,17 @@
                             <div class="pup-btn">
                                 <button type="submit" id="login_form_btn">LOG IN</button>
                             </div>
-                            <div class="popup-or">
-                                <span>OR</span>
-                            </div>
-                            <div class="login-options">
-                                <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-                                <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
-                            </div>
                         </form>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="sign-up">
                         <form method="post" id="signup-form" action="<?php echo site_url('signup') ?>">
+                            <div class="login-options">
+                                <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+                                <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
+                            </div>
+                            <div class="popup-or">
+                                <span>OR</span>
+                            </div>
                             <div class="popup-input">
                                 <label>Email</label>
                                 <input type="text" name="email" placeholder="support@gmail.com" />
@@ -211,13 +218,6 @@
                             <div class="pup-btn">
                                 <button type="submit" id="signup_form_btn">Sign UP</button>
                             </div>
-                            <div class="popup-or">
-                                <span>OR</span>
-                            </div>
-                            <div class="login-options">
-                                <a href="<?php echo site_url('facebook') ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-                                <a href="<?php echo site_url('google') ?>"><img src="assets/images/google-login.png" alt="" /></a>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -233,7 +233,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="log-in">
-                            <form method="post" id="login-form" action="<?php //echo site_url('login')                          ?>">
+                            <form method="post" id="login-form" action="<?php //echo site_url('login')                                ?>">
                                 <div class="popup-input">
                                     <label>Email</label>
                                     <input type="text" name="email" placeholder="support@gmail.com" />
@@ -257,13 +257,13 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                          ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                          ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                                ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                                ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>
 <div role="tabpanel" class="tab-pane" id="sign-up">
- <form method="post" id="signup-form" action="<?php //echo site_url('signup')                          ?>">
+ <form method="post" id="signup-form" action="<?php //echo site_url('signup')                                ?>">
      <div class="popup-input">
          <label>Email</label>
          <input type="text" name="email" placeholder="support@gmail.com" />
@@ -299,8 +299,8 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                          ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                          ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                                ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                                ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>
