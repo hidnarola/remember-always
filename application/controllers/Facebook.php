@@ -142,6 +142,17 @@ class Facebook extends My_Controller {
                     $this->session->set_flashdata('error', 'You account is blocked. Please contact system administrator');
                     redirect($redirect_url);
                 } else {
+                    $data = [
+                        'firstname' => $user->getFirstName(),
+                        'lastname' => $user->getLastName(),
+                        'profile_image' => $user->getPicture()->getUrl(),
+                        'login_access_token' => $token,
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ];
+                    //-- Update users data
+                    $this->users_model->common_insert_update('update', TBL_USERS, $data, ['id' => $db_user['id']]);
+                    $db_user = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['facebook_id' => $facebook_id]], ['single' => true]);
+
                     $this->session->set_userdata('remalways_user', $db_user);
                     $this->session->set_flashdata('success', 'You are now logged in with Facebook successfully');
                     redirect($redirect_url);

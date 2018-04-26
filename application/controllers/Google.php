@@ -56,6 +56,17 @@ class Google extends MY_Controller {
                         $this->session->set_flashdata('error', 'You account is blocked. Please contact system administrator');
                         redirect($redirect_url);
                     } else {
+                        $data = [
+                            'firstname' => $me["name"]['givenName'],
+                            'lastname' => $me["name"]['familyName'],
+                            'profile_image' => $me['image']['url'],
+                            'login_access_token' => $access_token['access_token'],
+                            'updated_at' => date('Y-m-d H:i:s')
+                        ];
+                        //-- Update users data
+                        $this->users_model->common_insert_update('update', TBL_USERS, $data, ['id' => $db_user['id']]);
+                        $db_user = $this->users_model->sql_select(TBL_USERS, '*', ['where' => ['google_id' => $google_id]], ['single' => true]);
+
                         $this->session->set_userdata('remalways_user', $db_user);
                         $this->session->set_flashdata('success', 'You are now logged in with Google successfully');
                         redirect($redirect_url);
