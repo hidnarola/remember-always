@@ -478,7 +478,7 @@ a.remove-video:hover{opacity:.7;}
 .comment-btm button{float:right;padding:10px;width:124px;line-height:18px;color:#fff;font-size:18px;font-weight:500;font-family:'Rubik';background:#57585a;border:2px solid #57585a;border-radius:4px;    transition: ease-in-out .5s;}
 .comment-btm button:hover{background:transparent;color:#57585a;}
 
-.comments-div{display:block;width:100%;padding:0;max-height:600px;}
+.comments-div{display:block;width:100%;padding-right:10px;max-height:600px;}
 .comments-div ul{ margin:0;padding:0;list-style:none;}
 .comments-div ul li{width:100%;padding:0 0 17px;margin:0 0 20px;border-bottom:1px solid #efefef;}
 .comments-div-wrap{padding:0 0 0 80px;min-height:100px;position:relative;}
