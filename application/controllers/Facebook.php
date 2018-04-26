@@ -82,7 +82,13 @@ class Facebook extends My_Controller {
                 echo "Error Reason: " . $helper->getErrorReason() . "\n";
                 echo "Error Description: " . $helper->getErrorDescription() . "\n";
                 $this->session->set_flashdata('error', $helper->getErrorDescription());
-                redirect('/');
+                
+                $social_session = $this->session->userdata('social_profile');
+                if ($social_session == 'yes') {
+                    redirect('profile/create_profile');
+                } else {
+                    redirect('/');
+                }
             } else {
                 header('HTTP/1.0 400 Bad Request');
                 echo 'Bad request';

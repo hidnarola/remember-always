@@ -744,6 +744,10 @@ class Profile extends MY_Controller {
                     }
                     $slug = slug($slug, TBL_PROFILES);
 
+                    $created_by = null;
+                    if ($this->input->post('created_by') != '')
+                        $created_by = $this->input->post('created_by');
+
                     $profile = [
                         'firstname' => $this->input->post('firstname'),
                         'middlename' => $this->input->post('middlename'),
@@ -757,7 +761,8 @@ class Profile extends MY_Controller {
                         'is_published' => 1,
                         'country' => $this->input->post('country'),
                         'state' => $state,
-                        'city' => $city
+                        'city' => $city,
+                        'created_by' => $created_by,
                     ];
 
                     $this->session->set_userdata('profile', $profile);

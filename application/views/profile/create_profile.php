@@ -43,26 +43,26 @@
                                 <div class="step-01-m">
                                     <label class="label-css">Add Profile Details</label>
                                     <div class="input-wrap">
-                                        <input type="text" id="firstname" name="firstname" placeholder="First Name" class="input-css" value="<?php echo set_value('firstname') ?>" required/>
+                                        <input type="text" id="firstname" name="firstname" placeholder="First Name" class="input-css" value="<?php echo (set_value('firstname') != '') ? set_value('firstname') : $this->session->userdata('profile')['firstname'] ?>" required/>
                                         <!--<label id="firstname-error" class="error" for="firstname"><?php echo form_error('firstname') ?></label>-->
                                     </div>
                                     <div class="input-wrap">
-                                        <input type="text" id="middlename" name="middlename" placeholder="Middle Name" class="input-css" value="<?php echo set_value('middlename') ?>" />
+                                        <input type="text" id="middlename" name="middlename" placeholder="Middle Name" class="input-css" value="<?php echo (set_value('middlename') != '') ? set_value('middlename') : $this->session->userdata('profile')['middlename'] ?>" />
                                     </div>
                                     <div class="input-wrap">
-                                        <input type="text" id="lastname" name="lastname" placeholder="Last Name" class="input-css" value="<?php echo set_value('lastname') ?>" required/>
+                                        <input type="text" id="lastname" name="lastname" placeholder="Last Name" class="input-css" value="<?php echo (set_value('lastname') != '') ? set_value('lastname') : $this->session->userdata('profile')['lastname'] ?>" required/>
                                         <!--<label id="lastname-error" class="error" for="lastname"><?php echo form_error('lastname') ?></label>-->
                                     </div>
                                     <div class="input-wrap">
-                                        <input type="text" name="nickname" id="nickname" placeholder="Nick Name" class="input-css" value="<?php echo set_value('nickname') ?>"/>
+                                        <input type="text" name="nickname" id="nickname" placeholder="Nick Name" class="input-css" value="<?php echo (set_value('nickname') != '') ? set_value('nickname') : $this->session->userdata('profile')['nickname'] ?>"/>
                                     </div>
                                     <div class="input-wrap">
                                         <div class="input-l">
-                                            <input type="text" name="date_of_birth" id="date_of_birth" placeholder="Born (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo set_value('date_of_birth') ?>" required/>
+                                            <input type="text" name="date_of_birth" id="date_of_birth" placeholder="Born (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo (set_value('date_of_birth') != '') ? set_value('date_of_birth') : date('m/d/Y', strtotime($this->session->userdata('profile')['date_of_birth'])) ?>" required/>
                                             <label id="date_of_birth-error" class="error" for="date_of_birth"><?php echo (isset($date_error)) ? $date_error : form_error('date_of_birth') ?></label>
                                         </div>
                                         <div class="input-r">
-                                            <input type="text" name="date_of_death" id="date_of_death" placeholder="Died (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo set_value('date_of_death') ?>" required/>
+                                            <input type="text" name="date_of_death" id="date_of_death" placeholder="Died (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo (set_value('date_of_death') != '') ? set_value('date_of_death') : date('m/d/Y', strtotime($this->session->userdata('profile')['date_of_death'])) ?>" required/>
                                             <label id="date_of_death-error" class="error" for="date_of_death"><?php echo form_error('date_of_death') ?></label>
                                         </div>
                                     </div>
@@ -95,13 +95,13 @@
                                     <div class="input-wrap creating-this">
                                         <p>Are you creating this profile on behalf of a person(s), family or families, or group(s)? You can enter that here. If not, leave it blank.</p>
                                         <label class="label-css">Created with love by [you] on behalf of  </label>
-                                        <input type="text" id="created_by" name="created_by" placeholder="(optional) Enter the name of the person, family or group" class="input-css" value="<?php echo (isset($profile)) ? $profile['created_by'] : set_value('created_by') ?>"/>
+                                        <input type="text" id="created_by" name="created_by" placeholder="(optional) Enter the name of the person, family or group" class="input-css" value="<?php echo (set_value('created_by') != '') ? set_value('created_by') : $this->session->userdata('profile')['created_by'] ?>"/>
                                     </div>
                                 </div>
                                 <div class="step-01-r">
                                     <div class="input-wrap">
                                         <label class="label-css">Life Bio (obituary)</label>
-                                        <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Describe your loved one's life. You can write as much as you like, but you need at least one sentence. You will be able to easily add more or update it later."><?php echo (isset($profile)) ? $profile['life_bio'] : set_value('life_bio') ?></textarea>
+                                        <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Describe your loved one's life. You can write as much as you like, but you need at least one sentence. You will be able to easily add more or update it later."><?php echo (set_value('life_bio') != '') ? set_value('life_bio') : $this->session->userdata('profile')['life_bio'] ?></textarea>
                                     </div>
                                 </div>
                             </div>	
