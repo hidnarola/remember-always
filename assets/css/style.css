@@ -2014,6 +2014,8 @@ select:-webkit-autofill {background-color:#fff !important;box-shadow: 4px 4px 4p
     .new-profiletitle h1 {font-size: 26px; line-height: normal;}
     .new-process{ margin:0 0 20px;}
     .new-step .step-01-m .input-wrap {width: 100%;}
+	.add_timeline_btn.label-css{ position:absolute; bottom:17px; left:20px; width:auto;}
+	.step-06 {padding:0 0 50px;}
 
 
 }
