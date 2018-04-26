@@ -1010,7 +1010,7 @@ $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 2
                 </form>
                 <div class="pup-btn">
                     <button type="button" onclick="return add_affiliation();" id="add-funfact-btn">Add</button>
-                    <a class="affiliation-btn" href="<?php echo site_url('affiliation') ?>" target="_blank">Go to Affiliations</a>
+                    <!--<a class="affiliation-btn" href="<?php echo site_url('affiliation') ?>" target="_blank">Go to Affiliations</a>-->
                 </div>
             </div>
         </div>
