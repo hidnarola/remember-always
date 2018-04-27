@@ -163,11 +163,7 @@
                             </g>
                         </svg></span>
                     <h3>
-                        <?php if ($this->is_user_loggedin) { ?>
-                            <a href="<?php echo site_url('profile/create_profile') ?>">Create <br/> a Life Profile</a>
-                        <?php } else { ?>
-                            <a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="<?php echo site_url('profile/create_profile') ?>">Create <br/> a Life Profile</a>
-                        <?php } ?>
+                        <a href="<?php echo site_url('profile/create_profile') ?>">Create <br/> a Life Profile</a>
                     </h3>
                     <p>Share your loved one’s life story <br/> vividly; add funeral details if necessary.</p>
                 </div>
