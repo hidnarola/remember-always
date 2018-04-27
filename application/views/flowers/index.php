@@ -1,5 +1,6 @@
 <?php
 $url = site_url($_SERVER['PATH_INFO']);
+$url = site_url('flowers');
 $category = '';
 if (isset($_GET['category']) && !empty($_GET['category'])) {
     $category = $_GET['category'];
@@ -17,7 +18,7 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
                     <div class="profile-box-body">
                         <ul>
                             <li><a href="<?php echo site_url('flowers'); ?>" class="<?php echo $category == '' ? 'active' : '' ?>">All</a></li>
-                            <li role="tab" id="funeral_specific" >
+                            <li role="tab" id="funeral_specific">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#funeral_specific_ul" aria-expanded="<?php echo key_exists($category, $categories) ? 'true' : 'false' ?>" aria-controls="funeral_specific" class="<?php echo key_exists($category, $categories) ? 'active collapsed' : '' ?>">Funeral Specific</a>
                                 <ul id="funeral_specific_ul" class="sub_ul_custom panel-collapse collapse <?php echo key_exists($category, $categories) ? 'in' : '' ?>" role="tabpanel" aria-labelledby="funeral_specific">
                                     <?php foreach ($categories as $key => $val) { ?>
@@ -25,7 +26,7 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
                                     <?php } ?>
                                 </ul>
                             </li>
-                            <li role="tab" id="funeralprize_specific" >
+                            <li role="tab" id="funeralprize_specific">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#funeralprize_specific_ul" aria-expanded="<?php echo key_exists($category, $prize_categories) ? 'true' : 'false' ?>" aria-controls="funeralprize_specific" class="<?php echo key_exists($category, $prize_categories) ? 'active collapsed' : '' ?>">Funeral Flowers By Price</a>
                                 <ul id="funeralprize_specific_ul" class="sub_ul_custom panel-collapse collapse <?php echo key_exists($category, $prize_categories) ? 'in' : '' ?>" role="tabpanel" aria-labelledby="funeralprize_specific">
                                     <?php foreach ($prize_categories as $key => $val) { ?>
@@ -39,8 +40,7 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
             </div>
             <div class="mypost-r">
                 <div class="main_listing_data">
-                    <?php
-                    if (isset($flowers) && !empty($flowers)) {                        ?>
+                    <?php if (isset($flowers) && !empty($flowers)) { ?>
                         <ul class="listing_data">
                             <?php foreach ($flowers as $key => $val) {
                                 ?>
