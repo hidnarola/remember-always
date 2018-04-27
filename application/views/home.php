@@ -208,20 +208,21 @@
                             </g>
                         </svg></span>
                     <h3>
-                        <?php
-                        if ($this->is_user_loggedin) {
-                            if ($this->tribute_profile_count == 0) {
-                                ?>
-                                <a href="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
-                            <?php } else if ($this->tribute_profile_count == 1) {
-                                ?>
-                                <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
-                            <?php } else { ?>
-                                <a href="<?php echo site_url('dashboard/profiles') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
-                            <?php } ?>
-                        <?php } else { ?>
-                            <a href="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
-                        <?php } ?>
+                        <?php /*
+                          if ($this->is_user_loggedin) {
+                          if ($this->tribute_profile_count == 0) {
+                          ?>
+                          <a href="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
+                          <?php } else if ($this->tribute_profile_count == 1) {
+                          ?>
+                          <a href="<?php echo site_url('profile/edit/' . $this->tribute_profile['slug'] . '?tribute=1') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
+                          <?php } else { ?>
+                          <a href="<?php echo site_url('dashboard/profiles') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
+                          <?php } ?>
+                          <?php } else { ?>
+                          <a href="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
+                          <?php } */ ?>
+                        <a href="<?php echo site_url('profile/create_tribute_fundraiser') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
                     </h3>
                     <p>Get support for your loved <br/> one’s charity, foundation, or expenses.</p>
                 </div>
