@@ -75,15 +75,15 @@ class Login extends CI_Controller {
                 $data['success'] = true;
 //            $this->session->set_flashdata('success', 'Logged in successfully!');
             }
-            //-- If redirect is set in URL then redirect user back to that page
-            if ($this->input->get('type') == 'ajax') {
-                echo json_encode($data);
-                exit;
-            } else if ($this->input->get('redirect')) {
-                redirect(base64_decode($this->input->get('redirect')));
-            } else {
-                redirect('/');
-            }
+        }
+        //-- If redirect is set in URL then redirect user back to that page
+        if ($this->input->get('type') == 'ajax') {
+            echo json_encode($data);
+            exit;
+        } else if ($this->input->get('redirect')) {
+            redirect(base64_decode($this->input->get('redirect')));
+        } else {
+            redirect('/');
         }
     }
 
