@@ -313,7 +313,7 @@
                     </div>
                     <div class="comment-btm cart_btn btn_extra_div">
                         <button type="button" class="back" onclick="return back_step()">Back</button>
-                        <button type="button" name="cart_bill_btn" onclick="return proceed_step();">Continue</button>
+                        <button type="button" name="cart_bill_btn" onclick="return proceed_step();">Place Order</button>
                     </div>
                 </form>
             </div>
