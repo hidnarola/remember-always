@@ -172,7 +172,7 @@ class Flowers extends MY_Controller {
             $output = $floristone->send_flower($url);
             $dates = $output->DATES;
             foreach ($dates as $val) {
-                $options .= "<option value = '" . $val . "'>" . date('M d, Y', strtotime($val)) . "</option>";
+                $options .= "<option value = '" . $val . "'>" . date('l - M d, Y', strtotime($val)) . "</option>";
             }
         }
         echo $options;

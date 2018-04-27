@@ -43,8 +43,8 @@
                             <li class=""><div class="totle_sub"><span class="price_type">Total :</span><span class="crt_p">$<?php echo $price; ?></span></div></li>
                         </ul>
                         <div class="comment-btm checkout_btn">
-                            <button onclick="return submit_form();">Check Out</button>
                             <a href="<?php echo site_url() . 'flowers' ?>" class="back">Continue Shopping</a>
+                            <button onclick="return submit_form();">Check Out</button>
                         </div>
                     <?php } else { ?>
                         <p class="no-data comment-btm checkout_btn">Your cart is empty <a href="<?php echo site_url() . 'flowers' ?>" class="back">Continue Shopping</a></p>
@@ -301,7 +301,7 @@
                             </div>
                             <div class="input-wrap code">
                                 <label class="label-css">Security Code *</label>
-                                <input type="password" name="c_code" placeholder="cvv" class="input-css">
+                                <input type="text" name="c_code" placeholder="cvv" class="input-css">
                                 <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" title="Security Code. 3 digit number on back of card for MasterCard, Visa, Discover. 4 digit number on front of card for AMEX"></i>
                             </div>
                             <div class="custom_checkbox custom_check_margin">
