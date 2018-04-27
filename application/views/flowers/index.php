@@ -39,7 +39,8 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
             </div>
             <div class="mypost-r">
                 <div class="main_listing_data">
-                    <?php if (isset($flowers) && !empty($flowers)) { ?>
+                    <?php
+                    if (isset($flowers) && !empty($flowers)) {                        ?>
                         <ul class="listing_data">
                             <?php foreach ($flowers as $key => $val) {
                                 ?>
@@ -47,10 +48,10 @@ if (isset($_GET['category']) && !empty($_GET['category'])) {
                                     <div class="listing_inner_div">
                                         <div class="lst_img"><img src="<?php echo $val->SMALL ?>" alt="Arrive In Style" class=""></div>
                                         <h2 class="lst_product_name_xl"><?php echo $val->NAME ?></h2>
-                                        <p class="lst_price">$<?php echo $val->PRICE ?>5</p>
+                                        <p class="lst_price">$<?php echo $val->PRICE ?></p>
                                         <div class="lst_btn">
-                                            <a href="<?php echo site_url('flowers/view/').$val->CODE?>" class="lst_info">Info</a>
-                                            <a href="javascript:void(0)" class="buy_info manage_cart" onclick="return add_to_cart('<?php echo $val->CODE ?>'); ">Buy</a>
+                                            <a href="<?php echo site_url('flowers/view/') . $val->CODE ?>" class="lst_info">Info</a>
+                                            <a href="javascript:void(0)" class="buy_info manage_cart" onclick="return add_to_cart('<?php echo $val->CODE ?>');">Buy</a>
                                         </div>
                                     </div>
                                 </li>
