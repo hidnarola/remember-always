@@ -101,7 +101,8 @@
                                 <div class="step-01-r">
                                     <div class="input-wrap">
                                         <label class="label-css">Life Bio (obituary)</label>
-                                        <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Describe your loved one's life. You can write as much as you like, but you need at least one sentence. You will be able to easily add more or update it later."><?php echo (set_value('life_bio') != '') ? set_value('life_bio') : $this->session->userdata('profile')['life_bio'] ?></textarea>
+                                        <textarea name="life_bio" id="life_bio" class="input-css textarea-css" placeholder="Describe your loved one's life. You can write as much as you like, but you need at least one sentence. You will be able to easily add more or update it later." required><?php echo (set_value('life_bio') != '') ? set_value('life_bio') : $this->session->userdata('profile')['life_bio'] ?></textarea>
+                                        <label id="life_bio-error" class="error" for="life_bio"><?php echo form_error('life_bio') ?></label>
                                     </div>
                                 </div>
                             </div>	

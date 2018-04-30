@@ -123,6 +123,9 @@ $(function () {
             country: {
                 required: true
             },
+            life_bio: {
+                required: true
+            }
         },
         errorPlacement: function (error, element) {
             if (element.attr("name") == "country") {

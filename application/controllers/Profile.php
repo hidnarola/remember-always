@@ -396,6 +396,7 @@ class Profile extends MY_Controller {
             $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'trim|required');
             $this->form_validation->set_rules('date_of_death', 'Date of Death', 'trim|required');
             $this->form_validation->set_rules('country', 'Country', 'trim|required');
+            $this->form_validation->set_rules('life_bio', 'Life Bio', 'trim|required');
 
             if ($this->form_validation->run() == FALSE) {
                 $data['error'] = validation_errors();
@@ -527,6 +528,7 @@ class Profile extends MY_Controller {
         $this->form_validation->set_rules('date_of_birth', 'Date of Birth', 'trim|required');
         $this->form_validation->set_rules('date_of_death', 'Date of Death', 'trim|required');
         $this->form_validation->set_rules('country', 'Country', 'trim|required');
+        $this->form_validation->set_rules('life_bio', 'Life Bio', 'trim|required');
         $log_user = $flag = 0;
         if (!$this->is_user_loggedin) {
             if ($this->input->post('login_email') != '') {
