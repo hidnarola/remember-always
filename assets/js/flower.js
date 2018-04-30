@@ -107,7 +107,7 @@ $(function () {
             },
             r_zipcode: {
                 required: true,
-                custom_zipcode: true
+//                custom_zipcode: true
             },
             r_phone: {
                 required: true,
@@ -438,4 +438,24 @@ function remove_cart(code) {
 
 $(document).on('hover', 'i', function () {
 
+});
+
+//--Custom zipcode for US and Canada
+
+jQuery.validator.addMethod("us_zipcode", function (value, element) {
+    return this.optional(element) || /(^\d{5}(-\d{4})?$)/.test(value)
+}, "The specified US or Canadian ZIP Code is invalid");
+
+jQuery.validator.addMethod("canada_zipcode", function (value, element) {
+    return this.optional(element) || /(^[ABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Z]{1} *\d{1}[A-Z]{1}\d{1}$)/.test(value)
+}, "The specified US or Canadian ZIP Code is invalid");
+//-- Update zipcode rules on country change
+$(document).on('change', '#r_country', function () {
+    $('#r_zipcode').rules('remove', 'us_zipcode');
+    $('#r_zipcode').rules('remove', 'canada_zipcode');
+    if ($(this).val() == 'CA') {
+        $('#r_zipcode').rules('add', 'canada_zipcode');
+    } else if ($(this).val() == 'US') {
+        $('#r_zipcode').rules('add', 'us_zipcode');
+    }
 });
