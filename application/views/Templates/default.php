@@ -41,7 +41,12 @@
             }
             gtag('js', new Date());
             gtag('config', 'UA-114429616-1');
+            gtag('config', 'AW-973112771');
         </script>
+        <?php if ($this->controller == 'profile' && $this->action == 'share') { ?>
+            <!-- Event snippet for Profile Completion - Signup conversion page --> 
+            <script> gtag('event', 'conversion', {'send_to': 'AW-973112771/waM5CIm07YABEMOLgtAD'});</script> 
+        <?php } ?>
 
         <base href="<?php echo base_url(); ?>">
 
@@ -233,7 +238,7 @@
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="log-in">
-                            <form method="post" id="login-form" action="<?php //echo site_url('login')                                ?>">
+                            <form method="post" id="login-form" action="<?php //echo site_url('login')                                      ?>">
                                 <div class="popup-input">
                                     <label>Email</label>
                                     <input type="text" name="email" placeholder="support@gmail.com" />
@@ -257,13 +262,13 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                                ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                                ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                                      ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                                      ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>
 <div role="tabpanel" class="tab-pane" id="sign-up">
- <form method="post" id="signup-form" action="<?php //echo site_url('signup')                                ?>">
+ <form method="post" id="signup-form" action="<?php //echo site_url('signup')                                      ?>">
      <div class="popup-input">
          <label>Email</label>
          <input type="text" name="email" placeholder="support@gmail.com" />
@@ -299,8 +304,8 @@
          <span>OR</span>
      </div>
      <div class="login-options">
-         <a href="<?php //echo site_url('facebook')                                ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
-         <a href="<?php //echo site_url('google')                                ?>"><img src="assets/images/google-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('facebook')                                      ?>"><img src="assets/images/facebook-login.png" alt="" /></a>
+         <a href="<?php //echo site_url('google')                                      ?>"><img src="assets/images/google-login.png" alt="" /></a>
      </div>
  </form>
 </div>

@@ -385,7 +385,7 @@ a.remove-video:hover{opacity:.7;}
 .profile-title p{margin:0; padding:0; font-size:15px; color:#666; line-height:30px; display:block; font-family:'Rubik'; font-weight:400;}
 .multi-btn{ margin:30px 0 0;}
 .profile-title > a {display: inline-block;vertical-align: middle;font-family: 'Rubik';font-weight: 500;font-size: 14px;padding: 10px;line-height: 20px;border-radius: 4px;color: #fff;margin: 20px 15px 0 0;width: 142px;text-align: center;}
-.donate-btn{    border: 2px solid #8f63ca;background: transparent; color: #8f63ca; border-radius: 4px; padding: 10px; max-width: 152px; width: 100%; font-size: 14px; display: inline-block; text-align: center; font-family: 'Rubik'; text-transform: uppercase; font-weight: 500; vertical-align:top;}
+.donate-btn{border: 2px solid #8f63ca;background: transparent; color: #8f63ca; border-radius: 4px; padding: 10px; max-width: 152px; width: 100%; font-size: 14px; display: inline-block; text-align: center; font-family: 'Rubik'; text-transform: uppercase; font-weight: 500; vertical-align:top;}
 .donate-btn:hover{background:#8f63ca;color:#fff;text-decoration:none;}
 .flowers-btn{border:2px solid #49baa0;background:#49baa0;}
 .flowers-btn:hover{background:transparent;color:#49baa0;text-decoration:none;}

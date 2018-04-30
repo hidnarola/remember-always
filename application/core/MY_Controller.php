@@ -19,7 +19,7 @@ class MY_Controller extends CI_Controller {
         $this->meta_title = 'Free Online Memorials, Memorials Online, Memorial Fundraisers, Funeral Fundraisers, Funeral Planning Information';
 
         $this->controller = strtolower($this->router->fetch_class());
-        $this->action = $this->router->fetch_method();
+        $this->action = strtolower($this->router->fetch_method());
         $directory = $this->router->fetch_directory();
         //check if directory is admin or not
         if ($directory == 'admin/') {
