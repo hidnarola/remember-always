@@ -554,7 +554,7 @@
             </div>
             <div class="item">
                 <div class="member-box">
-                    <h3><span><img src="assets/images/RA_testimonial1.jpg" alt="" /></span> Awesome website! <small>CC, Phoenix, AZ</small></h3>
+                    <h3><span><img src="assets/timthumb.php?src=<?php echo base_url('assets/images/RA_testimonial1.jpg&zc=3&w=70&h=70&q=100') ?>" alt="" /></span> Awesome website! <small>CC, Phoenix, AZ</small></h3>
                     <p>Kudos for creating this awesome website!  I love the Life Profile that I was able to create for my dear Dad.  The fundraiser option was a life saver. We were able to get support from our family and friends to help cover the funeral expenses.</p>
                 </div>
             </div>
