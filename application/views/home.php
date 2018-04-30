@@ -594,7 +594,11 @@
                     ?>
                     <div class="item">
                         <div class="blog-box">
-                            <span><a href="<?php echo site_url('blog/details/' . $val['slug']) ?>"><img src="<?php echo BLOG_POST_IMAGES . $val['image'] ?>" alt="" /></a></span>
+                            <span>
+                                <a href="<?php echo site_url('blog/details/' . $val['slug']) ?>">
+                                    <img src="assets/timthumb.php?src=<?php echo base_url(BLOG_POST_IMAGES . $val['image'] . '&zc=3&w=345&h=214&q=100') ?>" alt="" />
+                                </a>
+                            </span>
                             <div class="blog-content">
                                 <p>by : <?php echo $val['firstname'] . ' ' . $val['lastname'] ?>  - <?php echo date('d-M-Y', strtotime($val['created_at'])); ?></p>
                                 <h3><a href="<?php echo site_url('blog/details/' . $val['slug']) ?>"><?php echo $val['title'] ?></a></h3>
