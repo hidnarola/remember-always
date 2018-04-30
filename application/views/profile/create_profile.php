@@ -58,11 +58,11 @@
                                     </div>
                                     <div class="input-wrap">
                                         <div class="input-l">
-                                            <input type="text" name="date_of_birth" id="date_of_birth" placeholder="Born (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo (set_value('date_of_birth') != '') ? set_value('date_of_birth') : date('m/d/Y', strtotime($this->session->userdata('profile')['date_of_birth'])) ?>" required/>
+                                            <input type="text" name="date_of_birth" id="date_of_birth" placeholder="Born (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo (set_value('date_of_birth') != '') ? set_value('date_of_birth') : ($this->session->userdata('profile')['date_of_birth'] != '') ? date('m/d/Y', strtotime($this->session->userdata('profile')['date_of_birth'])) : '' ?>" required/>
                                             <label id="date_of_birth-error" class="error" for="date_of_birth"><?php echo (isset($date_error)) ? $date_error : form_error('date_of_birth') ?></label>
                                         </div>
                                         <div class="input-r">
-                                            <input type="text" name="date_of_death" id="date_of_death" placeholder="Died (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo (set_value('date_of_death') != '') ? set_value('date_of_death') : date('m/d/Y', strtotime($this->session->userdata('profile')['date_of_death'])) ?>" required/>
+                                            <input type="text" name="date_of_death" id="date_of_death" placeholder="Died (mm/dd/yyyy)" class="input-css date-picker" value="<?php echo (set_value('date_of_death') != '') ? set_value('date_of_death') : ($this->session->userdata('profile')['date_of_death'] != '') ? date('m/d/Y', strtotime($this->session->userdata('profile')['date_of_death'])) : '' ?>" required/>
                                             <label id="date_of_death-error" class="error" for="date_of_death"><?php echo form_error('date_of_death') ?></label>
                                         </div>
                                     </div>
