@@ -338,7 +338,7 @@
                         <div class="profile-wrapp">
                             <div class="home-profile-img">
                                 <a href="<?php echo site_url('profile/' . $r_profile['slug']) ?>">
-                                    <img src="<?php echo base_url() . PROFILE_IMAGES . $r_profile['profile_image'] ?>" alt="<?php echo $r_profile['firstname'] . ' ' . $r_profile['lastname'] . ' Online Memorial Remember Always' ?>"/>
+                                    <img src="assets/timthumb.php?src=<?php echo base_url(PROFILE_IMAGES . $r_profile['profile_image'] . '&zc=3&w=100&h=100&q=100') ?>" alt="<?php echo $r_profile['firstname'] . ' ' . $r_profile['lastname'] . ' Online Memorial Remember Always' ?>"/>
                                 </a>
                             </div>
                             <h4><a href="<?php echo site_url('profile/' . $r_profile['slug']) ?>"><?php echo $r_profile['firstname'] . ' ' . $r_profile['lastname'] ?> <?php if ($r_profile['nickname'] != '') echo '(' . $r_profile['nickname'] . ')'; ?></a></h4>
@@ -361,7 +361,9 @@
                     <div class="item">
                         <div class="profile-wrapp">
                             <div class="home-profile-img">
-                                <a href="<?php echo site_url('profile/' . $m_profile['slug']) ?>"><img src="<?php echo base_url() . PROFILE_IMAGES . $m_profile['profile_image'] ?>" alt="<?php echo $m_profile['firstname'] . ' ' . $m_profile['lastname'] . ' Online Memorial Remember Always' ?>"/></a>
+                                <a href="<?php echo site_url('profile/' . $m_profile['slug']) ?>">
+                                    <img src="assets/timthumb.php?src=<?php echo base_url(PROFILE_IMAGES . $m_profile['profile_image'] . '&zc=3&w=100&h=100&q=100') ?>" alt="<?php echo $m_profile['firstname'] . ' ' . $m_profile['lastname'] . ' Online Memorial Remember Always' ?>"/>
+                                </a>
                             </div>
                             <h4><a href="<?php echo site_url('profile/' . $m_profile['slug']) ?>"><?php echo $m_profile['firstname'] . ' ' . $m_profile['lastname'] ?> <?php if ($m_profile['nickname'] != '') echo '(' . $m_profile['nickname'] . ')'; ?></a></h4>
                             <p><?php echo date('Y', strtotime($m_profile['date_of_birth'])) . ' - ' . date('Y', strtotime($m_profile['date_of_death'])) ?></p>
@@ -384,7 +386,9 @@
                     <div class="item">
                         <div class="profile-wrapp">
                             <div class="home-profile-img">
-                                <a href="<?php echo site_url('profile/' . $n_profile['slug']) ?>"><img src="<?php echo base_url() . PROFILE_IMAGES . $n_profile['profile_image'] ?>" alt="<?php echo $n_profile['firstname'] . ' ' . $n_profile['lastname'] . ' Online Memorial Remember Always' ?>"/></a>
+                                <a href="<?php echo site_url('profile/' . $n_profile['slug']) ?>">
+                                    <img src="assets/timthumb.php?src=<?php echo base_url(PROFILE_IMAGES . $n_profile['profile_image'] . '&zc=3&w=100&h=100&q=100') ?>" alt="<?php echo $n_profile['firstname'] . ' ' . $n_profile['lastname'] . ' Online Memorial Remember Always' ?>"/>
+                                </a>
                             </div>
                             <h4><a href="<?php echo site_url('profile/' . $n_profile['slug']) ?>"><?php echo $n_profile['firstname'] . ' ' . $n_profile['lastname'] ?><?php if ($n_profile['nickname'] != '') echo '(' . $n_profile['nickname'] . ')'; ?></a></h4>
                             <p><?php echo date('Y', strtotime($n_profile['date_of_birth'])) . ' - ' . date('Y', strtotime($n_profile['date_of_death'])) ?></p>
