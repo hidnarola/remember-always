@@ -221,15 +221,17 @@
 //          reverseButtons: true,
         }).then(function (isConfirm) {
             if (isConfirm) {
+                $('.loader').show();
                 $.ajax({
                     url: url,
                     type: "post",
                     dataType: "json",
                     success: function (data) {
+                        window.location.href = current_url;
+                        return true;
                     }
                 });
-                window.location.href = current_url;
-                return true;
+
             }
         }, function (dismiss) {
             if (dismiss === 'cancel') {
