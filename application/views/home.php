@@ -222,7 +222,7 @@
                           <?php } else { ?>
                           <a href="<?php echo site_url('profile/create_profile') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
                           <?php } */ ?>
-                        <a href="<?php echo site_url('profile/create_tribute_fundraiser') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
+                        <a href="<?php echo site_url('profile/create-tribute-fundraiser') ?>">Add a Tribute Fundraiser<br/>(optional)</a>
                     </h3>
                     <p>Get support for your loved <br/> one’s charity, foundation, or expenses.</p>
                 </div>

@@ -103,7 +103,7 @@ $route['profile/send_profile_email'] = 'profile/send_profile_email';
 $route['profile/share/(:any)'] = 'profile/share/$1';
 
 $route['profile/create-online-memorial-life-profile'] = 'profile/create_online_memorial_life_profile';
-$route['profile/create_tribute_fundraiser'] = 'profile/create_tribute_fundraiser';
+$route['profile/create-tribute-fundraiser'] = 'profile/create_tribute_fundraiser';
 $route['profile/sociallogin'] = 'profile/sociallogin';
 $route['profile/socialprofile'] = 'profile/socialprofile';
 
