@@ -2014,16 +2014,22 @@ select:-webkit-autofill {background-color:#fff !important;box-shadow: 4px 4px 4p
     .new-profiletitle h1 {font-size: 26px; line-height: normal;}
     .new-process{ margin:0 0 20px;}
     .new-step .step-01-m .input-wrap {width: 100%;}
-	.add_timeline_btn.label-css{ position:absolute; bottom:17px; left:20px; width:auto;}
-	.step-06 {padding:0 0 50px;}
-	.add_order ul {margin:20px auto; float:none; width:90%;}
-	.thanks_order .box_detail_cart {padding:10px;}
-	.thanks_order .box_detail_cart li:first-child {width:70px; padding:0;}
-	.thanks_order .box_detail_cart li:nth-child(2) {text-align: left;}
-	.thanks_order .box_detail_cart li:nth-child(2) .cart_name a {font-size: 16px !important;text-align: left;}
-	.thanks_order .box_detail_cart li:last-child {width: 100%;}
-	.thanks_order .cart_totle_ul {padding: 15px 0;}
-	.thanks_order .cart_totle_ul li .totle_sub .crt_p {font-size: 14px; margin-left: 5px;}
+    .add_timeline_btn.label-css{ position:absolute; bottom:17px; left:20px; width:auto;}
+    .step-06 {padding:0 0 50px;}
+    .add_order ul {margin:20px auto; float:none; width:90%;}
+    .thanks_order .box_detail_cart {padding:10px;}
+    .thanks_order .box_detail_cart li:first-child {width:70px; padding:0;}
+    .thanks_order .box_detail_cart li:nth-child(2) {text-align: left;}
+    .thanks_order .box_detail_cart li:nth-child(2) .cart_name a {font-size: 16px !important;text-align: left;}
+    .thanks_order .box_detail_cart li:last-child {width: 100%;}
+    .thanks_order .cart_totle_ul {padding: 15px 0;}
+    .thanks_order .cart_totle_ul li .totle_sub .crt_p {font-size: 14px; margin-left: 5px;}
+    .delivery_l, .delivery_r {float: none;width: 100%;padding: 0;}
+    .delivery_r .input-wrap.second .label-css {font-size: 18px;}
+    .input-wrap.third .label-css {font-size: 18px;}
+    .label_info {color: #999;font-size: 14px;}
+    .comment-btm.checkout_btn .back {padding: 7px 10px;font-size: 14px;width: auto;}
+    .form_delivery {margin: 0;}
 
 
 }
