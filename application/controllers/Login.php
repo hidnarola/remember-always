@@ -100,14 +100,16 @@ class Login extends CI_Controller {
                 }
                 $this->form_validation->set_message('login_validation', 'Invalid Email/Password.');
                 return FALSE;
-            } elseif ($result['is_verify'] == 0) {
-                $resend_link = site_url('signup/resend_verification?uid=' . base64_encode($result['id']));
-                if ($this->input->get('type') != 'ajax') {
-                    $this->session->set_flashdata('error', 'You have not verified your email yet! Please verify it first. <a href=\'' . $resend_link . '\'>Click here</a> to resend verification email.');
-                }
-                $this->form_validation->set_message('login_validation', 'You have not verified your email yet! Please verify it first. <a href="' . $resend_link . '">Click here</a> to resend verification email.');
-                return FALSE;
-            } elseif ($result['is_active'] == 0) {
+            }
+//            elseif ($result['is_verify'] == 0) {
+//                $resend_link = site_url('signup/resend_verification?uid=' . base64_encode($result['id']));
+//                if ($this->input->get('type') != 'ajax') {
+//                    $this->session->set_flashdata('error', 'You have not verified your email yet! Please verify it first. <a href=\'' . $resend_link . '\'>Click here</a> to resend verification email.');
+//                }
+//                $this->form_validation->set_message('login_validation', 'You have not verified your email yet! Please verify it first. <a href="' . $resend_link . '">Click here</a> to resend verification email.');
+//                return FALSE;
+//            } 
+            elseif ($result['is_active'] == 0) {
                 if ($this->input->get('type') != 'ajax') {
                     $this->session->set_flashdata('error', 'Your account is blocked! Please contact system Administrator.');
                 }

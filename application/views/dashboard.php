@@ -48,7 +48,8 @@
                                         <?php if ($val['type'] == 1) { ?>
                                             <a href="<?php echo site_url('profile/edit/' . $val['slug'] . '?tribute=1') ?>" class="flowers-btn">Add a fundraiser </a>
                                         <?php } ?>
-                                        <?php if ($val['is_published'] == 0 && $user['is_verify'] == 1) { ?>
+                                        <?php // if ($val['is_published'] == 0 && $user['is_verify'] == 1) { ?>
+                                        <?php if ($val['is_published'] == 0) { ?>
                                             <a href="javascript:void(0)" class="public publish" data-profile="<?php echo $val['slug'] ?>">Publish</a>
                                         <?php } ?>
                                         <a href="javascript:void(0)" class="delete profile_delete" data-profile="<?php echo $val['slug'] ?>">Delete</a>
