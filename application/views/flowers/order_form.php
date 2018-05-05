@@ -246,7 +246,7 @@
                                 </select>
                             </div>
                             <div class="input-wrap">
-                                <input type="text" name="c_zipcode" placeholder="Zip Code *" class="input-css">
+                                <input type="text" name="c_zipcode" id="c_zipcode" placeholder="Zip Code *" class="input-css">
                             </div>
                             <div class="input-wrap">
                                 <input type="text" name="c_phone" placeholder="Phone *" class="input-css">

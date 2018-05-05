@@ -153,7 +153,7 @@ $(function () {
             },
             c_zipcode: {
                 required: true,
-                custom_zipcode: true
+//                custom_zipcode: true
             },
             c_phone: {
                 required: true,
@@ -457,5 +457,15 @@ $(document).on('change', '#r_country', function () {
         $('#r_zipcode').rules('add', 'canada_zipcode');
     } else if ($(this).val() == 'US') {
         $('#r_zipcode').rules('add', 'us_zipcode');
+    }
+});
+//-- Update zipcode rules on country change
+$(document).on('change', '#c_country', function () {
+    $('#c_zipcode').rules('remove', 'us_zipcode');
+    $('#c_zipcode').rules('remove', 'canada_zipcode');
+    if ($(this).val() == 'CA') {
+        $('#c_zipcode').rules('add', 'canada_zipcode');
+    } else if ($(this).val() == 'US') {
+        $('#c_zipcode').rules('add', 'us_zipcode');
     }
 });
