@@ -389,6 +389,7 @@ function proceed_step() {
                         showSuccessMSg('Your order is successfully placed!');
                         window.location.href = site_url + 'flowers/get_order_details/' + data.order_no;
                     } else {
+                        $('.loader').hide();
                         $('#flower_process').val(1);
                         showErrorMSg(data.error);
                     }
@@ -411,6 +412,7 @@ function add_to_cart(code) {
                 showSuccessMSg(data.data);
                 window.location.href = site_url + 'flowers/cart';
             } else {
+                $('.loader').hide();
                 showErrorMSg(data.error);
             }
         }
@@ -429,6 +431,7 @@ function remove_cart(code) {
                 window.location.href = site_url + 'flowers/cart';
 //                $('.loader').hide();
             } else {
+                $('.loader').hide();
                 showErrorMSg(data.error);
             }
         }
