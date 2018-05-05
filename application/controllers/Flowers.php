@@ -29,10 +29,19 @@ class Flowers extends MY_Controller {
             'fh' => 'Funeral Hearts',
             'fx' => 'Funeral Crosses',
             'fc' => 'Funeral Casket sprays');
-        $prize_data = array('fu60' => 'Flowers Under $60',
-            'f60t80' => 'Flowers between $60 and $60',
+
+        /*
+          $prize_data = array(
+          'fu60' => 'Flowers Under $60',
+          'f60t80' => 'Flowers between $60 and $80',
+          'f80t100' => 'Flowers between $80 and $100',
+          'fa100' => 'Flowers above $100'); */
+
+        $prize_data = array(
+            'f60t80' => 'Flowers between $60 and $80',
             'f80t100' => 'Flowers between $80 and $100',
             'fa100' => 'Flowers above $100');
+        
         $floristone = new Floristone();
         $count = 6;
         $start = $start + 1;
