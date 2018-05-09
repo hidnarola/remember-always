@@ -23,12 +23,21 @@
         <div class="create-profile-body main-steps">
             <div class="container">
                 <div class="new-profiletitle">
-                    <h1>Create a beautiful memorial Life Profile.</h1>
-                    <p>A great honor and a wonderful way to preserve memories. It’s free.</p>
+                    <h1>Create a beautiful memorial Life Profile <?php if ($tribute == 1) echo "with a Tribute Fundraiser" ?>.</h1>
+                    <?php if ($tribute == 1) { ?>
+                        <p>Get the help you need during a difficult time.</p>
+                    <?php } else { ?>
+                        <p>A great honor and a wonderful way to preserve memories. It’s free.</p>
+                    <?php } ?>
                 </div>
                 <div class="new-step">
-                    <h2>Who would you like to remember always?</h2>
-                    <p>Enter some basic information about your loved one that passed away. <br/> You will be able to add more details later.</p>    
+                    <?php if ($tribute == 1) { ?>
+                        <h2>Who is the memorial and fundraiser in honor of?</h2>
+                        <p>Enter some basic info about your loved one that passed away. <br/> You will add fundraiser details in the next tab.</p>    
+                    <?php } else { ?>
+                        <h2>Who would you like to remember always?</h2>
+                        <p>Enter some basic information about your loved one that passed away. <br/> You will be able to add more details later.</p>    
+                    <?php } ?>
                     <div class="step-form">
                         <h4><a>Basic Info</a></li></h4>
                         <div id="first-step">
@@ -101,7 +110,7 @@
                                     </div>
                                     <div class="input-wrap creating-this">
                                         <!--<p>Are you creating this profile on behalf of a person(s), family or families, or group(s)? You can enter that here. If not, leave it blank.</p>-->
-                                        <label class="label-css">If creating this Life Profile on behalf of a family or group, then enter the name of the family or group here;<br/>Otherwise leave this field blank  </label>
+                                        <label class="label-css">If creating this Life Profile <?php if ($tribute == 1) echo " & Tribute Fundraiser " ?> on behalf of a family or group, then enter the name of the family or group here;<br/>Otherwise leave this field blank  </label>
                                         <input type="text" id="created_by" name="created_by" placeholder="(optional)" class="input-css" value="<?php echo (set_value('created_by') != '') ? set_value('created_by') : $this->session->userdata('profile')['created_by'] ?>"/>
                                     </div>
                                 </div>
@@ -122,7 +131,7 @@
                         <h2>
                             Create your account
                         </h2>
-                        <p>Enter your account details that you will use to log in and manage the memorial Life Profile.<br/>
+                        <p>Enter your account details that you will use to log in and manage the memorial Life Profile <?php if ($tribute == 1) echo " and Tribute Fundraiser" ?>.<br/>
                             Having an account will allow you to also post to other Life Profiles on the site. </p>
                     </div>
                     <div class='login-signup-div'>
@@ -181,7 +190,14 @@
             </div> 
         <?php } ?>
         <div class="memoriallife-btn">
-            <button type="submit" class="create-memoriallife-profile" id="create-profile-btn">Create memorial Life Profile</button>
+            <button type="submit" class="create-memoriallife-profile" id="create-profile-btn">
+                <?php
+                if ($tribute == 1)
+                    echo "Create Memorial with Tribute Fundraiser";
+                else
+                    echo "Create memorial Life Profile"
+                    ?>
+            </button>
         </div>
     </form>
 </div>

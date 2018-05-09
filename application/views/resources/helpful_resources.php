@@ -3,7 +3,7 @@
         <div class="common-head">
             <h2 class="h2title">Helpful Resources</h2>
         </div>
-        <div class="main_box_c">
+        <div class="main_box_c main_box_help_resorces">
             <div class="box_l">
                 <div class="profile-box fun-facts">
                     <h2 class="purple_h2">Funeral Planning Resources</h2>

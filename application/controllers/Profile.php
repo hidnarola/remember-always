@@ -517,9 +517,11 @@ class Profile extends MY_Controller {
     }
 
     /**
-     * Create profile function with login and signup
+     * Create profile function with Login and SingUp
+     * @param int $tribute 0 for normal create profile and 1 for tribute profile
      */
-    public function create_profile() {
+    public function create_profile($tribute = 0) {
+        $data['tribute'] = $tribute;
         $data['title'] = 'Remember Always | Create Profile';
         $data['countries'] = $this->users_model->customQuery('SELECT id,name FROM ' . TBL_COUNTRY . ' order by id=231 DESC');
 
@@ -696,6 +698,13 @@ class Profile extends MY_Controller {
             }
         }
         $this->template->load('default', 'profile/create_profile', $data);
+    }
+
+    /**
+     * Create profile page more focused on tribute fundraiser page
+     */
+    public function create_tribute() {
+        $this->create_profile(1);
     }
 
     /**

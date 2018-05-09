@@ -25,7 +25,7 @@
                     <?php
                     if ($this->is_user_loggedin) {
                         if ($key == 1) {
-                            echo '<a href="' . site_url('profile/create_profile') . '">Create a Tribute Fundraiser</a>';
+                            echo '<a href="' . site_url('profile/create_tribute') . '">Create a Tribute Fundraiser</a>';
                         } else if ($key == 2) {
                             echo '<a href="' . site_url('helpful_resources') . '">Access Resources</a>';
                         } else {
@@ -36,7 +36,7 @@
                     } else {
                         if ($key == 1) {
 //                            echo '<a href="javascript:void(0)" onclick="loginModal(this)" data-redirect="' . site_url('profile/create_profile') . '">Create a Tribute Fundraiser</a>';
-                            echo '<a href="' . site_url('profile/create_profile') . '">Create a Tribute Fundraiser</a>';
+                            echo '<a href="' . site_url('profile/create_tribute') . '">Create a Tribute Fundraiser</a>';
                         } else if ($key == 2) {
                             echo '<a href="' . site_url('helpful_resources') . '">Access Resources</a>';
                         } else {
