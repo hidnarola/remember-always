@@ -45,7 +45,7 @@
                 </svg>
             </a>
             <form action="<?php echo site_url('search') ?>" id="global_search_form">
-                <input type="text" name="keyword" id="global_search" class="global_search" placeholder="Search..."/>
+                <input type="text" name="keyword" id="global_search" class="global_search" placeholder="Find memorial Life Profiles and more"/>
                 <button type="submit" class="header_search">
                     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 129 129" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 129 129"  class="header_search">
                         <g>
@@ -54,6 +54,14 @@
                     </svg>
                 </button>
             </form>
+        </div>
+        <div class="div_menu_wrapper">
+        <div class="nav_btn_destop">
+            <a href="javascript:void(0)" class="a_toggle_span">
+                <span></span>
+                <span></span>
+                <span></span>
+            </a>       
         </div>
         <nav class="navbar navbar-default nav-menu">
             <div class="container-fluid">
@@ -66,39 +74,52 @@
                     </button>
                     <a class="navbar-brand" href="#">Brand</a>
                 </div>
+
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li><a href="<?php echo site_url('/') ?>">Home</a></li>
+                        <li><a href="<?php echo site_url('profile/create-online-memorial-life-profile') ?>">Create a Memorial</a></li>
+                        <li><a href="<?php echo site_url('profile/create-tribute-fundraiser') ?>">Create a Fundraiser</a></li>
+                        <li><a href="<?php echo site_url('search?type=profile') ?>">Find a Memorial or Fundraiser</a></li>
+                        <li><a href="<?php echo site_url('affiliation') ?>">Browse Affiliations</a></li>
+                        <li class="menu-dottedline"><span></span></li>
+                        <li><a href="<?php echo site_url('community') ?>">Online Support Community</a></li>
+                        <li><a href="<?php echo site_url('funeral_planning') ?>">Funeral Planning</a></li>
+                        <li><a href="<?php echo site_url('service_provider') ?>">Find Funeral Homes and more</a></li>
+                        <li class="menu-dottedline"><span></span></li>
+                        <li><a href="<?php echo site_url('flowers') ?>">Send Flowers</a></li>
+                        <li><a href="<?php echo site_url('blog') ?>">Blog</a></li>
+                        <li><a href="<?php echo site_url('contact') ?>">Contact Us</a></li>
                         <?php
-                        $header_links = get_pages('header');
-                        if (isset($header_links)) {
-                            foreach ($header_links as $key => $value) {
-                                if (isset($value['sub_menus'])) {
-                                    foreach ($value['sub_menus'] as $key1 => $value1) {
-                                        ?>
-                                        <li class="">
-                                            <a href="<?php echo site_url('pages/' . $value1['slug']); ?>"><?php echo $value1['navigation_name']; ?></a>
-                                        </li>
-                                        <?php
-                                    }
-                                } else {
-                                    ?>
-                                    <li class="">
-                                        <a href="<?php echo site_url('pages/' . $value['slug']); ?>"><?php echo $value['navigation_name']; ?></a>
-                                    </li>
-                                    <?php
-                                }
-                            }
-                        }
+                        /*
+                          $header_links = get_pages('header');
+                          if (isset($header_links)) {
+                          foreach ($header_links as $key => $value) {
+                          if (isset($value['sub_menus'])) {
+                          foreach ($value['sub_menus'] as $key1 => $value1) {
+                          ?>
+                          <li class="">
+                          <a href="<?php echo site_url('pages/' . $value1['slug']); ?>"><?php echo $value1['navigation_name']; ?></a>
+                          </li>
+                          <?php
+                          }
+                          } else {
+                          ?>
+                          <li class="">
+                          <a href="<?php echo site_url('pages/' . $value['slug']); ?>"><?php echo $value['navigation_name']; ?></a>
+                          </li>
+                          <?php
+                          }
+                          }
+                          } */
                         ?>
-                        <!--                                                <li><a href="#">About</a></li>
-                                                                        <li><a href="#">Features</a></li>-->
-                        <li><a href="<?php echo site_url('faqs') ?>">FAQs</a></li>
-                        <li><a href="<?php echo site_url('contact') ?>">Contact</a></li>
+<!--                        <li><a href="<?php echo site_url('faqs') ?>">FAQs</a></li>
+                        <li><a href="<?php echo site_url('contact') ?>">Contact</a></li>-->
                     </ul>
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
+            </div>
         <?php if (isset($breadcrumb)) { ?>
             <div class="breadcrumb">
                 <ul>

@@ -3,7 +3,9 @@
  * @author KU 
  */
 $(function () {
-
+    $(".a_toggle_span").click(function () {
+        $("ul.nav.navbar-nav").toggle();
+    });
     $('.sign-up-pop').on('click', function () {
         jQuery('[href="#sign-up"]').trigger('click')
     });
