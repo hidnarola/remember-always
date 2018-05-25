@@ -43,7 +43,7 @@
             <h3>Contact us</h3>
             <p><strong>Address :</strong><br/><a href="https://www.google.com/maps/place/3415+W+Lake+Mary+Blvd+%23951965lake,+Lake+Mary,+FL+32746,+USA/@28.7554428,-81.3406926,17z/data=!4m5!3m4!1s0x88e76d583d725ad1:0x93eca9ac4182673a!8m2!3d28.7554428!4d-81.3385039" target="_blank"> 3415 W. Lake Mary Blvd. #951965 <br/> Lake Mary, FL 32795 </a></p>
             <p><strong>Phone :</strong> 863-703-6036</p>
-            <p><strong>E-mail :</strong> support@rememberalways.com</p>
+            <p><strong>E-mail :</strong> <a href="mailto:support@rememberalways.com">support@rememberalways.com</a></p>
         </div>
         <div class="ftr-follow ftr-sepretor">
             <h3>Follow Us</h3>
