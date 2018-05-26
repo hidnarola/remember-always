@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Provider_model to manage service providers
+ * Blogs_model to manage blogs
  * @author KU
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -34,5 +34,5 @@ class Blogs_model extends MY_Model {
 
 }
 
-/* End of file Provider_model.php */
+/* End of file Blogs_model.php */
 /* Location: ./application/models/admin/Provider_model.php */

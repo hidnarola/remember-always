@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Profile Controller
- * Manage profile related functions
+ * Flowers Controller
+ * Manage flowers related functions
  * @author KU 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');

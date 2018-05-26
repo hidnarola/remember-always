@@ -13,9 +13,11 @@ class Community_model extends MY_Model {
     }
 
     /**
-     * @uses : this function is used to get result based on datatable in service categories list page
-     * @param : @table 
-     * @author : AKK
+     * This function is used to get result based on data table in question list page
+     * @param string $type
+     * @param integer $start
+     * @param integer $offset
+     * @return integer / array
      */
     public function get_results($type = 'result', $start = 0, $offset = 5) {
         $this->db->select('q.id,q.title,q.user_id,q.slug,q.description,u.firstname,u.lastname,u.facebook_id,u.google_id,u.profile_image,IF(ans.answers IS NULL,0,ans.answers) answers,q.created_at');

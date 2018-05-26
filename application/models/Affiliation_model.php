@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Category_model for category function
+ * Affiliation_model for affiliation function
  * @author Akk
  * */
 defined('BASEPATH') OR exit('No direct script access allowed');
@@ -13,9 +13,13 @@ class Affiliation_model extends MY_Model {
     }
 
     /**
-     * @uses : this function is used to get result based on datatable in service categories list page
-     * @param : @table 
-     * @author : AKK
+     * This function is used to get result based on data-table in affiliation list page
+     * @param string $type
+     * @param array $data
+     * @param integer $start
+     * @param integer $offset
+     * @return integer/array
+     * @author AKK
      */
     public function get_all_affiliation($type = 'result', $data = array(), $start = 0, $offset = 5) {
         $this->db->select('a.*,ac.name as category,con.name as con_name,st.name as s_name,c.name as c_name');
@@ -45,5 +49,5 @@ class Affiliation_model extends MY_Model {
 
 }
 
-/* End of file Category_model.php */
+/* End of file Affiliation_model.php */
 /* Location: ./application/models/Affiliation_model.php */

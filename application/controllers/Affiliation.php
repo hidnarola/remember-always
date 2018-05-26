@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Service Provider Controller
- * Manage profile related functions
- * @author KU 
+ * Affiliation Controller
+ * Manage affiliation related functions
+ * @author AKK 
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
