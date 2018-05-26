@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <style type="text/css">.input-css.error{border:1px solid red;}</style>
 <div class="common-page common_questionnaire">
     <div class="container">
@@ -134,14 +136,14 @@ if ($this->is_user_loggedin) {
 }
 ?>
 <script type="text/javascript">
-                        var current_url = '<?php echo isset($url) ? $url : '' ?>';
-                        var user_image = '<?php echo base_url(USER_IMAGES) ?>';
-                        var logged_in = <?php echo $loggend_in ?>;
-                        var cur_year = '<?php echo date('Y') ?>';
-                        var cur_month = '<?php echo date('m') ?>';
-                        var cur_day = '<?php echo date('d') ?>';
-                        var cur_hour = '<?php echo date('H') ?>';
-                        var cur_min = '<?php echo date('i') ?>';
-                        var cur_s = '<?php echo date('s') ?>';
+    var current_url = '<?php echo isset($url) ? $url : '' ?>';
+    var user_image = '<?php echo base_url(USER_IMAGES) ?>';
+    var logged_in = <?php echo $loggend_in ?>;
+    var cur_year = '<?php echo date('Y') ?>';
+    var cur_month = '<?php echo date('m') ?>';
+    var cur_day = '<?php echo date('d') ?>';
+    var cur_hour = '<?php echo date('H') ?>';
+    var cur_min = '<?php echo date('i') ?>';
+    var cur_s = '<?php echo date('s') ?>';
 </script>
 <script src="assets/js/community.js"></script>

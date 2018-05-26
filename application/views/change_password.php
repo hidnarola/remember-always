@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <link href="assets/css/bootstrap-datepicker/bootstrap-datepicker3.min.css" rel="stylesheet"/>
 <script src="assets/js/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 <!-- /theme JS files -->

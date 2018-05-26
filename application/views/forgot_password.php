@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <div class="container">
 
     <!-- Page content -->

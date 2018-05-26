@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 <section class="new-column top-spacing">
     <div class="container">

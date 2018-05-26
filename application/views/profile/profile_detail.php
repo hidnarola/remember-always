@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <div class="create-profile newdesign-profile">
     <div class="container">
         <div class="create-profile-box create-profile-body">

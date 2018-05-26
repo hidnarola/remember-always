@@ -440,8 +440,8 @@
         <script src="assets/js/jquery.validate.min.js"></script>
         <script src="assets/js/additional-methods.min.js"></script>
         <script src="assets/js/pnotify.custom.min.js"></script> 
-        <script src="assets/js/jquery.fancybox.js"></script>
-        <script src="assets/js/jquery.fancybox.pack.js"></script>
+<!--        <script src="assets/js/jquery.fancybox.js"></script>
+        <script src="assets/js/jquery.fancybox.pack.js"></script>-->
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>-->
 
         <script src="assets/js/sweetalert2.all.min.js"></script>

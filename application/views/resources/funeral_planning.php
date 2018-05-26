@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <div class="common-page">
     <div class="container">
         <div class="common-head">
@@ -322,28 +324,28 @@
                     </div>
                 </div>
             </div>
-<!--            <div class="mt-20 profile-box" style="width: auto;">
-                <script id="mNCC" language="javascript">
-                    medianet_width = "728";
-                    medianet_height = "90";
-                    medianet_crid = "252046787";
-                    medianet_versionId = "3111299";
-                </script>
-                <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
-            </div>-->
+            <!--            <div class="mt-20 profile-box" style="width: auto;">
+                            <script id="mNCC" language="javascript">
+                                medianet_width = "728";
+                                medianet_height = "90";
+                                medianet_crid = "252046787";
+                                medianet_versionId = "3111299";
+                            </script>
+                            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
+                        </div>-->
         </div>
     </div>
 </div>
 
 <script type="text/javascript">
-                    $('.according-tab .panel-title a').on('click', function () {
-                        jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
-                        var classes = jQuery(this).prop('class');
-                        var clasArray = classes.split(' ')
-                        if (clasArray.includes('change_ic')) {
-                            jQuery(this).removeClass('change_ic')
-                        } else {
-                            jQuery(this).addClass('change_ic')
-                        }
-                    });
+    $('.according-tab .panel-title a').on('click', function () {
+        jQuery('.according-tab .panel-title a').not(this).removeClass('change_ic')
+        var classes = jQuery(this).prop('class');
+        var clasArray = classes.split(' ')
+        if (clasArray.includes('change_ic')) {
+            jQuery(this).removeClass('change_ic')
+        } else {
+            jQuery(this).addClass('change_ic')
+        }
+    });
 </script>

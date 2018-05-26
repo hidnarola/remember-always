@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <div class="common-page">
     <div class="container">
         <div class="common-head">
@@ -42,27 +44,27 @@
                 </script>
                 <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>-->
             </div>
-<!--            <div class="mt-20 profile-box">
-                <script id="mNCC" language="javascript">
-                    medianet_width = "728";
-                    medianet_height = "90";
-                    medianet_crid = "252046787";
-                    medianet_versionId = "3111299";
-                </script>
-                <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
-            </div>-->
+            <!--            <div class="mt-20 profile-box">
+                            <script id="mNCC" language="javascript">
+                                medianet_width = "728";
+                                medianet_height = "90";
+                                medianet_crid = "252046787";
+                                medianet_versionId = "3111299";
+                            </script>
+                            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
+                        </div>-->
         </div>
     </div>
 </div>
 <script type="text/javascript">
-                    $(function () {
-                        $(".fancybox")
-                                .fancybox({
-                                    openEffect: 'none',
-                                    closeEffect: 'none',
-                                    nextEffect: 'none',
-                                    prevEffect: 'none',
-                                    padding: 0,
-                                });
-                    });
+    $(function () {
+        $(".fancybox")
+                .fancybox({
+                    openEffect: 'none',
+                    closeEffect: 'none',
+                    nextEffect: 'none',
+                    prevEffect: 'none',
+                    padding: 0,
+                });
+    });
 </script>

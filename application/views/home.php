@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <section class="carousel">
     <div id="owl-demo" class="owl-carousel owl-theme">
         <?php foreach ($slider_images as $key => $image) { ?>

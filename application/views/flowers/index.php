@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <?php
 $url = site_url($_SERVER['PATH_INFO']);
 $url = site_url('flowers');

@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <?php
 $delivery_date = '';
 $recepint = [];
@@ -19,7 +21,7 @@ if (isset($order_data) && !empty($order_data)) {
                     <h2 class="thanks_title">Thanks for your order</h2>
                     <h6 class="order_num">Order Number: <?php echo $order_data->ORDERNO ?></h6>
                     <?php if (!empty($delivery_date)) { ?>
-                    <h6 class="order_num">Delivery Date: <?php echo date('M d, Y', strtotime($delivery_date)) ?></h6>
+                        <h6 class="order_num">Delivery Date: <?php echo date('M d, Y', strtotime($delivery_date)) ?></h6>
                     <?php } ?>
                     <div class="add_order">
                         <ul>

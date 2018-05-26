@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <div class="new-srh-for">
     <div class="container">
         <h2 class="h2title">Find memorial Life Profiles <br/> and other site content</h2>

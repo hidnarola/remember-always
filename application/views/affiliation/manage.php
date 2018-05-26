@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <!-- Select2  files -->
 <link href="assets/css/select2/select2.min.css" rel="stylesheet" />
 <link href="assets/css/select2/select2-bootstrap.min.css" rel="stylesheet" />

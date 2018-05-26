@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <script type="text/javascript" src="https://www.wepay.com/min/js/iframe.wepay.js"></script>
 <div class="common-page">
     <div class="container">

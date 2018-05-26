@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <style type="text/css">
     #map_wrapper {height: 400px;}
     #map_canvas {width: 100%;height: 100%;}
@@ -129,15 +131,15 @@
                                 </div>
                             </div>
                         <?php } ?>
-<!--                        <div class="adv_div">
-                            <script id="mNCC" language="javascript">
-                                medianet_width = "300";
-                                medianet_height = "250";
-                                medianet_crid = "404298848";
-                                medianet_versionId = "3111299";
-                            </script>
-                            <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
-                        </div>-->
+                        <!--                        <div class="adv_div">
+                                                    <script id="mNCC" language="javascript">
+                                                        medianet_width = "300";
+                                                        medianet_height = "250";
+                                                        medianet_crid = "404298848";
+                                                        medianet_versionId = "3111299";
+                                                    </script>
+                                                    <script src="//contextual.media.net/nmedianet.js?cid=8CUPCYT30"></script>
+                                                </div>-->
                     </div>
                 </div>
             </div>
@@ -149,220 +151,220 @@
 <script>
 
 
-                                function getLocation() {
-                                    if (navigator.geolocation) {
-                                        navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
-                                    } else {
-                                        console.log("Geolocation is not supported by this browser.");
-                                    }
-                                }
-                                function geoSuccess(position) {
-                                    var lat = position.coords.latitude;
-                                    var lng = position.coords.longitude;
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(geoSuccess, geoError);
+        } else {
+            console.log("Geolocation is not supported by this browser.");
+        }
+    }
+    function geoSuccess(position) {
+        var lat = position.coords.latitude;
+        var lng = position.coords.longitude;
 
-                                    user_latitude = getCookie('user_latitude');
-                                    user_longitude = getCookie('user_longitude');
+        user_latitude = getCookie('user_latitude');
+        user_longitude = getCookie('user_longitude');
 
-                                    setCookie('user_latitude', lat, 365);
-                                    setCookie('user_longitude', lng, 365);
-                                    codeLatLng(lat, lng);
+        setCookie('user_latitude', lat, 365);
+        setCookie('user_longitude', lng, 365);
+        codeLatLng(lat, lng);
 
-                                    if (user_latitude == '' && user_longitude == '') {
-                                        $('.loader').show();
-                                        location.reload();
-                                    } else if (user_latitude != lat || user_longitude != lng) {
-                                        $('.loader').show();
-                                        location.reload();
-                                    }
+        if (user_latitude == '' && user_longitude == '') {
+            $('.loader').show();
+            location.reload();
+        } else if (user_latitude != lat || user_longitude != lng) {
+            $('.loader').show();
+            location.reload();
+        }
 
-                                }
-                                function geoError() {
-                                    console.log("Geocoder failed.");
-                                    setCookie('user_latitude', '', -365);
-                                    setCookie('user_longitude', '', -365);
-                                    setCookie('user_geolocation', '', -365);
-                                }
-                                var geocoder = new google.maps.Geocoder();
+    }
+    function geoError() {
+        console.log("Geocoder failed.");
+        setCookie('user_latitude', '', -365);
+        setCookie('user_longitude', '', -365);
+        setCookie('user_geolocation', '', -365);
+    }
+    var geocoder = new google.maps.Geocoder();
 //                                function initialize() {
 //                                    geocoder = new google.maps.Geocoder();
 //                                }
-                                getLocation();
+    getLocation();
 
-                                function codeLatLng(lat, lng) {
-                                    var latlng = new google.maps.LatLng(lat, lng);
-                                    geocoder.geocode({'latLng': latlng}, function (results, status) {
-                                        if (status == google.maps.GeocoderStatus.OK) {
-                                            if (results[1]) {
-                                                var indice = 0;
-                                                for (var j = 0; j < results.length; j++)
-                                                {
-                                                    if (results[j].types[0] == 'locality')
-                                                    {
-                                                        indice = j;
-                                                        break;
-                                                    }
-                                                }
-                                                for (var i = 0; i < results[j].address_components.length; i++)
-                                                {
-                                                    if (results[j].address_components[i].types[0] == "locality") {
-                                                        //this is the object you are looking for
-                                                        city = results[j].address_components[i];
-                                                    }
-                                                    if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
-                                                        //this is the object you are looking for
-                                                        region = results[j].address_components[i];
-                                                    }
-                                                    if (results[j].address_components[i].types[0] == "country") {
-                                                        //this is the object you are looking for
-                                                        country = results[j].address_components[i];
+    function codeLatLng(lat, lng) {
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder.geocode({'latLng': latlng}, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    var indice = 0;
+                    for (var j = 0; j < results.length; j++)
+                    {
+                        if (results[j].types[0] == 'locality')
+                        {
+                            indice = j;
+                            break;
+                        }
+                    }
+                    for (var i = 0; i < results[j].address_components.length; i++)
+                    {
+                        if (results[j].address_components[i].types[0] == "locality") {
+                            //this is the object you are looking for
+                            city = results[j].address_components[i];
+                        }
+                        if (results[j].address_components[i].types[0] == "administrative_area_level_1") {
+                            //this is the object you are looking for
+                            region = results[j].address_components[i];
+                        }
+                        if (results[j].address_components[i].types[0] == "country") {
+                            //this is the object you are looking for
+                            country = results[j].address_components[i];
 
-                                                    } else {
+                        } else {
 //                                                        console.log("No results found");
-                                                    }
-                                                }
-                                                //set user's location in cookie 
-                                                if (city.long_name != '' && city.long_name != undefined) {
-                                                    user_geolocation = city.long_name + ', ' + region.long_name + ', ' + country.long_name;
-                                                } else {
-                                                    if (region.long_name != '' && region.long_name != undefined) {
-                                                        user_geolocation = region.long_name + ', ' + country.long_name;
-                                                    } else {
-                                                        user_geolocation = country.long_name;
-                                                    }
+                        }
+                    }
+                    //set user's location in cookie 
+                    if (city.long_name != '' && city.long_name != undefined) {
+                        user_geolocation = city.long_name + ', ' + region.long_name + ', ' + country.long_name;
+                    } else {
+                        if (region.long_name != '' && region.long_name != undefined) {
+                            user_geolocation = region.long_name + ', ' + country.long_name;
+                        } else {
+                            user_geolocation = country.long_name;
+                        }
 
-                                                }
-                                                setCookie('user_geolocation', user_geolocation, 365);
-                                            } else {
+                    }
+                    setCookie('user_geolocation', user_geolocation, 365);
+                } else {
 //                                                console.log("No results found");
-                                            }
-                                        } else {
+                }
+            } else {
 //                                            console.log("Geocoder failed due to: " + status);
-                                        }
-                                    });
-                                }
+            }
+        });
+    }
 
-                                var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
-                                var empty = <?php echo $empty ?>;
-                                var input = (document.getElementById('location'));
-                                var options = {
-                                    componentRestrictions: {country: "us"}
-                                };
-                                var autocomplete = new google.maps.places.Autocomplete(input);
-                                var infowindow = new google.maps.InfoWindow();
-                                google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                                    infowindow.close();
-                                    var place = autocomplete.getPlace();
-                                    if (!place.geometry) {
-                                        $('#input-latitude').val('');
-                                        $('#input-latitude').val('');
-                                        return;
-                                    }
-                                    $('#input-latitude').val(place.geometry.location.lat());
-                                    $('#input-longitude').val(place.geometry.location.lng());
-                                });
+    var srch_data = '<?php echo isset($_SERVER['REDIRECT_QUERY_STRING']) ? '?' . $_SERVER['REDIRECT_QUERY_STRING'] : '' ?>';
+    var empty = <?php echo $empty ?>;
+    var input = (document.getElementById('location'));
+    var options = {
+        componentRestrictions: {country: "us"}
+    };
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    var infowindow = new google.maps.InfoWindow();
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        infowindow.close();
+        var place = autocomplete.getPlace();
+        if (!place.geometry) {
+            $('#input-latitude').val('');
+            $('#input-latitude').val('');
+            return;
+        }
+        $('#input-latitude').val(place.geometry.location.lat());
+        $('#input-longitude').val(place.geometry.location.lng());
+    });
 
-                                jQuery(function ($) {
-                                    /*
-                                     var script = document.createElement('script');
-                                     script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
-                                     document.body.appendChild(script);*/
-                                    if (empty != 0) {
-                                        initialize();
-                                    }
-                                });
+    jQuery(function ($) {
+        /*
+         var script = document.createElement('script');
+         script.src = "//maps.googleapis.com/maps/api/js?sensor=false&callback=initialize";
+         document.body.appendChild(script);*/
+        if (empty != 0) {
+            initialize();
+        }
+    });
 
-                                function initialize() {
-                                    var map;
-                                    var bounds = new google.maps.LatLngBounds();
-                                    var mapOptions = {
-                                        mapTypeId: 'roadmap',
-                                    };
+    function initialize() {
+        var map;
+        var bounds = new google.maps.LatLngBounds();
+        var mapOptions = {
+            mapTypeId: 'roadmap',
+        };
 
-                                    // Display a map on the page
-                                    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-                                    map.setTilt(45);
+        // Display a map on the page
+        map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        map.setTilt(45);
 
-                                    // Multiple Markers
-                                    var markers = <?php echo json_encode($lat_arr) ?>;
+        // Multiple Markers
+        var markers = <?php echo json_encode($lat_arr) ?>;
 
-                                    // Info Window Content
-                                    var infoWindowContent = <?php echo json_encode($info_content) ?>;
+        // Info Window Content
+        var infoWindowContent = <?php echo json_encode($info_content) ?>;
 
-                                    // Display multiple markers on a map
-                                    var infoWindow = new google.maps.InfoWindow(), marker, i;
+        // Display multiple markers on a map
+        var infoWindow = new google.maps.InfoWindow(), marker, i;
 
-                                    // Loop through our array of markers & place each one on the map  
-                                    for (i = 0; i < markers.length; i++) {
-                                        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-                                        bounds.extend(position);
-                                        marker = new google.maps.Marker({
-                                            position: position,
-                                            map: map,
-                                            title: markers[i][0]
-                                        });
+        // Loop through our array of markers & place each one on the map  
+        for (i = 0; i < markers.length; i++) {
+            var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+            bounds.extend(position);
+            marker = new google.maps.Marker({
+                position: position,
+                map: map,
+                title: markers[i][0]
+            });
 
-                                        // Allow each marker to have an info window    
-                                        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                                            return function () {
-                                                infoWindow.setContent(infoWindowContent[i][0]);
-                                                infoWindow.open(map, marker);
-                                            }
-                                        })(marker, i));
+            // Allow each marker to have an info window    
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infoWindow.setContent(infoWindowContent[i][0]);
+                    infoWindow.open(map, marker);
+                }
+            })(marker, i));
 
-                                        // Automatically center the map fitting all markers on the screen
-                                        map.fitBounds(bounds);
-                                    }
+            // Automatically center the map fitting all markers on the screen
+            map.fitBounds(bounds);
+        }
 
-                                    // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-                                    var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
-                                        this.setZoom(10);
-                                        google.maps.event.removeListener(boundsListener);
-                                    });
+        // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
+        var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function (event) {
+            this.setZoom(10);
+            google.maps.event.removeListener(boundsListener);
+        });
 
-                                }
+    }
 
-                                $(document).on('keyup paste', 'input[type="text"]', function () {
-                                    if ($(this).val() != '') {
-                                        $('#provider_srch_btn').removeAttr('disabled');
-                                    }
-                                });
-                                $(document).on('change', 'select', function () {
-                                    if ($(this).val() != '') {
-                                        $('#provider_srch_btn').removeAttr('disabled');
-                                    }
-                                });
-                                $(document).on('click', '#provider_srch_btn', function () {
+    $(document).on('keyup paste', 'input[type="text"]', function () {
+        if ($(this).val() != '') {
+            $('#provider_srch_btn').removeAttr('disabled');
+        }
+    });
+    $(document).on('change', 'select', function () {
+        if ($(this).val() != '') {
+            $('#provider_srch_btn').removeAttr('disabled');
+        }
+    });
+    $(document).on('click', '#provider_srch_btn', function () {
 //        $('#provider_form').submit();
-                                    submit_form();
-                                });
-                                function submit_form() {
-                                    var location = $('#location').val();
-                                    var keyword = $('#keyword').val();
-                                    if (location == '' && keyword == '') {
-                                        window.location.href = site_url + 'service_provider';
-                                    } else if (location != '' && keyword != '') {
-                                        window.location.href = site_url + 'service_provider?keyword=' + keyword + '&location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
-                                    } else if (location != '') {
-                                        window.location.href = site_url + 'service_provider?location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
-                                    } else if (keyword != '') {
-                                        window.location.href = site_url + 'service_provider?keyword=' + keyword;
-                                    }
-                                    return false;
-                                }
-                                $("#keyword").keydown(function (e) {
-                                    var value = e.keyCode;
-                                    if (value == 13) {
-                                        $('.loader').show();
-                                        submit_form();
-                                    }
-                                });
-                                $("#location").keydown(function (e) {
-                                    var value = e.keyCode;
-                                    if (value == 13) {
-                                        $('.loader').show();
-                                        setTimeout(function () {
-                                            submit_form();
-                                        }, 1000);
-                                    }
-                                });
+        submit_form();
+    });
+    function submit_form() {
+        var location = $('#location').val();
+        var keyword = $('#keyword').val();
+        if (location == '' && keyword == '') {
+            window.location.href = site_url + 'service_provider';
+        } else if (location != '' && keyword != '') {
+            window.location.href = site_url + 'service_provider?keyword=' + keyword + '&location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
+        } else if (location != '') {
+            window.location.href = site_url + 'service_provider?location=' + location.replace('::', ',') + '&lat=' + $('#input-latitude').val() + '&long=' + $('#input-longitude').val();
+        } else if (keyword != '') {
+            window.location.href = site_url + 'service_provider?keyword=' + keyword;
+        }
+        return false;
+    }
+    $("#keyword").keydown(function (e) {
+        var value = e.keyCode;
+        if (value == 13) {
+            $('.loader').show();
+            submit_form();
+        }
+    });
+    $("#location").keydown(function (e) {
+        var value = e.keyCode;
+        if (value == 13) {
+            $('.loader').show();
+            setTimeout(function () {
+                submit_form();
+            }, 1000);
+        }
+    });
 </script>

@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <style type="text/css">
     .select2.error{border:1px solid red !important;}
 </style>

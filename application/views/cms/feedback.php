@@ -1,3 +1,5 @@
+<script src="assets/js/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.fancybox.pack.js"></script>
 <script type="text/javascript" src="assets/js/jquery.validate.js"></script>
 <script src="assets/js/bootstrap/bootstrap-select.min.js" type="text/javascript"></script>
 <link href="assets/css/bootstrap-select.min.css" rel="stylesheet" type="text/css">
@@ -5,7 +7,7 @@
     <div class="content">
         <div class="mt-150">
             <div class="hero-image">
-                <div style="background-image: url('<?php echo PAGE_BANNER.'/DSCF1766-Edit.jpg' ?>');" class="hero-image-inner">
+                <div style="background-image: url('<?php echo PAGE_BANNER . '/DSCF1766-Edit.jpg' ?>');" class="hero-image-inner">
                     <div class="hero-image-content">
                         <div class="container">
                             <h1><?php echo $page_title ?></h1>
@@ -75,13 +77,13 @@
     </div>
 </div>
 <script>
-    $(document).on('click','#post',function (){
+    $(document).on('click', '#post', function () {
         if ($('#feedback-form').valid()) {
             $('.loading').show();
             $('#feedback-form').submit();
-        }    
+        }
     })
-    
+
     $("#feedback-form").validate({
         ignore: ':not(select:hidden, input:visible, textarea:visible)',
         rules: {
@@ -90,13 +92,13 @@
             },
             email: {
                 first_email: true,
-                email : true,
+                email: true,
                 required: true
             },
             message: {
                 required: true,
-                wordMin : ['20'],
-                wordMax : ['50']
+                wordMin: ['20'],
+                wordMax: ['50']
             },
             cover_photo: {
                 extension: "jpg|png|jpeg",
@@ -108,13 +110,13 @@
         },
         messages: {
             "message": {
-                wordMin : 'Your description is too short. Please enter more description.',
-                wordMax : 'Your description is too long. Please enter short description.'
+                wordMin: 'Your description is too short. Please enter more description.',
+                wordMax: 'Your description is too long. Please enter short description.'
             }
         },
     });
-    $(function() {
-        setTimeout(function() {
+    $(function () {
+        setTimeout(function () {
             $(".alert").hide()
         }, 5000);
     });
