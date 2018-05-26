@@ -445,8 +445,9 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>-->
 
         <script src="assets/js/sweetalert2.all.min.js"></script>
-        <script src="assets/js/jquery.mCustomScrollbar.js"></script>
-        <script src="assets/js/typeahead.bundle.js"></script>
+        <script src="assets/js/jquery.mCustomScrollbar.min.js"></script>
+        <!--<script src="assets/js/jquery.mCustomScrollbar.js"></script>-->
+        <script src="assets/js/typeahead.bundle.min.js"></script>
         <script src="assets/js/jquery.creditCardValidator.js"></script> 
         <script src="assets/js/responsive-tabs.js"></script>  
         <script src="assets/js/jquery.magnific-popup.min.js"></script>  
