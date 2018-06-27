@@ -113,7 +113,7 @@ if ($this->session->flashdata('success')) {
                                             <th class="text-nowrap">Status :</th>
                                             <td>
                                                 <?php echo isset($profile_data['is_published']) && $profile_data['is_published'] == '1' ? '<span class="label label-success">Published</span>' : '<span class="label label-default">Not Published</span>' ?>
-                                                <?php echo isset($profile_data['is_blocked']) && $profile_data['is_blocked'] == '1' ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Blocked</span>' ?>
+                                                <?php // echo isset($profile_data['is_blocked']) && $profile_data['is_blocked'] == '1' ? '<span class="label label-success">Active</span>' : '<span class="label label-danger">Blocked</span>' ?>
                                             </td>
                                         </tr>
                                         <?php if ($profile_data['type'] == 2) { ?>
