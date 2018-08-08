@@ -60,7 +60,7 @@ $(function () {
             onTotalScroll: function () {
                 if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
                     var limitStart = $(".gallery_div_ul ul > li").length;
-                    loadGallery(limitStart);
+//                    loadGallery(limitStart);
                 }
             }, /*user custom callback function on scroll event*/
 

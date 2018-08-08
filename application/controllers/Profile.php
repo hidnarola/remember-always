@@ -941,7 +941,8 @@ class Profile extends MY_Controller {
         if ($static === false) {
             $profile_id = base64_decode($profile_id);
         }
-        $final_gallery_data = $this->users_model->sql_select(TBL_GALLERY, 'media,type', ['where' => array('profile_id' => trim($profile_id), 'is_delete' => 0)], ['limit' => $offset, 'offset' => $start]);
+//        $final_gallery_data = $this->users_model->sql_select(TBL_GALLERY, 'media,type', ['where' => array('profile_id' => trim($profile_id), 'is_delete' => 0)], ['limit' => $offset, 'offset' => $start]);
+        $final_gallery_data = $this->users_model->sql_select(TBL_GALLERY, 'media,type', ['where' => array('profile_id' => trim($profile_id), 'is_delete' => 0)]);
         if ($static === true) {
             return $final_gallery_data;
         } else {
