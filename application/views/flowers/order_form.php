@@ -139,7 +139,7 @@
                             <div class="input-wrap input-wrap_small">
                                 <input type="text" name="r_phone" placeholder="Phone *" class="input-css">
                                 <i class="fa fa-info-circle" aria-hidden="true" data-placement="left" title="Recipient's Phone Number. 10 digits. Acceptable formats: xxx-xxx-xxxx, (xxx) xxx-xxxx, xxxxxxxxxx"></i>
-                                <small>xxx-xxx-xxxx</small>
+                                <!--<small>xxx-xxx-xxxx</small>-->
                             </div>
                         </div>						
                         <div class="delivery_r">
