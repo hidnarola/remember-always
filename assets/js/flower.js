@@ -112,7 +112,8 @@ $(function () {
             r_phone: {
                 required: true,
 //                number: true,
-                maxlength: 13,
+//                maxlength: 13,
+                maxlength: 10,
                 minlength: 10,
             },
             r_d_date: {
@@ -157,7 +158,7 @@ $(function () {
             },
             c_phone: {
                 required: true,
-                number: true,
+//                number: true,
                 maxlength: 10,
                 minlength: 10,
             },
