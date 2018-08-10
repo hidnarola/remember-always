@@ -38,7 +38,7 @@ class Flowers extends MY_Controller {
           'fa100' => 'Flowers above $100'); */
 
         $prize_data = array(
-            'f60t80' => 'Flowers between $60 and $80',
+            'f60t80' => 'Flowers under $80',
             'f80t100' => 'Flowers between $80 and $100',
             'fa100' => 'Flowers above $100');
         
