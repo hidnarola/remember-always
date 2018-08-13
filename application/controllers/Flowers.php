@@ -45,7 +45,7 @@ class Flowers extends MY_Controller {
         $floristone = new Floristone();
         $count = 6;
         $start = $start + 1;
-        $url = "https://www.floristone.com/api/rest/flowershop/getproducts?count=$count&start=$start";
+        $url = "https://www.floristone.com/api/rest/flowershop/getproducts?count=$count&start=$start&sorttype=pa";
         if (!empty($this->input->get())) {
             $data = $this->input->get();
             if (isset($data['category']) && !empty($data['category'])) {
