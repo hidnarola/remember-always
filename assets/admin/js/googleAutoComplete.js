@@ -95,7 +95,7 @@ function fillInAddressComponents(place, componentForm, formFields) {
                             $url = site_url + 'service_provider/get_cities_by_state';
                         }
                         $.ajax({
-                            type: "POST",
+                            type: "get",
                             url: $url,
                             data: {
                                 stateid: state_val,

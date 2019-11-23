@@ -246,8 +246,8 @@ class Affiliations extends MY_Controller {
      * Get cities  or state based on type passed as data.
      * */
     public function get_data() {
-        $id = base64_decode($this->input->post('id'));
-        $type = $this->input->post('type');
+        $id = base64_decode($this->input->get('id'));
+        $type = $this->input->get('type');
         $options = '';
         if ($type == 'city') {
             $options = '<option value="">-- Select City --</option>';
@@ -283,7 +283,7 @@ class Affiliations extends MY_Controller {
      * @author AKK
      */
     public function delete_image() {
-        $gallery = base64_decode($this->input->post('image'));
+        $gallery = base64_decode($this->input->get('image'));
         $media = $this->affiliation_model->sql_select(TBL_AFFILIATIONS, 'image', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
         if (!empty($media)) {
             $update_array = array(

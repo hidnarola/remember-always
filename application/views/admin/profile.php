@@ -94,6 +94,13 @@
                                 <input type="text" name="email" id="email" placeholder="Enter Email" class="form-control" disabled value="<?php echo $this->session->userdata('remalways_admin')['email']; ?>">
                             </div>
                         </div>
+                        <?php
+                        $csrf = array(
+                            'name' => $this->security->get_csrf_token_name(),
+                            'hash' => $this->security->get_csrf_hash()
+                        );
+                        ?>
+                        <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                         <div class="text-right col-lg-12">
                             <button class="btn btn-success" type="submit" id="update_profile">Save <i class="icon-arrow-right14 position-right"></i></button>
                         </div>
@@ -135,6 +142,13 @@
                                 ?>
                             </div>
                         </div>
+                        <?php
+                        $csrf = array(
+                            'name' => $this->security->get_csrf_token_name(),
+                            'hash' => $this->security->get_csrf_hash()
+                        );
+                        ?>
+                        <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                         <div class="text-right col-lg-12">
                             <button class="btn btn-success" id="update_password" type="submit">Update Password <i class="icon-arrow-right14 position-right"></i></button>
                         </div>

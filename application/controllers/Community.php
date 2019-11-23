@@ -129,7 +129,7 @@ class Community extends MY_Controller {
      * @author KU
      */
     public function get_question() {
-        $slug = $this->input->post('slug');
+        $slug = $this->input->get('slug');
         $question_data = $this->community_model->sql_select(TBL_QUESTIONS, 'title,slug,description', ['where' => array('slug' => trim($slug), 'is_delete' => 0, 'user_id' => $this->user_id)], ['single' => true]);
         if (!empty($question_data)) {
             $data['question'] = $question_data;
@@ -234,7 +234,7 @@ class Community extends MY_Controller {
      * @author KU
      */
     public function get_comments() {
-        $id = $this->input->post('answer');
+        $id = $this->input->get('answer');
         $answer = $this->community_model->sql_select(TBL_ANSWERS, 'id,answer,created_at', ['where' => array('id' => $id, 'is_delete' => 0)], ['single' => true]);
         if (!empty($answer)) {
             $comments = $this->community_model->sql_select(TBL_COMMENTS . ' c', 'c.comment,c.created_at,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id', ['where' => array('c.answer_id' => $id, 'c.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=c.user_id')], 'order_by' => 'c.created_at DESC']);
@@ -253,7 +253,7 @@ class Community extends MY_Controller {
      * @author KU
      */
     public function get_answers() {
-        $id = $this->input->post('question');
+        $id = $this->input->get('question');
         $question = $this->community_model->sql_select(TBL_QUESTIONS, 'id,title,created_at', ['where' => array('id' => $id, 'is_delete' => 0)], ['single' => true]);
         if (!empty($question)) {
             $answers = $this->community_model->sql_select(TBL_ANSWERS . ' a', 'a.answer,a.created_at,u.firstname,u.lastname,u.profile_image,u.facebook_id,u.google_id', ['where' => array('a.question_id' => $id, 'a.is_delete' => 0)], ['join' => [array('table' => TBL_USERS . ' u', 'condition' => 'u.id=a.user_id')], 'order_by' => 'a.created_at DESC']);
@@ -275,12 +275,12 @@ class Community extends MY_Controller {
     public function post_comment() {
         //-- check user is logged in or not
         if ($this->is_user_loggedin) {
-            if ($this->input->post('comment') != '' && $this->input->post('answer') != '') {
-                $answer = $this->community_model->sql_select(TBL_ANSWERS, 'id', ['where' => array('id' => $this->input->post('answer'), 'is_delete' => 0)], ['single' => true]);
+            if ($this->input->get('comment') != '' && $this->input->get('answer') != '') {
+                $answer = $this->community_model->sql_select(TBL_ANSWERS, 'id', ['where' => array('id' => $this->input->get('answer'), 'is_delete' => 0)], ['single' => true]);
                 if (!empty($answer)) {
                     $data = [
                         'user_id' => $this->user_id,
-                        'comment' => trim($this->input->post('comment')),
+                        'comment' => trim($this->input->get('comment')),
                         'answer_id' => $answer['id'],
                         'created_at' => date('Y-m-d H:i:s')
                     ];

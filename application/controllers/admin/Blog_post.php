@@ -248,11 +248,11 @@ class Blog_post extends MY_Controller {
      * @author : AKK
      * */
     public function change_data_status() {
-        if (!is_null($this->input->post('id')))
-            $id = base64_decode($this->input->post('id'));
+        if (!is_null($this->input->get('id')))
+            $id = base64_decode($this->input->get('id'));
         if (is_numeric($id)) {
-            $user_array = array('is_view' => $this->input->post('value'), 'updated_at' => date('Y-m-d H:i:s'));
-            if ($this->input->post('value') == 0) {
+            $user_array = array('is_view' => $this->input->get('value'), 'updated_at' => date('Y-m-d H:i:s'));
+            if ($this->input->get('value') == 0) {
                 $this->blog_post_model->common_insert_update('update', TBL_BLOG_POST, $user_array, ['id' => $id]);
             }
             $count = $this->blog_post_model->sql_select(TBL_BLOG_POST, 'COUNT(*) as view_count', ['where' => array('is_view' => 1, 'is_delete' => 0)], ['single' => true]);

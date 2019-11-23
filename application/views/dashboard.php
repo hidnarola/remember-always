@@ -187,7 +187,7 @@
             if (isConfirm) {
                 $.ajax({
                     url: url,
-                    type: "post",
+                    type: "get",
                     dataType: "json",
                     success: function (data) {
                         if (data.success) {
@@ -227,7 +227,7 @@
                 $('.loader').show();
                 $.ajax({
                     url: url,
-                    type: "post",
+                    type: "get",
                     dataType: "json",
                     success: function (data) {
                         window.location.href = current_url;

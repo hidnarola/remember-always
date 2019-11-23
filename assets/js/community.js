@@ -31,7 +31,7 @@ $(function () {
 
         $.ajax({
             url: site_url + "community/get_question",
-            type: "POST",
+            type: "get",
             data: {slug: que_slug},
             dataType: "json",
             success: function (data) {
@@ -184,7 +184,7 @@ $(function () {
             if ($('#comment_form_' + answer).valid()) {
                 $.ajax({
                     url: site_url + "community/post_comment",
-                    type: "POST",
+                    type: "get",
                     data: {answer: answer, comment: comment},
                     dataType: "json",
                     async: false,
@@ -221,7 +221,7 @@ function show_comments(answer, obj) {
     $('.loader').show();
     $.ajax({
         url: site_url + "community/get_comments",
-        type: "POST",
+        type: "get",
         data: {answer: answer},
         dataType: "json",
         async: false,
@@ -282,7 +282,7 @@ function show_answers(question, obj) {
     $('.loader').show();
     $.ajax({
         url: site_url + "community/get_answers",
-        type: "POST",
+        type: "get",
         data: {question: question},
         dataType: "json",
         async: false,

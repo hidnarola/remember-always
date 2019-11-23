@@ -19,6 +19,13 @@
                                 <textarea class="input-css textarea-css" name="que_description" id="que_description" placeholder="Describe your question"></textarea>
                             </div>
                             <input type="hidden" name="question_slug" id="question_slug" value=""/>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="an_btn">
                                 <a href="javascript:void(0)" class="post_que_btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i>Post</a>
                             </div>

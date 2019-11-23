@@ -224,8 +224,8 @@ class Users extends MY_Controller {
      * Get cities  or state based on type passed as data.
      * */
     public function get_data() {
-        $id = base64_decode($this->input->post('id'));
-        $type = $this->input->post('type');
+        $id = base64_decode($this->input->get('id'));
+        $type = $this->input->get('type');
         $options = '';
         if ($type == 'city') {
             $options = '<option value="">-- Select City --</option>';
@@ -709,8 +709,8 @@ class Users extends MY_Controller {
      */
     public function load_data() {
         $offset = 2;
-        $id = base64_decode($this->input->post('id'));
-        $type = $this->input->post('type');
+        $id = base64_decode($this->input->get('id'));
+        $type = $this->input->get('type');
         if ($type == 'affiliation') {
             $affiliations = $this->users_model->sql_select(TBL_AFFILIATIONS . ' a', 'a.*,ac.name as category_name,co.name as country_name,c.name as city_name,s.name as state_name', ['where' => array('a.id' => trim($id), 'a.is_delete' => 0)], ['single' => true, 'join' => [array('table' => TBL_AFFILIATIONS_CATEGORY . ' ac', 'condition' => 'ac.id=a.category_id AND ac.is_delete=0'), array('table' => TBL_COUNTRY . ' co', 'condition' => 'co.id=a.country'), array('table' => TBL_STATE . ' s', 'condition' => 's.id=a.state'), array('table' => TBL_CITY . ' c', 'condition' => 'c.id=a.city')]]);
             if (!empty($affiliations)) {

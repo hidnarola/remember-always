@@ -168,7 +168,13 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <?php
+                                $csrf = array(
+                                    'name' => $this->security->get_csrf_token_name(),
+                                    'hash' => $this->security->get_csrf_hash()
+                                );
+                                ?>
+                                <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                                 <div class="form-group">
                                     <button type="submit" class="btn bg-blue btn-block">Login <i class="icon-arrow-right14 position-right"></i></button>
                                 </div>

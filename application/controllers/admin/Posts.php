@@ -388,7 +388,7 @@ class Posts extends MY_Controller {
      * @param int $id
      * */
     public function get_user_profile() {
-        $id = base64_decode($this->input->post('id'));
+        $id = base64_decode($this->input->get('id'));
         $options = '<option value="">-- Select User Profile --</option>';
         if (is_numeric($id)) {
             $post_data = $this->post_model->sql_select(TBL_PROFILES, null, ['where' => array('user_id' => trim($id), 'is_delete' => 0)]);

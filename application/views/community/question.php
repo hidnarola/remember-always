@@ -45,6 +45,13 @@
                                             <form id="add_answer_form" method="post" action="<?php echo site_url('community/add_answers') ?>">
                                                 <textarea name="description" class="input-css" id="description" placeholder="Add Answer"></textarea>
                                                 <input type="hidden" name="slug" value="<?php echo $question['slug'] ?>"/>
+                                                <?php
+                                                $csrf = array(
+                                                    'name' => $this->security->get_csrf_token_name(),
+                                                    'hash' => $this->security->get_csrf_hash()
+                                                );
+                                                ?>
+                                                <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                                                 <a href="javascript:void(0)" id="add_answer" data-question="<?php echo $question['slug'] ?>">Post</a>
                                             </form>
                                         </div>

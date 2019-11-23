@@ -47,11 +47,11 @@ class Profiles extends MY_Controller {
      * Change most visited and notable status of profile
      * */
     public function change_data_status() {
-        $profile_status_type = $this->input->post('type');
-        $profile_id = $this->input->post('id');
+        $profile_status_type = $this->input->get('type');
+        $profile_id = $this->input->get('id');
         $check_profile = $this->profile_model->sql_select(TBL_PROFILES, 'id', ['where' => ['id' => $profile_id]], ['single' => true]);
         if (!empty($check_profile)) {
-            $val = $this->input->post('value');
+            $val = $this->input->get('value');
             if ($profile_status_type == 'most_visited') {
                 $update_array = array(
                     'most_visited' => $val

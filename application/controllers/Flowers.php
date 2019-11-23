@@ -144,10 +144,10 @@ class Flowers extends MY_Controller {
      * Get cities  or state based on type passed as data.
      * */
     public function get_data() {
-        $type = $this->input->post('type');
+        $type = $this->input->get('type');
         $options = '';
         if ($type == 'city') {
-            $id = base64_decode($this->input->post('id'));
+            $id = base64_decode($this->input->get('id'));
             $options = '<option value="">-- Select City --</option>';
             if (is_numeric($id)) {
                 $data = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);
@@ -158,7 +158,7 @@ class Flowers extends MY_Controller {
                 }
             }
         } else if ($type == 'state') {
-            $id = base64_decode($this->input->post('id'));
+            $id = base64_decode($this->input->get('id'));
             $options = '<option value="">-- Select State --</option>';
             if (is_numeric($id)) {
                 $data = $this->users_model->sql_select(TBL_STATE, null, ['where' => array('country_id' => trim($id))]);
@@ -174,7 +174,7 @@ class Flowers extends MY_Controller {
                 }
             }
         } else if ($type == 'zip') {
-            $zipcode = $this->input->post('id');
+            $zipcode = $this->input->get('id');
             $options = '<option value="">-- Delivery Date --</option>';
             $url = "https://www.floristone.com/api/rest/flowershop/checkdeliverydate?zipcode=$zipcode";
             $floristone = new Floristone();

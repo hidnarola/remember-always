@@ -173,6 +173,13 @@
                                     </div>
 
                                 </div>
+                                <?php
+                                $csrf = array(
+                                    'name' => $this->security->get_csrf_token_name(),
+                                    'hash' => $this->security->get_csrf_hash()
+                                );
+                                ?>
+                                <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                                 <div class="step-btm-btn">
                                     <button type="submit" class="next">Save</button>
                                 </div>
@@ -263,7 +270,7 @@
             $('.loader').show();
             $.ajax({
                 url: site_url + "profile/get_states",
-                type: "POST",
+                type: "get",
                 data: {country: atob(country_val)},
                 dataType: "json",
                 success: function (data) {
@@ -287,7 +294,7 @@
             $('.loader').show();
             $url = site_url + 'service_provider/get_cities_by_state';
             $.ajax({
-                type: "POST",
+                type: "get",
                 url: $url,
                 data: {
                     stateid: state_id,

@@ -176,8 +176,8 @@ class Affiliation extends MY_Controller {
      * Get cities  or state based on type passed as data.
      * */
     public function get_data() {
-        $id = base64_decode($this->input->post('id'));
-        $type = $this->input->post('type');
+        $id = base64_decode($this->input->get('id'));
+        $type = $this->input->get('type');
         $options = '';
         if ($type == 'city') {
             $options = '<option value="">-- Select City --</option>';

@@ -118,7 +118,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label>City: </label>
-                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($affiliation['city']) ? $affiliation['city'] : set_value('city');                                             ?>">-->
+                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($affiliation['city']) ? $affiliation['city'] : set_value('city');                                              ?>">-->
                                         <select name="city" id="city" class="form-control selectpicker">
                                             <option value="">-- Select City --</option>
                                             <?php
@@ -169,6 +169,13 @@
                                     </div>
                                 </div>
                             <?php } ?>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="text-right">
                                 <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                             </div>
@@ -265,7 +272,7 @@
         var country_id = $("#country option:selected").val();
         $url = '<?php echo base_url() ?>' + 'admin/users/get_data';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: country_id,
@@ -282,7 +289,7 @@
         var state_id = $("#state option:selected").val();
         $url = '<?php echo base_url() ?>' + 'admin/users/get_data';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: state_id,

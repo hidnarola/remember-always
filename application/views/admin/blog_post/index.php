@@ -268,7 +268,7 @@
         $.ajax({
             url: "<?php site_url() ?>admin/blog_post/change_data_status",
             data: {id: data_id, value: value},
-            type: "POST",
+            type: "get",
             success: function (result) {
                 console.log(result);
                 if (result == 'success') {

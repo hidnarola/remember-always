@@ -90,8 +90,8 @@ class MY_Controller extends CI_Controller {
      * @author AKK
      */
     public function get_cities_by_state() {
-        $id = base64_decode($this->input->post('stateid'));
-        $city_val = $this->input->post('city');
+        $id = base64_decode($this->input->get('stateid'));
+        $city_val = $this->input->get('city');
         if ($city_val != '' && $id != '') {
             $city_exists = $this->users_model->sql_select(TBL_CITY, null, ['where' => array('name' => trim($city_val))]);
             if (empty($city_exists)) {

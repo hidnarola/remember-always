@@ -192,6 +192,13 @@
                                     <input type="hidden" name="video_count" id="video_count" value="50">
                                 <?php } ?>
                             </div>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="text-right">
                                 <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                             </div>
@@ -311,7 +318,7 @@
         var user_id = $("#pf_user_id option:selected").val();
         $url = '<?php echo base_url() ?>' + 'admin/posts/get_user_profile';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: user_id,

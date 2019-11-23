@@ -344,7 +344,14 @@
                                             <input type="file" name="images_post[]" id="images_post" class="post_gallery_upload" data-type="image" multiple="true"> 
                                         </div>
                                     </div>
-                                    <!--<input type="hidden" name="post_data" id="post_data"/>-->
+                                    <?php
+                                    $csrf = array(
+                                        'name' => $this->security->get_csrf_token_name(),
+                                        'hash' => $this->security->get_csrf_hash()
+                                    );
+                                    ?>
+                                    <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
+                                            <!--<input type="hidden" name="post_data" id="post_data"/>-->
                                     <button type="submit" name="post_btn" id="post_btn" class="purple_btn">Post</button>
                                 </div>
                             </form>
@@ -558,6 +565,13 @@
                         <textarea class="input-css textarea-css" name="email_friends" id="email_friends" placeholder="Enter up to 30 email addresses separated by commas,you will be able to send more later if needed. To share with more than 30 people via email,you can use your regular email to share the Life Profile link." required></textarea>
                         <label id="email_friends-error" class="error" for="email_friends"></label>
                     </div>
+                    <?php
+                    $csrf = array(
+                        'name' => $this->security->get_csrf_token_name(),
+                        'hash' => $this->security->get_csrf_hash()
+                    );
+                    ?>
+                    <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                     <input type="hidden" name="profile_slug" id="profile_slug" value="<?php echo $profile['slug'] ?>"/>
                 </form>
                 <div class="step-btm-btn">
@@ -817,4 +831,155 @@ else
                                 jQuery(this).addClass('change_ic')
                             }
                         });
+                        $(document).on('click', '#login_form_btn', function (e) {
+                            if ($('#login-form').valid()) {
+                                e.preventDefault();
+                                var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>',
+                                        csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
+                                var postformData = new FormData();
+                                postformData.append('comment', $('#comment').val());
+                                postformData.append('email', $('#loginpop_email').val());
+                                postformData.append('password', $('#loginpop_password').val());
+                                postformData.append('profile_id', profile_id);
+                                postformData.append(csrfName, csrfHash);
+                                $(post_data).each(function (key) {
+                                    if (post_data[key] != null) {
+                                        post_types[key] = [];
+                                        post_types[key] = post_data[key]['media_type'];
+                                        postformData.append('post_upload[]', post_data[key], post_data[key].name);
+                                        postformData.append('post_types[]', post_types[key]);
+                                    }
+                                });
+                                $('.loader').show();
+                                $.ajax({
+                                    url: site_url + "login?type=ajax",
+                                    type: "POST",
+                                    data: postformData,
+                                    dataType: "json",
+                                    processData: false, // tell jQuery not to process the data
+                                    contentType: false, // tell jQuery not to set contentType
+                                    success: function (data) {
+                                        $('.loader').hide();
+                                        if (data.success == true) {
+                                            //-- Remove default preview div
+                                            window.location.href = site_url + 'profile/' + slug;
+
+                                        } else {
+                                            showErrorMSg(data.error);
+                                        }
+                                    }
+                                });
+                            } else {
+                                console.log('not hereee');
+                            }
+                        });
+
+                        $('#post_form').validate({
+                            onkeyup: false,
+                            onfocusout: false,
+                            rules: {
+                                comment: {
+                                    atleast_one_for_post: true,
+                                },
+                            },
+                            highlight: function (element, errorClass) {
+                                if ($(element).attr('name') === 'comment') {
+                                    $('#post-modal').modal();
+                                }
+                            },
+                            messages: {
+                                comment: {
+                                    atleast_one_for_post: ''
+                                },
+                            },
+                            submitHandler: function (form) {
+                                var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>',
+                                        csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
+                                var postformData = new FormData();
+                                postformData.append('comment', $('#comment').val());
+                                $(post_data).each(function (key) {
+                                    if (post_data[key] != null) {
+                                        post_types[key] = [];
+                                        post_types[key] = post_data[key]['media_type'];
+                                        postformData.append('post_upload[]', post_data[key], post_data[key].name);
+                                        postformData.append('post_types[]', post_types[key]);
+                                        postformData.append(csrfName, csrfHash);
+                                    }
+                                });
+                                $('.loader').show();
+                                $.ajax({
+                                    url: site_url + "profile/" + slug,
+                                    type: "POST",
+                                    data: postformData,
+                                    dataType: "json",
+                                    processData: false, // tell jQuery not to process the data
+                                    contentType: false, // tell jQuery not to set contentType
+                                    success: function (data) {
+                                        if (data.success == true) {
+                                            //-- Remove default preview div
+                                            window.location.href = site_url + 'profile/' + slug;
+
+                                        } else {
+                                            showErrorMSg(data.error);
+                                        }
+                                    }
+                                });
+                                return false;
+                            },
+                        });
+
+                        // Display the preview and error of cover image  */
+                        function readcoverURL(input) {
+
+                            var height = 330, width = 1120, img = '', file = '', val = '';
+                            if (input.files && input.files[0]) {
+                                var reader = new FileReader();
+                                reader.onload = function (e) {
+                                    var _URL = window.URL || window.webkitURL;
+                                    var valid_extensions = /(\.jpg|\.jpeg|\.png)$/i;
+                                    if (typeof (input.files[0]) != 'undefined') {
+                                        if (valid_extensions.test(input.files[0].name)) {
+                                            img = new Image();
+                                            img.onload = function () {
+                                                if (this.width < width || this.height < height) {
+                                                    showErrorMSg('Photo should be ' + width + ' X ' + height + ' or more dimensions');
+                                                } else {
+                                                    var csrfName = '<?php echo $this->security->get_csrf_token_name(); ?>',
+                                                            csrfHash = '<?php echo $this->security->get_csrf_hash(); ?>';
+                                                    var formData = new FormData();
+                                                    formData.append('profile_id', profile_id);
+                                                    formData.append('cover_image', input.files[0], input.files[0].name);
+                                                    formData.append(csrfName, csrfHash);
+                                                    $.ajax({
+                                                        url: site_url + "profile/upload_cover_image",
+                                                        type: "POST",
+                                                        data: formData,
+                                                        dataType: "json",
+                                                        processData: false, // tell jQuery not to process the data
+                                                        contentType: false, // tell jQuery not to set contentType
+                                                        success: function (data) {
+                                                            if (data.success == true) {
+                                                                //-- Remove default preview div
+                                                                $('.cover_img').attr('src', data.url);
+                                                                var reader = new FileReader();
+                                                                reader.readAsDataURL(input.files[0]);
+                                                                showSuccessMSg(data.data);
+                                                            } else {
+                                                                showErrorMSg(data.error);
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            };
+                                            img.src = _URL.createObjectURL(input.files[0]);
+                                        } else {
+                                            showErrorMSg(input.files[0].name + " is not a valid image file.");
+                                        }
+                                    } else {
+                                        showErrorMSg("This browser does not support HTML5 FileReader.");
+                                    }
+                                }
+                                reader.readAsDataURL(input.files[0]);
+                            }
+                        }
 </script>

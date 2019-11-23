@@ -164,6 +164,13 @@
                                 <big id="instruct_count">(100 characters remaining)</big>
                             </div>
                         </div>
+                        <?php
+                        $csrf = array(
+                            'name' => $this->security->get_csrf_token_name(),
+                            'hash' => $this->security->get_csrf_hash()
+                        );
+                        ?>
+                        <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                         <div class="comment-btm cart_btn">
                             <button class="back" onclick="return back_step()">Back</button>
                             <button type="button" name="cart_btn" onclick="return proceed_step();">Continue</button>
@@ -313,6 +320,13 @@
                             <p class="p_mark">All flowers, plants, or containers may not always be available. By checking this box, you give us permission to make reasonable substitutions to ensure we deliver your order in a timely manner. Substitutions will not affect the value or quality of your order.</p>
                         </div>					
                     </div>
+                    <?php
+                    $csrf = array(
+                        'name' => $this->security->get_csrf_token_name(),
+                        'hash' => $this->security->get_csrf_hash()
+                    );
+                    ?>
+                    <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                     <div class="comment-btm cart_btn btn_extra_div">
                         <button type="button" class="back" onclick="return back_step()">Back</button>
                         <button type="button" name="cart_bill_btn" onclick="return proceed_step();">Place Order</button>

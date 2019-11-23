@@ -249,7 +249,7 @@ class Providers extends MY_Controller {
      * @param int $id
      * */
     public function get_city() {
-        $id = base64_decode($this->input->post('stateid'));
+        $id = base64_decode($this->input->get('stateid'));
         $options = '<option value="">-- Select City --</option>';
         if (is_numeric($id)) {
             $post_data = $this->providers_model->sql_select(TBL_CITY, null, ['where' => array('state_id' => trim($id))]);

@@ -195,6 +195,13 @@
                             ?>
                         </div>
                     </div>
+                    <?php
+                    $csrf = array(
+                        'name' => $this->security->get_csrf_token_name(),
+                        'hash' => $this->security->get_csrf_hash()
+                    );
+                    ?>
+                    <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                     <div class="edit-update step-btm-btn">
                         <button type="submit" class="next">Save</button>
                         <button type="reset" class="skip">Cancel</button>
@@ -285,7 +292,7 @@
         var country_id = $("#country option:selected").val();
         $url = '<?php echo base_url() ?>' + 'users/get_data';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: country_id,
@@ -302,7 +309,7 @@
         var state_id = $("#state option:selected").val();
         $url = '<?php echo base_url() ?>' + 'users/get_data';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: state_id,

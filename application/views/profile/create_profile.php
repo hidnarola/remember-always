@@ -191,6 +191,13 @@
                 </div>
             </div> 
         <?php } ?>
+        <?php
+        $csrf = array(
+            'name' => $this->security->get_csrf_token_name(),
+            'hash' => $this->security->get_csrf_hash()
+        );
+        ?>
+        <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
         <div class="memoriallife-btn">
             <button type="submit" class="create-memoriallife-profile" id="create-profile-btn">
                 <?php
@@ -361,7 +368,7 @@
             $('.loader').show();
             $.ajax({
                 url: site_url + "profile/get_states",
-                type: "POST",
+                type: "get",
                 data: {country: country_val},
                 dataType: "json",
                 success: function (data) {
@@ -394,7 +401,7 @@
             $('.loader').show();
             $.ajax({
                 url: site_url + "profile/get_cities",
-                type: "POST",
+                type: "get",
                 data: {state: state_val},
                 dataType: "json",
                 success: function (data) {

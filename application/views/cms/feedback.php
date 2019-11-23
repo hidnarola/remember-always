@@ -69,6 +69,13 @@
                             <label for="contact-form-message">Your feedback, comment or suggestion <span>*</span></label>
                             <textarea rows="6" id="message" name="message" class="form-control"></textarea><div class="textarea-resize"></div>
                         </div><!-- /.form-group -->
+                        <?php
+                        $csrf = array(
+                            'name' => $this->security->get_csrf_token_name(),
+                            'hash' => $this->security->get_csrf_hash()
+                        );
+                        ?>
+                        <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                         <button class="btn btn-primary pull-right" id="post" type="button">Post Message</button>
                     </form><!-- /.contact-form -->
                 </div><!-- /.contact-form-wrapper -->

@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label>State: <span class="text-danger">*</span></label>
-                                        <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');                     ?>">-->
+                                        <!--<input type="text" name="state" id="state" class="form-control" value="<?php // echo isset($provider_data['state']) ? $provider_data['state'] : set_value('state');                      ?>">-->
                                         <select name="state" id="state" class="form-control selectpicker">
                                             <option value="">-- Select State --</option>
                                             <?php
@@ -136,7 +136,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label>City: <span class="text-danger">*</span></label>
-                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');                     ?>">-->
+                                        <!--<input type="text" name="city" id="city" class="form-control" value="<?php // echo isset($provider_data['city']) ? $provider_data['city'] : set_value('city');                      ?>">-->
                                         <select name="city" id="city" class="form-control selectpicker">
                                             <option value="">-- Select City --</option>
                                             <?php
@@ -194,6 +194,13 @@
                                 </div>
                                 <div id="proper_image" class="validation-error-label"></div>
                             </div>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="text-right">
                                 <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                             </div>
@@ -297,7 +304,7 @@
             $('.loader').show();
             $.ajax({
                 url: site_url + "profile/get_states",
-                type: "POST",
+                type: "get",
                 data: {country: atob(country_val)},
                 dataType: "json",
                 success: function (data) {
@@ -317,7 +324,7 @@
         $('#state_hidden').val(state_id);
         $url = '<?php echo base_url() ?>' + 'admin/providers/get_city';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 stateid: state_id,

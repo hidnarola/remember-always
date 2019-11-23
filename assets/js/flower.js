@@ -217,7 +217,7 @@ $(document).on('change', '.selectpicker', function () {
             var country_id = $('option:selected', this).attr('data-bind');
             $url = site_url + 'flowers/get_data';
             $.ajax({
-                type: "POST",
+                type: "get",
                 url: $url,
                 data: {
                     id: country_id,
@@ -235,7 +235,7 @@ $(document).on('change', '.selectpicker', function () {
             var state_id = $('option:selected', this).attr('data-bind');
             $url = site_url + 'flowers/get_data';
             $.ajax({
-                type: "POST",
+                type: "get",
                 url: $url,
                 data: {
                     id: state_id,
@@ -251,7 +251,7 @@ $(document).on('change', '.selectpicker', function () {
             var country_id = $('option:selected', this).attr('data-bind');
             $url = site_url + 'flowers/get_data';
             $.ajax({
-                type: "POST",
+                type: "get",
                 url: $url,
                 data: {
                     id: country_id,
@@ -267,7 +267,7 @@ $(document).on('change', '.selectpicker', function () {
             var state_id = $('option:selected', this).attr('data-bind');
             $url = site_url + 'flowers/get_data';
             $.ajax({
-                type: "POST",
+                type: "get",
                 url: $url,
                 data: {
                     id: state_id,
@@ -286,7 +286,7 @@ $(document).on('focusout', '#r_zipcode', function () {
     var zip = $(this).val();
     $url = site_url + 'flowers/get_data';
     $.ajax({
-        type: "POST",
+        type: "get",
         url: $url,
         data: {
             id: zip,
@@ -405,7 +405,7 @@ function add_to_cart(code) {
     $('.loader').show();
     $.ajax({
         url: site_url + "flowers/manage_cart/" + code + '/add',
-        type: "POST",
+        type: "get",
         dataType: "json",
         success: function (data) {
 //            $('.loader').hide();
@@ -424,7 +424,7 @@ function remove_cart(code) {
     $('.loader').show();
     $.ajax({
         url: site_url + "flowers/manage_cart/" + code + '/remove',
-        type: "POST",
+        type: "get",
         dataType: "json",
         success: function (data) {
             if (data.success == true) {

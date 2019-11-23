@@ -240,7 +240,7 @@
     function loadResults(limitStart) {
         $.ajax({
             url: site_url + 'service_provider/load_providers/' + limitStart + srch_data,
-            type: "post",
+            type: "get",
             dataType: "json",
             success: function (data) {
                 var string = '';

@@ -335,7 +335,7 @@ $(function () {
 
             $.ajax({
                 url: site_url + 'search/get_result',
-                type: 'POST',
+                type: 'get',
                 data: {search_text: search_text},
                 success: function (data) {
                     data = JSON.parse(data);

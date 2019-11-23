@@ -114,6 +114,13 @@ if ($this->session->flashdata('success')) {
                                     <label>SEO Meta Description: <span class="text-danger">*</span></label>
                                     <input type="text" name="meta_description" id="meta_description" class="form-control" value="<?php echo isset($page_data['meta_description']) ? $page_data['meta_description'] : set_value('meta_description'); ?>">
                                 </div>
+                                <?php
+                                $csrf = array(
+                                    'name' => $this->security->get_csrf_token_name(),
+                                    'hash' => $this->security->get_csrf_hash()
+                                );
+                                ?>
+                                <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                                 <div class="text-right">
                                     <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                                 </div>
@@ -243,7 +250,7 @@ if ($this->session->flashdata('success')) {
         function delete_media(data) {
             $.ajax({
                 url: site_url + "admin/pages/delete_image",
-                type: "POST",
+                type: "get",
                 data: {'image': data},
                 dataType: "json",
                 success: function (data) {

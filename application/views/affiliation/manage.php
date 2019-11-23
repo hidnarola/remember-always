@@ -158,6 +158,13 @@
                                     </div>
 
                                 </div>
+                                <?php
+                                $csrf = array(
+                                    'name' => $this->security->get_csrf_token_name(),
+                                    'hash' => $this->security->get_csrf_hash()
+                                );
+                                ?>
+                                <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                                 <div class="step-btm-btn">
                                     <button type="submit" class="next">Save</button>
                                 </div>
@@ -218,9 +225,9 @@
 
     $(document).on('change', '#country', function () {
         var country_id = $("#country option:selected").val();
-        $url = '<?php echo base_url() ?>' + 'affiliation/get_data';
+        $url = '<?php echo site_url() ?>' + 'affiliation/get_data';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: country_id,
@@ -235,9 +242,9 @@
     });
     $(document).on('change', '#state', function () {
         var state_id = $("#state option:selected").val();
-        $url = '<?php echo base_url() ?>' + 'affiliation/get_data';
+        $url = '<?php echo site_url() ?>' + 'affiliation/get_data';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: state_id,

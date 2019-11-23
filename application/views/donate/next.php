@@ -57,6 +57,13 @@
                             <div class="input-wrap textarea_small">
                                 <textarea name="donation_message" id="donation_message" class="input-css textarea-css" placeholder="Enter message here for donation"></textarea>
                             </div>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <!--                            <div class="keep-me">
                                                             <label class="custom-checkbox">Do you want to display your name?
                                                                 <input type="checkbox" name="display_name" value="1">

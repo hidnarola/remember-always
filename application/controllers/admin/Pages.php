@@ -211,10 +211,10 @@ class Pages extends MY_Controller {
      * @author : AKK
      * */
     public function change_data_status() {
-        if (!is_null($this->input->post('id')))
-            $id = base64_decode($this->input->post('id'));
+        if (!is_null($this->input->get('id')))
+            $id = base64_decode($this->input->get('id'));
         if (is_numeric($id)) {
-            $user_array = array($this->input->post('type') => $this->input->post('value'));
+            $user_array = array($this->input->get('type') => $this->input->get('value'));
             $this->pages_model->common_insert_update('update', TBL_PAGES, $user_array, ['id' => $id]);
             echo 'success';
         }
@@ -226,7 +226,7 @@ class Pages extends MY_Controller {
      * @author AKK
      */
     public function delete_image() {
-        $gallery = base64_decode($this->input->post('image'));
+        $gallery = base64_decode($this->input->get('image'));
         $media = $this->pages_model->sql_select(TBL_PAGES, 'banner_image', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
         if (!empty($media)) {
             $update_array = array(

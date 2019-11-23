@@ -518,6 +518,13 @@
                                 </label>
                                 <a href="javascript:void(0)" onclick="showForgotModal()">Forget your password?</a>
                             </div>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="pup-btn">
                                 <button type="submit" id="login_form_btn">LOG IN</button>
                             </div>
@@ -559,6 +566,13 @@
                                     <span class="checkmark"></span>
                                 </label>
                             </div>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="pup-btn">
                                 <button type="submit" id="signup_form_btn">Sign UP</button>
                             </div>
@@ -583,6 +597,13 @@
                             <div class="keep-me">
                                 <a href="javascript:void(0)" onclick="loginforgetModal()">Back to login?</a>
                             </div>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="pup-btn">
                                 <button type="submit" id="reset_password_btn">RESET PASSWORD</button>
                             </div>
@@ -616,6 +637,13 @@
                             <div class="keep-me">
                                 <a href="javascript:void(0)" onclick="loginrestModal()">Back to login?</a>
                             </div>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="pup-btn">
                                 <button type="submit" id="change_password_btn">CHANGE PASSWORD</button>
                             </div>

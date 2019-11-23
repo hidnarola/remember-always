@@ -51,7 +51,7 @@ $(function () {
             $('.loader').show();
             $.ajax({
                 url: site_url + "profile/lifetimeline",
-                type: "POST",
+                type: "get",
                 data: {profile_id: profile_id},
                 success: function (data) {
                     timeline_change = 0;
@@ -297,6 +297,8 @@ function proceed_step() {
             if ($('#create_profile_form').valid()) {
                 $('#profile_process').val(1);
                 fd = new FormData(document.getElementById("create_profile_form"));
+                fd.append(csrfName, csrfHash);
+
                 $('.loader').show();
                 $.ajax({
                     url: create_profile_url,
@@ -306,6 +308,8 @@ function proceed_step() {
                     processData: false, // tell jQuery not to process the data
                     contentType: false, // tell jQuery not to set contentType
                     success: function (data) {
+                        csrfName = data.csrfName;
+                        csrfHash = data.csrfHash;
                         $('.loader').hide();
                         if (data.success == true) {
                             basic_info_change = 0;
@@ -393,7 +397,7 @@ function proceed_step() {
                         $('.loader').show();
                         $.ajax({
                             url: site_url + "profile/add_fundraiser",
-                            type: "POST",
+                            type: "get",
                             data: {profile_id: profile_id, fundraiser_title: $('#fundraiser_title').val(), fundraiser_goal: $('#fundraiser_goal').val(), fundraiser_details: $('#fundraiser_details').val()},
 //                            data: postformData,
                             dataType: "json",
@@ -417,7 +421,7 @@ function proceed_step() {
                         $('.loader').show();
                         $.ajax({
                             url: site_url + "profile/proceed_steps",
-                            type: "POST",
+                            type: "get",
                             data: {profile_process: 6, profile_id: profile_id},
                             dataType: "json",
                             success: function (data) {
@@ -441,7 +445,7 @@ function proceed_step() {
             $('.loader').show();
             $.ajax({
                 url: site_url + "profile/proceed_steps",
-                type: "POST",
+                type: "get",
                 data: {profile_process: 2, profile_id: profile_id},
                 dataType: "json",
                 success: function (data) {
@@ -463,7 +467,7 @@ function proceed_step() {
             $('.loader').show();
             $.ajax({
                 url: site_url + "profile/proceed_steps",
-                type: "POST",
+                type: "get",
                 data: {profile_process: 3, profile_id: profile_id},
                 dataType: "json",
                 success: function (data) {
@@ -486,7 +490,7 @@ function proceed_step() {
             $('.loader').show();
             $.ajax({
                 url: site_url + "profile/proceed_steps",
-                type: "POST",
+                type: "get",
                 data: {profile_process: 3, profile_id: profile_id},
                 dataType: "json",
                 success: function (data) {
@@ -517,6 +521,7 @@ function proceed_step() {
                 if ($('#timeline-form').valid() && validate_timeline_date()) {
                     fd = new FormData(document.getElementById("timeline-form"));
                     fd.append('profile_id', profile_id);
+                    fd.append(csrfName, csrfHash);
                     $('.loader').show();
                     $.ajax({
                         url: site_url + "profile/add_timeline",
@@ -527,6 +532,8 @@ function proceed_step() {
                         contentType: false, // tell jQuery not to set contentType
                         success: function (data) {
                             timeline_change = 0;
+                            csrfName = data.csrfName;
+                            csrfHash = data.csrfHash;
                             $('.loader').hide();
                             if (data.success == true) {
                                 $('#profile_process').val(4);
@@ -545,7 +552,7 @@ function proceed_step() {
                 $('.loader').show();
                 $.ajax({
                     url: site_url + "profile/proceed_steps",
-                    type: "POST",
+                    type: "get",
                     data: {profile_process: 4, profile_id: profile_id},
                     dataType: "json",
                     success: function (data) {
@@ -681,9 +688,11 @@ function proceed_step() {
                 $.ajax({
                     url: site_url + "profile/add_services",
                     type: "POST",
-                    data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id,
+                    data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id + "&" + csrfName + "=" + csrfHash,
                     dataType: "json",
                     success: function (data) {
+                        csrfName = data.csrfName;
+                        csrfHash = data.csrfHash;
                         services_change = 0;
                         $('.loader').hide();
                         if (data.success == true) {
@@ -750,6 +759,7 @@ function save_finish() {
 function save_profile_data(redirect_user) {
     $('#profile_process').val(1);
     fd = new FormData(document.getElementById("create_profile_form"));
+    fd.append(csrfName, csrfHash);
     $('.loader').show();
     $.ajax({
         url: create_profile_url,
@@ -760,6 +770,8 @@ function save_profile_data(redirect_user) {
         processData: false, // tell jQuery not to process the data
         contentType: false, // tell jQuery not to set contentType
         success: function (data) {
+            csrfName = data.csrfName;
+            csrfHash = data.csrfHash;
             if (data.success == true) {
                 basic_info_change = 0;
                 create_profile_url = site_url + "profile/edit/" + data.data.slug;
@@ -809,6 +821,7 @@ function save_lifetimeline(redirect_user) {
         if ($('#timeline-form').valid() && validate_timeline_date()) {
             fd = new FormData(document.getElementById("timeline-form"));
             fd.append('profile_id', profile_id);
+            fd.append(csrfName, csrfHash);
             $.ajax({
                 url: site_url + "profile/add_timeline",
                 type: "POST",
@@ -818,6 +831,8 @@ function save_lifetimeline(redirect_user) {
                 processData: false, // tell jQuery not to process the data 
                 contentType: false, // tell jQuery not to set contentType
                 success: function (data) {
+                    csrfName = data.csrfName;
+                    csrfHash = data.csrfHash;
                     timeline_change = 0;
                     if (data.success == true) {
                         $('#profile_process').val(4);
@@ -962,9 +977,11 @@ function save_funeral_tribute(redirect_user) {
                 url: site_url + "profile/add_services",
                 type: "POST",
                 async: false,
-                data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id,
+                data: $('#funeralservice-form').serialize() + "&profile_id=" + profile_id + "&" + csrfName + "=" + csrfHash,
                 dataType: "json",
                 success: function (data) {
+                    csrfName = data.csrfName;
+                    csrfHash = data.csrfHash;
                     services_change = 0;
                     if (data.success == true) {
                         save_tribute(redirect_user)
@@ -1131,131 +1148,13 @@ function publish_profile() {
     }
     return false;
 }
-//-- Gallery step
-var image_count = 0, video_count = 0;
-$("#gallery").change(function () {
-    var dvPreview = $("#selected-preview");
-    if (typeof (FileReader) != "undefined") {
-        if (profile_id == 0) {
-            $('.nav-tabs a[href="#first-step"]').tab('show');
-            $('.panel-collapse.collapse').collapse('hide');
-            $('#collapse-first-step.collapse').collapse('show');
 
-            $('#create_profile_form').valid();
-            showErrorMSg('Please save Basic Info first!');
-        } else {
-            $($(this)[0].files).each(function (index) {
-                var file = $(this);
-                str = '';
-                if (regex_img.test(file[0].name.toLowerCase())) {
-                    //-- check image and video count
-                    if (image_count <= max_images_count) {
-
-                        // upload image
-                        var formData = new FormData();
-                        formData.append('profile_id', profile_id);
-                        formData.append('type', 'image');
-                        formData.append('gallery', file[0], file[0].name);
-                        $('.loader').show();
-                        $.ajax({
-                            url: site_url + "profile/upload_gallery",
-                            type: "POST",
-                            data: formData,
-                            dataType: "json",
-                            processData: false, // tell jQuery not to process the data
-                            contentType: false, // tell jQuery not to set contentType
-                            success: function (data) {
-                                $('.loader').hide();
-                                if (data.success == true) {
-                                    //-- Remove default preview div
-                                    $('#default-preview').remove();
-                                    var reader = new FileReader();
-
-                                    reader.onload = function (e) {
-                                        str = '<li><div class="upload-wrap"><span>';
-                                        str += '<a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="image"><img src="' + e.target.result + '" class="profile-exif-img"></a>';
-                                        str += '</span><a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
-                                        str += delete_str;
-                                        str += '</a></div></li>';
-                                        dvPreview.append(str);
-                                        var img = dvPreview.find('.profile-exif-img');
-                                        fixExifOrientation(img);
-                                    }
-                                    reader.readAsDataURL(file[0]);
-                                } else {
-                                    showErrorMSg(data.error);
-                                }
-                            }
-                        });
-                    } else {
-                        showErrorMSg("Limit is exceeded to upload images");
-                    }
-                    image_count++;
-
-                } else if (regex_video.test(file[0].name.toLowerCase())) {
-                    if (video_count <= max_videos_count) {
-                        // upload video
-                        var videoData = new FormData();
-                        videoData.append('profile_id', profile_id);
-                        videoData.append('type', 'video');
-                        videoData.append('gallery', file[0], file[0].name);
-                        $('.loader').show();
-                        $.ajax({
-                            url: site_url + "profile/upload_gallery",
-                            type: "POST",
-                            data: videoData,
-                            dataType: "json",
-                            processData: false, // tell jQuery not to process the data
-                            contentType: false, // tell jQuery not to set contentType
-                            success: function (data) {
-                                $('.loader').hide();
-                                if (data.success == true) {
-                                    $('#default-preview').remove();
-                                    str = '<li><div class="upload-wrap"><span id="upload_gallery_' + index + '">';
-                                    str += '<video id="video_' + index + '" style="width:100%;height:100%;visibility:hidden;" controls><source src="' + URL.createObjectURL(file[0]) + '">Your browser does not support HTML5 video.</video>';
-                                    str += '</span>';
-                                    str += '<span class="gallery-play-btn"><a href="' + URL.createObjectURL(file[0]) + '" class="fancybox" rel="upload_gallery" data-fancybox-type="iframe"><img src="assets/images/play.png" alt=""></a></span>';
-                                    str += '<a href="javascript:void(0)" class="remove-video" onclick="delete_media(this,\'' + data.data + '\')">';
-                                    str += delete_str;
-                                    str += '</a></div></li>';
-                                    dvPreview.append(str);
-                                    var video = document.querySelector('#video_' + index);
-                                    video.addEventListener('loadeddata', function () {
-                                        var canvas = document.createElement("canvas");
-                                        canvas.width = video.videoWidth;
-                                        canvas.height = video.videoHeight;
-                                        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-
-                                        var img = document.createElement("img");
-                                        img.src = canvas.toDataURL();
-                                        $('#upload_gallery_' + index).prepend(img);
-                                    }, false);
-                                } else {
-                                    showErrorMSg(data.error);
-                                }
-                            }
-                        });
-
-                    } else {
-                        showErrorMSg("Limit is exceeded to upload videos");
-                    }
-                    video_count++;
-
-                } else {
-                    showErrorMSg(file[0].name + " is not a valid image/video file.");
-                }
-            });
-        }
-    } else {
-        showErrorMSg("This browser does not support HTML5 FileReader.");
-    }
-});
 
 function delete_media(obj, data) {
     $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_gallery",
-        type: "POST",
+        type: "get",
         data: {'gallery': data},
         dataType: "json",
         success: function (data) {
@@ -1288,7 +1187,7 @@ function add_funfact() {
                 $('.loader').show();
                 $.ajax({
                     url: site_url + "profile/add_facts",
-                    type: "POST",
+                    type: "get",
                     data: {facts: $('#fun_fact').val(), profile_id: profile_id},
                     dataType: "json",
                     success: function (data) {
@@ -1329,7 +1228,7 @@ function delete_facts(obj, data) {
     $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_facts",
-        type: "POST",
+        type: "get",
         data: {'fact': data},
         dataType: "json",
         success: function (data) {
@@ -1370,7 +1269,7 @@ function add_affiliation() {
                 $('.loader').show();
                 $.ajax({
                     url: site_url + "profile/add_affiliation",
-                    type: "POST",
+                    type: "get",
                     data: {select_affiliation: $('#select_affiliation').val(), affiliation_text: $('#affiliation_text').val(), profile_id: profile_id},
                     dataType: "json",
                     success: function (data) {
@@ -1416,7 +1315,7 @@ function delete_affiliation(obj, data, type) {
     $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_affiliation",
-        type: "POST",
+        type: "get",
         data: {'affiliation': data, 'type': type},
         dataType: "json",
         success: function (data) {
@@ -1480,7 +1379,7 @@ $(document).on('click', '.remove_org_timeline_btn', function () {
     $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_timeline",
-        type: "POST",
+        type: "get",
         data: {id: id},
         dataType: "json",
         success: function (data) {
@@ -1598,7 +1497,7 @@ $(document).on('change', '.service-country', function () {
         $('.loader').show();
         $.ajax({
             url: site_url + "profile/get_states",
-            type: "POST",
+            type: "get",
             data: {country: country_val},
             dataType: "json",
             success: function (data) {
@@ -1647,7 +1546,7 @@ $(document).on('change', '.service-state', function () {
         $('.loader').show();
         $.ajax({
             url: site_url + "profile/get_cities",
-            type: "POST",
+            type: "get",
             data: {state: state_val},
             dataType: "json",
             success: function (data) {
@@ -1770,7 +1669,7 @@ function delete_fundajaxmedia(obj, media_id) {
     $('.loader').show();
     $.ajax({
         url: site_url + "profile/delete_fundmedia",
-        type: "POST",
+        type: "get",
         data: {'media': media_id},
         dataType: "json",
         success: function (data) {
@@ -1865,7 +1764,7 @@ WePay.OAuth2.button_init(document.getElementById('start_oauth2'), {
             data['redirect_uri'] = curr_url;
             $.ajax({
                 url: site_url + 'fundraiser/index/' + profile_slug,
-                type: 'POST',
+                type: 'get',
                 data: data,
                 dataType: "json",
                 success: function (data) {

@@ -424,7 +424,7 @@ if ($this->session->flashdata('success')) {
 //            console.log(data_id);
             $.ajax({
                 url: '<?php echo site_url() ?>' + 'admin/users/load_data',
-                type: "post",
+                type: "get",
                 dataType: "json",
                 data: {
                     id: data_id,

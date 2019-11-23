@@ -74,6 +74,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php
+                                $csrf = array(
+                                    'name' => $this->security->get_csrf_token_name(),
+                                    'hash' => $this->security->get_csrf_hash()
+                                );
+                                ?>
+                                <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                                 <button type="submit" class="btn bg-blue btn-block" id="change_password">Change password <i class="icon-arrow-right14 position-right"></i></button>
                             </div>
                         </form>

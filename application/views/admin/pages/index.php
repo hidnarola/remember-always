@@ -236,7 +236,7 @@
         $.ajax({
             url: "<?php site_url() ?>admin/pages/change_data_status",
             data: {type: data_type, id: data_id, value: value},
-            type: "POST",
+            type: "get",
             success: function (result) {
                 swal("Success!", "Your changes was successfully arranged!", "success");
 //                    common_ajax_call();

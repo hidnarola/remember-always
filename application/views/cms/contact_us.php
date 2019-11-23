@@ -56,6 +56,13 @@
                     <?php
                     echo '<label id="g-recaptcha-response-error" class="error" for="g-recaptcha-response">' . form_error('g-recaptcha-response') . '</label>';
                     ?>
+                    <?php
+                    $csrf = array(
+                        'name' => $this->security->get_csrf_token_name(),
+                        'hash' => $this->security->get_csrf_hash()
+                    );
+                    ?>
+                    <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                     <div class="edit-update step-btm-btn">
                         <button type="submit" class="next" id="send_email_btn">Send Email</button>
                     </div>

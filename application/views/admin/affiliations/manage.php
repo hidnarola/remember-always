@@ -154,7 +154,7 @@
                                             <?php } else { ?>
                                                 <a class="fancybox" target="_blank" href="<?php echo AFFILIATION_IMAGE . $affiliation['image']; ?>" data-fancybox-group="gallery" ><img src="assets/admin/images/placeholder.jpg" height="90px" width="110px" alt="" class="img-circle"/></a>
                                             <?php } ?>
-    <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id'])                   ?>')"><i class="icon-trash"></i> Remove</button>-->
+    <!--<button class="btn btn-danger delete_image" type="button" onclick="delete_media('<?php // echo base64_encode($affiliation['id'])                    ?>')"><i class="icon-trash"></i> Remove</button>-->
                                         <?php } else {
                                             ?>
                                             <img src="<?php echo base_url('assets/admin/images/placeholder.jpg') ?>" style="width: 110px; height: 90px; border-radius: 2px;" alt="">
@@ -169,6 +169,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php
+                            $csrf = array(
+                                'name' => $this->security->get_csrf_token_name(),
+                                'hash' => $this->security->get_csrf_hash()
+                            );
+                            ?>
+                            <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                             <div class="text-right">
                                 <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                             </div>
@@ -259,7 +266,7 @@
         var country_id = $("#country option:selected").val();
         $url = '<?php echo base_url() ?>' + 'admin/affiliations/get_data';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: country_id,
@@ -276,7 +283,7 @@
         var state_id = $("#state option:selected").val();
         $url = '<?php echo base_url() ?>' + 'admin/affiliations/get_data';
         $.ajax({
-            type: "POST",
+            type: "get",
             url: $url,
             data: {
                 id: state_id,
@@ -336,7 +343,7 @@
     function delete_media(data) {
         $.ajax({
             url: site_url + "admin/affiliations/delete_image",
-            type: "POST",
+            type: "get",
             data: {'image': data},
             dataType: "json",
             success: function (data) {

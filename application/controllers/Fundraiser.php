@@ -46,8 +46,8 @@ class Fundraiser extends MY_Controller {
                 require_once(APPPATH . 'libraries/Wepay.php');
 
                 // oauth2 parameters
-                $code = $this->input->post('code'); // the code parameter from step 2
-                $redirect_uri = $this->input->post('redirect_uri'); // this is the redirect_uri you used in step 1
+                $code = $this->input->get('code'); // the code parameter from step 2
+                $redirect_uri = $this->input->get('redirect_uri'); // this is the redirect_uri you used in step 1
                 // application settings
                 if (WEPAY_ENDPOINT == 'stage') {
                     Wepay::useStaging($this->client_id, $this->client_secret);

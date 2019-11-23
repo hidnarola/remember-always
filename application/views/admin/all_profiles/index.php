@@ -73,7 +73,7 @@
         $.ajax({
             url: "<?php site_url() ?>admin/profiles/change_data_status",
             data: {id: data_id, value: value, type: data_type},
-            type: "POST",
+            type: "get",
             success: function (result) {
                 if (result = 'success') {
                     swal({

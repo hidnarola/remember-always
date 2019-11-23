@@ -507,8 +507,11 @@ class Profile extends MY_Controller {
                     $data['error'] = 'Date of birth must be smaller than Date of death';
                 }
             }
-
-            echo json_encode($data);
+            $reponse = array(
+                'csrfName' => $this->security->get_csrf_token_name(),
+                'csrfHash' => $this->security->get_csrf_hash()
+            );
+            echo json_encode(array_merge($reponse, $data));
             exit;
         }
 
@@ -928,7 +931,11 @@ class Profile extends MY_Controller {
             $data['success'] = false;
             $data['error'] = "Invalid data!";
         }
-        echo json_encode($data);
+        $reponse = array(
+            'csrfName' => $this->security->get_csrf_token_name(),
+            'csrfHash' => $this->security->get_csrf_hash()
+        );
+        echo json_encode(array_merge($reponse, $data));
         exit;
     }
 
@@ -955,7 +962,7 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function delete_gallery() {
-        $gallery = base64_decode($this->input->post('gallery'));
+        $gallery = base64_decode($this->input->get('gallery'));
         $gallery_media = $this->users_model->sql_select(TBL_GALLERY, 'media,type', ['where' => ['id' => $gallery, 'is_delete' => 0]], ['single' => true]);
         if (!empty($gallery_media)) {
             $this->users_model->common_delete(TBL_GALLERY, ['id' => $gallery]);
@@ -975,9 +982,9 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function proceed_steps() {
-        if ($this->input->post('profile_process')) {
-            $profile_id = base64_decode($this->input->post('profile_id'));
-            $profile_process = $this->input->post('profile_process');
+        if ($this->input->get('profile_process')) {
+            $profile_id = base64_decode($this->input->get('profile_id'));
+            $profile_process = $this->input->get('profile_process');
             //-- Get profile detail from profile_id
             $profile = $this->users_model->sql_select(TBL_PROFILES, 'profile_process', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
             if (!empty($profile)) {
@@ -999,10 +1006,10 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function add_facts() {
-        $profile_id = base64_decode($this->input->post('profile_id'));
+        $profile_id = base64_decode($this->input->get('profile_id'));
         $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
         if (!empty($profile)) {
-            $id = $this->users_model->common_insert_update('insert', TBL_FUN_FACTS, ['profile_id' => $profile_id, 'user_id' => $this->user_id, 'facts' => trim($this->input->post('facts')), 'created_at' => date('Y-m-d H:i:s')]);
+            $id = $this->users_model->common_insert_update('insert', TBL_FUN_FACTS, ['profile_id' => $profile_id, 'user_id' => $this->user_id, 'facts' => trim($this->input->get('facts')), 'created_at' => date('Y-m-d H:i:s')]);
             $data['success'] = true;
             $data['data'] = base64_encode($id);
         } else {
@@ -1034,7 +1041,7 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function delete_facts() {
-        $fact = base64_decode($this->input->post('fact'));
+        $fact = base64_decode($this->input->get('fact'));
         $fact_detail = $this->users_model->sql_select(TBL_FUN_FACTS, 'facts', ['where' => ['id' => $fact, 'is_delete' => 0]], ['single' => true]);
         if (!empty($fact_detail)) {
             $this->users_model->common_insert_update('update', TBL_FUN_FACTS, ['is_delete' => 1], ['id' => $fact]);
@@ -1052,25 +1059,25 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function add_affiliation() {
-        $profile_id = base64_decode($this->input->post('profile_id'));
+        $profile_id = base64_decode($this->input->get('profile_id'));
         $profile = $this->users_model->sql_select(TBL_PROFILES, 'user_id', ['where' => ['id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
         if (!empty($profile)) {
             $id_arr = [];
-            if ($this->input->post('select_affiliation') != '') {
-                $sql = 'INSERT IGNORE INTO ' . TBL_PROFILE_AFFILIATION . ' (profile_id,affiliation_id,created_at) VALUES (' . $profile_id . ',' . $this->input->post('select_affiliation') . ',\'' . date('Y-m-d H:i:s') . '\')';
+            if ($this->input->get('select_affiliation') != '') {
+                $sql = 'INSERT IGNORE INTO ' . TBL_PROFILE_AFFILIATION . ' (profile_id,affiliation_id,created_at) VALUES (' . $profile_id . ',' . $this->input->get('select_affiliation') . ',\'' . date('Y-m-d H:i:s') . '\')';
                 $this->db->query($sql);
                 $id = $this->db->insert_id();
-                $affiliation = $this->users_model->sql_select(TBL_AFFILIATIONS, 'name', ['where' => ['id' => $this->input->post('select_affiliation')]], ['single' => true]);
+                $affiliation = $this->users_model->sql_select(TBL_AFFILIATIONS, 'name', ['where' => ['id' => $this->input->get('select_affiliation')]], ['single' => true]);
                 if ($id != 0) {
                     $id_arr[] = ['id' => base64_encode($id), 'type' => 0, 'name' => $affiliation['name']];
                 }
             }
-            if (trim($this->input->post('affiliation_text')) != '') {
+            if (trim($this->input->get('affiliation_text')) != '') {
                 $sql = 'INSERT IGNORE INTO ' . TBL_PROFILE_AFFILIATIONTEXTS . ' (profile_id,affiliation_text,created_at) VALUES (?,?,?)';
-                $this->db->query($sql, array($profile_id, trim($this->input->post('affiliation_text')), date('Y-m-d H:i:s')));
+                $this->db->query($sql, array($profile_id, trim($this->input->get('affiliation_text')), date('Y-m-d H:i:s')));
                 $id = $this->db->insert_id();
                 if ($id != 0) {
-                    $id_arr[] = ['id' => base64_encode($id), 'type' => 1, 'name' => trim($this->input->post('affiliation_text'))];
+                    $id_arr[] = ['id' => base64_encode($id), 'type' => 1, 'name' => trim($this->input->get('affiliation_text'))];
                 }
             }
             $sql = "SELECT count(id) as count FROM ("
@@ -1111,8 +1118,8 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function delete_affiliation() {
-        $id = base64_decode($this->input->post('affiliation'));
-        if ($this->input->post('type') == 1) {
+        $id = base64_decode($this->input->get('affiliation'));
+        if ($this->input->get('type') == 1) {
             $this->users_model->common_delete(TBL_PROFILE_AFFILIATIONTEXTS, ['id' => $id]);
         } else {
             $this->users_model->common_delete(TBL_PROFILE_AFFILIATION, ['id' => $id]);
@@ -1222,7 +1229,11 @@ class Profile extends MY_Controller {
                 $data['success'] = true;
             }
         }
-        echo json_encode($data);
+        $reponse = array(
+            'csrfName' => $this->security->get_csrf_token_name(),
+            'csrfHash' => $this->security->get_csrf_hash()
+        );
+        echo json_encode(array_merge($reponse, $data));
         exit;
     }
 
@@ -1230,7 +1241,7 @@ class Profile extends MY_Controller {
      * Delete time line section
      */
     public function delete_timeline() {
-        $id = base64_decode($this->input->post('id'));
+        $id = base64_decode($this->input->get('id'));
         if (!empty($id)) {
             $this->users_model->common_insert_update('update', TBL_LIFE_TIMELINE, ['is_delete' => 1], ['id' => $id]);
             $data['success'] = true;
@@ -1247,7 +1258,7 @@ class Profile extends MY_Controller {
      * Get life time-line of particular profile
      */
     public function lifetimeline() {
-        $id = base64_decode($this->input->post('profile_id'));
+        $id = base64_decode($this->input->get('profile_id'));
         $timeline = $this->users_model->sql_select(TBL_LIFE_TIMELINE, '*', ['where' => ['profile_id' => $id, 'is_delete' => 0]], ['order_by' => 'year,month,date']);
         $month_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
         $day_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31];
@@ -1376,7 +1387,7 @@ class Profile extends MY_Controller {
      * Get states 
      */
     public function get_states() {
-        $country_id = $this->input->post('country');
+        $country_id = $this->input->get('country');
         $states = $this->users_model->sql_select(TBL_STATE, 'id,name,shortcode', ['where' => ['country_id' => $country_id]]);
         echo json_encode($states);
         exit;
@@ -1386,7 +1397,7 @@ class Profile extends MY_Controller {
      * Get cities 
      */
     public function get_cities() {
-        $state_id = $this->input->post('state');
+        $state_id = $this->input->get('state');
         $cities = $this->users_model->sql_select(TBL_CITY, 'id,name', ['where' => ['state_id' => $state_id]]);
         echo json_encode($cities);
         exit;
@@ -1518,7 +1529,11 @@ class Profile extends MY_Controller {
             $data['success'] = false;
             $data['error'] = 'Something went wrong! Please try again later,';
         }
-        echo json_encode($data);
+        $reponse = array(
+            'csrfName' => $this->security->get_csrf_token_name(),
+            'csrfHash' => $this->security->get_csrf_hash()
+        );
+        echo json_encode(array_merge($reponse, $data));
         exit;
     }
 
@@ -1526,18 +1541,18 @@ class Profile extends MY_Controller {
      * Add fundraiser into profile
      */
     public function add_fundraiser() {
-        if ($this->input->post('profile_id')) {
-            if (trim($this->input->post('fundraiser_title')) != '' && trim($this->input->post('fundraiser_details')) != '' && trim($this->input->post('fundraiser_goal')) != '') {
-                if ($this->input->post('fundraiser_goal') >= 250) {
-                    $profile_id = base64_decode($this->input->post('profile_id'));
+        if ($this->input->get('profile_id')) {
+            if (trim($this->input->get('fundraiser_title')) != '' && trim($this->input->get('fundraiser_details')) != '' && trim($this->input->get('fundraiser_goal')) != '') {
+                if ($this->input->get('fundraiser_goal') >= 250) {
+                    $profile_id = base64_decode($this->input->get('profile_id'));
                     //Get fund raiser profile 
                     $fund_profile = $this->users_model->sql_select(TBL_FUNDRAISER_PROFILES, '*', ['where' => ['profile_id' => $profile_id, 'is_delete' => 0]], ['single' => true]);
 
                     $data_array = [
                         'profile_id' => $profile_id,
-                        'title' => trim($this->input->post('fundraiser_title')),
-                        'goal' => $this->input->post('fundraiser_goal'),
-                        'details' => trim($this->input->post('fundraiser_details'))
+                        'title' => trim($this->input->get('fundraiser_title')),
+                        'goal' => $this->input->get('fundraiser_goal'),
+                        'details' => trim($this->input->get('fundraiser_details'))
                     ];
 
                     $directory = 'profile_' . $profile_id;
@@ -1555,7 +1570,7 @@ class Profile extends MY_Controller {
                             $_FILES['custom_image']['tmp_name'] = $_FILES['fundraiser_append_media']['tmp_name'][$key];
                             $_FILES['custom_image']['error'] = $_FILES['fundraiser_append_media']['error'][$key];
                             $_FILES['custom_image']['size'] = $_FILES['fundraiser_append_media']['size'][$key];
-                            if ($this->input->post('fundraiser_append_types')[$key] == 1) {
+                            if ($this->input->get('fundraiser_append_types')[$key] == 1) {
                                 $image_data = upload_image('custom_image', FUNDRAISER_IMAGES . $directory);
                             } else {
                                 $image_data = upload_video('custom_image', FUNDRAISER_IMAGES . $directory);
@@ -1568,7 +1583,7 @@ class Profile extends MY_Controller {
                                 $image = $image_data;
                                 $dataArr_media[] = array(
                                     'media' => $directory . '/' . $image,
-                                    'type' => $this->input->post('fundraiser_append_types')[$key],
+                                    'type' => $this->input->get('fundraiser_append_types')[$key],
                                     'created_at' => date('Y-m-d H:i:s'),
                                 );
                             }
@@ -1615,7 +1630,7 @@ class Profile extends MY_Controller {
      * @author KU
      */
     public function delete_fundmedia() {
-        $media = base64_decode($this->input->post('media'));
+        $media = base64_decode($this->input->get('media'));
         $fund_media = $this->users_model->sql_select(TBL_FUNDRAISER_MEDIA, 'media,type', ['where' => ['id' => $media, 'is_delete' => 0]], ['single' => true]);
         if (!empty($fund_media)) {
             $this->users_model->common_delete(TBL_FUNDRAISER_MEDIA, ['id' => $media]);
@@ -1691,7 +1706,7 @@ class Profile extends MY_Controller {
      */
     public function delete_post() {
         if ($this->is_user_loggedin) {
-            $post_id = $this->input->post('post');
+            $post_id = $this->input->get('post');
             //-- check if post is added by logged in user
             $post_data = $this->users_model->sql_select(TBL_POSTS, 'id', ['where' => ['id' => $post_id, 'is_delete' => 0, 'user_id' => $this->user_id]], ['single' => true]);
             if (!empty($post_data)) {

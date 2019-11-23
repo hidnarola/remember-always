@@ -60,6 +60,13 @@ if ($this->session->flashdata('success')) {
                                 <input type="text" name="name" id="name" placeholder="Enter Category Name" class="form-control" value="<?php echo (isset($category['name'])) ? $category['name'] : set_value('name'); ?>">
                             </div>
                         </div>
+                        <?php
+                        $csrf = array(
+                            'name' => $this->security->get_csrf_token_name(),
+                            'hash' => $this->security->get_csrf_hash()
+                        );
+                        ?>
+                        <input type="hidden" name="<?= $csrf['name']; ?>" value="<?= $csrf['hash']; ?>" />
                         <div class="text-right">
                             <button class="btn btn-success" type="submit">Save <i class="icon-arrow-right14 position-right"></i></button>
                         </div>
